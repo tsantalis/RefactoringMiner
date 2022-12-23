@@ -1508,6 +1508,40 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 	}
 
 	@Test
+	public void testMergedStatementMappingsMovedOutOfIfElseIfBranch() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		GitRepository repo = gitService.cloneIfNotExists(getProject(),
+				REPOS + "/liferay-plugins",
+				"https://github.com/liferay/liferay-plugins.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "7c7ecf4cffda166938efd0ae34830e2979c25c73", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/liferay-plugins-7c7ecf4cffda166938efd0ae34830e2979c25c73.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testInnerTryBlockDeleted() throws Exception {
 		GitRepository repository = gitService.cloneIfNotExists(getProject(),
 				REPOS + "/jgit",

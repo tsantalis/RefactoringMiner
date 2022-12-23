@@ -31,7 +31,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isStatic;
 	private boolean isNative;
 	private boolean isSynchronized;
-	private boolean emptyBody;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
@@ -143,14 +142,6 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setNative(boolean isNative) {
 		this.isNative = isNative;
-	}
-
-	public boolean hasEmptyBody() {
-		return emptyBody;
-	}
-
-	public void setEmptyBody(boolean emptyBody) {
-		this.emptyBody = emptyBody;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {
@@ -503,7 +494,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				for(String key : operationInvocationMap.keySet()) {
 					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
 					for(AbstractCall operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this, null) || operationInvocation.getName().equals(this.getName())) {
+						if(operationInvocation.matchesOperation(this, this, null) ||
+								(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
 							return operationInvocation;
 						}
 					}

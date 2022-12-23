@@ -163,10 +163,10 @@ public class OperationInvocation extends AbstractCall {
     }
 
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
-		if(!this.methodName.equals(operation.getName())) {
-			return false;
-		}
-		Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
+    	if(!this.methodName.equals(operation.getName())) {
+    		return false;
+    	}
+    	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();
     	Map<String, VariableDeclaration> parentFieldDeclarationMap = null;
     	Map<String, VariableDeclaration> childFieldDeclarationMap = null;
     	if(modelDiff != null) {
@@ -258,6 +258,10 @@ public class OperationInvocation extends AbstractCall {
     				}
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    		}
+    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains("->") && arg.indexOf(")") < arg.length()) {
+    			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
     		}
     		else if(arg.endsWith(".getClassLoader()")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));

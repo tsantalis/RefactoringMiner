@@ -95,6 +95,31 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean isConstructor();
 	AbstractCall isDelegate();
 
+	default boolean hasEmptyBody() {
+		OperationBody operationBody = getBody();
+		if(operationBody != null) {
+			return operationBody.getCompositeStatement().getStatements().size() == 0;
+		}
+		return false;
+	}
+
+	default boolean emptyBodiesWithIdenticalComments(VariableDeclarationContainer other) {
+		if(this.hasEmptyBody() && other.hasEmptyBody()) {
+			List<UMLComment> comments1 = this.getComments();
+			List<UMLComment> comments2 = other.getComments();
+			if(comments1.size() == comments2.size() && comments1.size() > 0) {
+				int identicalComments = 0;
+				for(int i=0; i<comments1.size(); i++) {
+					if(comments1.get(i).getText().equals(comments2.get(i).getText())) {
+						identicalComments++;
+					}
+				}
+				return identicalComments == comments1.size();
+			}
+		}
+		return false;
+	}
+
 	default AbstractCall delegatesTo(VariableDeclarationContainer operation, UMLModelDiff modelDiff) {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();

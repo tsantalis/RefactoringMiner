@@ -28,12 +28,12 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
 
     @Test
     public void testProjects() throws Exception {
-        processRepositoryCommits("https://github.com/apache/drill.git", 317, 0, 12);
+        processRepositoryCommits("https://github.com/apache/drill.git", 318, 0, 12);
         processRepositoryCommits("https://github.com/ReactiveX/RxJava.git", 15, 0, 0);
         processRepositoryCommits("https://github.com/CyanogenMod/android_frameworks_base.git", 54, 0, 1);
         processRepositoryCommits("https://github.com/real-logic/Aeron.git", 33, 0, 1);
         processRepositoryCommits("https://github.com/gradle/gradle.git", 141, 0, 4);
-        processRepositoryCommits("https://github.com/geometer/FBReaderJ.git", 4, 0, 0);
+        processRepositoryCommits("https://github.com/geometer/FBReaderJ.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-data-neo4j.git", 108, 0, 2);
         processRepositoryCommits("https://github.com/wildfly/wildfly.git", 168, 0, 2);
         processRepositoryCommits("https://github.com/fabric8io/fabric8.git", 22, 0, 0);
@@ -154,7 +154,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/addthis/hydra.git", 135, 0, 0);
         processRepositoryCommits("https://github.com/apache/pig.git", 7, 0, 1);
         processRepositoryCommits("https://github.com/apache/hive.git", 68, 0, 3);
-        processRepositoryCommits("https://github.com/google/closure-compiler.git", 63, 0, 2);
+        processRepositoryCommits("https://github.com/google/closure-compiler.git", 67, 0, 0);
         processRepositoryCommits("https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git", 7, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-framework.git", 79, 0, 3);
         processRepositoryCommits("https://github.com/greenrobot/greenDAO.git", 1, 0, 0);

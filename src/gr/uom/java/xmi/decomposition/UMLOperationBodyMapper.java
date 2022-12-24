@@ -5770,6 +5770,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							if(removedAttributeMatched && addedAttributeMatched) {
 								expressionMatched = true;
+								Replacement r = new Replacement(assignmentInvocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), ReplacementType.VARIABLE_NAME);
+								replacementInfo.addReplacement(r);
+							}
+						}
+						for(AbstractCodeMapping mapping : this.mappings) {
+							for(Replacement r : mapping.getReplacements()) {
+								if(r.getBefore().equals(assignmentInvocationCoveringTheEntireStatement1.getExpression()) &&
+										r.getAfter().equals(invocationCoveringTheEntireStatement2.getExpression())) {
+									expressionMatched = true;
+									replacementInfo.addReplacement(r);
+									break;
+								}
+							}
+							if(expressionMatched) {
+								break;
 							}
 						}
 						if(expressionMatched) {
@@ -5866,7 +5881,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		//method invocation has been renamed but the expression and arguments are identical
-		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && statement1.getClass().equals(statement2.getClass()) &&
 				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers,
 						matchPairOfRemovedAddedOperationsWithIdenticalBody(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2))) {
 			boolean variableDeclarationMatch = true;

@@ -24,6 +24,8 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -56,6 +58,9 @@ import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
+import com.github.gumtreediff.gen.jdt.JdtVisitor;
+import com.github.gumtreediff.tree.TreeContext;
+
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -66,13 +71,13 @@ public class UMLModelASTReader {
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	private UMLModel umlModel;
 
-	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
+	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, boolean astDiff) {
 		this.umlModel = new UMLModel(repositoryDirectories);
-		processJavaFileContents(javaFileContents);
+		processJavaFileContents(javaFileContents, astDiff);
 	}
 
-	private void processJavaFileContents(Map<String, String> javaFileContents) {
-		ASTParser parser = ASTParser.newParser(AST.JLS17);
+	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
+		ASTParser parser = ASTParser.newParser(AST.JLS18);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
 			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
@@ -83,7 +88,8 @@ public class UMLModelASTReader {
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);
 			parser.setStatementsRecovery(true);
 			String javaFileContent = javaFileContents.get(filePath);
-			parser.setSource(javaFileContent.toCharArray());
+			char[] charArray = javaFileContent.toCharArray();
+			parser.setSource(charArray);
 			if((javaFileContent.contains(FREE_MARKER_GENERATED) || javaFileContent.contains(FREE_MARKER_GENERATED_2)) &&
 					!javaFileContent.contains("private static final String FREE_MARKER_GENERATED = \"generated using freemarker\";")) {
 				continue;
@@ -91,6 +97,14 @@ public class UMLModelASTReader {
 			try {
 				CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);
+				if(astDiff) {
+					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
+					scanner.setSource(charArray);
+					JdtVisitor visitor = new JdtVisitor(scanner);
+					compilationUnit.accept(visitor);
+					TreeContext treeContext = visitor.getTreeContext();
+					this.umlModel.getTreeContextMap().put(filePath, treeContext);
+				}
 			}
 			catch(Exception e) {
 				//e.printStackTrace();
@@ -98,7 +112,7 @@ public class UMLModelASTReader {
 		}
 	}
 
-	public UMLModelASTReader(File rootFolder) throws IOException {
+	public UMLModelASTReader(File rootFolder, boolean astDiff) throws IOException {
 		List<String> javaFilePaths = getJavaFilePaths(rootFolder);
 		Map<String, String> javaFileContents = new LinkedHashMap<String, String>();
 		Set<String> repositoryDirectories = new LinkedHashSet<String>();
@@ -113,7 +127,7 @@ public class UMLModelASTReader {
 			}
 		}
 		this.umlModel = new UMLModel(repositoryDirectories);
-		processJavaFileContents(javaFileContents);
+		processJavaFileContents(javaFileContents, astDiff);
 	}
 
 	private static List<String> getJavaFilePaths(File folder) throws IOException {
@@ -132,6 +146,7 @@ public class UMLModelASTReader {
 
 	protected void processCompilationUnit(String sourceFilePath, CompilationUnit compilationUnit, String javaFileContent) {
 		List<UMLComment> comments = extractInternalComments(compilationUnit, sourceFilePath, javaFileContent);
+		this.umlModel.getCommentMap().put(sourceFilePath, comments);
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = null;
 		UMLJavadoc packageDoc = null;

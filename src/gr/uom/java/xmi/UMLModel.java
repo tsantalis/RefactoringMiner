@@ -4,11 +4,15 @@ import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+
+import com.github.gumtreediff.tree.TreeContext;
 
 public class UMLModel {
 	private Set<String> repositoryDirectories;
@@ -16,6 +20,8 @@ public class UMLModel {
     private List<UMLGeneralization> generalizationList;
     private List<UMLRealization> realizationList;
     private boolean partial;
+    private Map<String, TreeContext> treeContextMap = new LinkedHashMap<>();
+    private Map<String, List<UMLComment>> commentMap = new LinkedHashMap<>();
 
     public UMLModel(Set<String> repositoryDirectories) {
     	this.repositoryDirectories = repositoryDirectories;
@@ -23,6 +29,14 @@ public class UMLModel {
         generalizationList = new ArrayList<UMLGeneralization>();
         realizationList = new ArrayList<UMLRealization>();
     }
+
+	public Map<String, TreeContext> getTreeContextMap() {
+		return treeContextMap;
+	}
+
+	public Map<String, List<UMLComment>> getCommentMap() {
+		return commentMap;
+	}
 
 	public boolean isPartial() {
 		return partial;

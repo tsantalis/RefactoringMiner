@@ -552,7 +552,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public static UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
-		return new UMLModelASTReader(fileContents, repositoryDirectories).getUmlModel();
+		return new UMLModelASTReader(fileContents, repositoryDirectories, false).getUmlModel();
 	}
 
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);

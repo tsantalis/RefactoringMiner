@@ -77,6 +77,7 @@ public class UMLModelDiff {
 	private List<UMLClassRenameDiff> classRenameDiffList;
 	private List<UMLClassMergeDiff> classMergeDiffList;
 	private List<UMLClassSplitDiff> classSplitDiffList;
+	private List<UMLAttributeDiff> movedAttributeDiffList;
 	private List<Refactoring> refactorings;
 	private Set<Refactoring> moveRenameClassRefactorings;
 	private Set<String> deletedFolderPaths;
@@ -106,6 +107,7 @@ public class UMLModelDiff {
 		this.classRenameDiffList = new ArrayList<UMLClassRenameDiff>();
 		this.classMergeDiffList = new ArrayList<UMLClassMergeDiff>();
 		this.classSplitDiffList = new ArrayList<UMLClassSplitDiff>();
+		this.movedAttributeDiffList = new ArrayList<UMLAttributeDiff>();
 		this.refactorings = new ArrayList<Refactoring>();
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 	}
@@ -190,6 +192,10 @@ public class UMLModelDiff {
 
 	public List<UMLClassRenameDiff> getClassRenameDiffList() {
 		return classRenameDiffList;
+	}
+
+	public List<UMLAttributeDiff> getMovedAttributeDiffList() {
+		return movedAttributeDiffList;
 	}
 
 	public boolean commonlyImplementedOperations(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff2) {
@@ -971,7 +977,7 @@ public class UMLModelDiff {
 		return addedRealizations;
 	}
 
-	private List<MoveAttributeRefactoring> checkForAttributeMovesIncludingRemovedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) {
+	private List<MoveAttributeRefactoring> checkForAttributeMovesIncludingRemovedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		List<UMLAttribute> addedAttributes = getAddedAttributesInCommonClasses();
 		/*for(UMLClass addedClass : addedClasses) {
     	  addedAttributes.addAll(addedClass.getAttributes());
@@ -983,7 +989,7 @@ public class UMLModelDiff {
 		return checkForAttributeMoves(addedAttributes, removedAttributes, renameMap, refactorings);
 	}
 
-	private List<MoveAttributeRefactoring> checkForAttributeMovesIncludingAddedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) {
+	private List<MoveAttributeRefactoring> checkForAttributeMovesIncludingAddedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		List<UMLAttribute> addedAttributes = getAddedAttributesInCommonClasses();
 		for(UMLClass addedClass : addedClasses) {
 			addedAttributes.addAll(addedClass.getAttributes());
@@ -995,13 +1001,13 @@ public class UMLModelDiff {
 		return checkForAttributeMoves(addedAttributes, removedAttributes, renameMap, refactorings);
 	}
 
-	private List<MoveAttributeRefactoring> checkForAttributeMovesBetweenCommonClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) {
+	private List<MoveAttributeRefactoring> checkForAttributeMovesBetweenCommonClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		List<UMLAttribute> addedAttributes = getAddedAttributesInCommonClasses();
 		List<UMLAttribute> removedAttributes = getRemovedAttributesInCommonClasses();
 		return checkForAttributeMoves(addedAttributes, removedAttributes, renameMap, refactorings);
 	}
 
-	private List<MoveAttributeRefactoring> checkForAttributeMovesBetweenRemovedAndAddedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) {
+	private List<MoveAttributeRefactoring> checkForAttributeMovesBetweenRemovedAndAddedClasses(Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClass addedClass : addedClasses) {
 			addedAttributes.addAll(addedClass.getAttributes());
@@ -1014,7 +1020,7 @@ public class UMLModelDiff {
 	}
 
 	private List<MoveAttributeRefactoring> checkForAttributeMoves(List<UMLAttribute> addedAttributes, List<UMLAttribute> removedAttributes,
-			Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) {
+			Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		List<MoveAttributeRefactoring> refactorings = new ArrayList<MoveAttributeRefactoring>();
 		if(addedAttributes.size() <= removedAttributes.size()) {
 			for(UMLAttribute addedAttribute : addedAttributes) {
@@ -1025,7 +1031,7 @@ public class UMLModelDiff {
 						candidates.add(candidate);
 					}
 				}
-				processCandidates(candidates, refactorings);
+				processCandidates(candidates, refactorings, pastRefactorings);
 			}
 		}
 		else {
@@ -1037,7 +1043,7 @@ public class UMLModelDiff {
 						candidates.add(candidate);
 					}
 				}
-				processCandidates(candidates, refactorings);
+				processCandidates(candidates, refactorings, pastRefactorings);
 			}
 		}
 		return refactorings;
@@ -1103,7 +1109,7 @@ public class UMLModelDiff {
 		return filtered;
 	}
 
-	private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings) {
+	private void processCandidates(List<MoveAttributeRefactoring> candidates, List<MoveAttributeRefactoring> refactorings, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		if(candidates.size() > 1) {
 			TreeMap<Integer, List<MoveAttributeRefactoring>> map = new TreeMap<Integer, List<MoveAttributeRefactoring>>();
 			for(MoveAttributeRefactoring candidate : candidates) {
@@ -1119,9 +1125,19 @@ public class UMLModelDiff {
 			}
 			int maxCompatibility = map.lastKey();
 			refactorings.addAll(map.get(maxCompatibility));
+			for(MoveAttributeRefactoring moveAttributeRefactoring : map.get(maxCompatibility)) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
+				movedAttributeDiffList.add(attributeDiff);
+				pastRefactorings.addAll(attributeDiff.getRefactorings());
+			}
 		}
 		else if(candidates.size() == 1) {
 			refactorings.addAll(candidates);
+			for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
+				movedAttributeDiffList.add(attributeDiff);
+				pastRefactorings.addAll(attributeDiff.getRefactorings());
+			}
 		}
 	}
 
@@ -1615,6 +1631,7 @@ public class UMLModelDiff {
 				}
 				this.refactorings.add(ref);
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				movedAttributeDiffList.add(attributeDiff);
 				refactorings.addAll(attributeDiff.getRefactorings()); 
 			}
 		}

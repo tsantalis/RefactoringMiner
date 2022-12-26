@@ -416,7 +416,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	}
 
 	public double levelParentEditDistanceSum() {
-		return levelParentEditDistance.stream().collect(Collectors.summingDouble(Double::doubleValue));
+		return levelParentEditDistance().stream().collect(Collectors.summingDouble(Double::doubleValue));
 	}
 
 	private List<Double> levelParentEditDistance() {

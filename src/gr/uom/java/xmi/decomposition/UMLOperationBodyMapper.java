@@ -3528,6 +3528,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			AbstractCodeMapping parentMapping = null;
+			if(parentMapper != null && operationInvocation != null) {
+				parentMapping = findParentMappingContainingOperationInvocation();
+			}
 			//exact string matching - leaf nodes - finds moves to another level
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
@@ -3557,7 +3561,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						continue;
 					}
-					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 						AbstractCodeFragment leaf1 = leafIterator1.next();
 						if(!alreadyMatched1(leaf1)) {
@@ -3692,7 +3696,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			AbstractCodeMapping startMapping = null;
 			AbstractCodeMapping endMapping = null;
-			AbstractCodeMapping parentMapping = null;
 			Set<VariableDeclaration> referencedVariableDeclarations1 = new LinkedHashSet<>();
 			Set<VariableDeclaration> referencedVariableDeclarations2 = new LinkedHashSet<>();
 			if(parentMapper != null) {
@@ -3730,45 +3733,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				if(this.mappings.isEmpty() && operationInvocation != null) {
+				if(this.mappings.isEmpty() && operationInvocation != null && parentMapping == null) {
 					AbstractCodeFragment statementContainingOperationInvocation = null;
-					for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
-						if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
-							statementContainingOperationInvocation = leaf;
-							break;
-						}
-					}
 					for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
 						if(mapping instanceof LeafMapping) {
 							if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 								statementContainingOperationInvocation = mapping.getFragment2();
 							}
 						}
-						if(statementContainingOperationInvocation != null) {
-							if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
-								parentMapping = mapping;
-								break;
-							}
-							if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
-									statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-									mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) {
-								parentMapping = mapping;
-								break;
-							}
-						}
-					}
-					if(parentMapping == null) {
-						for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
-							if(mapping instanceof LeafMapping) {
-								if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
-									statementContainingOperationInvocation = mapping.getFragment2();
-								}
-							}
-							if(statementContainingOperationInvocation != null && mapping.getFragment2().equals(statementContainingOperationInvocation)) {
-								startMapping = mapping;
-								endMapping = mapping;
-								break;
-							}
+						if(statementContainingOperationInvocation != null && mapping.getFragment2().equals(statementContainingOperationInvocation)) {
+							startMapping = mapping;
+							endMapping = mapping;
+							break;
 						}
 					}
 				}
@@ -3843,7 +3819,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
-								TreeSet<LeafMapping> scopedMappingSet = new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping));
+								TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping)) : new TreeSet<LeafMapping>();
 								for(LeafMapping mapping : mappingSet) {
 									if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
 										scopedMappingSet.add(mapping);
@@ -4006,6 +3982,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
+		AbstractCodeMapping parentMapping = null;
+		AbstractCodeFragment statementContainingOperationInvocation = null;
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				statementContainingOperationInvocation = leaf;
+				break;
+			}
+		}
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+			if(mapping instanceof LeafMapping) {
+				if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+					statementContainingOperationInvocation = mapping.getFragment2();
+				}
+			}
+			if(statementContainingOperationInvocation != null) {
+				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
+					parentMapping = mapping;
+					break;
+				}
+				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
+						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) {
+					parentMapping = mapping;
+					break;
+				}
+			}
+		}
+		return parentMapping;
 	}
 
 	private boolean duplicateMapping(AbstractCodeMapping mapping) {

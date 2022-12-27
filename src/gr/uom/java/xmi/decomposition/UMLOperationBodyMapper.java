@@ -2730,7 +2730,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(!mappingSet.isEmpty()) {
 						Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
-						if(movedOutOfIfElseBranch.size() > 1) {
+						boolean equalStringRepresentationForFirstMapping = !movedOutOfIfElseBranch.contains(mappingSet.first()) &&
+								((CompositeStatementObject)mappingSet.first().getFragment1()).stringRepresentation().equals(((CompositeStatementObject)mappingSet.first().getFragment2()).stringRepresentation());
+						if(movedOutOfIfElseBranch.size() > 1 && !equalStringRepresentationForFirstMapping) {
 							for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
 								addMapping(mapping);
 								innerNodes1.remove(mapping.getFragment1());

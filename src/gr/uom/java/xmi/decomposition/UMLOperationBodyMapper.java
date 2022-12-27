@@ -2609,16 +2609,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(score == 0 && replacements != null) {
 								if(replacements.size() == 1 && (replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR).size() > 0 || replacementInfo.getReplacements(ReplacementType.INVERT_CONDITIONAL).size() > 0)) {
 									//special handling when there is only an infix operator or invert conditional replacement, but no children mapped
-									score = 1;
+									score = 0.99;
 								}
 								else if(replacements.size() <= 2 && replacementInfo.getReplacements(ReplacementType.INVERT_CONDITIONAL).size() > 0) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(containsInvertCondition(statement1, statement2)) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
@@ -2628,7 +2628,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
 												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
-													score = 1;
+													score = 0.99;
 												}
 												break;
 											}
@@ -2636,7 +2636,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								else if(identicalCommentsInBody(statement1, statement2)) {
-									score = 1;
+									score = 0.99;
 								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
@@ -2771,16 +2771,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(score == 0 && replacements != null) {
 								if(replacements.size() == 1 && (replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR).size() > 0 || replacementInfo.getReplacements(ReplacementType.INVERT_CONDITIONAL).size() > 0)) {
 									//special handling when there is only an infix operator or invert conditional replacement, but no children mapped
-									score = 1;
+									score = 0.99;
 								}
 								else if(replacements.size() <= 2 && replacementInfo.getReplacements(ReplacementType.INVERT_CONDITIONAL).size() > 0) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(containsInvertCondition(statement1, statement2)) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(replacementInfo.getReplacements(ReplacementType.COMPOSITE).size() > 0) {
-									score = 1;
+									score = 0.99;
 								}
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 									//find if the corresponding try blocks are already matched
@@ -2790,7 +2790,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
 												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
-													score = 1;
+													score = 0.99;
 												}
 												break;
 											}
@@ -2798,7 +2798,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								else if(identicalCommentsInBody(statement1, statement2)) {
-									score = 1;
+									score = 0.99;
 								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&

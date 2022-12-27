@@ -1591,6 +1591,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
+				if(matchingParentMappers(parentMappers) > 1) {
+					if(parentMappingFound.contains(true)) {
+						for(int i=0; i<parentMappingFound.size(); i++) {
+							if(parentMappingFound.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+						determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+					}
+				}
 			}
 			else if(parentMappingFound.contains(true)) {
 				for(int i=0; i<parentMappingFound.size(); i++) {

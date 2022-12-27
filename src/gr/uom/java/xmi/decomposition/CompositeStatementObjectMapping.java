@@ -147,22 +147,32 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 	}
 
 	private int numberOfIdenticalDirectlyNestedChildren() {
-		int count = 0;
 		CompositeStatementObject comp1 = (CompositeStatementObject)getFragment1();
 		CompositeStatementObject comp2 = (CompositeStatementObject)getFragment2();
 		if((comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) ||
 				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) ||
 				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) ||
 				(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK))) {
-			List<AbstractStatement> statements1 = comp1.getStatements();
-			List<AbstractStatement> statements2 = comp2.getStatements();
-			for(AbstractStatement statement1 : statements1) {
-				String s1 = statement1.getString();
-				for(AbstractStatement statement2 : statements2) {
-					String s2 = statement2.getString();
-					if(s1.equals(s2)) {
-						count++;
-					}
+			return numberOfIdenticalDirectlyNestedChildren(comp1, comp2);
+		}
+		else if(comp1.getStatements().size() == 1 && comp2.getStatements().size() == 1 &&
+				comp1.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+				comp2.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			return numberOfIdenticalDirectlyNestedChildren((CompositeStatementObject)comp1.getStatements().get(0), (CompositeStatementObject)comp2.getStatements().get(0));
+		}
+		return 0;
+	}
+
+	private int numberOfIdenticalDirectlyNestedChildren(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+		int count = 0;
+		List<AbstractStatement> statements1 = comp1.getStatements();
+		List<AbstractStatement> statements2 = comp2.getStatements();
+		for(AbstractStatement statement1 : statements1) {
+			String s1 = statement1.getString();
+			for(AbstractStatement statement2 : statements2) {
+				String s2 = statement2.getString();
+				if(s1.equals(s2)) {
+					count++;
 				}
 			}
 		}

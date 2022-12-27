@@ -519,7 +519,7 @@ public class TestStatementMappings {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/deeplearning4j",
-		    "https://deeplearning4j/deeplearning4j.git");
+		    "https://github.com/deeplearning4j/deeplearning4j.git");
 
 		final List<String> actual = new ArrayList<>();
 		miner.detectAtCommit(repo, "91cdfa1ffd937a4cb01cdc0052874ef7831955e2", new RefactoringHandler() {
@@ -551,11 +551,45 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testDuplicatedExtractMethodStatementMappingsWithTwoLevelOptimization() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/alluxio",
+		    "https://github.com/Alluxio/alluxio.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "9aeefcd8120bb3b89cdb437d8c32d2ed84b8a825", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/alluxio-9aeefcd8120bb3b89cdb437d8c32d2ed84b8a825.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testDuplicatedAndNestedExtractMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 		    REPOS + "/spring-boot",
-		    "https://spring-projects/spring-boot.git");
+		    "https://github.com/spring-projects/spring-boot.git");
 
 		final List<String> actual = new ArrayList<>();
 		miner.detectAtCommit(repo, "becced5f0b7bac8200df7a5706b568687b517b90", new RefactoringHandler() {

@@ -2,19 +2,14 @@ package gr.uom.java.xmi;
 
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,6 +17,7 @@ import java.util.stream.Stream;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
@@ -64,19 +60,135 @@ import com.github.gumtreediff.tree.TreeContext;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.astDiff.models.ProjectData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UMLModelASTReader {
+	private final static Logger logger = LoggerFactory.getLogger(UMLModelASTReader.class);
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
 	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 	private UMLModel umlModel;
+
+	private Map<String, String> fileContents;
 
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, boolean astDiff) {
 		this.umlModel = new UMLModel(repositoryDirectories);
 		processJavaFileContents(javaFileContents, astDiff);
 	}
 
+
+
+	private Map<String, String> getFileContents() {
+		return this.fileContents;
+	}
+
+
+	public static ProjectData makeProjectData(String dir1, String dir2) throws IOException, RefactoringMinerTimedOutException {
+		logger.info("RefactoringMiner Started...");
+		long RM_started =  System.currentTimeMillis();
+		UMLModelASTReader umlModelASTReader1 = new UMLModelASTReader(new File(dir1),true);
+		UMLModelASTReader umlModelASTReader2 = new UMLModelASTReader(new File(dir2),true);
+		UMLModelDiff modelDiff = umlModelASTReader1.getUmlModel().diff(umlModelASTReader2.getUmlModel());
+		long RM_finished =  System.currentTimeMillis();
+		logger.info("RefactoringMiner ModelDiff execution: " + (RM_finished - RM_started)/ 1000 + " seconds");
+		ProjectData projectData = new ProjectData();
+		projectData.setUmlModelDiff(modelDiff);
+		projectData.setFileContentsBefore(umlModelASTReader1.getFileContents());
+		projectData.setFileContentsCurrent(umlModelASTReader2.getFileContents());
+		return projectData;
+
+	}
+
+	public static ProjectData makeProjectData_fromFiles(String file1, String file2) throws IOException, RefactoringMinerTimedOutException {
+		//TODO, RefactoringMiner support for this one
+
+		String contents1 = FileUtils.readFileToString(new File(file1));
+		Map<String,String> dir1info = new HashMap<>();
+//
+		String modifiedName1 = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(file2))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				// process the line.
+				String keyword = "package";
+				String semicolon = ";";
+				if (line.contains(keyword) && line.endsWith(";"))
+				{
+					int packageIndex = line.indexOf(keyword);
+					int startingIndex = packageIndex + keyword.length();
+					int semicolonIndex = line.indexOf(semicolon);
+					String substring = line.substring(startingIndex, semicolonIndex - 1);
+					String trimed = substring.trim();
+					modifiedName1 = trimed + "." + Path.of(file1).getFileName().toString();
+					break;
+				}
+			}
+		}
+
+		String contents2 = FileUtils.readFileToString(new File(file2));
+		Map<String,String> dir2info = new HashMap<>();
+
+		String modifiedName2 = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(file2))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				// process the line.
+				String keyword = "package";
+				String semicolon = ";";
+				if (line.contains(keyword) && line.endsWith(";"))
+				{
+					int packageIndex = line.indexOf(keyword);
+					int startingIndex = packageIndex + keyword.length();
+					int semicolonIndex = line.indexOf(semicolon);
+					String substring = line.substring(startingIndex, semicolonIndex - 1);
+					String trimed = substring.trim();
+					modifiedName2 = trimed + "." + Path.of(file2).getFileName().toString();
+					break;
+				}
+			}
+		}
+		boolean tempFlag1 = false;
+		boolean tempFlag2 = false;
+		if (modifiedName1.endsWith(".java")) {
+			modifiedName1 = modifiedName1.substring(0, modifiedName1.indexOf(".java"));
+			tempFlag1 = true;
+		}
+		modifiedName1 = modifiedName1.replace(".","/");
+		if (tempFlag1)
+			modifiedName1 += ".java";
+
+		if (modifiedName2.endsWith(".java")) {
+			modifiedName2 = modifiedName2.substring(0, modifiedName2.indexOf(".java"));
+			tempFlag2 = true;
+		}
+		modifiedName2 = modifiedName2.replace(".","/");
+		if (tempFlag2)
+			modifiedName2 += ".java";
+		dir1info.put(modifiedName1,contents1);
+		dir2info.put(modifiedName2,contents2);
+
+		logger.info("RefactoringMiner Started...");
+		long RM_started =  System.currentTimeMillis();
+
+		UMLModelASTReader umlModelASTReader1 = new UMLModelASTReader(dir1info,null,true);
+		UMLModelASTReader umlModelASTReader2 = new UMLModelASTReader(dir2info,null,true);
+
+		UMLModelDiff modelDiff = umlModelASTReader1.getUmlModel().diff(umlModelASTReader2.getUmlModel());
+		long RM_finished =  System.currentTimeMillis();
+		logger.info("RefactoringMiner ModelDiff execution: " + (RM_finished - RM_started)/ 1000 + " seconds");
+		ProjectData projectData = new ProjectData();
+		projectData.setUmlModelDiff(modelDiff);
+		projectData.setFileContentsBefore(umlModelASTReader1.getFileContents());
+		projectData.setFileContentsCurrent(umlModelASTReader2.getFileContents());
+		return projectData;
+
+	}
+
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
+		this.fileContents = javaFileContents;
 		ASTParser parser = ASTParser.newParser(AST.JLS18);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();

@@ -84,6 +84,14 @@ public class UMLModelDiff {
 	private Set<Pair<VariableDeclarationContainer, VariableDeclarationContainer>> processedOperationPairs = new HashSet<Pair<VariableDeclarationContainer, VariableDeclarationContainer>>();
 	private Set<Pair<UMLClass, UMLClass>> processedClassPairs = new HashSet<Pair<UMLClass, UMLClass>>();
 
+	public UMLModel getParentModel() {
+		return parentModel;
+	}
+
+	public UMLModel getChildModel() {
+		return childModel;
+	}
+
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
 		this.childModel = childModel;

@@ -69,6 +69,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.astDiff.models.ProjectData;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -287,6 +288,131 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return moveSourceFolderRefactorings;
 	}
 
+	private static ProjectData calcProjectData(GitService gitService, Repository repository, RevCommit currentCommit) throws Exception {
+		ProjectData projectData = new ProjectData();
+		Set<String> filePathsBefore = new LinkedHashSet<String>();
+		Set<String> filePathsCurrent = new LinkedHashSet<String>();
+		Map<String, String> renamedFilesHint = new HashMap<String, String>();
+		gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+
+		Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		try (RevWalk walk = new RevWalk(repository)) {
+			// If no java files changed, there is no refactoring. Also, if there are
+			// only ADD's or only REMOVE's there is no refactoring
+			if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
+				RevCommit parentCommit = currentCommit.getParent(0);
+				long population_started = System.currentTimeMillis();
+				populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+				long population_ended = System.currentTimeMillis();
+				System.out.println("Populating File execution: " + (population_ended - population_started)/ 1000 + " seconds");
+				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+				long RM_started =  System.currentTimeMillis();
+				logger.info("RefactoringMiner Started...");
+				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+				long RM_finished =  System.currentTimeMillis();
+
+				logger.info("RefactoringMiner ModelDiff execution: " + (RM_finished - RM_started)/ 1000 + " seconds");
+
+				projectData.setUmlModelDiff(modelDiff);
+				projectData.setFileContentsCurrent(fileContentsCurrent);
+				projectData.setFileContentsBefore(fileContentsBefore);
+			}
+			walk.dispose();
+		}
+		return projectData;
+	}
+	public ProjectData calcProjectData(String dir, String commitId)
+	{
+		ProjectData projectData = null;
+		GitService gitService = new GitServiceImpl();
+		try {
+			Repository repository = gitService.cloneIfNotExists(dir, null);
+			RevWalk walk = new RevWalk(repository);
+			try {
+				RevCommit commit = walk.parseCommit(repository.resolve(commitId));
+				if (commit.getParentCount() > 0) {
+					walk.parseCommit(commit.getParent(0));
+					projectData = calcProjectData(gitService, repository, commit);
+				} else {
+					logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return projectData;
+	}
+	public ProjectData getProjectData(String gitURL, String commitId, boolean reversed)
+	{
+		ProjectData projectData = new ProjectData();
+		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+		Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+		Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+		long populating_started =  System.currentTimeMillis();
+		try {
+
+			populateWithGitHubAPI(gitURL, commitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		long populating_finished =  System.currentTimeMillis();
+		logger.info("Population From GitHub execution: " + (populating_finished - populating_started)/ 1000 + " seconds");
+		try {
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		logger.info("RefactoringMiner Started...");
+		long RM_started =  System.currentTimeMillis();
+		UMLModel currentUMLModel = null;
+		try {
+			currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		UMLModel parentUMLModel = null;
+		try {
+			parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		UMLModelDiff modelDiff = null;
+		try {
+			if (!reversed)
+				modelDiff = parentUMLModel.diff(currentUMLModel);
+			else
+				modelDiff = currentUMLModel.diff(parentUMLModel);
+		} catch (RefactoringMinerTimedOutException e) {
+			throw new RuntimeException(e);
+		}
+		long RM_finished =  System.currentTimeMillis();
+		logger.info("RefactoringMiner ModelDiff execution: " + (RM_finished - RM_started)/ 1000 + " seconds");
+		if (!reversed) {
+			projectData.setFileContentsBefore(fileContentsBefore);
+			projectData.setFileContentsCurrent(fileContentsCurrent);
+		}
+		else {
+			projectData.setFileContentsCurrent(fileContentsBefore);
+			projectData.setFileContentsBefore(fileContentsCurrent);
+		}
+		projectData.setUmlModelDiff(modelDiff);
+//		projectData.setRepositoryDirectoriesBefore(repositoryDirectoriesBefore);
+//		projectData.setRepositoryDirectoriesCurrent(repositoryDirectoriesCurrent);
+//		projectData.setRenamedFilesHint(renamedFilesHint);
+		return projectData;
+	}
 	public static void populateFileContents(Repository repository, RevCommit commit,
 			Set<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
 		logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
@@ -552,7 +678,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	public static UMLModel createModel(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
-		return new UMLModelASTReader(fileContents, repositoryDirectories, false).getUmlModel();
+		return new UMLModelASTReader(fileContents, repositoryDirectories, true).getUmlModel();
 	}
 
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);

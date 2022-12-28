@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  * @since   2022-12-26 12:04 a.m.
  */
 public class TreeUtilFunctions {

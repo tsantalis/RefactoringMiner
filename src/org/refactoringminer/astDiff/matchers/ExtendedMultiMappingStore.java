@@ -18,7 +18,7 @@ import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.utils.Pair;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  * @since   2022-12-26 12:19 a.m.
  */
 public class ExtendedMultiMappingStore extends MultiMappingStore implements Iterable<Mapping> {

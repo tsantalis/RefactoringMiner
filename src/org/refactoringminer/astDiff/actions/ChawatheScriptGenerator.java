@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * An edit script generator based upon Chawathe algorithm supporting multi-mappings.
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class ChawatheScriptGenerator implements EditScriptGenerator {
 	private Tree origSrc;
@@ -266,7 +266,7 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 		return lcs;
 	}
 
-	public String findNameByTree(Map<String, TreeContext> contextMap, Tree t){
+	public String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
 		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {
 			if (stringTreeContextEntry.getValue().getRoot() == TreeUtilFunctions.getFinalRoot(t))
 			{

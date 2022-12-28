@@ -11,7 +11,7 @@ import com.github.gumtreediff.utils.SequenceAlgorithms;
 import java.util.*;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  * @since   2022-12-27 8:46 p.m.
  */
 public class CustomBottomUpMatcher implements Matcher {

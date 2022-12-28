@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  * @since   2022-12-26 8:13 p.m.
  */
 public class CustomGTSimple extends CompositeMatchers.CompositeMatcher {

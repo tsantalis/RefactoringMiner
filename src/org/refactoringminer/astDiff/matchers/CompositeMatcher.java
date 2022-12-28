@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 	Map<Tree,Tree> cpyToSrc;

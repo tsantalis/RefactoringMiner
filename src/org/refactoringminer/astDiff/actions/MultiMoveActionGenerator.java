@@ -7,7 +7,7 @@ import org.refactoringminer.astDiff.actions.model.MultiMove;
 import java.util.*;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class MultiMoveActionGenerator {
 	private Map<Set<Tree>, Set<Tree>> fullMap;

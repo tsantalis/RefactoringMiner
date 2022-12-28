@@ -11,7 +11,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import java.util.*;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class BasicTreeMatcher implements TreeMatcher {
 

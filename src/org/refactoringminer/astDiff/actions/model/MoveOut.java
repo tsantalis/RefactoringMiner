@@ -4,7 +4,7 @@ import com.github.gumtreediff.actions.model.TreeAddition;
 import com.github.gumtreediff.tree.Tree;
 
 /**
- * @author  Pourya Alikhani Fard <pouryafard75@gmail.com>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class MoveOut extends TreeAddition {
 	private String dstFile;

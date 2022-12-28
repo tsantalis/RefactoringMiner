@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,49 +22,45 @@ import com.github.gumtreediff.utils.Pair;
  * @since   2022-12-26 12:19 a.m.
  */
 public class ExtendedMultiMappingStore extends MultiMappingStore implements Iterable<Mapping> {
-	private Map<Tree, Set<Tree>> srcToDsts_all;
-	private Map<Tree, Set<Tree>> dstToSrcs_all;
-
 	private TreeContext srcTC;
 	private TreeContext dstTC;
 
 	public ExtendedMultiMappingStore(TreeContext srcTC, TreeContext dstTC) {
+		super();
 		this.srcTC = srcTC;
 		this.dstTC = dstTC;
-		srcToDsts_all = new LinkedHashMap<>();
-		dstToSrcs_all = new LinkedHashMap<>();
 	}
 
 	public boolean isDstMultiMapped(Tree dstTree) {
-		if (!dstToSrcs_all.containsKey(dstTree))
+		if (!hasDst(dstTree))
 			return false;
-		if (dstToSrcs_all.get(dstTree).size() > 1)
+		if (getSrcs(dstTree).size() > 1)
 			return true;
-		Tree mappedSrc = dstToSrcs_all.get(dstTree).iterator().next();
-		if (!srcToDsts_all.containsKey(mappedSrc))
+		Tree mappedSrc = getSrcs(dstTree).iterator().next();
+		if (!hasSrc(mappedSrc))
 			return false;
-		return srcToDsts_all.get(mappedSrc).size() > 1;
+		return getDsts(mappedSrc).size() > 1;
 	}
 
 	public boolean isSrcMultiMapped(Tree srcTree) {
-		if (!srcToDsts_all.containsKey(srcTree))
+		if (!hasSrc(srcTree))
 			return false;
-		if (srcToDsts_all.get(srcTree).size() > 1)
+		if (getDsts(srcTree).size() > 1)
 			return true;
-		Tree mappedSrc = srcToDsts_all.get(srcTree).iterator().next();
-		if (!dstToSrcs_all.containsKey(mappedSrc))
+		Tree mappedSrc = getDsts(srcTree).iterator().next();
+		if (!hasDst(mappedSrc))
 			return false;
-		return dstToSrcs_all.get(mappedSrc).size() > 1;
+		return getSrcs(mappedSrc).size() > 1;
 	}
 
 	private Map<Tree,Tree> getSrcToDstMono() {
 		Map<Tree,Tree> monos = new HashMap<>();
-		for (Tree _src : srcToDsts_all.keySet())
+		for (Tree _src : allMappedSrcs())
 		{
-			if (srcToDsts_all.get(_src).size() > 1)
+			if (getDsts(_src).size() > 1)
 				continue;
-			Tree _dst = srcToDsts_all.get(_src).iterator().next();
-			if (dstToSrcs_all.get(_dst).size() > 1)
+			Tree _dst = getDsts(_src).iterator().next();
+			if (getSrcs(_dst).size() > 1)
 				continue;
 			monos.put(_src,_dst);
 		}
@@ -74,12 +69,12 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
 	private Map<Tree,Tree> getDstToSrcMono() {
 		Map<Tree,Tree> monos = new HashMap<>();
-		for (Tree _dst : dstToSrcs_all.keySet())
+		for (Tree _dst : allMappedDsts())
 		{
-			if (dstToSrcs_all.get(_dst).size() > 1)
+			if (getSrcs(_dst).size() > 1)
 				continue;
-			Tree _src = dstToSrcs_all.get(_dst).iterator().next();
-			if (srcToDsts_all.get(_src).size() > 1)
+			Tree _src = getSrcs(_dst).iterator().next();
+			if (getDsts(_src).size() > 1)
 				continue;
 			monos.put(_dst,_src);
 		}
@@ -94,14 +89,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		}
 	}
 
-	public Set<Mapping> getMappings() {
-		Set<Mapping> mappings = new HashSet<>();
-		for (Tree src : srcToDsts_all.keySet())
-			for (Tree dst: srcToDsts_all.get(src))
-				mappings.add(new Mapping(src, dst));
-		return mappings;
-	}
-
 	public MappingStore getMonoMappingStore() {
 		MappingStore monoStore = new MappingStore(srcTC.getRoot(),dstTC.getRoot());
 		for (Map.Entry<Tree,Tree> entry : getSrcToDstMono().entrySet())
@@ -111,15 +98,15 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
 	public Map<Tree,Set<Tree>> dstToSrcMultis() {
 		Map<Tree,Set<Tree>> multis = new HashMap<>();
-		for (Tree _dst : dstToSrcs_all.keySet())
+		for (Tree _dst : allMappedDsts())
 		{
-			if (dstToSrcs_all.get(_dst).size() > 1 && !(_dst instanceof FakeTree))
-				multis.put(_dst,dstToSrcs_all.get(_dst));
+			if (getSrcs(_dst).size() > 1 && !(_dst instanceof FakeTree))
+				multis.put(_dst,getSrcs(_dst));
 			else
 			{
-				Tree mappedSrc = dstToSrcs_all.get(_dst).iterator().next();
-				if (srcToDsts_all.get(mappedSrc).size() > 1  && !(_dst instanceof FakeTree))
-					multis.put(_dst,dstToSrcs_all.get(_dst));
+				Tree mappedSrc = getSrcs(_dst).iterator().next();
+				if (getDsts(mappedSrc).size() > 1  && !(_dst instanceof FakeTree))
+					multis.put(_dst,getSrcs(_dst));
 			}
 		}
 		return multis;
@@ -127,48 +114,34 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
 	public Map<Tree,Set<Tree>> srcToDstMultis() {
 		Map<Tree,Set<Tree>> multis = new HashMap<>();
-		for (Tree _src : srcToDsts_all.keySet())
+		for (Tree _src : allMappedSrcs())
 		{
-			if (srcToDsts_all.get(_src).size() > 1)
-				multis.put(_src,srcToDsts_all.get(_src));
+			if (getDsts(_src).size() > 1)
+				multis.put(_src,getDsts(_src));
 			else
 			{
-				Tree mappedSrc = srcToDsts_all.get(_src).iterator().next();
-				if (dstToSrcs_all.get(mappedSrc).size() > 1)
-					multis.put(_src,srcToDsts_all.get(_src));
+				Tree mappedSrc = getDsts(_src).iterator().next();
+				if (getSrcs(mappedSrc).size() > 1)
+					multis.put(_src,getDsts(_src));
 			}
 		}
 		return multis;
 	}
 
 	public void replaceMapping(Tree src, Tree dst) {
-		if (this.getDstForSrc(src) != null)
+		if (this.getDsts(src) != null)
 		{
-			Set<Tree> dstForSrcList = new LinkedHashSet<>(this.getDstForSrc(src));
+			Set<Tree> dstForSrcList = new LinkedHashSet<>(this.getDsts(src));
 			for (Tree dstForSrc : dstForSrcList)
 				removeMapping(src,dstForSrc);
 		}
-		if (this.getSrcForDst(dst) != null)
+		if (this.getSrcs(dst) != null)
 		{
-			Set<Tree> srcForDstList = new LinkedHashSet<>(this.getSrcForDst(dst));
+			Set<Tree> srcForDstList = new LinkedHashSet<>(this.getSrcs(dst));
 			for (Tree srcForDst : srcForDstList)
 				removeMapping(srcForDst,dst);
 		}
-		if (!srcToDsts_all.containsKey(src))
-			srcToDsts_all.put(src, new HashSet<>());
-		srcToDsts_all.get(src).add(dst);
-		if (!dstToSrcs_all.containsKey(dst))
-			dstToSrcs_all.put(dst, new HashSet<>());
-		dstToSrcs_all.get(dst).add(src);
-	}
-
-	public void addMapping(Tree src, Tree dst) {
-		if (!srcToDsts_all.containsKey(src))
-			srcToDsts_all.put(src, new HashSet<>());
-		srcToDsts_all.get(src).add(dst);
-		if (!dstToSrcs_all.containsKey(dst))
-			dstToSrcs_all.put(dst, new HashSet<>());
-		dstToSrcs_all.get(dst).add(src);
+		addMapping(src, dst);
 	}
 
 	public void addListOfMapping(List<Pair<Tree,Tree>> pairList) {
@@ -178,71 +151,18 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		}
 	}
 
-	public void removeMapping(Tree src, Tree dst) {
-		if (srcToDsts_all.get(src) != null) {
-			srcToDsts_all.get(src).remove(dst);
-			if (srcToDsts_all.get(src).size() == 0)
-				srcToDsts_all.remove(src);
-		}
-		if (dstToSrcs_all.get(dst) != null) {
-			dstToSrcs_all.get(dst).remove(src);
-			if (dstToSrcs_all.get(dst).size() == 0)
-				dstToSrcs_all.remove(dst);
-		}
-	}
-
-	public int size() {
-		return getMappings().size();
-	}
-
-	public Set<Tree> getDstForSrc(Tree src) {
-		return srcToDsts_all.get(src);
-	}
-
-	public Set<Tree> getSrcForDst(Tree dst) {
-		return dstToSrcs_all.get(dst);
-	}
-
-	public Set<Tree> allMappedSrcs() {
-		return srcToDsts_all.keySet();
-	}
-
-	public Set<Tree> allMappedDsts() {
-		return dstToSrcs_all.keySet();
-	}
-
-	public boolean hasSrc(Tree src) {
-		return srcToDsts_all.containsKey(src);
-	}
-
-	public boolean hasDst(Tree dst) {
-		return dstToSrcs_all.containsKey(dst);
-	}
-
-	public boolean has(Tree src, Tree dst) {
-		return srcToDsts_all.get(src).contains(dst);
-	}
-
-	public boolean isSrcUnique(Tree src) {
-		return getDstForSrc(src).size() == 1;
-	}
-
-	public boolean isDstUnique(Tree dst) {
-		return getSrcForDst(dst).size() == 1;
-	}
-
 	public boolean isSrcMapped(Tree src) {
-		return srcToDsts_all.containsKey(src);
+		return hasSrc(src);
 	}
 
 	public boolean isDstMapped(Tree dst) {
-		return dstToSrcs_all.containsKey(dst);
+		return hasDst(dst);
 	}
 
 	public boolean areSrcsUnmapped(Collection<Tree> srcs, Tree dst) {
 		for (Tree src : srcs)
 			if (isSrcMapped(src)) {
-				Set<Tree> dstForSrc = this.getDstForSrc(src);
+				Set<Tree> dstForSrc = this.getDsts(src);
 				for (Tree dstMapped : dstForSrc) {
 					if (TreeUtils.preOrder(dst).contains(dstMapped))
 						return false;
@@ -257,28 +177,13 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	public boolean areDstsUnmapped(Collection<Tree> dsts, Tree src) {
 		for (Tree dst : dsts)
 			if (isDstMapped(dst)) {
-				Set<Tree> srcForDst = this.getSrcForDst(dst);
+				Set<Tree> srcForDst = this.getSrcs(dst);
 				for (Tree srcMapped : srcForDst) {
 					if (TreeUtils.preOrder(src).contains(srcMapped))
 						return false;
 				}
 			}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder b = new StringBuilder();
-		for (Tree t : srcToDsts_all.keySet()) {
-			String l = srcToDsts_all.get(t).stream().map(Object::toString).collect(Collectors.joining(", "));
-			b.append(String.format("%s -> %s", t.toString(), l)).append('\n');
-		}
-		return b.toString();
-	}
-
-	@Override
-	public Iterator<Mapping> iterator() {
-		return getMappings().iterator();
 	}
 
 	public void addMappingRecursively(Tree src, Tree dst) {

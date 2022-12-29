@@ -22,16 +22,16 @@ public class ExtendedOnlyRootsClassifier extends ExtendedAbstractITreeClassifier
 	public void classify() {
 		ASTDiff astDiff = (ASTDiff)diff;
 		Set<Tree> insertedDsts = new HashSet<>();
-		for (Action a: diff.editScript)
+		for (Action a: astDiff.getEditScript())
 			if (a instanceof Insert)
 				insertedDsts.add(a.getNode());
 
 		Set<Tree> deletedSrcs = new HashSet<>();
-		for (Action a: diff.editScript)
+		for (Action a: astDiff.getEditScript())
 			if (a instanceof Delete)
 				deletedSrcs.add(a.getNode());
 
-		for (Action a: diff.editScript) {
+		for (Action a: astDiff.getEditScript()) {
 			if (a instanceof TreeDelete)
 				srcDelTrees.add(a.getNode());
 			else if (a instanceof Delete) {

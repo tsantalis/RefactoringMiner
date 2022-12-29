@@ -189,19 +189,15 @@ public class ExtractOperationDetection {
 			else {
 				//add any mappings back to parent mapper as non-mapped statements
 				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-					if(!mapping.isExact() || mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-						AbstractCodeFragment fragment1 = mapping.getFragment1();
-						if(fragment1 instanceof CompositeStatementObject) {
-							if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
-								mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
-							}
+					AbstractCodeFragment fragment1 = mapping.getFragment1();
+					if(fragment1 instanceof CompositeStatementObject) {
+						if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
+							mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
 						}
-						else {
-							if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
-								mapper.getNonMappedLeavesT1().add(fragment1);
-							}
+					}
+					else {
+						if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
+							mapper.getNonMappedLeavesT1().add(fragment1);
 						}
 					}
 				}
@@ -224,20 +220,15 @@ public class ExtractOperationDetection {
 			else {
 				//add any mappings back to parent mapper as non-mapped statements
 				for(AbstractCodeMapping mapping : nestedMapper.getMappings()) {
-					if(!mapping.isExact() || mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-							mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-						AbstractCodeFragment fragment1 = mapping.getFragment1();
-						if(fragment1 instanceof CompositeStatementObject) {
-							if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
-								mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
-							}
+					AbstractCodeFragment fragment1 = mapping.getFragment1();
+					if(fragment1 instanceof CompositeStatementObject) {
+						if(!mapper.getNonMappedInnerNodesT1().contains(fragment1)) {
+							mapper.getNonMappedInnerNodesT1().add((CompositeStatementObject)fragment1);
 						}
-						else {
-							if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
-								mapper.getNonMappedLeavesT1().add(fragment1);
-							}
+					}
+					else {
+						if(!mapper.getNonMappedLeavesT1().contains(fragment1)) {
+							mapper.getNonMappedLeavesT1().add(fragment1);
 						}
 					}
 				}

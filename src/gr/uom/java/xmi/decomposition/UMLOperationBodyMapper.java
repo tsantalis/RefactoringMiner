@@ -2579,7 +2579,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(!mappingSet.isEmpty()) {
 						CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
-						CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
+						Map<CompositeStatementObjectMapping, Boolean> mappingExistsIdenticalInExtractedMethod = new LinkedHashMap<>();
+						if(parentMapper == null && containsCallToExtractedMethod && mappingSet.size() > 1) {
+							for(CompositeStatementObjectMapping mapping : mappingSet) {
+								mappingExistsIdenticalInExtractedMethod.put(mapping, mappingExistsIdenticalInExtractedMethod(mapping, leaves2, addedOperations));
+							}
+						}
+						CompositeStatementObjectMapping minStatementMapping = null;
+						if(oneTryBlockNestedUnderTheOther != null) {
+							minStatementMapping = oneTryBlockNestedUnderTheOther;
+						}
+						else if(mappingExistsIdenticalInExtractedMethod.containsKey(mappingSet.first()) && mappingExistsIdenticalInExtractedMethod.get(mappingSet.first())) {
+							for(CompositeStatementObjectMapping mapping : mappingSet) {
+								if(!mappingExistsIdenticalInExtractedMethod.get(mapping)) {
+									minStatementMapping = mapping;
+									break;
+								}
+							}
+							if(minStatementMapping == null) {
+								minStatementMapping = mappingSet.first();
+							}
+						}
+						else {
+							minStatementMapping = mappingSet.first();
+						}
 						addMapping(minStatementMapping);
 						innerNodes2.remove(minStatementMapping.getFragment2());
 						innerNodeIterator1.remove();
@@ -2741,7 +2764,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							CompositeStatementObjectMapping oneTryBlockNestedUnderTheOther = oneTryBlockNestedUnderTheOther(mappingSet);
-							CompositeStatementObjectMapping minStatementMapping = oneTryBlockNestedUnderTheOther != null ? oneTryBlockNestedUnderTheOther : mappingSet.first();
+							Map<CompositeStatementObjectMapping, Boolean> mappingExistsIdenticalInExtractedMethod = new LinkedHashMap<>();
+							if(parentMapper == null && containsCallToExtractedMethod && mappingSet.size() > 1) {
+								for(CompositeStatementObjectMapping mapping : mappingSet) {
+									mappingExistsIdenticalInExtractedMethod.put(mapping, mappingExistsIdenticalInExtractedMethod(mapping, leaves2, addedOperations));
+								}
+							}
+							CompositeStatementObjectMapping minStatementMapping = null;
+							if(oneTryBlockNestedUnderTheOther != null) {
+								minStatementMapping = oneTryBlockNestedUnderTheOther;
+							}
+							else if(mappingExistsIdenticalInExtractedMethod.containsKey(mappingSet.first()) && mappingExistsIdenticalInExtractedMethod.get(mappingSet.first())) {
+								for(CompositeStatementObjectMapping mapping : mappingSet) {
+									if(!mappingExistsIdenticalInExtractedMethod.get(mapping)) {
+										minStatementMapping = mapping;
+										break;
+									}
+								}
+								if(minStatementMapping == null) {
+									minStatementMapping = mappingSet.first();
+								}
+							}
+							else {
+								minStatementMapping = mappingSet.first();
+							}
 							checkForCatchBlockMerge(mappingSet, parameterToArgumentMap);
 							addMapping(minStatementMapping);
 							innerNodes1.remove(minStatementMapping.getFragment1());
@@ -2852,6 +2898,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean mappingExistsIdenticalInExtractedMethod(CompositeStatementObjectMapping mapping,
+			List<AbstractCodeFragment> leaves2, List<UMLOperation> addedOperations) {
+		if(addedOperations.size() > 0) {
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+				if(invocation == null) {
+					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+				}
+				UMLOperation matchingOperation = null;
+				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					List<String> fragmentStringRepresentation = ((CompositeStatementObject)mapping.getFragment1()).stringRepresentation();
+					List<String> operationStringRepresentation = matchingOperation.stringRepresentation();
+					for(int index = 0; index<operationStringRepresentation.size(); index++) {
+						if(operationStringRepresentation.get(index).equals(fragmentStringRepresentation.get(0)) &&
+								operationStringRepresentation.size() >= index + fragmentStringRepresentation.size()) {
+							List<String> subList = operationStringRepresentation.subList(index, index + fragmentStringRepresentation.size());
+							if(subList.equals(fragmentStringRepresentation)) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkForCatchBlockMerge(TreeSet<CompositeStatementObjectMapping> mappingSet, Map<String, String> parameterToArgumentMap) {
@@ -4183,7 +4256,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean isWithinScope(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping, AbstractCodeMapping mappingToCheck,
 			Set<VariableDeclaration> referencedVariableDeclarations1, Set<VariableDeclaration> referencedVariableDeclarations2) {
-		if(parentMapper != null && (callsToExtractedMethod > 1 || nested)) {
+		if(parentMapper != null && (callsToExtractedMethod > 1 || nested || parentMapper.getChildMappers().size() > 0)) {
 			if(startMapping != null && endMapping != null) {
 				List<VariableDeclaration> variableDeclarations1 = mappingToCheck.getFragment1().getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = mappingToCheck.getFragment2().getVariableDeclarations();

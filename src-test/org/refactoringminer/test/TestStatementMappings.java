@@ -653,6 +653,40 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testExtractMethodStatementMappings3() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/checkstyle",
+		    "https://github.com/checkstyle/checkstyle.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "ab2f93f9bf61816d84154e636d32c81c05854e24", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/checkstyle-ab2f93f9bf61816d84154e636d32c81c05854e24.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSlidedStatementMappings() throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 		    ".",

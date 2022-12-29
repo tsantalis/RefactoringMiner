@@ -8694,7 +8694,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
 						!logGuard(comp1) &&
 						!parentMapperContainsExactMapping(comp1)) {
-					return 0.1;
+					return 0.01;
 				}
 			}
 		}

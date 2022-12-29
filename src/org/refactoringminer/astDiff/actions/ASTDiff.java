@@ -16,11 +16,10 @@ import com.github.gumtreediff.tree.TreeContext;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class ASTDiff extends Diff {
-	private EditScript editScript; //field hiding to make it non-final
 	private ExtendedMultiMappingStore multiMappings;
 
 	public ASTDiff(TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
-		super(src, dst, mappings.getMonoMappingStore(), null);
+		super(src, dst, mappings.getMonoMappingStore(), new EditScript());
 		this.multiMappings = mappings;
 	}
 
@@ -28,13 +27,12 @@ public class ASTDiff extends Diff {
 		return multiMappings;
 	}
 
-	public EditScript getEditScript() {
-		return editScript;
-	}
-
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		this.editScript = new SimplifiedChawatheScriptGenerator().computeActions(multiMappings,parentContextMap,childContextMap);
-		processMultiMappings(multiMappings, editScript);
+		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(multiMappings,parentContextMap,childContextMap);
+		processMultiMappings(multiMappings, newEditScript);
+		for(Action action : newEditScript) {
+			editScript.add(action);
+		}
 	}
 
 	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {
@@ -59,6 +57,8 @@ public class ASTDiff extends Diff {
 	 * subtree has been subject to a same operation.
 	 */
 	public TreeClassifier createRootNodesClassifier() {
-		return new ExtendedOnlyRootsClassifier(this);
+		ExtendedOnlyRootsClassifier classifier = new ExtendedOnlyRootsClassifier(this);
+		classifier.classify();
+		return classifier;
 	}
 }

@@ -16,11 +16,11 @@ import com.github.gumtreediff.tree.TreeContext;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class ASTDiff extends Diff {
+	private EditScript editScript; //field hiding to make it non-final
 	private ExtendedMultiMappingStore multiMappings;
 
-	public ASTDiff(TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings,
-			Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		super(src, dst, mappings.getMonoMappingStore(), computeEditScript(mappings, parentContextMap, childContextMap));
+	public ASTDiff(TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
+		super(src, dst, mappings.getMonoMappingStore(), null);
 		this.multiMappings = mappings;
 	}
 
@@ -28,14 +28,16 @@ public class ASTDiff extends Diff {
 		return multiMappings;
 	}
 
-	private static EditScript computeEditScript(ExtendedMultiMappingStore mappings, 
-			Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		EditScript editScript = new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap);
-		processMultiMaps(mappings, editScript);
+	public EditScript getEditScript() {
 		return editScript;
 	}
 
-	private static void processMultiMaps(ExtendedMultiMappingStore mappings, EditScript editScript) {
+	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
+		this.editScript = new SimplifiedChawatheScriptGenerator().computeActions(multiMappings,parentContextMap,childContextMap);
+		processMultiMappings(multiMappings, editScript);
+	}
+
+	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {
 		//ArrayList<Action> multiMoves = new ArrayList<>();
 		Map<Tree, Set<Tree>> dstToSrcMultis = mappings.dstToSrcMultis();
 		MultiMoveActionGenerator multiMoveActionGenerator = new MultiMoveActionGenerator();

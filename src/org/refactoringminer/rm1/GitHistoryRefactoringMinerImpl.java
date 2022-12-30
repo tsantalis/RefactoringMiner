@@ -573,31 +573,52 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
-	public void detectAtDirectories(Path previousDirectory, Path nextDirectory, RefactoringHandler handler) {
-		File previousFile = previousDirectory.toFile();
-		File nextFile = nextDirectory.toFile();
+	public void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler) {
+		File previousFile = previousPath.toFile();
+		File nextFile = nextPath.toFile();
 		detectAtDirectories(previousFile, nextFile, handler);
 	}
 
 	@Override
-	public void detectAtDirectories(File previousDirectory, File nextDirectory, RefactoringHandler handler) {
-		if(previousDirectory.exists() && previousDirectory.isDirectory() && nextDirectory.exists() && nextDirectory.isDirectory()) {
+	public void detectAtDirectories(File previousFile, File nextFile, RefactoringHandler handler) {
+		if(previousFile.exists() && nextFile.exists()) {
 			List<Refactoring> refactorings = Collections.emptyList();
-			String id = previousDirectory.getName() + " -> " + nextDirectory.getName();
+			String id = previousFile.getName() + " -> " + nextFile.getName();
 			try {
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				populateFileContents(nextDirectory, getJavaFilePaths(nextDirectory), fileContentsCurrent, repositoryDirectoriesCurrent);
-				populateFileContents(previousDirectory, getJavaFilePaths(previousDirectory), fileContentsBefore, repositoryDirectoriesBefore);
-				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
-				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
-				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-				refactorings = modelDiff.getRefactorings();
-				refactorings.addAll(moveSourceFolderRefactorings);
-				refactorings = filter(refactorings);
+				if(previousFile.isDirectory() && nextFile.isDirectory()) {
+					Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+					Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+					Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
+					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+					UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					refactorings = modelDiff.getRefactorings();
+					refactorings.addAll(moveSourceFolderRefactorings);
+					refactorings = filter(refactorings);
+				}
+				else if(previousFile.isFile() && nextFile.isFile()) {
+					String previousFileName = previousFile.getName();
+					String nextFileName = nextFile.getName();
+					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
+						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+						refactorings = modelDiff.getRefactorings();
+						refactorings.addAll(moveSourceFolderRefactorings);
+						refactorings = filter(refactorings);
+					}
+				}
 			}
 			catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", id), e);
@@ -1102,33 +1123,57 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtDirectories(Path previousDirectory, Path nextDirectory) {
-		File previousFile = previousDirectory.toFile();
-		File nextFile = nextDirectory.toFile();
+	public Set<ASTDiff> diffAtDirectories(Path previousPath, Path nextPath) {
+		File previousFile = previousPath.toFile();
+		File nextFile = nextPath.toFile();
 		return diffAtDirectories(previousFile, nextFile);
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtDirectories(File previousDirectory, File nextDirectory) {
+	public Set<ASTDiff> diffAtDirectories(File previousFile, File nextFile) {
 		Set<ASTDiff> diffSet = new LinkedHashSet<>();
-		if(previousDirectory.exists() && previousDirectory.isDirectory() && nextDirectory.exists() && nextDirectory.isDirectory()) {
-			String id = previousDirectory.getName() + " -> " + nextDirectory.getName();
+		if(previousFile.exists() && nextFile.exists()) {
+			String id = previousFile.getName() + " -> " + nextFile.getName();
 			try {
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				populateFileContents(nextDirectory, getJavaFilePaths(nextDirectory), fileContentsCurrent, repositoryDirectoriesCurrent);
-				populateFileContents(previousDirectory, getJavaFilePaths(previousDirectory), fileContentsBefore, repositoryDirectoriesBefore);
-				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
-				UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
-				UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
-				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-				ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-				for(ASTDiff diff : differ.getDiffSet()) {
-					diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-					diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-					diffSet.add(diff);
+				if(previousFile.isDirectory() && nextFile.isDirectory()) {
+					Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+					Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+					Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
+					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
+				}
+				else if(previousFile.isFile() && nextFile.isFile()) {
+					String previousFileName = previousFile.getName();
+					String nextFileName = nextFile.getName();
+					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
+						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+						ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+						for(ASTDiff diff : differ.getDiffSet()) {
+							diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+							diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+							diffSet.add(diff);
+						}
+					}
 				}
 			}
 			catch (Exception e) {

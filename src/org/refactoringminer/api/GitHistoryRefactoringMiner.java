@@ -104,22 +104,22 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
 
 	/**
-	 * Detect refactorings performed between two directories representing two versions of Java programs. 
+	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs. 
 	 * 
-	 * @param previousDirectory The directory corresponding to the previous version.
-	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param previousPath The directory (or file) corresponding to the previous version.
+	 * @param nextPath The directory (or file) corresponding to the next version.
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
-	void detectAtDirectories(Path previousDirectory, Path nextDirectory, RefactoringHandler handler);
+	void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler);
 
 	/**
-	 * Detect refactorings performed between two directories representing two versions of Java programs. 
+	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs. 
 	 * 
-	 * @param previousDirectory The directory corresponding to the previous version.
-	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param previousFile The directory (or file) corresponding to the previous version.
+	 * @param nextFile The directory (or file) corresponding to the next version.
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
-	void detectAtDirectories(File previousDirectory, File nextDirectory, RefactoringHandler handler);
+	void detectAtDirectories(File previousFile, File nextFile, RefactoringHandler handler);
 
 	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.
@@ -146,20 +146,20 @@ public interface GitHistoryRefactoringMiner {
 	Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout);
 
 	/**
-	 * Generate the AST diff between two directories representing two versions of Java programs. 
+	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
 	 * 
-	 * @param previousDirectory The directory corresponding to the previous version.
-	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param previousPath The directory (or file) corresponding to the previous version.
+	 * @param nextPath The directory (or file) corresponding to the next version.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtDirectories(Path previousDirectory, Path nextDirectory);
+	Set<ASTDiff> diffAtDirectories(Path previousPath, Path nextPath);
 
 	/**
-	 * Generate the AST diff between two directories representing two versions of Java programs. 
+	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
 	 * 
-	 * @param previousDirectory The directory corresponding to the previous version.
-	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param previousFile The directory (or file) corresponding to the previous version.
+	 * @param nextFile The directory (or file) corresponding to the next version.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtDirectories(File previousDirectory, File nextDirectory);
+	Set<ASTDiff> diffAtDirectories(File previousFile, File nextFile);
 }

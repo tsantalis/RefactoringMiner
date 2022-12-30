@@ -1,6 +1,9 @@
 package org.refactoringminer.api;
 
+import java.util.Set;
+
 import org.eclipse.jgit.lib.Repository;
+import org.refactoringminer.astDiff.actions.ASTDiff;
 
 /**
  * Detect refactorings in the git history.
@@ -111,4 +114,23 @@ public interface GitHistoryRefactoringMiner {
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.
 	 */
 	String getConfigId();
+
+	/**
+	 * Generate the AST diff for the specified commit. 
+	 * 
+	 * @param repository A git repository (from JGit library).
+	 * @param commitId The SHA key that identifies the commit.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	Set<ASTDiff> diffAtCommit(Repository repository, String commitId);
+
+	/**
+	 * Generate the AST diff for the specified commit. All required information is extracted using the GitHub API.
+	 *
+	 * @param gitURL The git URL of the repository.
+	 * @param commitId The SHA key that identifies the commit.
+	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no AST diffs.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout);
 }

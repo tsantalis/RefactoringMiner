@@ -69,6 +69,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,29 +140,25 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
 		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-		try (RevWalk walk = new RevWalk(repository)) {
-			// If no java files changed, there is no refactoring. Also, if there are
-			// only ADD's or only REMOVE's there is no refactoring
-			if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
-				RevCommit parentCommit = currentCommit.getParent(0);
-				populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-				populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
-				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
-				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-				
-				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-				refactoringsAtRevision = modelDiff.getRefactorings();
-				refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-				refactoringsAtRevision = filter(refactoringsAtRevision);
-			} else {
-				//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
-				refactoringsAtRevision = Collections.emptyList();
-			}
-			handler.handle(commitId, refactoringsAtRevision);
+		// If no java files changed, there is no refactoring. Also, if there are
+		// only ADD's or only REMOVE's there is no refactoring
+		if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
+			RevCommit parentCommit = currentCommit.getParent(0);
+			populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+			populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 			
-			walk.dispose();
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactoringsAtRevision = modelDiff.getRefactorings();
+			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+			refactoringsAtRevision = filter(refactoringsAtRevision);
+		} else {
+			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
+			refactoringsAtRevision = Collections.emptyList();
 		}
+		handler.handle(commitId, refactoringsAtRevision);
 		return refactoringsAtRevision;
 	}
 
@@ -343,7 +341,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint); 
 				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-				// Diff between currentModel e parentModel
 				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 				refactoringsAtRevision = modelDiff.getRefactorings();
 				refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
@@ -555,6 +552,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return new UMLModelASTReader(fileContents, repositoryDirectories, false).getUmlModel();
 	}
 
+	public static UMLModel createModelForASTDiff(Map<String, String> fileContents, Set<String> repositoryDirectories) throws Exception {
+		return new UMLModelASTReader(fileContents, repositoryDirectories, true).getUmlModel();
+	}
+
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 
 	@Override
@@ -693,7 +694,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
 			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
-			//  Diff between currentModel e parentModel
 			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
@@ -940,5 +940,128 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		String downloadLink = cloneURL.substring(0, indexOfDotGit) + downloadResource + commitId + ".zip";
 		return downloadLink;
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtCommit(Repository repository, String commitId) {
+		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
+		File metadataFolder = repository.getDirectory();
+		File projectFolder = metadataFolder.getParentFile();
+		GitService gitService = new GitServiceImpl();
+		RevWalk walk = new RevWalk(repository);
+		try {
+			RevCommit currentCommit = walk.parseCommit(repository.resolve(commitId));
+			if (currentCommit.getParentCount() > 0) {
+				walk.parseCommit(currentCommit.getParent(0));
+				Set<String> filePathsBefore = new LinkedHashSet<String>();
+				Set<String> filePathsCurrent = new LinkedHashSet<String>();
+				Map<String, String> renamedFilesHint = new HashMap<String, String>();
+				gitService.fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+				
+				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+				// If no java files changed, there is no refactoring. Also, if there are
+				// only ADD's or only REMOVE's there is no refactoring
+				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
+					RevCommit parentCommit = currentCommit.getParent(0);
+					populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+					populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					diffSet.addAll(differ.getDiffSet());
+				}
+			}
+			else {
+				logger.warn(String.format("Ignored revision %s because it has no parent", commitId));
+			}
+		} catch (MissingObjectException moe) {
+			try {
+				ChangedFileInfo changedFileInfo = populateWithGitHubAPI(projectFolder, cloneURL, commitId);
+				String parentCommitId = changedFileInfo.getParentCommitId();
+				List<String> filesBefore = changedFileInfo.getFilesBefore();
+				List<String> filesCurrent = changedFileInfo.getFilesCurrent();
+				Map<String, String> renamedFilesHint = changedFileInfo.getRenamedFilesHint();
+				File currentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + commitId);
+				File parentFolder = new File(projectFolder.getParentFile(), projectFolder.getName() + "-" + parentCommitId);
+				if (!currentFolder.exists()) {	
+					downloadAndExtractZipFile(projectFolder, cloneURL, commitId);
+				}
+				if (!parentFolder.exists()) {	
+					downloadAndExtractZipFile(projectFolder, cloneURL, parentCommitId);
+				}
+				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+				if (currentFolder.exists() && parentFolder.exists()) {
+					populateFileContents(currentFolder, filesCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+					populateFileContents(parentFolder, filesBefore, fileContentsBefore, repositoryDirectoriesBefore);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint); 
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					diffSet.addAll(differ.getDiffSet());
+				}
+			} catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+			}
+		} catch (RefactoringMinerTimedOutException e) {
+			logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+		} finally {
+			walk.close();
+			walk.dispose();
+		}
+		return diffSet;
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout) {
+		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		Future<?> f = null;
+		try {
+			Runnable r = () -> {
+				try {
+					Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+					Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+					Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+					Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+					populateWithGitHubAPI(gitURL, commitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					diffSet.addAll(differ.getDiffSet());
+				}
+				catch(RefactoringMinerTimedOutException e) {
+					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
+				}
+				catch (Exception e) {
+					logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+				}
+			};
+			f = service.submit(r);
+			f.get(timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+			f.cancel(true);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
+		}
+		return diffSet;
 	}
 }

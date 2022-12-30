@@ -67,7 +67,6 @@ import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
-import org.refactoringminer.api.Churn;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -1098,6 +1097,43 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			e.printStackTrace();
 		} finally {
 			service.shutdown();
+		}
+		return diffSet;
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtDirectories(Path previousDirectory, Path nextDirectory) {
+		File previousFile = previousDirectory.toFile();
+		File nextFile = nextDirectory.toFile();
+		return diffAtDirectories(previousFile, nextFile);
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtDirectories(File previousDirectory, File nextDirectory) {
+		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+		if(previousDirectory.exists() && previousDirectory.isDirectory() && nextDirectory.exists() && nextDirectory.isDirectory()) {
+			String id = previousDirectory.getName() + " -> " + nextDirectory.getName();
+			try {
+				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+				populateFileContents(nextDirectory, getJavaFilePaths(nextDirectory), fileContentsCurrent, repositoryDirectoriesCurrent);
+				populateFileContents(previousDirectory, getJavaFilePaths(previousDirectory), fileContentsBefore, repositoryDirectoriesBefore);
+				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+				UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+				ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+				for(ASTDiff diff : differ.getDiffSet()) {
+					diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+					diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+					diffSet.add(diff);
+				}
+			}
+			catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", id), e);
+			}
 		}
 		return diffSet;
 	}

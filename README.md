@@ -469,14 +469,25 @@ Churn churn = miner.churnAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f794439
 ```
 ## With two directories containing Java source code
 
-There is also a lower level API that compares the Java files in two directories
-containing the code before and after some changes:  
+It is possible to detect refactorings between the Java files in two directories
+containing the code before and after some changes.
+This feature supports the detection of renamed and moved classes,
+and automatically excludes from the analysis any files with identical contents:  
 
 ```java
-UMLModel model1 = new UMLModelASTReader(new File("/path/to/version1")).getUmlModel();
-UMLModel model2 = new UMLModelASTReader(new File("/path/to/version2")).getUmlModel();
-UMLModelDiff modelDiff = model1.diff(model2);
-List<Refactoring> refactorings = modelDiff.getRefactorings();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+File dir1 = new File("/home/user/tmp/v1");
+File dir2 = new File("/home/user/tmp/v2");
+miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
+  @Override
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
 ```
 ## With all information fetched directly from GitHub
 

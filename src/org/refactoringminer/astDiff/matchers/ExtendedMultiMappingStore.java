@@ -34,8 +34,12 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	public boolean isDstMultiMapped(Tree dstTree) {
 		if (!hasDst(dstTree))
 			return false;
+		if (getSrcs(dstTree) == null)
+			return false;
 		if (getSrcs(dstTree).size() > 1)
 			return true;
+		if (getSrcs(dstTree).size() == 0)
+			return false;
 		Tree mappedSrc = getSrcs(dstTree).iterator().next();
 		if (!hasSrc(mappedSrc))
 			return false;
@@ -45,8 +49,12 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	public boolean isSrcMultiMapped(Tree srcTree) {
 		if (!hasSrc(srcTree))
 			return false;
+		if (getDsts(srcTree) == null)
+			return false;
 		if (getDsts(srcTree).size() > 1)
 			return true;
+		if (getDsts(srcTree).size() == 0)
+			return false;
 		Tree mappedSrc = getDsts(srcTree).iterator().next();
 		if (!hasDst(mappedSrc))
 			return false;
@@ -104,9 +112,11 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 				multis.put(_dst,getSrcs(_dst));
 			else
 			{
-				Tree mappedSrc = getSrcs(_dst).iterator().next();
-				if (getDsts(mappedSrc).size() > 1  && !(_dst instanceof FakeTree))
-					multis.put(_dst,getSrcs(_dst));
+				if (getSrcs(_dst).size() > 0) {
+					Tree mappedSrc = getSrcs(_dst).iterator().next();
+					if (getDsts(mappedSrc).size() > 1  && !(_dst instanceof FakeTree))
+						multis.put(_dst,getSrcs(_dst));
+				}
 			}
 		}
 		return multis;

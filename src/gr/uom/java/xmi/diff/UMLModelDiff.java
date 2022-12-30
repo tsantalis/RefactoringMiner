@@ -112,6 +112,14 @@ public class UMLModelDiff {
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 	}
 
+	public UMLModel getParentModel() {
+		return parentModel;
+	}
+
+	public UMLModel getChildModel() {
+		return childModel;
+	}
+
 	public UMLAbstractClass findClassInParentModel(String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
 			if(umlClass.getName().equals(className)) {

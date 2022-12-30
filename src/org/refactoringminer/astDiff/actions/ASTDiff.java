@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.actions;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
@@ -16,10 +17,14 @@ import com.github.gumtreediff.tree.TreeContext;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class ASTDiff extends Diff {
+	private String srcPath;
+	private String dstPath;
 	private ExtendedMultiMappingStore multiMappings;
 
-	public ASTDiff(TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
+	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
 		super(src, dst, mappings.getMonoMappingStore(), new EditScript());
+		this.srcPath = srcPath;
+		this.dstPath = dstPath;
 		this.multiMappings = mappings;
 	}
 
@@ -60,5 +65,22 @@ public class ASTDiff extends Diff {
 		ExtendedOnlyRootsClassifier classifier = new ExtendedOnlyRootsClassifier(this);
 		classifier.classify();
 		return classifier;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dstPath, srcPath);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ASTDiff other = (ASTDiff) obj;
+		return Objects.equals(dstPath, other.dstPath) && Objects.equals(srcPath, other.srcPath);
 	}
 }

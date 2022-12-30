@@ -463,10 +463,7 @@ miner.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new Refac
   }
 });
 ```
-You can get the churn of a specific commit using `churnAtCommit` as follows:
-```java
-Churn churn = miner.churnAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", handler);
-```
+
 ## With two directories containing Java source code
 
 It is possible to detect refactorings between the Java files in two directories

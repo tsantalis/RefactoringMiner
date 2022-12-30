@@ -574,6 +574,16 @@ public class ProjectASTDiffer
 					new CompositeMatcher().match(srcTree,dstTree, (AbstractStatement) splitConditionalRefactoring.getOriginalConditional(), (AbstractStatement) splitConditional,mappingStore);
 				}
 			}
+			else if (refactoring instanceof MergeConditionalRefactoring)
+			{
+				MergeConditionalRefactoring mergeConditionalRefactoring = (MergeConditionalRefactoring) refactoring;
+				Set<AbstractCodeFragment> mergedConditionals = mergeConditionalRefactoring.getMergedConditionals();
+				for (AbstractCodeFragment eachMerged : mergedConditionals) {
+					new CompositeMatcher().match(srcTree,dstTree,
+							(AbstractStatement) eachMerged, (AbstractStatement) mergeConditionalRefactoring.getNewConditional()
+							,mappingStore);
+				}
+			}
 		}
 	}
 

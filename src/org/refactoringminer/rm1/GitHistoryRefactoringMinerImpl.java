@@ -999,7 +999,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				}
 			}
 			else {
@@ -1032,7 +1036,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				}
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
@@ -1067,7 +1075,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				}
 				catch(RefactoringMinerTimedOutException e) {
 					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);

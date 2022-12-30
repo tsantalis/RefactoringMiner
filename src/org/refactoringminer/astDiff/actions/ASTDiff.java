@@ -19,6 +19,8 @@ import com.github.gumtreediff.tree.TreeContext;
 public class ASTDiff extends Diff {
 	private String srcPath;
 	private String dstPath;
+	private String srcContents;
+	private String dstContents;
 	private ExtendedMultiMappingStore multiMappings;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
@@ -30,6 +32,30 @@ public class ASTDiff extends Diff {
 
 	public ExtendedMultiMappingStore getMultiMappings() {
 		return multiMappings;
+	}
+
+	public String getSrcContents() {
+		return srcContents;
+	}
+
+	public void setSrcContents(String srcContents) {
+		this.srcContents = srcContents;
+	}
+
+	public String getDstContents() {
+		return dstContents;
+	}
+
+	public void setDstContents(String dstContents) {
+		this.dstContents = dstContents;
+	}
+
+	public String getSrcPath() {
+		return srcPath;
+	}
+
+	public String getDstPath() {
+		return dstPath;
 	}
 
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {

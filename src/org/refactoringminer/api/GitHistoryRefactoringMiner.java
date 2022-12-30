@@ -1,5 +1,7 @@
 package org.refactoringminer.api;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Set;
 
 import org.eclipse.jgit.lib.Repository;
@@ -100,6 +102,24 @@ public interface GitHistoryRefactoringMiner {
 	 * @throws Exception propagated from org.kohsuke.github API
 	 */
 	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
+
+	/**
+	 * Detect refactorings performed between two directories representing two versions of Java programs. 
+	 * 
+	 * @param previousDirectory The directory corresponding to the previous version.
+	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param handler A handler object that is responsible to process the detected refactorings. 
+	 */
+	void detectAtDirectories(Path previousDirectory, Path nextDirectory, RefactoringHandler handler);
+
+	/**
+	 * Detect refactorings performed between two directories representing two versions of Java programs. 
+	 * 
+	 * @param previousDirectory The directory corresponding to the previous version.
+	 * @param nextDirectory The directory corresponding to the next version.
+	 * @param handler A handler object that is responsible to process the detected refactorings. 
+	 */
+	void detectAtDirectories(File previousDirectory, File nextDirectory, RefactoringHandler handler);
 
 	/**
 	 * Detect refactorings performed in the specified commit. 

@@ -19,6 +19,9 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -39,6 +42,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -557,6 +562,51 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
+
+	private static List<String> getJavaFilePaths(File folder) throws IOException {
+		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
+		List<String> paths = walk.map(x -> x.toString())
+				.filter(f -> f.endsWith(".java"))
+				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
+				.collect(Collectors.toList());
+		walk.close();
+		return paths;
+	}
+
+	@Override
+	public void detectAtDirectories(Path previousDirectory, Path nextDirectory, RefactoringHandler handler) {
+		File previousFile = previousDirectory.toFile();
+		File nextFile = nextDirectory.toFile();
+		detectAtDirectories(previousFile, nextFile, handler);
+	}
+
+	@Override
+	public void detectAtDirectories(File previousDirectory, File nextDirectory, RefactoringHandler handler) {
+		if(previousDirectory.exists() && previousDirectory.isDirectory() && nextDirectory.exists() && nextDirectory.isDirectory()) {
+			List<Refactoring> refactorings = Collections.emptyList();
+			String id = previousDirectory.getName() + " -> " + nextDirectory.getName();
+			try {
+				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+				populateFileContents(nextDirectory, getJavaFilePaths(nextDirectory), fileContentsCurrent, repositoryDirectoriesCurrent);
+				populateFileContents(previousDirectory, getJavaFilePaths(previousDirectory), fileContentsBefore, repositoryDirectoriesBefore);
+				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap()); 
+				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+				refactorings = modelDiff.getRefactorings();
+				refactorings.addAll(moveSourceFolderRefactorings);
+				refactorings = filter(refactorings);
+			}
+			catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", id), e);
+				handler.handleException(id, e);
+			}
+			handler.handle(id, refactorings);
+		}
+	}
 
 	@Override
 	public void detectAtCommit(Repository repository, String commitId, RefactoringHandler handler) {

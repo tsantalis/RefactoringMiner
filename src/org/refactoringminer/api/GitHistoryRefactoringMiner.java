@@ -144,4 +144,22 @@ public interface GitHistoryRefactoringMiner {
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
 	Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout);
+
+	/**
+	 * Generate the AST diff between two directories representing two versions of Java programs. 
+	 * 
+	 * @param previousDirectory The directory corresponding to the previous version.
+	 * @param nextDirectory The directory corresponding to the next version.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	Set<ASTDiff> diffAtDirectories(Path previousDirectory, Path nextDirectory);
+
+	/**
+	 * Generate the AST diff between two directories representing two versions of Java programs. 
+	 * 
+	 * @param previousDirectory The directory corresponding to the previous version.
+	 * @param nextDirectory The directory corresponding to the next version.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 */
+	Set<ASTDiff> diffAtDirectories(File previousDirectory, File nextDirectory);
 }

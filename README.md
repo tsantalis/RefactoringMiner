@@ -489,6 +489,23 @@ miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
   }
 });
 ```
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+Path dir1 = Paths.get("/home/user/tmp/v1");
+Path dir1 = Paths.get("/home/user/tmp/v2");
+miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
+  @Override
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
 ## With all information fetched directly from GitHub
 
 To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.

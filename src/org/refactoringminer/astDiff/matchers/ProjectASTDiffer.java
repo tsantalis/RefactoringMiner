@@ -283,6 +283,7 @@ public class ProjectASTDiffer
 	private void fromRefMiner(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
 		if (bodyMapper.getAnonymousClassDiffs() != null) {
 			for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
+				processClassAttributes(srcTree,dstTree,anonymousClassDiff,mappingStore);
 				for (UMLOperationBodyMapper umlOperationBodyMapper : anonymousClassDiff.getOperationBodyMapperList()) {
 					processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
 				}
@@ -607,10 +608,10 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processClassAttributes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-		List<Pair<UMLAttribute, UMLAttribute>> pairs = findMatchedAttributesPair(classDiff);
-		for (Pair<UMLAttribute,UMLAttribute> matchedPair : pairs) {
-			processFieldDeclaration(srcTree,dstTree,matchedPair.first,matchedPair.second,mappingStore);
+	private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+		Set<org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
+		for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
+			processFieldDeclaration(srcTree,dstTree,pair.getLeft(),pair.getRight(),mappingStore);
 		}
 	}
 

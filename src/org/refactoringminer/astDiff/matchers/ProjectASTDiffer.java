@@ -585,6 +585,15 @@ public class ProjectASTDiffer
 							,mappingStore);
 				}
 			}
+			else if (refactoring instanceof MergeCatchRefactoring)
+			{
+				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
+				for (AbstractCodeFragment eachMerged : mergeCatchRefactoring.getMergedCatchBlocks()) {
+					new CompositeMatcher().match(srcTree,dstTree,
+							(AbstractStatement) eachMerged, (AbstractStatement) mergeCatchRefactoring.getNewCatchBlock()
+							,mappingStore);
+				}
+			}
 		}
 	}
 

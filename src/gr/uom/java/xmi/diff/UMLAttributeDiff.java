@@ -161,7 +161,7 @@ public class UMLAttributeDiff {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				addedGetter == null && addedSetter == null && (mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
+				(mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
 	}
 
 	public String toString() {

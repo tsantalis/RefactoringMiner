@@ -319,6 +319,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
     				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
+    				}
     			}
 			}
     	}
@@ -337,6 +340,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attributeWithTheSameName, attribute);
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
+    				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
     				}
     			}
 			}

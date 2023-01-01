@@ -56,6 +56,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
     				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
+    				}
     			}
     		}
     	}
@@ -74,6 +77,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(matchingAttribute, attribute);
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
+    				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
     				}
     			}
     		}

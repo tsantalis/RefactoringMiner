@@ -230,7 +230,7 @@ public class UMLAttributeDiff {
 			ChangeAttributeAccessModifierRefactoring ref = new ChangeAttributeAccessModifierRefactoring(removedAttribute.getVisibility(), addedAttribute.getVisibility(), removedAttribute, addedAttribute);
 			refactorings.add(ref);
 		}
-		if(encapsulationCondition()) {
+		if(encapsulated()) {
 			EncapsulateAttributeRefactoring ref = new EncapsulateAttributeRefactoring(removedAttribute, addedAttribute, addedGetter, addedSetter);
 			refactorings.add(ref);
 		}
@@ -300,7 +300,7 @@ public class UMLAttributeDiff {
 		return refactorings;
 	}
 
-	private boolean encapsulationCondition() {
+	public boolean encapsulated() {
 		return addedSetter != null || addedGetter != null;
 	}
 

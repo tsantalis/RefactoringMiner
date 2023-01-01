@@ -80,6 +80,7 @@ public class Visitor extends ASTVisitor {
 	private List<String> arrayAccesses = new ArrayList<String>();
 	private List<String> prefixExpressions = new ArrayList<String>();
 	private List<String> postfixExpressions = new ArrayList<String>();
+	private List<String> thisExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<String> parenthesizedExpressions = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
@@ -267,6 +268,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.thisExpressions, anonymous.getThisExpressions());
 			removeLast(this.parenthesizedExpressions, anonymous.getParenthesizedExpressions());
 			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
@@ -391,10 +393,10 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(ThisExpression node) {
 		if(!(node.getParent() instanceof FieldAccess)) {
-			variables.add(stringify(node));
+			thisExpressions.add(stringify(node));
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(stringify(node));
+				anonymous.getThisExpressions().add(stringify(node));
 			}
 		}
 		return super.visit(node);
@@ -954,6 +956,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<String> getPostfixExpressions() {
 		return postfixExpressions;
+	}
+
+	public List<String> getThisExpressions() {
+		return thisExpressions;
 	}
 
 	public List<String> getArguments() {

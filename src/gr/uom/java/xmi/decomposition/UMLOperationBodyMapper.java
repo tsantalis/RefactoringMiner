@@ -5303,12 +5303,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		findReplacements(variables1, prefixExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
 		findReplacements(prefixExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PREFIX_EXPRESSION);
+		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals("return this;\n")) {
+			findReplacements(variables1, Set.of("this"), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION);
+		}
+		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals("return this;\n")) {
+			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION);
+		}
 		findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL);
-		if(statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) {
-			Set<String> nullLiterals2 = new LinkedHashSet<String>();
-			nullLiterals2.add("null");
+		if((statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) ||
+				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
+						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2)) {
+			Set<String> nullLiterals2 = Set.of("null");
+			for(String parameter : parameterToArgumentMap.keySet()) { 
+				String argument = parameterToArgumentMap.get(parameter); 
+				if(!parameter.equals(argument) && variables1.contains(parameter)) {
+					variables1.add(argument);
+				}
+			}
 			findReplacements(variables1, nullLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL);
 			if(invocationCoveringTheEntireStatement1 != null) {
 				String expression = invocationCoveringTheEntireStatement1.getExpression();
@@ -5323,9 +5336,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				findReplacements(methodInvocations1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_OPTIONAL_EMPTY);
 			}
 		}
-		else if(!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) {
-			Set<String> nullLiterals1 = new LinkedHashSet<String>();
-			nullLiterals1.add("null");
+		if((!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) ||
+				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
+						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2)) {
+			Set<String> nullLiterals1 = Set.of("null");
+			for(String parameter : parameterToArgumentMap.keySet()) { 
+				String argument = parameterToArgumentMap.get(parameter); 
+				if(!parameter.equals(argument) && variables2.contains(parameter)) {
+					variables2.add(argument);
+				}
+			}
 			findReplacements(nullLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL);
 			if(invocationCoveringTheEntireStatement2 != null) {
 				String expression = invocationCoveringTheEntireStatement2.getExpression();
@@ -6879,6 +6899,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
+	private boolean bothContainNullInDifferentIndexes(AbstractCall call1, AbstractCall call2) {
+		if(call1 != null && call2 != null && call1.getArguments().contains("null") && call2.getArguments().contains("null")) {
+			int index1 = call1.getArguments().indexOf("null");
+			int index2 = call2.getArguments().indexOf("null");
+			return index1 != index2;
+		}
+		return false;
+	}
+
 	private boolean matchingArgument(Set<String> variables1, Set<String> literals2, AbstractCall call1, AbstractCall call2) {
 		if(call1 != null && call2 != null && call1.getArguments().size() == call2.getArguments().size()) {
 			for(int i=0; i<call1.getArguments().size(); i++) {
@@ -7891,7 +7920,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(String parameter : parameterToArgumentMap.keySet()) {
 			String argument = parameterToArgumentMap.get(parameter);
 			if(variables.contains(parameter)) {
-				variables.add(argument);
+				if(!StringDistance.isNumeric(argument)) {
+					variables.add(argument);
+				}
 				if(argument.contains("(") && argument.contains(")")) {
 					int indexOfOpeningParenthesis = argument.indexOf("(");
 					int indexOfClosingParenthesis = argument.lastIndexOf(")");
@@ -7903,7 +7934,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
 							!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
 						String arguments = argument.substring(indexOfOpeningParenthesis+1, indexOfClosingParenthesis);
-						if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")")) {
+						if(!arguments.isEmpty() && !arguments.contains(",") && !arguments.contains("(") && !arguments.contains(")") && !StringDistance.isNumeric(arguments)) {
 							variables.add(arguments);
 						}
 					}

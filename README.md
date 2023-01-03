@@ -18,6 +18,7 @@ Table of Contents
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
+   * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
    * [Running RefactoringMiner from the command line](#running-refactoringminer-from-the-command-line)
@@ -536,6 +537,50 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
     }
   }
 }, 10);
+```
+
+# AST Diff API usage guidelines
+
+All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
+
+`ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
+
+```java
+// With a locally cloned git repository
+GitService gitService = new GitServiceImpl();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+
+Repository repo = gitService.cloneIfNotExists(
+    "tmp/refactoring-toy-example",
+    "https://github.com/danilofes/refactoring-toy-example.git");
+
+Set<ASTDiff> diffs = miner.diffAtCommit(repo, "36287f7c3b09eff78395267a3ac0d7da067863fd");
+```
+
+To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+```java
+// With all information fetched directly from GitHub
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+Set<ASTDiff> diffs = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git", "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
+```
+
+```java
+// With two directories containing Java source code (File API)
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+File dir1 = new File("/home/user/tmp/v1");
+File dir2 = new File("/home/user/tmp/v2");
+Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
+```
+
+```java
+// With two directories containing Java source code (Path API)
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+Path dir1 = Paths.get("/home/user/tmp/v1");
+Path dir1 = Paths.get("/home/user/tmp/v2");
+Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
 ```
 
 # Location information for the detected refactorings

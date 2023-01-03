@@ -545,6 +545,8 @@ All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.c
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
 
+More detailed documentation can be found in [GitHistoryRefactoringMiner](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/api/GitHistoryRefactoringMiner.java) JavaDoc.
+
 ```java
 // With a locally cloned git repository
 GitService gitService = new GitServiceImpl();

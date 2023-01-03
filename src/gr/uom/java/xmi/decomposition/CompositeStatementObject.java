@@ -651,6 +651,12 @@ public class CompositeStatementObject extends AbstractStatement {
 		return locationInfo.codeRange();
 	}
 
+	public boolean isBlock() {
+		return this.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE);
+	}
+
 	public boolean isLoop() {
 		return this.locationInfo.getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
 				this.locationInfo.getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||

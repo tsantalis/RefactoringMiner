@@ -473,6 +473,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		String s1 = parent1.getString();
 		String s2 = parent2.getString();
+		if(!s1.equals(parent1.getArgumentizedString()) && s2.equals(parent1.getArgumentizedString())) {
+			return 0;
+		}
+		if(!s2.equals(parent2.getArgumentizedString()) && s1.equals(parent2.getArgumentizedString())) {
+			return 0;
+		}
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;

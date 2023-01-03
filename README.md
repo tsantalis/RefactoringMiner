@@ -562,7 +562,8 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 ```java
 // With all information fetched directly from GitHub
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-Set<ASTDiff> diffs = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git", "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
+Set<ASTDiff> diffs = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
+    "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
 ```
 
 ```java

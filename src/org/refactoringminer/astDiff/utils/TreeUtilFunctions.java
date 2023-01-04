@@ -9,6 +9,8 @@ import gr.uom.java.xmi.LocationInfo;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.refactoringminer.astDiff.matchers.Constants;
+
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  * @since   2022-12-26 12:04 a.m.
@@ -76,10 +78,10 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (tree.getType().name.equals("Block")) return null;
+		if (tree.getType().name.equals(Constants.BLOCK)) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
-		if (tree.getType().name.equals("AnonymousClassDeclaration")) return copy;
+		if (tree.getType().name.equals(Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;
 		for (Tree child : tree.getChildren()) {
 			Tree childCopy = deepCopyWithMapPruning(child,cpyMap);
 			if (childCopy != null)

@@ -4,6 +4,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -273,8 +274,8 @@ public class ProjectASTDiffer
 			VariableDeclaration rightPair = matchedPair.getRight();
 			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftPair.getLocationInfo());
 			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightPair.getLocationInfo());
-			if (leftTree.getParent().getType().name.equals("MethodDeclaration") &&
-					rightTree.getParent().getType().name.equals("MethodDeclaration"))
+			if (leftTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION) &&
+					rightTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION))
 				if (rightTree.isIsomorphicTo(leftTree))
 					mappingStore.addMappingRecursively(leftTree,rightTree);
 		}
@@ -312,13 +313,13 @@ public class ProjectASTDiffer
 		//else
 		{
 			mappingStore.addMapping(srcStatementNode,dstStatementNode);
-			if ( (srcStatementNode.getType().name.equals("TryStatement") && dstStatementNode.getType().name.equals("TryStatement")) ||
-					(srcStatementNode.getType().name.equals("CatchClause") && dstStatementNode.getType().name.equals("CatchClause"))) {
+			if ( (srcStatementNode.getType().name.equals(Constants.TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.TRY_STATEMENT)) ||
+					(srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))) {
 				matchBlocks(srcStatementNode, dstStatementNode, mappingStore);
-				if  (srcStatementNode.getType().name.equals("CatchClause") && dstStatementNode.getType().name.equals("CatchClause"))
+				if  (srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))
 					new CompositeMatcher().match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
 			}
-			else if (!srcStatementNode.getType().name.equals("Block") && !dstStatementNode.getType().name.equals("Block")) {
+			else if (!srcStatementNode.getType().name.equals(Constants.BLOCK) && !dstStatementNode.getType().name.equals(Constants.BLOCK)) {
 				new CompositeMatcher().match(srcStatementNode, dstStatementNode, abstractCodeMapping , mappingStore);
 			}
 		}
@@ -359,7 +360,7 @@ public class ProjectASTDiffer
 	}
 
 	private void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
-		String searchingType = "Block";
+		String searchingType = Constants.BLOCK;
 		Pair<Tree, Tree> matched = matchBasedOnType(srcStatementNode,dstStatementNode, searchingType);
 		if (matched != null)
 			mappingStore.addMapping(matched.first,matched.second);
@@ -472,7 +473,7 @@ public class ProjectASTDiffer
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
 				for (AbstractCodeFragment abstractCodeFragment : replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore()) {
-					if (abstractCodeFragment.getLocationInfo().getCodeElementType().toString().equals("ENHANCED_FOR_STATEMENT")) {
+					if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 						enhancedFor = abstractCodeFragment;
 						break;
 					}
@@ -501,7 +502,7 @@ public class ProjectASTDiffer
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
 				for (AbstractCodeFragment abstractCodeFragment : replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter()) {
-					if (abstractCodeFragment.getLocationInfo().getCodeElementType().toString().equals("ENHANCED_FOR_STATEMENT")) {
+					if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
 						enhancedFor = abstractCodeFragment;
 						break;
 					}
@@ -686,19 +687,19 @@ public class ProjectASTDiffer
 		String visibility2 = dstUMLAttribute.getVisibility();
 		if (visibility1 != null && visibility2 != null)
 		{
-			matchModifierForFeild(srcFieldDeclaration,dstFieldDeclaration,visibility1,mappingStore);
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,visibility1,mappingStore);
 		}
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
-			matchModifierForFeild(srcFieldDeclaration,dstFieldDeclaration,"final",mappingStore);
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isVolatile())
-			matchModifierForFeild(srcFieldDeclaration,dstFieldDeclaration,"volatile",mappingStore);
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.VOLATILE,mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isStatic())
-			matchModifierForFeild(srcFieldDeclaration,dstFieldDeclaration,"static",mappingStore);
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isTransient())
-			matchModifierForFeild(srcFieldDeclaration,dstFieldDeclaration,"transient",mappingStore);
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
 	}
 
-	private void matchModifierForFeild(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
+	private void matchModifierForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
 		Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, modifier);
 		Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, modifier);
 		if (srcModifierTree != null && dstModifierTree != null)
@@ -716,9 +717,9 @@ public class ProjectASTDiffer
 		{
 			for (Tree child : anyFieldDeclaration.getChildren())
 			{
-				if (child.getType().name.equals("AccessModifier"))
+				if (child.getType().name.equals(Constants.ACCESS_MODIFIER))
 					return child;
-				if (child.getType().name.equals("VariableDeclarationFragment"))
+				if (child.getType().name.equals(Constants.VARIABLE_DECLARATION_FRAGMENT))
 					break;
 			}
 		}
@@ -732,7 +733,7 @@ public class ProjectASTDiffer
 			{
 				if (child.getLabel().equals(label))
 					return child;
-				if (child.getType().name.equals("VariableDeclarationFragment"))
+				if (child.getType().name.equals(Constants.VARIABLE_DECLARATION_FRAGMENT))
 					break;
 			}
 		}
@@ -745,7 +746,7 @@ public class ProjectASTDiffer
 			{
 				if (child.getType().name.equals(type))
 					return child;
-				if (child.getType().name.equals("VariableDeclarationFragment"))
+				if (child.getType().name.equals(Constants.VARIABLE_DECLARATION_FRAGMENT))
 					break;
 			}
 		}
@@ -773,7 +774,7 @@ public class ProjectASTDiffer
 	}
 
 	private Tree findPackageDeclaration(Tree inputTree) {
-		String searchingType = "PackageDeclaration";
+		String searchingType = Constants.PACKAGE_DECLARATION;
 		if (!inputTree.getChildren().isEmpty())
 		{
 			List<Tree> children = inputTree.getChildren();
@@ -791,7 +792,7 @@ public class ProjectASTDiffer
 		Set<UMLImport> commonImports = importDiffList.getCommonImports();
 		if (commonImports.isEmpty())
 			return;
-		String searchingType = "ImportDeclaration";
+		String searchingType = Constants.IMPORT_DECLARATION;
 		List<Tree> srcChildren = srcTree.getChildren();
 		List<Tree> dstChildren = dstTree.getChildren();
 
@@ -815,10 +816,10 @@ public class ProjectASTDiffer
 
 	private void processMethodSignature(Tree srcOperationNode, Tree dstOperationNode, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
 		List<String> searchingTypes = new ArrayList<>();
-		//searchingTypes.add("AccessModifier");
-		searchingTypes.add("SimpleName");
-		searchingTypes.add("PrimitiveType");
-		searchingTypes.add("Block");
+		//searchingTypes.add(Constants.ACCESS_MODIFIER);
+		searchingTypes.add(Constants.SIMPLE_NAME);
+		searchingTypes.add(Constants.PRIMITIVE_TYPE);
+		searchingTypes.add(Constants.BLOCK);
 		for (String type : searchingTypes) {
 			Pair<Tree,Tree> matched = matchBasedOnType(srcOperationNode,dstOperationNode,type);
 			if (matched != null)
@@ -826,21 +827,21 @@ public class ProjectASTDiffer
 		}
 		if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
 			if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())
-				matchModifier(srcOperationNode, dstOperationNode, "static", mappingStore);
+				matchModifier(srcOperationNode, dstOperationNode, Constants.STATIC, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isFinal() && umlOperationBodyMapper.getOperation2().isFinal())
-				matchModifier(srcOperationNode, dstOperationNode, "final", mappingStore);
+				matchModifier(srcOperationNode, dstOperationNode, Constants.FINAL, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isAbstract() && umlOperationBodyMapper.getOperation2().isAbstract())
-				matchModifier(srcOperationNode, dstOperationNode, "abstract", mappingStore);
+				matchModifier(srcOperationNode, dstOperationNode, Constants.ABSTRACT, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
-				matchModifier(srcOperationNode, dstOperationNode, "synchronized", mappingStore);
+				matchModifier(srcOperationNode, dstOperationNode, Constants.SYNCHRONIZED, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().getVisibility() != null || umlOperationBodyMapper.getOperation1().getVisibility().equals("==")
 					&&
 					umlOperationBodyMapper.getOperation2().getVisibility() != null || umlOperationBodyMapper.getOperation2().getVisibility().equals("=="))
 			{
 				String v1 = umlOperationBodyMapper.getOperation1().getVisibility();
 				String v2 = umlOperationBodyMapper.getOperation2().getVisibility();
-				Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, "Modifier", v1);
-				Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, "Modifier", v2);
+				Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
+				Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.MODIFIER, v2);
 				if (tree1 != null && tree2 != null)
 					mappingStore.addMappingRecursively(tree1,tree2);
 			}
@@ -856,8 +857,8 @@ public class ProjectASTDiffer
 	}
 
 	private void processClassDeclarationMapping(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-		String AST_type = "TypeDeclaration";
-		if (classDiff.getOriginalClass().isEnum()) AST_type = "EnumDeclaration";
+		String AST_type = Constants.TYPE_DECLARATION;
+		if (classDiff.getOriginalClass().isEnum()) AST_type = Constants.ENUM_DECLARATION;
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
 		mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
@@ -869,25 +870,25 @@ public class ProjectASTDiffer
 		{
 			String v1 = classDiff.getOriginalClass().getVisibility();
 			String v2 = classDiff.getNextClass().getVisibility();
-			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, "Modifier", v1);
-			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, "Modifier", v2);
+			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, Constants.MODIFIER, v1);
+			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, Constants.MODIFIER, v2);
 			if (tree1 != null && tree2 != null)
 				mappingStore.addMappingRecursively(tree1,tree2);
 		}
 
-		searchingTypes.add("SimpleName");
-		searchingTypes.add("TYPE_DECLARATION_KIND");
+		searchingTypes.add(Constants.SIMPLE_NAME);
+		searchingTypes.add(Constants.TYPE_DECLARATION_KIND);
 		for (String type : searchingTypes) {
 			Pair<Tree,Tree> matched = matchBasedOnType(srcTypeDeclaration,dstTypeDeclaration,type);
 			if (matched != null)
 				mappingStore.addMapping(matched.first,matched.second);
 		}
 		if (classDiff.getOriginalClass().isStatic() && classDiff.getNextClass().isStatic())
-			matchModifier(srcTypeDeclaration,dstTypeDeclaration,"static",mappingStore);
+			matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.STATIC,mappingStore);
 		if (classDiff.getOriginalClass().isFinal() && classDiff.getNextClass().isFinal())
-			matchModifier(srcTypeDeclaration,dstTypeDeclaration,"final",mappingStore);
+			matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.FINAL,mappingStore);
 		if (classDiff.getOriginalClass().isAbstract() && classDiff.getNextClass().isAbstract())
-			matchModifier(srcTypeDeclaration,dstTypeDeclaration,"abstract",mappingStore);
+			matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.ABSTRACT,mappingStore);
 
 		for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
 			Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo());
@@ -904,7 +905,7 @@ public class ProjectASTDiffer
 
 	private void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
 		// TODO: 8/3/2022 Search should be limited to the method signature before the method name
-		String type = "Modifier";
+		String type = Constants.MODIFIER;
 		Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
 		Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);
 		if (srcTree != null && dstTree != null){

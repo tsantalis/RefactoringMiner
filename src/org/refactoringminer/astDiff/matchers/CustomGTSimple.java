@@ -40,16 +40,16 @@ class CustomGreedy extends GreedySubtreeMatcher {
 					if (original)
 						mappings.addMappingRecursively(mapping.first, mapping.second);
 					else {
-						String SimpleNameType = "SimpleName";
+						String SimpleNameType = Constants.SIMPLE_NAME;
 						if (mapping.first.getType().name.equals(SimpleNameType) &&
 								mapping.second.getType().name.equals(SimpleNameType)) {
 							if (
 									!mapping.first.getParent().getType().name.equals(mapping.second.getParent().getType().name)
 									&&
 									(
-											((mapping.first.getParent().getType().name.equals("MethodInvocation")) && !mapping.second.getParent().getType().name.equals("MethodInvocation"))
+											((mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) && !mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
 											||
-											((mapping.second.getParent().getType().name.equals("MethodInvocation")) && !mapping.first.getParent().getType().name.equals("MethodInvocation"))
+											((mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) && !mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
 											)
 									) {
 								//pass

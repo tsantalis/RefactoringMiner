@@ -543,13 +543,13 @@ public class UMLModelASTReader {
     		umlClass.setFinal(true);
     	
     	if((modifiers & Modifier.PUBLIC) != 0)
-    		umlClass.setVisibility("public");
+    		umlClass.setVisibility(Visibility.PUBLIC);
     	else if((modifiers & Modifier.PROTECTED) != 0)
-    		umlClass.setVisibility("protected");
+    		umlClass.setVisibility(Visibility.PROTECTED);
     	else if((modifiers & Modifier.PRIVATE) != 0)
-    		umlClass.setVisibility("private");
+    		umlClass.setVisibility(Visibility.PRIVATE);
     	else
-    		umlClass.setVisibility("package");
+    		umlClass.setVisibility(Visibility.PACKAGE);
     	
     	List<IExtendedModifier> extendedModifiers = typeDeclaration.modifiers();
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
@@ -596,15 +596,15 @@ public class UMLModelASTReader {
 		
 		int methodModifiers = methodDeclaration.getModifiers();
 		if((methodModifiers & Modifier.PUBLIC) != 0)
-			umlOperation.setVisibility("public");
+			umlOperation.setVisibility(Visibility.PUBLIC);
 		else if((methodModifiers & Modifier.PROTECTED) != 0)
-			umlOperation.setVisibility("protected");
+			umlOperation.setVisibility(Visibility.PROTECTED);
 		else if((methodModifiers & Modifier.PRIVATE) != 0)
-			umlOperation.setVisibility("private");
+			umlOperation.setVisibility(Visibility.PRIVATE);
 		else if(isInterfaceMethod)
-			umlOperation.setVisibility("public");
+			umlOperation.setVisibility(Visibility.PUBLIC);
 		else
-			umlOperation.setVisibility("package");
+			umlOperation.setVisibility(Visibility.PACKAGE);
 		
 		if((methodModifiers & Modifier.ABSTRACT) != 0)
 			umlOperation.setAbstract(true);
@@ -685,7 +685,7 @@ public class UMLModelASTReader {
 		distributeComments(comments, locationInfo, enumConstant.getComments());
 		enumConstant.setFinal(true);
 		enumConstant.setStatic(true);
-		enumConstant.setVisibility("public");
+		enumConstant.setVisibility(Visibility.PUBLIC);
 		List<Expression> arguments = enumConstantDeclaration.arguments();
 		for(Expression argument : arguments) {
 			enumConstant.addArgument(stringify(argument));
@@ -712,15 +712,15 @@ public class UMLModelASTReader {
 			
 			int fieldModifiers = fieldDeclaration.getModifiers();
 			if((fieldModifiers & Modifier.PUBLIC) != 0)
-				umlAttribute.setVisibility("public");
+				umlAttribute.setVisibility(Visibility.PUBLIC);
 			else if((fieldModifiers & Modifier.PROTECTED) != 0)
-				umlAttribute.setVisibility("protected");
+				umlAttribute.setVisibility(Visibility.PROTECTED);
 			else if((fieldModifiers & Modifier.PRIVATE) != 0)
-				umlAttribute.setVisibility("private");
+				umlAttribute.setVisibility(Visibility.PRIVATE);
 			else if(isInterfaceField)
-				umlAttribute.setVisibility("public");
+				umlAttribute.setVisibility(Visibility.PUBLIC);
 			else
-				umlAttribute.setVisibility("package");
+				umlAttribute.setVisibility(Visibility.PACKAGE);
 			
 			if((fieldModifiers & Modifier.FINAL) != 0)
 				umlAttribute.setFinal(true);

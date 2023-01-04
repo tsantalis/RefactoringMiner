@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -43,8 +44,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	private boolean visibilityChanged;
-	private String oldVisibility;
-	private String newVisibility;
+	private Visibility oldVisibility;
+	private Visibility newVisibility;
 	private boolean abstractionChanged;
 	private boolean oldAbstraction;
 	private boolean newAbstraction;
@@ -433,11 +434,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.visibilityChanged = visibilityChanged;
 	}
 
-	private void setOldVisibility(String oldVisibility) {
+	private void setOldVisibility(Visibility oldVisibility) {
 		this.oldVisibility = oldVisibility;
 	}
 
-	private void setNewVisibility(String newVisibility) {
+	private void setNewVisibility(Visibility newVisibility) {
 		this.newVisibility = newVisibility;
 	}
 

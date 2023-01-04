@@ -686,19 +686,15 @@ public class ProjectASTDiffer
 		//if (attributeAccessModifierPair.first != null && attributeAccessModifierPair.second != null)
 		//	mappingStore.addMapping(attributeAccessModifierPair.first, attributeAccessModifierPair.second);
 
-		String visibility1 = srcUMLAttribute.getVisibility();
-		String visibility2 = dstUMLAttribute.getVisibility();
-		if (visibility1 != null && visibility2 != null)
-		{
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,visibility1,mappingStore);
-		}
+		if (srcUMLAttribute.getVisibility().equals(dstUMLAttribute.getVisibility()))
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isVolatile())
+		if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.VOLATILE,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isStatic())
+		if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isTransient())
+		if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
 	}
 
@@ -837,17 +833,12 @@ public class ProjectASTDiffer
 				matchModifier(srcOperationNode, dstOperationNode, Constants.ABSTRACT, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
 				matchModifier(srcOperationNode, dstOperationNode, Constants.SYNCHRONIZED, mappingStore);
-			if (umlOperationBodyMapper.getOperation1().getVisibility() != null || umlOperationBodyMapper.getOperation1().getVisibility().equals("==")
-					&&
-					umlOperationBodyMapper.getOperation2().getVisibility() != null || umlOperationBodyMapper.getOperation2().getVisibility().equals("=="))
-			{
-				String v1 = umlOperationBodyMapper.getOperation1().getVisibility();
-				String v2 = umlOperationBodyMapper.getOperation2().getVisibility();
-				Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
-				Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.MODIFIER, v2);
-				if (tree1 != null && tree2 != null)
-					mappingStore.addMappingRecursively(tree1,tree2);
-			}
+			String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
+			String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
+			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
+			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.MODIFIER, v2);
+			if (tree1 != null && tree2 != null)
+				mappingStore.addMappingRecursively(tree1,tree2);
 		}
 	}
 
@@ -865,20 +856,15 @@ public class ProjectASTDiffer
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
 		mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
+		
+		String v1 = classDiff.getOriginalClass().getVisibility().toString();
+		String v2 = classDiff.getNextClass().getVisibility().toString();
+		Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, Constants.MODIFIER, v1);
+		Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, Constants.MODIFIER, v2);
+		if (tree1 != null && tree2 != null)
+			mappingStore.addMappingRecursively(tree1,tree2);
+
 		List<String> searchingTypes = new ArrayList<>();
-
-		if (classDiff.getOriginalClass().getVisibility() != null || classDiff.getOriginalClass().getVisibility().equals("==")
-				&&
-				classDiff.getNextClass().getVisibility() != null || classDiff.getNextClass().getVisibility().equals("=="))
-		{
-			String v1 = classDiff.getOriginalClass().getVisibility();
-			String v2 = classDiff.getNextClass().getVisibility();
-			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, Constants.MODIFIER, v1);
-			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, Constants.MODIFIER, v2);
-			if (tree1 != null && tree2 != null)
-				mappingStore.addMappingRecursively(tree1,tree2);
-		}
-
 		searchingTypes.add(Constants.SIMPLE_NAME);
 		searchingTypes.add(Constants.TYPE_DECLARATION_KIND);
 		for (String type : searchingTypes) {

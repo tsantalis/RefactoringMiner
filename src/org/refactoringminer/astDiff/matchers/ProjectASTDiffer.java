@@ -270,14 +270,18 @@ public class ProjectASTDiffer
 
 	private void processMethodParameters(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> matchedVariables, ExtendedMultiMappingStore mappingStore) {
 		for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> matchedPair: matchedVariables) {
-			VariableDeclaration leftPair = matchedPair.getLeft();
-			VariableDeclaration rightPair = matchedPair.getRight();
-			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftPair.getLocationInfo());
-			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightPair.getLocationInfo());
-			if (leftTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION) &&
-					rightTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION))
+			VariableDeclaration leftVarDecl = matchedPair.getLeft();
+			VariableDeclaration rightVarDecl = matchedPair.getRight();
+			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
+			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
+			if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
 				if (rightTree.isIsomorphicTo(leftTree))
-					mappingStore.addMappingRecursively(leftTree,rightTree);
+					mappingStore.addMappingRecursively(leftTree, rightTree);
+				else {
+					new LeafMatcher(false).match(leftTree,rightTree,null,mappingStore);
+					mappingStore.addMapping(leftTree,rightTree);
+				}
+			}
 		}
 	}
 

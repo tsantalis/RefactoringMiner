@@ -7130,6 +7130,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 				(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identicalWithOnlyChangesInAnonymousClassArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				(invocationCoveringTheEntireStatement1 instanceof ObjectCreation && invocationCoveringTheEntireStatement2 instanceof ObjectCreation && invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2))))) {

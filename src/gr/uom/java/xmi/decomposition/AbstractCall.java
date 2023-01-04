@@ -206,6 +206,33 @@ public abstract class AbstractCall implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean equalArgumentsExceptForAnonymousClassArguments(AbstractCall call) {
+		List<String> arguments1 = getArguments();
+		List<String> arguments2 = call.getArguments();
+		if(arguments1.size() != arguments2.size())
+			return false;
+		int anonymousClassArguments1 = 0;
+		int anonymousClassArguments2 = 0; 
+		for(int i=0; i<arguments1.size(); i++) {
+			String argument1 = arguments1.get(i);
+			String argument2 = arguments2.get(i);
+			boolean anonymousClassArgument1 = argument1.contains("{\n");
+			if(anonymousClassArgument1) {
+				anonymousClassArguments1++;
+			}
+			boolean anonymousClassArgument2 = argument2.contains("{\n");
+			if(anonymousClassArgument2) {
+				anonymousClassArguments2++;
+			}
+			if(!anonymousClassArgument1 || !anonymousClassArgument2) {
+				if(!argument1.equals(argument2)) {
+					return false;
+				}
+			}
+		}
+		return anonymousClassArguments1 == anonymousClassArguments2 && anonymousClassArguments1 > 0;
+	}
+
 	public boolean equalArgumentsExceptForStringLiterals(AbstractCall call) {
 		List<String> arguments1 = getArguments();
 		List<String> arguments2 = call.getArguments();
@@ -528,6 +555,13 @@ public abstract class AbstractCall implements LocationInfoProvider {
 				identicalName(call) &&
 				!equalArguments(call) &&
 				getArguments().size() != call.getArguments().size();
+	}
+
+	public boolean identicalWithOnlyChangesInAnonymousClassArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+		return identicalExpression(call, replacements, parameterToArgumentMap) &&
+				identicalName(call) && !equalArguments(call) &&
+				getArguments().size() == call.getArguments().size() &&
+				equalArgumentsExceptForAnonymousClassArguments(call);
 	}
 
 	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {

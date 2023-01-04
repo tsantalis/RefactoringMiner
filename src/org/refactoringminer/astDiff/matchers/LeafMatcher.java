@@ -45,8 +45,8 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 	}
 
 	private void specialCases(Tree src, Tree dst, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
-		String EXP_STATEMENT =  "ExpressionStatement";
-		String VAR_DEC_STATEMENT = "VariableDeclarationStatement";
+		String EXP_STATEMENT =  Constants.EXPRESSION_STATEMENT;
+		String VAR_DEC_STATEMENT = Constants.VARIABLE_DECLARATION_STATEMENT;
 		Tree expTree,varTree;
 		boolean expFirst;
 		Tree assignment_operator = null;
@@ -63,12 +63,12 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 			}
 			if (expTree.getChildren().size() > 0)
 			{
-				if (expTree.getChild(0).getType().name.equals("Assignment"))
+				if (expTree.getChild(0).getType().name.equals(Constants.ASSIGNMENT))
 				{
 					assignment = expTree.getChild(0);
 					for(Tree child : assignment.getChildren())
 					{
-						if (child.getType().name.equals("ASSIGNMENT_OPERATOR") && child.getLabel().equals("="))
+						if (child.getType().name.equals(Constants.ASSIGNMENT_OPERATOR) && child.getLabel().equals(Constants.EQUAL_OPERATOR))
 						{
 							assignment_operator = child;
 							break;
@@ -88,12 +88,12 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 			}
 			if (expTree.getChildren().size() > 0)
 			{
-				if (expTree.getChild(0).getType().name.equals("Assignment"))
+				if (expTree.getChild(0).getType().name.equals(Constants.ASSIGNMENT))
 				{
 					assignment = expTree.getChild(0);
 					for(Tree child : assignment.getChildren())
 					{
-						if (child.getType().name.equals("ASSIGNMENT_OPERATOR") && child.getLabel().equals("="))
+						if (child.getType().name.equals(Constants.ASSIGNMENT_OPERATOR) && child.getLabel().equals(Constants.EQUAL_OPERATOR))
 						{
 							assignment_operator = child;
 							break;

@@ -17,7 +17,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 
 	@Override
 	public void match(Tree src, Tree dst, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
-		String labeled = "LabeledStatement";
+		String labeled = Constants.LABELED_STATEMENT;
 		if (src.getType().name.equals(labeled) && dst.getType().name.equals(labeled))
 			mappingStore.addMapping(src.getChild(0),dst.getChild(0));
 		else

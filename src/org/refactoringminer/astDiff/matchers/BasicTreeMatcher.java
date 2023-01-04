@@ -275,7 +275,7 @@ public class BasicTreeMatcher implements TreeMatcher {
 	}
 
 	private static int numberOfMappedDescendants(Tree src, Tree dst, ExtendedMultiMappingStore mappings) {
-		//Set<Tree> dstDescendants = new HashSet<>(dst.getCustomDescendants("Block"));
+		//Set<Tree> dstDescendants = new HashSet<>(dst.getCustomDescendants(Constants.BLOCK));
 		Set<Tree> dstDescendants = new HashSet<>(dst.getDescendants());
 		int mappedDescendants = 0;
 

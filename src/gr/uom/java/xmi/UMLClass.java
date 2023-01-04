@@ -11,7 +11,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private String qualifiedName;
     private String sourceFile;
     private String sourceFolder;
-    private String visibility;
+    private Visibility visibility;
     private boolean isFinal;
     private boolean isStatic;
 	private boolean isAbstract;
@@ -103,11 +103,11 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		this.topLevel = topLevel;
 	}
 
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 

@@ -23,7 +23,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private LocationInfo locationInfo;
 	private String name;
 	private UMLType type;
-	private String visibility;
+	private Visibility visibility;
 	private String className;
 	private boolean isFinal;
 	private boolean isStatic;
@@ -245,11 +245,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 

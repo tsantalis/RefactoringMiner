@@ -812,7 +812,7 @@ public abstract class UMLAbstractClass {
 	public abstract boolean isFinal();
 	public abstract boolean isStatic();
 	public abstract boolean isTopLevel();
-	public abstract String getVisibility();
+	public abstract Visibility getVisibility();
 
 	public String getNonQualifiedName() {
 		return name;

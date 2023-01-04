@@ -10,14 +10,15 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.Visibility;
 
 public class ChangeClassAccessModifierRefactoring implements Refactoring {
-	private String originalAccessModifier;
-	private String changedAccessModifier;
+	private Visibility originalAccessModifier;
+	private Visibility changedAccessModifier;
 	private UMLAbstractClass classBefore;
 	private UMLAbstractClass classAfter;
 
-	public ChangeClassAccessModifierRefactoring(String originalAccessModifier, String changedAccessModifier,
+	public ChangeClassAccessModifierRefactoring(Visibility originalAccessModifier, Visibility changedAccessModifier,
 			UMLAbstractClass classBefore, UMLAbstractClass classAfter) {
 		this.originalAccessModifier = originalAccessModifier;
 		this.changedAccessModifier = changedAccessModifier;
@@ -25,11 +26,11 @@ public class ChangeClassAccessModifierRefactoring implements Refactoring {
 		this.classAfter = classAfter;
 	}
 
-	public String getOriginalAccessModifier() {
+	public Visibility getOriginalAccessModifier() {
 		return originalAccessModifier;
 	}
 
-	public String getChangedAccessModifier() {
+	public Visibility getChangedAccessModifier() {
 		return changedAccessModifier;
 	}
 

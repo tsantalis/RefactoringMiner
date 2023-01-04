@@ -24,7 +24,7 @@ import org.refactoringminer.util.AstUtils;
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
-	private String visibility;
+	private Visibility visibility;
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
 	private String className;
@@ -90,11 +90,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return "method";
 	}
 
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 

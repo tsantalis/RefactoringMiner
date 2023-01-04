@@ -98,8 +98,8 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 		return false;
 	}
 
-	public String getVisibility() {
-		return "private";
+	public Visibility getVisibility() {
+		return Visibility.PRIVATE;
 	}
 
 	public boolean isTopLevel() {

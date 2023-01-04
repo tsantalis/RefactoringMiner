@@ -319,6 +319,53 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean differOnlyInDefaultInitializer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
+		if(variableDeclarations1.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString())) {
+			StringBuilder tmpS1 = new StringBuilder();
+			StringBuilder tmpS2 = new StringBuilder();
+			int defaultInitializers = 0;
+			for(int i=0; i<variableDeclarations1.size(); i++) {
+				VariableDeclaration variableDeclaration1 = variableDeclarations1.get(i);
+				tmpS1.append(variableDeclarationAsString(variableDeclaration1));
+				VariableDeclaration variableDeclaration2 = variableDeclarations2.get(i);
+				tmpS2.append(variableDeclarationAsString(variableDeclaration2));
+				if(i < variableDeclarations1.size()-1) {
+					tmpS1.append(", ");
+					tmpS2.append(", ");
+				}
+				if(variableDeclaration1.getInitializer() == null && variableDeclaration2.getInitializer() != null &&
+						(variableDeclaration2.getInitializer().getExpression().equals("null") ||
+						variableDeclaration2.getInitializer().getExpression().equals("0") ||
+						variableDeclaration2.getInitializer().getExpression().equals("false"))) {
+					defaultInitializers++;
+				}
+				else if(variableDeclaration2.getInitializer() == null && variableDeclaration1.getInitializer() != null &&
+						(variableDeclaration1.getInitializer().getExpression().equals("null") ||
+						variableDeclaration1.getInitializer().getExpression().equals("0") ||
+						variableDeclaration1.getInitializer().getExpression().equals("false"))) {
+					defaultInitializers++;
+				}
+			}
+			tmpS1.append(";\n");
+			tmpS2.append(";\n");
+			if(s1.equals(tmpS1.toString()) && s2.equals(tmpS2.toString()) && defaultInitializers == variableDeclarations1.size()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static String variableDeclarationAsString(VariableDeclaration variableDeclaration) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(variableDeclaration.getType());
+		sb.append(" ");
+		sb.append(variableDeclaration.getVariableName());
+		if(variableDeclaration.getInitializer() != null) {
+			sb.append("=").append(variableDeclaration.getInitializer());
+		}
+		return sb.toString();
+	}
+
 	private static boolean differOnlyInPrefix(String s1, String s2, String prefixWithout, String prefixWith) {
 		if(s1.startsWith(prefixWithout) && s2.startsWith(prefixWith)) {
 			String suffix1 = s1.substring(prefixWithout.length(), s1.length());

@@ -34,6 +34,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<String> arrayAccesses = new ArrayList<String>();
 	private List<String> prefixExpressions = new ArrayList<String>();
 	private List<String> postfixExpressions = new ArrayList<String>();
+	private List<String> thisExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<String> parenthesizedExpressions = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
@@ -83,6 +84,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		this.infixOperators.clear();
 		this.postfixExpressions.clear();
 		this.prefixExpressions.clear();
+		this.getThisExpressions().clear();
 		this.parenthesizedExpressions.clear();
 		this.arguments.clear();
 		this.ternaryOperatorExpressions.clear();
@@ -149,6 +151,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<String> getPostfixExpressions() {
 		return postfixExpressions;
+	}
+
+	public List<String> getThisExpressions() {
+		return thisExpressions;
 	}
 
 	public List<String> getArguments() {

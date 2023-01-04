@@ -36,6 +36,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private List<String> arrayAccesses = new ArrayList<String>();
 	private List<String> prefixExpressions = new ArrayList<String>();
 	private List<String> postfixExpressions = new ArrayList<String>();
+	private List<String> thisExpressions = new ArrayList<String>();
 	private List<String> arguments = new ArrayList<String>();
 	private List<String> parenthesizedExpressions = new ArrayList<String>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
@@ -330,6 +331,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			removeLast(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
+			removeLast(this.thisExpressions, anonymous.getThisExpressions());
 			removeLast(this.parenthesizedExpressions, anonymous.getParenthesizedExpressions());
 			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
@@ -452,10 +454,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	public void visit(PsiThisExpression node) {
 		if(!isFieldAccessWithThisExpression(node.getParent())) {
 			String source = Formatter.format(node);
-			variables.add(source);
+			thisExpressions.add(source);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
+				anonymous.getThisExpressions().add(source);
 			}
 		}
 	}
@@ -806,6 +808,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	public List<String> getPostfixExpressions() {
 		return postfixExpressions;
+	}
+
+	public List<String> getThisExpressions() {
+		return thisExpressions;
 	}
 
 	public List<String> getArguments() {

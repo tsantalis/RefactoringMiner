@@ -355,6 +355,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<String> getThisExpressions() {
+		List<String> thisExpressions = new ArrayList<String>();
+		for(AbstractExpression expression : expressionList) {
+			thisExpressions.addAll(expression.getThisExpressions());
+		}
+		return thisExpressions;
+	}
+
+	@Override
 	public List<String> getArguments() {
 		List<String> arguments = new ArrayList<String>();
 		for(AbstractExpression expression : expressionList) {
@@ -640,6 +649,12 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public CodeRange codeRange() {
 		return locationInfo.codeRange();
+	}
+
+	public boolean isBlock() {
+		return this.locationInfo.getCodeElementType().equals(CodeElementType.BLOCK) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
+				this.locationInfo.getCodeElementType().equals(CodeElementType.CATCH_CLAUSE);
 	}
 
 	public boolean isLoop() {

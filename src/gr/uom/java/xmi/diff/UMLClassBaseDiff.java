@@ -319,6 +319,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
     				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
+    				}
     			}
 			}
     	}
@@ -337,6 +340,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attributeWithTheSameName, attribute);
     				if(!commonAtrributes.contains(pair)) {
     					commonAtrributes.add(pair);
+    				}
+    				if(attributeDiff.encapsulated()) {
+    					refactorings.addAll(attributeDiff.getRefactorings());
     				}
     			}
 			}
@@ -1545,6 +1551,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Boolean> parentIsContainerBody = new ArrayList<>();
 			List<Boolean> nestedMapper = new ArrayList<>();
 			List<Boolean> identical = new ArrayList<>();
+			List<Integer> identicalStatementsForCompositeMappings = new ArrayList<>();
 			List<Integer> nonMappedNodes = new ArrayList<>();
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
@@ -1553,6 +1560,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();
+				if(mapping instanceof CompositeStatementObjectMapping) {
+					CompositeStatementObject comp1 = (CompositeStatementObject)mapping.getFragment1();
+					CompositeStatementObject comp2 = (CompositeStatementObject)mapping.getFragment2();
+					List<String> stringRepresentation1 = comp1.stringRepresentation();
+					List<String> stringRepresentation2 = comp2.stringRepresentation();
+					int minSize = Math.min(stringRepresentation1.size(), stringRepresentation2.size());
+					int identicalStatements = 0;
+					for(int i=0; i<minSize; i++) {
+						if(stringRepresentation1.get(i).equals(stringRepresentation2.get(i)) &&
+								!stringRepresentation1.get(i).equals("{") && !stringRepresentation1.get(i).equals("}")) {
+							identicalStatements++;
+						}
+					}
+					identicalStatementsForCompositeMappings.add(identicalStatements);
+				}
 				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));
 				parentIsContainerBody.add(mapper.parentIsContainerBody(mapping));
@@ -1591,11 +1613,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
+				if(matchingParentMappers(parentMappers) > 1) {
+					if(parentMappingFound.contains(true)) {
+						for(int i=0; i<parentMappingFound.size(); i++) {
+							if(parentMappingFound.get(i) == false) {
+								indicesToBeRemoved.add(i);
+							}
+						}
+						determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+					}
+				}
 			}
 			else if(parentMappingFound.contains(true)) {
 				for(int i=0; i<parentMappingFound.size(); i++) {
 					if(parentMappingFound.get(i) == false) {
-						indicesToBeRemoved.add(i);
+						//check if composite mapping in index i has more identical statements
+						boolean skip = false;
+						if(!identicalStatementsForCompositeMappings.isEmpty()) {
+							int indexOfTrueParentMapping = parentMappingFound.indexOf(true);
+							if(identicalStatementsForCompositeMappings.get(i) > identicalStatementsForCompositeMappings.get(indexOfTrueParentMapping)) {
+								skip = true;
+							}
+						}
+						if(!skip) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
 				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);

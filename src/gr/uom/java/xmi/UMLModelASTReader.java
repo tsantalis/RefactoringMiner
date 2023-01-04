@@ -23,12 +23,12 @@ public class UMLModelASTReader {
 	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private UMLModel umlModel;
 
-	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories) {
+	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, boolean astDiff) {
 		this.umlModel = new UMLModel(repositoryDirectories);
-		ApplicationManager.getApplication().runReadAction(() -> processJavaFileContents(javaFileContents));
+		ApplicationManager.getApplication().runReadAction(() -> processJavaFileContents(javaFileContents, astDiff));
 	}
 
-	private void processJavaFileContents(Map<String, String> javaFileContents) {
+	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
 		for(String filePath : javaFileContents.keySet()) {
 			String javaFileContent = javaFileContents.get(filePath);
 			if((javaFileContent.contains(FREE_MARKER_GENERATED) || javaFileContent.contains(FREE_MARKER_GENERATED_2)) &&
@@ -38,6 +38,14 @@ public class UMLModelASTReader {
 			try {
 				PsiFile psiFile = PsiFactoryManager.getFactory().createFileFromText(JavaLanguage.INSTANCE, javaFileContent);
 				processCompilationUnit(filePath, psiFile, javaFileContent);
+				if(astDiff) {
+//					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
+//					scanner.setSource(charArray);
+//					JdtVisitor visitor = new JdtVisitor(scanner);
+//					compilationUnit.accept(visitor);
+//					TreeContext treeContext = visitor.getTreeContext();
+//					this.umlModel.getTreeContextMap().put(filePath, treeContext);
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace();

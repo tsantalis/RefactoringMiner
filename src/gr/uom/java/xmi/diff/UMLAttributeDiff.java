@@ -31,6 +31,7 @@ public class UMLAttributeDiff {
 	private boolean finalChanged;
 	private boolean volatileChanged;
 	private boolean transientChanged;
+	private boolean initializerChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLOperation addedGetter;
@@ -121,7 +122,16 @@ public class UMLAttributeDiff {
 		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
 		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
 		if(initializer1 != null && initializer2 != null) {
+			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
+				initializerChanged = true;
+			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
+		}
+		else if(initializer1 == null && initializer2 != null) {
+			initializerChanged = true;
+		}
+		else if(initializer1 != null && initializer2 == null) {
+			initializerChanged = true;
 		}
 	}
 
@@ -161,7 +171,7 @@ public class UMLAttributeDiff {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				(mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
+				!initializerChanged;
 	}
 
 	public String toString() {

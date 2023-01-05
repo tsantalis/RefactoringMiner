@@ -1801,10 +1801,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment statement : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT2())) {
 				expandAnonymousAndLambdas(statement, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operationBodyMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
 			}
+			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 				if(!returnWithVariableReplacement(mapping) && !nullLiteralReplacements(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
 					expandAnonymousAndLambdas(fragment, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operationBodyMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+				}
+				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+					for(AbstractCodeFragment leaf1 : leaves1) {
+						if(mapping.getFragment2().getString().equals(leaf1.getString())) {
+							CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+							if(parent2.getParent() != null && (!operationBodyMapper.alreadyMatched2(parent2) || (parent2.isBlock() && !operationBodyMapper.alreadyMatched2(parent2.getParent())))) {
+								AbstractCodeFragment fragment = mapping.getFragment2();
+								expandAnonymousAndLambdas(fragment, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operationBodyMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+								break;
+							}
+						}
+					}
 				}
 			}
 			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
@@ -1820,7 +1833,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
 			List<CompositeStatementObject> innerNodes1 = composite1.getInnerNodes();
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
@@ -3550,11 +3562,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else {
-							LeafMapping minStatementMapping = mappingSet.first();
-							if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-								addToMappings(minStatementMapping, mappingSet);
-								leaves2.remove(minStatementMapping.getFragment2());
+							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
+							if(movedInIfElseBranch.size() > 1) {
+								for(AbstractCodeMapping mapping : movedInIfElseBranch) {
+									addToMappings((LeafMapping) mapping, mappingSet);
+									leaves2.remove(mapping.getFragment2());
+								}
 								leafIterator1.remove();
+							}
+							else {
+								LeafMapping minStatementMapping = mappingSet.first();
+								if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+									addToMappings(minStatementMapping, mappingSet);
+									leaves2.remove(minStatementMapping.getFragment2());
+									leafIterator1.remove();
+								}
 							}
 						}
 					}
@@ -4062,7 +4084,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
-		AbstractCodeMapping parentMapping = null;
+		//Extract Method scenario
 		AbstractCodeFragment statementContainingOperationInvocation = null;
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
 			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
@@ -4078,18 +4100,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(statementContainingOperationInvocation != null) {
 				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
-					parentMapping = mapping;
-					break;
+					return mapping;
 				}
 				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
 						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) {
-					parentMapping = mapping;
-					break;
+					return mapping;
 				}
 			}
 		}
-		return parentMapping;
+		//Inline Method scenario
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) {
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				statementContainingOperationInvocation = leaf;
+				break;
+			}
+		}
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+			if(mapping instanceof LeafMapping) {
+				if(mapping.getFragment1().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+					statementContainingOperationInvocation = mapping.getFragment1();
+				}
+			}
+			if(statementContainingOperationInvocation != null) {
+				if(mapping.getFragment1().equals(statementContainingOperationInvocation.getParent())) {
+					return mapping;
+				}
+				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
+						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+						mapping.getFragment1().equals(statementContainingOperationInvocation.getParent().getParent())) {
+					return mapping;
+				}
+			}
+		}
+		return null;
 	}
 
 	private boolean duplicateMapping(AbstractCodeMapping mapping) {
@@ -4171,50 +4215,173 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private Set<AbstractCodeMapping> movedOutOfIfElseIfBranch(TreeSet<? extends AbstractCodeMapping> mappingSet) {
-		if(container1.equals(container2) || parentMapper != null) {
+	private Set<AbstractCodeMapping> movedInIfElseIfBranch(TreeSet<? extends AbstractCodeMapping> mappingSet) {
+		if(container1.equals(container2) || (parentMapper != null && !nested)) {
 			Map<CompositeStatementObject, AbstractCodeMapping> map = new LinkedHashMap<>();
-			boolean ifFound = false, elseIfFound = false;
+			boolean ifFound = false, elseIfFound = false, elseFound = false;
 			for(AbstractCodeMapping mapping : mappingSet) {
-				AbstractCodeFragment fragment = mapping.getFragment1();
+				AbstractCodeFragment fragment = mapping.getFragment2();
 				if(fragment.getParent() != null && fragment.getParent().getParent() != null) {
 					boolean isWithinIfBranch = isIfBranch(fragment.getParent(), fragment.getParent().getParent());
-					//boolean isWithinElseBranch = isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					boolean isWithinElseBranch = isElseBranch(fragment.getParent(), fragment.getParent().getParent());
 					boolean isWithinElseIfBranch = false;
 					if(fragment.getParent().getParent().getParent() != null) {
 						isWithinElseIfBranch = isElseIfBranch(fragment.getParent().getParent(), fragment.getParent().getParent().getParent());
 					}
-					if(isWithinIfBranch && !isWithinElseIfBranch && fragment.getDepth() - mapping.getFragment2().getDepth() >= 2) {
+					int depthDifference = fragment.getDepth() - mapping.getFragment1().getDepth();
+					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							ifFound = true;
 						}
 					}
-					else if(isWithinElseIfBranch && fragment.getDepth() - mapping.getFragment2().getDepth() >= 3) {
+					else if(isWithinElseIfBranch && depthDifference >= 3) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							elseIfFound = true;
 						}
 					}
-					/*else if(isWithinElseBranch && fragment.getDepth() - mapping.getFragment2().getDepth() >= 2) {
+					else if(isWithinElseBranch && depthDifference >= 2) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							elseFound = true;
 						}
-					}*/
+					}
 				}
 			}
-			boolean elseFound = false;
-			for(CompositeStatementObject block : map.keySet()) {
-				if(hasElseBranch(block.getParent())) {
-					elseFound = true;
+			if(ifFound && (elseIfFound || elseFound) && ifElseIfChain(map.keySet())) {
+				AbstractCodeFragment fragment1 = mappingSet.first().getFragment1();
+				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
+				boolean fragment1NestedUnderLoop = false;
+				if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
+					fragment1NestedUnderLoop = fragment1.getParent().isLoop() || fragment1.getParent().getParent().isLoop();
 				}
-			}
-			if(ifFound && elseIfFound && !elseFound && ifElseIfChain(map.keySet())) {
-				return new LinkedHashSet<AbstractCodeMapping>(map.values());
+				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop) {
+					boolean fragment1IsInsideIfElseIf = false;
+					if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
+						boolean isWithinIfBranch = isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						boolean isWithinElseIfBranch = false;
+						if(fragment1.getParent().getParent().getParent() != null) {
+							isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
+						}
+						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment1.getParent().getParent())) {
+							fragment1IsInsideIfElseIf = true;
+						}
+					}
+					if(parentMapper != null && parentMapper.alreadyMatched2(mappingSet.first().getFragment2().getParent().getParent())) {
+						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
+						if(parentMapping != null && parentMapping.getFragment2().equals(mappingSet.first().getFragment2().getParent().getParent())) {
+							fragment1IsInsideIfElseIf = true;
+						}
+					}
+					if(!fragment1IsInsideIfElseIf) {
+						return new LinkedHashSet<AbstractCodeMapping>(map.values());
+					}
+				}
 			}
 		}
 		return Set.of(mappingSet.first());
+	}
+
+	private Set<AbstractCodeMapping> movedOutOfIfElseIfBranch(TreeSet<? extends AbstractCodeMapping> mappingSet) {
+		if(container1.equals(container2) || (parentMapper != null && !nested)) {
+			Map<CompositeStatementObject, AbstractCodeMapping> map = new LinkedHashMap<>();
+			boolean ifFound = false, elseIfFound = false, elseFound = false;
+			for(AbstractCodeMapping mapping : mappingSet) {
+				AbstractCodeFragment fragment = mapping.getFragment1();
+				if(fragment.getParent() != null && fragment.getParent().getParent() != null) {
+					boolean isWithinIfBranch = isIfBranch(fragment.getParent(), fragment.getParent().getParent());
+					boolean isWithinElseBranch = isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					boolean isWithinElseIfBranch = false;
+					if(fragment.getParent().getParent().getParent() != null) {
+						isWithinElseIfBranch = isElseIfBranch(fragment.getParent().getParent(), fragment.getParent().getParent().getParent());
+					}
+					int depthDifference = fragment.getDepth() - mapping.getFragment2().getDepth();
+					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2) {
+						if(!map.containsKey(fragment.getParent())) {
+							map.put(fragment.getParent(), mapping);
+							ifFound = true;
+						}
+					}
+					else if(isWithinElseIfBranch && depthDifference >= 3) {
+						if(!map.containsKey(fragment.getParent())) {
+							map.put(fragment.getParent(), mapping);
+							elseIfFound = true;
+						}
+					}
+					else if(isWithinElseBranch && depthDifference >= 2) {
+						if(!map.containsKey(fragment.getParent())) {
+							map.put(fragment.getParent(), mapping);
+							elseFound = true;
+						}
+					}
+				}
+			}
+			if(ifFound && (elseIfFound || elseFound) && ifElseIfChain(map.keySet())) {
+				AbstractCodeFragment fragment2 = mappingSet.first().getFragment2();
+				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
+				boolean fragment2NestedUnderLoop = false;
+				if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
+					fragment2NestedUnderLoop = fragment2.getParent().isLoop() || fragment2.getParent().getParent().isLoop();
+				}
+				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop) {
+					boolean fragment2IsInsideIfElseIf = false;
+					if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
+						boolean isWithinIfBranch = isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						boolean isWithinElseIfBranch = false;
+						if(fragment2.getParent().getParent().getParent() != null) {
+							isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
+						}
+						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment2.getParent().getParent())) {
+							fragment2IsInsideIfElseIf = true;
+						}
+					}
+					if(parentMapper != null && parentMapper.alreadyMatched1(mappingSet.first().getFragment1().getParent().getParent())) {
+						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
+						if(parentMapping != null && parentMapping.getFragment1().equals(mappingSet.first().getFragment1().getParent().getParent())) {
+							fragment2IsInsideIfElseIf = true;
+						}
+					}
+					if(!fragment2IsInsideIfElseIf) {
+						return new LinkedHashSet<AbstractCodeMapping>(map.values());
+					}
+				}
+			}
+		}
+		return Set.of(mappingSet.first());
+	}
+
+
+	private boolean nestedUnderLoop(Set<CompositeStatementObject> blocks) {
+		//sort by start offset
+		List<CompositeStatementObject> ifParents = new ArrayList<>();
+		for(CompositeStatementObject block : blocks) {
+			CompositeStatementObject parent = block.getParent();
+			if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				if(ifParents.isEmpty()) {
+					ifParents.add(parent);
+				}
+				else {
+					int index=0;
+					for(CompositeStatementObject ifParent : ifParents) {
+						if(parent.getLocationInfo().getStartOffset() < ifParent.getLocationInfo().getStartOffset()) {
+							break;
+						}
+						index++;
+					}
+					ifParents.add(index, parent);
+				}
+			}
+		}
+		if(ifParents.size() > 0) {
+			CompositeStatementObject firstParent = ifParents.get(0);
+			if(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
+				return firstParent.getParent().isLoop() || firstParent.getParent().getParent().isLoop();
+			}
+		}
+		return false;
 	}
 
 	private boolean ifElseIfChain(Set<CompositeStatementObject> blocks) {
@@ -5373,6 +5540,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				findReplacements(nullLiterals1, ternaryExpressions2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 			}
+			Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
+			Set<String> tmpVariables1 = new LinkedHashSet<String>();
+			for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+				List<String> thenVariables = ternary.getThenExpression().getVariables();
+				List<String> elseVariables = ternary.getElseExpression().getVariables();
+				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0)) &&
+						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0))) {
+					ternaryExpressions2.add(ternary.getExpression());
+					tmpVariables1.addAll(ternary.getCondition().getVariables());
+					tmpVariables1.addAll(ternary.getThenExpression().getVariables());
+					tmpVariables1.addAll(ternary.getElseExpression().getVariables());
+				}
+			}
+			findReplacements(tmpVariables1, ternaryExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 		}
 		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement2.getNullLiterals().isEmpty()) {
@@ -5384,6 +5565,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				findReplacements(ternaryExpressions1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 			}
+			Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
+			Set<String> tmpVariables2 = new LinkedHashSet<String>();
+			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
+				List<String> thenVariables = ternary.getThenExpression().getVariables();
+				List<String> elseVariables = ternary.getElseExpression().getVariables();
+				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0)) &&
+						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0))) {
+					ternaryExpressions1.add(ternary.getExpression());
+					tmpVariables2.addAll(ternary.getCondition().getVariables());
+					tmpVariables2.addAll(thenVariables);
+					tmpVariables2.addAll(elseVariables);
+				}
+			}
+			findReplacements(ternaryExpressions1, tmpVariables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
 		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, arguments2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);

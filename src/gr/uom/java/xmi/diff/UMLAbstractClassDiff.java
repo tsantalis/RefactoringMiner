@@ -423,6 +423,9 @@ public abstract class UMLAbstractClassDiff {
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
 								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings)) {
 							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
+							if(!attributeDiffList.contains(attributeDiff)) {
+								attributeDiffList.add(attributeDiff);
+							}
 							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 							if(!refactorings.containsAll(attributeDiffRefactorings)) {
 								refactorings.addAll(attributeDiffRefactorings);

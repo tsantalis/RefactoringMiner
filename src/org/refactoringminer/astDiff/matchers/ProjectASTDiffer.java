@@ -624,10 +624,17 @@ public class ProjectASTDiffer
 	private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		Set<org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
 		for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
-			Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
-			Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
-			if (srcAttr.isIsoStructuralTo(dstAttr))
-				mappingStore.addMappingRecursively(srcAttr,dstAttr);
+			processFieldDeclaration(srcTree,dstTree,pair.getLeft(),pair.getRight(),mappingStore);
+		}
+		List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
+		for (UMLAttributeDiff umlAttributeDiff : attributeDiffList)
+		{
+			processFieldDeclaration(srcTree,dstTree,umlAttributeDiff.getRemovedAttribute(),umlAttributeDiff.getAddedAttribute(),mappingStore);
+			if (umlAttributeDiff.getInitializerMapper().isPresent())
+			{
+				UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
+				processMethod(srcTree, dstTree, umlOperationBodyMapper, mappingStore);
+			}
 		}
 	}
 
@@ -653,8 +660,11 @@ public class ProjectASTDiffer
 
 	private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore)
 	{
-		Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getLocationInfo()).getParent(); //TODO
-		Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo()).getParent(); //TODO
+
+		Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getLocationInfo());
+		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
+		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
+		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
 		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
 				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		{

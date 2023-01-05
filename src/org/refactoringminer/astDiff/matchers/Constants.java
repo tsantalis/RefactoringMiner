@@ -10,6 +10,8 @@ public class Constants {
 	public static final String CATCH_CLAUSE = "CatchClause";
 	public static final String BLOCK = "Block";
 	public static final String VARIABLE_DECLARATION_FRAGMENT = "VariableDeclarationFragment";
+
+	public static final String FIELD_DECLARATION = "FieldDeclaration";
 	public static final String ACCESS_MODIFIER = "AccessModifier";
 	public static final String PACKAGE_DECLARATION = "PackageDeclaration";
 	public static final String ANONYMOUS_CLASS_DECLARATION = "AnonymousClassDeclaration";

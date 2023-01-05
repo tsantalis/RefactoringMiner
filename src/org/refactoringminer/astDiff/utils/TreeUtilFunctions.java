@@ -123,4 +123,13 @@ public class TreeUtilFunctions {
 			return tree;
 		return getFinalRoot(tree.getParent());
 	}
+
+	public static Tree getParentUntilType(Tree tree, String matchingType) {
+		if (tree.getType().name.equals(matchingType))
+			return tree;
+		if (tree.getParent() != null)
+			return getParentUntilType(tree.getParent(),matchingType);
+		else
+			return null;
+	}
 }

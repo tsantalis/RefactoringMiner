@@ -624,7 +624,10 @@ public class ProjectASTDiffer
 	private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		Set<org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
 		for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
-			processFieldDeclaration(srcTree,dstTree,pair.getLeft(),pair.getRight(),mappingStore);
+			Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
+			Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
+			if (srcAttr.isIsoStructuralTo(dstAttr))
+				mappingStore.addMappingRecursively(srcAttr,dstAttr);
 		}
 	}
 

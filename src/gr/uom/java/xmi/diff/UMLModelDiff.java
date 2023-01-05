@@ -1135,7 +1135,9 @@ public class UMLModelDiff {
 			refactorings.addAll(map.get(maxCompatibility));
 			for(MoveAttributeRefactoring moveAttributeRefactoring : map.get(maxCompatibility)) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
-				movedAttributeDiffList.add(attributeDiff);
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				pastRefactorings.addAll(attributeDiff.getRefactorings());
 			}
 		}
@@ -1143,30 +1145,44 @@ public class UMLModelDiff {
 			refactorings.addAll(candidates);
 			for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
-				movedAttributeDiffList.add(attributeDiff);
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				pastRefactorings.addAll(attributeDiff.getRefactorings());
 			}
 		}
 	}
 
 	private MoveAttributeRefactoring processPairOfAttributes(UMLAttribute addedAttribute, UMLAttribute removedAttribute, Map<Replacement,
-			Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) {
+			Set<CandidateAttributeRefactoring>> renameMap, Set<Refactoring> pastRefactorings) throws RefactoringMinerTimedOutException {
 		if(!removedAttribute.getName().equals(addedAttribute.getName()) && movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), pastRefactorings).size() > 0) {
 			return null;
 		}
 		if(addedAttribute.getName().equals(removedAttribute.getName()) &&
 				addedAttribute.getType().equals(removedAttribute.getType())) {
 			if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
 				return pullUpAttribute;
 			}
 			else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
 				return pushDownAttribute;
 			}
 			else if(sourceClassImportsTargetClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
 					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName())) {
 				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute)) {
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+					if(!movedAttributeDiffList.contains(attributeDiff)) {
+						movedAttributeDiffList.add(attributeDiff);
+					}
 					MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
 					return moveAttribute;
 				}
@@ -1176,6 +1192,10 @@ public class UMLModelDiff {
 				addedAttribute.getType().equals(removedAttribute.getType())) {
 			Replacement rename = new Replacement(removedAttribute.getName(), addedAttribute.getName(), ReplacementType.VARIABLE_NAME);
 			if(renameMap.containsKey(rename)) {
+				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
 				MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(removedAttribute, addedAttribute, candidates);
 				return moveAttribute;
@@ -1639,7 +1659,9 @@ public class UMLModelDiff {
 				}
 				this.refactorings.add(ref);
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
-				movedAttributeDiffList.add(attributeDiff);
+				if(!movedAttributeDiffList.contains(attributeDiff)) {
+					movedAttributeDiffList.add(attributeDiff);
+				}
 				refactorings.addAll(attributeDiff.getRefactorings()); 
 			}
 		}
@@ -2044,6 +2066,9 @@ public class UMLModelDiff {
 								!diff.getNextClass().containsAttributeWithName(pattern.getBefore()) &&
 								!attributeMerged(a1, a2, refactorings)) {
 							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff, this);
+							if(!movedAttributeDiffList.contains(attributeDiff)) {
+								movedAttributeDiffList.add(attributeDiff);
+							}
 							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 							if(!refactorings.containsAll(attributeDiffRefactorings)) {
 								refactorings.addAll(attributeDiffRefactorings);
@@ -2113,6 +2138,10 @@ public class UMLModelDiff {
 						if(a2 != null) {
 							if(candidate.getOriginalVariableDeclaration().isAttribute()) {
 								if(originalClassDiff != null && originalClassDiff.removedAttributes.contains(candidate.getOriginalAttribute())) {
+									UMLAttributeDiff attributeDiff = new UMLAttributeDiff(candidate.getOriginalAttribute(), a2, diff2, this);
+									if(!movedAttributeDiffList.contains(attributeDiff)) {
+										movedAttributeDiffList.add(attributeDiff);
+									}
 									MoveAndRenameAttributeRefactoring ref = new MoveAndRenameAttributeRefactoring(candidate.getOriginalAttribute(), a2, set);
 									if(!refactorings.contains(ref)) {
 										refactorings.add(ref);

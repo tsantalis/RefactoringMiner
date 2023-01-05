@@ -49,7 +49,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, this, modelDiff);
     			if(!attributeDiff.isEmpty()) {
 	    			refactorings.addAll(attributeDiff.getRefactorings());
-	    			this.attributeDiffList.add(attributeDiff);
+	    			if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
     			}
     			else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, matchingAttribute);
@@ -71,7 +73,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, this, modelDiff);
     			if(!attributeDiff.isEmpty()) {
 	    			refactorings.addAll(attributeDiff.getRefactorings());
-					this.attributeDiffList.add(attributeDiff);
+	    			if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
     			}
     			else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(matchingAttribute, attribute);
@@ -208,7 +212,9 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 					refactorings.addAll(attributeDiff.getRefactorings());
 					addedAttributeIterator.remove();
 					removedAttributeIterator.remove();
-					attributeDiffList.add(attributeDiff);
+					if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
 					break;
 				}
 			}

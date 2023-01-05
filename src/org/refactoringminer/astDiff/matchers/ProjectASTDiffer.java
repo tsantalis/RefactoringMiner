@@ -537,12 +537,12 @@ public class ProjectASTDiffer
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
 			}
 			else if (refactoring instanceof RenameAttributeRefactoring) {
-				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) (refactoring);
-				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
-				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
-				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
-				//	mappingStore.addMappingRecursively(srcAttrTree.getParent(),dstAttrTree.getParent());
-				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
+//				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) (refactoring);
+//				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
+//				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
+//				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
+//				//	mappingStore.addMappingRecursively(srcAttrTree.getParent(),dstAttrTree.getParent());
+//				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				//ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;

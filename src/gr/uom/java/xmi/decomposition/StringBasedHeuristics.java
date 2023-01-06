@@ -291,12 +291,16 @@ public class StringBasedHeuristics {
 		return (diff1.isEmpty() && diff2.startsWith("(") && diff2.endsWith(")")) || diff2.equals("(" + diff1 + ")");
 	}
 
-	protected static boolean differOnlyInFinalModifier(String s1, String s2) {;
+	protected static boolean differOnlyInThrow(String s1, String s2) {
+		return differOnlyInPrefix(s1, s2, "", "throw ");
+	}
+
+	protected static boolean differOnlyInFinalModifier(String s1, String s2) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
 				differOnlyInPrefix(s1, s2, "catch(", "catch(final ");
 	}
 
-	protected static boolean differOnlyInThis(String s1, String s2) {;
+	protected static boolean differOnlyInThis(String s1, String s2) {
 		if(differOnlyInPrefix(s1, s2, "", "this.")) {
 			return true;
 		}

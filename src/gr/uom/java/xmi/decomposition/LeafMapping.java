@@ -237,7 +237,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 								return 1;
 							}
 						}
-						if(levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(0.0) &&
+						if(this.equalContainer() && o.equalContainer() &&
+								levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(0.0) &&
 								levelParentEditDistance2.size() == 2 && levelParentEditDistance2.get(1).equals(0.0) &&
 								!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
 							int parentIndexDiff1 = this.parentIndexDiff();

@@ -44,7 +44,11 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public abstract double editDistance();
-	
+
+	public boolean equalContainer() {
+		return operation1.equals(operation2);
+	}
+
 	public AbstractCodeFragment getFragment1() {
 		return fragment1;
 	}

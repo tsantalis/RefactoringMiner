@@ -19,25 +19,25 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private AnonymousClassDeclaration astNode;
 	private String astNodeString;
-	private List<String> variables = new ArrayList<String>();
-	private List<String> types = new ArrayList<String>();
+	private List<LeafExpression> variables = new ArrayList<>();
+	private List<String> types = new ArrayList<>();
 	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
-	private List<String> stringLiterals = new ArrayList<String>();
-	private List<String> numberLiterals = new ArrayList<String>();
-	private List<String> nullLiterals = new ArrayList<String>();
-	private List<String> booleanLiterals = new ArrayList<String>();
-	private List<String> typeLiterals = new ArrayList<String>();
+	private List<LeafExpression> stringLiterals = new ArrayList<>();
+	private List<LeafExpression> numberLiterals = new ArrayList<>();
+	private List<LeafExpression> nullLiterals = new ArrayList<>();
+	private List<LeafExpression> booleanLiterals = new ArrayList<>();
+	private List<LeafExpression> typeLiterals = new ArrayList<>();
 	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
-	private List<String> infixExpressions = new ArrayList<String>();
-	private List<String> infixOperators = new ArrayList<String>();
-	private List<String> arrayAccesses = new ArrayList<String>();
-	private List<String> prefixExpressions = new ArrayList<String>();
-	private List<String> postfixExpressions = new ArrayList<String>();
-	private List<String> thisExpressions = new ArrayList<String>();
-	private List<String> arguments = new ArrayList<String>();
-	private List<String> parenthesizedExpressions = new ArrayList<String>();
+	private List<LeafExpression> infixExpressions = new ArrayList<>();
+	private List<String> infixOperators = new ArrayList<>();
+	private List<LeafExpression> arrayAccesses = new ArrayList<>();
+	private List<LeafExpression> prefixExpressions = new ArrayList<>();
+	private List<LeafExpression> postfixExpressions = new ArrayList<>();
+	private List<LeafExpression> thisExpressions = new ArrayList<>();
+	private List<LeafExpression> arguments = new ArrayList<>();
+	private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	
@@ -79,23 +79,23 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return anonymousClassDeclarations;
 	}
 
-	public List<String> getStringLiterals() {
+	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
 	}
 
-	public List<String> getNumberLiterals() {
+	public List<LeafExpression> getNumberLiterals() {
 		return numberLiterals;
 	}
 
-	public List<String> getNullLiterals() {
+	public List<LeafExpression> getNullLiterals() {
 		return nullLiterals;
 	}
 
-	public List<String> getBooleanLiterals() {
+	public List<LeafExpression> getBooleanLiterals() {
 		return booleanLiterals;
 	}
 
-	public List<String> getTypeLiterals() {
+	public List<LeafExpression> getTypeLiterals() {
 		return typeLiterals;
 	}
 
@@ -103,7 +103,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return creationMap;
 	}
 
-	public List<String> getInfixExpressions() {
+	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
 	}
 
@@ -111,27 +111,27 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return infixOperators;
 	}
 
-	public List<String> getArrayAccesses() {
+	public List<LeafExpression> getArrayAccesses() {
 		return arrayAccesses;
 	}
 
-	public List<String> getPrefixExpressions() {
+	public List<LeafExpression> getPrefixExpressions() {
 		return prefixExpressions;
 	}
 
-	public List<String> getPostfixExpressions() {
+	public List<LeafExpression> getPostfixExpressions() {
 		return postfixExpressions;
 	}
 
-	public List<String> getThisExpressions() {
+	public List<LeafExpression> getThisExpressions() {
 		return thisExpressions;
 	}
 
-	public List<String> getArguments() {
+	public List<LeafExpression> getArguments() {
 		return this.arguments;
 	}
 
-	public List<String> getParenthesizedExpressions() {
+	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
 	}
 
@@ -139,7 +139,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return ternaryOperatorExpressions;
 	}
 
-	public List<String> getVariables() {
+	public List<LeafExpression> getVariables() {
 		return variables;
 	}
 

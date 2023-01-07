@@ -57,6 +57,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class Visitor extends ASTVisitor {
 	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
@@ -64,25 +65,25 @@ public class Visitor extends ASTVisitor {
 	private CompilationUnit cu;
 	private String filePath;
 	private VariableDeclarationContainer container;
-	private List<String> variables = new ArrayList<String>();
-	private List<String> types = new ArrayList<String>();
+	private List<LeafExpression> variables = new ArrayList<>();
+	private List<String> types = new ArrayList<>();
 	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
-	private List<String> stringLiterals = new ArrayList<String>();
-	private List<String> numberLiterals = new ArrayList<String>();
-	private List<String> nullLiterals = new ArrayList<String>();
-	private List<String> booleanLiterals = new ArrayList<String>();
-	private List<String> typeLiterals = new ArrayList<String>();
+	private List<LeafExpression> stringLiterals = new ArrayList<>();
+	private List<LeafExpression> numberLiterals = new ArrayList<>();
+	private List<LeafExpression> nullLiterals = new ArrayList<>();
+	private List<LeafExpression> booleanLiterals = new ArrayList<>();
+	private List<LeafExpression> typeLiterals = new ArrayList<>();
 	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
-	private List<String> infixExpressions = new ArrayList<String>();
-	private List<String> infixOperators = new ArrayList<String>();
-	private List<String> arrayAccesses = new ArrayList<String>();
-	private List<String> prefixExpressions = new ArrayList<String>();
-	private List<String> postfixExpressions = new ArrayList<String>();
-	private List<String> thisExpressions = new ArrayList<String>();
-	private List<String> arguments = new ArrayList<String>();
-	private List<String> parenthesizedExpressions = new ArrayList<String>();
+	private List<LeafExpression> infixExpressions = new ArrayList<>();
+	private List<String> infixOperators = new ArrayList<>();
+	private List<LeafExpression> arrayAccesses = new ArrayList<>();
+	private List<LeafExpression> prefixExpressions = new ArrayList<>();
+	private List<LeafExpression> postfixExpressions = new ArrayList<>();
+	private List<LeafExpression> thisExpressions = new ArrayList<>();
+	private List<LeafExpression> arguments = new ArrayList<>();
+	private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -95,28 +96,31 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ArrayAccess node) {
-		arrayAccesses.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.ARRAY_ACCESS, container);
+		arrayAccesses.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArrayAccesses().add(stringify(node));
+			anonymous.getArrayAccesses().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(PrefixExpression node) {
-		prefixExpressions.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PREFIX_EXPRESSION, container);
+		prefixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPrefixExpressions().add(stringify(node));
+			anonymous.getPrefixExpressions().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(PostfixExpression node) {
-		postfixExpressions.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.POSTFIX_EXPRESSION, container);
+		postfixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPostfixExpressions().add(stringify(node));
+			anonymous.getPostfixExpressions().add(expression);
 		}
 		return super.visit(node);
 	}
@@ -132,13 +136,13 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(InfixExpression node) {
-		List extendedOperands = node.extendedOperands();
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.INFIX_EXPRESSION, container);
 		String nodeAsString = stringify(node);
-		infixExpressions.add(nodeAsString);
+		infixExpressions.add(expression);
 		infixOperators.add(node.getOperator().toString());
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(nodeAsString);
+			anonymous.getInfixExpressions().add(expression);
 			anonymous.getInfixOperators().add(node.getOperator().toString());
 		}
 		return super.visit(node);
@@ -251,7 +255,7 @@ public class Visitor extends ASTVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			removeLast(this.variables, anonymous.getVariables());
-			removeLast(this.types, anonymous.getTypes());
+			removeLastString(this.types, anonymous.getTypes());
 			for(String key : anonymous.getMethodInvocationMap().keySet()) {
 				this.methodInvocationMap.remove(key, anonymous.getMethodInvocationMap().get(key));
 			}
@@ -265,7 +269,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
 			removeLast(this.numberLiterals, anonymous.getNumberLiterals());
 			removeLast(this.infixExpressions, anonymous.getInfixExpressions());
-			removeLast(this.infixOperators, anonymous.getInfixOperators());
+			removeLastString(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
 			removeLast(this.thisExpressions, anonymous.getThisExpressions());
@@ -278,9 +282,17 @@ public class Visitor extends ASTVisitor {
 		}
 	}
 
-	private static void removeLast(List<String> parentList, List<String> childList) {
+	private static void removeLastString(List<String> parentList, List<String> childList) {
 		for(int i=childList.size()-1; i>=0; i--) {
 			String element = childList.get(i);
+			int lastIndex = parentList.lastIndexOf(element);
+			parentList.remove(lastIndex);
+		}
+	}
+
+	private static void removeLast(List<LeafExpression> parentList, List<LeafExpression> childList) {
+		for(int i=childList.size()-1; i>=0; i--) {
+			LeafExpression element = childList.get(i);
 			int lastIndex = parentList.lastIndexOf(element);
 			parentList.remove(lastIndex);
 		}
@@ -347,56 +359,62 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(StringLiteral node) {
-		stringLiterals.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.STRING_LITERAL, container);
+		stringLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getStringLiterals().add(stringify(node));
+			anonymous.getStringLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(NumberLiteral node) {
-		numberLiterals.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NUMBER_LITERAL, container);
+		numberLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNumberLiterals().add(stringify(node));
+			anonymous.getNumberLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(NullLiteral node) {
-		nullLiterals.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NULL_LITERAL, container);
+		nullLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getNullLiterals().add(stringify(node));
+			anonymous.getNullLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(BooleanLiteral node) {
-		booleanLiterals.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.BOOLEAN_LITERAL, container);
+		booleanLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getBooleanLiterals().add(stringify(node));
+			anonymous.getBooleanLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(TypeLiteral node) {
-		typeLiterals.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.TYPE_LITERAL, container);
+		typeLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypeLiterals().add(stringify(node));
+			anonymous.getTypeLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
 
 	public boolean visit(ThisExpression node) {
 		if(!(node.getParent() instanceof FieldAccess)) {
-			thisExpressions.add(stringify(node));
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.THIS_EXPRESSION, container);
+			thisExpressions.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getThisExpressions().add(stringify(node));
+				anonymous.getThisExpressions().add(expression);
 			}
 		}
 		return super.visit(node);
@@ -405,10 +423,11 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(SimpleName node) {
 		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();
-			variables.add(stringify(fieldAccess));
+			LeafExpression fieldAccessExpression = new LeafExpression(cu, filePath, fieldAccess, CodeElementType.FIELD_ACCESS, container);
+			variables.add(fieldAccessExpression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(stringify(fieldAccess));
+				anonymous.getVariables().add(fieldAccessExpression);
 			}
 		}
 		else if(node.getParent() instanceof MethodInvocation &&
@@ -446,10 +465,11 @@ public class Visitor extends ASTVisitor {
 			// skip names being part of qualified names
 		}
 		else {
-			variables.add(node.getIdentifier());
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.SIMPLE_NAME, container);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(node.getIdentifier());
+				anonymous.getVariables().add(expression);
 			}
 		}
 		return super.visit(node);
@@ -777,10 +797,11 @@ public class Visitor extends ASTVisitor {
 				anonymous.getLambdas().add(lambda);
 			}
 		}
-		this.arguments.add(stringify(argument));
+		LeafExpression expression = new LeafExpression(cu, filePath, argument, CodeElementType.EXPRESSION, container);
+		this.arguments.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArguments().add(stringify(argument));
+			anonymous.getArguments().add(expression);
 		}
 	}
 
@@ -805,10 +826,11 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getTypes().add(qualifier.getFullyQualifiedName());
 			}
-			variables.add(stringify(node));
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(stringify(node));
+				anonymous.getVariables().add(expression);
 			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
@@ -824,20 +846,22 @@ public class Visitor extends ASTVisitor {
 					}
 				}
 				if(qualifierIsParameter) {
-					variables.add(stringify(node));
+					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+					variables.add(expression);
 					if(current.getUserObject() != null) {
 						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(stringify(node));
+						anonymous.getVariables().add(expression);
 					}
 				}
 			}
 			EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
 			if(enhancedFor != null) {
 				if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
-					variables.add(stringify(node));
+					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+					variables.add(expression);
 					if(current.getUserObject() != null) {
 						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(stringify(node));
+						anonymous.getVariables().add(expression);
 					}
 				}
 			}
@@ -870,10 +894,11 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(CastExpression node) {
 		Expression castExpression = node.getExpression();
 		if(castExpression instanceof SimpleName) {
-			variables.add(stringify(node));
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CAST_EXPRESSION, container);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(stringify(node));
+				anonymous.getVariables().add(expression);
 			}
 		}
 		return super.visit(node);
@@ -890,10 +915,11 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ParenthesizedExpression node) {
-		parenthesizedExpressions.add(stringify(node));
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PARENTHESIZED_EXPRESSION, container);
+		parenthesizedExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getParenthesizedExpressions().add(stringify(node));
+			anonymous.getParenthesizedExpressions().add(expression);
 		}
 		return super.visit(node);
 	}
@@ -914,23 +940,23 @@ public class Visitor extends ASTVisitor {
 		return anonymousClassDeclarations;
 	}
 
-	public List<String> getStringLiterals() {
+	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
 	}
 
-	public List<String> getNumberLiterals() {
+	public List<LeafExpression> getNumberLiterals() {
 		return numberLiterals;
 	}
 
-	public List<String> getNullLiterals() {
+	public List<LeafExpression> getNullLiterals() {
 		return nullLiterals;
 	}
 
-	public List<String> getBooleanLiterals() {
+	public List<LeafExpression> getBooleanLiterals() {
 		return booleanLiterals;
 	}
 
-	public List<String> getTypeLiterals() {
+	public List<LeafExpression> getTypeLiterals() {
 		return typeLiterals;
 	}
 
@@ -938,7 +964,7 @@ public class Visitor extends ASTVisitor {
 		return creationMap;
 	}
 
-	public List<String> getInfixExpressions() {
+	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
 	}
 
@@ -946,27 +972,27 @@ public class Visitor extends ASTVisitor {
 		return infixOperators;
 	}
 
-	public List<String> getArrayAccesses() {
+	public List<LeafExpression> getArrayAccesses() {
 		return arrayAccesses;
 	}
 
-	public List<String> getPrefixExpressions() {
+	public List<LeafExpression> getPrefixExpressions() {
 		return prefixExpressions;
 	}
 
-	public List<String> getPostfixExpressions() {
+	public List<LeafExpression> getPostfixExpressions() {
 		return postfixExpressions;
 	}
 
-	public List<String> getThisExpressions() {
+	public List<LeafExpression> getThisExpressions() {
 		return thisExpressions;
 	}
 
-	public List<String> getArguments() {
+	public List<LeafExpression> getArguments() {
 		return this.arguments;
 	}
 
-	public List<String> getParenthesizedExpressions() {
+	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
 	}
 
@@ -974,7 +1000,7 @@ public class Visitor extends ASTVisitor {
 		return ternaryOperatorExpressions;
 	}
 
-	public List<String> getVariables() {
+	public List<LeafExpression> getVariables() {
 		return variables;
 	}
 

@@ -104,7 +104,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<? extends AbstractCall>> methodInvocationMap1, Map<String, List<? extends AbstractCall>> methodInvocationMap2,
-			List<String> infixExpressions1, List<String> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info) {
+			List<LeafExpression> infixExpressions1, List<LeafExpression> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info) {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -181,7 +181,8 @@ public class StringBasedHeuristics {
 					return true;
 				}
 				if(infixExpressions2.size() - infixExpressions1.size() == 1 && !diff2.isEmpty() && countOperators(diff2) == 1) {
-					for(String infix : infixExpressions2) {
+					for(LeafExpression infixExpression : infixExpressions2) {
+						String infix = infixExpression.getString();
 						if(!infix.equals(diff2) && (infix.startsWith(diff2) || infix.endsWith(diff2))) {
 							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
 								return true;
@@ -209,7 +210,8 @@ public class StringBasedHeuristics {
 					return true;
 				}
 				if(infixExpressions1.size() - infixExpressions2.size() == 1 && !diff1.isEmpty() && countOperators(diff1) == 1) {
-					for(String infix : infixExpressions1) {
+					for(LeafExpression infixExpression : infixExpressions1) {
+						String infix = infixExpression.getString();
 						if(!infix.equals(diff1) && (infix.startsWith(diff1) || infix.endsWith(diff1))) {
 							if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
 								return true;
@@ -238,8 +240,9 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
-			for(String infixExpression2 : infixExpressions2) {
-				if(infixExpression2.equals(diff1) || infixExpression2.equals("(" + diff1) || infixExpression2.equals(diff1 + ")")) {
+			for(LeafExpression infixExpression2 : infixExpressions2) {
+				String infix = infixExpression2.getString();
+				if(infix.equals(diff1) || infix.equals("(" + diff1) || infix.equals(diff1 + ")")) {
 					for(Replacement r : info.getReplacements()) {
 						if(diff1.contains(r.getAfter())) {
 							return false;
@@ -1130,22 +1133,23 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean equalAfterInfixExpressionExpansion(String s1, String s2, ReplacementInfo replacementInfo, List<String> infixExpressions1) {
+	protected static boolean equalAfterInfixExpressionExpansion(String s1, String s2, ReplacementInfo replacementInfo, List<LeafExpression> infixExpressions1) {
 		Set<Replacement> replacementsToBeRemoved = new LinkedHashSet<Replacement>();
 		Set<Replacement> replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		String originalArgumentizedString1 = replacementInfo.getArgumentizedString1();
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			String before = replacement.getBefore();
-			for(String infixExpression1 : infixExpressions1) {
-				if(infixExpression1.startsWith(before)) {
-					String suffix = infixExpression1.substring(before.length(), infixExpression1.length());
+			for(LeafExpression infixExpression1 : infixExpressions1) {
+				String infix = infixExpression1.getString();
+				if(infix.startsWith(before)) {
+					String suffix = infix.substring(before.length(), infix.length());
 					String after = replacement.getAfter();
 					if(s1.contains(after + suffix)) {
 						String temp = ReplacementUtil.performReplacement(replacementInfo.getArgumentizedString1(), after + suffix, after);
 						int distanceRaw = StringDistance.editDistance(temp, replacementInfo.getArgumentizedString2());
 						if(distanceRaw >= 0 && distanceRaw < replacementInfo.getRawDistance()) {
 							replacementsToBeRemoved.add(replacement);
-							Replacement newReplacement = new Replacement(infixExpression1, after, ReplacementType.INFIX_EXPRESSION);
+							Replacement newReplacement = new Replacement(infix, after, ReplacementType.INFIX_EXPRESSION);
 							replacementsToBeAdded.add(newReplacement);
 							replacementInfo.setArgumentizedString1(temp);
 						}

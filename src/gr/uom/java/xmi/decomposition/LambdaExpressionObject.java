@@ -264,7 +264,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public List<String> getAllVariables() {
 		if(expression != null) {
-			return expression.getVariables();
+			List<String> variables = new ArrayList<>();
+			for(LeafExpression variable : expression.getVariables()) {
+				variables.add(variable.getString());
+			}
+			return variables;
 		}
 		if(body != null) {
 			return body.getAllVariables();

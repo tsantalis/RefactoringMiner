@@ -409,8 +409,9 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean infixOperandMatch(AbstractExpression initializer, String replacedExpression) {
-		List<String> infixExpressions = initializer.getInfixExpressions();
-		for(String infix : infixExpressions) {
+		List<LeafExpression> infixExpressions = initializer.getInfixExpressions();
+		for(LeafExpression infixExpression : infixExpressions) {
+			String infix = infixExpression.getString();
 			if(infix.startsWith(replacedExpression) || infix.endsWith(replacedExpression)) {
 				return true;
 			}

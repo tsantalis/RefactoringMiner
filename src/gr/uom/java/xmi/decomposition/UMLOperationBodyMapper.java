@@ -3816,17 +3816,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(startMapping != null && endMapping != null && startMapping.equals(endMapping)) {
 					List<VariableDeclaration> variableDeclarationsInScope1 = container1.getVariableDeclarationsInScope(startMapping.getFragment1().getLocationInfo());
-					for(String variable : startMapping.getFragment1().getVariables()) {
+					for(LeafExpression variable : startMapping.getFragment1().getVariables()) {
 						for(VariableDeclaration variableDeclaration : variableDeclarationsInScope1) {
-							if(variable.equals(variableDeclaration.getVariableName())) {
+							if(variable.getString().equals(variableDeclaration.getVariableName())) {
 								referencedVariableDeclarations1.add(variableDeclaration);
 							}
 						}
 					}
 					List<VariableDeclaration> variableDeclarationsInScope2 = container2.getVariableDeclarationsInScope(startMapping.getFragment2().getLocationInfo());
-					for(String variable : startMapping.getFragment2().getVariables()) {
+					for(LeafExpression variable : startMapping.getFragment2().getVariables()) {
 						for(VariableDeclaration variableDeclaration : variableDeclarationsInScope2) {
-							if(variable.equals(variableDeclaration.getVariableName())) {
+							if(variable.getString().equals(variableDeclaration.getVariableName())) {
 								referencedVariableDeclarations2.add(variableDeclaration);
 							}
 						}
@@ -5014,8 +5014,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
 		Map<String, List<? extends AbstractCall>> methodInvocationMap1 = new LinkedHashMap<String, List<? extends AbstractCall>>(statement1.getMethodInvocationMap());
 		Map<String, List<? extends AbstractCall>> methodInvocationMap2 = new LinkedHashMap<String, List<? extends AbstractCall>>(statement2.getMethodInvocationMap());
-		Set<String> variables1 = new LinkedHashSet<String>(statement1.getVariables());
-		Set<String> variables2 = new LinkedHashSet<String>(statement2.getVariables());
+		Set<String> variables1 = convertToStringSet(statement1.getVariables());
+		Set<String> variables2 = convertToStringSet(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
 		variableIntersection.retainAll(variables2);
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
@@ -5122,8 +5122,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> creations1 = new LinkedHashSet<String>(creationMap1.keySet());
 		Set<String> creations2 = new LinkedHashSet<String>(creationMap2.keySet());
 		
-		Set<String> arguments1 = new LinkedHashSet<String>(statement1.getArguments());
-		Set<String> arguments2 = new LinkedHashSet<String>(statement2.getArguments());
+		Set<String> arguments1 = convertToStringSet(statement1.getArguments());
+		Set<String> arguments2 = convertToStringSet(statement2.getArguments());
 		removeCommonElements(arguments1, arguments2);
 		
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, variables1, variables2)) {
@@ -5272,41 +5272,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		creations1.removeAll(creationIntersection);
 		creations2.removeAll(creationIntersection);
 		
-		Set<String> stringLiterals1 = new LinkedHashSet<String>(statement1.getStringLiterals());
-		Set<String> stringLiterals2 = new LinkedHashSet<String>(statement2.getStringLiterals());
+		Set<String> stringLiterals1 = convertToStringSet(statement1.getStringLiterals());
+		Set<String> stringLiterals2 = convertToStringSet(statement2.getStringLiterals());
 		removeCommonElements(stringLiterals1, stringLiterals2);
 		
-		Set<String> numberLiterals1 = new LinkedHashSet<String>(statement1.getNumberLiterals());
-		Set<String> numberLiterals2 = new LinkedHashSet<String>(statement2.getNumberLiterals());
+		Set<String> numberLiterals1 = convertToStringSet(statement1.getNumberLiterals());
+		Set<String> numberLiterals2 = convertToStringSet(statement2.getNumberLiterals());
 		removeCommonElements(numberLiterals1, numberLiterals2);
 		
-		Set<String> booleanLiterals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
-		Set<String> booleanLiterals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
+		Set<String> booleanLiterals1 = convertToStringSet(statement1.getBooleanLiterals());
+		Set<String> booleanLiterals2 = convertToStringSet(statement2.getBooleanLiterals());
 		removeCommonElements(booleanLiterals1, booleanLiterals2);
 		
 		Set<String> infixOperators1 = new LinkedHashSet<String>(statement1.getInfixOperators());
 		Set<String> infixOperators2 = new LinkedHashSet<String>(statement2.getInfixOperators());
 		removeCommonElements(infixOperators1, infixOperators2);
 		
-		Set<String> arrayAccesses1 = new LinkedHashSet<String>(statement1.getArrayAccesses());
-		Set<String> arrayAccesses2 = new LinkedHashSet<String>(statement2.getArrayAccesses());
+		Set<String> arrayAccesses1 = convertToStringSet(statement1.getArrayAccesses());
+		Set<String> arrayAccesses2 = convertToStringSet(statement2.getArrayAccesses());
 		removeCommonElements(arrayAccesses1, arrayAccesses2);
 		
-		Set<String> prefixExpressions1 = new LinkedHashSet<String>(statement1.getPrefixExpressions());
-		Set<String> prefixExpressions2 = new LinkedHashSet<String>(statement2.getPrefixExpressions());
+		Set<String> prefixExpressions1 = convertToStringSet(statement1.getPrefixExpressions());
+		Set<String> prefixExpressions2 = convertToStringSet(statement2.getPrefixExpressions());
 		removeCommonElements(prefixExpressions1, prefixExpressions2);
 		
-		Set<String> parenthesizedExpressions1 = new LinkedHashSet<String>(statement1.getParenthesizedExpressions());
-		Set<String> parenthesizedExpressions2 = new LinkedHashSet<String>(statement2.getParenthesizedExpressions());
+		Set<String> parenthesizedExpressions1 = convertToStringSet(statement1.getParenthesizedExpressions());
+		Set<String> parenthesizedExpressions2 = convertToStringSet(statement2.getParenthesizedExpressions());
 		removeCommonElements(parenthesizedExpressions1, parenthesizedExpressions2);
 		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE);
 		
 		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
-			Set<String> infixExpressions1 = new LinkedHashSet<String>(statement1.getInfixExpressions());
+			Set<String> infixExpressions1 = convertToStringSet(statement1.getInfixExpressions());
 			infixExpressions1.remove(statement1.infixExpressionCoveringTheEntireFragment());
-			Set<String> infixExpressions2 = new LinkedHashSet<String>(statement2.getInfixExpressions());
+			Set<String> infixExpressions2 = convertToStringSet(statement2.getInfixExpressions());
 			infixExpressions2.remove(statement2.infixExpressionCoveringTheEntireFragment());
 			removeCommonElements(infixExpressions1, infixExpressions2);
 			
@@ -5543,14 +5543,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<String> ternaryExpressions2 = new LinkedHashSet<String>();
 			Set<String> tmpVariables1 = new LinkedHashSet<String>();
 			for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
-				List<String> thenVariables = ternary.getThenExpression().getVariables();
-				List<String> elseVariables = ternary.getElseExpression().getVariables();
-				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0)) &&
-						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0))) {
+				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
+				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
+				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString()) &&
+						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString())) {
 					ternaryExpressions2.add(ternary.getExpression());
-					tmpVariables1.addAll(ternary.getCondition().getVariables());
-					tmpVariables1.addAll(ternary.getThenExpression().getVariables());
-					tmpVariables1.addAll(ternary.getElseExpression().getVariables());
+					tmpVariables1.addAll(convertToStringSet(ternary.getCondition().getVariables()));
+					tmpVariables1.addAll(convertToStringSet(ternary.getThenExpression().getVariables()));
+					tmpVariables1.addAll(convertToStringSet(ternary.getElseExpression().getVariables()));
 				}
 			}
 			findReplacements(tmpVariables1, ternaryExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
@@ -5568,14 +5568,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<String> ternaryExpressions1 = new LinkedHashSet<String>();
 			Set<String> tmpVariables2 = new LinkedHashSet<String>();
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
-				List<String> thenVariables = ternary.getThenExpression().getVariables();
-				List<String> elseVariables = ternary.getElseExpression().getVariables();
-				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0)) &&
-						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0))) {
+				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
+				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
+				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString()) &&
+						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString())) {
 					ternaryExpressions1.add(ternary.getExpression());
-					tmpVariables2.addAll(ternary.getCondition().getVariables());
-					tmpVariables2.addAll(thenVariables);
-					tmpVariables2.addAll(elseVariables);
+					tmpVariables2.addAll(convertToStringSet(ternary.getCondition().getVariables()));
+					tmpVariables2.addAll(convertToStringSet(thenVariables));
+					tmpVariables2.addAll(convertToStringSet(elseVariables));
 				}
 			}
 			findReplacements(ternaryExpressions1, tmpVariables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
@@ -5586,8 +5586,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(!statement2.getString().endsWith("=true;\n") && !statement2.getString().endsWith("=false;\n")) {
 			if(!statement1.getBooleanLiterals().equals(statement2.getBooleanLiterals())) {
-				Set<String> literals1 = new LinkedHashSet<String>(statement1.getBooleanLiterals());
-				Set<String> literals2 = new LinkedHashSet<String>(statement2.getBooleanLiterals());
+				Set<String> literals1 = convertToStringSet(statement1.getBooleanLiterals());
+				Set<String> literals2 = convertToStringSet(statement2.getBooleanLiterals());
 				if(literals1.equals(literals2) ||
 						matchingArgument(arguments1, literals2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
 						matchingArgument(arguments1, literals2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
@@ -7096,6 +7096,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return null;
 	}
 
+	private static Set<String> convertToStringSet(List<LeafExpression> expressions) {
+		Set<String> set = new LinkedHashSet<>();
+		for(LeafExpression expression : expressions) {
+			set.add(expression.getString());
+		}
+		return set;
+	}
+
 	private boolean bothContainNullInDifferentIndexes(AbstractCall call1, AbstractCall call2) {
 		if(call1 != null && call2 != null && call1.getArguments().contains("null") && call2.getArguments().contains("null")) {
 			int index1 = call1.getArguments().indexOf("null");
@@ -8589,8 +8597,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment fragment2 : info.statements2) {
 			if(fragment2.getVariableDeclarations().contains(v2)) {
 				AbstractExpression initializer = v2.getInitializer();
-				if(initializer != null && initializer.getVariables().contains(v1.getVariableName())) {
-					return true;
+				if(initializer != null) {
+					for(LeafExpression variable : initializer.getVariables()) {
+						if(variable.getString().equals(v1.getVariableName())) {
+							return true;
+						}
+					}
 				}
 				
 			}
@@ -8600,8 +8612,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
 			if(v1DeclarationInFragment2 != null) {
 				AbstractExpression initializer = v1DeclarationInFragment2.getInitializer();
-				if(initializer != null && initializer.getVariables().contains(v2.getVariableName())) {
-					return true;
+				if(initializer != null) {
+					for(LeafExpression variable : initializer.getVariables()) {
+						if(variable.getString().equals(v2.getVariableName())) {
+							return true;
+						}
+					}
 				}
 			}
 			if(fragment2.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + ";\n")) {

@@ -1670,10 +1670,30 @@ public class VariableReplacementAnalysis {
 			}
 			if(v1.getInitializer().getTernaryOperatorExpressions().size() == 1) {
 				TernaryOperatorExpression ternary = v1.getInitializer().getTernaryOperatorExpressions().get(0);
-				if(ternary.getThenExpression().getVariables().contains(v2.getVariableName()) || ternary.getElseExpression().getVariables().contains(v2.getVariableName())) {
+				boolean containedInTernary = false;
+				for(LeafExpression variable : ternary.getThenExpression().getVariables()) {
+					if(variable.getString().equals(v2.getVariableName())) {
+						containedInTernary = true;
+						break;
+					}
+				}
+				if(!containedInTernary) {
+					for(LeafExpression variable : ternary.getElseExpression().getVariables()) {
+						if(variable.getString().equals(v2.getVariableName())) {
+							containedInTernary = true;
+							break;
+						}
+					}
+				}
+				if(containedInTernary) {
 					boolean v2InitializerContainsThisReference = false;
-					if(v2.getInitializer() != null && v2.getInitializer().getVariables().contains("this." + v2.getVariableName())) {
-						v2InitializerContainsThisReference = true;
+					if(v2.getInitializer() != null) {
+						for(LeafExpression variable : v2.getInitializer().getVariables()) {
+							if(variable.getString().equals("this." + v2.getVariableName())) {
+								v2InitializerContainsThisReference = true;
+								break;
+							}
+						}
 					}
 					if(!v2InitializerContainsThisReference) {
 						return true;
@@ -1687,10 +1707,30 @@ public class VariableReplacementAnalysis {
 			}
 			if(v2.getInitializer().getTernaryOperatorExpressions().size() == 1) {
 				TernaryOperatorExpression ternary = v2.getInitializer().getTernaryOperatorExpressions().get(0);
-				if(ternary.getThenExpression().getVariables().contains(v1.getVariableName()) || ternary.getElseExpression().getVariables().contains(v1.getVariableName())) {
+				boolean containedInTernary = false;
+				for(LeafExpression variable : ternary.getThenExpression().getVariables()) {
+					if(variable.getString().equals(v1.getVariableName())) {
+						containedInTernary = true;
+						break;
+					}
+				}
+				if(!containedInTernary) {
+					for(LeafExpression variable : ternary.getElseExpression().getVariables()) {
+						if(variable.getString().equals(v1.getVariableName())) {
+							containedInTernary = true;
+							break;
+						}
+					}
+				}
+				if(containedInTernary) {
 					boolean v1InitializerContainsThisReference = false;
-					if(v1.getInitializer() != null && v1.getInitializer().getVariables().contains("this." + v1.getVariableName())) {
-						v1InitializerContainsThisReference = true;
+					if(v1.getInitializer() != null) {
+						for(LeafExpression variable : v1.getInitializer().getVariables()) {
+							if(variable.getString().equals("this." + v1.getVariableName())) {
+								v1InitializerContainsThisReference = true;
+								break;
+							}
+						}
 					}
 					if(!v1InitializerContainsThisReference) {
 						return true;
@@ -1787,8 +1827,21 @@ public class VariableReplacementAnalysis {
 	}
 
 	public static boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
-		return mapping.getFragment1().getVariables().contains(v1.getVariableName()) &&
-				mapping.getFragment2().getVariables().contains(v1.getVariableName());
+		boolean containedInFragment1 = false;
+		for(LeafExpression variable : mapping.getFragment1().getVariables()) {
+			if(variable.getString().equals(v1.getVariableName())) {
+				containedInFragment1 = true;
+				break;
+			}
+		}
+		boolean containedInFragment2 = false;
+		for(LeafExpression variable : mapping.getFragment2().getVariables()) {
+			if(variable.getString().equals(v1.getVariableName())) {
+				containedInFragment2 = true;
+				break;
+			}
+		}
+		return containedInFragment1 && containedInFragment2;
 	}
 
 	private static boolean containsVariableDeclarationWithName(VariableDeclaration variableDeclaration, Set<VariableDeclaration> variableDeclarations, VariableDeclaration other) {
@@ -1996,10 +2049,10 @@ public class VariableReplacementAnalysis {
 										}
 										else {
 											//check if the extracted method is called in the initializer of a variable used in the initializer of v2
-											List<String> initializerVariables = v2.getInitializer().getVariables();
-											for(String variable : initializerVariables) {
+											List<LeafExpression> initializerVariables = v2.getInitializer().getVariables();
+											for(LeafExpression variable : initializerVariables) {
 												for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
-													if(declaration.getVariableName().equals(variable) && declaration.getInitializer() != null) {
+													if(declaration.getVariableName().equals(variable.getString()) && declaration.getInitializer() != null) {
 														Map<String, List<AbstractCall>> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
 														for(String key2 : methodInvocationMap2.keySet()) {
 															for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {

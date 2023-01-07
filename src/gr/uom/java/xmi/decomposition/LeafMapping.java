@@ -393,19 +393,19 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		else if(parent1 != null && parent2 == null) {
 			return Collections.emptySet();
 		}
-		List<String> variables1 = parent1.getVariables();
-		List<String> variables2 = parent2.getVariables();
+		List<LeafExpression> variables1 = parent1.getVariables();
+		List<LeafExpression> variables2 = parent2.getVariables();
 		if(variables1.size() == 1 && variables2.size() == 1) {
 			Set<String> tokens1 = new LinkedHashSet<>();
-			for(String variable : variables1) {
-				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable);
+			for(LeafExpression variable : variables1) {
+				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable.getString());
 				for(String s : array) {
 					tokens1.add(s.toLowerCase());
 				}
 			}
 			Set<String> tokens2 = new LinkedHashSet<>();
-			for(String variable : variables2) {
-				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable);
+			for(LeafExpression variable : variables2) {
+				String[] array = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variable.getString());
 				for(String s : array) {
 					tokens2.add(s.toLowerCase());
 				}

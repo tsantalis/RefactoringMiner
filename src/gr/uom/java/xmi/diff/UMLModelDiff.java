@@ -22,6 +22,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -1208,8 +1209,14 @@ public class UMLModelDiff {
 		VariableDeclaration v1 = addedAttribute.getVariableDeclaration();
 		VariableDeclaration v2 = removedAttribute.getVariableDeclaration();
 		if(v1.getInitializer() != null && v2.getInitializer() != null) {
-			List<String> typeLiterals1 = v1.getInitializer().getTypeLiterals();
-			List<String> typeLiterals2 = v2.getInitializer().getTypeLiterals();
+			List<String> typeLiterals1 = new ArrayList<>();
+			for(LeafExpression expression : v1.getInitializer().getTypeLiterals()) {
+				typeLiterals1.add(expression.getString());
+			}
+			List<String> typeLiterals2 = new ArrayList<>();
+			for(LeafExpression expression : v2.getInitializer().getTypeLiterals()) {
+				typeLiterals2.add(expression.getString());
+			}
 			String className1 = addedAttribute.getNonQualifiedClassName();
 			String className2 = removedAttribute.getNonQualifiedClassName();
 			if(typeLiterals1.contains(className1 + ".class") && typeLiterals2.contains(className2 + ".class") &&
@@ -3480,7 +3487,7 @@ public class UMLModelDiff {
 			if(c1.isLoop()) {
 				for(CompositeStatementObject c2 : operationBodyMapper.getNonMappedInnerNodesT2()) {
 					if(c2.isLoop()) {
-						Set<String> intersection = new LinkedHashSet<String>(c1.getVariables());
+						Set<LeafExpression> intersection = new LinkedHashSet<>(c1.getVariables());
 						intersection.retainAll(c2.getVariables());
 						if(!intersection.isEmpty()) {
 							nonMappedLoopsIteratingOverSameVariable++;

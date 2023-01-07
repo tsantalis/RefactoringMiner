@@ -4,6 +4,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -214,7 +215,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public List<String> getAllVariables() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
-			return initializer.getVariables();
+			List<String> variables = new ArrayList<>();
+			for(LeafExpression variable : initializer.getVariables()) {
+				variables.add(variable.getString());
+			}
+			return variables;
 		}
 		return Collections.emptyList();
 	}

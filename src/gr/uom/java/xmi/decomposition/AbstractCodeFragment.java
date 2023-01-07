@@ -37,25 +37,25 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	
 	public abstract CompositeStatementObject getParent();
 	public abstract String getString();
-	public abstract List<String> getVariables();
+	public abstract List<LeafExpression> getVariables();
 	public abstract List<String> getTypes();
 	public abstract List<VariableDeclaration> getVariableDeclarations();
 	public abstract Map<String, List<AbstractCall>> getMethodInvocationMap();
 	public abstract List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations();
-	public abstract List<String> getStringLiterals();
-	public abstract List<String> getNumberLiterals();
-	public abstract List<String> getNullLiterals();
-	public abstract List<String> getBooleanLiterals();
-	public abstract List<String> getTypeLiterals();
+	public abstract List<LeafExpression> getStringLiterals();
+	public abstract List<LeafExpression> getNumberLiterals();
+	public abstract List<LeafExpression> getNullLiterals();
+	public abstract List<LeafExpression> getBooleanLiterals();
+	public abstract List<LeafExpression> getTypeLiterals();
 	public abstract Map<String, List<ObjectCreation>> getCreationMap();
-	public abstract List<String> getInfixExpressions();
+	public abstract List<LeafExpression> getInfixExpressions();
 	public abstract List<String> getInfixOperators();
-	public abstract List<String> getArrayAccesses();
-	public abstract List<String> getPrefixExpressions();
-	public abstract List<String> getPostfixExpressions();
-	public abstract List<String> getThisExpressions();
-	public abstract List<String> getArguments();
-	public abstract List<String> getParenthesizedExpressions();
+	public abstract List<LeafExpression> getArrayAccesses();
+	public abstract List<LeafExpression> getPrefixExpressions();
+	public abstract List<LeafExpression> getPostfixExpressions();
+	public abstract List<LeafExpression> getThisExpressions();
+	public abstract List<LeafExpression> getArguments();
+	public abstract List<LeafExpression> getParenthesizedExpressions();
 	public abstract List<TernaryOperatorExpression> getTernaryOperatorExpressions();
 	public abstract List<LambdaExpressionObject> getLambdas();
 	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
@@ -196,7 +196,8 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public String infixExpressionCoveringTheEntireFragment() {
 		String statement = getString();
-		for(String infix : getInfixExpressions()) {
+		for(LeafExpression infixExpression : getInfixExpressions()) {
+			String infix = infixExpression.getString();
 			if((infix + ";\n").equals(statement) || infix.equals(statement)) {
 				return infix;
 			}
@@ -378,9 +379,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private boolean expressionIsTheRightHandSideOfAssignment(String expression) {
 		String statement = getString();
 		if(statement.contains("=")) {
-			List<String> variables = getVariables();
+			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
-				String s = variables.get(0) + "=" + expression + ";\n";
+				String s = variables.get(0).getString() + "=" + expression + ";\n";
 				if(statement.equals(s)) {
 					return true;
 				}
@@ -392,15 +393,16 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private boolean expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(String expression) {
 		String statement = getString();
 		if(statement.contains("=")) {
-			List<String> variables = getVariables();
+			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
-				String s = variables.get(0) + "=" + expression + ";\n";
-				if(statement.equals(s) && variables.get(0).startsWith("this.")) {
+				String variable = variables.get(0).getString();
+				String s = variable + "=" + expression + ";\n";
+				if(statement.equals(s) && variable.startsWith("this.")) {
 					return true;
 				}
 				String beforeAssignment = statement.substring(0, statement.indexOf("="));
 				if(variables.size() >= 2) {
-					if(beforeAssignment.equals(variables.get(0) + "." + variables.get(1))) {
+					if(beforeAssignment.equals(variable + "." + variables.get(1).getString())) {
 						return true;
 					}
 				}

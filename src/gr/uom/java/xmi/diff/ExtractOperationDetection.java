@@ -13,12 +13,12 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -123,10 +123,14 @@ public class ExtractOperationDetection {
 			List<AbstractCall> sorted = new ArrayList<AbstractCall>();
 			List<String> allVariables = new ArrayList<String>();
 			for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
-				allVariables.addAll(composite.getVariables());
+				for(LeafExpression expression : composite.getVariables()) {
+					allVariables.add(expression.getString());
+				}
 			}
 			for(AbstractCodeFragment leaf : mapper.getNonMappedLeavesT1()) {
-				allVariables.addAll(leaf.getVariables());
+				for(LeafExpression expression : leaf.getVariables()) {
+					allVariables.add(expression.getString());
+				}
 			}
 			int max = 0;
 			for(AbstractCall invocation : invocations) {

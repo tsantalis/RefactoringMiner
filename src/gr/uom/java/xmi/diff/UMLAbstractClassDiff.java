@@ -555,7 +555,7 @@ public abstract class UMLAbstractClassDiff {
 						Set<VariableDeclaration> attributesMatchedWithArguments = new LinkedHashSet<VariableDeclaration>();
 						Set<String> attributeNamesMatchedWithArguments = new LinkedHashSet<String>();
 						for(AbstractCall extractedInvocation : extractedInvocations) {
-							for(String argument : extractedInvocation.getArguments()) {
+							for(String argument : extractedInvocation.arguments()) {
 								for(UMLAttribute attribute : originalClass.getAttributes()) {
 									if(attribute.getName().equals(argument)) {
 										attributesMatchedWithArguments.add(attribute.getVariableDeclaration());

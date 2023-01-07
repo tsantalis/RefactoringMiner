@@ -134,7 +134,7 @@ public class ExtractOperationDetection {
 			}
 			int max = 0;
 			for(AbstractCall invocation : invocations) {
-				List<String> arguments = invocation.getArguments();
+				List<String> arguments = invocation.arguments();
 				int occurrences = 0;
 				for(String argument : arguments) {
 					occurrences += Collections.frequency(allVariables, argument);
@@ -287,7 +287,7 @@ public class ExtractOperationDetection {
 				AbstractCall matchingInvocation = iterator.next();
 				if(invocation.getName().equals(matchingInvocation.getName())) {
 					boolean matchingInvocationFound = false;
-					for(String argument : invocation.getArguments()) {
+					for(String argument : invocation.arguments()) {
 						if(argument.equals(matchingInvocation.getExpression())) {
 							iterator.remove();
 							matchingInvocationFound = true;
@@ -378,7 +378,7 @@ public class ExtractOperationDetection {
 		}
 		List<UMLParameter> originalMethodParameters = originalOperation.getParametersWithoutReturnType();
 		Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters = new LinkedHashMap<UMLParameter, UMLParameter>();
-		List<String> arguments = addedOperationInvocation.getArguments();
+		List<String> arguments = addedOperationInvocation.arguments();
 		List<UMLParameter> parameters = addedOperation.getParametersWithoutReturnType();
 		Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
 		//special handling for methods with varargs parameter for which no argument is passed in the matching invocation

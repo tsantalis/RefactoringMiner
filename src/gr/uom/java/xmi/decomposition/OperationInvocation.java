@@ -1,6 +1,5 @@
 package gr.uom.java.xmi.decomposition;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
@@ -79,8 +78,8 @@ public class OperationInvocation extends AbstractCall {
         PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
     }
 
-	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION);
+	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -123,8 +122,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION);
+	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -136,8 +135,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION);
+	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION, container);
 		this.methodName = "super";
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -151,8 +150,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation) {
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION);
+	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION, container);
 		this.methodName = "this";
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -163,7 +162,7 @@ public class OperationInvocation extends AbstractCall {
 	}
 
 	private OperationInvocation() {
-		
+		super();
 	}
 
 	public OperationInvocation update(String oldExpression, String newExpression) {
@@ -635,9 +634,9 @@ public class OperationInvocation extends AbstractCall {
 		List<UMLParameter> parameters = operationToBeMatched.getParametersWithoutReturnType();
 		if(operationToBeMatched.hasVarargsParameter()) {
 			//we expect arguments to be =(parameters-1), or =parameters, or >parameters
-			if(getArguments().size() < parameters.size()) {
+			if(arguments().size() < parameters.size()) {
 				int i = 0;
-				for(String argument : getArguments()) {
+				for(String argument : arguments()) {
 					if(typeInferenceMapFromContext.containsKey(argument)) {
 						UMLType argumentType = typeInferenceMapFromContext.get(argument);
 						UMLType paremeterType = parameters.get(i).getType();
@@ -650,7 +649,7 @@ public class OperationInvocation extends AbstractCall {
 			else {
 				int i = 0;
 				for(UMLParameter parameter : parameters) {
-					String argument = getArguments().get(i);
+					String argument = arguments().get(i);
 					if(typeInferenceMapFromContext.containsKey(argument)) {
 						UMLType argumentType = typeInferenceMapFromContext.get(argument);
 						UMLType paremeterType = parameter.isVarargs() ?
@@ -667,7 +666,7 @@ public class OperationInvocation extends AbstractCall {
 		else {
 			//we expect an equal number of parameters and arguments
 			int i = 0;
-			for(String argument : getArguments()) {
+			for(String argument : arguments()) {
 				if(typeInferenceMapFromContext.containsKey(argument)) {
 					UMLType argumentType = typeInferenceMapFromContext.get(argument);
 					UMLType paremeterType = parameters.get(i).getType();

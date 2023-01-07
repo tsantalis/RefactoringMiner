@@ -153,7 +153,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
+		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
 		if(creationMap.containsKey(nodeAsString)) {
 			creationMap.get(nodeAsString).add(creation);
@@ -179,7 +179,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ArrayCreation node) {
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
+		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
 		if(creationMap.containsKey(nodeAsString)) {
 			creationMap.get(nodeAsString).add(creation);
@@ -542,7 +542,7 @@ public class Visitor extends ASTVisitor {
 		else {
 			methodInvocation = stringify(node);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
+		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
 		if(methodInvocationMap.containsKey(methodInvocation)) {
 			methodInvocationMap.get(methodInvocation).add(invocation);
 		}
@@ -567,7 +567,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ExpressionMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
+		MethodReference reference = new MethodReference(cu, filePath, node, container);
 		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
@@ -593,7 +593,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(SuperMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
+		MethodReference reference = new MethodReference(cu, filePath, node, container);
 		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
@@ -619,7 +619,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(TypeMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
+		MethodReference reference = new MethodReference(cu, filePath, node, container);
 		String referenceString = stringify(node);
 		if(methodInvocationMap.containsKey(referenceString)) {
 			methodInvocationMap.get(referenceString).add(reference);
@@ -677,7 +677,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
+		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);
@@ -707,7 +707,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
+		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);
@@ -737,7 +737,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
+		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
 		if(methodInvocationMap.containsKey(nodeAsString)) {
 			methodInvocationMap.get(nodeAsString).add(invocation);

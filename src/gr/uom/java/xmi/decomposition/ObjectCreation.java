@@ -10,9 +10,9 @@ import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class ObjectCreation extends AbstractCall {
@@ -21,8 +21,8 @@ public class ObjectCreation extends AbstractCall {
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
 	
-	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation) {
-		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION);
+	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation, VariableDeclarationContainer container) {
+		super(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
 		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
 		this.numberOfArguments = creation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -38,8 +38,8 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
-	public ObjectCreation(CompilationUnit cu, String filePath, ArrayCreation creation) {
-		this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.ARRAY_CREATION);
+	public ObjectCreation(CompilationUnit cu, String filePath, ArrayCreation creation, VariableDeclarationContainer container) {
+		super(cu, filePath, creation, CodeElementType.ARRAY_CREATION, container);
 		this.isArray = true;
 		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0);
 		this.numberOfArguments = creation.dimensions().size();
@@ -70,7 +70,7 @@ public class ObjectCreation extends AbstractCall {
 	}
 
 	private ObjectCreation() {
-		
+		super();
 	}
 
 	public ObjectCreation update(String oldExpression, String newExpression) {

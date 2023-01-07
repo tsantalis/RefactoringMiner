@@ -391,7 +391,7 @@ public abstract class AbstractCodeMapping {
 		}
 		AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 		if(invocation != null) {
-			if(invocation.getArguments().contains(replacedExpression)) {
+			if(invocation.arguments().contains(replacedExpression)) {
 				return true;
 			}
 			String expression = invocation.getExpression();
@@ -401,7 +401,7 @@ public abstract class AbstractCodeMapping {
 		}
 		ObjectCreation creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
-			if(creation.getArguments().contains(replacedExpression)) {
+			if(creation.arguments().contains(replacedExpression)) {
 				return true;
 			}
 		}

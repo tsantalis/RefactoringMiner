@@ -950,11 +950,11 @@ public class VariableReplacementAnalysis {
 					AbstractCall invocationBefore = invocationReplacement.getInvokedOperationBefore();
 					AbstractCall invocationAfter = invocationReplacement.getInvokedOperationAfter();
 					if(invocationBefore.identicalName(invocationAfter) && invocationBefore.identicalExpression(invocationAfter) && !invocationBefore.equalArguments(invocationAfter)) {
-						Set<String> argumentIntersection = new LinkedHashSet<String>(invocationBefore.getArguments());
-						argumentIntersection.retainAll(invocationAfter.getArguments());
-						Set<String> arguments1WithoutCommon = new LinkedHashSet<String>(invocationBefore.getArguments());
+						Set<String> argumentIntersection = new LinkedHashSet<String>(invocationBefore.arguments());
+						argumentIntersection.retainAll(invocationAfter.arguments());
+						Set<String> arguments1WithoutCommon = new LinkedHashSet<String>(invocationBefore.arguments());
 						arguments1WithoutCommon.removeAll(argumentIntersection);
-						Set<String> arguments2WithoutCommon = new LinkedHashSet<String>(invocationAfter.getArguments());
+						Set<String> arguments2WithoutCommon = new LinkedHashSet<String>(invocationAfter.arguments());
 						arguments2WithoutCommon.removeAll(argumentIntersection);
 						if(arguments1WithoutCommon.size() > arguments2WithoutCommon.size() && arguments2WithoutCommon.size() == 1) {
 							MergeVariableReplacement merge = new MergeVariableReplacement(arguments1WithoutCommon, arguments2WithoutCommon.iterator().next());
@@ -1397,10 +1397,10 @@ public class VariableReplacementAnalysis {
 					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
 					AbstractCall invocation1 = methodInvocationReplacement.getInvokedOperationBefore();
 					AbstractCall invocation2 = methodInvocationReplacement.getInvokedOperationAfter();
-					if(invocation1.getName().equals(invocation2.getName()) && invocation1.getArguments().size() == invocation2.getArguments().size()) {
-						for(int i=0; i<invocation1.getArguments().size(); i++) {
-							String argument1 = invocation1.getArguments().get(i);
-							String argument2 = invocation2.getArguments().get(i);
+					if(invocation1.getName().equals(invocation2.getName()) && invocation1.arguments().size() == invocation2.arguments().size()) {
+						for(int i=0; i<invocation1.arguments().size(); i++) {
+							String argument1 = invocation1.arguments().get(i);
+							String argument2 = invocation2.arguments().get(i);
 							if(argument1.contains("[") || argument2.contains("[")) {
 								String before = argument1.contains("[") ? argument1.substring(0, argument1.indexOf("[")) : argument1;
 								String after = argument2.contains("[") ? argument2.substring(0, argument2.indexOf("[")) : argument2;
@@ -1857,7 +1857,7 @@ public class VariableReplacementAnalysis {
 		if(initializer != null) {
 			AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 			if(invocation != null) {
-				if(invocation.getArguments().contains(variableDeclaration.getVariableName())) {
+				if(invocation.arguments().contains(variableDeclaration.getVariableName())) {
 					return true;
 				}
 				if(invocation.getExpression() != null && invocation.getExpression().equals(variableDeclaration.getVariableName())) {
@@ -1866,7 +1866,7 @@ public class VariableReplacementAnalysis {
 			}
 			ObjectCreation creation = initializer.creationCoveringEntireFragment();
 			if(creation != null) {
-				if(creation.getArguments().contains(variableDeclaration.getVariableName())) {
+				if(creation.arguments().contains(variableDeclaration.getVariableName())) {
 					return true;
 				}
 			}

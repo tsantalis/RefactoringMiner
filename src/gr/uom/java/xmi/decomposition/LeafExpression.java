@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Expression;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -16,12 +16,16 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class LeafExpression extends AbstractCodeFragment {
-	private String expression;
-	private LocationInfo locationInfo;
+	private String string;
+	protected LocationInfo locationInfo;
 
-	public LeafExpression(CompilationUnit cu, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+	public LeafExpression(CompilationUnit cu, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
     	this.locationInfo = new LocationInfo(cu, filePath, expression, codeElementType);
-    	this.expression = stringify(expression);
+    	this.string = stringify(expression);
+	}
+
+	protected LeafExpression() {
+		
 	}
 
 	@Override
@@ -41,7 +45,7 @@ public class LeafExpression extends AbstractCodeFragment {
 
 	@Override
 	public String getString() {
-		return expression;
+		return string;
 	}
 
 	@Override
@@ -161,7 +165,7 @@ public class LeafExpression extends AbstractCodeFragment {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(expression);
+		return Objects.hash(string);
 	}
 
 	@Override
@@ -173,6 +177,6 @@ public class LeafExpression extends AbstractCodeFragment {
 		if (getClass() != obj.getClass())
 			return false;
 		LeafExpression other = (LeafExpression) obj;
-		return Objects.equals(expression, other.expression);
+		return Objects.equals(string, other.string);
 	}
 }

@@ -289,7 +289,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						if(creation.getAnonymousClassDeclaration() != null) {
 							return false;
 						}
-						List<String> arguments = creation.getArguments();
+						List<String> arguments = creation.arguments();
 						if(arguments.size() == 1 && arguments.contains(declaration2.getVariableName())) {
 							return true;
 						}

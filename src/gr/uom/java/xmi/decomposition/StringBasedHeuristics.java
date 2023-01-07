@@ -222,8 +222,8 @@ public class StringBasedHeuristics {
 			}
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(invocation1.actualString().equals(diff1) && invocation1.getArguments().contains(diff2) &&
-							(invocation1.getArguments().size() == 1 || (diff2.contains("?") && diff2.contains(":")))) {
+					if(invocation1.actualString().equals(diff1) && invocation1.arguments().contains(diff2) &&
+							(invocation1.arguments().size() == 1 || (diff2.contains("?") && diff2.contains(":")))) {
 						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation1, Direction.INVOCATION_TO_VARIABLE);
 						info.addReplacement(r);
 						return true;
@@ -232,8 +232,8 @@ public class StringBasedHeuristics {
 			}
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(invocation2.actualString().equals(diff2) && invocation2.getArguments().contains(diff1) &&
-							(invocation2.getArguments().size() == 1 || (diff1.contains("?") && diff1.contains(":")))) {
+					if(invocation2.actualString().equals(diff2) && invocation2.arguments().contains(diff1) &&
+							(invocation2.arguments().size() == 1 || (diff1.contains("?") && diff1.contains(":")))) {
 						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation2, Direction.VARIABLE_TO_INVOCATION);
 						info.addReplacement(r);
 						return true;
@@ -1018,24 +1018,24 @@ public class StringBasedHeuristics {
 			List<String> arguments1 = null;
 			AbstractCall invocation1 = null;
 			if(creationCoveringTheEntireStatement1 != null) {
-				arguments1 = creationCoveringTheEntireStatement1.getArguments();
+				arguments1 = creationCoveringTheEntireStatement1.arguments();
 			}
 			else if((invocation1 = statement1.invocationCoveringEntireFragment()) != null) {
-				arguments1 = invocation1.getArguments();
+				arguments1 = invocation1.arguments();
 			}
 			else if((invocation1 = statement1.assignmentInvocationCoveringEntireStatement()) != null) {
-				arguments1 = invocation1.getArguments();
+				arguments1 = invocation1.arguments();
 			}
 			List<String> arguments2 = null;
 			AbstractCall invocation2 = null;
 			if(creationCoveringTheEntireStatement2 != null) {
-				arguments2 = creationCoveringTheEntireStatement2.getArguments();
+				arguments2 = creationCoveringTheEntireStatement2.arguments();
 			}
 			else if((invocation2 = statement2.invocationCoveringEntireFragment()) != null) {
-				arguments2 = invocation2.getArguments();
+				arguments2 = invocation2.arguments();
 			}
 			else if((invocation2 = statement2.assignmentInvocationCoveringEntireStatement()) != null) {
-				arguments2 = invocation2.getArguments();
+				arguments2 = invocation2.arguments();
 			}
 			if(arguments1 != null && arguments2 != null) {
 				Set<Replacement> concatReplacements = new LinkedHashSet<>();
@@ -1172,8 +1172,8 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo) {
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.getName().equals("this") && invocationCoveringTheEntireStatement2.getName().equals("this")) {
-			List<String> arguments1 = invocationCoveringTheEntireStatement1.getArguments();
-			List<String> arguments2 = invocationCoveringTheEntireStatement2.getArguments();
+			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
+			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
 			Set<String> argumentIntersection = invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
 			int minArguments = Math.min(arguments1.size(), arguments2.size());
 			int replacedArguments = 0;
@@ -1218,7 +1218,7 @@ public class StringBasedHeuristics {
 				if(creation2.equals(assignment2)) {
 					objectCreation2 = creationMap2.get(creation2).get(0);
 					type2 = objectCreation2.getType();
-					for(String argument : objectCreation2.getArguments()) {
+					for(String argument : objectCreation2.arguments()) {
 						if(parameterToArgumentMap.containsKey(argument)) {
 							argumentToParameterMap.put(parameterToArgumentMap.get(argument), argument);
 						}
@@ -1228,7 +1228,7 @@ public class StringBasedHeuristics {
 			int minArguments = 0;
 			if(type1 != null && type2 != null) {
 				compatibleTypes = type1.compatibleTypes(type2);
-				minArguments = Math.min(objectCreation1.getArguments().size(), objectCreation2.getArguments().size());
+				minArguments = Math.min(objectCreation1.arguments().size(), objectCreation2.arguments().size());
 			}
 			int replacedArguments = 0;
 			for(Replacement replacement : replacementInfo.getReplacements()) {
@@ -1238,8 +1238,8 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if(objectCreation1 != null && objectCreation2 != null &&
-						objectCreation1.getArguments().contains(replacement.getBefore()) &&
-						(objectCreation2.getArguments().contains(replacement.getAfter()) || objectCreation2.getArguments().contains(argumentToParameterMap.get(replacement.getAfter())))) {
+						objectCreation1.arguments().contains(replacement.getBefore()) &&
+						(objectCreation2.arguments().contains(replacement.getAfter()) || objectCreation2.arguments().contains(argumentToParameterMap.get(replacement.getAfter())))) {
 					replacedArguments++;
 				}
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
@@ -1270,7 +1270,7 @@ public class StringBasedHeuristics {
 				if(creation2.equals(assignment2)) {
 					objectCreation2 = creationMap2.get(creation2).get(0);
 					type2 = objectCreation2.getType();
-					for(String argument : objectCreation2.getArguments()) {
+					for(String argument : objectCreation2.arguments()) {
 						if(parameterToArgumentMap.containsKey(argument)) {
 							argumentToParameterMap.put(parameterToArgumentMap.get(argument), argument);
 						}
@@ -1280,7 +1280,7 @@ public class StringBasedHeuristics {
 			int minArguments = 0;
 			if(type1 != null && type2 != null) {
 				compatibleTypes = type1.compatibleTypes(type2);
-				minArguments = Math.min(objectCreation1.getArguments().size(), objectCreation2.getArguments().size());
+				minArguments = Math.min(objectCreation1.arguments().size(), objectCreation2.arguments().size());
 			}
 			int replacedArguments = 0;
 			for(Replacement replacement : replacementInfo.getReplacements()) {
@@ -1290,8 +1290,8 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if(objectCreation1 != null && objectCreation2 != null &&
-						objectCreation1.getArguments().contains(replacement.getBefore()) &&
-						(objectCreation2.getArguments().contains(replacement.getAfter()) || objectCreation2.getArguments().contains(argumentToParameterMap.get(replacement.getAfter())))) {
+						objectCreation1.arguments().contains(replacement.getBefore()) &&
+						(objectCreation2.arguments().contains(replacement.getAfter()) || objectCreation2.arguments().contains(argumentToParameterMap.get(replacement.getAfter())))) {
 					replacedArguments++;
 				}
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
@@ -1375,7 +1375,7 @@ public class StringBasedHeuristics {
 					classInstanceCreationReplacement = true;
 			}
 			if(inv1 != null && inv2 != null) {
-				equalArguments = inv1.equalArguments(inv2) && inv1.getArguments().size() > 0;
+				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;
 			}
 			if(typeReplacement && !compatibleTypes && variableRename && classInstanceCreationReplacement && !equalArguments) {
 				return true;
@@ -1384,8 +1384,8 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
-				if(inv1.getArguments().size() > inv2.getArguments().size()) {
-					for(String argument : inv1.getArguments()) {
+				if(inv1.arguments().size() > inv2.arguments().size()) {
+					for(String argument : inv1.arguments()) {
 						List<AbstractCall> argumentInvocations = methodInvocationMap1.get(argument);
 						if(argumentInvocations != null) {
 							for(AbstractCall argumentInvocation : argumentInvocations) {
@@ -1396,8 +1396,8 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				else if(inv1.getArguments().size() < inv2.getArguments().size()) {
-					for(String argument : inv2.getArguments()) {
+				else if(inv1.arguments().size() < inv2.arguments().size()) {
+					for(String argument : inv2.arguments()) {
 						List<AbstractCall> argumentInvocations = methodInvocationMap2.get(argument);
 						if(argumentInvocations != null) {
 							for(AbstractCall argumentInvocation : argumentInvocations) {
@@ -1512,12 +1512,12 @@ public class StringBasedHeuristics {
 				if(initializer1.getCreationMap().size() == 1 && initializer2.getCreationMap().size() == 1) {
 					ObjectCreation creation1 = initializer1.getCreationMap().values().iterator().next().get(0);
 					ObjectCreation creation2 = initializer2.getCreationMap().values().iterator().next().get(0);
-					if(creation1.getArguments().size() == 0 && creation2.getArguments().size() == 0) {
+					if(creation1.arguments().size() == 0 && creation2.arguments().size() == 0) {
 						zeroArgumentClassInstantiation = true;
 					}
-					else if(creation1.getArguments().size() == 1 && creation2.getArguments().size() == 1) {
-						String argument1 = creation1.getArguments().get(0);
-						String argument2 = creation2.getArguments().get(0);
+					else if(creation1.arguments().size() == 1 && creation2.arguments().size() == 1) {
+						String argument1 = creation1.arguments().get(0);
+						String argument2 = creation2.arguments().get(0);
 						for(Replacement replacement : replacementInfo.getReplacements()) {
 							if(replacement.getBefore().equals(argument1) && replacement.getAfter().equals(argument2)) {
 								classInstantiationArgumentReplacement = true;

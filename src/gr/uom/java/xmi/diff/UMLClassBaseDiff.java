@@ -1225,12 +1225,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		for(UMLOperation operation : operations) {
 			List<AbstractCall> operationInvocations = operation.getAllOperationInvocations();
 			for(AbstractCall operationInvocation : operationInvocations) {
-				Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation.getArguments());
-				argumentIntersection.retainAll(invocation.getArguments());
+				Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation.arguments());
+				argumentIntersection.retainAll(invocation.arguments());
 				if(operationInvocation.getName().equals(invocation.getName()) && !argumentIntersection.isEmpty()) {
 					return true;
 				}
-				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.getArguments().size()) {
+				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.arguments().size()) {
 					return true;
 				}
 			}
@@ -1787,7 +1787,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		if(invocation != null) {
-			for(String argument : invocation.getArguments()) {
+			for(String argument : invocation.arguments()) {
 				if(argument.contains(operationInvocation.actualString())) {
 					return true;
 				}

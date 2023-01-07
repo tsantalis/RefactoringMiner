@@ -9,24 +9,24 @@ import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 
 public class MethodReference extends AbstractCall {
 	private String methodName;
 	private volatile int hashCode = 0;
 	
-	public MethodReference(CompilationUnit cu, String filePath, ExpressionMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
+	public MethodReference(CompilationUnit cu, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer container) {
+		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = stringify(reference.getExpression());
 		this.arguments = new ArrayList<String>();
 	}
 	
-	public MethodReference(CompilationUnit cu, String filePath, SuperMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
+	public MethodReference(CompilationUnit cu, String filePath, SuperMethodReference reference, VariableDeclarationContainer container) {
+		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.arguments = new ArrayList<String>();
 		if(reference.getQualifier() != null) {
@@ -37,8 +37,8 @@ public class MethodReference extends AbstractCall {
 		}
 	}
 	
-	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
+	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference, VariableDeclarationContainer container) {
+		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0).toQualifiedString();
 		this.arguments = new ArrayList<String>();
@@ -68,7 +68,7 @@ public class MethodReference extends AbstractCall {
 	}
 
 	private MethodReference() {
-		
+		super();
 	}
 
 	@Override

@@ -4230,13 +4230,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(ifFound && (elseIfFound || elseFound) && ifElseIfChain(map.keySet())) {
+				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();
+				Set<String> variableDeclarationNames2 = new LinkedHashSet<>();
+				for(AbstractCodeMapping mapping : map.values()) {
+					AbstractCodeFragment fragment1 = mapping.getFragment1();
+					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					for(VariableDeclaration variable : fragment1.getVariableDeclarations()) {
+						variableDeclarationNames1.add(variable.getVariableName());
+					}
+					for(VariableDeclaration variable : fragment2.getVariableDeclarations()) {
+						variableDeclarationNames2.add(variable.getVariableName());
+					}
+					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null) {
+						if(fragment1.getString().contains("=")) {
+							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf("="));
+							variableDeclarationNames1.add(assignedVariable);
+						}
+					}
+					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null) {
+						if(fragment2.getString().contains("=")) {
+							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf("="));
+							variableDeclarationNames2.add(assignedVariable);
+						}
+					}
+				}
 				AbstractCodeFragment fragment1 = mappingSet.first().getFragment1();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment1NestedUnderLoop = false;
 				if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
 					fragment1NestedUnderLoop = fragment1.getParent().isLoop() || fragment1.getParent().getParent().isLoop();
 				}
-				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop) {
+				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment1IsInsideIfElseIf = false;
 					if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
@@ -4299,13 +4323,37 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(ifFound && (elseIfFound || elseFound) && ifElseIfChain(map.keySet())) {
+				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();
+				Set<String> variableDeclarationNames2 = new LinkedHashSet<>();
+				for(AbstractCodeMapping mapping : map.values()) {
+					AbstractCodeFragment fragment1 = mapping.getFragment1();
+					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					for(VariableDeclaration variable : fragment1.getVariableDeclarations()) {
+						variableDeclarationNames1.add(variable.getVariableName());
+					}
+					for(VariableDeclaration variable : fragment2.getVariableDeclarations()) {
+						variableDeclarationNames2.add(variable.getVariableName());
+					}
+					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null) {
+						if(fragment1.getString().contains("=")) {
+							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf("="));
+							variableDeclarationNames1.add(assignedVariable);
+						}
+					}
+					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null) {
+						if(fragment2.getString().contains("=")) {
+							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf("="));
+							variableDeclarationNames2.add(assignedVariable);
+						}
+					}
+				}
 				AbstractCodeFragment fragment2 = mappingSet.first().getFragment2();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment2NestedUnderLoop = false;
 				if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
 					fragment2NestedUnderLoop = fragment2.getParent().isLoop() || fragment2.getParent().getParent().isLoop();
 				}
-				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop) {
+				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment2IsInsideIfElseIf = false;
 					if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
@@ -4332,7 +4380,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		return Set.of(mappingSet.first());
 	}
-
 
 	private boolean nestedUnderLoop(Set<CompositeStatementObject> blocks) {
 		//sort by start offset

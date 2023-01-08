@@ -4249,7 +4249,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							fragment1IsInsideIfElseIf = true;
 						}
 					}
-					if(parentMapper != null && parentMapper.alreadyMatched2(mappingSet.first().getFragment2().getParent().getParent())) {
+					if(parentMapper != null && mappingSet.first().getFragment2().getParent().getParent() != null && parentMapper.alreadyMatched2(mappingSet.first().getFragment2().getParent().getParent())) {
 						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 						if(parentMapping != null && parentMapping.getFragment2().equals(mappingSet.first().getFragment2().getParent().getParent())) {
 							fragment1IsInsideIfElseIf = true;
@@ -4318,7 +4318,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							fragment2IsInsideIfElseIf = true;
 						}
 					}
-					if(parentMapper != null && parentMapper.alreadyMatched1(mappingSet.first().getFragment1().getParent().getParent())) {
+					if(parentMapper != null && mappingSet.first().getFragment1().getParent().getParent() != null && parentMapper.alreadyMatched1(mappingSet.first().getFragment1().getParent().getParent())) {
 						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 						if(parentMapping != null && parentMapping.getFragment1().equals(mappingSet.first().getFragment1().getParent().getParent())) {
 							fragment2IsInsideIfElseIf = true;

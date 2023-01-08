@@ -513,13 +513,9 @@ public class VariableReplacementAnalysis {
 	private boolean containCallToOperation(Set<AbstractCodeFragment> statementsInScope, VariableDeclarationContainer calledOperation, VariableDeclarationContainer callerOperation) {
 		UMLModelDiff modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		for(AbstractCodeFragment statement : statementsInScope) {
-			Map<String, List<AbstractCall>> map = statement.getMethodInvocationMap();
-			for(String key : map.keySet()) {
-				List<AbstractCall> invocationList = map.get(key);
-				for(AbstractCall invocation : invocationList) {
-					if(invocation.matchesOperation(calledOperation, callerOperation, modelDiff)) {
-						return true;
-					}
+			for(AbstractCall invocation : statement.getMethodInvocations()) {
+				if(invocation.matchesOperation(calledOperation, callerOperation, modelDiff)) {
+					return true;
 				}
 			}
 		}
@@ -714,13 +710,9 @@ public class VariableReplacementAnalysis {
 			}
 			if(replacement instanceof VariableReplacementWithMethodInvocation) {
 				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
-				Map<String, List<AbstractCall>> map = variableDeclaration.getInitializer().getMethodInvocationMap();
-				for(String key : map.keySet()) {
-					List<AbstractCall> list = map.get(key);
-					for(AbstractCall call : list) {
-						if(call.identicalName(r.getInvokedOperation())) {
-							return true;
-						}
+				for(AbstractCall call : variableDeclaration.getInitializer().getMethodInvocations()) {
+					if(call.identicalName(r.getInvokedOperation())) {
+						return true;
 					}
 				}
 			}
@@ -2041,25 +2033,19 @@ public class VariableReplacementAnalysis {
 							}
 							if(v2 != null && v2.getInitializer() != null) {
 								VariableDeclarationContainer extractedMethod = mapper.getContainer2();
-								Map<String, List<AbstractCall>> methodInvocationMap = v2.getInitializer().getMethodInvocationMap();
-								for(String key : methodInvocationMap.keySet()) {
-									for(AbstractCall invocation : methodInvocationMap.get(key)) {
-										if(invocation.matchesOperation(extractedMethod, operation2, modelDiff)) {
-											return false;
-										}
-										else {
-											//check if the extracted method is called in the initializer of a variable used in the initializer of v2
-											List<LeafExpression> initializerVariables = v2.getInitializer().getVariables();
-											for(LeafExpression variable : initializerVariables) {
-												for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
-													if(declaration.getVariableName().equals(variable.getString()) && declaration.getInitializer() != null) {
-														Map<String, List<AbstractCall>> methodInvocationMap2 = declaration.getInitializer().getMethodInvocationMap();
-														for(String key2 : methodInvocationMap2.keySet()) {
-															for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-																if(invocation2.matchesOperation(extractedMethod, operation2, modelDiff)) {
-																	return false;
-																}
-															}
+								for(AbstractCall invocation : v2.getInitializer().getMethodInvocations()) {
+									if(invocation.matchesOperation(extractedMethod, operation2, modelDiff)) {
+										return false;
+									}
+									else {
+										//check if the extracted method is called in the initializer of a variable used in the initializer of v2
+										List<LeafExpression> initializerVariables = v2.getInitializer().getVariables();
+										for(LeafExpression variable : initializerVariables) {
+											for(VariableDeclaration declaration : operation2.getAllVariableDeclarations()) {
+												if(declaration.getVariableName().equals(variable.getString()) && declaration.getInitializer() != null) {
+													for(AbstractCall invocation2 : declaration.getInitializer().getMethodInvocations()) {
+														if(invocation2.matchesOperation(extractedMethod, operation2, modelDiff)) {
+															return false;
 														}
 													}
 												}

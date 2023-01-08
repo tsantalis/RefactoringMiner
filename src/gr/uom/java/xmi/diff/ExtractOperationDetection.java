@@ -255,16 +255,12 @@ public class ExtractOperationDetection {
 		List<AbstractCall> operationInvocations = mapper.getContainer2().getAllOperationInvocations();
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-				Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
-				for(String key : methodInvocationMap.keySet()) {
-					List<AbstractCall> invocations = methodInvocationMap.get(key);
-					for(AbstractCall invocation : invocations) {
-						for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
-							AbstractCall matchingInvocation = iterator.next();
-							if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
-								iterator.remove();
-								break;
-							}
+				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {
+					for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
+						AbstractCall matchingInvocation = iterator.next();
+						if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
+							iterator.remove();
+							break;
 						}
 					}
 				}
@@ -304,31 +300,16 @@ public class ExtractOperationDetection {
 	}
 
 	public static void addStatementInvocations(List<AbstractCall> operationInvocations, AbstractCodeFragment statement) {
-		Map<String, List<AbstractCall>> statementMethodInvocationMap = statement.getMethodInvocationMap();
-		for(String key : statementMethodInvocationMap.keySet()) {
-			for(AbstractCall statementInvocation : statementMethodInvocationMap.get(key)) {
-				if(!containsInvocation(operationInvocations, statementInvocation)) {
-					operationInvocations.add(statementInvocation);
-				}
+		for(AbstractCall statementInvocation : statement.getMethodInvocations()) {
+			if(!containsInvocation(operationInvocations, statementInvocation)) {
+				operationInvocations.add(statementInvocation);
 			}
 		}
 		List<LambdaExpressionObject> lambdas = statement.getLambdas();
 		for(LambdaExpressionObject lambda : lambdas) {
-			if(lambda.getBody() != null) {
-				for(AbstractCall statementInvocation : lambda.getBody().getAllOperationInvocations()) {
-					if(!containsInvocation(operationInvocations, statementInvocation)) {
-						operationInvocations.add(statementInvocation);
-					}
-				}
-			}
-			if(lambda.getExpression() != null) {
-				Map<String, List<AbstractCall>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
-				for(String key : methodInvocationMap.keySet()) {
-					for(AbstractCall statementInvocation : methodInvocationMap.get(key)) {
-						if(!containsInvocation(operationInvocations, statementInvocation)) {
-							operationInvocations.add(statementInvocation);
-						}
-					}
+			for(AbstractCall statementInvocation : lambda.getAllOperationInvocations()) {
+				if(!containsInvocation(operationInvocations, statementInvocation)) {
+					operationInvocations.add(statementInvocation);
 				}
 			}
 		}

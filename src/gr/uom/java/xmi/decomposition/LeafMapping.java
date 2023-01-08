@@ -281,12 +281,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				this.getFragment1().equals(o.getFragment1()) &&
 				o.getFragment2().getLocationInfo().getEndOffset() < this.getFragment2().getLocationInfo().getStartOffset()) {
 			List<VariableDeclaration> variableDeclarations2 = o.getFragment2().getVariableDeclarations();
-			Map<String, List<ObjectCreation>> creationMap2 = this.getFragment2().getCreationMap();
+			Map<String, List<AbstractCall>> creationMap2 = this.getFragment2().getCreationMap();
 			for(VariableDeclaration declaration2 : variableDeclarations2) {
 				for(String key : creationMap2.keySet()) {
-					List<ObjectCreation> creations = creationMap2.get(key);
-					for(ObjectCreation creation : creations) {
-						if(creation.getAnonymousClassDeclaration() != null) {
+					List<AbstractCall> creations = creationMap2.get(key);
+					for(AbstractCall creation : creations) {
+						if(((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
 							return false;
 						}
 						List<String> arguments = creation.arguments();

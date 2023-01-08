@@ -21,7 +21,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private String astNodeString;
 	private List<LeafExpression> variables = new ArrayList<>();
 	private List<String> types = new ArrayList<>();
-	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
+	private List<AbstractCall> methodInvocations = new ArrayList<>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
 	private List<LeafExpression> stringLiterals = new ArrayList<>();
@@ -29,7 +29,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LeafExpression> nullLiterals = new ArrayList<>();
 	private List<LeafExpression> booleanLiterals = new ArrayList<>();
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
-	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
+	private Map<String, List<AbstractCall>> creationMap = new LinkedHashMap<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
 	private List<LeafExpression> arrayAccesses = new ArrayList<>();
@@ -63,8 +63,8 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return astNodeString;
 	}
 
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		return this.methodInvocationMap;
+	public List<AbstractCall> getMethodInvocations() {
+		return methodInvocations;
 	}
 
 	public List<VariableDeclaration> getVariableDeclarations() {
@@ -99,7 +99,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return typeLiterals;
 	}
 
-	public Map<String, List<ObjectCreation>> getCreationMap() {
+	public Map<String, List<AbstractCall>> getCreationMap() {
 		return creationMap;
 	}
 

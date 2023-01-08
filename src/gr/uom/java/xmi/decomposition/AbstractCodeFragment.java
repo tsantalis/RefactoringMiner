@@ -40,14 +40,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getVariables();
 	public abstract List<String> getTypes();
 	public abstract List<VariableDeclaration> getVariableDeclarations();
-	public abstract Map<String, List<AbstractCall>> getMethodInvocationMap();
+	public abstract List<AbstractCall> getMethodInvocations();
 	public abstract List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations();
 	public abstract List<LeafExpression> getStringLiterals();
 	public abstract List<LeafExpression> getNumberLiterals();
 	public abstract List<LeafExpression> getNullLiterals();
 	public abstract List<LeafExpression> getBooleanLiterals();
 	public abstract List<LeafExpression> getTypeLiterals();
-	public abstract Map<String, List<ObjectCreation>> getCreationMap();
+	public abstract Map<String, List<AbstractCall>> getCreationMap();
 	public abstract List<LeafExpression> getInfixExpressions();
 	public abstract List<String> getInfixOperators();
 	public abstract List<LeafExpression> getArrayAccesses();
@@ -218,26 +218,26 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public ObjectCreation creationCoveringEntireFragment() {
-		Map<String, List<ObjectCreation>> creationMap = getCreationMap();
+		Map<String, List<AbstractCall>> creationMap = getCreationMap();
 		String statement = getString();
 		for(String objectCreation : creationMap.keySet()) {
-			List<ObjectCreation> creations = creationMap.get(objectCreation);
-			for(ObjectCreation creation : creations) {
+			List<AbstractCall> creations = creationMap.get(objectCreation);
+			for(AbstractCall creation : creations) {
 				if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
 					creation.coverage = StatementCoverageType.ONLY_CALL;
-					return creation;
+					return (ObjectCreation) creation;
 				}
 				else if(("return " + objectCreation + ";\n").equals(statement)) {
 					creation.coverage = StatementCoverageType.RETURN_CALL;
-					return creation;
+					return (ObjectCreation) creation;
 				}
 				else if(("throw " + objectCreation + ";\n").equals(statement)) {
 					creation.coverage = StatementCoverageType.THROW_CALL;
-					return creation;
+					return (ObjectCreation) creation;
 				}
 				else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
 					creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-					return creation;
+					return (ObjectCreation) creation;
 				}
 			}
 		}
@@ -245,44 +245,41 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public AbstractCall invocationCoveringEntireFragment() {
-		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
 		String statement = getString();
-		for(String methodInvocation : methodInvocationMap.keySet()) {
-			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
-			for(AbstractCall invocation : invocations) {
-				if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
-					invocation.coverage = StatementCoverageType.ONLY_CALL;
-					return invocation;
-				}
-				else if(("return " + methodInvocation + ";\n").equals(statement)) {
-					invocation.coverage = StatementCoverageType.RETURN_CALL;
-					return invocation;
-				}
-				else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
-					invocation.coverage = StatementCoverageType.CAST_CALL;
-					return invocation;
-				}
-				else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
-					invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-					return invocation;
-				}
-				else if(invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
-						invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
-					invocation.coverage = StatementCoverageType.ONLY_CALL;
-					return invocation;
-				}
+		for(AbstractCall invocation : getMethodInvocations()) {
+			String methodInvocation = invocation.getString();
+			if((methodInvocation + ";\n").equals(statement) || methodInvocation.equals(statement) || ("!" + methodInvocation).equals(statement)) {
+				invocation.coverage = StatementCoverageType.ONLY_CALL;
+				return invocation;
+			}
+			else if(("return " + methodInvocation + ";\n").equals(statement)) {
+				invocation.coverage = StatementCoverageType.RETURN_CALL;
+				return invocation;
+			}
+			else if(isCastExpressionCoveringEntireFragment(methodInvocation)) {
+				invocation.coverage = StatementCoverageType.CAST_CALL;
+				return invocation;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(methodInvocation)) {
+				invocation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+				return invocation;
+			}
+			else if(invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.SUPER_CONSTRUCTOR_INVOCATION) ||
+					invocation.getLocationInfo().getCodeElementType().equals(CodeElementType.CONSTRUCTOR_INVOCATION)) {
+				invocation.coverage = StatementCoverageType.ONLY_CALL;
+				return invocation;
 			}
 		}
 		return null;
 	}
 
 	public ObjectCreation assignmentCreationCoveringEntireStatement() {
-		Map<String, List<ObjectCreation>> creationMap = getCreationMap();
+		Map<String, List<AbstractCall>> creationMap = getCreationMap();
 		for(String objectCreation : creationMap.keySet()) {
-			List<ObjectCreation> creations = creationMap.get(objectCreation);
-			for(ObjectCreation creation : creations) {
+			List<AbstractCall> creations = creationMap.get(objectCreation);
+			for(AbstractCall creation : creations) {
 				if(expressionIsTheRightHandSideOfAssignment(objectCreation)) {
-					return creation;
+					return (ObjectCreation) creation;
 				}
 			}
 		}
@@ -290,26 +287,18 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public AbstractCall assignmentInvocationCoveringEntireStatement() {
-		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
-		for(String methodInvocation : methodInvocationMap.keySet()) {
-			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
-			for(AbstractCall invocation : invocations) {
-				if(expressionIsTheRightHandSideOfAssignment(methodInvocation)) {
-					return invocation;
-				}
+		for(AbstractCall invocation : getMethodInvocations()) {
+			if(expressionIsTheRightHandSideOfAssignment(invocation.getString())) {
+				return invocation;
 			}
 		}
 		return null;
 	}
 
 	public AbstractCall fieldAssignmentInvocationCoveringEntireStatement() {
-		Map<String, List<AbstractCall>> methodInvocationMap = getMethodInvocationMap();
-		for(String methodInvocation : methodInvocationMap.keySet()) {
-			List<AbstractCall> invocations = methodInvocationMap.get(methodInvocation);
-			for(AbstractCall invocation : invocations) {
-				if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(methodInvocation)) {
-					return invocation;
-				}
+		for(AbstractCall invocation : getMethodInvocations()) {
+			if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(invocation.getString())) {
+				return invocation;
 			}
 		}
 		return null;

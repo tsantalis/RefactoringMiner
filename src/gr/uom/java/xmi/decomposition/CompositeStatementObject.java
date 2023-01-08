@@ -237,22 +237,12 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		Map<String, List<AbstractCall>> map = new LinkedHashMap<String, List<AbstractCall>>();
+	public List<AbstractCall> getMethodInvocations() {
+		List<AbstractCall> list = new ArrayList<>();
 		for(AbstractExpression expression : expressionList) {
-			Map<String, List<AbstractCall>> expressionMap = expression.getMethodInvocationMap();
-			for(String key : expressionMap.keySet()) {
-				if(map.containsKey(key)) {
-					map.get(key).addAll(expressionMap.get(key));
-				}
-				else {
-					List<AbstractCall> list = new ArrayList<AbstractCall>();
-					list.addAll(expressionMap.get(key));
-					map.put(key, list);
-				}
-			}
+			list.addAll(expression.getMethodInvocations());
 		}
-		return map;
+		return list;
 	}
 
 	@Override
@@ -400,16 +390,16 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public Map<String, List<ObjectCreation>> getCreationMap() {
-		Map<String, List<ObjectCreation>> map = new LinkedHashMap<String, List<ObjectCreation>>();
+	public Map<String, List<AbstractCall>> getCreationMap() {
+		Map<String, List<AbstractCall>> map = new LinkedHashMap<>();
 		for(AbstractExpression expression : expressionList) {
-			Map<String, List<ObjectCreation>> expressionMap = expression.getCreationMap();
+			Map<String, List<AbstractCall>> expressionMap = expression.getCreationMap();
 			for(String key : expressionMap.keySet()) {
 				if(map.containsKey(key)) {
 					map.get(key).addAll(expressionMap.get(key));
 				}
 				else {
-					List<ObjectCreation> list = new ArrayList<ObjectCreation>();
+					List<AbstractCall> list = new ArrayList<>();
 					list.addAll(expressionMap.get(key));
 					map.put(key, list);
 				}
@@ -418,73 +408,26 @@ public class CompositeStatementObject extends AbstractStatement {
 		return map;
 	}
 
-	public Map<String, List<AbstractCall>> getAllMethodInvocations() {
-		Map<String, List<AbstractCall>> map = new LinkedHashMap<String, List<AbstractCall>>();
-		map.putAll(getMethodInvocationMap());
+	public List<AbstractCall> getAllMethodInvocations() {
+		List<AbstractCall> list = new ArrayList<>();
+		list.addAll(getMethodInvocations());
 		for(AbstractStatement statement : statementList) {
 			if(statement instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement;
-				Map<String, List<AbstractCall>> compositeMap = composite.getAllMethodInvocations();
-				for(String key : compositeMap.keySet()) {
-					if(map.containsKey(key)) {
-						map.get(key).addAll(compositeMap.get(key));
-					}
-					else {
-						List<AbstractCall> list = new ArrayList<AbstractCall>();
-						list.addAll(compositeMap.get(key));
-						map.put(key, list);
-					}
-				}
+				list.addAll(composite.getAllMethodInvocations());
 			}
 			else if(statement instanceof StatementObject) {
 				StatementObject statementObject = (StatementObject)statement;
-				Map<String, List<AbstractCall>> statementMap = statementObject.getMethodInvocationMap();
-				for(String key : statementMap.keySet()) {
-					if(map.containsKey(key)) {
-						map.get(key).addAll(statementMap.get(key));
-					}
-					else {
-						List<AbstractCall> list = new ArrayList<AbstractCall>();
-						list.addAll(statementMap.get(key));
-						map.put(key, list);
-					}
-				}
+				list.addAll(statementObject.getMethodInvocations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
-					Map<String, List<AbstractCall>> lambdaMap = null;
-					if(lambda.getBody() != null) {
-						lambdaMap = lambda.getBody().getCompositeStatement().getAllMethodInvocations();
-					}
-					else if(lambda.getExpression() != null) {
-						lambdaMap = new LinkedHashMap<String, List<AbstractCall>>();
-						lambdaMap.putAll(lambda.getExpression().getMethodInvocationMap());
-					}
-					for(String key : lambdaMap.keySet()) {
-						if(map.containsKey(key)) {
-							map.get(key).addAll(lambdaMap.get(key));
-						}
-						else {
-							List<AbstractCall> list = new ArrayList<AbstractCall>();
-							list.addAll(lambdaMap.get(key));
-							map.put(key, list);
-						}
-					}
+					list.addAll(lambda.getAllOperationInvocations());
 				}
 				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
-					Map<String, List<AbstractCall>> anonymousMap = anonymous.getMethodInvocationMap();
-					for(String key : anonymousMap.keySet()) {
-						if(map.containsKey(key)) {
-							map.get(key).addAll(anonymousMap.get(key));
-						}
-						else {
-							List<AbstractCall> list = new ArrayList<AbstractCall>();
-							list.addAll(anonymousMap.get(key));
-							map.put(key, list);
-						}
-					}
+					list.addAll(anonymous.getMethodInvocations());
 				}
 			}
 		}
-		return map;
+		return list;
 	}
 
 	public List<AnonymousClassDeclarationObject> getAllAnonymousClassDeclarations() {

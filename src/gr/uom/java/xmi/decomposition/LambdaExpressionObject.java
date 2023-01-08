@@ -248,12 +248,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public List<AbstractCall> getAllOperationInvocations() {
 		if(expression != null) {
-			List<AbstractCall> invocations = new ArrayList<AbstractCall>();
-			Map<String, List<AbstractCall>> invocationMap = expression.getMethodInvocationMap();
-			for(String key : invocationMap.keySet()) {
-				invocations.addAll(invocationMap.get(key));
-			}
-			return invocations;
+			return new ArrayList<>(expression.getMethodInvocations());
 		}
 		if(body != null) {
 			return body.getAllOperationInvocations();

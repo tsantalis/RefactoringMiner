@@ -22,14 +22,14 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<LeafExpression> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
-	private Map<String, List<AbstractCall>> methodInvocationMap;
+	private List<AbstractCall> methodInvocations;
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations;
 	private List<LeafExpression> stringLiterals;
 	private List<LeafExpression> numberLiterals;
 	private List<LeafExpression> nullLiterals;
 	private List<LeafExpression> booleanLiterals;
 	private List<LeafExpression> typeLiterals;
-	private Map<String, List<ObjectCreation>> creationMap;
+	private Map<String, List<AbstractCall>> creationMap;
 	private List<LeafExpression> infixExpressions;
 	private List<String> infixOperators;
 	private List<LeafExpression> arrayAccesses;
@@ -48,7 +48,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
-		this.methodInvocationMap = visitor.getMethodInvocationMap();
+		this.methodInvocations = visitor.getMethodInvocations();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
 		this.stringLiterals = visitor.getStringLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
@@ -120,8 +120,8 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		return methodInvocationMap;
+	public List<AbstractCall> getMethodInvocations() {
+		return methodInvocations;
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, List<ObjectCreation>> getCreationMap() {
+	public Map<String, List<AbstractCall>> getCreationMap() {
 		return creationMap;
 	}
 

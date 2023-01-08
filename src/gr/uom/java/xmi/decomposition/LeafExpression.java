@@ -64,8 +64,8 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		return Collections.emptyMap();
+	public List<AbstractCall> getMethodInvocations() {
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, List<ObjectCreation>> getCreationMap() {
+	public Map<String, List<AbstractCall>> getCreationMap() {
 		return Collections.emptyMap();
 	}
 

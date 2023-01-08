@@ -102,12 +102,7 @@ public class OperationBody {
 	}
 
 	public List<AbstractCall> getAllOperationInvocations() {
-		List<AbstractCall> invocations = new ArrayList<AbstractCall>();
-		Map<String, List<AbstractCall>> invocationMap = compositeStatement.getAllMethodInvocations();
-		for(String key : invocationMap.keySet()) {
-			invocations.addAll(invocationMap.get(key));
-		}
-		return invocations;
+		return new ArrayList<AbstractCall>(compositeStatement.getAllMethodInvocations());
 	}
 
 	public List<LambdaExpressionObject> getAllLambdas() {

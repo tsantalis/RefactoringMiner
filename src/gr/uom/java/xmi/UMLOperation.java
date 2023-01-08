@@ -494,14 +494,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				Map<String, List<AbstractCall>> operationInvocationMap = statement.getMethodInvocationMap();
-				for(String key : operationInvocationMap.keySet()) {
-					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
-					for(AbstractCall operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this, null) ||
-								(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
-							return operationInvocation;
-						}
+				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
+					if(operationInvocation.matchesOperation(this, this, null) ||
+							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
+						return operationInvocation;
 					}
 				}
 			}

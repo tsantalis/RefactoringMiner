@@ -463,7 +463,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement.getVariableDeclarations().size() > 0) {
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
-					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreationMap().size() > 0)) {
+					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0)) {
 						for(AbstractCodeFragment nonMappedLeaf1 : nonMappedLeavesT1) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations1 = nonMappedLeaf1.getVariableDeclarations();
@@ -503,7 +503,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement.getVariableDeclarations().size() > 0) {
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
-					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreationMap().size() > 0)) {
+					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0)) {
 						for(AbstractCodeFragment nonMappedLeaf2 : nonMappedLeavesT2) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();
@@ -5144,8 +5144,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> methodInvocations1 = new LinkedHashSet<String>(methodInvocationMap1.keySet());
 		Set<String> methodInvocations2 = new LinkedHashSet<String>(methodInvocationMap2.keySet());
 		
-		Map<String, List<AbstractCall>> creationMap1 = new LinkedHashMap<>(statement1.getCreationMap());
-		Map<String, List<AbstractCall>> creationMap2 = new LinkedHashMap<>(statement2.getCreationMap());
+		Map<String, List<AbstractCall>> creationMap1 = convertToMap(statement1.getCreations());
+		Map<String, List<AbstractCall>> creationMap2 = convertToMap(statement2.getCreations());
 		Set<String> creations1 = new LinkedHashSet<String>(creationMap1.keySet());
 		Set<String> creations2 = new LinkedHashSet<String>(creationMap2.keySet());
 		
@@ -6483,17 +6483,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(variableDeclarations1.size() > 0) {
 							VariableDeclaration declaration1 = variableDeclarations1.get(0);
 							for(AbstractCodeFragment fragment1 : replacementInfo.statements1) {
-								Map<String, List<AbstractCall>> fragmentCreationMap1 = fragment1.getCreationMap();
-								for(String fragmentKey1 : fragmentCreationMap1.keySet()) {
-									for(AbstractCall fragmentCreation1 : fragmentCreationMap1.get(fragmentKey1)) {
-										if(fragmentCreation1.arguments().contains(declaration1.getVariableName()) &&
-												creationCoveringTheEntireStatement2.identicalName(fragmentCreation1)) {
-											Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<AbstractCodeFragment>();
-											additionallyMatchedStatements1.add(fragment1);
-											Replacement replacement = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<AbstractCodeFragment>());
-											replacementInfo.addReplacement(replacement);
-											return replacementInfo.getReplacements();
-										}
+								for(AbstractCall fragmentCreation1 : fragment1.getCreations()) {
+									if(fragmentCreation1.arguments().contains(declaration1.getVariableName()) &&
+											creationCoveringTheEntireStatement2.identicalName(fragmentCreation1)) {
+										Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<AbstractCodeFragment>();
+										additionallyMatchedStatements1.add(fragment1);
+										Replacement replacement = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<AbstractCodeFragment>());
+										replacementInfo.addReplacement(replacement);
+										return replacementInfo.getReplacements();
 									}
 								}
 							}

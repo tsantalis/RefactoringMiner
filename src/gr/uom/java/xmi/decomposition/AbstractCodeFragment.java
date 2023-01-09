@@ -47,7 +47,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getNullLiterals();
 	public abstract List<LeafExpression> getBooleanLiterals();
 	public abstract List<LeafExpression> getTypeLiterals();
-	public abstract Map<String, List<AbstractCall>> getCreationMap();
+	public abstract List<AbstractCall> getCreations();
 	public abstract List<LeafExpression> getInfixExpressions();
 	public abstract List<String> getInfixOperators();
 	public abstract List<LeafExpression> getArrayAccesses();
@@ -218,27 +218,24 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public ObjectCreation creationCoveringEntireFragment() {
-		Map<String, List<AbstractCall>> creationMap = getCreationMap();
 		String statement = getString();
-		for(String objectCreation : creationMap.keySet()) {
-			List<AbstractCall> creations = creationMap.get(objectCreation);
-			for(AbstractCall creation : creations) {
-				if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
-					creation.coverage = StatementCoverageType.ONLY_CALL;
-					return (ObjectCreation) creation;
-				}
-				else if(("return " + objectCreation + ";\n").equals(statement)) {
-					creation.coverage = StatementCoverageType.RETURN_CALL;
-					return (ObjectCreation) creation;
-				}
-				else if(("throw " + objectCreation + ";\n").equals(statement)) {
-					creation.coverage = StatementCoverageType.THROW_CALL;
-					return (ObjectCreation) creation;
-				}
-				else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
-					creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
-					return (ObjectCreation) creation;
-				}
+		for(AbstractCall creation : getCreations()) {
+			String objectCreation = creation.getString();
+			if((objectCreation + ";\n").equals(statement) || objectCreation.equals(statement)) {
+				creation.coverage = StatementCoverageType.ONLY_CALL;
+				return (ObjectCreation) creation;
+			}
+			else if(("return " + objectCreation + ";\n").equals(statement)) {
+				creation.coverage = StatementCoverageType.RETURN_CALL;
+				return (ObjectCreation) creation;
+			}
+			else if(("throw " + objectCreation + ";\n").equals(statement)) {
+				creation.coverage = StatementCoverageType.THROW_CALL;
+				return (ObjectCreation) creation;
+			}
+			else if(expressionIsTheInitializerOfVariableDeclaration(objectCreation)) {
+				creation.coverage = StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL;
+				return (ObjectCreation) creation;
 			}
 		}
 		return null;
@@ -274,13 +271,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public ObjectCreation assignmentCreationCoveringEntireStatement() {
-		Map<String, List<AbstractCall>> creationMap = getCreationMap();
-		for(String objectCreation : creationMap.keySet()) {
-			List<AbstractCall> creations = creationMap.get(objectCreation);
-			for(AbstractCall creation : creations) {
-				if(expressionIsTheRightHandSideOfAssignment(objectCreation)) {
-					return (ObjectCreation) creation;
-				}
+		for(AbstractCall creation : getCreations()) {
+			if(expressionIsTheRightHandSideOfAssignment(creation.getString())) {
+				return (ObjectCreation) creation;
 			}
 		}
 		return null;

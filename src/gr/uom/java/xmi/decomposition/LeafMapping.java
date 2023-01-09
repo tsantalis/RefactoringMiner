@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -281,18 +280,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				this.getFragment1().equals(o.getFragment1()) &&
 				o.getFragment2().getLocationInfo().getEndOffset() < this.getFragment2().getLocationInfo().getStartOffset()) {
 			List<VariableDeclaration> variableDeclarations2 = o.getFragment2().getVariableDeclarations();
-			Map<String, List<AbstractCall>> creationMap2 = this.getFragment2().getCreationMap();
+			List<AbstractCall> creations2 = this.getFragment2().getCreations();
 			for(VariableDeclaration declaration2 : variableDeclarations2) {
-				for(String key : creationMap2.keySet()) {
-					List<AbstractCall> creations = creationMap2.get(key);
-					for(AbstractCall creation : creations) {
-						if(((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
-							return false;
-						}
-						List<String> arguments = creation.arguments();
-						if(arguments.size() == 1 && arguments.contains(declaration2.getVariableName())) {
-							return true;
-						}
+				for(AbstractCall creation : creations2) {
+					if(((ObjectCreation)creation).getAnonymousClassDeclaration() != null) {
+						return false;
+					}
+					List<String> arguments = creation.arguments();
+					if(arguments.size() == 1 && arguments.contains(declaration2.getVariableName())) {
+						return true;
 					}
 				}
 			}

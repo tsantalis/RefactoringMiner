@@ -3,9 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -29,7 +27,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LeafExpression> nullLiterals = new ArrayList<>();
 	private List<LeafExpression> booleanLiterals = new ArrayList<>();
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
-	private Map<String, List<AbstractCall>> creationMap = new LinkedHashMap<>();
+	private List<AbstractCall> creations = new ArrayList<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
 	private List<LeafExpression> arrayAccesses = new ArrayList<>();
@@ -99,8 +97,8 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return typeLiterals;
 	}
 
-	public Map<String, List<AbstractCall>> getCreationMap() {
-		return creationMap;
+	public List<AbstractCall> getCreations() {
+		return creations;
 	}
 
 	public List<LeafExpression> getInfixExpressions() {

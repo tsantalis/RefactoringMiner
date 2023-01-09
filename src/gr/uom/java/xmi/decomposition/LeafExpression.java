@@ -4,7 +4,6 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -99,8 +98,8 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getCreationMap() {
-		return Collections.emptyMap();
+	public List<AbstractCall> getCreations() {
+		return Collections.emptyList();
 	}
 
 	@Override

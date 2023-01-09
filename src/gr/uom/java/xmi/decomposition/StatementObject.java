@@ -2,7 +2,6 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -35,7 +34,7 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> nullLiterals;
 	private List<LeafExpression> booleanLiterals;
 	private List<LeafExpression> typeLiterals;
-	private Map<String, List<AbstractCall>> creationMap;
+	private List<AbstractCall> creations;
 	private List<LeafExpression> infixExpressions;
 	private List<String> infixOperators;
 	private List<LeafExpression> arrayAccesses;
@@ -62,7 +61,7 @@ public class StatementObject extends AbstractStatement {
 		this.nullLiterals = visitor.getNullLiterals();
 		this.booleanLiterals = visitor.getBooleanLiterals();
 		this.typeLiterals = visitor.getTypeLiterals();
-		this.creationMap = visitor.getCreationMap();
+		this.creations = visitor.getCreations();
 		this.infixExpressions = visitor.getInfixExpressions();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arrayAccesses = visitor.getArrayAccesses();
@@ -202,8 +201,8 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getCreationMap() {
-		return creationMap;
+	public List<AbstractCall> getCreations() {
+		return creations;
 	}
 
 	@Override

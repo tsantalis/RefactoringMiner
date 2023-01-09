@@ -2,9 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -75,7 +73,7 @@ public class Visitor extends ASTVisitor {
 	private List<LeafExpression> nullLiterals = new ArrayList<>();
 	private List<LeafExpression> booleanLiterals = new ArrayList<>();
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
-	private Map<String, List<AbstractCall>> creationMap = new LinkedHashMap<>();
+	private List<AbstractCall> creations = new ArrayList<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
 	private List<LeafExpression> arrayAccesses = new ArrayList<>();
@@ -153,26 +151,10 @@ public class Visitor extends ASTVisitor {
 			processArgument(argument);
 		}
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
-		String nodeAsString = stringify(node);
-		if(creationMap.containsKey(nodeAsString)) {
-			creationMap.get(nodeAsString).add(creation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<>();
-			list.add(creation);
-			creationMap.put(nodeAsString, list);
-		}
+		creations.add(creation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousCreationMap = anonymous.getCreationMap();
-			if(anonymousCreationMap.containsKey(nodeAsString)) {
-				anonymousCreationMap.get(nodeAsString).add(creation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<>();
-				list.add(creation);
-				anonymousCreationMap.put(nodeAsString, list);
-			}
+			anonymous.getCreations().add(creation);
 		}
 		return super.visit(node);
 	}
@@ -180,25 +162,10 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(ArrayCreation node) {
 		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
 		String nodeAsString = stringify(node);
-		if(creationMap.containsKey(nodeAsString)) {
-			creationMap.get(nodeAsString).add(creation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<>();
-			list.add(creation);
-			creationMap.put(nodeAsString, list);
-		}
+		creations.add(creation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousCreationMap = anonymous.getCreationMap();
-			if(anonymousCreationMap.containsKey(nodeAsString)) {
-				anonymousCreationMap.get(nodeAsString).add(creation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<>();
-				list.add(creation);
-				anonymousCreationMap.put(nodeAsString, list);
-			}
+			anonymous.getCreations().add(creation);
 		}
 		ArrayInitializer initializer = node.getInitializer();
 		if(initializer != null) {
@@ -256,9 +223,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.variables, anonymous.getVariables());
 			removeLastString(this.types, anonymous.getTypes());
 			removeLast(this.methodInvocations, anonymous.getMethodInvocations());
-			for(String key : anonymous.getCreationMap().keySet()) {
-				this.creationMap.remove(key, anonymous.getCreationMap().get(key));
-			}
+			removeLast(this.creations, anonymous.getCreations());
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
 			removeLast(this.stringLiterals, anonymous.getStringLiterals());
 			removeLast(this.nullLiterals, anonymous.getNullLiterals());
@@ -839,8 +804,8 @@ public class Visitor extends ASTVisitor {
 		return typeLiterals;
 	}
 
-	public Map<String, List<AbstractCall>> getCreationMap() {
-		return creationMap;
+	public List<AbstractCall> getCreations() {
+		return creations;
 	}
 
 	public List<LeafExpression> getInfixExpressions() {

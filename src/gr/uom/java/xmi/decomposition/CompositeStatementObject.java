@@ -390,22 +390,12 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getCreationMap() {
-		Map<String, List<AbstractCall>> map = new LinkedHashMap<>();
+	public List<AbstractCall> getCreations() {
+		List<AbstractCall> list = new ArrayList<>();
 		for(AbstractExpression expression : expressionList) {
-			Map<String, List<AbstractCall>> expressionMap = expression.getCreationMap();
-			for(String key : expressionMap.keySet()) {
-				if(map.containsKey(key)) {
-					map.get(key).addAll(expressionMap.get(key));
-				}
-				else {
-					List<AbstractCall> list = new ArrayList<>();
-					list.addAll(expressionMap.get(key));
-					map.put(key, list);
-				}
-			}
+			list.addAll(expression.getCreations());
 		}
-		return map;
+		return list;
 	}
 
 	public List<AbstractCall> getAllMethodInvocations() {

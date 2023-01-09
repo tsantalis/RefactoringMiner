@@ -1206,17 +1206,17 @@ public class StringBasedHeuristics {
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
-			Map<String, List<AbstractCall>> creationMap1 = statement1.getCreationMap();
-			for(String creation1 : creationMap1.keySet()) {
-				if(creation1.equals(assignment1)) {
-					objectCreation1 = (ObjectCreation) creationMap1.get(creation1).get(0);
+			List<AbstractCall> creations1 = statement1.getCreations();
+			for(AbstractCall creation1 : creations1) {
+				if(creation1.getString().equals(assignment1)) {
+					objectCreation1 = (ObjectCreation)creation1;
 					type1 = objectCreation1.getType();
 				}
 			}
-			Map<String, List<AbstractCall>> creationMap2 = statement2.getCreationMap();
-			for(String creation2 : creationMap2.keySet()) {
-				if(creation2.equals(assignment2)) {
-					objectCreation2 = (ObjectCreation) creationMap2.get(creation2).get(0);
+			List<AbstractCall> creations2 = statement2.getCreations();
+			for(AbstractCall creation2 : creations2) {
+				if(creation2.getString().equals(assignment2)) {
+					objectCreation2 = (ObjectCreation)creation2;
 					type2 = objectCreation2.getType();
 					for(String argument : objectCreation2.arguments()) {
 						if(parameterToArgumentMap.containsKey(argument)) {
@@ -1258,17 +1258,17 @@ public class StringBasedHeuristics {
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
-			Map<String, List<AbstractCall>> creationMap1 = statement1.getCreationMap();
-			for(String creation1 : creationMap1.keySet()) {
-				if(creation1.equals(assignment1)) {
-					objectCreation1 = (ObjectCreation) creationMap1.get(creation1).get(0);
+			List<AbstractCall> creations1 = statement1.getCreations();
+			for(AbstractCall creation1 : creations1) {
+				if(creation1.getString().equals(assignment1)) {
+					objectCreation1 = (ObjectCreation)creation1;
 					type1 = objectCreation1.getType();
 				}
 			}
-			Map<String, List<AbstractCall>> creationMap2 = statement2.getCreationMap();
-			for(String creation2 : creationMap2.keySet()) {
-				if(creation2.equals(assignment2)) {
-					objectCreation2 = (ObjectCreation) creationMap2.get(creation2).get(0);
+			List<AbstractCall> creations2 = statement2.getCreations();
+			for(AbstractCall creation2 : creations2) {
+				if(creation2.getString().equals(assignment2)) {
+					objectCreation2 = (ObjectCreation)creation2;
 					type2 = objectCreation2.getType();
 					for(String argument : objectCreation2.arguments()) {
 						if(parameterToArgumentMap.containsKey(argument)) {
@@ -1324,18 +1324,18 @@ public class StringBasedHeuristics {
 			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
 			UMLType type1 = null, type2 = null;
 			AbstractCall inv1 = null, inv2 = null;
-			Map<String, List<AbstractCall>> creationMap1 = statement1.getCreationMap();
-			for(String creation1 : creationMap1.keySet()) {
-				if(creation1.equals(assignment1)) {
-					ObjectCreation objectCreation = (ObjectCreation) creationMap1.get(creation1).get(0);
+			List<AbstractCall> creations1 = statement1.getCreations();
+			for(AbstractCall creation1 : creations1) {
+				if(creation1.getString().equals(assignment1)) {
+					ObjectCreation objectCreation = (ObjectCreation)creation1;
 					type1 = objectCreation.getType();
 					inv1 = objectCreation;
 				}
 			}
-			Map<String, List<AbstractCall>> creationMap2 = statement2.getCreationMap();
-			for(String creation2 : creationMap2.keySet()) {
-				if(creation2.equals(assignment2)) {
-					ObjectCreation objectCreation = (ObjectCreation) creationMap2.get(creation2).get(0);
+			List<AbstractCall> creations2 = statement2.getCreations();
+			for(AbstractCall creation2 : creations2) {
+				if(creation2.getString().equals(assignment2)) {
+					ObjectCreation objectCreation = (ObjectCreation)creation2;
 					type2 = objectCreation.getType();
 					inv2 = objectCreation;
 				}
@@ -1501,9 +1501,9 @@ public class StringBasedHeuristics {
 			}
 			else if(initializer1 != null && initializer2 != null) {
 				nullInitializer = initializer1.getExpression().equals("null") || initializer2.getExpression().equals("null");
-				if(initializer1.getCreationMap().size() == 1 && initializer2.getCreationMap().size() == 1) {
-					ObjectCreation creation1 = (ObjectCreation) initializer1.getCreationMap().values().iterator().next().get(0);
-					ObjectCreation creation2 = (ObjectCreation) initializer2.getCreationMap().values().iterator().next().get(0);
+				if(initializer1.getCreations().size() == 1 && initializer2.getCreations().size() == 1) {
+					ObjectCreation creation1 = (ObjectCreation) initializer1.getCreations().get(0);
+					ObjectCreation creation2 = (ObjectCreation) initializer2.getCreations().get(0);
 					if(creation1.arguments().size() == 0 && creation2.arguments().size() == 0) {
 						zeroArgumentClassInstantiation = true;
 					}

@@ -1,9 +1,14 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class CompositeStatementObjectMapping extends AbstractCodeMapping implements Comparable<CompositeStatementObjectMapping> {
@@ -28,7 +33,7 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		}
 		double distance1 = this.editDistance();
 		double distance2 = o.editDistance();
-		if(distance1 != distance2) {
+		if(distance1 != distance2 && !replacementsOnSameASTNodes(o)) {
 			if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
 				return -1;
 			}
@@ -111,6 +116,33 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				}
 			}
 		}
+	}
+
+	private boolean replacementsOnSameASTNodes(CompositeStatementObjectMapping o) {
+		Set<Replacement> thisReplacements = this.getReplacements();
+		Set<Replacement> otherReplacements = o.getReplacements();
+		if(thisReplacements.size() == otherReplacements.size()) {
+			Iterator<Replacement> thisIterator = thisReplacements.iterator();
+			Iterator<Replacement> otherIterator = otherReplacements.iterator();
+			int identicalBefore = 0;
+			int identicalAfter = 0;
+			while(thisIterator.hasNext()) {
+				Replacement thisReplacement = thisIterator.next();
+				Replacement otherReplacement = otherIterator.next();
+				if(!(thisReplacement instanceof IntersectionReplacement) && !(thisReplacement instanceof CompositeReplacement)) {
+					if(thisReplacement.getBefore().equals(otherReplacement.getBefore()) && thisReplacement.getType().equals(otherReplacement.getType())) {
+						identicalBefore++;
+					}
+					if(thisReplacement.getAfter().equals(otherReplacement.getAfter()) && thisReplacement.getType().equals(otherReplacement.getType())) {
+						identicalAfter++;
+					}
+				}
+			}
+			if(identicalBefore == thisReplacements.size() || identicalAfter == thisReplacements.size()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public double editDistance() {

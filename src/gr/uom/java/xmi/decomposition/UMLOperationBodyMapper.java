@@ -389,7 +389,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(container1.getBodyHashCode() != container2.getBodyHashCode() && containsCallToExtractedMethod) {
 				for(Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator(); mappingIterator.hasNext();) {
 					AbstractCodeMapping mapping = mappingIterator.next();
-					if(!mapping.containsReplacement(ReplacementType.COMPOSITE) && !nestedUnderSplitConditional(mapping) && !ifBecomingElseIf.contains(mapping)) {
+					boolean ifChangedToElseIf = false;
+					if(ifBecomingElseIf.contains(mapping)) {
+						int mappedChildrenSize = 0;
+						for(AbstractCodeMapping m : mappings) {
+							if(!mapping.equals(m) && !m.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+									mapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) &&
+									mapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+								mappedChildrenSize++;
+							}
+						}
+						ifChangedToElseIf = mappedChildrenSize > 0;
+					}
+					if(!mapping.containsReplacement(ReplacementType.COMPOSITE) && !nestedUnderSplitConditional(mapping) && !ifChangedToElseIf) {
 						AbstractCodeFragment child1 = mapping.getFragment1();
 						AbstractCodeFragment child2 = mapping.getFragment2();
 						CompositeStatementObject parent1 = child1.getParent();

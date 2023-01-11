@@ -9,6 +9,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class CompositeStatementObjectMapping extends AbstractCodeMapping implements Comparable<CompositeStatementObjectMapping> {
@@ -129,7 +130,7 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			while(thisIterator.hasNext()) {
 				Replacement thisReplacement = thisIterator.next();
 				Replacement otherReplacement = otherIterator.next();
-				if(!(thisReplacement instanceof IntersectionReplacement) && !(thisReplacement instanceof CompositeReplacement)) {
+				if(!(thisReplacement instanceof IntersectionReplacement) && !(thisReplacement instanceof CompositeReplacement) && !thisReplacement.getType().equals(ReplacementType.TYPE)) {
 					if(thisReplacement.getBefore().equals(otherReplacement.getBefore()) && thisReplacement.getType().equals(otherReplacement.getType())) {
 						identicalBefore++;
 					}

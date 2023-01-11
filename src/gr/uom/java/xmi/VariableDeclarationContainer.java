@@ -184,14 +184,6 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 					keysToBeRemoved.add(key);
 				}
 				else {
-					//exclude exception variables declared in catch blocks
-					for(VariableDeclaration variable : variableDeclarationMap.get(key)) {
-						UMLType variableType = variable.getType();
-						if(variableType != null && variableType.getClassType().endsWith("Exception")) {
-							keysToBeRemoved.add(key);
-							break;
-						}
-					}
 					//exclude variables aliased with fields
 					boolean foundInLocalVariables = false;
 					for(String value : map.get(key)) {

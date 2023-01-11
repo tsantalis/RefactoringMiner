@@ -239,20 +239,22 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 					mapping.first.getPos(),
 					mapping.first.getEndPos(),
 					mapping.first.hashCode(),
-					(mapping.first.getParent() == null) ? null : mapping.first.getParent().getType().name,
+					(mapping.first.getParent() == null) ? "" : mapping.first.getParent().getType().name,
 					mapping.second.getType().name,
 					mapping.second.getLabel(),
 					mapping.second.getPos(),
 					mapping.second.getEndPos(),
 					mapping.second.hashCode(),
-					(mapping.second.getParent() == null) ? null : mapping.second.getParent().getType().name
+					(mapping.second.getParent() == null) ? "" : mapping.second.getParent().getType().name
 					);
 			exportList.add(mappingExportModel);
 		}
 		exportList.sort(
-				(MappingExportModel m1, MappingExportModel m2) ->
-				Integer.compare(m1.getFirstHash() * m1.getSecondHash(), m2.firstHash * m2.getSecondHash())
-				);
+				Comparator.comparing(
+						MappingExportModel::getFirstPos)
+						.thenComparing(exportModel -> -1 * exportModel.getFirstEndPos())
+						.thenComparing(MappingExportModel::getFirstType)
+		);
 		return exportList;
 	}
 

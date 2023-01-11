@@ -163,84 +163,28 @@ public class ProjectASTDiffer
 			List<String> beforeRefactoringClasses = refactoring.getInvolvedClassesBeforeRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
 			List<String> afterRefactoringClasses = refactoring.getInvolvedClassesAfterRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
 			if (refactoring instanceof MoveOperationRefactoring) {
-				MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) refactoring;
-				String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-				String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
+				{
+					MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) refactoring;
+					String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
+					String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
+				}
 			}
-//			if (refactoring instanceof MoveAttributeRefactoring)
-//			{
-//				MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
-//
-//				String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-//				String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-//				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-//				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-//				processFieldDeclaration(srcTotalTree,dstTotalTree,moveAttributeRefactoring.getOriginalAttribute(),moveAttributeRefactoring.getMovedAttribute(),mappingStore);
-//			}
-			if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()))
+			if (refactoring instanceof MoveAttributeRefactoring)
 			{
-				if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
 				{
-					PushDownOperationRefactoring pushDownOperationRefactoring = (PushDownOperationRefactoring) refactoring;
-					String otherFileName = pushDownOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(otherFileTree,dstTree,pushDownOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
-				{
-					PullUpOperationRefactoring pullUpOperationRefactoring = (PullUpOperationRefactoring) refactoring;
-					String otherFileName = pullUpOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(otherFileTree,dstTree,pullUpOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_ATTRIBUTE))
-				{
-					PushDownAttributeRefactoring pushDownAttributeRefactoring = (PushDownAttributeRefactoring) refactoring;
-					String otherFileName = pushDownAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(otherFileTree,dstTree,pushDownAttributeRefactoring.getOriginalAttribute(),pushDownAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE))
-				{
-					PullUpAttributeRefactoring pullUpAttributeRefactoring = (PullUpAttributeRefactoring) refactoring;
-					String otherFileName = pullUpAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(otherFileTree,dstTree,pullUpAttributeRefactoring.getOriginalAttribute(),pullUpAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-
-			}
-			else if (beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
-			{
-				if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
-				{
-					PushDownOperationRefactoring pushDownOperationRefactoring = (PushDownOperationRefactoring) refactoring;
-					String otherFileName = pushDownOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(srcTree,otherFileTree,pushDownOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
-				{
-					PullUpOperationRefactoring pullUpOperationRefactoring = (PullUpOperationRefactoring) refactoring;
-					String otherFileName = pullUpOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(srcTree,otherFileTree,pullUpOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_ATTRIBUTE))
-				{
-					PushDownAttributeRefactoring pushDownAttributeRefactoring = (PushDownAttributeRefactoring) refactoring;
-					String otherFileName = pushDownAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(srcTree,otherFileTree,pushDownAttributeRefactoring.getOriginalAttribute(),pushDownAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE))
-				{
-					PullUpAttributeRefactoring pullUpAttributeRefactoring = (PullUpAttributeRefactoring) refactoring;
-					String otherFileName = pullUpAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(srcTree,otherFileTree,pullUpAttributeRefactoring.getOriginalAttribute(),pullUpAttributeRefactoring.getMovedAttribute(),mappingStore);
+					MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
+					String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
+					String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
 				}
 			}
 		}

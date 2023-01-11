@@ -137,6 +137,32 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 							return 1;
 						}
 					}
+					if(thisReplacementTypes.equals(otherReplacementTypes) && thisReplacementTypes.size() == 1 && thisReplacementTypes.iterator().next().equals(ReplacementType.TYPE)) {
+						int thisCompositeTypeReplacements = 0;
+						for(Replacement r : this.getReplacements()) {
+							if(r.getBefore().contains(".") && r.getBefore().endsWith("." + r.getAfter())) {
+								thisCompositeTypeReplacements++;
+							}
+							else if(r.getAfter().contains(".") && r.getAfter().endsWith("." + r.getBefore())) {
+								thisCompositeTypeReplacements++;
+							}
+						}
+						int otherCompositeTypeReplacements = 0;
+						for(Replacement r : o.getReplacements()) {
+							if(r.getBefore().contains(".") && r.getBefore().endsWith("." + r.getAfter())) {
+								otherCompositeTypeReplacements++;
+							}
+							else if(r.getAfter().contains(".") && r.getAfter().endsWith("." + r.getBefore())) {
+								otherCompositeTypeReplacements++;
+							}
+						}
+						if(thisCompositeTypeReplacements == this.getReplacements().size() && otherCompositeTypeReplacements != o.getReplacements().size()) {
+							return -1;
+						}
+						else if(thisCompositeTypeReplacements != this.getReplacements().size() && otherCompositeTypeReplacements == o.getReplacements().size()) {
+							return 1;
+						}
+					}
 				}
 				return Double.compare(distance1, distance2);
 			}

@@ -526,13 +526,16 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
-			Set<String> before = new LinkedHashSet<String>();
-			for(String mergedVariable : candidate.getMergedVariables()) {
-				before.add(PrefixSuffixUtils.normalize(mergedVariable));
+			int movedAttributes = movedAttributeCount(candidate);
+			if(movedAttributes != candidate.getMergedVariables().size()) {
+				Set<String> before = new LinkedHashSet<String>();
+				for(String mergedVariable : candidate.getMergedVariables()) {
+					before.add(PrefixSuffixUtils.normalize(mergedVariable));
+				}
+				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
+				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
+				processMerge(mergeMap, merge, candidate);
 			}
-			String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
-			MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
-			processMerge(mergeMap, merge, candidate);
 		}
 		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
 			Set<String> after = new LinkedHashSet<String>();
@@ -543,6 +546,40 @@ public abstract class UMLAbstractClassDiff {
 			SplitVariableReplacement split = new SplitVariableReplacement(before, after);
 			processSplit(splitMap, split, candidate);
 		}
+	}
+
+	public int movedAttributeCount(CandidateMergeVariableRefactoring candidate) {
+		UMLAttribute addedAttribute = null;
+		for(UMLAttribute attribute : addedAttributes) {
+			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable()))) {
+				addedAttribute = attribute;
+				break;
+			}
+		}
+		int movedAttributes = 0;
+		if(addedAttribute != null) {
+			UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(addedAttribute.getType());
+			if(classDiff != null) {
+				for(String mergedVariable : candidate.getMergedVariables()) {
+					UMLAttribute removedAttribute = null;
+					for(UMLAttribute attribute : removedAttributes) {
+						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable))) {
+							removedAttribute = attribute;
+							break;
+						}
+					}
+					if(removedAttribute != null) {
+						for(UMLAttribute attribute : classDiff.getAddedAttributes()) {
+							if(attribute.getName().equals(removedAttribute.getName()) && attribute.getType().equals(removedAttribute.getType())) {
+								movedAttributes++;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		return movedAttributes;
 	}
 
 	private boolean multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(CandidateAttributeRefactoring candidate, List<Refactoring> refactorings) {

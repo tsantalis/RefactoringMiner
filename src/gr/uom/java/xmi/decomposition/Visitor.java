@@ -9,11 +9,13 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.CatchClause;
@@ -25,6 +27,7 @@ import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.MarkerAnnotation;
@@ -689,7 +692,29 @@ public class Visitor extends ASTVisitor {
 						break;
 					}
 				}
-				if(qualifierIsParameter) {
+				boolean qualifiedIsField = false;
+				if(!qualifierIsParameter && !parentMethodDeclaration.isConstructor()) {
+					AbstractTypeDeclaration parentTypeDeclaration = findParentTypeDeclaration(parentMethodDeclaration);
+					if(parentTypeDeclaration != null) {
+						List<BodyDeclaration> bodyDeclarations = parentTypeDeclaration.bodyDeclarations();
+						for(BodyDeclaration declaration : bodyDeclarations) {
+							if(declaration instanceof FieldDeclaration) {
+								FieldDeclaration fieldDeclaration = (FieldDeclaration)declaration;
+								List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
+								for(VariableDeclarationFragment fragment : fragments) {
+									if(fragment.getName().getIdentifier().equals(qualifierIdentifier)) {
+										qualifiedIsField = true;
+										break;
+									}
+								}
+								if(qualifiedIsField) {
+									break;
+								}
+							}
+						}
+					}
+				}
+				if(qualifierIsParameter || qualifiedIsField) {
 					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 					variables.add(expression);
 					if(current.getUserObject() != null) {
@@ -718,6 +743,17 @@ public class Visitor extends ASTVisitor {
 		while(parent != null) {
 			if(parent instanceof EnhancedForStatement) {
 				return (EnhancedForStatement)parent;
+			}
+			parent = parent.getParent();
+		}
+		return null;
+	}
+
+	private AbstractTypeDeclaration findParentTypeDeclaration(ASTNode node) {
+		ASTNode parent = node.getParent();
+		while(parent != null) {
+			if(parent instanceof AbstractTypeDeclaration) {
+				return (AbstractTypeDeclaration)parent;
 			}
 			parent = parent.getParent();
 		}

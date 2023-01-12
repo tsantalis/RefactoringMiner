@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,6 +61,86 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LambdaExpressionObject> getLambdas();
 	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
 	public abstract VariableDeclaration getVariableDeclaration(String variableName);
+
+	public List<LeafExpression> findExpression(String s) {
+		List<LeafExpression> matchingExpressions = new ArrayList<>();
+		for(LeafExpression expression : getVariables()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getMethodInvocations()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getStringLiterals()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getNumberLiterals()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getNullLiterals()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getBooleanLiterals()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getTypeLiterals()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getCreations()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getInfixExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getArrayAccesses()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getPrefixExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getPostfixExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getThisExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getArguments()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		for(LeafExpression expression : getParenthesizedExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+			}
+		}
+		return matchingExpressions;
+	}
 
 	public boolean isKeyword() {
 		String statement = getString();
@@ -335,7 +416,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		List<VariableDeclaration> variableDeclarations = getVariableDeclarations();
 		if(variableDeclarations.size() == 1 && variableDeclarations.get(0).getInitializer() != null) {
 			String initializer = variableDeclarations.get(0).getInitializer().toString();
-			if(expressions.contains(initializer)) {
+			if(expressions.contains(initializer) && !getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT)) {
 				return true;
 			}
 		}

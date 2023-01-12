@@ -1385,7 +1385,7 @@ public class VariableReplacementAnalysis {
 						}
 					}
 				}
-				else if(replacement.getType().equals(ReplacementType.METHOD_INVOCATION)) {
+				else if(replacement instanceof MethodInvocationReplacement) {
 					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
 					AbstractCall invocation1 = methodInvocationReplacement.getInvokedOperationBefore();
 					AbstractCall invocation2 = methodInvocationReplacement.getInvokedOperationAfter();
@@ -1410,6 +1410,48 @@ public class VariableReplacementAnalysis {
 											map.put(variableReplacement, list);
 										}
 									}
+								}
+							}
+						}
+					}
+				}
+				else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+					VariableReplacementWithMethodInvocation variableReplacedWithMethod = (VariableReplacementWithMethodInvocation)replacement;
+					AbstractCall invocation = variableReplacedWithMethod.getInvokedOperation();
+					String variable = null;
+					if(variableReplacedWithMethod.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+						variable = variableReplacedWithMethod.getBefore();
+					}
+					else if(variableReplacedWithMethod.getDirection().equals(Direction.INVOCATION_TO_VARIABLE)) {
+						variable = variableReplacedWithMethod.getAfter();
+					}
+					if(variable != null && variable.endsWith(".length")) {
+						if((invocation.getName().equals("size") || invocation.getName().equals("length")) && invocation.arguments().size() == 0 && invocation.getExpression() != null) {
+							Replacement variableReplacement = null;
+							if(variableReplacedWithMethod.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+								String before = variable.substring(0, variable.indexOf(".length"));
+								String after = invocation.getExpression();
+								if(!before.equals(after)) {
+									variableReplacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+								}
+							}
+							else if(variableReplacedWithMethod.getDirection().equals(Direction.INVOCATION_TO_VARIABLE)) {
+								String before = invocation.getExpression();
+								String after = variable.substring(0, variable.indexOf(".length"));
+								if(!before.equals(after)) {
+									variableReplacement = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+								}
+							}
+							if(variableReplacement != null && !returnVariableMapping(mapping, replacement) &&
+									!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+									replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+								if(map.containsKey(variableReplacement)) {
+									map.get(variableReplacement).add(mapping);
+								}
+								else {
+									Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+									list.add(mapping);
+									map.put(variableReplacement, list);
 								}
 							}
 						}

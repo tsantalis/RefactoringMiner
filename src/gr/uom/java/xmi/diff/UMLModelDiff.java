@@ -2050,12 +2050,15 @@ public class UMLModelDiff {
 				UMLAttribute a2 = diff.findAttributeInNextClass(merge.getAfter());
 				Set<CandidateMergeVariableRefactoring> set = mergeMap.get(merge);
 				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
-					MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, diff.getOriginalClassName(), diff.getNextClassName(), set);
-					if(!refactorings.contains(ref)) {
-						refactorings.add(ref);
-						Set<Refactoring> conflictingRefactorings = attributeRenamed(mergedVariables, a2.getVariableDeclaration(), refactorings);
-						if(!conflictingRefactorings.isEmpty()) {
-							refactorings.removeAll(conflictingRefactorings);
+					int movedAttributeCount = diff.movedAttributeCount(set.iterator().next());
+					if(movedAttributeCount != mergedAttributes.size()) {
+						MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, diff.getOriginalClassName(), diff.getNextClassName(), set);
+						if(!refactorings.contains(ref)) {
+							refactorings.add(ref);
+							Set<Refactoring> conflictingRefactorings = attributeRenamed(mergedVariables, a2.getVariableDeclaration(), refactorings);
+							if(!conflictingRefactorings.isEmpty()) {
+								refactorings.removeAll(conflictingRefactorings);
+							}
 						}
 					}
 				}
@@ -2948,10 +2951,24 @@ public class UMLModelDiff {
 					}
 				}
 			}
+			String fragment1 = mappingList.get(0).getFragment1().getString();
+			String fragment2 = mappingList.get(0).getFragment2().getString();
 			if(operationBodyMapper.getContainer1().isGetter()) {
-				if(mappingList.get(0).getFragment1().getString().startsWith("return this;") ||
-						mappingList.get(0).getFragment2().getString().startsWith("return this;")) {
+				if(fragment1.startsWith("return this;") || fragment2.startsWith("return this;")) {
 					return false;
+				}
+			}
+			if(fragment1.startsWith("return ") && fragment2.startsWith("return ")) {
+				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
+				if(extractedOperation != null) {
+					UMLType returnType = extractedOperation.getReturnParameter().getType();
+					String fragment1VariableName = fragment1.substring(7, fragment1.indexOf(";\n"));
+					VariableDeclaration fragment1VariableDeclaration = operationBodyMapper.getContainer1().getVariableDeclaration(fragment1VariableName);
+					if(fragment1VariableDeclaration != null) {
+						if(!returnType.equals(fragment1VariableDeclaration.getType())) {
+							return false;
+						}
+					}
 				}
 			}
 		}
@@ -3481,6 +3498,80 @@ public class UMLModelDiff {
 					}
 				}
 			}
+			else if(addedClass != null && s1.getString().contains("=")) {
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
+					if(attributeDeclaration.getInitializer() != null) {
+						String attributeInitializer = attributeDeclaration.getInitializer().getString();
+						List<LeafExpression> matchingExpressions = s1.findExpression(attributeInitializer);
+						for(LeafExpression expression : matchingExpressions) {
+							LeafMapping mapping = new LeafMapping(expression, attributeDeclaration.getInitializer(),
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							operationBodyMapper.addMapping(mapping);
+						}
+						if(matchingExpressions.size() > 0) {
+							nonMappedStatementsDeclaringSameVariable++;
+							leafIterator1.remove();
+							mappings++;
+							break;
+						}
+					}
+				}
+			}
+		}
+		Set<AbstractCodeMapping> mappingsToBeRemoved = new HashSet<>();
+		Set<AbstractCodeMapping> mappingsToBeAdded = new HashSet<>();
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			AbstractCodeFragment s1 = mapping.getFragment1();
+			if(addedClass != null && s1.getVariableDeclarations().size() == 1) {
+				VariableDeclaration v1 = s1.getVariableDeclarations().get(0);
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
+					if(attributeDeclaration.getInitializer() != null && v1.getInitializer() != null) {
+						String attributeInitializer = attributeDeclaration.getInitializer().getString();
+						String variableInitializer = v1.getInitializer().getString();
+						if(attributeInitializer.equals(variableInitializer) && attributeDeclaration.equalType(v1) &&
+								(attribute.getName().equals(v1.getVariableName()) ||
+										attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) ||
+										v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {
+							LeafMapping newMapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							mappingsToBeAdded.add(newMapping);
+							nonMappedStatementsDeclaringSameVariable++;
+							mappingsToBeRemoved.add(mapping);
+							break;
+						}
+					}
+				}
+			}
+			else if(addedClass != null && s1.getString().contains("=")) {
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
+					if(attributeDeclaration.getInitializer() != null) {
+						String attributeInitializer = attributeDeclaration.getInitializer().getString();
+						List<LeafExpression> matchingExpressions = s1.findExpression(attributeInitializer);
+						for(LeafExpression expression : matchingExpressions) {
+							LeafMapping newMapping = new LeafMapping(expression, attributeDeclaration.getInitializer(),
+									operationBodyMapper.getContainer1(),
+									operationBodyMapper.getContainer2());
+							mappingsToBeAdded.add(newMapping);
+						}
+						if(matchingExpressions.size() > 0) {
+							nonMappedStatementsDeclaringSameVariable++;
+							mappingsToBeRemoved.add(mapping);
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(AbstractCodeMapping mappingToBeRemoved : mappingsToBeRemoved) {
+			operationBodyMapper.removeMapping(mappingToBeRemoved);
+		}
+		for(AbstractCodeMapping mappingToBeAdded : mappingsToBeAdded) {
+			operationBodyMapper.addMapping(mappingToBeAdded);
 		}
 		int nonMappedLoopsIteratingOverSameVariable = 0;
 		for(CompositeStatementObject c1 : operationBodyMapper.getNonMappedInnerNodesT1()) {

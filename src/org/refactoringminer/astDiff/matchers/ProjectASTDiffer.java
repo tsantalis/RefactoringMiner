@@ -530,8 +530,8 @@ public class ProjectASTDiffer
 					Tree srcVariableType =TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getType().getLocationInfo());
 					List<Tree> srcChildrenList = srcVariableDeclaration.getChildren();
 					Tree srcVarName = srcChildrenList.get(srcChildrenList.size() - 1);
-					//mappingStore.addMapping(srcVariableDeclaration,dstVariableDeclaration);
-					mappingStore.addMapping(srcVariableType,dstVariableType.getChild(0));
+//					mappingStore.addMapping(srcVariableDeclaration,dstVariableDeclaration);
+//					mappingStore.addMapping(srcVariableType,dstVariableType.getChild(0));
 					mappingStore.addMapping(srcVarName,dstVarName);
 				}
 			}

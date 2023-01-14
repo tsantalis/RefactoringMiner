@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -229,7 +232,6 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
 				int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());
-	
 				if(depthDiff1 != depthDiff2) {
 					return Integer.valueOf(depthDiff1).compareTo(Integer.valueOf(depthDiff2));
 				}
@@ -240,12 +242,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 					}
 					else {
-						boolean sameVariableDeclarationTypeInParent1 = this.sameVariableDeclarationTypeInParent();
-						boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
 						double parentEditDistance1 = levelParentEditDistance1.get(0);
 						double parentEditDistance2 = levelParentEditDistance2.get(0);
-						Set<String> set1 = this.parentVariableTokenIntersection();
-						Set<String> set2 = o.parentVariableTokenIntersection();
+						boolean sameVariableDeclarationTypeInParent1 = this.sameVariableDeclarationTypeInParent();
+						boolean sameVariableDeclarationTypeInParent2 = o.sameVariableDeclarationTypeInParent();
 						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && sameVariableDeclarationTypeInParent1 != sameVariableDeclarationTypeInParent2) {
 							if(sameVariableDeclarationTypeInParent1 && !sameVariableDeclarationTypeInParent2) {
 								return -1;
@@ -254,11 +254,33 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 								return 1;
 							}
 						}
-						else if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && set1.size() != set2.size()) {
+						Set<String> set1 = this.parentVariableTokenIntersection();
+						Set<String> set2 = o.parentVariableTokenIntersection();
+						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && set1.size() != set2.size()) {
 							if(set1.size() > set2.size()) {
 								return -1;
 							}
 							else if(set1.size() < set2.size()) {
+								return 1;
+							}
+						}
+						boolean directParentsReferenceSameVariables1 = this.directParentsReferenceSameVariables();
+						boolean directParentsReferenceSameVariables2 = o.directParentsReferenceSameVariables();
+						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && directParentsReferenceSameVariables1 != directParentsReferenceSameVariables2) {
+							if(directParentsReferenceSameVariables1 && !directParentsReferenceSameVariables2) {
+								return -1;
+							}
+							if(!directParentsReferenceSameVariables1 && directParentsReferenceSameVariables2) {
+								return 1;
+							}
+						}
+						int commonConditionalsInParent1 = this.commonConditionalsInParent();
+						int commonConditionalsInParent2 = o.commonConditionalsInParent();
+						if(parentEditDistance1 >= 0 && parentEditDistance2 >= 0 && commonConditionalsInParent1 != commonConditionalsInParent2) {
+							if(commonConditionalsInParent1 > commonConditionalsInParent2) {
+								return -1;
+							}
+							else if(commonConditionalsInParent1 < commonConditionalsInParent2) {
 								return 1;
 							}
 						}
@@ -370,6 +392,34 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		return Math.abs(parent1.getIndex() - parent2.getIndex());
 	}
 
+	private int commonConditionalsInParent() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 != null && parent2 != null && parent1.getExpressions().size() == 1 && parent2.getExpressions().size() == 1) {
+			AbstractExpression expr1 = parent1.getExpressions().get(0);
+			AbstractExpression expr2 = parent2.getExpressions().get(0);
+			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(expr1.getString());
+			List<String> subConditionsAsList1 = new ArrayList<String>();
+			for(String s : subConditions1) {
+				subConditionsAsList1.add(s.trim());
+			}
+			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(expr2.getString());
+			List<String> subConditionsAsList2 = new ArrayList<String>();
+			for(String s : subConditions2) {
+				subConditionsAsList2.add(s.trim());
+			}
+			Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+			return intersection.size();
+		}
+		return 0;
+	}
+
 	private boolean sameVariableDeclarationTypeInParent() {
 		CompositeStatementObject parent1 = getFragment1().getParent();
 		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -392,6 +442,45 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean directParentsReferenceSameVariables() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 == null && parent2 == null) {
+			//method signature is the parent
+			return false;
+		}
+		else if(parent1 == null && parent2 != null) {
+			return false;
+		}
+		else if(parent1 != null && parent2 == null) {
+			return false;
+		}
+		List<LeafExpression> variables1 = parent1.getVariables();
+		List<LeafExpression> variables2 = parent2.getVariables();
+		Set<String> lowerCaseVariables1 = new LinkedHashSet<>();
+		for(LeafExpression variable1 : variables1) {
+			if(Character.isLowerCase(variable1.getString().charAt(0))) {
+				lowerCaseVariables1.add(variable1.getString());
+			}
+		}
+		Set<String> lowerCaseVariables2 = new LinkedHashSet<>();
+		for(LeafExpression variable2 : variables2) {
+			if(Character.isLowerCase(variable2.getString().charAt(0))) {
+				lowerCaseVariables2.add(variable2.getString());
+			}
+		}
+		if(lowerCaseVariables1.size() > 0 && lowerCaseVariables1.equals(lowerCaseVariables2)) {
+			return true;
 		}
 		return false;
 	}

@@ -1650,4 +1650,41 @@ public class StringBasedHeuristics {
 		}
 		return null;
 	}
+
+	protected static Set<String> subConditionIntersection(List<String> subConditionsAsList1, List<String> subConditionsAsList2) {
+		Set<String> intersection = new LinkedHashSet<String>();
+		for(String c1 : subConditionsAsList1) {
+			for(String c2 : subConditionsAsList2) {
+				if(c1.equals(c2)) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c1.equals("(" + c2)) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c1.equals(c2 + ")")) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c1.equals("!" + c2) || c1.equals("!(" + c2 + ")")) {
+					intersection.add(c2);
+					break;
+				}
+				else if(c2.equals("(" + c1)) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c2.equals(c1 + ")")) {
+					intersection.add(c1);
+					break;
+				}
+				else if(c2.equals("!" + c1) || c2.equals("!(" + c1 + ")")) {
+					intersection.add(c1);
+					break;
+				}
+			}
+		}
+		return intersection;
+	}
 }

@@ -1042,4 +1042,45 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return diffSet;
 	}
 
+	@Override
+	public Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout) {
+		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		Future<?> f = null;
+		try {
+			Runnable r = () -> {
+				try {
+					Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+					Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+					Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+					Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+					populateWithGitHubAPI(gitURL, commitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					diffSet.addAll(differ.getDiffSet());
+				}
+				catch(RefactoringMinerTimedOutException e) {
+					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
+				}
+				catch (Exception e) {
+					logger.warn(String.format("Ignored revision %s due to error", commitId), e);
+				}
+			};
+			f = service.submit(r);
+			f.get(timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+			f.cancel(true);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
+		}
+		return diffSet;
+	}
 }

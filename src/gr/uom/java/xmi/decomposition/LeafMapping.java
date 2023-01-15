@@ -190,6 +190,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				boolean identicalCompositeChildren1 = this.identicalCompositeChildrenStructure();
 				boolean identicalCompositeChildren2 = o.identicalCompositeChildrenStructure();
+				if(identicalCompositeChildren1 && !identicalCompositeChildren2) {
+					return -1;
+				}
+				else if(!identicalCompositeChildren1 && identicalCompositeChildren2) {
+					return 1;
+				}
 				if(levelParentEditDistance1.size() == levelParentEditDistance2.size()) {
 					if(nLevelParentEditDistance1 == 0 && nLevelParentEditDistance2 > 0) { 
 						return -1; 
@@ -223,12 +229,6 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
 						return 1;
 					}
-				}
-				if(identicalCompositeChildren1 && !identicalCompositeChildren2) {
-					return -1;
-				}
-				else if(!identicalCompositeChildren1 && identicalCompositeChildren2) {
-					return 1;
 				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
 				int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());

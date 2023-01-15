@@ -112,10 +112,29 @@ public class ProjectASTDiffer
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processRefactorings(srcTree,dstTree,classDiff.getRefactorings(),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
+		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processLastStepMappings(srcTree,dstTree,mappingStore);
 		//if (CHECK_COMMENTS) addAndProcessComments(treeContextPair.first, treeContextPair.second,mappingStore);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
+	}
+
+	private void processMovedAttributes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+		List<UMLAttributeDiff> movedAttributeDiffList = modelDiff.getMovedAttributeDiffList();
+		for (UMLAttributeDiff umlAttributeDiff : movedAttributeDiffList) {
+			UMLAttribute srcAttr = umlAttributeDiff.getRemovedAttribute();
+			UMLAttribute dstAttr = umlAttributeDiff.getAddedAttribute();
+			String srcAttrPath = srcAttr.getLocationInfo().getFilePath();
+			String dstAttrPath = dstAttr.getLocationInfo().getFilePath();
+			if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(srcAttrPath) &&
+					classDiff.getNextClass().getLocationInfo().getFilePath().equals(dstAttrPath)) {
+				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcAttrPath).getRoot();
+				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstAttrPath).getRoot();
+				processFieldDeclarationByAttrDiff(srcTotalTree,dstTotalTree,umlAttributeDiff,mappingStore);
+			}
+
+
+		}
 	}
 
 	private void processLastStepMappings(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
@@ -151,16 +170,16 @@ public class ProjectASTDiffer
 				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
 				processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
 			}
-			if (refactoring instanceof MoveAttributeRefactoring)
-			{
-				MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
-
-				String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-				String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				processFieldDeclaration(srcTotalTree,dstTotalTree,moveAttributeRefactoring.getOriginalAttribute(),moveAttributeRefactoring.getMovedAttribute(),mappingStore);
-			}
+//			if (refactoring instanceof MoveAttributeRefactoring)
+//			{
+//				MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
+//
+//				String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
+//				String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
+//				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+//				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+//				processFieldDeclaration(srcTotalTree,dstTotalTree,moveAttributeRefactoring.getOriginalAttribute(),moveAttributeRefactoring.getMovedAttribute(),mappingStore);
+//			}
 			if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()))
 			{
 				if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
@@ -270,14 +289,18 @@ public class ProjectASTDiffer
 
 	private void processMethodParameters(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> matchedVariables, ExtendedMultiMappingStore mappingStore) {
 		for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> matchedPair: matchedVariables) {
-			VariableDeclaration leftPair = matchedPair.getLeft();
-			VariableDeclaration rightPair = matchedPair.getRight();
-			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftPair.getLocationInfo());
-			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightPair.getLocationInfo());
-			if (leftTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION) &&
-					rightTree.getParent().getType().name.equals(Constants.METHOD_DECLARATION))
+			VariableDeclaration leftVarDecl = matchedPair.getLeft();
+			VariableDeclaration rightVarDecl = matchedPair.getRight();
+			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
+			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
+			if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
 				if (rightTree.isIsomorphicTo(leftTree))
-					mappingStore.addMappingRecursively(leftTree,rightTree);
+					mappingStore.addMappingRecursively(leftTree, rightTree);
+				else {
+					new LeafMatcher(false).match(leftTree,rightTree,null,mappingStore);
+					mappingStore.addMapping(leftTree,rightTree);
+				}
+			}
 		}
 	}
 
@@ -313,11 +336,10 @@ public class ProjectASTDiffer
 		//else
 		{
 			mappingStore.addMapping(srcStatementNode,dstStatementNode);
-			if ( (srcStatementNode.getType().name.equals(Constants.TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.TRY_STATEMENT)) ||
+			if ((srcStatementNode.getType().name.equals(Constants.TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.TRY_STATEMENT)) ||
 					(srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))) {
 				matchBlocks(srcStatementNode, dstStatementNode, mappingStore);
-				if  (srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))
-					new CompositeMatcher().match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
+				new CompositeMatcher().match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
 			}
 			else if (!srcStatementNode.getType().name.equals(Constants.BLOCK) && !dstStatementNode.getType().name.equals(Constants.BLOCK)) {
 				new CompositeMatcher().match(srcStatementNode, dstStatementNode, abstractCodeMapping , mappingStore);
@@ -535,11 +557,11 @@ public class ProjectASTDiffer
 			}
 			else if (refactoring instanceof RenameAttributeRefactoring) {
 				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) (refactoring);
-				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
-				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
-				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
-				//	mappingStore.addMappingRecursively(srcAttrTree.getParent(),dstAttrTree.getParent());
-				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
+//				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
+//				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
+//				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
+//				//	mappingStore.addMappingRecursively(srcAttrTree.getParent(),dstAttrTree.getParent());
+//				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				//ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
@@ -623,7 +645,23 @@ public class ProjectASTDiffer
 		for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
 			processFieldDeclaration(srcTree,dstTree,pair.getLeft(),pair.getRight(),mappingStore);
 		}
+		List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
+		for (UMLAttributeDiff umlAttributeDiff : attributeDiffList)
+		{
+			processFieldDeclarationByAttrDiff(srcTree,dstTree,umlAttributeDiff,mappingStore);
+		}
+
 	}
+
+	private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
+		processFieldDeclaration(srcTree,dstTree,umlAttributeDiff.getRemovedAttribute(),umlAttributeDiff.getAddedAttribute(),mappingStore);
+		if (umlAttributeDiff.getInitializerMapper().isPresent())
+		{
+			UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
+			processMethod(srcTree, dstTree, umlOperationBodyMapper, mappingStore);
+		}
+	}
+
 
 	private List<Pair<UMLAttribute, UMLAttribute>> findMatchedAttributesPair(UMLClassBaseDiff classDiff) {
 		List<Pair<UMLAttribute,UMLAttribute>> pairs = new ArrayList<>();
@@ -647,8 +685,11 @@ public class ProjectASTDiffer
 
 	private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore)
 	{
-		Tree srcFieldDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getLocationInfo()).getParent(); //TODO
-		Tree dstFieldDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo()).getParent(); //TODO
+
+		Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getLocationInfo());
+		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
+		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
+		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
 		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
 				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		{
@@ -683,19 +724,15 @@ public class ProjectASTDiffer
 		//if (attributeAccessModifierPair.first != null && attributeAccessModifierPair.second != null)
 		//	mappingStore.addMapping(attributeAccessModifierPair.first, attributeAccessModifierPair.second);
 
-		String visibility1 = srcUMLAttribute.getVisibility();
-		String visibility2 = dstUMLAttribute.getVisibility();
-		if (visibility1 != null && visibility2 != null)
-		{
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,visibility1,mappingStore);
-		}
+		if (srcUMLAttribute.getVisibility().equals(dstUMLAttribute.getVisibility()))
+			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isVolatile())
+		if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.VOLATILE,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isStatic())
+		if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isTransient())
+		if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
 	}
 
@@ -834,17 +871,12 @@ public class ProjectASTDiffer
 				matchModifier(srcOperationNode, dstOperationNode, Constants.ABSTRACT, mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
 				matchModifier(srcOperationNode, dstOperationNode, Constants.SYNCHRONIZED, mappingStore);
-			if (umlOperationBodyMapper.getOperation1().getVisibility() != null || umlOperationBodyMapper.getOperation1().getVisibility().equals("==")
-					&&
-					umlOperationBodyMapper.getOperation2().getVisibility() != null || umlOperationBodyMapper.getOperation2().getVisibility().equals("=="))
-			{
-				String v1 = umlOperationBodyMapper.getOperation1().getVisibility();
-				String v2 = umlOperationBodyMapper.getOperation2().getVisibility();
-				Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
-				Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.MODIFIER, v2);
-				if (tree1 != null && tree2 != null)
-					mappingStore.addMappingRecursively(tree1,tree2);
-			}
+			String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
+			String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
+			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
+			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstOperationNode, Constants.MODIFIER, v2);
+			if (tree1 != null && tree2 != null)
+				mappingStore.addMappingRecursively(tree1,tree2);
 		}
 	}
 
@@ -862,20 +894,15 @@ public class ProjectASTDiffer
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
 		mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
+		
+		String v1 = classDiff.getOriginalClass().getVisibility().toString();
+		String v2 = classDiff.getNextClass().getVisibility().toString();
+		Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, Constants.MODIFIER, v1);
+		Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, Constants.MODIFIER, v2);
+		if (tree1 != null && tree2 != null)
+			mappingStore.addMappingRecursively(tree1,tree2);
+
 		List<String> searchingTypes = new ArrayList<>();
-
-		if (classDiff.getOriginalClass().getVisibility() != null || classDiff.getOriginalClass().getVisibility().equals("==")
-				&&
-				classDiff.getNextClass().getVisibility() != null || classDiff.getNextClass().getVisibility().equals("=="))
-		{
-			String v1 = classDiff.getOriginalClass().getVisibility();
-			String v2 = classDiff.getNextClass().getVisibility();
-			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration, Constants.MODIFIER, v1);
-			Tree tree2 = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration, Constants.MODIFIER, v2);
-			if (tree1 != null && tree2 != null)
-				mappingStore.addMappingRecursively(tree1,tree2);
-		}
-
 		searchingTypes.add(Constants.SIMPLE_NAME);
 		searchingTypes.add(Constants.TYPE_DECLARATION_KIND);
 		for (String type : searchingTypes) {

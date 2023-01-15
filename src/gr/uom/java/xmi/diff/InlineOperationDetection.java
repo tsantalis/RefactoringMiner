@@ -10,7 +10,6 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -117,7 +116,7 @@ public class InlineOperationDetection {
 
 	private UMLOperationBodyMapper createMapperForInlinedMethod(UMLOperationBodyMapper mapper,
 			UMLOperation removedOperation, AbstractCall removedOperationInvocation, boolean nested) throws RefactoringMinerTimedOutException {
-		List<String> arguments = removedOperationInvocation.getArguments();
+		List<String> arguments = removedOperationInvocation.arguments();
 		List<String> parameters = removedOperation.getParameterNameList();
 		Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
 		//special handling for methods with varargs parameter for which no argument is passed in the matching invocation

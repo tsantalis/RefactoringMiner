@@ -68,9 +68,9 @@ public class OperationInvocation extends AbstractCall {
         PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
     }
 
-	public OperationInvocation(PsiFile cu, String filePath, PsiMethodCallExpression invocation) {
+	public OperationInvocation(PsiFile cu, String filePath, PsiMethodCallExpression invocation, VariableDeclarationContainer container) {
+		super(cu, filePath, invocation, getCodeElementType(invocation, invocation.getMethodExpression().getQualifierExpression()), container);
 		PsiReferenceExpression methodExpression = invocation.getMethodExpression();
-		this.locationInfo = new LocationInfo(cu, filePath, invocation, getCodeElementType(invocation, methodExpression.getQualifierExpression()));
 		this.methodName = methodExpression.getReferenceName();
 		this.arguments = new ArrayList<String>();
 		PsiExpressionList argumentList = invocation.getArgumentList();
@@ -87,7 +87,7 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	private LocationInfo.CodeElementType getCodeElementType(PsiMethodCallExpression expression, PsiExpression qualifierExpression) {
+	private static LocationInfo.CodeElementType getCodeElementType(PsiMethodCallExpression expression, PsiExpression qualifierExpression) {
 		if (qualifierExpression instanceof PsiSuperExpression) {
 			return LocationInfo.CodeElementType.SUPER_METHOD_INVOCATION;
 		} else if (isThisConstructorInvocation(expression)) {
@@ -602,9 +602,9 @@ public class OperationInvocation extends AbstractCall {
 		List<UMLParameter> parameters = operationToBeMatched.getParametersWithoutReturnType();
 		if(operationToBeMatched.hasVarargsParameter()) {
 			//we expect arguments to be =(parameters-1), or =parameters, or >parameters
-			if(getArguments().size() < parameters.size()) {
+			if(arguments().size() < parameters.size()) {
 				int i = 0;
-				for(String argument : getArguments()) {
+				for(String argument : arguments()) {
 					if(typeInferenceMapFromContext.containsKey(argument)) {
 						UMLType argumentType = typeInferenceMapFromContext.get(argument);
 						UMLType paremeterType = parameters.get(i).getType();
@@ -617,7 +617,7 @@ public class OperationInvocation extends AbstractCall {
 			else {
 				int i = 0;
 				for(UMLParameter parameter : parameters) {
-					String argument = getArguments().get(i);
+					String argument = arguments().get(i);
 					if(typeInferenceMapFromContext.containsKey(argument)) {
 						UMLType argumentType = typeInferenceMapFromContext.get(argument);
 						UMLType paremeterType = parameter.isVarargs() ?
@@ -634,7 +634,7 @@ public class OperationInvocation extends AbstractCall {
 		else {
 			//we expect an equal number of parameters and arguments
 			int i = 0;
-			for(String argument : getArguments()) {
+			for(String argument : arguments()) {
 				if(typeInferenceMapFromContext.containsKey(argument)) {
 					UMLType argumentType = typeInferenceMapFromContext.get(argument);
 					UMLType paremeterType = parameters.get(i).getType();

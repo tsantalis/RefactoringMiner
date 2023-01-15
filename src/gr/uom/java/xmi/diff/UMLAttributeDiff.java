@@ -31,6 +31,7 @@ public class UMLAttributeDiff {
 	private boolean finalChanged;
 	private boolean volatileChanged;
 	private boolean transientChanged;
+	private boolean initializerChanged;
 	private List<UMLOperationBodyMapper> operationBodyMapperList;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLOperation addedGetter;
@@ -96,11 +97,6 @@ public class UMLAttributeDiff {
 		this.removedAttribute = removedAttribute;
 		this.addedAttribute = addedAttribute;
 		this.operationBodyMapperList = operationBodyMapperList;
-		this.visibilityChanged = false;
-		this.typeChanged = false;
-		this.renamed = false;
-		this.staticChanged = false;
-		this.finalChanged = false;
 		if(!removedAttribute.getName().equals(addedAttribute.getName()))
 			renamed = true;
 		if(!removedAttribute.getVisibility().equals(addedAttribute.getVisibility()))
@@ -121,7 +117,16 @@ public class UMLAttributeDiff {
 		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
 		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
 		if(initializer1 != null && initializer2 != null) {
+			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
+				initializerChanged = true;
+			}
 			this.mapper = new UMLOperationBodyMapper(removedAttribute, addedAttribute, classDiff, modelDiff);
+		}
+		else if(initializer1 == null && initializer2 != null) {
+			initializerChanged = true;
+		}
+		else if(initializer1 != null && initializer2 == null) {
+			initializerChanged = true;
 		}
 	}
 
@@ -161,7 +166,7 @@ public class UMLAttributeDiff {
 
 	public boolean isEmpty() {
 		return !visibilityChanged && !staticChanged && !finalChanged && !volatileChanged && !transientChanged && !typeChanged && !renamed && !qualifiedTypeChanged && annotationListDiff.isEmpty() &&
-				(mapper == null || (mapper != null && mapper.getRefactoringsAfterPostProcessing().isEmpty()));
+				!initializerChanged;
 	}
 
 	public String toString() {
@@ -316,5 +321,42 @@ public class UMLAttributeDiff {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((removedAttribute == null || removedAttribute.getVariableDeclaration() == null) ? 0 : removedAttribute.getVariableDeclaration().hashCode());
+		result = prime * result + ((addedAttribute == null || addedAttribute.getVariableDeclaration() == null) ? 0 : addedAttribute.getVariableDeclaration().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UMLAttributeDiff other = (UMLAttributeDiff)obj;
+		if (removedAttribute == null) {
+			if (other.removedAttribute != null)
+				return false;
+		} else if(removedAttribute.getVariableDeclaration() == null) {
+			if(other.removedAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!removedAttribute.getVariableDeclaration().equals(other.removedAttribute.getVariableDeclaration()))
+			return false;
+		if (addedAttribute == null) {
+			if (other.addedAttribute != null)
+				return false;
+		} else if(addedAttribute.getVariableDeclaration() == null) {
+			if(other.addedAttribute.getVariableDeclaration() != null)
+				return false;
+		} else if (!addedAttribute.getVariableDeclaration().equals(other.addedAttribute.getVariableDeclaration()))
+			return false;
+		return true;
 	}
 }

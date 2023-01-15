@@ -4,6 +4,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
@@ -23,7 +24,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	private LocationInfo locationInfo;
 	private String name;
 	private UMLType type;
-	private String visibility;
+	private Visibility visibility;
 	private String className;
 	private boolean isFinal;
 	private boolean isStatic;
@@ -201,12 +202,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public List<AbstractCall> getAllOperationInvocations() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
-			List<AbstractCall> invocations = new ArrayList<AbstractCall>();
-			Map<String, List<AbstractCall>> invocationMap = initializer.getMethodInvocationMap();
-			for(String key : invocationMap.keySet()) {
-				invocations.addAll(invocationMap.get(key));
-			}
-			return invocations;
+			return new ArrayList<>(initializer.getMethodInvocations());
 		}
 		return Collections.emptyList();
 	}
@@ -214,7 +210,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public List<String> getAllVariables() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
-			return initializer.getVariables();
+			List<String> variables = new ArrayList<>();
+			for(LeafExpression variable : initializer.getVariables()) {
+				variables.add(variable.getString());
+			}
+			return variables;
 		}
 		return Collections.emptyList();
 	}
@@ -245,11 +245,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 

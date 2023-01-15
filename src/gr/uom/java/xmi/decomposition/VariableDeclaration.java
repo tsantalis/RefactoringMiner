@@ -302,13 +302,18 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public void addStatementInScope(AbstractCodeFragment statement) {
 		if(scope.subsumes(statement.getLocationInfo())) {
-			List<String> variables = statement.getVariables();
-			if(variables.contains(variableName) || (isAttribute && variables.contains("this." + variableName))) {
-				scope.addStatementUsingVariable(statement);
+			List<LeafExpression> variables = statement.getVariables();
+			boolean matchFound = false;
+			for(LeafExpression variable : variables) {
+				if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals("this." + variableName))) {
+					scope.addStatementUsingVariable(statement);
+					matchFound = true;
+					break;
+				}
 			}
-			else {
-				for(String variable : variables) {
-					if(variable.startsWith(variableName + ".")) {
+			if(!matchFound) {
+				for(LeafExpression variable : variables) {
+					if(variable.getString().startsWith(variableName + ".")) {
 						scope.addStatementUsingVariable(statement);
 						break;
 					}

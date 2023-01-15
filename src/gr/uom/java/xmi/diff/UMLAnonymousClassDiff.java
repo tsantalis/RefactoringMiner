@@ -77,7 +77,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, matchingAttribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
     				refactorings.addAll(attributeDiff.getRefactorings());
-    				attributeDiffList.add(attributeDiff);
+    				if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
     			}
     			else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, matchingAttribute);
@@ -99,7 +101,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
     			UMLAttributeDiff attributeDiff = new UMLAttributeDiff(matchingAttribute, attribute, operationBodyMapperList);
     			if(!attributeDiff.isEmpty()) {
     				refactorings.addAll(attributeDiff.getRefactorings());
-    				attributeDiffList.add(attributeDiff);
+    				if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
     			}
     			else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(matchingAttribute, attribute);
@@ -125,10 +129,12 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
 					boolean emptyBodiesWithIdenticalComments = operation1.emptyBodiesWithIdenticalComments(operation2);
-					if(mappings > 0 || emptyBodiesWithIdenticalComments) {
+					boolean emptyBodiesWithEqualSignature = operation1.hasEmptyBody() && operation2.hasEmptyBody() && operation1.equals(operation2);
+					boolean matchingEmptyBodies = emptyBodiesWithIdenticalComments || emptyBodiesWithEqualSignature;
+					if(mappings > 0 || matchingEmptyBodies) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
 						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if((mappings > nonMappedElementsT1 || mappings > nonMappedElementsT2) || emptyBodiesWithIdenticalComments ||
+						if((mappings > nonMappedElementsT1 || mappings > nonMappedElementsT2) || matchingEmptyBodies ||
 								isPartOfMethodExtracted(operation1, operation2) || isPartOfMethodInlined(operation1, operation2)) {
 							operationBodyMapperList.add(mapper);
 							removedOperations.remove(operation1);
@@ -175,7 +181,9 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					addedAttributeIterator.remove();
 					removedAttributeIterator.remove();
 					refactorings.addAll(attributeDiff.getRefactorings());
-					attributeDiffList.add(attributeDiff);
+					if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
 					break;
 				}
 			}

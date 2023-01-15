@@ -423,6 +423,9 @@ public abstract class UMLAbstractClassDiff {
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
 								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings)) {
 							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
+							if(!attributeDiffList.contains(attributeDiff)) {
+								attributeDiffList.add(attributeDiff);
+							}
 							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
 							if(!refactorings.containsAll(attributeDiffRefactorings)) {
 								refactorings.addAll(attributeDiffRefactorings);
@@ -523,13 +526,16 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		for(CandidateMergeVariableRefactoring candidate : mapper.getCandidateAttributeMerges()) {
-			Set<String> before = new LinkedHashSet<String>();
-			for(String mergedVariable : candidate.getMergedVariables()) {
-				before.add(PrefixSuffixUtils.normalize(mergedVariable));
+			int movedAttributes = movedAttributeCount(candidate);
+			if(movedAttributes != candidate.getMergedVariables().size()) {
+				Set<String> before = new LinkedHashSet<String>();
+				for(String mergedVariable : candidate.getMergedVariables()) {
+					before.add(PrefixSuffixUtils.normalize(mergedVariable));
+				}
+				String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
+				MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
+				processMerge(mergeMap, merge, candidate);
 			}
-			String after = PrefixSuffixUtils.normalize(candidate.getNewVariable());
-			MergeVariableReplacement merge = new MergeVariableReplacement(before, after);
-			processMerge(mergeMap, merge, candidate);
 		}
 		for(CandidateSplitVariableRefactoring candidate : mapper.getCandidateAttributeSplits()) {
 			Set<String> after = new LinkedHashSet<String>();
@@ -542,6 +548,40 @@ public abstract class UMLAbstractClassDiff {
 		}
 	}
 
+	public int movedAttributeCount(CandidateMergeVariableRefactoring candidate) {
+		UMLAttribute addedAttribute = null;
+		for(UMLAttribute attribute : addedAttributes) {
+			if(attribute.getName().equals(PrefixSuffixUtils.normalize(candidate.getNewVariable()))) {
+				addedAttribute = attribute;
+				break;
+			}
+		}
+		int movedAttributes = 0;
+		if(addedAttribute != null) {
+			UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(addedAttribute.getType());
+			if(classDiff != null) {
+				for(String mergedVariable : candidate.getMergedVariables()) {
+					UMLAttribute removedAttribute = null;
+					for(UMLAttribute attribute : removedAttributes) {
+						if(attribute.getName().equals(PrefixSuffixUtils.normalize(mergedVariable))) {
+							removedAttribute = attribute;
+							break;
+						}
+					}
+					if(removedAttribute != null) {
+						for(UMLAttribute attribute : classDiff.getAddedAttributes()) {
+							if(attribute.getName().equals(removedAttribute.getName()) && attribute.getType().equals(removedAttribute.getType())) {
+								movedAttributes++;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		return movedAttributes;
+	}
+
 	private boolean multipleExtractedMethodInvocationsWithDifferentAttributesAsArguments(CandidateAttributeRefactoring candidate, List<Refactoring> refactorings) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof ExtractOperationRefactoring) {
@@ -552,7 +592,7 @@ public abstract class UMLAbstractClassDiff {
 						Set<VariableDeclaration> attributesMatchedWithArguments = new LinkedHashSet<VariableDeclaration>();
 						Set<String> attributeNamesMatchedWithArguments = new LinkedHashSet<String>();
 						for(AbstractCall extractedInvocation : extractedInvocations) {
-							for(String argument : extractedInvocation.getArguments()) {
+							for(String argument : extractedInvocation.arguments()) {
 								for(UMLAttribute attribute : originalClass.getAttributes()) {
 									if(attribute.getName().equals(argument)) {
 										attributesMatchedWithArguments.add(attribute.getVariableDeclaration());

@@ -13,12 +13,12 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -123,14 +123,18 @@ public class ExtractOperationDetection {
 			List<AbstractCall> sorted = new ArrayList<AbstractCall>();
 			List<String> allVariables = new ArrayList<String>();
 			for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
-				allVariables.addAll(composite.getVariables());
+				for(LeafExpression expression : composite.getVariables()) {
+					allVariables.add(expression.getString());
+				}
 			}
 			for(AbstractCodeFragment leaf : mapper.getNonMappedLeavesT1()) {
-				allVariables.addAll(leaf.getVariables());
+				for(LeafExpression expression : leaf.getVariables()) {
+					allVariables.add(expression.getString());
+				}
 			}
 			int max = 0;
 			for(AbstractCall invocation : invocations) {
-				List<String> arguments = invocation.getArguments();
+				List<String> arguments = invocation.arguments();
 				int occurrences = 0;
 				for(String argument : arguments) {
 					occurrences += Collections.frequency(allVariables, argument);
@@ -251,16 +255,12 @@ public class ExtractOperationDetection {
 		List<AbstractCall> operationInvocations = mapper.getContainer2().getAllOperationInvocations();
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
 			if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-				Map<String, List<AbstractCall>> methodInvocationMap = mapping.getFragment2().getMethodInvocationMap();
-				for(String key : methodInvocationMap.keySet()) {
-					List<AbstractCall> invocations = methodInvocationMap.get(key);
-					for(AbstractCall invocation : invocations) {
-						for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
-							AbstractCall matchingInvocation = iterator.next();
-							if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
-								iterator.remove();
-								break;
-							}
+				for(AbstractCall invocation : mapping.getFragment2().getMethodInvocations()) {
+					for(ListIterator<AbstractCall> iterator = operationInvocations.listIterator(); iterator.hasNext();) {
+						AbstractCall matchingInvocation = iterator.next();
+						if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
+							iterator.remove();
+							break;
 						}
 					}
 				}
@@ -283,7 +283,7 @@ public class ExtractOperationDetection {
 				AbstractCall matchingInvocation = iterator.next();
 				if(invocation.getName().equals(matchingInvocation.getName())) {
 					boolean matchingInvocationFound = false;
-					for(String argument : invocation.getArguments()) {
+					for(String argument : invocation.arguments()) {
 						if(argument.equals(matchingInvocation.getExpression())) {
 							iterator.remove();
 							matchingInvocationFound = true;
@@ -300,31 +300,16 @@ public class ExtractOperationDetection {
 	}
 
 	public static void addStatementInvocations(List<AbstractCall> operationInvocations, AbstractCodeFragment statement) {
-		Map<String, List<AbstractCall>> statementMethodInvocationMap = statement.getMethodInvocationMap();
-		for(String key : statementMethodInvocationMap.keySet()) {
-			for(AbstractCall statementInvocation : statementMethodInvocationMap.get(key)) {
-				if(!containsInvocation(operationInvocations, statementInvocation)) {
-					operationInvocations.add(statementInvocation);
-				}
+		for(AbstractCall statementInvocation : statement.getMethodInvocations()) {
+			if(!containsInvocation(operationInvocations, statementInvocation)) {
+				operationInvocations.add(statementInvocation);
 			}
 		}
 		List<LambdaExpressionObject> lambdas = statement.getLambdas();
 		for(LambdaExpressionObject lambda : lambdas) {
-			if(lambda.getBody() != null) {
-				for(AbstractCall statementInvocation : lambda.getBody().getAllOperationInvocations()) {
-					if(!containsInvocation(operationInvocations, statementInvocation)) {
-						operationInvocations.add(statementInvocation);
-					}
-				}
-			}
-			if(lambda.getExpression() != null) {
-				Map<String, List<AbstractCall>> methodInvocationMap = lambda.getExpression().getMethodInvocationMap();
-				for(String key : methodInvocationMap.keySet()) {
-					for(AbstractCall statementInvocation : methodInvocationMap.get(key)) {
-						if(!containsInvocation(operationInvocations, statementInvocation)) {
-							operationInvocations.add(statementInvocation);
-						}
-					}
+			for(AbstractCall statementInvocation : lambda.getAllOperationInvocations()) {
+				if(!containsInvocation(operationInvocations, statementInvocation)) {
+					operationInvocations.add(statementInvocation);
 				}
 			}
 		}
@@ -374,7 +359,7 @@ public class ExtractOperationDetection {
 		}
 		List<UMLParameter> originalMethodParameters = originalOperation.getParametersWithoutReturnType();
 		Map<UMLParameter, UMLParameter> originalMethodParametersPassedAsArgumentsMappedToCalledMethodParameters = new LinkedHashMap<UMLParameter, UMLParameter>();
-		List<String> arguments = addedOperationInvocation.getArguments();
+		List<String> arguments = addedOperationInvocation.arguments();
 		List<UMLParameter> parameters = addedOperation.getParametersWithoutReturnType();
 		Map<String, String> parameterToArgumentMap = new LinkedHashMap<String, String>();
 		//special handling for methods with varargs parameter for which no argument is passed in the matching invocation

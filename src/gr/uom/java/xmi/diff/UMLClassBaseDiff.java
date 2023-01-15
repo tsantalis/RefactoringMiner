@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
@@ -43,8 +44,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	private boolean visibilityChanged;
-	private String oldVisibility;
-	private String newVisibility;
+	private Visibility oldVisibility;
+	private Visibility newVisibility;
 	private boolean abstractionChanged;
 	private boolean oldAbstraction;
 	private boolean newAbstraction;
@@ -312,7 +313,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attribute, attributeWithTheSameName, this, modelDiff);
 				if(!attributeDiff.isEmpty()) {
 					refactorings.addAll(attributeDiff.getRefactorings());
-					this.attributeDiffList.add(attributeDiff);
+					if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
 				}
 				else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attribute, attributeWithTheSameName);
@@ -334,7 +337,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(attributeWithTheSameName, attribute, this, modelDiff);
 				if(!attributeDiff.isEmpty()) {
 					refactorings.addAll(attributeDiff.getRefactorings());
-					this.attributeDiffList.add(attributeDiff);
+					if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
 				}
 				else {
     				Pair<UMLAttribute, UMLAttribute> pair = Pair.of(attributeWithTheSameName, attribute);
@@ -433,11 +438,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.visibilityChanged = visibilityChanged;
 	}
 
-	private void setOldVisibility(String oldVisibility) {
+	private void setOldVisibility(Visibility oldVisibility) {
 		this.oldVisibility = oldVisibility;
 	}
 
-	private void setNewVisibility(String newVisibility) {
+	private void setNewVisibility(Visibility newVisibility) {
 		this.newVisibility = newVisibility;
 	}
 
@@ -1220,12 +1225,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		for(UMLOperation operation : operations) {
 			List<AbstractCall> operationInvocations = operation.getAllOperationInvocations();
 			for(AbstractCall operationInvocation : operationInvocations) {
-				Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation.getArguments());
-				argumentIntersection.retainAll(invocation.getArguments());
+				Set<String> argumentIntersection = new LinkedHashSet<String>(operationInvocation.arguments());
+				argumentIntersection.retainAll(invocation.arguments());
 				if(operationInvocation.getName().equals(invocation.getName()) && !argumentIntersection.isEmpty()) {
 					return true;
 				}
-				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.getArguments().size()) {
+				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.arguments().size()) {
 					return true;
 				}
 			}
@@ -1782,7 +1787,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		if(invocation != null) {
-			for(String argument : invocation.getArguments()) {
+			for(String argument : invocation.arguments()) {
 				if(argument.contains(operationInvocation.actualString())) {
 					return true;
 				}

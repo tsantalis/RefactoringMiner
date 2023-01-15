@@ -512,13 +512,13 @@ public class UMLModelASTReader {
 				umlClass.setFinal(true);
 
 			if (modifiers.hasExplicitModifier(PsiModifier.PUBLIC))
-				umlClass.setVisibility("public");
+				umlClass.setVisibility(Visibility.PUBLIC);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
-				umlClass.setVisibility("protected");
+				umlClass.setVisibility(Visibility.PROTECTED);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
-				umlClass.setVisibility("private");
+				umlClass.setVisibility(Visibility.PRIVATE);
 			else
-				umlClass.setVisibility("package");
+				umlClass.setVisibility(Visibility.PACKAGE);
 
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				umlClass.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
@@ -564,15 +564,15 @@ public class UMLModelASTReader {
 		PsiModifierList modifiers = methodDeclaration.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC))
-				umlOperation.setVisibility("public");
+				umlOperation.setVisibility(Visibility.PUBLIC);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
-				umlOperation.setVisibility("protected");
+				umlOperation.setVisibility(Visibility.PROTECTED);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
-				umlOperation.setVisibility("private");
+				umlOperation.setVisibility(Visibility.PRIVATE);
 			else if (isInterfaceMethod)
-				umlOperation.setVisibility("public");
+				umlOperation.setVisibility(Visibility.PUBLIC);
 			else
-				umlOperation.setVisibility("package");
+				umlOperation.setVisibility(Visibility.PACKAGE);
 
 			if (modifiers.hasExplicitModifier(PsiModifier.ABSTRACT))
 				umlOperation.setAbstract(true);
@@ -634,7 +634,7 @@ public class UMLModelASTReader {
 		distributeComments(comments, locationInfo, enumConstant.getComments());
 		enumConstant.setFinal(true);
 		enumConstant.setStatic(true);
-		enumConstant.setVisibility("public");
+		enumConstant.setVisibility(Visibility.PUBLIC);
 		PsiExpressionList argumentList = enumConstantDeclaration.getArgumentList();
 		if (argumentList != null) {
 			for (PsiExpression argument : argumentList.getExpressions()) {
@@ -661,15 +661,15 @@ public class UMLModelASTReader {
 		PsiModifierList modifiers = fieldDeclaration.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC))
-				umlAttribute.setVisibility("public");
+				umlAttribute.setVisibility(Visibility.PUBLIC);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
-				umlAttribute.setVisibility("protected");
+				umlAttribute.setVisibility(Visibility.PROTECTED);
 			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
-				umlAttribute.setVisibility("private");
+				umlAttribute.setVisibility(Visibility.PRIVATE);
 			else if (isInterfaceField)
-				umlAttribute.setVisibility("public");
+				umlAttribute.setVisibility(Visibility.PUBLIC);
 			else
-				umlAttribute.setVisibility("package");
+				umlAttribute.setVisibility(Visibility.PACKAGE);
 
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL))
 				umlAttribute.setFinal(true);

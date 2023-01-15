@@ -125,13 +125,9 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				Map<String, List<AbstractCall>> operationInvocationMap = statement.getMethodInvocationMap();
-				for(String key : operationInvocationMap.keySet()) {
-					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
-					for(AbstractCall operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(operation, this, modelDiff)) {
-							return operationInvocation;
-						}
+				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
+					if(operationInvocation.matchesOperation(operation, this, modelDiff)) {
+						return operationInvocation;
 					}
 				}
 			}
@@ -188,14 +184,6 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 					keysToBeRemoved.add(key);
 				}
 				else {
-					//exclude exception variables declared in catch blocks
-					for(VariableDeclaration variable : variableDeclarationMap.get(key)) {
-						UMLType variableType = variable.getType();
-						if(variableType != null && variableType.getClassType().endsWith("Exception")) {
-							keysToBeRemoved.add(key);
-							break;
-						}
-					}
 					//exclude variables aliased with fields
 					boolean foundInLocalVariables = false;
 					for(String value : map.get(key)) {

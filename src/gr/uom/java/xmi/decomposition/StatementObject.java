@@ -2,7 +2,6 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiStatement;
@@ -17,25 +16,25 @@ public class StatementObject extends AbstractStatement {
 	
 	private String statement;
 	private LocationInfo locationInfo;
-	private List<String> variables;
+	private List<LeafExpression> variables;
 	private List<String> types;
 	private List<VariableDeclaration> variableDeclarations;
-	private Map<String, List<AbstractCall>> methodInvocationMap;
+	private List<AbstractCall> methodInvocations;
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations;
-	private List<String> stringLiterals;
-	private List<String> numberLiterals;
-	private List<String> nullLiterals;
-	private List<String> booleanLiterals;
-	private List<String> typeLiterals;
-	private Map<String, List<ObjectCreation>> creationMap;
-	private List<String> infixExpressions;
+	private List<LeafExpression> stringLiterals;
+	private List<LeafExpression> numberLiterals;
+	private List<LeafExpression> nullLiterals;
+	private List<LeafExpression> booleanLiterals;
+	private List<LeafExpression> typeLiterals;
+	private List<AbstractCall> creations;
+	private List<LeafExpression> infixExpressions;
 	private List<String> infixOperators;
-	private List<String> arrayAccesses;
-	private List<String> prefixExpressions;
-	private List<String> postfixExpressions;
-	private List<String> thisExpressions;
-	private List<String> arguments;
-	private List<String> parenthesizedExpressions;
+	private List<LeafExpression> arrayAccesses;
+	private List<LeafExpression> prefixExpressions;
+	private List<LeafExpression> postfixExpressions;
+	private List<LeafExpression> thisExpressions;
+	private List<LeafExpression> arguments;
+	private List<LeafExpression> parenthesizedExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	
@@ -47,14 +46,14 @@ public class StatementObject extends AbstractStatement {
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
-		this.methodInvocationMap = visitor.getMethodInvocationMap();
+		this.methodInvocations = visitor.getMethodInvocations();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
 		this.stringLiterals = visitor.getStringLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
 		this.nullLiterals = visitor.getNullLiterals();
 		this.booleanLiterals = visitor.getBooleanLiterals();
 		this.typeLiterals = visitor.getTypeLiterals();
-		this.creationMap = visitor.getCreationMap();
+		this.creations = visitor.getCreations();
 		this.infixExpressions = visitor.getInfixExpressions();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arrayAccesses = visitor.getArrayAccesses();
@@ -81,7 +80,7 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public List<String> getVariables() {
+	public List<LeafExpression> getVariables() {
 		return variables;
 	}
 
@@ -96,8 +95,8 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		return methodInvocationMap;
+	public List<AbstractCall> getMethodInvocations() {
+		return methodInvocations;
 	}
 
 	@Override
@@ -106,37 +105,37 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public List<String> getStringLiterals() {
+	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
 	}
 
 	@Override
-	public List<String> getNumberLiterals() {
+	public List<LeafExpression> getNumberLiterals() {
 		return numberLiterals;
 	}
 
 	@Override
-	public List<String> getNullLiterals() {
+	public List<LeafExpression> getNullLiterals() {
 		return nullLiterals;
 	}
 
 	@Override
-	public List<String> getBooleanLiterals() {
+	public List<LeafExpression> getBooleanLiterals() {
 		return booleanLiterals;
 	}
 
 	@Override
-	public List<String> getTypeLiterals() {
+	public List<LeafExpression> getTypeLiterals() {
 		return typeLiterals;
 	}
 
 	@Override
-	public Map<String, List<ObjectCreation>> getCreationMap() {
-		return creationMap;
+	public List<AbstractCall> getCreations() {
+		return creations;
 	}
 
 	@Override
-	public List<String> getInfixExpressions() {
+	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
 	}
 
@@ -146,32 +145,32 @@ public class StatementObject extends AbstractStatement {
 	}
 
 	@Override
-	public List<String> getArrayAccesses() {
+	public List<LeafExpression> getArrayAccesses() {
 		return arrayAccesses;
 	}
 
 	@Override
-	public List<String> getPrefixExpressions() {
+	public List<LeafExpression> getPrefixExpressions() {
 		return prefixExpressions;
 	}
 
 	@Override
-	public List<String> getPostfixExpressions() {
+	public List<LeafExpression> getPostfixExpressions() {
 		return postfixExpressions;
 	}
 
 	@Override
-	public List<String> getThisExpressions() {
+	public List<LeafExpression> getThisExpressions() {
 		return thisExpressions;
 	}
 
 	@Override
-	public List<String> getArguments() {
+	public List<LeafExpression> getArguments() {
 		return arguments;
 	}
 
 	@Override
-	public List<String> getParenthesizedExpressions() {
+	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
 	}
 

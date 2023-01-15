@@ -44,7 +44,11 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public abstract double editDistance();
-	
+
+	public boolean equalContainer() {
+		return operation1.equals(operation2);
+	}
+
 	public AbstractCodeFragment getFragment1() {
 		return fragment1;
 	}
@@ -387,7 +391,7 @@ public abstract class AbstractCodeMapping {
 		}
 		AbstractCall invocation = initializer.invocationCoveringEntireFragment();
 		if(invocation != null) {
-			if(invocation.getArguments().contains(replacedExpression)) {
+			if(invocation.arguments().contains(replacedExpression)) {
 				return true;
 			}
 			String expression = invocation.getExpression();
@@ -397,7 +401,7 @@ public abstract class AbstractCodeMapping {
 		}
 		ObjectCreation creation = initializer.creationCoveringEntireFragment();
 		if(creation != null) {
-			if(creation.getArguments().contains(replacedExpression)) {
+			if(creation.arguments().contains(replacedExpression)) {
 				return true;
 			}
 		}
@@ -405,8 +409,9 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean infixOperandMatch(AbstractExpression initializer, String replacedExpression) {
-		List<String> infixExpressions = initializer.getInfixExpressions();
-		for(String infix : infixExpressions) {
+		List<LeafExpression> infixExpressions = initializer.getInfixExpressions();
+		for(LeafExpression infixExpression : infixExpressions) {
+			String infix = infixExpression.getString();
 			if(infix.startsWith(replacedExpression) || infix.endsWith(replacedExpression)) {
 				return true;
 			}

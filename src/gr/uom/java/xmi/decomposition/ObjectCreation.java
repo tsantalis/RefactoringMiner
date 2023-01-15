@@ -3,12 +3,9 @@ package gr.uom.java.xmi.decomposition;
 import java.util.ArrayList;
 
 import com.intellij.psi.*;
-import gr.uom.java.xmi.Formatter;
-import gr.uom.java.xmi.TypeUtils;
+import gr.uom.java.xmi.*;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class ObjectCreation extends AbstractCall {
@@ -17,9 +14,9 @@ public class ObjectCreation extends AbstractCall {
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
 	
-	public ObjectCreation(PsiFile cu, String filePath, PsiNewExpression creation) {
+	public ObjectCreation(PsiFile cu, String filePath, PsiNewExpression creation, VariableDeclarationContainer container) {
+		super(cu, filePath, creation, creation.isArrayCreation() ? CodeElementType.ARRAY_CREATION : CodeElementType.CLASS_INSTANCE_CREATION, container);
 		if(creation.isArrayCreation()) {
-			this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.ARRAY_CREATION);
 			this.isArray = true;
 			this.type = TypeUtils.extractType(cu, filePath, creation);
 			this.arguments = new ArrayList<String>();
@@ -34,7 +31,6 @@ public class ObjectCreation extends AbstractCall {
 			}
 		}
 		else {
-			this.locationInfo = new LocationInfo(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION);
 			this.type = TypeUtils.extractType(cu, filePath, creation);
 			this.arguments = new ArrayList<String>();
 			PsiExpressionList argList = creation.getArgumentList();

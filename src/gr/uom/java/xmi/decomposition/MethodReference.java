@@ -6,16 +6,16 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethodReferenceExpression;
 import gr.uom.java.xmi.Formatter;
 
-import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.StringDistance;
 
 public class MethodReference extends AbstractCall {
 	private String methodName;
 	private volatile int hashCode = 0;
 	
-	public MethodReference(PsiFile cu, String filePath, PsiMethodReferenceExpression reference) {
-		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.METHOD_REFERENCE);
+	public MethodReference(PsiFile cu, String filePath, PsiMethodReferenceExpression reference, VariableDeclarationContainer container) {
+		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		if(reference.getQualifierType() != null) {
 			this.expression = Formatter.format(reference.getQualifierType());
 		}

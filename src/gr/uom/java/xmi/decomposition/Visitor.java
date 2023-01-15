@@ -2,16 +2,14 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.intellij.psi.*;
 import gr.uom.java.xmi.Formatter;
-import gr.uom.java.xmi.LocationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,25 +18,25 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private PsiFile cu;
 	private String filePath;
 	private VariableDeclarationContainer container;
-	private List<String> variables = new ArrayList<String>();
-	private List<String> types = new ArrayList<String>();
-	private Map<String, List<AbstractCall>> methodInvocationMap = new LinkedHashMap<String, List<AbstractCall>>();
+	private List<LeafExpression> variables = new ArrayList<>();
+	private List<String> types = new ArrayList<>();
+	private List<AbstractCall> methodInvocations = new ArrayList<>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
-	private List<String> stringLiterals = new ArrayList<String>();
-	private List<String> numberLiterals = new ArrayList<String>();
-	private List<String> nullLiterals = new ArrayList<String>();
-	private List<String> booleanLiterals = new ArrayList<String>();
-	private List<String> typeLiterals = new ArrayList<String>();
-	private Map<String, List<ObjectCreation>> creationMap = new LinkedHashMap<String, List<ObjectCreation>>();
-	private List<String> infixExpressions = new ArrayList<String>();
-	private List<String> infixOperators = new ArrayList<String>();
-	private List<String> arrayAccesses = new ArrayList<String>();
-	private List<String> prefixExpressions = new ArrayList<String>();
-	private List<String> postfixExpressions = new ArrayList<String>();
-	private List<String> thisExpressions = new ArrayList<String>();
-	private List<String> arguments = new ArrayList<String>();
-	private List<String> parenthesizedExpressions = new ArrayList<String>();
+	private List<LeafExpression> stringLiterals = new ArrayList<>();
+	private List<LeafExpression> numberLiterals = new ArrayList<>();
+	private List<LeafExpression> nullLiterals = new ArrayList<>();
+	private List<LeafExpression> booleanLiterals = new ArrayList<>();
+	private List<LeafExpression> typeLiterals = new ArrayList<>();
+	private List<AbstractCall> creations = new ArrayList<>();
+	private List<LeafExpression> infixExpressions = new ArrayList<>();
+	private List<String> infixOperators = new ArrayList<>();
+	private List<LeafExpression> arrayAccesses = new ArrayList<>();
+	private List<LeafExpression> prefixExpressions = new ArrayList<>();
+	private List<LeafExpression> postfixExpressions = new ArrayList<>();
+	private List<LeafExpression> thisExpressions = new ArrayList<>();
+	private List<LeafExpression> arguments = new ArrayList<>();
+	private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -107,29 +105,29 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiArrayAccessExpression node) {
-		String source = Formatter.format(node);
-		arrayAccesses.add(source);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.ARRAY_ACCESS, container);
+		arrayAccesses.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArrayAccesses().add(source);
+			anonymous.getArrayAccesses().add(expression);
 		}
 	}
 
 	private void visit(PsiPrefixExpression node) {
-		String source = Formatter.format(node);
-		prefixExpressions.add(source);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PREFIX_EXPRESSION, container);
+		prefixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPrefixExpressions().add(source);
+			anonymous.getPrefixExpressions().add(expression);
 		}
 	}
 
 	private void visit(PsiPostfixExpression node) {
-		String source = Formatter.format(node);
-		postfixExpressions.add(source);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.POSTFIX_EXPRESSION, container);
+		postfixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getPostfixExpressions().add(source);
+			anonymous.getPostfixExpressions().add(expression);
 		}
 	}
 
@@ -143,41 +141,43 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiBinaryExpression node) {
-		String binaryExpression = Formatter.format(node);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.INFIX_EXPRESSION, container);
 		String operator = Formatter.format(node.getOperationSign());
-		infixExpressions.add(binaryExpression);
+		infixExpressions.add(expression);
 		infixOperators.add(operator);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(binaryExpression);
+			anonymous.getInfixExpressions().add(expression);
 			anonymous.getInfixOperators().add(operator);
 		}
 	}
 
 	private void visit(PsiPolyadicExpression node) {
-		String polyadicString = Formatter.format(node);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.INFIX_EXPRESSION, container);
 		String operator = Formatter.format(node.getTokenBeforeOperand(node.getOperands()[1]));
-		infixExpressions.add(polyadicString);
+		infixExpressions.add(expression);
 		infixOperators.add(operator);
 		//special handling for adding intermediate composite infix expressions
-		List<String> intermediateInfixExpressions = new ArrayList<>();
+		List<LeafExpression> intermediateInfixExpressions = new ArrayList<>();
 		int count = node.getOperands().length;
+		String polyadicString = expression.getString();
 		while (count > 2 && !operator.equals("+")) {
 			PsiExpression lastOperand = node.getOperands()[count-1];
 			String lastOperandString = Formatter.format(lastOperand);
 			String suffix = " " + operator + " " + lastOperandString;
 			if (polyadicString.contains(suffix)) {
 				String intermediateInfix = polyadicString.substring(0, polyadicString.lastIndexOf(suffix));
-				if (!infixExpressions.contains(intermediateInfix)) {
-					infixExpressions.add(intermediateInfix);
-					intermediateInfixExpressions.add(intermediateInfix);
+				LeafExpression intermediateInfixExpression = new LeafExpression(cu, filePath, node, intermediateInfix, CodeElementType.INFIX_EXPRESSION, container);
+				if (!infixExpressions.contains(intermediateInfixExpression)) {
+					infixExpressions.add(intermediateInfixExpression);
+					intermediateInfixExpressions.add(intermediateInfixExpression);
 				}
 			}
 			count--;
 		}
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getInfixExpressions().add(polyadicString);
+			anonymous.getInfixExpressions().add(expression);
 			anonymous.getInfixExpressions().addAll(intermediateInfixExpressions);
 			anonymous.getInfixOperators().add(operator);
 		}
@@ -188,27 +188,11 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		if(classOrAnonymousClassReference != null) {
 			visit(classOrAnonymousClassReference);
 		}
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node);
-		String nodeAsString = Formatter.format(node);
-		if(creationMap.containsKey(nodeAsString)) {
-			creationMap.get(nodeAsString).add(creation);
-		}
-		else {
-			List<ObjectCreation> list = new ArrayList<ObjectCreation>();
-			list.add(creation);
-			creationMap.put(nodeAsString, list);
-		}
+		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
+		creations.add(creation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<ObjectCreation>> anonymousCreationMap = anonymous.getCreationMap();
-			if(anonymousCreationMap.containsKey(nodeAsString)) {
-				anonymousCreationMap.get(nodeAsString).add(creation);
-			}
-			else {
-				List<ObjectCreation> list = new ArrayList<ObjectCreation>();
-				list.add(creation);
-				anonymousCreationMap.put(nodeAsString, list);
-			}
+			anonymous.getCreations().add(creation);
 		}
 	}
 
@@ -266,7 +250,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiParameter node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, LocationInfo.CodeElementType.SINGLE_VARIABLE_DECLARATION, container, node.isVarArgs());
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, CodeElementType.SINGLE_VARIABLE_DECLARATION, container, node.isVarArgs());
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -314,13 +298,9 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			removeLast(this.variables, anonymous.getVariables());
-			removeLast(this.types, anonymous.getTypes());
-			for(String key : anonymous.getMethodInvocationMap().keySet()) {
-				this.methodInvocationMap.remove(key, anonymous.getMethodInvocationMap().get(key));
-			}
-			for(String key : anonymous.getCreationMap().keySet()) {
-				this.creationMap.remove(key, anonymous.getCreationMap().get(key));
-			}
+			removeLastString(this.types, anonymous.getTypes());
+			removeLast(this.methodInvocations, anonymous.getMethodInvocations());
+			removeLast(this.creations, anonymous.getCreations());
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
 			removeLast(this.stringLiterals, anonymous.getStringLiterals());
 			removeLast(this.nullLiterals, anonymous.getNullLiterals());
@@ -328,7 +308,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
 			removeLast(this.numberLiterals, anonymous.getNumberLiterals());
 			removeLast(this.infixExpressions, anonymous.getInfixExpressions());
-			removeLast(this.infixOperators, anonymous.getInfixOperators());
+			removeLastString(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
 			removeLast(this.thisExpressions, anonymous.getThisExpressions());
@@ -341,9 +321,17 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		}
 	}
 
-	private static void removeLast(List<String> parentList, List<String> childList) {
+	private static void removeLastString(List<String> parentList, List<String> childList) {
 		for(int i=childList.size()-1; i>=0; i--) {
 			String element = childList.get(i);
+			int lastIndex = parentList.lastIndexOf(element);
+			parentList.remove(lastIndex);
+		}
+	}
+
+	private static void removeLast(List<? extends LeafExpression> parentList, List<? extends LeafExpression> childList) {
+		for(int i=childList.size()-1; i>=0; i--) {
+			LeafExpression element = childList.get(i);
 			int lastIndex = parentList.lastIndexOf(element);
 			parentList.remove(lastIndex);
 		}
@@ -411,30 +399,33 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void visit(PsiLiteralExpression node) {
 		Object value = node.getValue();
-		String source = Formatter.format(node);
 		if(value instanceof String) {
-			stringLiterals.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.STRING_LITERAL, container);
+			stringLiterals.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getStringLiterals().add(source);
+				anonymous.getStringLiterals().add(expression);
 			}
 		} else if (value instanceof Number) {
-			numberLiterals.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NUMBER_LITERAL, container);
+			numberLiterals.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getNumberLiterals().add(source);
+				anonymous.getNumberLiterals().add(expression);
 			}
 		} else if (value instanceof Boolean) {
-			booleanLiterals.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.BOOLEAN_LITERAL, container);
+			booleanLiterals.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getBooleanLiterals().add(source);
+				anonymous.getBooleanLiterals().add(expression);
 			}
 		} else if (value == null) {
-			nullLiterals.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NULL_LITERAL, container);
+			nullLiterals.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getNullLiterals().add(source);
+				anonymous.getNullLiterals().add(expression);
 			}
 		} else {
 			// Characters not processed
@@ -443,21 +434,21 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiClassObjectAccessExpression node) {
-		String source = Formatter.format(node);
-		typeLiterals.add(source);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.TYPE_LITERAL, container);
+		typeLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getTypeLiterals().add(source);
+			anonymous.getTypeLiterals().add(expression);
 		}
 	}
 
 	public void visit(PsiThisExpression node) {
 		if(!isFieldAccessWithThisExpression(node.getParent())) {
-			String source = Formatter.format(node);
-			thisExpressions.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.THIS_EXPRESSION, container);
+			thisExpressions.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getThisExpressions().add(source);
+				anonymous.getThisExpressions().add(expression);
 			}
 		}
 	}
@@ -474,11 +465,11 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private void visit(PsiIdentifier node) {
 		if(isFieldAccessWithThisExpression(node.getParent())) {
 			PsiReferenceExpression fieldAccess = (PsiReferenceExpression)node.getParent();
-			String source = Formatter.format(fieldAccess);
-			variables.add(source);
+			LeafExpression fieldAccessExpression = new LeafExpression(cu, filePath, fieldAccess, CodeElementType.FIELD_ACCESS, container);
+			variables.add(fieldAccessExpression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
+				anonymous.getVariables().add(fieldAccessExpression);
 			}
 		}
 		else if(node.getParent() instanceof PsiAnnotation &&
@@ -507,11 +498,11 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 			// skip names being part of qualified names, or method invocation names
 		}
 		else {
-			String source = Formatter.format(node);
-			variables.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.SIMPLE_NAME, container);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
+				anonymous.getVariables().add(expression);
 			}
 		}
 	}
@@ -541,60 +532,24 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 
 	private void visit(PsiMethodCallExpression node) {
 		PsiExpressionList argumentList = node.getArgumentList();
-		int argumentSize = 0;
-		if(argumentList != null) {
-			PsiExpression[] arguments = argumentList.getExpressions();
-			argumentSize = arguments.length;
-			for (PsiExpression argument : arguments) {
-				processArgument(argument);
-			}
+		PsiExpression[] arguments = argumentList.getExpressions();
+		for (PsiExpression argument : arguments) {
+			processArgument(argument);
 		}
-		String methodInvocation = Formatter.format(node);
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node);
-		if(methodInvocationMap.containsKey(methodInvocation)) {
-			methodInvocationMap.get(methodInvocation).add(invocation);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(invocation);
-			methodInvocationMap.put(methodInvocation, list);
-		}
+		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
+		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(methodInvocation)) {
-				anonymousMethodInvocationMap.get(methodInvocation).add(invocation);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(invocation);
-				anonymousMethodInvocationMap.put(methodInvocation, list);
-			}
+			anonymous.getMethodInvocations().add(invocation);
 		}
 	}
 
 	private void visit(PsiMethodReferenceExpression node) {
-		MethodReference reference = new MethodReference(cu, filePath, node);
-		String referenceString = Formatter.format(node);
-		if(methodInvocationMap.containsKey(referenceString)) {
-			methodInvocationMap.get(referenceString).add(reference);
-		}
-		else {
-			List<AbstractCall> list = new ArrayList<AbstractCall>();
-			list.add(reference);
-			methodInvocationMap.put(referenceString, list);
-		}
+		MethodReference reference = new MethodReference(cu, filePath, node, container);
+		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			Map<String, List<AbstractCall>> anonymousMethodInvocationMap = anonymous.getMethodInvocationMap();
-			if(anonymousMethodInvocationMap.containsKey(referenceString)) {
-				anonymousMethodInvocationMap.get(referenceString).add(reference);
-			}
-			else {
-				List<AbstractCall> list = new ArrayList<AbstractCall>();
-				list.add(reference);
-				anonymousMethodInvocationMap.put(referenceString, list);
-			}
+			anonymous.getMethodInvocations().add(reference);
 		}
 	}
 
@@ -617,11 +572,11 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 				anonymous.getLambdas().add(lambda);
 			}
 		}
-		String argumentSource = Formatter.format(argument);
-		this.arguments.add(argumentSource);
+		LeafExpression expression = new LeafExpression(cu, filePath, argument, CodeElementType.EXPRESSION, container);
+		this.arguments.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getArguments().add(argumentSource);
+			anonymous.getArguments().add(expression);
 		}
 	}
 
@@ -642,7 +597,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		if (methodCallReferenceExpression(node)) {
 			return;
 		}
-		String source = Formatter.format(node);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 		PsiExpression qualifier = node.getQualifierExpression();
 		if(qualifier != null) {
 			String qualifierIdentifier = Formatter.format(qualifier);
@@ -652,10 +607,10 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
 					anonymous.getTypes().add(qualifierIdentifier);
 				}
-				variables.add(source);
+				variables.add(expression);
 				if (current.getUserObject() != null) {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-					anonymous.getVariables().add(source);
+					anonymous.getVariables().add(expression);
 				}
 			} else if (isSimpleName(qualifier) && !isQualifiedName(node.getParent())) {
 				PsiMethod parentMethodDeclaration = findParentMethodDeclaration(node);
@@ -668,31 +623,44 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 							break;
 						}
 					}
-					if (qualifierIsParameter) {
-						variables.add(source);
+					boolean qualifiedIsField = false;
+					if (!qualifierIsParameter && !parentMethodDeclaration.isConstructor()) {
+						PsiClass psiClass = findParentTypeDeclaration(parentMethodDeclaration);
+						if (psiClass != null) {
+							PsiField[] fields = psiClass.getFields();
+							for (PsiField field : fields) {
+								if (field.getName().equals(qualifierIdentifier)) {
+									qualifiedIsField = true;
+									break;
+								}
+							}
+						}
+					}
+					if (qualifierIsParameter || qualifiedIsField) {
+						variables.add(expression);
 						if (current.getUserObject() != null) {
 							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-							anonymous.getVariables().add(source);
+							anonymous.getVariables().add(expression);
 						}
 					}
 				}
 				PsiForeachStatement enhancedFor = findParentEnhancedForStatement(node);
 				if (enhancedFor != null) {
 					if (enhancedFor.getIterationParameter().getName().equals(qualifierIdentifier)) {
-						variables.add(source);
+						variables.add(expression);
 						if (current.getUserObject() != null) {
 							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();
-							anonymous.getVariables().add(source);
+							anonymous.getVariables().add(expression);
 						}
 					}
 				}
 			}
 		}
 		else {
-			variables.add(source);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
+				anonymous.getVariables().add(expression);
 			}
 		}
 	}
@@ -702,6 +670,17 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		while(parent != null) {
 			if(parent instanceof PsiForeachStatement) {
 				return (PsiForeachStatement)parent;
+			}
+			parent = parent.getParent();
+		}
+		return null;
+	}
+
+	private PsiClass findParentTypeDeclaration(PsiElement node) {
+		PsiElement parent = node.getParent();
+		while(parent != null) {
+			if(parent instanceof PsiClass) {
+				return (PsiClass)parent;
 			}
 			parent = parent.getParent();
 		}
@@ -722,11 +701,11 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	private void visit(PsiTypeCastExpression node) {
 		PsiExpression castExpression = node.getOperand();
 		if(isSimpleName(castExpression)) {
-			String source = Formatter.format(node);
-			variables.add(source);
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CAST_EXPRESSION, container);
+			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-				anonymous.getVariables().add(source);
+				anonymous.getVariables().add(expression);
 			}
 		}
 	}
@@ -742,16 +721,16 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 	}
 
 	private void visit(PsiParenthesizedExpression node) {
-		String source = Formatter.format(node);
-		parenthesizedExpressions.add(source);
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PARENTHESIZED_EXPRESSION, container);
+		parenthesizedExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-			anonymous.getParenthesizedExpressions().add(source);
+			anonymous.getParenthesizedExpressions().add(expression);
 		}
 	}
 
-	public Map<String, List<AbstractCall>> getMethodInvocationMap() {
-		return this.methodInvocationMap;
+	public List<AbstractCall> getMethodInvocations() {
+		return methodInvocations;
 	}
 
 	public List<VariableDeclaration> getVariableDeclarations() {
@@ -766,31 +745,31 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		return anonymousClassDeclarations;
 	}
 
-	public List<String> getStringLiterals() {
+	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
 	}
 
-	public List<String> getNumberLiterals() {
+	public List<LeafExpression> getNumberLiterals() {
 		return numberLiterals;
 	}
 
-	public List<String> getNullLiterals() {
+	public List<LeafExpression> getNullLiterals() {
 		return nullLiterals;
 	}
 
-	public List<String> getBooleanLiterals() {
+	public List<LeafExpression> getBooleanLiterals() {
 		return booleanLiterals;
 	}
 
-	public List<String> getTypeLiterals() {
+	public List<LeafExpression> getTypeLiterals() {
 		return typeLiterals;
 	}
 
-	public Map<String, List<ObjectCreation>> getCreationMap() {
-		return creationMap;
+	public List<AbstractCall> getCreations() {
+		return creations;
 	}
 
-	public List<String> getInfixExpressions() {
+	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
 	}
 
@@ -798,27 +777,27 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		return infixOperators;
 	}
 
-	public List<String> getArrayAccesses() {
+	public List<LeafExpression> getArrayAccesses() {
 		return arrayAccesses;
 	}
 
-	public List<String> getPrefixExpressions() {
+	public List<LeafExpression> getPrefixExpressions() {
 		return prefixExpressions;
 	}
 
-	public List<String> getPostfixExpressions() {
+	public List<LeafExpression> getPostfixExpressions() {
 		return postfixExpressions;
 	}
 
-	public List<String> getThisExpressions() {
+	public List<LeafExpression> getThisExpressions() {
 		return thisExpressions;
 	}
 
-	public List<String> getArguments() {
+	public List<LeafExpression> getArguments() {
 		return this.arguments;
 	}
 
-	public List<String> getParenthesizedExpressions() {
+	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
 	}
 
@@ -826,7 +805,7 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 		return ternaryOperatorExpressions;
 	}
 
-	public List<String> getVariables() {
+	public List<LeafExpression> getVariables() {
 		return variables;
 	}
 

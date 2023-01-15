@@ -4,6 +4,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -12,6 +13,7 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.Set;
 public class UMLOperation implements Comparable<UMLOperation>, Serializable, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
 	private String name;
-	private String visibility;
+	private Visibility visibility;
 	private boolean isAbstract;
 	private List<UMLParameter> parameters;
 	private String className;
@@ -88,11 +90,11 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return "method";
 	}
 
-	public String getVisibility() {
+	public Visibility getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(String visibility) {
+	public void setVisibility(Visibility visibility) {
 		this.visibility = visibility;
 	}
 
@@ -202,7 +204,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<AbstractCall> getAllOperationInvocations() {
 		if(operationBody != null)
 			return operationBody.getAllOperationInvocations();
-		return new ArrayList<AbstractCall>();
+		return Collections.emptyList();
 	}
 
 	public boolean containsAssertion() {
@@ -214,13 +216,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public List<LambdaExpressionObject> getAllLambdas() {
 		if(operationBody != null)
 			return operationBody.getAllLambdas();
-		return new ArrayList<LambdaExpressionObject>();
+		return Collections.emptyList();
 	}
 
 	public List<String> getAllVariables() {
 		if(operationBody != null)
 			return operationBody.getAllVariables();
-		return new ArrayList<String>();
+		return Collections.emptyList();
 	}
 
 	public Map<String, Set<VariableDeclaration>> variableDeclarationMap() {
@@ -490,14 +492,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				Map<String, List<AbstractCall>> operationInvocationMap = statement.getMethodInvocationMap();
-				for(String key : operationInvocationMap.keySet()) {
-					List<AbstractCall> operationInvocations = operationInvocationMap.get(key);
-					for(AbstractCall operationInvocation : operationInvocations) {
-						if(operationInvocation.matchesOperation(this, this, null) ||
-								(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
-							return operationInvocation;
-						}
+				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
+					if(operationInvocation.matchesOperation(this, this, null) ||
+							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
+						return operationInvocation;
 					}
 				}
 			}
@@ -512,7 +510,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
 				if(statement.getString().startsWith("return ")) {
-					for(String variable : statement.getVariables()) {
+					for(LeafExpression variableExpression : statement.getVariables()) {
+						String variable = variableExpression.getString();
 						if(statement.getString().equals("return " + variable + ";\n") && parameters.size() == 0) {
 							return true;
 						}
@@ -543,7 +542,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				for(String variable : statement.getVariables()) {
+				for(LeafExpression variableExpression : statement.getVariables()) {
+					String variable = variableExpression.getString();
 					if(statement.getString().equals(variable + "=" + parameterNames.get(0) + ";\n")) {
 						return true;
 					}
@@ -560,7 +560,8 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			for(AbstractStatement statement : statements) {
 				if(statement instanceof StatementObject) {
-					for(String variable : statement.getVariables()) {
+					for(LeafExpression variableExpression : statement.getVariables()) {
+						String variable = variableExpression.getString();
 						if(statement.getString().startsWith(variable + "=")) {
 							for(String parameterName : parameterNames) {
 								if(statement.getString().equals(variable + "=" + parameterName + ";\n")) {

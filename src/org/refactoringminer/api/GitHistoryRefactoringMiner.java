@@ -93,6 +93,24 @@ public interface GitHistoryRefactoringMiner {
 	void detectAtPullRequest(String gitURL, int pullRequest, RefactoringHandler handler, int timeout) throws Exception;
 
 	/**
+	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs.
+	 *
+	 * @param previousPath The directory (or file) corresponding to the previous version.
+	 * @param nextPath The directory (or file) corresponding to the next version.
+	 * @param handler A handler object that is responsible to process the detected refactorings.
+	 */
+	void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler);
+
+	/**
+	 * Detect refactorings performed between two directories (or files) representing two versions of Java programs.
+	 *
+	 * @param previousFile The directory (or file) corresponding to the previous version.
+	 * @param nextFile The directory (or file) corresponding to the next version.
+	 * @param handler A handler object that is responsible to process the detected refactorings.
+	 */
+	void detectAtDirectories(File previousFile, File nextFile, RefactoringHandler handler);
+
+	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.
 	 */
 	String getConfigId();

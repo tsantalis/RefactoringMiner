@@ -37,6 +37,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -46,6 +49,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -593,6 +598,72 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	private static final String systemFileSeparator = Matcher.quoteReplacement(File.separator);
 
+	private static List<String> getJavaFilePaths(File folder) throws IOException {
+		Stream<Path> walk = Files.walk(Paths.get(folder.toURI()));
+		List<String> paths = walk.map(x -> x.toString())
+				.filter(f -> f.endsWith(".java"))
+				.map(x -> x.substring(folder.getPath().length()+1).replaceAll(systemFileSeparator, "/"))
+				.collect(Collectors.toList());
+		walk.close();
+		return paths;
+	}
+
+	@Override
+	public void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler) {
+		File previousFile = previousPath.toFile();
+		File nextFile = nextPath.toFile();
+		detectAtDirectories(previousFile, nextFile, handler);
+	}
+
+	@Override
+	public void detectAtDirectories(File previousFile, File nextFile, RefactoringHandler handler) {
+		if(previousFile.exists() && nextFile.exists()) {
+			List<Refactoring> refactorings = Collections.emptyList();
+			String id = previousFile.getName() + " -> " + nextFile.getName();
+			try {
+				if(previousFile.isDirectory() && nextFile.isDirectory()) {
+					Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+					Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+					Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
+					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap());
+					UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					refactorings = modelDiff.getRefactorings();
+					refactorings.addAll(moveSourceFolderRefactorings);
+					refactorings = filter(refactorings);
+				}
+				else if(previousFile.isFile() && nextFile.isFile()) {
+					String previousFileName = previousFile.getName();
+					String nextFileName = nextFile.getName();
+					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
+						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap());
+						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+						refactorings = modelDiff.getRefactorings();
+						refactorings.addAll(moveSourceFolderRefactorings);
+						refactorings = filter(refactorings);
+					}
+				}
+			}
+			catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", id), e);
+				handler.handleException(id, e);
+			}
+			handler.handle(id, refactorings);
+		}
+	}
+
 	@Override
 	public void detectAtCommit(GitRepository repository, String commitId, RefactoringHandler handler) {
 		String cloneURL = null;
@@ -995,7 +1066,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				} else {
 					logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
 				}
@@ -1029,7 +1104,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				}
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
@@ -1061,7 +1140,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					diffSet.addAll(differ.getDiffSet());
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
 				}
 				catch(RefactoringMinerTimedOutException e) {
 					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
@@ -1080,6 +1163,67 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			e.printStackTrace();
 		} finally {
 			service.shutdown();
+		}
+		return diffSet;
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtDirectories(Path previousPath, Path nextPath) {
+		File previousFile = previousPath.toFile();
+		File nextFile = nextPath.toFile();
+		return diffAtDirectories(previousFile, nextFile);
+	}
+
+	@Override
+	public Set<ASTDiff> diffAtDirectories(File previousFile, File nextFile) {
+		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+		if(previousFile.exists() && nextFile.exists()) {
+			String id = previousFile.getName() + " -> " + nextFile.getName();
+			try {
+				if(previousFile.isDirectory() && nextFile.isDirectory()) {
+					Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+					Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+					Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+					Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+					populateFileContents(nextFile, getJavaFilePaths(nextFile), fileContentsCurrent, repositoryDirectoriesCurrent);
+					populateFileContents(previousFile, getJavaFilePaths(previousFile), fileContentsBefore, repositoryDirectoriesBefore);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap());
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+					for(ASTDiff diff : differ.getDiffSet()) {
+						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+						diffSet.add(diff);
+					}
+				}
+				else if(previousFile.isFile() && nextFile.isFile()) {
+					String previousFileName = previousFile.getName();
+					String nextFileName = nextFile.getName();
+					if(previousFileName.endsWith(".java") && nextFileName.endsWith(".java")) {
+						Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
+						Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
+						Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+						Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+						populateFileContents(nextFile.getParentFile(), List.of(nextFileName), fileContentsCurrent, repositoryDirectoriesCurrent);
+						populateFileContents(previousFile.getParentFile(), List.of(previousFileName), fileContentsBefore, repositoryDirectoriesBefore);
+						List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, Collections.emptyMap());
+						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+						ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
+						for(ASTDiff diff : differ.getDiffSet()) {
+							diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
+							diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
+							diffSet.add(diff);
+						}
+					}
+				}
+			}
+			catch (Exception e) {
+				logger.warn(String.format("Ignored revision %s due to error", id), e);
+			}
 		}
 		return diffSet;
 	}

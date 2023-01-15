@@ -1,5 +1,6 @@
 package gr.uom.java.xmi;
 
+import com.github.gumtreediff.tree.TreeContext;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.*;
@@ -39,12 +40,10 @@ public class UMLModelASTReader {
 				PsiFile psiFile = PsiFactoryManager.getFactory().createFileFromText(JavaLanguage.INSTANCE, javaFileContent);
 				processCompilationUnit(filePath, psiFile, javaFileContent);
 				if(astDiff) {
-//					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
-//					scanner.setSource(charArray);
-//					JdtVisitor visitor = new JdtVisitor(scanner);
-//					compilationUnit.accept(visitor);
-//					TreeContext treeContext = visitor.getTreeContext();
-//					this.umlModel.getTreeContextMap().put(filePath, treeContext);
+					PsiVisitor visitor = new PsiVisitor();
+					psiFile.accept(visitor);
+					TreeContext treeContext = visitor.getTreeContext();
+					this.umlModel.getTreeContextMap().put(filePath, treeContext);
 				}
 			}
 			catch(Exception e) {

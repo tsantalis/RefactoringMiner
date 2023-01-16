@@ -4402,19 +4402,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment fragment1 = mappingSet.first().getFragment1();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment1NestedUnderLoop = false;
-				if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
-					fragment1NestedUnderLoop = fragment1.getParent().isLoop() || fragment1.getParent().getParent().isLoop();
+				AbstractCodeFragment f1 = fragment1;
+				while(f1.getParent() != null && f1.getParent().getParent() != null) {
+					if(f1.getParent().isLoop() || f1.getParent().getParent().isLoop()) {
+						fragment1NestedUnderLoop = true;
+						break;
+					}
+					f1 = f1.getParent();
 				}
 				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment1IsInsideIfElseIf = false;
 					if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
-						boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
-						boolean isWithinElseIfBranch = false;
-						if(fragment1.getParent().getParent().getParent() != null) {
-							isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
-						}
-						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment1.getParent().getParent())) {
+						//boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						//boolean isWithinElseIfBranch = false;
+						//if(fragment1.getParent().getParent().getParent() != null) {
+						//	isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
+						//}
+						if(isWithinIfBranch && (hasElseBranch(fragment1.getParent().getParent()) || hasElseIfBranch(fragment1.getParent().getParent()))) {
 							fragment1IsInsideIfElseIf = true;
 						}
 					}
@@ -4495,19 +4500,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment fragment2 = mappingSet.first().getFragment2();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment2NestedUnderLoop = false;
-				if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
-					fragment2NestedUnderLoop = fragment2.getParent().isLoop() || fragment2.getParent().getParent().isLoop();
+				AbstractCodeFragment f2 = fragment2;
+				while(f2.getParent() != null && f2.getParent().getParent() != null) {
+					if(f2.getParent().isLoop() || f2.getParent().getParent().isLoop()) {
+						fragment2NestedUnderLoop = true;
+						break;
+					}
+					f2 = f2.getParent();
 				}
 				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment2IsInsideIfElseIf = false;
 					if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
-						boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
-						boolean isWithinElseIfBranch = false;
-						if(fragment2.getParent().getParent().getParent() != null) {
-							isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
-						}
-						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment2.getParent().getParent())) {
+						//boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						//boolean isWithinElseIfBranch = false;
+						//if(fragment2.getParent().getParent().getParent() != null) {
+						//	isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
+						//}
+						if(isWithinIfBranch && (hasElseBranch(fragment2.getParent().getParent()) || hasElseIfBranch(fragment2.getParent().getParent()))) {
 							fragment2IsInsideIfElseIf = true;
 						}
 					}
@@ -4549,8 +4559,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(ifParents.size() > 0) {
 			CompositeStatementObject firstParent = ifParents.get(0);
-			if(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
-				return firstParent.getParent().isLoop() || firstParent.getParent().getParent().isLoop();
+			while(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
+				if(firstParent.getParent().isLoop() || firstParent.getParent().getParent().isLoop()) {
+					return true;
+				}
+				firstParent = firstParent.getParent();
 			}
 		}
 		return false;

@@ -1,8 +1,11 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -27,6 +30,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsFromInlinedOperation;
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
+	private Map<String, String> parameterToArgumentMap;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
@@ -42,6 +46,8 @@ public class InlineOperationRefactoring implements Refactoring {
 			this.inlinedCodeFragmentsFromInlinedOperation.add(mapping.getFragment1());
 			this.inlinedCodeFragmentsInTargetOperation.add(mapping.getFragment2());
 		}
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap1();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public void updateMapperInfo() {
@@ -111,6 +117,10 @@ public class InlineOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public Map<String, String> getParameterToArgumentMap() {
+		return parameterToArgumentMap;
 	}
 
 	public Set<AbstractCodeFragment> getInlinedCodeFragments() {

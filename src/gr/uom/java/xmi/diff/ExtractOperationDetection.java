@@ -89,7 +89,7 @@ public class ExtractOperationDetection {
 		if(!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty() ||
 			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
 			List<AbstractCall> addedOperationInvocations = callCountMap != null ? callCountMap.get(addedOperation) : matchingInvocations(addedOperation, operationInvocations, mapper.getContainer2());
-			if(addedOperationInvocations != null && addedOperationInvocations.size() > 0) {
+			if(addedOperationInvocations.size() > 0) {
 				int otherAddedMethodsCalled = 0;
 				int otherAddedMethodsCalledWithSameOrMoreCallSites = 0;
 				for(UMLOperation addedOperation2 : this.addedOperations) {
@@ -107,11 +107,11 @@ public class ExtractOperationDetection {
 				if(otherAddedMethodsCalledWithSameOrMoreCallSites == 0 && (otherAddedMethodsCalled == 0 || mapper.getContainer1().stringRepresentation().size() > addedOperationInvocations.size() * addedOperation.stringRepresentation().size())) {
 					List<AbstractCall> sortedInvocations = sortInvocationsBasedOnArgumentOccurrences(addedOperationInvocations);
 					for(AbstractCall addedOperationInvocation : sortedInvocations) {
-						processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);
+						processAddedOperation(addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);
 					}
 				}
 				else {
-					processAddedOperation(mapper, addedOperation, refactorings, addedOperationInvocations, addedOperationInvocations.get(0));
+					processAddedOperation(addedOperation, refactorings, addedOperationInvocations, addedOperationInvocations.get(0));
 				}
 			}
 		}
@@ -154,7 +154,7 @@ public class ExtractOperationDetection {
 		}
 	}
 
-	private void processAddedOperation(UMLOperationBodyMapper mapper, UMLOperation addedOperation,
+	private void processAddedOperation(UMLOperation addedOperation,
 			List<ExtractOperationRefactoring> refactorings,
 			List<AbstractCall> addedOperationInvocations, AbstractCall addedOperationInvocation)
 			throws RefactoringMinerTimedOutException {

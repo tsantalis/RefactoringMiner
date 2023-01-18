@@ -1391,10 +1391,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
-		for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
-			UMLOperation removedOperation = removedOperationIterator.next();
-			for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
-				InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
+			List<UMLOperation> sortedRemovedOperations = detection.getRemovedOperationsSortedByCalls();
+			for(UMLOperation removedOperation : sortedRemovedOperations) {
 				List<InlineOperationRefactoring> refs = detection.check(removedOperation);
 				for(InlineOperationRefactoring refactoring : refs) {
 					refactorings.add(refactoring);

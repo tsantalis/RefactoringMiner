@@ -3414,12 +3414,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			
+			AbstractCodeMapping parentMapping = null;
+			if(parentMapper != null && operationInvocation != null) {
+				parentMapping = findParentMappingContainingOperationInvocation();
+			}
 			//exact string matching - leaf nodes - finds moves to another level
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 				AbstractCodeFragment leaf1 = leafIterator1.next();
 				if(!alreadyMatched1(leaf1)) {
-					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForInline(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 						AbstractCodeFragment leaf2 = leafIterator2.next();
 						if(!alreadyMatched2(leaf2)) {
@@ -3432,135 +3435,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						/*
-						boolean identicalDepthAndIndex = false;
-						for(AbstractCodeMapping m : mappingSet) {
-							int index1 = m.getFragment1().getIndex();
-							int index2 = m.getFragment2().getIndex();
-							if(index1 != index2) {
-								//check if parent includes try-catch and adjust the index
-								int catchFinallyBlockCount1 = 0;
-								if(m.getFragment1().getParent() != null) {
-									for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
-										if(parentStatement.equals(m.getFragment1())) {
-											break;
-										}
-										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-											catchFinallyBlockCount1++;
-										}
-									}
-								}
-								index1 = index1 - catchFinallyBlockCount1;
-								int catchFinallyBlockCount2 = 0;
-								if(m.getFragment2().getParent() != null) {
-									for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
-										if(parentStatement.equals(m.getFragment2())) {
-											break;
-										}
-										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-											catchFinallyBlockCount2++;
-										}
-									}
-								}
-								index2 = index2 - catchFinallyBlockCount2;
-							}
-							if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && index1 == index2) {
-								identicalDepthAndIndex = true;
-								break;
-							}
-						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf1.isKeyword();
-						*/
 						boolean codeUnderIfMovedUnderElse = false;
 						if(!leaf1.isKeyword()) {
-							for(AbstractCodeMapping m : mappingSet) {
-								if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && m.getFragment1().getIndex() == m.getFragment2().getIndex()) {
-									break;
-								}
-								AbstractCodeFragment child1 = m.getFragment1();
-								AbstractCodeFragment child2 = m.getFragment2();
-								CompositeStatementObject parent1 = child1.getParent();
-								CompositeStatementObject parent2 = child2.getParent();
-								boolean isUnderIf1 = false;
-								boolean isUnderElse1 = false;
-								while(parent1 != null) {
-									if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) ||
-											parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
-										break;
-									}
-									if(isIfBranch(child1, parent1)) {
-										isUnderIf1 = true;
-										break;
-									}
-									if(isElseBranch(child1, parent1)) {
-										isUnderElse1 = true;
-										break;
-									}
-									child1 = parent1;
-									parent1 = parent1.getParent();
-								}
-								boolean isUnderIf2 = false;
-								boolean isUnderElse2 = false;
-								while(parent2 != null) {
-									if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) ||
-											parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
-										break;
-									}
-									if(isIfBranch(child2, parent2)) {
-										isUnderIf2 = true;
-										break;
-									}
-									if(isElseBranch(child2, parent2)) {
-										isUnderElse2 = true;
-										break;
-									}
-									child2 = parent2;
-									parent2 = parent2.getParent();
-								}
-								codeUnderIfMovedUnderElse = isUnderIf1 != isUnderIf2 && isUnderElse1 != isUnderElse2;
-								if(isUnderElse1 && isUnderElse2) {
-									boolean isParentUnderIf1 = false;
-									boolean isParentUnderElse1 = false;
-									if(parent1.getParent() != null && parent1.getParent().getParent() != null) {
-										if(isIfBranch(parent1.getParent(), parent1.getParent().getParent())) {
-											isParentUnderIf1 = true;
-										}
-										else if(isElseBranch(parent1.getParent(), parent1.getParent().getParent())) {
-											isParentUnderElse1 = true;
-										}
-									}
-									boolean isParentUnderIf2 = false;
-									boolean isParentUnderElse2 = false;
-									if(parent2.getParent() != null && parent2.getParent().getParent() != null) {
-										if(isIfBranch(parent2.getParent(), parent2.getParent().getParent())) {
-											isParentUnderIf2 = true;
-										}
-										else if(isElseBranch(parent2.getParent(), parent2.getParent().getParent())) {
-											isParentUnderElse2 = true;
-										}
-									}
-									codeUnderIfMovedUnderElse = isParentUnderIf1 != isParentUnderIf2 && isParentUnderElse1 != isParentUnderElse2;
-								}
-								if(codeUnderIfMovedUnderElse) {
-									break;
-								}
-							}
+							codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
 						}
 						if(mappingSet.size() > 1 && (parentMapper != null || codeUnderIfMovedUnderElse) && mappings.size() > 1) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
@@ -3583,7 +3460,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										lineDistance2 = entry.getKey();
 									}
 								}
-								if(Math.abs(lineDistance1 - lineDistance2) <= 1 && levelParentEditDistanceSum.firstEntry().getKey() == 0) {
+								boolean validParentEditDistance = levelParentEditDistanceSum.firstEntry().getKey() == 0 ||
+										(parentMapper != null && levelParentEditDistanceSum.firstEntry().getKey() == 1);
+								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2) && validParentEditDistance) {
 									minLineDistanceStatementMapping = levelParentEditDistanceSum.firstEntry().getValue();
 								}
 								else {
@@ -3622,7 +3501,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 				AbstractCodeFragment leaf1 = leafIterator1.next();
 				if(!alreadyMatched1(leaf1)) {
-					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForInline(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 						AbstractCodeFragment leaf2 = leafIterator2.next();
 						if(!alreadyMatched2(leaf2)) {
@@ -3785,7 +3664,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						continue;
 					}
-					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping)) : new TreeSet<LeafMapping>();
+					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 						AbstractCodeFragment leaf1 = leafIterator1.next();
 						if(!alreadyMatched1(leaf1)) {
@@ -3836,8 +3715,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf2.isKeyword();
-						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall()) || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 0) {
+						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
@@ -3858,7 +3736,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										lineDistance2 = entry.getKey();
 									}
 								}
-								if(Math.abs(lineDistance1 - lineDistance2) <= 1 && levelParentEditDistanceSum.firstEntry().getKey() == 0) {
+								boolean validParentEditDistance = levelParentEditDistanceSum.firstEntry().getKey() == 0 ||
+										(parentMapper != null && levelParentEditDistanceSum.firstEntry().getKey() == 1);
+								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2) && validParentEditDistance) {
 									minLineDistanceStatementMapping = levelParentEditDistanceSum.firstEntry().getValue();
 								}
 								else {
@@ -4043,7 +3923,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							if(isScopedMatch(startMapping, endMapping, parentMapping) && mappingSet.size() > 1) {
-								TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparator(parentMapping)) : new TreeSet<LeafMapping>();
+								TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 								for(LeafMapping mapping : mappingSet) {
 									if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
 										scopedMappingSet.add(mapping);
@@ -4206,6 +4086,97 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean codeUnderIfMovedUnderElse(TreeSet<LeafMapping> mappingSet) {
+		boolean codeUnderIfMovedUnderElse = false;
+		for(AbstractCodeMapping m : mappingSet) {
+			if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && m.getFragment1().getIndex() == m.getFragment2().getIndex()) {
+				break;
+			}
+			AbstractCodeFragment child1 = m.getFragment1();
+			AbstractCodeFragment child2 = m.getFragment2();
+			CompositeStatementObject parent1 = child1.getParent();
+			CompositeStatementObject parent2 = child2.getParent();
+			boolean isUnderIf1 = false;
+			boolean isUnderElse1 = false;
+			while(parent1 != null) {
+				if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+					break;
+				}
+				if(isIfBranch(child1, parent1)) {
+					isUnderIf1 = true;
+					break;
+				}
+				if(isElseBranch(child1, parent1)) {
+					isUnderElse1 = true;
+					break;
+				}
+				child1 = parent1;
+				parent1 = parent1.getParent();
+			}
+			boolean isUnderIf2 = false;
+			boolean isUnderElse2 = false;
+			while(parent2 != null) {
+				if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+					break;
+				}
+				if(isIfBranch(child2, parent2)) {
+					isUnderIf2 = true;
+					break;
+				}
+				if(isElseBranch(child2, parent2)) {
+					isUnderElse2 = true;
+					break;
+				}
+				child2 = parent2;
+				parent2 = parent2.getParent();
+			}
+			codeUnderIfMovedUnderElse = isUnderIf1 != isUnderIf2 && isUnderElse1 != isUnderElse2;
+			if(isUnderElse1 && isUnderElse2) {
+				boolean isParentUnderIf1 = false;
+				boolean isParentUnderElse1 = false;
+				if(parent1.getParent() != null && parent1.getParent().getParent() != null) {
+					if(isIfBranch(parent1.getParent(), parent1.getParent().getParent())) {
+						isParentUnderIf1 = true;
+					}
+					else if(isElseBranch(parent1.getParent(), parent1.getParent().getParent())) {
+						isParentUnderElse1 = true;
+					}
+				}
+				boolean isParentUnderIf2 = false;
+				boolean isParentUnderElse2 = false;
+				if(parent2.getParent() != null && parent2.getParent().getParent() != null) {
+					if(isIfBranch(parent2.getParent(), parent2.getParent().getParent())) {
+						isParentUnderIf2 = true;
+					}
+					else if(isElseBranch(parent2.getParent(), parent2.getParent().getParent())) {
+						isParentUnderElse2 = true;
+					}
+				}
+				codeUnderIfMovedUnderElse = isParentUnderIf1 != isParentUnderIf2 && isParentUnderElse1 != isParentUnderElse2;
+			}
+			if(codeUnderIfMovedUnderElse) {
+				break;
+			}
+		}
+		return codeUnderIfMovedUnderElse;
 	}
 
 	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
@@ -4402,19 +4373,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment fragment1 = mappingSet.first().getFragment1();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment1NestedUnderLoop = false;
-				if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
-					fragment1NestedUnderLoop = fragment1.getParent().isLoop() || fragment1.getParent().getParent().isLoop();
+				AbstractCodeFragment f1 = fragment1;
+				while(f1.getParent() != null && f1.getParent().getParent() != null) {
+					if(f1.getParent().isLoop() || f1.getParent().getParent().isLoop()) {
+						fragment1NestedUnderLoop = true;
+						break;
+					}
+					f1 = f1.getParent();
 				}
 				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment1IsInsideIfElseIf = false;
 					if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
-						boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
-						boolean isWithinElseIfBranch = false;
-						if(fragment1.getParent().getParent().getParent() != null) {
-							isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
-						}
-						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment1.getParent().getParent())) {
+						//boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						//boolean isWithinElseIfBranch = false;
+						//if(fragment1.getParent().getParent().getParent() != null) {
+						//	isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
+						//}
+						if(isWithinIfBranch && (hasElseBranch(fragment1.getParent().getParent()) || hasElseIfBranch(fragment1.getParent().getParent()))) {
 							fragment1IsInsideIfElseIf = true;
 						}
 					}
@@ -4495,19 +4471,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeFragment fragment2 = mappingSet.first().getFragment2();
 				boolean ifElseIfChainNestedUnderLoop = nestedUnderLoop(map.keySet());
 				boolean fragment2NestedUnderLoop = false;
-				if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
-					fragment2NestedUnderLoop = fragment2.getParent().isLoop() || fragment2.getParent().getParent().isLoop();
+				AbstractCodeFragment f2 = fragment2;
+				while(f2.getParent() != null && f2.getParent().getParent() != null) {
+					if(f2.getParent().isLoop() || f2.getParent().getParent().isLoop()) {
+						fragment2NestedUnderLoop = true;
+						break;
+					}
+					f2 = f2.getParent();
 				}
 				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment2IsInsideIfElseIf = false;
 					if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
 						boolean isWithinIfBranch = isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
-						boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
-						boolean isWithinElseIfBranch = false;
-						if(fragment2.getParent().getParent().getParent() != null) {
-							isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
-						}
-						if(isWithinIfBranch && !isWithinElseIfBranch && hasElseBranch(fragment2.getParent().getParent())) {
+						//boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						//boolean isWithinElseIfBranch = false;
+						//if(fragment2.getParent().getParent().getParent() != null) {
+						//	isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
+						//}
+						if(isWithinIfBranch && (hasElseBranch(fragment2.getParent().getParent()) || hasElseIfBranch(fragment2.getParent().getParent()))) {
 							fragment2IsInsideIfElseIf = true;
 						}
 					}
@@ -4549,8 +4530,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(ifParents.size() > 0) {
 			CompositeStatementObject firstParent = ifParents.get(0);
-			if(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
-				return firstParent.getParent().isLoop() || firstParent.getParent().getParent().isLoop();
+			while(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
+				if(firstParent.getParent().isLoop() || firstParent.getParent().getParent().isLoop()) {
+					return true;
+				}
+				firstParent = firstParent.getParent();
 			}
 		}
 		return false;

@@ -2,10 +2,10 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.Comparator;
 
-public class ScopedLeafMappingComparator implements Comparator<LeafMapping> {
+public class ScopedLeafMappingComparatorForExtract implements Comparator<LeafMapping> {
 	private AbstractCodeMapping parentMapping;
 	
-	public ScopedLeafMappingComparator(AbstractCodeMapping parentMapping) {
+	public ScopedLeafMappingComparatorForExtract(AbstractCodeMapping parentMapping) {
 		this.parentMapping = parentMapping;
 	}
 

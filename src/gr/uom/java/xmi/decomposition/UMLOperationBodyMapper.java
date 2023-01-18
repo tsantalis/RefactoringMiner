@@ -3435,47 +3435,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						/*
-						boolean identicalDepthAndIndex = false;
-						for(AbstractCodeMapping m : mappingSet) {
-							int index1 = m.getFragment1().getIndex();
-							int index2 = m.getFragment2().getIndex();
-							if(index1 != index2) {
-								//check if parent includes try-catch and adjust the index
-								int catchFinallyBlockCount1 = 0;
-								if(m.getFragment1().getParent() != null) {
-									for(AbstractStatement parentStatement : m.getFragment1().getParent().getStatements()) {
-										if(parentStatement.equals(m.getFragment1())) {
-											break;
-										}
-										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-											catchFinallyBlockCount1++;
-										}
-									}
-								}
-								index1 = index1 - catchFinallyBlockCount1;
-								int catchFinallyBlockCount2 = 0;
-								if(m.getFragment2().getParent() != null) {
-									for(AbstractStatement parentStatement : m.getFragment2().getParent().getStatements()) {
-										if(parentStatement.equals(m.getFragment2())) {
-											break;
-										}
-										if(parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) ||
-												parentStatement.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
-											catchFinallyBlockCount2++;
-										}
-									}
-								}
-								index2 = index2 - catchFinallyBlockCount2;
-							}
-							if(m.getFragment1().getDepth() == m.getFragment2().getDepth() && index1 == index2) {
-								identicalDepthAndIndex = true;
-								break;
-							}
-						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf1.isKeyword();
-						*/
 						boolean codeUnderIfMovedUnderElse = false;
 						if(!leaf1.isKeyword()) {
 							codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
@@ -3756,12 +3715,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean identicalDepthAndIndexForKeywordStatement = identicalDepthAndIndex && leaf2.isKeyword();
-						//boolean codeUnderIfMovedUnderElse = false;
-						//if(!leaf2.isKeyword()) {
-						//	codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
-						//}
-						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall()) || identicalDepthAndIndexForKeywordStatement) && mappings.size() > 0) {
+						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {

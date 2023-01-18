@@ -6,10 +6,12 @@ plugins {
 apply {
     plugin "java"
     plugin "org.jetbrains.intellij"
+    plugin "maven-publish"
+    plugin "signing"
 }
 
 group = "com.github.tsantalis"
-version = "2.3.2"
+version = "2.3.2-SNAPSHOT"
 
 sourceSets {
     main {
@@ -40,7 +42,6 @@ dependencies {
     implementation('com.github.gumtreediff:core:3.0.0') {
         exclude group: 'it.unimi.dsi', module: 'fastutil'
     }
-//    implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
     testImplementation 'junit:junit:4.13.2'
 }
 
@@ -51,4 +52,68 @@ intellij {
     plugins = ["java", "git4idea"]
     updateSinceUntilBuild = true
     buildSearchableOptions.enabled = false
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+publishing {
+    repositories {
+        maven {
+            def releaseRepo = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'refactoring-miner-psi'
+            from components.java
+
+            pom {
+                name = "Refactoring Miner"
+                description = 'RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.'
+                url = 'https://github.com/tsantalis/RefactoringMiner'
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'http://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'tsantalis'
+                        name = 'Nikolaos Tsantalis'
+                        email = 'tsantalis@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+                    developerConnection = 'scm:git:git@github.com:tsantalis/RefactoringMiner.git'
+                    url = 'https://github.com/tsantalis/RefactoringMiner/tree/intellij-psi'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }

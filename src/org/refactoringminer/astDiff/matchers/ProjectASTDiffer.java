@@ -49,6 +49,7 @@ public class ProjectASTDiffer
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList());
 		makeASTDiff(modelDiff.getClassRenameDiffList());
+		makeASTDiff(modelDiff.getClassMoveDiffList());
 		//makeASTDiff(modelDiff.getClassMoveDiffList());
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
@@ -690,6 +691,14 @@ public class ProjectASTDiffer
 		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
 		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
 		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
+		if (srcFieldDeclaration == null || dstFieldDeclaration == null)
+		{
+			System.err.println("Field Declration mapping has not been processed due to null check");
+			System.err.println(srcUMLAttribute);
+			System.err.println(dstUMLAttribute);
+			System.err.println();
+			return;
+		}
 		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
 				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		{

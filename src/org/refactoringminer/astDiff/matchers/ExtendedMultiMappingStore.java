@@ -65,9 +65,12 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		Map<Tree,Tree> monos = new HashMap<>();
 		for (Tree _src : allMappedSrcs())
 		{
-			if (getDsts(_src).size() > 1)
+			Set<Tree> dsts = getDsts(_src);
+			if (dsts.size() > 1)
 				continue;
-			Tree _dst = getDsts(_src).iterator().next();
+			if (dsts.size() == 0)
+				continue;
+			Tree _dst = dsts.iterator().next();
 			if (getSrcs(_dst).size() > 1)
 				continue;
 			monos.put(_src,_dst);

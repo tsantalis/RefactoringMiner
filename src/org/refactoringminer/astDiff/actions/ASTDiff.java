@@ -1,8 +1,6 @@
 package org.refactoringminer.astDiff.actions;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
@@ -28,6 +26,30 @@ public class ASTDiff extends Diff {
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
 		this.multiMappings = mappings;
+	}
+
+	/**
+	 * @return A Set of Subtrees from the src AST which are not mapped
+	 * This is not a getter. It calculates the entire set per each method call
+	 * This method returns all the subtrees (not only the roots), the user might need to group them if all the children of one tree is included
+	 */
+	public Set<Tree> calculateNonMappedSrcSubTrees(){
+		Set<Tree> treeSet = new LinkedHashSet<>();
+		this.src.getRoot().preOrder().forEach(tree -> {if (!getMultiMappings().isSrcMapped(tree)) treeSet.add(tree);});
+		return treeSet;
+	}
+
+
+	/**
+	 * @return A Set of Subtrees from the dst AST which are not mapped
+	 * This is not a getter. It calculates the entire set per each method call
+	 * This method returns all the subtrees (not only the roots), the user might need to group them if all the children of one tree is included
+	 *
+	 */
+	public Set<Tree> calculateNonMappedDstSubTrees(){
+		Set<Tree> treeSet = new LinkedHashSet<>();
+		this.dst.getRoot().preOrder().forEach(tree -> {if (!getMultiMappings().isDstMapped(tree)) treeSet.add(tree);});
+		return treeSet;
 	}
 
 	public ExtendedMultiMappingStore getMultiMappings() {

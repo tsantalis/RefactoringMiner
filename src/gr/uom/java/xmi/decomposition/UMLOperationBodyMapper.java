@@ -407,7 +407,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2, false);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
+				if(!isSplitConditionalExpression(mappings.get(i))) {
+					mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
+				}
+				else {
+					this.mappings.remove(mappings.get(i));
+				}
 			}
 			
 			if(container1.getBodyHashCode() != container2.getBodyHashCode() && containsCallToExtractedMethod) {
@@ -640,6 +645,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean isElseIf1 = isElseIfBranch(mapping.getFragment1(), mapping.getFragment1().getParent());
 			boolean isElseIf2 = isElseIfBranch(mapping.getFragment2(), mapping.getFragment2().getParent());
 			return isElseIf1 != isElseIf2;
+		}
+		return false;
+	}
+
+	private boolean isSplitConditionalExpression(AbstractCodeMapping mapping) {
+		for(Refactoring r : this.refactorings) {
+			if(r instanceof SplitConditionalRefactoring) {
+				SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+				if(split.getOriginalConditional() instanceof CompositeStatementObject) {
+					CompositeStatementObject comp = (CompositeStatementObject)split.getOriginalConditional();
+					if(comp.getExpressions().contains(mapping.getFragment1())) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}

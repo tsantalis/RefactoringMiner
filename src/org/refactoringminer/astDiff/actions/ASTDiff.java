@@ -24,7 +24,7 @@ public class ASTDiff extends Diff {
 	private ExtendedMultiMappingStore multiMappings;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
-		super(src, dst, null, new EditScript());
+		super(src, dst, mappings.getMonoMappingStore(), new EditScript());
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
 		this.multiMappings = mappings;

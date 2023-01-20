@@ -1,15 +1,17 @@
 package org.refactoringminer.astDiff.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.util.*;
@@ -23,7 +25,9 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 @RunWith(Parameterized.class)
 public class testAllCases {
-
+	private static final String REPOS = "tmp1";
+	private static GitService gitService = new GitServiceImpl();
+	
     @Parameterized.Parameter(0)
     public String repo;
     @Parameterized.Parameter(1)
@@ -40,7 +44,7 @@ public class testAllCases {
         assertEquals(String.format("Failed for the repo : %s, commit : %s , srcFileName: %s",repo,commit,srcFileName),
                 expected,actual);
     }
-    //TODO: This test fetches the commit from URL. Therefore, github-oauth.properties must be valid before the execution of this test.
+
     @Parameterized.Parameters
     public static Iterable<Object[]> initData() throws Exception {
         List<Object[]> allCases = new ArrayList<>();
@@ -48,7 +52,10 @@ public class testAllCases {
         String jsonFile = getTestDir() + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         for (CaseInfo info : infos) {
-            Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
+            //Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
+        	String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
+        	Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
+        	Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
             for (ASTDiff astDiff : astDiffs) {
                 String finalFilePath = getFinalFilePath(astDiff, getTestDir(), info.getRepo(), info.getCommit());
                 String calculated = astDiff.getMultiMappings().exportString();
@@ -58,6 +65,4 @@ public class testAllCases {
         }
         return allCases;
     }
-
-
 }

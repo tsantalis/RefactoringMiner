@@ -2,9 +2,7 @@ package org.refactoringminer.astDiff.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.actions.ASTDiff;
-import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
@@ -19,6 +17,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.getTestDir;
 
 public class AddCase {
+
     public static void main(String[] args) {
         if (args.length == 2) {
             String repo = args[0];
@@ -40,11 +39,13 @@ public class AddCase {
         if (args.length == 0)
             System.err.println("No input were given");
     }
+
     private static void addTestCase(String url) throws IOException {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
         addTestCase(repo,commit);
     }
+
     private static void addTestCase(String repo, String commit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonFile = getTestDir() + getTestInfoFile();
@@ -78,9 +79,8 @@ public class AddCase {
                 throw new RuntimeException(e);
             }
         }
-        else{
+        else {
             System.err.println("Nothing updated");
         }
     }
 }
-

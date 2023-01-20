@@ -254,6 +254,7 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 						MappingExportModel::getFirstPos)
 						.thenComparing(exportModel -> -1 * exportModel.getFirstEndPos())
 						.thenComparing(MappingExportModel::getFirstType)
+						.thenComparing(MappingExportModel::getSecondPos)
 		);
 		return exportList;
 	}

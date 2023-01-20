@@ -2,10 +2,8 @@ package org.refactoringminer.astDiff.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.refactoringminer.astDiff.utils.URLHelper;
 
 import org.apache.commons.io.FileUtils;
-import org.refactoringminer.astDiff.utils.CaseInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +13,13 @@ import java.util.Scanner;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 public class RemoveCase {
+
     public static void main(String[] args) {
         if (args.length == 2) {
             String repo = args[0];
             String commit = args[1];
             try {
-                RemoveTestCase(repo, commit);
+                removeTestCase(repo, commit);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -28,7 +27,7 @@ public class RemoveCase {
         if (args.length == 1) {
             String url = args[0];
             try {
-                RemoveTestCase(url);
+                removeTestCase(url);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -36,12 +35,14 @@ public class RemoveCase {
         if (args.length == 0)
             System.err.println("No input were given");
     }
-    private static void RemoveTestCase(String url) throws IOException {
+
+    private static void removeTestCase(String url) throws IOException {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
-        RemoveTestCase(repo,commit);
+        removeTestCase(repo,commit);
     }
-    private static void RemoveTestCase(String repo, String commit) throws IOException {
+
+    private static void removeTestCase(String repo, String commit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonFile = getTestDir() + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
@@ -69,7 +70,7 @@ public class RemoveCase {
                 throw new RuntimeException(e);
             }
         }
-        else{
+        else {
             System.err.println("Nothing removed");
         }
     }

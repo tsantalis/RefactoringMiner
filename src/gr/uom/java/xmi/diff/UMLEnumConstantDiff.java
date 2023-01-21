@@ -103,6 +103,18 @@ public class UMLEnumConstantDiff {
 		}
 		return refactorings;
 	}
+	
+	public Set<Refactoring> getRefactorings(Set<CandidateAttributeRefactoring> set) {
+		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+		RenameAttributeRefactoring rename = null;
+		if(isRenamed()) {
+			rename = new RenameAttributeRefactoring(removedEnumConstant, addedEnumConstant, set);
+			refactorings.add(rename);
+		}
+		refactorings.addAll(this.refactorings);
+		refactorings.addAll(getAnnotationRefactorings());
+		return refactorings;
+	}
 
 	public Set<Refactoring> getRefactorings() {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();

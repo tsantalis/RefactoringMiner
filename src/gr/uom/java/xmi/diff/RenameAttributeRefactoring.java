@@ -22,8 +22,8 @@ public class RenameAttributeRefactoring implements Refactoring {
 			Set<CandidateAttributeRefactoring> attributeRenames) {
 		this.originalAttribute = originalAttribute;
 		this.renamedAttribute = renamedAttribute;
-		this.classNameBefore = originalAttribute.getClassName();;
-		this.classNameAfter = renamedAttribute.getClassName();;
+		this.classNameBefore = originalAttribute.getClassName();
+		this.classNameAfter = renamedAttribute.getClassName();
 		this.attributeRenames = attributeRenames;
 	}
 

@@ -422,14 +422,27 @@ public abstract class UMLAbstractClassDiff {
 								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(renameMap, pattern)) &&
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
 								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings)) {
-							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
-							if(!attributeDiffList.contains(attributeDiff)) {
-								attributeDiffList.add(attributeDiff);
+							if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
+								UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, this, modelDiff);
+								if(!enumConstantDiffList.contains(enumConstantDiff)) {
+									enumConstantDiffList.add(enumConstantDiff);
+								}
+								Set<Refactoring> enumConstantDiffRefactorings = enumConstantDiff.getRefactorings(set);
+								if(!refactorings.containsAll(enumConstantDiffRefactorings)) {
+									refactorings.addAll(enumConstantDiffRefactorings);
+									break;//it's not necessary to repeat the same process for all candidates in the set
+								}
 							}
-							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
-							if(!refactorings.containsAll(attributeDiffRefactorings)) {
-								refactorings.addAll(attributeDiffRefactorings);
-								break;//it's not necessary to repeat the same process for all candidates in the set
+							else {
+								UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
+								if(!attributeDiffList.contains(attributeDiff)) {
+									attributeDiffList.add(attributeDiff);
+								}
+								Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+								if(!refactorings.containsAll(attributeDiffRefactorings)) {
+									refactorings.addAll(attributeDiffRefactorings);
+									break;//it's not necessary to repeat the same process for all candidates in the set
+								}
 							}
 						}
 					}

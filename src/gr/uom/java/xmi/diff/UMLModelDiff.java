@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLClassMatcher;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.UMLClassMatcher.Rename;
+import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLGeneralization;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
@@ -2075,14 +2076,40 @@ public class UMLModelDiff {
 						if(!diff.getOriginalClass().containsAttributeWithName(pattern.getAfter()) &&
 								!diff.getNextClass().containsAttributeWithName(pattern.getBefore()) &&
 								!attributeMerged(a1, a2, refactorings)) {
-							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff, this);
-							if(!movedAttributeDiffList.contains(attributeDiff)) {
-								movedAttributeDiffList.add(attributeDiff);
+							if(innerClassMoveDiffList.contains(diff)) {
+								if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
+									UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, diff, this);
+									if(!diff.getEnumConstantDiffList().contains(enumConstantDiff)) {
+										diff.getEnumConstantDiffList().add(enumConstantDiff);
+									}
+									Set<Refactoring> enumConstantDiffRefactorings = enumConstantDiff.getRefactorings(set);
+									if(!refactorings.containsAll(enumConstantDiffRefactorings)) {
+										refactorings.addAll(enumConstantDiffRefactorings);
+										break;//it's not necessary to repeat the same process for all candidates in the set
+									}
+								}
+								else {
+									UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff, this);
+									if(!diff.getAttributeDiffList().contains(attributeDiff)) {
+										diff.getAttributeDiffList().add(attributeDiff);
+									}
+									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+									if(!refactorings.containsAll(attributeDiffRefactorings)) {
+										refactorings.addAll(attributeDiffRefactorings);
+										break;//it's not necessary to repeat the same process for all candidates in the set
+									}
+								}
 							}
-							Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
-							if(!refactorings.containsAll(attributeDiffRefactorings)) {
-								refactorings.addAll(attributeDiffRefactorings);
-								break;//it's not necessary to repeat the same process for all candidates in the set
+							else {
+								UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, diff, this);
+								if(!movedAttributeDiffList.contains(attributeDiff) && !a1.getClassName().equals(a2.getClassName())) {
+									movedAttributeDiffList.add(attributeDiff);
+								}
+								Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+								if(!refactorings.containsAll(attributeDiffRefactorings)) {
+									refactorings.addAll(attributeDiffRefactorings);
+									break;//it's not necessary to repeat the same process for all candidates in the set
+								}
 							}
 						}
 					}

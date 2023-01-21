@@ -10,7 +10,6 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
@@ -50,7 +49,7 @@ public class ProjectASTDiffer
 		makeASTDiff(modelDiff.getCommonClassDiffList());
 		makeASTDiff(modelDiff.getClassRenameDiffList());
 		makeASTDiff(modelDiff.getClassMoveDiffList());
-		//makeASTDiff(modelDiff.getClassMoveDiffList());
+		makeASTDiff(modelDiff.getInnerClassMoveDiffList());
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
@@ -101,14 +100,6 @@ public class ProjectASTDiffer
 		processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
 		processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
-		for (UMLEnumConstantDiff umlEnumConstantDiff : classDiff.getEnumConstantDiffList()) {
-			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().isPresent() ? umlEnumConstantDiff.getAnonymousClassDiff().get() : null;
-			assert anonymousClassDiff != null;
-			List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
-			for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
-				processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
-			}
-		}
 		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processRefactorings(srcTree,dstTree,classDiff.getRefactorings(),mappingStore);
@@ -133,8 +124,6 @@ public class ProjectASTDiffer
 				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstAttrPath).getRoot();
 				processFieldDeclarationByAttrDiff(srcTotalTree,dstTotalTree,umlAttributeDiff,mappingStore);
 			}
-
-
 		}
 	}
 
@@ -509,11 +498,11 @@ public class ProjectASTDiffer
 //				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
-				//ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-				//AbstractExpression initializer = extractVariableRefactoring.getVariableDeclaration().getInitializer();
-				//for (AbstractCodeMapping reference : extractVariableRefactoring.getReferences()) {
-				//
-				//}
+				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
+					//processLeafMapping(srcTree, dstTree, mapping, mappingStore);
+					lastStepMappings.add(mapping);
+				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)
 			{
@@ -595,7 +584,11 @@ public class ProjectASTDiffer
 		{
 			processFieldDeclarationByAttrDiff(srcTree,dstTree,umlAttributeDiff,mappingStore);
 		}
-
+		List<UMLEnumConstantDiff> enumConstantDiffList = classDiff.getEnumConstantDiffList();
+		for (UMLEnumConstantDiff enumConstantDiff : enumConstantDiffList)
+		{
+			processFieldDeclarationByEnumConstantDiff(srcTree,dstTree,enumConstantDiff,mappingStore);
+		}
 	}
 
 	private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
@@ -607,6 +600,16 @@ public class ProjectASTDiffer
 		}
 	}
 
+	private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
+		processFieldDeclaration(srcTree,dstTree,umlEnumConstantDiff.getRemovedEnumConstant(),umlEnumConstantDiff.getAddedEnumConstant(),mappingStore);
+		if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
+			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
+			List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
+			for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
+				processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
+			}
+		}
+	}
 
 	private List<Pair<UMLAttribute, UMLAttribute>> findMatchedAttributesPair(UMLClassBaseDiff classDiff) {
 		List<Pair<UMLAttribute,UMLAttribute>> pairs = new ArrayList<>();
@@ -635,13 +638,13 @@ public class ProjectASTDiffer
 		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
 		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
 		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
-		if (srcFieldDeclaration == null || dstFieldDeclaration == null)
+		if (srcFieldDeclaration == null)
 		{
-			System.err.println("Field Declration mapping has not been processed due to null check");
-			System.err.println(srcUMLAttribute);
-			System.err.println(dstUMLAttribute);
-			System.err.println();
-			return;
+			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.ENUM_CONSTANT_DECLARATION);
+		}
+		if (dstFieldDeclaration == null)
+		{
+			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.ENUM_CONSTANT_DECLARATION);
 		}
 		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
 				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))

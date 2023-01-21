@@ -23,6 +23,7 @@ public class Constants {
 	public static final String PRIMITIVE_TYPE = "PrimitiveType";
 	public static final String TYPE_DECLARATION = "TypeDeclaration";
 	public static final String ENUM_DECLARATION = "EnumDeclaration";
+	public static final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
 
 	// AST node property labels
 	public static final String ASSIGNMENT_OPERATOR = "ASSIGNMENT_OPERATOR";

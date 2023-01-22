@@ -135,6 +135,9 @@ public class OperationBody {
 						AbstractExpression abstractExpression = new AbstractExpression(cu, filePath, initializer, CodeElementType.FOR_STATEMENT_INITIALIZER, container);
 						child.addExpression(abstractExpression);
 						VariableDeclaration vd = new VariableDeclaration(cu, filePath, localVariable, container);
+						if(!abstractExpression.getVariableDeclarations().contains(vd)) {
+							abstractExpression.getVariableDeclarations().add(vd);
+						}
 						child.addVariableDeclaration(vd);
 					}
 				}

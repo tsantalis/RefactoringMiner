@@ -59,7 +59,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/JetBrains/intellij-plugins.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/dropwizard/metrics.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/google/guava.git", 10, 0, 0);
-        processRepositoryCommits("https://github.com/apache/giraph.git", 45, 3, 0);
+        processRepositoryCommits("https://github.com/apache/giraph.git", 46, 3, 0);
         processRepositoryCommits("https://github.com/siacs/Conversations.git", 11, 0, 6);
         processRepositoryCommits("https://github.com/Netflix/genie.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/eclipse/vert.x.git", 38, 0, 15);
@@ -90,9 +90,9 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/codinguser/gnucash-android.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-data-jpa.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/loopj/android-async-http.git", 1, 0, 0);
-        processRepositoryCommits("https://github.com/datastax/java-driver.git", 29, 0, 3);
+        processRepositoryCommits("https://github.com/datastax/java-driver.git", 30, 0, 3);
         processRepositoryCommits("https://github.com/SimonVT/schematic.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/jfinal/jfinal.git", 240, 0, 13);
+        processRepositoryCommits("https://github.com/jfinal/jfinal.git", 245, 0, 13);
         processRepositoryCommits("https://github.com/oblac/jodd.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/realm/realm-java.git", 14, 0, 0);
         processRepositoryCommits("https://github.com/bennidi/mbassador.git", 16, 0, 0);
@@ -143,7 +143,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/bitcoinj/bitcoinj.git", 134, 0, 5);
         processRepositoryCommits("https://github.com/facebook/presto.git", 305, 0, 0);
         processRepositoryCommits("https://github.com/deeplearning4j/deeplearning4j.git", 13, 0, 1);
-        processRepositoryCommits("https://github.com/crate/crate.git", 167, 0, 1);
+        processRepositoryCommits("https://github.com/crate/crate.git", 168, 0, 1);
         processRepositoryCommits("https://github.com/libgdx/libgdx.git", 2, 0, 0);
         processRepositoryCommits("https://github.com/hibernate/hibernate-orm.git", 99, 0, 0);
         processRepositoryCommits("https://github.com/Netflix/zuul.git", 6, 1, 0);

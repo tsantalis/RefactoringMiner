@@ -35,6 +35,7 @@ public class Constants {
 	 * 	See {@link com.intellij.psi.PsiClass#isEnum}.
 	 */
 	public static final String ENUM_DECLARATION = "PsiClass";
+	public static final String ENUM_CONSTANT_DECLARATION = "PsiEnumConstant";
 
 	// PSI node property labels
 	/**

@@ -10,7 +10,6 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
-import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
@@ -49,7 +48,8 @@ public class ProjectASTDiffer
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList());
 		makeASTDiff(modelDiff.getClassRenameDiffList());
-		//makeASTDiff(modelDiff.getClassMoveDiffList());
+		makeASTDiff(modelDiff.getClassMoveDiffList());
+		makeASTDiff(modelDiff.getInnerClassMoveDiffList());
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
@@ -100,14 +100,6 @@ public class ProjectASTDiffer
 		processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
 		processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
-		for (UMLEnumConstantDiff umlEnumConstantDiff : classDiff.getEnumConstantDiffList()) {
-			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().isPresent() ? umlEnumConstantDiff.getAnonymousClassDiff().get() : null;
-			assert anonymousClassDiff != null;
-			List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
-			for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
-				processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
-			}
-		}
 		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processRefactorings(srcTree,dstTree,classDiff.getRefactorings(),mappingStore);
@@ -132,8 +124,6 @@ public class ProjectASTDiffer
 				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstAttrPath).getRoot();
 				processFieldDeclarationByAttrDiff(srcTotalTree,dstTotalTree,umlAttributeDiff,mappingStore);
 			}
-
-
 		}
 	}
 
@@ -163,84 +153,28 @@ public class ProjectASTDiffer
 			List<String> beforeRefactoringClasses = refactoring.getInvolvedClassesBeforeRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
 			List<String> afterRefactoringClasses = refactoring.getInvolvedClassesAfterRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
 			if (refactoring instanceof MoveOperationRefactoring) {
-				MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) refactoring;
-				String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-				String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
+				{
+					MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) refactoring;
+					String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
+					String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
+				}
 			}
-//			if (refactoring instanceof MoveAttributeRefactoring)
-//			{
-//				MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
-//
-//				String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-//				String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-//				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-//				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-//				processFieldDeclaration(srcTotalTree,dstTotalTree,moveAttributeRefactoring.getOriginalAttribute(),moveAttributeRefactoring.getMovedAttribute(),mappingStore);
-//			}
-			if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()))
+			if (refactoring instanceof MoveAttributeRefactoring)
 			{
-				if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
 				{
-					PushDownOperationRefactoring pushDownOperationRefactoring = (PushDownOperationRefactoring) refactoring;
-					String otherFileName = pushDownOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(otherFileTree,dstTree,pushDownOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
-				{
-					PullUpOperationRefactoring pullUpOperationRefactoring = (PullUpOperationRefactoring) refactoring;
-					String otherFileName = pullUpOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(otherFileTree,dstTree,pullUpOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_ATTRIBUTE))
-				{
-					PushDownAttributeRefactoring pushDownAttributeRefactoring = (PushDownAttributeRefactoring) refactoring;
-					String otherFileName = pushDownAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(otherFileTree,dstTree,pushDownAttributeRefactoring.getOriginalAttribute(),pushDownAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE))
-				{
-					PullUpAttributeRefactoring pullUpAttributeRefactoring = (PullUpAttributeRefactoring) refactoring;
-					String otherFileName = pullUpAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getParentModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(otherFileTree,dstTree,pullUpAttributeRefactoring.getOriginalAttribute(),pullUpAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-
-			}
-			else if (beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
-			{
-				if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_OPERATION))
-				{
-					PushDownOperationRefactoring pushDownOperationRefactoring = (PushDownOperationRefactoring) refactoring;
-					String otherFileName = pushDownOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(srcTree,otherFileTree,pushDownOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_OPERATION))
-				{
-					PullUpOperationRefactoring pullUpOperationRefactoring = (PullUpOperationRefactoring) refactoring;
-					String otherFileName = pullUpOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processMethod(srcTree,otherFileTree,pullUpOperationRefactoring.getBodyMapper(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PUSH_DOWN_ATTRIBUTE))
-				{
-					PushDownAttributeRefactoring pushDownAttributeRefactoring = (PushDownAttributeRefactoring) refactoring;
-					String otherFileName = pushDownAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(srcTree,otherFileTree,pushDownAttributeRefactoring.getOriginalAttribute(),pushDownAttributeRefactoring.getMovedAttribute(),mappingStore);
-				}
-				else if (refactoring.getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE))
-				{
-					PullUpAttributeRefactoring pullUpAttributeRefactoring = (PullUpAttributeRefactoring) refactoring;
-					String otherFileName = pullUpAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-					Tree otherFileTree = modelDiff.getChildModel().getTreeContextMap().get(otherFileName).getRoot();
-					processFieldDeclaration(srcTree,otherFileTree,pullUpAttributeRefactoring.getOriginalAttribute(),pullUpAttributeRefactoring.getMovedAttribute(),mappingStore);
+					MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
+					String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
+					String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
 				}
 			}
 		}
@@ -564,11 +498,11 @@ public class ProjectASTDiffer
 //				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
-				//ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-				//AbstractExpression initializer = extractVariableRefactoring.getVariableDeclaration().getInitializer();
-				//for (AbstractCodeMapping reference : extractVariableRefactoring.getReferences()) {
-				//
-				//}
+				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
+					//processLeafMapping(srcTree, dstTree, mapping, mappingStore);
+					lastStepMappings.add(mapping);
+				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)
 			{
@@ -585,8 +519,8 @@ public class ProjectASTDiffer
 					Tree srcVariableType =TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getType().getLocationInfo());
 					List<Tree> srcChildrenList = srcVariableDeclaration.getChildren();
 					Tree srcVarName = srcChildrenList.get(srcChildrenList.size() - 1);
-					//mappingStore.addMapping(srcVariableDeclaration,dstVariableDeclaration);
-					mappingStore.addMapping(srcVariableType,dstVariableType.getChild(0));
+//					mappingStore.addMapping(srcVariableDeclaration,dstVariableDeclaration);
+//					mappingStore.addMapping(srcVariableType,dstVariableType.getChild(0));
 					mappingStore.addMapping(srcVarName,dstVarName);
 				}
 			}
@@ -650,7 +584,11 @@ public class ProjectASTDiffer
 		{
 			processFieldDeclarationByAttrDiff(srcTree,dstTree,umlAttributeDiff,mappingStore);
 		}
-
+		List<UMLEnumConstantDiff> enumConstantDiffList = classDiff.getEnumConstantDiffList();
+		for (UMLEnumConstantDiff enumConstantDiff : enumConstantDiffList)
+		{
+			processFieldDeclarationByEnumConstantDiff(srcTree,dstTree,enumConstantDiff,mappingStore);
+		}
 	}
 
 	private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
@@ -662,6 +600,16 @@ public class ProjectASTDiffer
 		}
 	}
 
+	private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
+		processFieldDeclaration(srcTree,dstTree,umlEnumConstantDiff.getRemovedEnumConstant(),umlEnumConstantDiff.getAddedEnumConstant(),mappingStore);
+		if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
+			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
+			List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
+			for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
+				processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
+			}
+		}
+	}
 
 	private List<Pair<UMLAttribute, UMLAttribute>> findMatchedAttributesPair(UMLClassBaseDiff classDiff) {
 		List<Pair<UMLAttribute,UMLAttribute>> pairs = new ArrayList<>();
@@ -690,6 +638,14 @@ public class ProjectASTDiffer
 		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
 		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
 		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
+		if (srcFieldDeclaration == null)
+		{
+			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.ENUM_CONSTANT_DECLARATION);
+		}
+		if (dstFieldDeclaration == null)
+		{
+			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.ENUM_CONSTANT_DECLARATION);
+		}
 		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
 				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		{

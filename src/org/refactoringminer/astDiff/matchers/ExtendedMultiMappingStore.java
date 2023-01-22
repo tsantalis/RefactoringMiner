@@ -65,9 +65,12 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		Map<Tree,Tree> monos = new HashMap<>();
 		for (Tree _src : allMappedSrcs())
 		{
-			if (getDsts(_src).size() > 1)
+			Set<Tree> dsts = getDsts(_src);
+			if (dsts.size() > 1)
 				continue;
-			Tree _dst = getDsts(_src).iterator().next();
+			if (dsts.size() == 0)
+				continue;
+			Tree _dst = dsts.iterator().next();
 			if (getSrcs(_dst).size() > 1)
 				continue;
 			monos.put(_src,_dst);
@@ -232,25 +235,30 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
 	public List<MappingExportModel> exportModelList() {
 		List<MappingExportModel> exportList = new ArrayList<>();
-		for (Mapping mapping : new ArrayList<>(getMappings())) {
+		for (Mapping mapping : getMappings()) {
 			MappingExportModel mappingExportModel = new MappingExportModel(
 					mapping.first.getType().name,
 					mapping.first.getLabel(),
 					mapping.first.getPos(),
 					mapping.first.getEndPos(),
 					mapping.first.hashCode(),
+					(mapping.first.getParent() == null) ? "" : mapping.first.getParent().getType().name,
 					mapping.second.getType().name,
-					mapping.first.getLabel(),
-					mapping.first.getPos(),
-					mapping.first.getEndPos(),
-					mapping.second.hashCode()
+					mapping.second.getLabel(),
+					mapping.second.getPos(),
+					mapping.second.getEndPos(),
+					mapping.second.hashCode(),
+					(mapping.second.getParent() == null) ? "" : mapping.second.getParent().getType().name
 					);
 			exportList.add(mappingExportModel);
 		}
 		exportList.sort(
-				(MappingExportModel m1, MappingExportModel m2) ->
-				Integer.compare(m1.getFirstHash() * m1.getSecondHash(), m2.firstHash * m2.getSecondHash())
-				);
+				Comparator.comparing(
+						MappingExportModel::getFirstPos)
+						.thenComparing(exportModel -> -1 * exportModel.getFirstEndPos())
+						.thenComparing(MappingExportModel::getFirstType)
+						.thenComparing(MappingExportModel::getSecondPos)
+		);
 		return exportList;
 	}
 
@@ -267,12 +275,13 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	}
 
 	public static class MappingExportModel implements Serializable {
-		String firstType,secondType,firstLabel,secondLabel;
+		String firstType,secondType,firstLabel,secondLabel,firstParentType,secondParentType;
 		int firstPos,secondPos,firstEndPos,secondEndPos;
 		@JsonIgnore
 		int firstHash,secondHash;
 
-		public MappingExportModel(String firstType, String firstLabel,int firstPos,int firstEndPos, int firstHash,String secondType, String secondLabel, int secondPos, int secondEndPos, int secondHash) {
+		public MappingExportModel(String firstType, String firstLabel,int firstPos,int firstEndPos, int firstHash, String firstParentType,
+								  String secondType, String secondLabel, int secondPos, int secondEndPos, int secondHash, String secondParentType) {
 			this.firstType = firstType;
 			this.secondType = secondType;
 			this.firstLabel = firstLabel;
@@ -283,6 +292,8 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 			this.secondEndPos = secondEndPos;
 			this.firstHash = firstHash;
 			this.secondHash = secondHash;
+			this.firstParentType = firstParentType;
+			this.secondParentType = secondParentType;
 		}
 
 		public int getFirstHash() {
@@ -363,6 +374,22 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 
 		public void setSecondEndPos(int secondEndPos) {
 			this.secondEndPos = secondEndPos;
+		}
+
+		public String getFirstParentType() {
+			return firstParentType;
+		}
+
+		public void setFirstParentType(String firstParentType) {
+			this.firstParentType = firstParentType;
+		}
+
+		public String getSecondParentType() {
+			return secondParentType;
+		}
+
+		public void setSecondParentType(String secondParentType) {
+			this.secondParentType = secondParentType;
 		}
 	}
 }

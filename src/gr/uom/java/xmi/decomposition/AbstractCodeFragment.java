@@ -1,12 +1,14 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
@@ -63,80 +65,96 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract VariableDeclaration getVariableDeclaration(String variableName);
 
 	public List<LeafExpression> findExpression(String s) {
+		Set<LocationInfo> locations = new HashSet<>();
 		List<LeafExpression> matchingExpressions = new ArrayList<>();
 		for(LeafExpression expression : getVariables()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getMethodInvocations()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getStringLiterals()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getNumberLiterals()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getNullLiterals()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getBooleanLiterals()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getTypeLiterals()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getCreations()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getInfixExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getArrayAccesses()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getPrefixExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getPostfixExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getThisExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
-			}
-		}
-		for(LeafExpression expression : getArguments()) {
-			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getParenthesizedExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
+		for(LeafExpression expression : getArguments()) {
+			if(expression.getString().equals(s)) {
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 			}
 		}
 		return matchingExpressions;

@@ -416,12 +416,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			
 			if(container1.getBodyHashCode() != container2.getBodyHashCode() && containsCallToExtractedMethod) {
-				for(Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator(); mappingIterator.hasNext();) {
+				for(Iterator<AbstractCodeMapping> mappingIterator = this.mappings.iterator(); mappingIterator.hasNext();) {
 					AbstractCodeMapping mapping = mappingIterator.next();
 					boolean ifChangedToElseIf = false;
 					if(ifBecomingElseIf.contains(mapping)) {
 						int mappedChildrenSize = 0;
-						for(AbstractCodeMapping m : mappings) {
+						for(AbstractCodeMapping m : this.mappings) {
 							if(!mapping.equals(m) && !m.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 									mapping.getFragment1().getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) &&
 									mapping.getFragment2().getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
@@ -442,6 +442,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									break;
 								}
 								if(parent2 instanceof TryStatementObject && parent2.getParent().getParent() == null) {
+									break;
+								}
+								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && parent1.getParent().getParent() == null) {
+									break;
+								}
+								if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && parent2.getParent().getParent() == null) {
 									break;
 								}
 								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) != parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {

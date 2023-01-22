@@ -1420,9 +1420,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+					AbstractCodeFragment fragmentContainingExpression = null;
 					if(oneToManyMappings.containsKey(mapping.getFragment2())) {
 						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
 						oneToManyMappers.get(mapping.getFragment2()).add(childMapper);
+					}
+					else if(mapping.getFragment2() instanceof AbstractExpression &&
+							(fragmentContainingExpression = findFragmentContainingExpression(oneToManyMappings.keySet(), (AbstractExpression)mapping.getFragment2())) != null) {
+						oneToManyMappings.get(fragmentContainingExpression).add(mapping);
+						oneToManyMappers.get(fragmentContainingExpression).add(childMapper);
 					}
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1478,6 +1484,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		addedOperations.removeAll(operationsToBeRemoved);
 	}
 
+	private AbstractCodeFragment findFragmentContainingExpression(Set<AbstractCodeFragment> fragments, AbstractExpression expression) {
+		for(AbstractCodeFragment fragment : fragments) {
+			if(fragment instanceof CompositeStatementObject) {
+				CompositeStatementObject comp = (CompositeStatementObject)fragment;
+				if(comp.getExpressions().contains(expression)) {
+					return fragment;
+				}
+			}
+		}
+		return null;
+	}
+
 	private boolean subexpressionOverlap(List<AbstractCodeMapping> mappings, AbstractCodeMapping newMapping) {
 		for(AbstractCodeMapping previousMapping : mappings) {
 			AbstractCodeFragment previousFragment2 = previousMapping.getFragment2();
@@ -1500,11 +1518,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 				for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+					AbstractCodeFragment fragmentContainingExpression = null;
 					if(oneToManyMappings.containsKey(mapping.getFragment1())) {
 						if(!subexpressionOverlap(oneToManyMappings.get(mapping.getFragment1()), mapping)) {
 							oneToManyMappings.get(mapping.getFragment1()).add(mapping);
 							oneToManyMappers.get(mapping.getFragment1()).add(childMapper);
 						}
+					}
+					else if(mapping.getFragment1() instanceof AbstractExpression &&
+							(fragmentContainingExpression = findFragmentContainingExpression(oneToManyMappings.keySet(), (AbstractExpression)mapping.getFragment1())) != null) {
+						oneToManyMappings.get(fragmentContainingExpression).add(mapping);
+						oneToManyMappers.get(fragmentContainingExpression).add(childMapper);
 					}
 					else {
 						List<AbstractCodeMapping> mappings = new ArrayList<>();
@@ -1579,6 +1603,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					identicalStatementsForCompositeMappings.add(identicalStatements);
+				}
+				else {
+					identicalStatementsForCompositeMappings.add(0);
 				}
 				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));

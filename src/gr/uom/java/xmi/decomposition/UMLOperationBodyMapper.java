@@ -481,7 +481,44 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										!isElseBranch(child1, parent1) && !isElseBranch(child2, parent2) &&
 										!isTryBranch(child1, parent1) && !isTryBranch(child2, parent2) &&
 										!ifAddingElseIf(parent1.getParent()) && !ifAddingElseIf(parent2.getParent())) {
-									unmatchedParent = true;
+									boolean additionalVariableDeclarationStatements = false;
+									if(indexOfChildInParent1 > indexOfChildInParent2) {
+										int referencedVariableDeclarationStatements = 0;
+										for(int i=0; i<indexOfChildInParent1; i++) {
+											AbstractStatement statement = parent1.getStatements().get(i);
+											if(statement.getVariableDeclarations().size() > 0) {
+												for(LeafExpression variableReference : child1.getVariables()) {
+													if(statement.getVariableDeclarations().get(0).getVariableName().equals(variableReference.getString())) {
+														referencedVariableDeclarationStatements++;
+														break;
+													}
+												}
+											}
+										}
+										if(referencedVariableDeclarationStatements == Math.abs(indexOfChildInParent1 - indexOfChildInParent2)) {
+											additionalVariableDeclarationStatements = true;
+										}
+									}
+									else if(indexOfChildInParent2 > indexOfChildInParent1) {
+										int referencedVariableDeclarationStatements = 0;
+										for(int i=0; i<indexOfChildInParent2; i++) {
+											AbstractStatement statement = parent2.getStatements().get(i);
+											if(statement.getVariableDeclarations().size() > 0) {
+												for(LeafExpression variableReference : child2.getVariables()) {
+													if(statement.getVariableDeclarations().get(0).getVariableName().equals(variableReference.getString())) {
+														referencedVariableDeclarationStatements++;
+														break;
+													}
+												}
+											}
+										}
+										if(referencedVariableDeclarationStatements == Math.abs(indexOfChildInParent1 - indexOfChildInParent2)) {
+											additionalVariableDeclarationStatements = true;
+										}
+									}
+									if(!additionalVariableDeclarationStatements) {
+										unmatchedParent = true;
+									}
 								}
 								break;
 							}

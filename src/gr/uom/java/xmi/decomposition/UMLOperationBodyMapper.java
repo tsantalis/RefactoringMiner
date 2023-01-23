@@ -9686,6 +9686,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			for(Refactoring r : this.refactorings) {
+				if(r instanceof ExtractVariableRefactoring) {
+					ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+					AbstractExpression initializer = extract.getVariableDeclaration().getInitializer();
+					if(initializer != null && initializer.getString().equals(replacement.getBefore())) {
+						skip = true;
+						break;
+					}
+				}
+			}
 			if(!skip) {
 				types.add(replacement.getType());
 			}

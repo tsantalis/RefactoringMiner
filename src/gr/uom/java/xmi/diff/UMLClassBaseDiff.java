@@ -1667,6 +1667,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								skip = true;
 							}
 						}
+						if(parentIsContainerBody.get(i) == true && editDistances.get(i).equals(editDistances.get(parentMappingFound.indexOf(true))) &&
+								!mappings.get(i).getFragment1().getString().startsWith("return ") && !mappings.get(i).getFragment2().getString().startsWith("return ")) {
+							skip = true;
+						}
 						if(!skip) {
 							indicesToBeRemoved.add(i);
 						}

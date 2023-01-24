@@ -1,5 +1,8 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+import static gr.uom.java.xmi.decomposition.Visitor.METHOD_SIGNATURE_PATTERN;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,10 +10,12 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -18,8 +23,10 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
+import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -589,6 +596,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(removedOperations.size() <= addedOperations.size()) {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
+				if(isCommentedOut(removedOperation)) {
+					continue;
+				}
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
@@ -704,6 +714,86 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean isCommentedOut(UMLOperation removedOperation) {
+		List<UMLComment> nextClassComments = nextClass.getComments();
+		for(UMLComment nextClassComment : nextClassComments) {
+			String comment = nextClassComment.getText();
+			boolean commentedOut = false;
+			Scanner scanner = new Scanner(comment);
+			int openCurlyBrackets = 0;
+			int closeCurlyBrackets = 0;
+			String methodSignature = null;
+			int bodyStartOffset = -1;
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				if(line.contains("/*")) {
+					line = line.replace("/*", "");
+				}
+				if(line.contains("//")) {
+					line = line.replace("//", "");
+				}
+				line = line.trim();
+				if(METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {
+					//method signature starts
+					methodSignature = line;
+					openCurlyBrackets = 0;
+					closeCurlyBrackets = 0;
+				}
+				for(int i=0; i<line.length(); i++) {
+					if(line.charAt(i) == '{') {
+						if(methodSignature != null && openCurlyBrackets == 0) {
+							int indexOfSignature = comment.indexOf(methodSignature);
+							String commentSubString = comment.substring(indexOfSignature, comment.length());
+							int indexOfOpenCurlyBracket = commentSubString.indexOf("{");
+							bodyStartOffset = indexOfSignature + indexOfOpenCurlyBracket;
+						}
+						openCurlyBrackets++;
+					}
+					else if(line.charAt(i) == '}') {
+						closeCurlyBrackets++;
+					}
+				}
+				if(openCurlyBrackets > 0 && openCurlyBrackets == closeCurlyBrackets) {
+					//method ends
+					if(methodSignature != null) {
+						int indexOfSignature = comment.indexOf(methodSignature);
+						String commentSubString = comment.substring(indexOfSignature, comment.length());
+						int indexOfCloseCurlyBracket = -1;
+						int occurrences = 0;
+						for(int i=0; i<commentSubString.length(); i++) {
+							if(commentSubString.charAt(i) == '}') {
+								indexOfCloseCurlyBracket = i;
+								occurrences++;
+								if(occurrences == closeCurlyBrackets) {
+									break;
+								}
+							}
+						}
+						int bodyEndOffset = indexOfSignature + indexOfCloseCurlyBracket;
+						if(bodyStartOffset >= 0 && comment.charAt(bodyStartOffset) == '{' &&
+								bodyEndOffset >= 0 && comment.charAt(bodyEndOffset) == '}') {
+							// +1 to include the closing curly bracket
+							String methodBody = comment.substring(bodyStartOffset, bodyEndOffset + 1);
+							ASTNode methodBodyBlock = UMLModelASTReader.processBlock(methodBody);
+							if(methodBodyBlock != null) {
+								int methodBodyHashCode = stringify(methodBodyBlock).hashCode();
+								if(methodBodyHashCode == removedOperation.getBodyHashCode()) {
+									commentedOut = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+			scanner.close();
+			if(commentedOut) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private Set<MethodInvocationReplacement> getCallReferences(UMLOperation removedOperation, UMLOperation addedOperation) {

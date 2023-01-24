@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.matchers;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
+import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -849,6 +850,16 @@ public class ProjectASTDiffer
 		if (classDiff.getOriginalClass().isEnum()) AST_type = Constants.ENUM_DECLARATION;
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
+		if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null)
+		{
+			if (
+					srcTypeDeclaration.getParent().getType().name.equals(Constants.TYPE_DECLARATION_STATEMENT)
+					&&
+					dstTypeDeclaration.getParent().getType().name.equals(Constants.TYPE_DECLARATION_STATEMENT)
+				)
+				mappingStore.addMapping(srcTypeDeclaration.getParent(),dstTypeDeclaration.getParent());
+		}
+
 		mappingStore.addMapping(srcTypeDeclaration,dstTypeDeclaration);
 		
 		String v1 = classDiff.getOriginalClass().getVisibility().toString();

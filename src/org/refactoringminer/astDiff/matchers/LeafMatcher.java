@@ -28,14 +28,19 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Map<Tree,Tree> srcCopy = new HashMap<>();
 		Map<Tree,Tree> dstCopy = new HashMap<>();
 		Pair<Tree, Tree> prunedPair = pruneTrees(src, dst, srcCopy, dstCopy);
-		//MappingStore match = new GTSimple(0).match(prunedPair.first, prunedPair.second, new MappingStore(prunedPair.first, prunedPair.second));
-		MappingStore match = new CustomGreedy(0,false).match(prunedPair.first,prunedPair.second);
-		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
-		customBottomUpMatcher.match(prunedPair.first,prunedPair.second,match);
-		if (!overwrite)
-			mappingStore.addWithMaps(match,srcCopy,dstCopy);
-		else
-			mappingStore.replaceWithMaps(match,srcCopy,dstCopy);
+		try {
+			MappingStore match = new CustomGreedy(0, false).match(prunedPair.first, prunedPair.second);
+			CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
+			customBottomUpMatcher.match(prunedPair.first, prunedPair.second, match);
+			if (!overwrite)
+				mappingStore.addWithMaps(match, srcCopy, dstCopy);
+			else
+				mappingStore.replaceWithMaps(match, srcCopy, dstCopy);
+		}
+		catch (Exception exception)
+		{
+			System.out.println(exception.getMessage());
+		}
 	}
 
 	public Pair<Tree,Tree> pruneTrees(Tree src, Tree dst, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {

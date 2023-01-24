@@ -286,25 +286,23 @@ public class ProjectASTDiffer
 		LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
 		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
 		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
-
-		//if (leafMapping.getFragment2().toString().equals(leafMapping.getFragment1().toString())) {
-		//	mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
-		//}
-		//else {
-		//	if (srcStatementNode.isIsoStructuralTo(dstStatementNode))
-		//	{
-		//		mappingStore.addMappingRecursively(srcStatementNode,dstStatementNode);
-		//	}
-		//	else
 		{
 			if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
 				mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
-			if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression)
+			if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression) {
 				lastStepMappings.add(abstractCodeMapping);
+			}
 			else
 				new LeafMatcher(false).match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
 		}
+	}
+
+	public void processLeafMatcherForExtractVariables(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+		LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
+		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
+		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
+		new LeafMatcher(false).match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
 	}
 
 	private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {
@@ -500,9 +498,9 @@ public class ProjectASTDiffer
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+				int cc = 0;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
-					processLeafMapping(srcTree, dstTree, mapping, mappingStore);
-//					lastStepMappings.add(mapping);
+					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
 				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)

@@ -6,13 +6,22 @@ public class UtilMethods {
     private static String dir = "src-test/org/refactoringminer/astDiff/data/";
     private static String infoFile = "cases.json";
 
+    private static final String JSON_SUFFIX = ".json";
+    private static final String JAVA_SUFFIX = ".java";
+
     public static String getFinalFilePath(ASTDiff astDiff, String dir, String repo, String commit) {
-        String filename1 = astDiff.getSrcPath();
-        String filename2 = astDiff.getSrcPath();
-        String exportName1 = filename1.replace("/",".").replace(".java","");
-        String exportName2 = filename2.replace("/",".").replace(".java","");
-        //return getFinalFolderPath(dir,repo,commit)+ exportName1 + "-" + exportName2 + ".json";
-        return getFinalFolderPath(dir,repo,commit)+ exportName1 + ".json";
+        String exportName = getFileNameFromSrcDiff(astDiff.getSrcPath());
+        return getFinalFolderPath(dir,repo,commit)+ exportName;
+    }
+    public static String getFileNameFromSrcDiff(String astSrcName)
+    {
+        String exportName1 = astSrcName.replace("/",".").replace(".java","");
+        return exportName1 + JSON_SUFFIX;
+    }
+    public static String getSrcASTDiffFromFile(String astSrcName)
+    {
+        String exportName1 = astSrcName.replace(".","/").replace("/json","");
+        return exportName1 + JAVA_SUFFIX;
     }
 
     public static String getFinalFolderPath(String dir, String repo, String commit) {

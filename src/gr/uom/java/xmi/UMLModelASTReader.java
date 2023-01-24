@@ -66,6 +66,29 @@ public class UMLModelASTReader {
 		processJavaFileContents(javaFileContents, astDiff);
 	}
 
+	public static ASTNode processBlock(String methodBody) {
+		ASTParser parser = ASTParser.newParser(AST.JLS18);
+		Map<String, String> options = JavaCore.getOptions();
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
+		parser.setCompilerOptions(options);
+		parser.setResolveBindings(false);
+		parser.setKind(ASTParser.K_STATEMENTS);
+		parser.setStatementsRecovery(true);
+		char[] charArray = methodBody.toCharArray();
+		parser.setSource(charArray);
+		ASTNode node = parser.createAST(null);
+		ASTNode methodBodyBlock = null;
+		if(node instanceof Block) {
+			Block extraBlockAddedByParser = (Block)node;
+			if(extraBlockAddedByParser.statements().size() > 0) {
+				methodBodyBlock = (ASTNode)extraBlockAddedByParser.statements().get(0);
+			}
+		}
+		return methodBodyBlock;
+	}
+
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
 		ASTParser parser = ASTParser.newParser(AST.JLS18);
 		for(String filePath : javaFileContents.keySet()) {

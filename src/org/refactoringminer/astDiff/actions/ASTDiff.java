@@ -22,6 +22,7 @@ public class ASTDiff extends Diff {
 	private String srcContents;
 	private String dstContents;
 	private ExtendedMultiMappingStore multiMappings;
+	private ExtendedOnlyRootsClassifier classifier;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
 		super(src, dst, mappings.getMonoMappingStore(), new EditScript());
@@ -58,16 +59,25 @@ public class ASTDiff extends Diff {
 		return dstPath;
 	}
 
+	public Set<Tree> getDeletedSrcTrees() {
+		return classifier.getDeletedSrcs();
+	}
+
+	public Set<Tree> getAddedDstTrees() {
+		return classifier.getInsertedDsts();
+	}
+
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
 		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(multiMappings,parentContextMap,childContextMap);
 		processMultiMappings(multiMappings, newEditScript);
 		for(Action action : newEditScript) {
 			editScript.add(action);
 		}
+		this.classifier = new ExtendedOnlyRootsClassifier(this);
+		classifier.classify();
 	}
 
 	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {
-		//ArrayList<Action> multiMoves = new ArrayList<>();
 		Map<Tree, Set<Tree>> dstToSrcMultis = mappings.dstToSrcMultis();
 		MultiMoveActionGenerator multiMoveActionGenerator = new MultiMoveActionGenerator();
 
@@ -88,8 +98,6 @@ public class ASTDiff extends Diff {
 	 * subtree has been subject to a same operation.
 	 */
 	public TreeClassifier createRootNodesClassifier() {
-		ExtendedOnlyRootsClassifier classifier = new ExtendedOnlyRootsClassifier(this);
-		classifier.classify();
 		return classifier;
 	}
 

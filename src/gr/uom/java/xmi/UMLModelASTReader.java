@@ -44,6 +44,7 @@ import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
 import org.eclipse.jdt.core.dom.TypeParameter;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
@@ -236,7 +237,7 @@ public class UMLModelASTReader {
 		
 		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		
-		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
+		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass);
 
 		for(BodyDeclaration declaration : map.keySet()) {
 			if(declaration instanceof MethodDeclaration) {
@@ -352,7 +353,7 @@ public class UMLModelASTReader {
     	
     	Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
     	
-    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
+    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass);
     	
     	for(BodyDeclaration declaration : map.keySet()) {
     		if(declaration instanceof MethodDeclaration) {
@@ -370,10 +371,27 @@ public class UMLModelASTReader {
 	}
 
 	private void processAnonymousClassDeclarations(CompilationUnit cu, AbstractTypeDeclaration typeDeclaration,
-			String packageName, String sourceFile, String className, UMLClass umlClass) {
+			String packageName, String sourceFile, String className,
+			List<UMLImport> importedTypes, UMLJavadoc packageDoc, List<UMLComment> allComments, UMLClass umlClass) {
 		AnonymousClassDeclarationVisitor visitor = new AnonymousClassDeclarationVisitor();
     	typeDeclaration.accept(visitor);
     	Set<AnonymousClassDeclaration> anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+    	
+    	Set<TypeDeclarationStatement> typeDeclarationStatements = visitor.getTypeDeclarationStatements();
+    	
+    	for(TypeDeclarationStatement statement : typeDeclarationStatements) {
+    		String methodNamePath = getMethodNamePath(statement);
+    		String fullName = packageName + "." + className + "." + methodNamePath;
+    		AbstractTypeDeclaration localTypeDeclaration = statement.getDeclaration();
+			if(localTypeDeclaration instanceof TypeDeclaration) {
+        		TypeDeclaration typeDeclaration2 = (TypeDeclaration)localTypeDeclaration;
+        		processTypeDeclaration(cu, typeDeclaration2, fullName, sourceFile, importedTypes, packageDoc, allComments);
+        	}
+        	else if(localTypeDeclaration instanceof EnumDeclaration) {
+        		EnumDeclaration enumDeclaration = (EnumDeclaration)localTypeDeclaration;
+        		processEnumDeclaration(cu, enumDeclaration, fullName, sourceFile, importedTypes, packageDoc, allComments);
+        	}
+    	}
     	
     	DefaultMutableTreeNode root = new DefaultMutableTreeNode();
     	for(AnonymousClassDeclaration anonymous : anonymousClassDeclarations) {
@@ -787,6 +805,24 @@ public class UMLModelASTReader {
 			}
 		}
 		parentNode.add(childNode);
+	}
+
+	private String getMethodNamePath(TypeDeclarationStatement statement) {
+		String name = "";
+		ASTNode parent = statement.getParent();
+		while(parent != null) {
+			if(parent instanceof MethodDeclaration) {
+				String methodName = ((MethodDeclaration)parent).getName().getIdentifier();
+				if(name.isEmpty()) {
+					name = methodName;
+				}
+				else {
+					name = methodName + "." + name;
+				}
+			}
+			parent = parent.getParent();
+		}
+		return name;
 	}
 
 	private String getAnonymousCodePath(DefaultMutableTreeNode node) {

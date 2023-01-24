@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
@@ -480,7 +481,15 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+		getTestRelatedRefactorings(refactorings);
 		return refactorings;
+	}
+
+	private void getTestRelatedRefactorings(List<Refactoring> refactorings) {
+		refactorings.addAll(operationBodyMapperList.stream()
+				.map(mapper -> new TestOperationDiff(mapper, this, refactorings))
+				.flatMap(testDiff -> testDiff.getRefactorings().stream())
+				.collect(Collectors.toList()));
 	}
 
 	public List<Refactoring> getRefactoringsBeforePostProcessing() {

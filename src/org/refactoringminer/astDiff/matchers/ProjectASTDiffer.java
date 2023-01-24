@@ -501,8 +501,8 @@ public class ProjectASTDiffer
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
-					//processLeafMapping(srcTree, dstTree, mapping, mappingStore);
-					lastStepMappings.add(mapping);
+					processLeafMapping(srcTree, dstTree, mapping, mappingStore);
+//					lastStepMappings.add(mapping);
 				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)

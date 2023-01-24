@@ -45,7 +45,7 @@ public class testAllCases {
                 expected,actual);
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     public static Iterable<Object[]> initData() throws Exception {
         List<Object[]> allCases = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();

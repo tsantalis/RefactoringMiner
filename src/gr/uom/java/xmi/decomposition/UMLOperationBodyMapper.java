@@ -2797,7 +2797,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
-												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
+												int count = 0;
+												if(try1.getCatchClauses().size() == try2.getCatchClauses().size()) {
+													for(int i=0; i<try1.getCatchClauses().size(); i++) {
+														CompositeStatementObject catch1 = try1.getCatchClauses().get(i);
+														CompositeStatementObject catch2 = try2.getCatchClauses().get(i);
+														List<VariableDeclaration> variableDeclarations1 = catch1.getVariableDeclarations();
+														List<VariableDeclaration> variableDeclarations2 = catch2.getVariableDeclarations();
+														if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+															VariableDeclaration v1 = variableDeclarations1.get(0);
+															VariableDeclaration v2 = variableDeclarations2.get(0);
+															if(v1.getType().equals(v2.getType())) {
+																count++;
+															}
+														}
+													}
+												}
+												boolean equalNumberOfCatchClausesWithSameExceptionTypes = count == try1.getCatchClauses().size();
+												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1) || equalNumberOfCatchClausesWithSameExceptionTypes) {
 													score = 0.99;
 												}
 												break;
@@ -2984,7 +3001,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											TryStatementObject try1 = (TryStatementObject)mapping.getFragment1();
 											TryStatementObject try2 = (TryStatementObject)mapping.getFragment2();
 											if(try1.getCatchClauses().contains(statement1) && try2.getCatchClauses().contains(statement2)) {
-												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1)) {
+												int count = 0;
+												if(try1.getCatchClauses().size() == try2.getCatchClauses().size()) {
+													for(int i=0; i<try1.getCatchClauses().size(); i++) {
+														CompositeStatementObject catch1 = try1.getCatchClauses().get(i);
+														CompositeStatementObject catch2 = try2.getCatchClauses().get(i);
+														List<VariableDeclaration> variableDeclarations1 = catch1.getVariableDeclarations();
+														List<VariableDeclaration> variableDeclarations2 = catch2.getVariableDeclarations();
+														if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+															VariableDeclaration v1 = variableDeclarations1.get(0);
+															VariableDeclaration v2 = variableDeclarations2.get(0);
+															if(v1.getType().equals(v2.getType())) {
+																count++;
+															}
+														}
+													}
+												}
+												boolean equalNumberOfCatchClausesWithSameExceptionTypes = count == try1.getCatchClauses().size();
+												if(replacements.isEmpty() || (try1.getCatchClauses().size() == 1 && try2.getCatchClauses().size() == 1) || equalNumberOfCatchClausesWithSameExceptionTypes) {
 													score = 0.99;
 												}
 												break;
@@ -5969,7 +6003,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		replacementInfo.addReplacements(replacementsToBeAdded);
 		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1.getInfixExpressions(), statement2.getInfixExpressions(), variableDeclarations1, variableDeclarations2, replacementInfo) ||
-				differOnlyInFinalModifier(s1, s2) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
+				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString()) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2))) ||

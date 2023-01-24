@@ -298,9 +298,29 @@ public class StringBasedHeuristics {
 		return differOnlyInPrefix(s1, s2, "", "throw ");
 	}
 
-	protected static boolean differOnlyInFinalModifier(String s1, String s2) {
+	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
-				differOnlyInPrefix(s1, s2, "catch(", "catch(final ");
+				differOnlyInPrefix(s1, s2, "catch(", "catch(final ") ||
+				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+	}
+
+	private static boolean catchDifferInFinalModifierAndExceptionName(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(s1.startsWith("catch(") && s2.startsWith("catch(")) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+				VariableDeclaration v1 = variableDeclarations1.get(0);
+				VariableDeclaration v2 = variableDeclarations2.get(0);
+				if(v1.getType().equals(v2.getType())) {
+					if((s1.startsWith("catch(final ") && s2.startsWith("catch(")) || (s1.startsWith("catch(") && s2.startsWith("catch(final "))) {
+						if(!v1.getVariableName().equals(v2.getVariableName())) {
+							Replacement r = new Replacement(v1.getVariableName(), v2.getVariableName(), ReplacementType.VARIABLE_NAME);
+							replacementInfo.addReplacement(r);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	protected static boolean differOnlyInThis(String s1, String s2) {

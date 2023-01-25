@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.matchers;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
-import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -498,7 +497,6 @@ public class ProjectASTDiffer
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-				int cc = 0;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
 					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
 				}

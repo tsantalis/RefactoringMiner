@@ -2099,20 +2099,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public Set<Refactoring> getRefactorings() {
-		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, matchedVariables);
-		refactorings.addAll(analysis.getVariableRenames());
-		refactorings.addAll(analysis.getVariableMerges());
-		refactorings.addAll(analysis.getVariableSplits());
-		matchedVariables.addAll(analysis.getMatchedVariables());
-		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
-		candidateAttributeMerges.addAll(analysis.getCandidateAttributeMerges());
-		candidateAttributeSplits.addAll(analysis.getCandidateAttributeSplits());
-
-		removedVariables = analysis.getRemovedVariables();
-		removedVariables.addAll(analysis.getRemovedVariablesStoringTheReturnOfInlinedMethod());
-		addedVariables = analysis.getAddedVariables();
-		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
-		movedVariables = analysis.getMovedVariables();
+		computeRefactoringsWithinBody();
 
 		if(parentMapper == null && getOperation1() != null && getOperation2() != null) {
 			this.operationSignatureDiff = new UMLOperationDiff(this);
@@ -2159,6 +2146,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.refactorings.addAll(temp);
 		}
 		return refactorings;
+	}
+
+	public void computeRefactoringsWithinBody() {
+		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, matchedVariables);
+		refactorings.addAll(analysis.getVariableRenames());
+		refactorings.addAll(analysis.getVariableMerges());
+		refactorings.addAll(analysis.getVariableSplits());
+		matchedVariables.addAll(analysis.getMatchedVariables());
+		candidateAttributeRenames.addAll(analysis.getCandidateAttributeRenames());
+		candidateAttributeMerges.addAll(analysis.getCandidateAttributeMerges());
+		candidateAttributeSplits.addAll(analysis.getCandidateAttributeSplits());
+
+		removedVariables = analysis.getRemovedVariables();
+		removedVariables.addAll(analysis.getRemovedVariablesStoringTheReturnOfInlinedMethod());
+		addedVariables = analysis.getAddedVariables();
+		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
+		movedVariables = analysis.getMovedVariables();
 	}
 
 	public Set<Refactoring> getRefactoringsAfterPostProcessing() {

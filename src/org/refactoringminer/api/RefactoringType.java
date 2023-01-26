@@ -29,7 +29,6 @@ public enum RefactoringType {
 	EXTRACT_SUPERCLASS("Extract Superclass", "Extract Superclass (.+) from classes \\[(.+)\\]", 2),
 	EXTRACT_SUBCLASS("Extract Subclass", "Extract Subclass (.+) from class (.+)"),
 	EXTRACT_CLASS("Extract Class", "Extract Class (.+) from class (.+)"),
-	MERGE_OPERATION("Merge Method", ".+"),
 	EXTRACT_AND_MOVE_OPERATION("Extract And Move Method", "Extract And Move Method (.+) extracted from (.+) in class (.+) & moved to class (.+)"),
 	MOVE_AND_INLINE_OPERATION("Move And Inline Method", "Move And Inline Method (.+) moved from class (.+) to class (.+) & inlined to (.+)"),
 	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
@@ -105,7 +104,8 @@ public enum RefactoringType {
 	SPLIT_CONDITIONAL("Split Conditional", "Split Conditional (.+) to \\[(.+)\\] in method (.+) from class (.+)"),
 	INVERT_CONDITION("Invert Condition", "Invert Condition (.+) to (.+) in method (.+) from class (.+)"),
 	MERGE_CONDITIONAL("Merge Conditional", "Merge Conditional \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
-	MERGE_CATCH("Merge Catch", "Merge Catch \\[(.+)\\] to (.+) in method (.+) from class (.+)");
+	MERGE_CATCH("Merge Catch", "Merge Catch \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
+	MERGE_OPERATION("Merge Method", "Merge Method \\[(.+)\\] to (.+) in class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -204,7 +204,8 @@ public enum RefactoringType {
 		SPLIT_CONDITIONAL,
 		INVERT_CONDITION,
 		MERGE_CONDITIONAL,
-		MERGE_CATCH
+		MERGE_CATCH,
+		MERGE_OPERATION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

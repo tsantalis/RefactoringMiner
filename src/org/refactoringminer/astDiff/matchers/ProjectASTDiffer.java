@@ -421,7 +421,7 @@ public class ProjectASTDiffer
 			if (refactoring instanceof ReplaceLoopWithPipelineRefactoring)
 			{
 				//TODO: Kinda completed but assertations must be removed
-				ReplaceLoopWithPipelineRefactoring replaceLoopWithPipelineRefactoring = (ReplaceLoopWithPipelineRefactoring) (refactoring);
+				ReplaceLoopWithPipelineRefactoring replaceLoopWithPipelineRefactoring = (ReplaceLoopWithPipelineRefactoring) refactoring;
 				assert replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter().size() == 1;
 				AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter().iterator().next();
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
@@ -446,11 +446,10 @@ public class ProjectASTDiffer
 				Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,next.getLocationInfo());
 				mappingStore.addMapping(srcSt,dstSt);
 			}
-
-			if (refactoring instanceof ReplacePipelineWithLoopRefactoring)
+			else if (refactoring instanceof ReplacePipelineWithLoopRefactoring)
 			{
 				//TODO : ongoing problem
-				ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) (refactoring);
+				ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
 				assert replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().size() == 1;
 				AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().iterator().next();
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
@@ -477,18 +476,24 @@ public class ProjectASTDiffer
 				Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,enhancedFor.getLocationInfo());
 				mappingStore.addMapping(srcSt,dstSt);
 			}
-			if (refactoring instanceof ExtractOperationRefactoring) {
-				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) (refactoring);
+			else if (refactoring instanceof MergeOperationRefactoring) {
+				MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
+				for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {
+					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				}
+			}
+			else if (refactoring instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
 			}
-			if (refactoring instanceof InlineOperationRefactoring) {
-				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) (refactoring);
+			else if (refactoring instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
 			}
 			else if (refactoring instanceof RenameAttributeRefactoring) {
-				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) (refactoring);
+				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
 //				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
 //				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
 //				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
@@ -496,14 +501,14 @@ public class ProjectASTDiffer
 //				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
-				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
 					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
 				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)
 			{
-				MergeVariableRefactoring mergeVariableRefactoring = (MergeVariableRefactoring)refactoring;
+				MergeVariableRefactoring mergeVariableRefactoring = (MergeVariableRefactoring) refactoring;
 				Set<VariableDeclaration> mergedVariables = mergeVariableRefactoring.getMergedVariables();
 				VariableDeclaration newVariable = mergeVariableRefactoring.getNewVariable();
 				Tree dstVariableType =TreeUtilFunctions.findByLocationInfo(dstTree,newVariable.getType().getLocationInfo());

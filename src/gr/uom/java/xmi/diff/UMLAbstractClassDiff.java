@@ -162,70 +162,72 @@ public abstract class UMLAbstractClassDiff {
 	protected abstract void createBodyMappers() throws RefactoringMinerTimedOutException;
 
 	protected boolean isPartOfMethodMovedFromDeletedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
-		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
-			List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
-			Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
-			Set<AbstractCall> invocationsCalledOnlyInOperation2 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation2);
-			invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
-			invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
-			boolean removedOperationCalledInContainer1 = false;
-			for(AbstractCall invocation : invocationsCalledOnlyInOperation1) {
-				if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), modelDiff)) {
-					removedOperationCalledInContainer1 = true;
-					break;
+		if(removedOperations.size() != addedOperations.size()) {
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
+				List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
+				Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
+				Set<AbstractCall> invocationsCalledOnlyInOperation2 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation2);
+				invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
+				invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
+				boolean removedOperationCalledInContainer1 = false;
+				for(AbstractCall invocation : invocationsCalledOnlyInOperation1) {
+					if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), modelDiff)) {
+						removedOperationCalledInContainer1 = true;
+						break;
+					}
 				}
-			}
-			boolean addedOperationCalledInContainer2 = false;
-			for(AbstractCall invocation : invocationsCalledOnlyInOperation2) {
-				if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
-					addedOperationCalledInContainer2 = true;
-					break;
+				boolean addedOperationCalledInContainer2 = false;
+				for(AbstractCall invocation : invocationsCalledOnlyInOperation2) {
+					if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+						addedOperationCalledInContainer2 = true;
+						break;
+					}
 				}
-			}
-			if(removedOperationCalledInContainer1 && addedOperationCalledInContainer2) {
-				List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
-				List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
-				Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
-				boolean identicalOperationInvocations = removedOperationInvocations.equals(addedOperationInvocations);
-				if(!identicalOperationInvocations) {
-					movedInvocations.removeAll(removedOperationInvocations);
-				}
-				if(movedInvocations.size() > 1) {
-					for(UMLOperation deletedOperation : removedOperations) {
-						if(!deletedOperation.equals(removedOperation)) {
-							Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(movedInvocations);
-							intersection.retainAll(deletedOperation.getAllOperationInvocations());
-							if(intersection.equals(movedInvocations)) {
-								boolean addedOperationHasAdditionalParameters = false;
-								if(identicalOperationInvocations) {
-									//check if addedOperation has additional parameters
-									List<UMLType> addedOperationParameterTypes = addedOperation.getParameterTypeList();
-									List<UMLType> removedOperationParameterTypes = removedOperation.getParameterTypeList();
-									List<UMLType> deletedOperationParameterTypes = deletedOperation.getParameterTypeList();
-									if(addedOperationParameterTypes.containsAll(removedOperationParameterTypes) &&
-											addedOperationParameterTypes.containsAll(deletedOperationParameterTypes) &&
-											addedOperationParameterTypes.size() > removedOperationParameterTypes.size() &&
-											addedOperationParameterTypes.size() > deletedOperationParameterTypes.size()) {
-										addedOperationHasAdditionalParameters = true;
-									}
-								}
-								if(!identicalOperationInvocations || addedOperationHasAdditionalParameters) {
-									CandidateMergeMethodRefactoring newCandidate = new CandidateMergeMethodRefactoring();
-									newCandidate.addMergedMethod(removedOperation);
-									newCandidate.addMergedMethod(deletedOperation);
-									newCandidate.setNewMethodAfterMerge(addedOperation);
-									boolean alreadyInCandidates = false;
-									for(CandidateMergeMethodRefactoring oldCandidate : candidateMethodMerges) {
-										if(newCandidate.equals(oldCandidate)) {
-											alreadyInCandidates = true;
-											break;
+				if(removedOperationCalledInContainer1 && addedOperationCalledInContainer2) {
+					List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+					List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+					Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
+					boolean identicalOperationInvocations = removedOperationInvocations.equals(addedOperationInvocations);
+					if(!identicalOperationInvocations) {
+						movedInvocations.removeAll(removedOperationInvocations);
+					}
+					if(movedInvocations.size() > 1) {
+						for(UMLOperation deletedOperation : removedOperations) {
+							if(!deletedOperation.equals(removedOperation)) {
+								Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(movedInvocations);
+								intersection.retainAll(deletedOperation.getAllOperationInvocations());
+								if(intersection.equals(movedInvocations)) {
+									boolean addedOperationHasAdditionalParameters = false;
+									if(identicalOperationInvocations) {
+										//check if addedOperation has additional parameters
+										List<UMLType> addedOperationParameterTypes = addedOperation.getParameterTypeList();
+										List<UMLType> removedOperationParameterTypes = removedOperation.getParameterTypeList();
+										List<UMLType> deletedOperationParameterTypes = deletedOperation.getParameterTypeList();
+										if(addedOperationParameterTypes.containsAll(removedOperationParameterTypes) &&
+												addedOperationParameterTypes.containsAll(deletedOperationParameterTypes) &&
+												addedOperationParameterTypes.size() > removedOperationParameterTypes.size() &&
+												addedOperationParameterTypes.size() > deletedOperationParameterTypes.size()) {
+											addedOperationHasAdditionalParameters = true;
 										}
 									}
-									if(!alreadyInCandidates) {
-										candidateMethodMerges.add(newCandidate);
+									if(!identicalOperationInvocations || addedOperationHasAdditionalParameters) {
+										CandidateMergeMethodRefactoring newCandidate = new CandidateMergeMethodRefactoring();
+										newCandidate.addMergedMethod(removedOperation);
+										newCandidate.addMergedMethod(deletedOperation);
+										newCandidate.setNewMethodAfterMerge(addedOperation);
+										boolean alreadyInCandidates = false;
+										for(CandidateMergeMethodRefactoring oldCandidate : candidateMethodMerges) {
+											if(newCandidate.equals(oldCandidate)) {
+												alreadyInCandidates = true;
+												break;
+											}
+										}
+										if(!alreadyInCandidates) {
+											candidateMethodMerges.add(newCandidate);
+										}
+										return true;
 									}
-									return true;
 								}
 							}
 						}

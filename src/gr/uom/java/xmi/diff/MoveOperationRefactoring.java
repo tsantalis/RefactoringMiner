@@ -26,12 +26,6 @@ public class MoveOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 	}
 
-	public MoveOperationRefactoring(UMLOperation originalOperation, UMLOperation movedOperation) {
-		this.originalOperation = originalOperation;
-		this.movedOperation = movedOperation;
-		this.replacements = new LinkedHashSet<Replacement>();
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
@@ -58,10 +52,6 @@ public class MoveOperationRefactoring implements Refactoring {
 
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
-	}
-
-	public void setBodyMapper(UMLOperationBodyMapper bodyMapper) {
-		this.bodyMapper = bodyMapper;
 	}
 
 	public UMLOperation getOriginalOperation() {

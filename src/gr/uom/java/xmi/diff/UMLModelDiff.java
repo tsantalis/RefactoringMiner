@@ -1540,9 +1540,9 @@ public class UMLModelDiff {
 							UMLOperation addedOperation = supplierClassDiff.containsAddedOperationWithTheSameSignature(removedOperation);
 							if(addedOperation != null) {
 								supplierClassDiff.getAddedOperations().remove(addedOperation);
-								Refactoring ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
-								this.refactorings.add(ref);
 								UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, supplierClassDiff);
+								Refactoring ref = new PullUpOperationRefactoring(mapper);
+								this.refactorings.add(ref);
 								this.refactorings.addAll(mapper.getRefactorings());
 								checkForExtractedOperationsWithinMovedMethod(mapper, supplierClassDiff.getRemovedOperations(), supplierClassDiff.getNextClass());
 							}
@@ -1632,19 +1632,18 @@ public class UMLModelDiff {
 			if(removedOperation != null) {
 				classDiff.getRemovedOperations().remove(removedOperation);
 				MoveOperationRefactoring ref = null;
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 				if(parentType.equals(RefactoringType.EXTRACT_SUPERCLASS)) {
-					ref = new PullUpOperationRefactoring(removedOperation, addedOperation);
+					ref = new PullUpOperationRefactoring(mapper);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_CLASS) || parentType.equals(RefactoringType.MERGE_CLASS)) {
-					ref = new MoveOperationRefactoring(removedOperation, addedOperation);
+					ref = new MoveOperationRefactoring(mapper);
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
-					ref = new PushDownOperationRefactoring(removedOperation, addedOperation);
+					ref = new PushDownOperationRefactoring(mapper);
 				}
 				this.refactorings.add(ref);
-				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 				refactorings.addAll(mapper.getRefactorings());
-				ref.setBodyMapper(mapper);
 				checkForExtractedOperationsWithinMovedMethod(mapper, classDiff.getRemovedOperations(), addedClass);
 			}
 		}

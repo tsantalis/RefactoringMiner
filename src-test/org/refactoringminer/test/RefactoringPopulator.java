@@ -125,7 +125,8 @@ public class RefactoringPopulator {
 		MergeConditional(new BigInteger("4951760157141521099596496896")),
 		MergeCatch(new BigInteger("9903520314283042199192993792")),
 		MergeMethod(new BigInteger("19807040628566084398385987584")),
-		All(new BigInteger("39614081257132168796771975167"));
+		SplitMethod(new BigInteger("39614081257132168796771975168")),
+		All(new BigInteger("79228162514264337593543950335"));
 
 		private BigInteger value;
 

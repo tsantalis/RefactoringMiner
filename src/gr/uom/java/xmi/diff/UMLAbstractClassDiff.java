@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
@@ -48,6 +49,7 @@ public abstract class UMLAbstractClassDiff {
 	protected List<UMLAnonymousClass> addedAnonymousClasses;
 	protected List<UMLAnonymousClass> removedAnonymousClasses;
 	protected Set<CandidateMergeMethodRefactoring> candidateMethodMerges = new LinkedHashSet<CandidateMergeMethodRefactoring>();
+	protected Set<CandidateSplitMethodRefactoring> candidateMethodSplits = new LinkedHashSet<CandidateSplitMethodRefactoring>();
 	private Set<CandidateAttributeRefactoring> candidateAttributeRenames = new LinkedHashSet<CandidateAttributeRefactoring>();
 	private Set<CandidateMergeVariableRefactoring> candidateAttributeMerges = new LinkedHashSet<CandidateMergeVariableRefactoring>();
 	private Set<CandidateSplitVariableRefactoring> candidateAttributeSplits = new LinkedHashSet<CandidateSplitVariableRefactoring>();
@@ -160,6 +162,92 @@ public abstract class UMLAbstractClassDiff {
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;
 
 	protected abstract void createBodyMappers() throws RefactoringMinerTimedOutException;
+
+	protected boolean isPartOfMethodMovedToAddedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLOperationBodyMapper operationBodyMapper) {
+		if(removedOperations.size() != addedOperations.size()) {
+			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+				List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
+				List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();
+				Set<AbstractCall> invocationsCalledOnlyInOperation1 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation1);
+				Set<AbstractCall> invocationsCalledOnlyInOperation2 = new LinkedHashSet<AbstractCall>(invocationsCalledInOperation2);
+				invocationsCalledOnlyInOperation1.removeAll(invocationsCalledInOperation2);
+				invocationsCalledOnlyInOperation2.removeAll(invocationsCalledInOperation1);
+				boolean removedOperationCalledInContainer1 = false;
+				for(AbstractCall invocation : invocationsCalledOnlyInOperation1) {
+					if(invocation.matchesOperation(removedOperation, mapper.getContainer1(), modelDiff)) {
+						removedOperationCalledInContainer1 = true;
+						break;
+					}
+				}
+				boolean addedOperationCalledInContainer2 = false;
+				for(AbstractCall invocation : invocationsCalledOnlyInOperation2) {
+					if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+						addedOperationCalledInContainer2 = true;
+						break;
+					}
+				}
+				if(removedOperationCalledInContainer1 && addedOperationCalledInContainer2) {
+					List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+					List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+					Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(removedOperationInvocations);
+					movedInvocations.removeAll(addedOperationInvocations);
+					if(movedInvocations.size() > 1) {
+						for(UMLOperation insertedOperation : addedOperations) {
+							if(!insertedOperation.equals(addedOperation)) {
+								Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(movedInvocations);
+								intersection.retainAll(insertedOperation.getAllOperationInvocations());
+								if(movedInvocations.equals(intersection)) {
+									boolean callsInsertedOperation = false;
+									for(AbstractCodeFragment fragment : operationBodyMapper.getNonMappedLeavesT2()) {
+										for(AbstractCall call : fragment.getMethodInvocations()) {
+											if(call.matchesOperation(insertedOperation, operationBodyMapper.getContainer2(), modelDiff)) {
+												callsInsertedOperation = true;
+												break;
+											}
+										}
+										if(callsInsertedOperation) {
+											break;
+										}
+									}
+									if(!callsInsertedOperation) {
+										for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
+											for(AbstractCall call : composite.getMethodInvocations()) {
+												if(call.matchesOperation(insertedOperation, operationBodyMapper.getContainer2(), modelDiff)) {
+													callsInsertedOperation = true;
+													break;
+												}
+											}
+											if(callsInsertedOperation) {
+												break;
+											}
+										}
+									}
+									if(!callsInsertedOperation) {
+										CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
+										newCandidate.addSplitMethod(addedOperation);
+										newCandidate.addSplitMethod(insertedOperation);
+										newCandidate.setOriginalMethodBeforeSplit(removedOperation);
+										boolean alreadyInCandidates = false;
+										for(CandidateSplitMethodRefactoring oldCandidate : candidateMethodSplits) {
+											if(newCandidate.equals(oldCandidate)) {
+												alreadyInCandidates = true;
+												break;
+											}
+										}
+										if(!alreadyInCandidates) {
+											candidateMethodSplits.add(newCandidate);
+										}
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 	protected boolean isPartOfMethodMovedFromDeletedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation) {
 		if(removedOperations.size() != addedOperations.size()) {

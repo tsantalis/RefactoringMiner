@@ -105,7 +105,8 @@ public enum RefactoringType {
 	INVERT_CONDITION("Invert Condition", "Invert Condition (.+) to (.+) in method (.+) from class (.+)"),
 	MERGE_CONDITIONAL("Merge Conditional", "Merge Conditional \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
 	MERGE_CATCH("Merge Catch", "Merge Catch \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
-	MERGE_OPERATION("Merge Method", "Merge Method \\[(.+)\\] to (.+) in class (.+)");
+	MERGE_OPERATION("Merge Method", "Merge Method \\[(.+)\\] to (.+) in class (.+)"),
+	SPLIT_OPERATION("Split Method", "Split Method (.+) to \\[(.+)\\] in class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -205,7 +206,8 @@ public enum RefactoringType {
 		INVERT_CONDITION,
 		MERGE_CONDITIONAL,
 		MERGE_CATCH,
-		MERGE_OPERATION
+		MERGE_OPERATION,
+		SPLIT_OPERATION
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

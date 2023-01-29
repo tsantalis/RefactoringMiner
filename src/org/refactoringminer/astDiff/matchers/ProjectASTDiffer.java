@@ -482,6 +482,12 @@ public class ProjectASTDiffer
 					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
 				}
 			}
+			else if (refactoring instanceof SplitOperationRefactoring) {
+				SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) refactoring;
+				for(UMLOperationBodyMapper bodyMapper : splitOperationRefactoring.getMappers()) {
+					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				}
+			}
 			else if (refactoring instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();

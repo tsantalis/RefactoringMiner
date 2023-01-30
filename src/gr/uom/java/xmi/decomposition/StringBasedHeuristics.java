@@ -41,8 +41,11 @@ public class StringBasedHeuristics {
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
-		if(s.contains(" -> ") && lines.length > 1) {
-			return true;
+		if(s.contains(" -> ")) {
+			if(lines.length > 1)
+				return true;
+			else if(lines.length == 1 && s.endsWith(";\n"))
+				return true;
 		}
 		for(String line : lines) {
 			line = VariableReplacementAnalysis.prepareLine(line);
@@ -1213,10 +1216,10 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.startsWith("return ") && string2.endsWith(";\n")) {
@@ -1330,10 +1333,10 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
@@ -1430,10 +1433,10 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		List<String> operators1 = statement1.getInfixOperators();

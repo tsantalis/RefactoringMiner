@@ -610,6 +610,7 @@ public abstract class AbstractCodeMapping {
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) ||
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION) ||
+				replacement.getType().equals(ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CONDITIONAL_EXPRESSION) ||
 				replacement instanceof IntersectionReplacement ||
 				replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 	}

@@ -10,6 +10,7 @@ import org.junit.runners.Parameterized;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
+import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
@@ -59,7 +60,7 @@ public class testAllCases {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getTestDir(), info.getRepo(), info.getCommit())).list())));
             for (ASTDiff astDiff : astDiffs) {
                 String finalFilePath = getFinalFilePath(astDiff, getTestDir(), info.getRepo(), info.getCommit());
-                String calculated = astDiff.getMultiMappings().exportString();
+                String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
                 String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
                 allCases.add(new Object[]{info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated});
                 expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));

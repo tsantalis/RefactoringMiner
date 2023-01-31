@@ -46,10 +46,10 @@ public class ProjectASTDiffer
 		long finish = System.currentTimeMillis();
 		logger.info("ModelDiff.getRefactorings() execution time: " + (finish - start)/ 1000 + " seconds");
 		long diff_execution_started = System.currentTimeMillis();
-		makeASTDiff(modelDiff.getCommonClassDiffList());
-		makeASTDiff(modelDiff.getClassRenameDiffList());
-		makeASTDiff(modelDiff.getClassMoveDiffList());
-		makeASTDiff(modelDiff.getInnerClassMoveDiffList());
+		makeASTDiff(modelDiff.getCommonClassDiffList(),false);
+		makeASTDiff(modelDiff.getClassRenameDiffList(),false);
+		makeASTDiff(modelDiff.getClassMoveDiffList(),true);
+		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
@@ -64,23 +64,25 @@ public class ProjectASTDiffer
 		logger.info("EditScript execution: " + (editScript_end - editScript_start)/ 1000 + " seconds");
 	}
 
-	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList) throws RefactoringMinerTimedOutException {
+	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList, boolean mergeFlag) throws RefactoringMinerTimedOutException {
 		for (UMLClassBaseDiff classDiff : umlClassBaseDiffList) {
-			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff));
-			//ASTDiff classASTDiff = processWithGTGreedy(classDiff, findTreeContexts(classDiff));
-			//ASTDiff classASTDiff = processWithGTSimple(classDiff, findTreeContexts(classDiff));
-			if (diffSet.contains(classASTDiff)) {
-				for (ASTDiff diff : diffSet) {
-					if (diff.equals(classASTDiff)) {
-						diff.getMultiMappings().mergeMappings(classASTDiff.getMultiMappings());
-						break;
-					}
-				}
-			}
+			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff),mergeFlag);
+			ASTDiff append = findAppend(classASTDiff);
+			if (append != null)
+				append.getMultiMappings().mergeMappings(classASTDiff.getMultiMappings());
 			else {
 				diffSet.add(classASTDiff);
 			}
 		}
+	}
+	private ASTDiff findAppend(ASTDiff classASTDiff) {
+		for (ASTDiff existing : diffSet) {
+			if (existing.getSrcPath().equals(classASTDiff.getSrcPath()))
+				return existing;
+			else if (existing.getDstPath().equals(classASTDiff.getDstPath()))
+				return existing;
+		}
+		return null;
 	}
 
 	private Pair<TreeContext, TreeContext> findTreeContexts(UMLClassBaseDiff classDiff) {
@@ -88,17 +90,18 @@ public class ProjectASTDiffer
 				modelDiff.getChildModel().getTreeContextMap().get(classDiff.getNextClass().getSourceFile()));
 	}
 
-	private ASTDiff process(UMLClassBaseDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair) throws RefactoringMinerTimedOutException {
+	private ASTDiff process(UMLClassBaseDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag) throws RefactoringMinerTimedOutException {
 		TreeContext srcTreeContext = treeContextPair.first;
 		TreeContext dstTreeContext = treeContextPair.second;
 		Tree srcTree = srcTreeContext.getRoot();
 		Tree dstTree = dstTreeContext.getRoot();
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTreeContext,dstTreeContext);
-		mappingStore.addMapping(srcTree,dstTree);
 		this.lastStepMappings = new ArrayList<>();
-
-		processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
-		processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
+		if (!mergeFlag) {
+			mappingStore.addMapping(srcTree, dstTree);
+			processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
+			processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
+		}
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
 		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);

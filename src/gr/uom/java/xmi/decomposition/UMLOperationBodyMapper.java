@@ -5979,6 +5979,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				findReplacements(arguments1, arguments2, replacementInfo, ReplacementType.ARGUMENT);
 			}
 		}
+		if(parentMapper != null && statement1.getParent() != null && statement2.getParent() != null &&
+				statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
+			if(statement1.getString().equals("return;\n") && statement2.getString().equals("return null;\n")) {
+				return replacementInfo.getReplacements();
+			}
+			else if(statement1.getString().equals("return null;\n") && statement2.getString().equals("return;\n")) {
+				return replacementInfo.getReplacements();
+			}
+		}
 		
 		String s1 = preprocessInput1(statement1, statement2);
 		String s2 = preprocessInput2(statement1, statement2);

@@ -48,7 +48,7 @@ public class ProjectASTDiffer
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList(),false);
 		makeASTDiff(modelDiff.getClassRenameDiffList(),false);
-		makeASTDiff(modelDiff.getClassMoveDiffList(),true);
+		makeASTDiff(modelDiff.getClassMoveDiffList(),false);
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
@@ -105,13 +105,28 @@ public class ProjectASTDiffer
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
 		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
-		processRefactorings(srcTree,dstTree,classDiff.getRefactorings(),mappingStore);
+		processRefactorings(srcTree,dstTree,getClassDiffRefactorings(classDiff),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
 		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processLastStepMappings(srcTree,dstTree,mappingStore);
 		//if (CHECK_COMMENTS) addAndProcessComments(treeContextPair.first, treeContextPair.second,mappingStore);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
+	}
+
+	private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff) {
+		List<Refactoring> classDiffRefactorings = new ArrayList<>();
+		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
+			Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
+			Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
+			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue;
+			if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(involvedClassesBeforeRefactoring.iterator().next().getLeft())
+					&& classDiff.getOriginalClass().getName().equals(involvedClassesBeforeRefactoring.iterator().next().getRight())
+					&& classDiff.getNextClass().getLocationInfo().getFilePath().equals(involvedClassesAfterRefactoring.iterator().next().getLeft())
+					&& classDiff.getNextClass().getName().equals(involvedClassesAfterRefactoring.iterator().next().getRight()))
+				classDiffRefactorings.add(modelDiffRefactoring);
+		}
+		return classDiffRefactorings;
 	}
 
 	private void processMovedAttributes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
@@ -286,6 +301,11 @@ public class ProjectASTDiffer
 		LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
 		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
 		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
+		if (srcStatementNode == null || dstStatementNode == null)
+		{
+			System.err.println("Tree not found for " + abstractCodeMapping);
+			return;
+		}
 		{
 			if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
 				mappingStore.addMapping(srcStatementNode, dstStatementNode);

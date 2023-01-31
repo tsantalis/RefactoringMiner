@@ -58,6 +58,7 @@ public abstract class UMLAbstractClassDiff {
 	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	protected List<Refactoring> refactorings;
 	protected UMLModelDiff modelDiff;
+	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
 	
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
 		this.addedOperations = new ArrayList<UMLOperation>();
@@ -196,7 +197,23 @@ public abstract class UMLAbstractClassDiff {
 							if(!insertedOperation.equals(addedOperation)) {
 								Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(movedInvocations);
 								intersection.retainAll(insertedOperation.getAllOperationInvocations());
-								if(movedInvocations.equals(intersection)) {
+								for(Iterator<AbstractCall> operationInvocationIterator = intersection.iterator(); operationInvocationIterator.hasNext();) {
+									AbstractCall invocation = operationInvocationIterator.next();
+									boolean lambdaGet = invocation.getName().equals("get") && invocation.arguments().size() == 0;
+									boolean collectionGet = invocation.getName().startsWith("get") && invocation.arguments().size() == 1;
+									if(!lambdaGet && (collectionAPINames.contains(invocation.getName()) || collectionGet)) {
+										operationInvocationIterator.remove();
+									}
+								}
+								List<AbstractCall> unmatchedCalls = new ArrayList<AbstractCall>(movedInvocations);
+								unmatchedCalls.removeAll(insertedOperation.getAllOperationInvocations());
+								if(movedInvocations.containsAll(intersection) && intersection.size() > 1 && intersection.size() >= unmatchedCalls.size()) {
+									for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT1()) {
+										unmatchedCalls.removeAll(composite.getMethodInvocations());
+									}
+									for(AbstractCodeFragment fragment : operationBodyMapper.getNonMappedLeavesT1()) {
+										unmatchedCalls.removeAll(fragment.getMethodInvocations());
+									}
 									boolean callsInsertedOperation = false;
 									for(AbstractCodeFragment fragment : operationBodyMapper.getNonMappedLeavesT2()) {
 										for(AbstractCall call : fragment.getMethodInvocations()) {
@@ -222,7 +239,7 @@ public abstract class UMLAbstractClassDiff {
 											}
 										}
 									}
-									if(!callsInsertedOperation) {
+									if(unmatchedCalls.isEmpty() && !callsInsertedOperation) {
 										CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
 										newCandidate.addSplitMethod(addedOperation);
 										newCandidate.addSplitMethod(insertedOperation);

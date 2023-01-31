@@ -54,7 +54,7 @@ public class AddCase {
         for (ASTDiff astDiff : astDiffs) {
             String finalPath = getFinalFilePath(astDiff, getTestDir(),  repo, commit);
             Files.createDirectories(Paths.get(getFinalFolderPath(getTestDir(),repo,commit)));
-            astDiff.getMultiMappings().exportToFile(new File(finalPath));
+            MappingExportModel.exportToFile(new File(finalPath), astDiff.getMultiMappings());
         }
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         CaseInfo caseInfo = new CaseInfo(repo,commit);

@@ -197,31 +197,29 @@ public class ProjectASTDiffer
 
 	private void processMethod(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore)
 	{
-		processOperationDiff(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
-		processMethodParameters(srcTree,dstTree,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
+		Tree srcOperationNode;
+		Tree dstOperationNode;
 		if (umlOperationBodyMapper.getOperation1() != null & umlOperationBodyMapper.getOperation2() != null) {
-			processMethodJavaDoc(srcTree, dstTree, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
-			Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo());
-			Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
+			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo());
+			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
+			processMethodJavaDoc(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
 			processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-			fromRefMiner(srcTree, dstTree, umlOperationBodyMapper, mappingStore);
+			fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		}
 		else {
 			//Static Initializers
-			Tree srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo());
-			Tree dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo());
+			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo());
+			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo());
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
 			if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer &&  umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)
 				if (((UMLInitializer)umlOperationBodyMapper.getContainer1()).isStatic() && ((UMLInitializer)umlOperationBodyMapper.getContainer2()).isStatic())
-				{
-					Tree srcInitializer = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo());
-					Tree dstInitializer = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo());
-					mappingStore.addMapping(srcInitializer.getChild(0),dstInitializer.getChild(0));
-				}
+					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));
 			processMethodSignature(srcOperationNode, dstOperationNode,umlOperationBodyMapper,  mappingStore);
-			fromRefMiner(srcTree, dstTree, umlOperationBodyMapper, mappingStore);
+			fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		}
+		processOperationDiff(srcOperationNode,dstOperationNode,umlOperationBodyMapper,mappingStore);
+		processMethodParameters(srcOperationNode,dstOperationNode,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
 	}
 
 	private void processMethodParameters(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> matchedVariables, ExtendedMultiMappingStore mappingStore) {

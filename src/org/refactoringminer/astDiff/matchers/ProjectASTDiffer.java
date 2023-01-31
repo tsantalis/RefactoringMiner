@@ -26,10 +26,10 @@ public class ProjectASTDiffer
 {
 	private final static Logger logger = LoggerFactory.getLogger(ProjectASTDiffer.class);
 	private final boolean CHECK_COMMENTS = false;
-	private UMLModelDiff modelDiff;
+	private final UMLModelDiff modelDiff;
 	private List<AbstractCodeMapping> lastStepMappings;
 	private List<Refactoring> modelDiffRefactorings;
-	private Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
@@ -64,7 +64,7 @@ public class ProjectASTDiffer
 		logger.info("EditScript execution: " + (editScript_end - editScript_start)/ 1000 + " seconds");
 	}
 
-	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList, boolean mergeFlag) throws RefactoringMinerTimedOutException {
+	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLClassBaseDiff classDiff : umlClassBaseDiffList) {
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff),mergeFlag);
 			ASTDiff append = findAppend(classASTDiff);
@@ -90,7 +90,7 @@ public class ProjectASTDiffer
 				modelDiff.getChildModel().getTreeContextMap().get(classDiff.getNextClass().getSourceFile()));
 	}
 
-	private ASTDiff process(UMLClassBaseDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag) throws RefactoringMinerTimedOutException {
+	private ASTDiff process(UMLClassBaseDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){
 		TreeContext srcTreeContext = treeContextPair.first;
 		TreeContext dstTreeContext = treeContextPair.second;
 		Tree srcTree = srcTreeContext.getRoot();
@@ -504,14 +504,6 @@ public class ProjectASTDiffer
 				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
 					lastStepMappings.add(expressionMapping);
 				}
-			}
-			else if (refactoring instanceof RenameAttributeRefactoring) {
-				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
-//				Tree srcAttrTree =TreeUtilFunctions.findByLocationInfo(srcTree,renameAttributeRefactoring.getOriginalAttribute().getLocationInfo()).getParent(); //Super Risky
-//				Tree dstAttrTree =TreeUtilFunctions.findByLocationInfo(dstTree,renameAttributeRefactoring.getRenamedAttribute().getLocationInfo()).getParent(); //Super Risky
-//				//if (dstAttrTree.isIsomorphicTo(srcAttrTree))
-//				//	mappingStore.addMappingRecursively(srcAttrTree.getParent(),dstAttrTree.getParent());
-//				processFieldDeclaration(srcAttrTree,dstAttrTree,renameAttributeRefactoring.getOriginalAttribute(),renameAttributeRefactoring.getRenamedAttribute(),mappingStore);
 			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;

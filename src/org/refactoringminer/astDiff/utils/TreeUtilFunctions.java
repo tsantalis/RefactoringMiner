@@ -87,6 +87,7 @@ public class TreeUtilFunctions {
 			if (childCopy != null)
 				copy.addChild(childCopy);
 		}
+		if (copy.getChildren().size() == 0) copy.setParent(tree.getParent());
 		return copy;
 	}
 
@@ -97,6 +98,7 @@ public class TreeUtilFunctions {
 		defaultTree.setPos(other.getPos());
 		defaultTree.setLength(other.getLength());
 		defaultTree.setChildren(new ArrayList<>());
+		defaultTree.setMetrics(other.getMetrics());
 		return defaultTree;
 	}
 

@@ -666,6 +666,13 @@ public class ProjectASTDiffer
 		}
 		mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
 		matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
+		if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {
+			if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
+				//TODO: JavaDocs are mapped as well.
+				new LeafMatcher(false).match(srcAttr,dstAttr,null,mappingStore);
+				return;
+			}
+		}
 		Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getType().getLocationInfo());
 		Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getType().getLocationInfo());
 		if (srcType.isIsoStructuralTo(dstType)) mappingStore.addMappingRecursively(srcType,dstType);

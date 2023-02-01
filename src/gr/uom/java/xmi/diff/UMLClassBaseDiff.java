@@ -623,40 +623,47 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				if(!mapperSet.isEmpty()) {
+					boolean firstMapperWithIdenticalMethodName = false;
+					UMLOperationBodyMapper firstMapper = mapperSet.first();
+					if(firstMapper.getContainer1().getName().equals(firstMapper.getContainer2().getName())) {
+						firstMapperWithIdenticalMethodName = true;
+					}
 					boolean matchingMergeCandidateFound = false;
-					for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
-						Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
-								candidate.addMapper(mapper);
-								methodsWithMapper.add(mapper.getContainer1());
-								matchingMergeCandidateFound = true;
+					boolean matchingSplitCandidateFound = false;
+					if(!firstMapperWithIdenticalMethodName) {
+						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
+							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
+									candidate.addMapper(mapper);
+									methodsWithMapper.add(mapper.getContainer1());
+									matchingMergeCandidateFound = true;
+								}
 							}
-						}
-						if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
-							for(VariableDeclarationContainer deletedOperation : candidate.getMergedMethods()) {
-								if(!methodsWithMapper.contains(deletedOperation)) {
-									UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)deletedOperation, (UMLOperation)candidate.getNewMethodAfterMerge(), this);
-									candidate.addMapper(operationBodyMapper);
+							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
+								for(VariableDeclarationContainer deletedOperation : candidate.getMergedMethods()) {
+									if(!methodsWithMapper.contains(deletedOperation)) {
+										UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)deletedOperation, (UMLOperation)candidate.getNewMethodAfterMerge(), this);
+										candidate.addMapper(operationBodyMapper);
+									}
 								}
 							}
 						}
-					}
-					boolean matchingSplitCandidateFound = false;
-					for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
-						Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
-								candidate.addMapper(mapper);
-								methodsWithMapper.add(mapper.getContainer2());
-								matchingSplitCandidateFound = true;
+						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
+							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
+									candidate.addMapper(mapper);
+									methodsWithMapper.add(mapper.getContainer2());
+									matchingSplitCandidateFound = true;
+								}
 							}
-						}
-						if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
-							for(VariableDeclarationContainer addedOperation : candidate.getSplitMethods()) {
-								if(!methodsWithMapper.contains(addedOperation)) {
-									UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, (UMLOperation)addedOperation, this);
-									candidate.addMapper(operationBodyMapper);
+							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
+								for(VariableDeclarationContainer addedOperation : candidate.getSplitMethods()) {
+									if(!methodsWithMapper.contains(addedOperation)) {
+										UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, (UMLOperation)addedOperation, this);
+										candidate.addMapper(operationBodyMapper);
+									}
 								}
 							}
 						}
@@ -733,40 +740,47 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				if(!mapperSet.isEmpty()) {
+					boolean firstMapperWithIdenticalMethodName = false;
+					UMLOperationBodyMapper firstMapper = mapperSet.first();
+					if(firstMapper.getContainer1().getName().equals(firstMapper.getContainer2().getName())) {
+						firstMapperWithIdenticalMethodName = true;
+					}
 					boolean matchingMergeCandidateFound = false;
-					for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
-						Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
-								candidate.addMapper(mapper);
-								methodsWithMapper.add(mapper.getContainer1());
-								matchingMergeCandidateFound = true;
+					boolean matchingSplitCandidateFound = false;
+					if(!firstMapperWithIdenticalMethodName) {
+						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
+							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
+									candidate.addMapper(mapper);
+									methodsWithMapper.add(mapper.getContainer1());
+									matchingMergeCandidateFound = true;
+								}
 							}
-						}
-						if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
-							for(VariableDeclarationContainer removedOperation : candidate.getMergedMethods()) {
-								if(!methodsWithMapper.contains(removedOperation)) {
-									UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)removedOperation, addedOperation, this);
-									candidate.addMapper(operationBodyMapper);
+							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
+								for(VariableDeclarationContainer removedOperation : candidate.getMergedMethods()) {
+									if(!methodsWithMapper.contains(removedOperation)) {
+										UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)removedOperation, addedOperation, this);
+										candidate.addMapper(operationBodyMapper);
+									}
 								}
 							}
 						}
-					}
-					boolean matchingSplitCandidateFound = false;
-					for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
-						Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
-								candidate.addMapper(mapper);
-								methodsWithMapper.add(mapper.getContainer2());
-								matchingSplitCandidateFound = true;
+						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
+							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
+									candidate.addMapper(mapper);
+									methodsWithMapper.add(mapper.getContainer2());
+									matchingSplitCandidateFound = true;
+								}
 							}
-						}
-						if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
-							for(VariableDeclarationContainer insertedOperation : candidate.getSplitMethods()) {
-								if(!methodsWithMapper.contains(insertedOperation)) {
-									UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)candidate.getOriginalMethodBeforeSplit(), (UMLOperation)insertedOperation, this);
-									candidate.addMapper(operationBodyMapper);
+							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
+								for(VariableDeclarationContainer insertedOperation : candidate.getSplitMethods()) {
+									if(!methodsWithMapper.contains(insertedOperation)) {
+										UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper((UMLOperation)candidate.getOriginalMethodBeforeSplit(), (UMLOperation)insertedOperation, this);
+										candidate.addMapper(operationBodyMapper);
+									}
 								}
 							}
 						}

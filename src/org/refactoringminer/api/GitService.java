@@ -29,11 +29,12 @@ public interface GitService {
 	 * 
 	 * @param folder The folder to store the local repo.
 	 * @param cloneUrl The repository URL.
-	 * @param credentialsProvider An instance of CredentialProvider used for private repository access.
+	 * @param username Username used for private repository access.
+	 * @param token Personal Access Token used for private repository access.
 	 * @return The repository object (JGit library).
 	 * @throws Exception propagated from JGit library.
 	 */
-	Repository cloneIfNotExists(String folder, String cloneUrl, CredentialsProvider credentialsProvider) throws Exception;
+	Repository cloneIfNotExists(String folder, String cloneUrl, String username, String token) throws Exception;
 	
 	Repository openRepository(String folder) throws Exception;
 

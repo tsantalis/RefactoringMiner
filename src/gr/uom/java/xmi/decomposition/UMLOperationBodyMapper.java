@@ -4645,26 +4645,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean nestedUnderLoop(Set<CompositeStatementObject> blocks) {
-		//sort by start offset
-		List<CompositeStatementObject> ifParents = new ArrayList<>();
-		for(CompositeStatementObject block : blocks) {
-			CompositeStatementObject parent = block.getParent();
-			if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-				if(ifParents.isEmpty()) {
-					ifParents.add(parent);
-				}
-				else {
-					int index=0;
-					for(CompositeStatementObject ifParent : ifParents) {
-						if(parent.getLocationInfo().getStartOffset() < ifParent.getLocationInfo().getStartOffset()) {
-							break;
-						}
-						index++;
-					}
-					ifParents.add(index, parent);
-				}
-			}
-		}
+		List<CompositeStatementObject> ifParents = extractIfParentsFromBlocks(blocks);
 		if(ifParents.size() > 0) {
 			CompositeStatementObject firstParent = ifParents.get(0);
 			while(firstParent.getParent() != null && firstParent.getParent().getParent() != null) {
@@ -4679,6 +4660,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean ifElseIfChain(Set<CompositeStatementObject> blocks) {
 		//sort by start offset
+		List<CompositeStatementObject> ifParents = extractIfParentsFromBlocks(blocks);
+		int chainMatches = 0;
+		for(int i=0; i<ifParents.size()-1; i++) {
+			CompositeStatementObject current = ifParents.get(i);
+			CompositeStatementObject next = ifParents.get(i+1);
+			if(current.getStatements().contains(next) || current.equals(next)) {
+				chainMatches++;
+			}
+		}
+		return chainMatches == ifParents.size()-1;
+	}
+
+	private List<CompositeStatementObject> extractIfParentsFromBlocks(Set<CompositeStatementObject> blocks) {
 		List<CompositeStatementObject> ifParents = new ArrayList<>();
 		for(CompositeStatementObject block : blocks) {
 			CompositeStatementObject parent = block.getParent();
@@ -4698,15 +4692,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		int chainMatches = 0;
-		for(int i=0; i<ifParents.size()-1; i++) {
-			CompositeStatementObject current = ifParents.get(i);
-			CompositeStatementObject next = ifParents.get(i+1);
-			if(current.getStatements().contains(next) || current.equals(next)) {
-				chainMatches++;
-			}
-		}
-		return chainMatches == ifParents.size()-1;
+		return ifParents;
 	}
 
 	private boolean isScopedMatch(AbstractCodeMapping startMapping, AbstractCodeMapping endMapping, AbstractCodeMapping parentMapping) {
@@ -9058,6 +9044,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int childrenSize2 = compStatements2.size();
 		List<CompositeStatementObject> nestedTryCatch1 = getNestedTryCatch(compStatements1);
 		List<CompositeStatementObject> nestedTryCatch2 = getNestedTryCatch(compStatements2);
+		boolean equalIfElseIfChain = false;
 		
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
 				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals("{") && !comp2.getString().equals("{")) {
@@ -9107,6 +9094,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					containsMapping(comp1.getTryContainer().get(), comp2.getTryContainer().get());
 			for(AbstractCodeMapping mapping : mappings) {
 				if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
+					boolean mappingNestedAtSameLevel = false;
+					CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+					CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+					while(parent1 != null && parent2 != null) {
+						if(parent1.equals(comp1) && parent2.equals(comp2)) {
+							mappingNestedAtSameLevel = true;
+							break;
+						}
+						parent1 = parent1.getParent();
+						parent2 = parent2.getParent();
+					}
+					if(!mappingNestedAtSameLevel) {
+						Set<CompositeStatementObject> ifElseIfChain1 = constructIfElseIfChain(mapping.getFragment1());
+						Set<CompositeStatementObject> ifElseIfChain2 = constructIfElseIfChain(mapping.getFragment2());
+						equalIfElseIfChain = ifElseIfChain1.size() == ifElseIfChain2.size() && ifElseIfChain1.size() > 1;
+					}
 					boolean mappingUnderNestedTryCatch = false;
 					if(nestedTryCatch1.isEmpty() && !nestedTryCatch2.isEmpty() && !blocksWithMappedTryContainer) {
 						for(CompositeStatementObject statement : nestedTryCatch2) {
@@ -9136,7 +9139,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					if(!mappingUnderNestedTryCatch) {
+					if(!mappingUnderNestedTryCatch && !equalIfElseIfChain) {
 						mappedLeavesSize++;
 					}
 				}
@@ -9233,7 +9236,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
 						!logGuard(comp1) &&
-						!parentMapperContainsExactMapping(comp1)) {
+						!parentMapperContainsExactMapping(comp1) && !equalIfElseIfChain) {
 					return 0.01;
 				}
 			}
@@ -9244,6 +9247,83 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return 0;
 		else
 			return (double)mappedChildrenSize/(double)max;
+	}
+
+	private Set<CompositeStatementObject> constructIfElseIfChain(AbstractCodeFragment fragment) {
+		if(fragment.getParent() != null && fragment.getParent().getParent() != null) {
+			boolean isWithinIfBranch = isIfBranch(fragment.getParent(), fragment.getParent().getParent());
+			boolean isWithinElseBranch = isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+			boolean isWithinElseIfBranch = false;
+			if(fragment.getParent().getParent().getParent() != null) {
+				isWithinElseIfBranch = isElseIfBranch(fragment.getParent().getParent(), fragment.getParent().getParent().getParent());
+			}
+			Set<CompositeStatementObject> blocks = new LinkedHashSet<>();
+			if(isWithinIfBranch && !isWithinElseIfBranch) {
+				blocks.add(fragment.getParent());
+				CompositeStatementObject currentIf = fragment.getParent().getParent();
+				//collect child blocks
+				while(currentIf != null && hasElseIfBranch(currentIf)) {
+					currentIf = (CompositeStatementObject)currentIf.getStatements().get(1);
+					if(currentIf.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						if(currentIf.getStatements().get(0) instanceof CompositeStatementObject) {
+							blocks.add((CompositeStatementObject)currentIf.getStatements().get(0));
+						}
+					}
+				}
+				if(hasElseBranch(currentIf)) {
+					if(currentIf.getStatements().get(1) instanceof CompositeStatementObject) {
+						blocks.add((CompositeStatementObject)currentIf.getStatements().get(1));
+					}
+				}
+			}
+			else if(isWithinElseIfBranch) {
+				blocks.add(fragment.getParent());
+				CompositeStatementObject currentIf = fragment.getParent().getParent();
+				CompositeStatementObject lastIf = currentIf;
+				//collect parent blocks
+				while(currentIf != null && currentIf.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+					CompositeStatementObject parent = currentIf.getParent();
+					if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							parent.getStatements().contains(currentIf)) {
+						if(parent.getStatements().get(0) instanceof CompositeStatementObject) {
+							blocks.add((CompositeStatementObject)parent.getStatements().get(0));
+						}
+					}
+					currentIf = parent;
+				}
+				//collect child blocks
+				while(lastIf != null && hasElseIfBranch(lastIf)) {
+					lastIf = (CompositeStatementObject)lastIf.getStatements().get(1);
+					if(lastIf.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						if(lastIf.getStatements().get(0) instanceof CompositeStatementObject) {
+							blocks.add((CompositeStatementObject)lastIf.getStatements().get(0));
+						}
+					}
+				}
+				if(hasElseBranch(lastIf)) {
+					if(lastIf.getStatements().get(1) instanceof CompositeStatementObject) {
+						blocks.add((CompositeStatementObject)lastIf.getStatements().get(1));
+					}
+				}
+			}
+			else if(isWithinElseBranch) {
+				blocks.add(fragment.getParent());
+				CompositeStatementObject currentIf = fragment.getParent().getParent();
+				//collect parent blocks
+				while(currentIf != null && currentIf.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+					CompositeStatementObject parent = currentIf.getParent();
+					if(parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							parent.getStatements().contains(currentIf)) {
+						if(parent.getStatements().get(0) instanceof CompositeStatementObject) {
+							blocks.add((CompositeStatementObject)parent.getStatements().get(0));
+						}
+					}
+					currentIf = parent;
+				}
+			}
+			return new LinkedHashSet<>(extractIfParentsFromBlocks(blocks));
+		}
+		return Collections.emptySet();
 	}
 
 	private boolean logGuard(CompositeStatementObject comp) {

@@ -5954,6 +5954,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return replacementInfo.getReplacements();
 			}
 		}
+		else if(parentMapper == null && statement1.getParent() != null && statement2.getParent() != null &&
+				statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
+			if(container1 instanceof UMLOperation && container2 instanceof UMLOperation) {
+				UMLParameter returnParameter1 = ((UMLOperation)container1).getReturnParameter();
+				UMLParameter returnParameter2 = ((UMLOperation)container2).getReturnParameter();
+				if(returnParameter1 != null && returnParameter2 != null) {
+					UMLType returnType1 = returnParameter1.getType();
+					UMLType returnType2 = returnParameter2.getType();
+					if(returnType1.getClassType().equals("void") && returnType2.getClassType().equals("boolean")) {
+						if(statement1.getString().equals("return;\n") && statement2.getString().equals("return false;\n")) {
+							return replacementInfo.getReplacements();
+						}
+						if(statement1.getString().equals("return;\n") && statement2.getString().equals("return true;\n")) {
+							return replacementInfo.getReplacements();
+						}
+					}
+					else if(returnType1.getClassType().equals("boolean") && returnType2.getClassType().equals("void")) {
+						if(statement2.getString().equals("return;\n") && statement1.getString().equals("return false;\n")) {
+							return replacementInfo.getReplacements();
+						}
+						if(statement2.getString().equals("return;\n") && statement1.getString().equals("return true;\n")) {
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
+		}
 		
 		String s1 = preprocessInput1(statement1, statement2);
 		String s2 = preprocessInput2(statement1, statement2);

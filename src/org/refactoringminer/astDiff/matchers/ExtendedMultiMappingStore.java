@@ -1,13 +1,7 @@
 package org.refactoringminer.astDiff.matchers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.matchers.MultiMappingStore;

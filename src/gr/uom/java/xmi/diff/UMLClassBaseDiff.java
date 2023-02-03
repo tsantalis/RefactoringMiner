@@ -840,13 +840,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					AbstractCall addedOperationInvocation = addedOperation.isDelegate();
 					if(addedOperationInvocation != null) {
 						for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-							if(removedOperationInvocation.matchesOperation(mapper.getContainer1(), removedOperation, modelDiff) &&
-									addedOperationInvocation.matchesOperation(mapper.getContainer2(), addedOperation, modelDiff) &&
+							if(removedOperationInvocation.matchesOperation(mapper.getContainer1(), removedOperation, this, modelDiff) &&
+									addedOperationInvocation.matchesOperation(mapper.getContainer2(), addedOperation, this, modelDiff) &&
 									removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
 								addedOperationIterator.remove();
 								removedOperationIterator.remove();
 			
-								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation);
+								UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, this);
 								refactorings.addAll(operationSignatureDiff.getRefactorings());
 								if(!removedOperation.getName().equals(addedOperation.getName()) &&
 										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
@@ -946,8 +946,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Set<MethodInvocationReplacement> callReferences = new LinkedHashSet<MethodInvocationReplacement>();
 		for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 			UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-			if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), modelDiff) &&
-					replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+			if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+					replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 				callReferences.add(replacement);
 			}
 		}
@@ -1020,8 +1020,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else {
 				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), modelDiff) &&
-							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 						mapperSet.add(operationBodyMapper);
 						break;
 					}
@@ -1031,8 +1031,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 				UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), modelDiff) &&
-						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+				if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+						replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 					mapperSet.add(operationBodyMapper);
 					break;
 				}
@@ -1079,8 +1079,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else {
 				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
-					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), modelDiff) &&
-							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), modelDiff)) {
+					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&
+							replacement.getInvokedOperationAfter().matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
 						mapperSet.add(operationBodyMapper);
 						break;
 					}
@@ -1269,7 +1269,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
 				boolean anotherMapperCallsOperation2OfTheBestMapper = false;
 				for(AbstractCall invocation : operationInvocations2) {
-					if(invocation.matchesOperation(bestMapper.getContainer2(), operation2, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, modelDiff) &&
+					if(invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
 						anotherMapperCallsOperation2OfTheBestMapper = true;
 						break;
@@ -1279,7 +1279,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<AbstractCall> operationInvocations1 = operation1.getAllOperationInvocations();
 				boolean anotherMapperCallsOperation1OfTheBestMapper = false;
 				for(AbstractCall invocation : operationInvocations1) {
-					if(invocation.matchesOperation(bestMapper.getContainer1(), operation1, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, modelDiff) &&
+					if(invocation.matchesOperation(bestMapper.getContainer1(), operation1, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
 						anotherMapperCallsOperation1OfTheBestMapper = true;
 						break;
@@ -1499,7 +1499,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			AbstractCall invocationT2 = statementT2.invocationCoveringEntireFragment();
 			if(invocationT2 != null) {
 				for(UMLOperation addedOperation : addedOperations) {
-					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getContainer2(), modelDiff)) {
+					if(invocationT2.matchesOperation(addedOperation, operationBodyMapper.getContainer2(), this, modelDiff)) {
 						AbstractCodeFragment statementT1 = nonMappedLeavesT1.get(0);
 						AbstractCall invocationT1 = statementT1.invocationCoveringEntireFragment();
 						if(invocationT1 != null && addedOperation.getAllOperationInvocations().contains(invocationT1)) {

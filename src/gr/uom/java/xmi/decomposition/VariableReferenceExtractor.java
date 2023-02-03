@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class VariableReferenceExtractor {
 
-	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, Set<AbstractCodeMapping> mappings) {
+	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, Set<AbstractCodeMapping> mappings,
+			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
 		Set<AbstractCodeFragment> statementsUsingVariable1 = declaration1.getStatementsInScopeUsingVariable();
 		Set<AbstractCodeFragment> statementsUsingVariable2 = declaration2.getStatementsInScopeUsingVariable();
@@ -22,8 +25,8 @@ public class VariableReferenceExtractor {
 			AbstractCall invocation2 = fragment2.invocationCoveringEntireFragment();
 			if(invocation1 != null && invocation2 != null) {
 				//add recursive calls to the mappings
-				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), null) &&
-						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), null)) {
+				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), classDiff, modelDiff) &&
+						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), classDiff, modelDiff)) {
 					references.add(mapping);
 				}
 			}
@@ -42,10 +45,11 @@ public class VariableReferenceExtractor {
 		return references;
 	}
 
-	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, List<UMLOperationBodyMapper> operationBodyMapperList) {
+	public static Set<AbstractCodeMapping> findReferences(VariableDeclaration declaration1, VariableDeclaration declaration2, List<UMLOperationBodyMapper> operationBodyMapperList,
+			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			references.addAll(findReferences(declaration1, declaration2, mapper.getMappings()));
+			references.addAll(findReferences(declaration1, declaration2, mapper.getMappings(), classDiff, modelDiff));
 		}
 		return references;
 	}

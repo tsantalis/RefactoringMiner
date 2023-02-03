@@ -172,7 +172,7 @@ public class InlineOperationDetection {
 	private List<AbstractCall> matchingInvocations(UMLOperation removedOperation, List<AbstractCall> operationInvocations, VariableDeclarationContainer callerOperation) {
 		List<AbstractCall> removedOperationInvocations = new ArrayList<AbstractCall>();
 		for(AbstractCall invocation : operationInvocations) {
-			if(invocation.matchesOperation(removedOperation, callerOperation, modelDiff)) {
+			if(invocation.matchesOperation(removedOperation, callerOperation, classDiff, modelDiff)) {
 				removedOperationInvocations.add(invocation);
 			}
 		}
@@ -197,7 +197,7 @@ public class InlineOperationDetection {
 		List<AbstractCall> invocations = operation.getAllOperationInvocations();
 		for(UMLOperation removedOperation : removedOperations) {
 			for(AbstractCall invocation : invocations) {
-				if(invocation.matchesOperation(removedOperation, operation, modelDiff)) {
+				if(invocation.matchesOperation(removedOperation, operation, classDiff, modelDiff)) {
 					if(!callTree.containsInPathToRootOrSibling(parent, removedOperation)) {
 						CallTreeNode node = new CallTreeNode(parent, operation, removedOperation, invocation);
 						parent.addChild(node);
@@ -233,7 +233,7 @@ public class InlineOperationDetection {
 		int delegateStatements = 0;
 		for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			AbstractCall invocation = statement.invocationCoveringEntireFragment();
-			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getContainer1(), parentMapper.getContainer1(), modelDiff)) {
+			if(invocation != null && invocation.matchesOperation(operationBodyMapper.getContainer1(), parentMapper.getContainer1(), classDiff, modelDiff)) {
 				delegateStatements++;
 			}
 		}
@@ -252,7 +252,7 @@ public class InlineOperationDetection {
 		if(operationInvocationsInNewMethod.contains(removedOperationInvocation)) {
 			if(classDiff != null) {
 				for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-					if(removedOperationInvocation.matchesOperation(addedOperation, callerOperation, modelDiff)) {
+					if(removedOperationInvocation.matchesOperation(addedOperation, callerOperation, classDiff, modelDiff)) {
 						return true;
 					}
 				}

@@ -12,6 +12,7 @@ import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_S
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
@@ -195,7 +196,8 @@ public class OperationInvocation extends AbstractCall {
     	return subExpressions.size();
     }
 
-    public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+    public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
+    		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	if(!this.methodName.equals(operation.getName())) {
     		return false;
     	}
@@ -318,7 +320,7 @@ public class OperationInvocation extends AbstractCall {
     		if(inferredArgumentTypes.size() > i && inferredArgumentTypes.get(i) != null) {
     			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i).toString()) &&
     					!parameterType.toString().equals(inferredArgumentTypes.get(i).toString()) &&
-    					!compatibleTypes(parameter, inferredArgumentTypes.get(i), callerOperation, modelDiff)) {
+    					!compatibleTypes(parameter, inferredArgumentTypes.get(i), classDiff, modelDiff)) {
     				return false;
     			}
     		}
@@ -328,7 +330,7 @@ public class OperationInvocation extends AbstractCall {
 		return this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
     }
 
-    private boolean compatibleTypes(UMLParameter parameter, UMLType type, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+    private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
     	if(collectionMatch(parameter.getType(), type))
@@ -376,24 +378,6 @@ public class OperationInvocation extends AbstractCall {
 	    				return true;
 	    		}
 	    	}
-	    	for(UMLClassBaseDiff classDiff : modelDiff.getCommonClassDiffList()) {
-	    		if(classDiff.getNextClassName().startsWith(callerOperation.getClassName())) {
-	    			List<UMLImport> imports = classDiff.getNextClass().getImportedTypes();
-	    			String qualifiedType1Prefix = null;
-	    			String qualifiedType2Prefix = null;
-	    			for(UMLImport umlImport : imports) {
-	    				if(umlImport.getName().endsWith("." + type1)) {
-	    					qualifiedType1Prefix = umlImport.getName().substring(0, umlImport.getName().indexOf("." + type1));
-	    				}
-	    				if(umlImport.getName().endsWith("." + type2)) {
-	    					qualifiedType2Prefix = umlImport.getName().substring(0, umlImport.getName().indexOf("." + type2));
-	    				}
-	    			}
-	    			if(qualifiedType1Prefix != null && qualifiedType2Prefix != null && qualifiedType1Prefix.equals(qualifiedType2Prefix)) {
-	    				return true;
-	    			}
-	    		}
-	    	}
     	}
     	if(!parameter.isVarargs() && type1.endsWith("Object") && !type2.endsWith("Object"))
     		return true;
@@ -412,6 +396,22 @@ public class OperationInvocation extends AbstractCall {
     	UMLClassBaseDiff superclassDiff = getUMLClassDiff(modelDiff, parameter.getType());
     	if(superclassDiff != null && subclassDiff == null) {
     		return true;
+    	}
+    	if(classDiff != null) {
+    		List<UMLImport> imports = classDiff.getNextClass().getImportedTypes();
+			String qualifiedType1Prefix = null;
+			String qualifiedType2Prefix = null;
+			for(UMLImport umlImport : imports) {
+				if(umlImport.getName().endsWith("." + type1)) {
+					qualifiedType1Prefix = umlImport.getName().substring(0, umlImport.getName().indexOf("." + type1));
+				}
+				if(umlImport.getName().endsWith("." + type2)) {
+					qualifiedType2Prefix = umlImport.getName().substring(0, umlImport.getName().indexOf("." + type2));
+				}
+			}
+			if(qualifiedType1Prefix != null && qualifiedType2Prefix != null && qualifiedType1Prefix.equals(qualifiedType2Prefix)) {
+				return true;
+			}
     	}
     	return false;
     }

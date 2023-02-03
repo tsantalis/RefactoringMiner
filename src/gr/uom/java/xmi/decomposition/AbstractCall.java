@@ -22,6 +22,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public abstract class AbstractCall extends LeafExpression {
@@ -56,9 +57,10 @@ public abstract class AbstractCall extends LeafExpression {
 	public abstract double normalizedNameDistance(AbstractCall call);
 	public abstract AbstractCall update(String oldExpression, String newExpression);
 	
-	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
+			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		if(this instanceof OperationInvocation) {
-			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, modelDiff);
+			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, classDiff, modelDiff);
 		}
 		return false;
 	}

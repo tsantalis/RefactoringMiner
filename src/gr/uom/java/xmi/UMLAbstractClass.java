@@ -660,7 +660,7 @@ public abstract class UMLAbstractClass {
 			if(commonOperations.contains(operation)) {
 				for(AbstractCall invocation : operation.getAllOperationInvocations()) {
 					for(UMLOperation unmatchedOperation : unmatchedOperations) {
-						if(invocation.matchesOperation(unmatchedOperation, operation, null)) {
+						if(invocation.matchesOperation(unmatchedOperation, operation, null, null)) {
 							unmatchedCalledOperations.add(unmatchedOperation);
 							break;
 						}

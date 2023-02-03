@@ -27,10 +27,12 @@ public class UMLParameterDiff {
 	private Set<AbstractCodeMapping> mappings;
 	private UMLAnnotationListDiff annotationListDiff;
 	private Set<Refactoring> mapperRefactorings;
+	private UMLAbstractClassDiff classDiff;
+	private UMLModelDiff modelDiff;
 	
 	public UMLParameterDiff(UMLParameter removedParameter, UMLParameter addedParameter,
 			UMLOperation removedOperation, UMLOperation addedOperation,
-			Set<AbstractCodeMapping> mappings, Set<Refactoring> mapperRefactorings) {
+			Set<AbstractCodeMapping> mappings, Set<Refactoring> mapperRefactorings, UMLAbstractClassDiff classDiff) {
 		this.mappings = mappings;
 		this.mapperRefactorings = mapperRefactorings;
 		this.removedParameter = removedParameter;
@@ -56,6 +58,8 @@ public class UMLParameterDiff {
 		if(removedParameter.isFinal() != addedParameter.isFinal())
 			finalChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedParameter.getAnnotations(), addedParameter.getAnnotations());
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 	}
 
 	public UMLParameter getRemovedParameter() {
@@ -110,7 +114,7 @@ public class UMLParameterDiff {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		VariableDeclaration originalVariable = getRemovedParameter().getVariableDeclaration();
 		VariableDeclaration newVariable = getAddedParameter().getVariableDeclaration();
-		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings);
+		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(originalVariable, newVariable, mappings, classDiff, modelDiff);
 		RenameVariableRefactoring renameRefactoring = null;
 		if(isNameChanged()) {
 			renameRefactoring = new RenameVariableRefactoring(originalVariable, newVariable, removedOperation, addedOperation, references, false);

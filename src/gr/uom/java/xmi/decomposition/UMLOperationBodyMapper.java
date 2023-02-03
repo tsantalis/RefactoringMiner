@@ -166,8 +166,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = operation1;
 		this.container2 = operation2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
@@ -259,7 +258,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			this.operationSignatureDiff = new UMLOperationDiff(operation1, operation2);
+			this.operationSignatureDiff = new UMLOperationDiff(operation1, operation2, classDiff);
 			Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 			Map<String, String> parameterToArgumentMap2 = new LinkedHashMap<String, String>();
 			List<UMLParameter> addedParameters = operationSignatureDiff.getAddedParameters();
@@ -750,8 +749,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public UMLOperationBodyMapper(UMLInitializer initializer1, UMLInitializer initializer2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = initializer1;
 		this.container2 = initializer2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
@@ -767,8 +765,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
 		this.parentMapper = parentMapper;
 		this.classDiff = parentMapper.classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = parentMapper.container1;
 		this.container2 = parentMapper.container2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
@@ -1424,8 +1421,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private UMLOperationBodyMapper(UMLOperation anonymousClassOperation, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
 		this.classDiff = parentMapper.classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.container1 = parentMapper.container1;
 		this.container2 = parentMapper.container2;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
@@ -1543,8 +1539,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.callSiteOperation = operationBodyMapper.container2;
 		this.container2 = addedOperation;
 		this.classDiff = classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -1892,8 +1887,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.container2 = operationBodyMapper.container2;
 		this.callSiteOperation = operationBodyMapper.container1;
 		this.classDiff = classDiff;
-		if(classDiff != null)
-			this.modelDiff = classDiff.getModelDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
 		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
 		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
@@ -2335,7 +2329,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(composite.countableStatement()) {
 				for(AbstractCall invocation : composite.getMethodInvocations()) {
 					for(UMLOperation operation : addedOperations) {
-						if(invocation.matchesOperation(operation, container2, modelDiff)) {
+						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
 							nonMappedInnerNodeCount++;
 							break;
 						}
@@ -2348,7 +2342,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(statement.countableStatement()) {
 				for(AbstractCall invocation : statement.getMethodInvocations()) {
 					for(UMLOperation operation : addedOperations) {
-						if(invocation.matchesOperation(operation, container2, modelDiff)) {
+						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
 							nonMappedLeafCount++;
 							break;
 						}
@@ -2365,7 +2359,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(composite.countableStatement()) {
 				for(AbstractCall invocation : composite.getMethodInvocations()) {
 					for(UMLOperation operation : removedOperations) {
-						if(invocation.matchesOperation(operation, container1, modelDiff)) {
+						if(invocation.matchesOperation(operation, container1, classDiff, modelDiff)) {
 							nonMappedInnerNodeCount++;
 							break;
 						}
@@ -2378,7 +2372,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(statement.countableStatement()) {
 				for(AbstractCall invocation : statement.getMethodInvocations()) {
 					for(UMLOperation operation : removedOperations) {
-						if(invocation.matchesOperation(operation, container1, modelDiff)) {
+						if(invocation.matchesOperation(operation, container1, classDiff, modelDiff)) {
 							nonMappedLeafCount++;
 							break;
 						}
@@ -7374,7 +7368,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
 			if(assignedVariable1.equals(assignedVariable2)) {
 				for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
-					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, modelDiff)) {
+					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {
 						return replacementInfo.getReplacements();
 					}
 				}
@@ -9447,12 +9441,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(invocation == null) {
 				invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 			}
-			if(invocation != null && invocation.matchesOperation(container2, callSiteOperation, modelDiff)) {
+			if(invocation != null && invocation.matchesOperation(container2, callSiteOperation, classDiff, modelDiff)) {
 				counter++;
 			}
 			else {
 				for(AbstractCall call : leaf2.getMethodInvocations()) {
-					if(!call.equals(invocation) && call.matchesOperation(container2, callSiteOperation, modelDiff)) {
+					if(!call.equals(invocation) && call.matchesOperation(container2, callSiteOperation, classDiff, modelDiff)) {
 						counter++;
 						break;
 					}
@@ -9464,7 +9458,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private UMLOperation matchesOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {
 		for(UMLOperation operation : operations) {
-			if(invocation.matchesOperation(operation, callerOperation, modelDiff))
+			if(invocation.matchesOperation(operation, callerOperation, classDiff, modelDiff))
 				return operation;
 		}
 		return null;
@@ -9473,10 +9467,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean matchPairOfRemovedAddedOperationsWithIdenticalBody(AbstractCall call1, AbstractCall call2) {
 		if(classDiff != null) {
 			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
-				if(call1.matchesOperation(removedOperation, container1, modelDiff)) {
+				if(call1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {
 					for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
 						if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
-							if(call2.matchesOperation(addedOperation, container2, modelDiff)) {
+							if(call2.matchesOperation(addedOperation, container2, classDiff, modelDiff)) {
 								return true;
 							}
 						}

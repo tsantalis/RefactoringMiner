@@ -17,6 +17,7 @@ import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public interface VariableDeclarationContainer extends LocationInfoProvider {
@@ -120,13 +121,13 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return false;
 	}
 
-	default AbstractCall delegatesTo(VariableDeclarationContainer operation, UMLModelDiff modelDiff) {
+	default AbstractCall delegatesTo(VariableDeclarationContainer operation, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		if(getBody() != null) {
 			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
-					if(operationInvocation.matchesOperation(operation, this, modelDiff)) {
+					if(operationInvocation.matchesOperation(operation, this, classDiff, modelDiff)) {
 						return operationInvocation;
 					}
 				}

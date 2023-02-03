@@ -43,6 +43,7 @@ public class UMLOperationDiff {
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> matchedVariables = new LinkedHashSet<>();
 	private Set<Refactoring> refactorings = new LinkedHashSet<>();
 	private UMLAbstractClassDiff classDiff;
+	private UMLModelDiff modelDiff;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLTypeParameterListDiff typeParameterListDiff;
 	private List<UMLType> addedExceptionTypes;
@@ -50,7 +51,9 @@ public class UMLOperationDiff {
 	private Set<Pair<UMLType, UMLType>> commonExceptionTypes;
 	private SimpleEntry<Set<UMLType>, Set<UMLType>> changedExceptionTypes;
 	
-	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation) {
+	public UMLOperationDiff(UMLOperation removedOperation, UMLOperation addedOperation, UMLAbstractClassDiff classDiff) {
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		process(removedOperation, addedOperation);
 	}
 
@@ -90,7 +93,7 @@ public class UMLOperationDiff {
 		for(SimpleEntry<UMLParameter, UMLParameter> matchedParameter : matchedParameters) {
 			UMLParameter parameter1 = matchedParameter.getKey();
 			UMLParameter parameter2 = matchedParameter.getValue();
-			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings, refactorings);
+			UMLParameterDiff parameterDiff = new UMLParameterDiff(parameter1, parameter2, removedOperation, addedOperation, mappings, refactorings, classDiff);
 			if(!parameterDiff.isEmpty()) {
 				parameterDiffList.add(parameterDiff);
 			}
@@ -114,7 +117,7 @@ public class UMLOperationDiff {
 			for(Iterator<UMLParameter> addedParameterIterator = addedParameters.iterator(); addedParameterIterator.hasNext();) {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getName().equals(addedParameter.getName())) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 					if(!parameterDiff.isEmpty()) {
 						parameterDiffList.add(parameterDiff);
 					}
@@ -131,7 +134,7 @@ public class UMLOperationDiff {
 				UMLParameter addedParameter = addedParameterIterator.next();
 				if(removedParameter.getType().equalsQualified(addedParameter.getType()) &&
 						!existsAnotherAddedParameterWithTheSameType(addedParameter)) {
-					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
+					UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 					if(!parameterDiff.isEmpty()) {
 						parameterDiffList.add(parameterDiff);
 					}
@@ -153,7 +156,7 @@ public class UMLOperationDiff {
 					int indexOfAddedParameter = indexOfParameter(addedParametersWithoutReturnType, addedParameter);
 					if(indexOfRemovedParameter == indexOfAddedParameter &&
 							usedParameters(removedOperation, addedOperation, removedParameter, addedParameter)) {
-						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings);
+						UMLParameterDiff parameterDiff = new UMLParameterDiff(removedParameter, addedParameter, removedOperation, addedOperation, mappings, refactorings, classDiff);
 						if(!parameterDiff.isEmpty()) {
 							parameterDiffList.add(parameterDiff);
 						}
@@ -199,6 +202,7 @@ public class UMLOperationDiff {
 		this.matchedVariables = mapper.getMatchedVariables();
 		this.refactorings = mapper.getRefactoringsAfterPostProcessing();
 		this.classDiff = mapper.getClassDiff();
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
 		process(mapper.getOperation1(), mapper.getOperation2());
 	}
 
@@ -433,7 +437,7 @@ public class UMLOperationDiff {
 					conflictFound = true;
 					if(matchedPair.getLeft().isParameter() && matchedPair.getRight().isLocalVariable()) {
 						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
-								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings), false);
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings, classDiff, modelDiff), false);
 						refactorings.add(rename);
 						Refactoring addParameter = new AddParameterRefactoring(parameterDiff.getAddedParameter(), removedOperation, addedOperation);
 						refactorings.add(addParameter);
@@ -445,7 +449,7 @@ public class UMLOperationDiff {
 					conflictFound = true;
 					if(matchedPair.getLeft().isLocalVariable() && matchedPair.getRight().isParameter()) {
 						Refactoring rename = new RenameVariableRefactoring(matchedPair.getLeft(), matchedPair.getRight(), removedOperation, addedOperation,
-								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings), false);
+								VariableReferenceExtractor.findReferences(matchedPair.getLeft(), matchedPair.getRight(), mappings, classDiff, modelDiff), false);
 						refactorings.add(rename);
 						Refactoring removeParameter = new RemoveParameterRefactoring(parameterDiff.getRemovedParameter(), removedOperation, addedOperation);
 						refactorings.add(removeParameter);

@@ -8728,6 +8728,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<Replacement> variableReplacementWithinMethodInvocations(String s1, String s2, Set<String> variables1, Set<String> variables2) {
 		Set<Replacement> tempReplacements = new LinkedHashSet<Replacement>();
 		for(String variable1 : variables1) {
+			String originalVariable1 = variable1;
+			if(parameterToArgumentMap1 != null && parameterToArgumentMap1.containsKey(variable1) && !parameterToArgumentMap1.get(variable1).equals(variable1)) {
+				variable1 = parameterToArgumentMap1.get(variable1);
+			}
 			if(s1.contains(variable1) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
@@ -8741,9 +8745,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());
 						boolean suffixMatch = substringAfterIndex1.equals(substringAfterIndex2) && !substringAfterIndex1.isEmpty();
+						if(!suffixMatch && !tempReplacements.isEmpty() && !substringAfterIndex1.isEmpty()) {
+							for(Replacement r : tempReplacements) {
+								String tmp1 = substringAfterIndex1.replace(r.getBefore(), r.getAfter());
+								if(tmp1.equals(substringAfterIndex2)) {
+									suffixMatch = true;
+									break;
+								}
+							}
+						}
 						boolean prefixMatch = substringBeforeIndex1.equals(substringBeforeIndex2) && !substringBeforeIndex1.isEmpty();
+						if(!prefixMatch && !tempReplacements.isEmpty() && !substringBeforeIndex1.isEmpty()) {
+							for(Replacement r : tempReplacements) {
+								String tmp1 = substringBeforeIndex1.replace(r.getBefore(), r.getAfter());
+								if(tmp1.equals(substringBeforeIndex2)) {
+									prefixMatch = true;
+									break;
+								}
+							}
+						}
 						if(prefixMatch || suffixMatch) {
-							Replacement r = new Replacement(variable1, variable2, ReplacementType.VARIABLE_NAME);
+							Replacement r = new Replacement(originalVariable1, variable2, ReplacementType.VARIABLE_NAME);
 							tempReplacements.add(r);
 						}
 					}

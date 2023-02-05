@@ -478,7 +478,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								int indexOfChildInParent2 = parent2.getStatements().indexOf(child2);
 								if(indexOfChildInParent1 != indexOfChildInParent2 &&
 										!isElseBranch(child1, parent1) && !isElseBranch(child2, parent2) &&
-										!isTryBranch(child1, parent1) && !isTryBranch(child2, parent2) &&
+										!isTryBlock(child1, parent1) && !isTryBlock(child2, parent2) &&
+										!isFinallyBlock(child1, parent1) && !isFinallyBlock(child2, parent2) &&
 										!ifAddingElseIf(parent1.getParent()) && !ifAddingElseIf(parent2.getParent())) {
 									boolean additionalVariableDeclarationStatements = false;
 									if(indexOfChildInParent1 > indexOfChildInParent2) {
@@ -625,8 +626,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private boolean isTryBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
+	private boolean isTryBlock(AbstractCodeFragment child, CompositeStatementObject parent) {
 		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+				parent.getStatements().indexOf(child) != -1;
+	}
+
+	private boolean isFinallyBlock(AbstractCodeFragment child, CompositeStatementObject parent) {
+		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
 				parent.getStatements().indexOf(child) != -1;
 	}
 

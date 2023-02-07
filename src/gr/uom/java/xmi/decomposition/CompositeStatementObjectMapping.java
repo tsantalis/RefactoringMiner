@@ -34,7 +34,10 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		}
 		double distance1 = this.editDistance();
 		double distance2 = o.editDistance();
-		if(distance1 != distance2 && !replacementsOnSameASTNodes(o)) {
+		boolean depthVSDistanceConflict = distance1 < distance2 && Math.abs(distance1 - distance2) < 0.02 &&
+				Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth()) > 0 &&
+				Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth()) == 0;
+		if(distance1 != distance2 && !replacementsOnSameASTNodes(o) && !depthVSDistanceConflict) {
 			if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
 				return -1;
 			}

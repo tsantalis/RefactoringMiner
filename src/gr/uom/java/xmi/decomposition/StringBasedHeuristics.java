@@ -1330,7 +1330,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			ReplacementInfo replacementInfo) {
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
 		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
@@ -1383,12 +1383,24 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter())))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
+						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
 					variableRename = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&
+						!mapper.getContainer1().isConstructor() && !mapper.getContainer2().isConstructor() && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
+						zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(mapper))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement instanceof VariableReplacementWithMethodInvocation &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						!assignment1.startsWith(assignment2) && !assignment2.startsWith(assignment1) &&
+						!referencedParameter((VariableReplacementWithMethodInvocation)replacement, mapper.getContainer1(), mapper.getContainer2()))
 					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
@@ -1425,6 +1437,63 @@ public class StringBasedHeuristics {
 				}
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private static boolean zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(UMLOperationBodyMapper mapper) {
+		if(mapper.getCallsToExtractedMethod() == 0) {
+			return true;
+		}
+		else if(mapper.getParentMapper() != null) {
+			return !mapper.getParentMapper().getContainer1().equals(mapper.getParentMapper().getContainer2());
+		}
+		return false;
+	}
+
+	private static boolean referencedParameter(VariableReplacementWithMethodInvocation replacement, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		int index1 = -1;
+		UMLType type1 = null;
+		int index2 = -1;
+		UMLType type2 = null;
+		if(replacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(replacement.getAfter().contains(parameter.getVariableName())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		else if(replacement.getDirection().equals(Direction.INVOCATION_TO_VARIABLE)) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(replacement.getBefore().contains(parameter.getVariableName())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		if(type1 != null && type2 != null && type1.equals(type2) && index1 == index2) {
+			return true;
 		}
 		return false;
 	}

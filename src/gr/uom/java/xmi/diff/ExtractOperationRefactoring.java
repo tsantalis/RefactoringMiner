@@ -18,6 +18,8 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
@@ -31,6 +33,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
+	private Set<AbstractCodeMapping> argumentMappings;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
@@ -41,12 +44,14 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
+		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
+			createArgumentMappings(mapping);
 		}
-		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
-		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, UMLOperation extractedOperation,
@@ -59,12 +64,14 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
+		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
+			createArgumentMappings(mapping);
 		}
-		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
-		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public void updateMapperInfo() {
@@ -74,6 +81,27 @@ public class ExtractOperationRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
+		}
+	}
+
+	private void createArgumentMappings(AbstractCodeMapping mapping) {
+		for(Replacement replacement : mapping.getReplacements()) {
+			List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
+			String parameterName = null;
+			for(String key : parameterToArgumentMap.keySet()) {
+				if(parameterToArgumentMap.get(key).equals(replacement.getAfter())) {
+					parameterName = key;
+					break;
+				}
+			}
+			List<LeafExpression> expressions2 = Collections.emptyList();
+			if(parameterName != null) {
+				expressions2 = mapping.getFragment2().findExpression(parameterName);
+			}
+			if(expressions1.size() == 1 && expressions2.size() == 1) {
+				LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, extractedOperation);
+				argumentMappings.add(expressionMapping);
+			}
 		}
 	}
 
@@ -123,6 +151,10 @@ public class ExtractOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public Set<AbstractCodeMapping> getArgumentMappings() {
+		return argumentMappings;
 	}
 
 	public Map<String, String> getParameterToArgumentMap() {

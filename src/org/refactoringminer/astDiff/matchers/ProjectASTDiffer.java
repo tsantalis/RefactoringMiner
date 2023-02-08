@@ -690,23 +690,21 @@ public class ProjectASTDiffer
 		return pairs;
 	}
 
-	private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore)
-	{
+	private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
 
-		Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getLocationInfo());
-		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getLocationInfo());
-		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.FIELD_DECLARATION);
-		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.FIELD_DECLARATION);
-		if (srcFieldDeclaration == null)
-		{
-			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr,Constants.ENUM_CONSTANT_DECLARATION);
+		Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo());
+		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo());
+		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.FIELD_DECLARATION);
+		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.FIELD_DECLARATION);
+		if (srcFieldDeclaration == null) {
+			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.ENUM_CONSTANT_DECLARATION);
 		}
-		if (dstFieldDeclaration == null)
-		{
-			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr,Constants.ENUM_CONSTANT_DECLARATION);
+		if (dstFieldDeclaration == null) {
+			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.ENUM_CONSTANT_DECLARATION);
 		}
-		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash ||
-				srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+		if (srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash
+//				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+			)
 		{
 			// TODO: 8/3/2022 isoStructural can't be a good idea here, i.e anonymous class
 			mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
@@ -746,8 +744,8 @@ public class ProjectASTDiffer
 		//if (attributeAccessModifierPair.first != null && attributeAccessModifierPair.second != null)
 		//	mappingStore.addMapping(attributeAccessModifierPair.first, attributeAccessModifierPair.second);
 
-		if (srcUMLAttribute.getVisibility().equals(dstUMLAttribute.getVisibility()))
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),mappingStore);
+//		if (srcUMLAttribute.getVisibility().equals(dstUMLAttribute.getVisibility()))
+		matchModifiersForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),dstUMLAttribute.getVisibility().toString(),mappingStore);
 		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
 		if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
@@ -756,6 +754,13 @@ public class ProjectASTDiffer
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
 		if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
 			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
+	}
+
+	private void matchModifiersForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String srcModifier, String dstModifier, ExtendedMultiMappingStore mappingStore) {
+		Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, srcModifier);
+		Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, dstModifier);
+		if (srcModifierTree != null && dstModifierTree != null)
+			mappingStore.addMapping(srcModifierTree,dstModifierTree);
 	}
 
 	private void matchModifierForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {

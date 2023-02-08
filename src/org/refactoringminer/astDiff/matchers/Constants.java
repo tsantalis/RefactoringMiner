@@ -42,4 +42,21 @@ public class Constants {
 
 	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
 
+	public static final String ASSERT_STATEMENT = "AssertStatement";
+	public static final String BREAK_STATEMENT = "BreakStatement";
+	public static final String CONSTRUCTOR_INVOCATION = "ConstructorInvocation";
+	public static final String CONTINUE_STATEMENT = "ContinueStatement";
+	public static final String DO_STATEMENT = "DoStatement";
+	public static final String EMPTY_STATEMENT = "EmptyStatement";
+	public static final String ENHANCED_FOR_STATEMENT = "EnhancedForStatement";
+	public static final String FOR_STATEMENT = "ForStatement";
+	public static final String IF_STATEMENT = "IfStatement";
+	public static final String RETURN_STATEMENT = "ReturnStatement";
+	public static final String SUPER_CONSTRUCTOR_INVOCATION = "SuperConstructorInvocation";
+	public static final String SWITCH_CASE = "SwitchCase";
+	public static final String SWITCH_STATEMENT = "SwitchStatement";
+	public static final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
+	public static final String THROW_STATEMENT = "ThrowStatement";
+	public static final String WHILE_STATEMENT = "WhileStatement";
+;
 }

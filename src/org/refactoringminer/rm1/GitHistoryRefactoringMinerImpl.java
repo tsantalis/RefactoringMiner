@@ -760,10 +760,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private void populateWithGitHubAPI(String cloneURL, String currentCommitId,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {
-		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
 		GHRepository repository = getGitHubRepository(cloneURL);
+		final String commitId = repository.queryCommits().from(currentCommitId).list().iterator().next().getSHA1();
+		logger.info("Processing {} {} ...", cloneURL, commitId);
 		List<GHCommit.File> commitFiles = new ArrayList<>();
-		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(currentCommitId, commitFiles);
+		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(commitId, commitFiles);
 		final String parentCommitId = currentCommit.getParents().get(0).getSHA1();
 		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
 		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
@@ -776,7 +777,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							URL currentRawURL = commitFile.getRawUrl();
 							InputStream currentRawFileInputStream = currentRawURL.openStream();
 							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId);
+							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
 							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
 							filesBefore.put(fileName, parentRawFile);
@@ -828,7 +829,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
 							String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 							String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-							String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
+							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
 							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
 							filesBefore.put(previousFilename, parentRawFile);

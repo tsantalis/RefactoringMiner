@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -88,7 +89,7 @@ public class VariableReplacementAnalysis {
 	private Map<String, Set<String>> aliasedVariablesInNextMethod;
 
 	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff,
-			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) {
+			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) throws RefactoringMinerTimedOutException {
 		this.mapper = mapper;
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
@@ -638,7 +639,7 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private void findAttributeExtractions() {
+	private void findAttributeExtractions() throws RefactoringMinerTimedOutException {
 		if(classDiff != null) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
@@ -664,13 +665,13 @@ public class VariableReplacementAnalysis {
 									while(it.hasNext()) {
 										Refactoring ref = it.next();
 										if(ref.equals(refactoring)) {
-											((ExtractAttributeRefactoring)ref).addReference(mapping);
+											((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
 											break;
 										}
 									}
 								}
 								else {
-									refactoring.addReference(mapping);
+									refactoring.addReference(mapping, classDiff, modelDiff);
 									refactorings.add(refactoring);
 								}
 							}

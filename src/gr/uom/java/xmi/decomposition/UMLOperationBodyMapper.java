@@ -2075,7 +2075,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return matchedVariables;
 	}
 
-	public Set<Refactoring> getRefactorings() {
+	public Set<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
 		computeRefactoringsWithinBody();
 
 		if(parentMapper == null && getOperation1() != null && getOperation2() != null) {
@@ -2125,7 +2125,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return refactorings;
 	}
 
-	public void computeRefactoringsWithinBody() {
+	public void computeRefactoringsWithinBody() throws RefactoringMinerTimedOutException {
 		VariableReplacementAnalysis analysis = new VariableReplacementAnalysis(this, refactorings, classDiff, matchedVariables);
 		refactorings.addAll(analysis.getVariableRenames());
 		refactorings.addAll(analysis.getVariableMerges());

@@ -493,11 +493,17 @@ public class ProjectASTDiffer
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
+					lastStepMappings.add(expressionMapping);
+				}
 			}
 			else if (refactoring instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
+					lastStepMappings.add(expressionMapping);
+				}
 			}
 			else if (refactoring instanceof RenameAttributeRefactoring) {
 				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;

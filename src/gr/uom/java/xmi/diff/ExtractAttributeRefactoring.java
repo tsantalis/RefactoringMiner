@@ -7,11 +7,14 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 
 public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute attributeDeclaration;
@@ -19,6 +22,7 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 	private UMLAbstractClass nextClass;
 	private Set<AbstractCodeMapping> references;
 	private boolean insideExtractedOrInlinedMethod;
+	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
 
 	public ExtractAttributeRefactoring(UMLAttribute variableDeclaration, UMLAbstractClass originalClass, UMLAbstractClass nextClass,
 			boolean insideExtractedOrInlinedMethod) {
@@ -27,10 +31,25 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		this.nextClass = nextClass;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+		this.anonymousClassDiffList = new ArrayList<>();
 	}
 
-	public void addReference(AbstractCodeMapping mapping) {
+	public void addReference(AbstractCodeMapping mapping, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		references.add(mapping);
+		List<UMLAnonymousClass> attributeAnonymousClassList = attributeDeclaration.getAnonymousClassList();
+		List<AnonymousClassDeclarationObject> fragmentAnonymousClassDeclarations = mapping.getFragment1().getAnonymousClassDeclarations();
+		if(attributeAnonymousClassList.size() > 0 && fragmentAnonymousClassDeclarations.size() > 0 &&
+				attributeAnonymousClassList.size() == fragmentAnonymousClassDeclarations.size()) {
+			for(int i=0; i<attributeAnonymousClassList.size(); i++) {
+				UMLAnonymousClass after = attributeAnonymousClassList.get(i);
+				UMLAnonymousClass before = mapping.getOperation1().findAnonymousClass(fragmentAnonymousClassDeclarations.get(i));
+				if(before != null && after != null) {
+					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(before, after, classDiff, modelDiff);
+					anonymousClassDiff.process();
+					anonymousClassDiffList.add(anonymousClassDiff);
+				}
+			}
+		}
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -47,6 +66,10 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public List<UMLAnonymousClassDiff> getAnonymousClassDiffList() {
+		return anonymousClassDiffList;
 	}
 
 	public boolean isInsideExtractedOrInlinedMethod() {

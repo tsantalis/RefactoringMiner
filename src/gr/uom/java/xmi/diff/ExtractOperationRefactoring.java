@@ -85,22 +85,24 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
-		for(Replacement replacement : mapping.getReplacements()) {
-			List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
-			String parameterName = null;
-			for(String key : parameterToArgumentMap.keySet()) {
-				if(parameterToArgumentMap.get(key).equals(replacement.getAfter())) {
-					parameterName = key;
-					break;
+		for(AbstractCall call : extractedOperationInvocations) {
+			for(String argument : call.arguments()) {
+				if(!parameterToArgumentMap.containsKey(argument)) {
+					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
+					if(expressions1.size() > 0) {
+						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+						for(AbstractCodeFragment leaf : leaves) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+								List<LeafExpression> expressions2 = leaf.findExpression(argument);
+								if(expressions1.size() == 1 && expressions2.size() == 1) {
+									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+									argumentMappings.add(expressionMapping);
+									break;
+								}
+							}
+						}
+					}
 				}
-			}
-			List<LeafExpression> expressions2 = Collections.emptyList();
-			if(parameterName != null) {
-				expressions2 = mapping.getFragment2().findExpression(parameterName);
-			}
-			if(expressions1.size() == 1 && expressions2.size() == 1) {
-				LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, extractedOperation);
-				argumentMappings.add(expressionMapping);
 			}
 		}
 	}

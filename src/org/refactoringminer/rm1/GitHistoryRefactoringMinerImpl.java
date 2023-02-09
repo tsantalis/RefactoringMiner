@@ -776,7 +776,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							URL currentRawURL = commitFile.getRawUrl();
 							InputStream currentRawFileInputStream = currentRawURL.openStream();
 							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId);
+							String encodedCurrentCommitId = URLEncoder.encode(currentCommitId, StandardCharsets.UTF_8);
+							String encodedParentCommitId = URLEncoder.encode(parentCommitId, StandardCharsets.UTF_8);
+							String rawURLInParentCommit = currentRawURL.toString().replace(encodedCurrentCommitId, encodedParentCommitId);
 							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
 							filesBefore.put(fileName, parentRawFile);
@@ -826,9 +828,11 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 							URL currentRawURL = commitFile.getRawUrl();
 							InputStream currentRawFileInputStream = currentRawURL.openStream();
 							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							String encodedCurrentCommitId = URLEncoder.encode(currentCommitId, StandardCharsets.UTF_8);
+							String encodedParentCommitId = URLEncoder.encode(parentCommitId, StandardCharsets.UTF_8);
 							String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
 							String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-							String rawURLInParentCommit = currentRawURL.toString().replace(currentCommitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
+							String rawURLInParentCommit = currentRawURL.toString().replace(encodedCurrentCommitId, encodedParentCommitId).replace(encodedFileName, encodedPreviousFilename);
 							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
 							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
 							filesBefore.put(previousFilename, parentRawFile);

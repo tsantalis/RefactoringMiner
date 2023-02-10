@@ -101,6 +101,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+		checkForExtractedOperationsWithCallsInOtherMappers();
 	}
 
 	private void processTypeParameters() {
@@ -1709,6 +1710,36 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers);
 		}
+	}
+
+	private void checkForExtractedOperationsWithCallsInOtherMappers() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if((!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty()) && mapper.getChildMappers().size() == 0) {
+				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, this, modelDiff, true);
+				List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
+				for(UMLOperation addedOperation : sortedAddedOperations) {
+					List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
+					for(ExtractOperationRefactoring refactoring : refs) {
+						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+						if(operationBodyMapper.exactMatches() > 1) {
+							refactorings.add(refactoring);
+							extractedOperationMappers.add(operationBodyMapper);
+							mapper.addChildMapper(operationBodyMapper);
+							operationsToBeRemoved.add(addedOperation);
+						}
+					}
+				}
+			}
+		}
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			optimizeDuplicateMappingsForExtract(mapper);
+		}
+		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {
+			processMapperRefactorings(operationBodyMapper, refactorings);
+		}
+		addedOperations.removeAll(operationsToBeRemoved);
 	}
 
 	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {

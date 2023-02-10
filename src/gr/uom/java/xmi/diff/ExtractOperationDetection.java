@@ -35,17 +35,37 @@ public class ExtractOperationDetection {
 	private Map<UMLOperation, List<AbstractCall>> callCountMap = null;
 	private List<UMLOperation> potentiallyMovedOperations = new ArrayList<UMLOperation>();
 
-	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
+	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff, boolean invocationsFromOtherMappers) {
 		this.mapper = mapper;
 		this.addedOperations = addedOperations;
 		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;
-		this.operationInvocations = getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(mapper);
+		if(invocationsFromOtherMappers) {
+			addInvocationsFromOtherMappers();
+		}
+		else {
+			this.operationInvocations = getInvocationsInSourceOperationAfterExtractionExcludingInvocationsInExactlyMappedStatements(mapper);
+		}
+	}
+
+	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
+		this(mapper, addedOperations, classDiff, modelDiff, false);
 	}
 
 	public ExtractOperationDetection(UMLOperationBodyMapper mapper, List<UMLOperation> potentiallyMovedOperations, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		this(mapper, addedOperations, classDiff, modelDiff);
 		this.potentiallyMovedOperations = potentiallyMovedOperations;
+	}
+
+	private void addInvocationsFromOtherMappers() {
+		this.operationInvocations = new ArrayList<>();
+		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+			if(!mapper.equals(this.mapper)) {
+				for(AbstractCodeFragment statement : mapper.getNonMappedLeavesT2()) {
+					addStatementInvocations(operationInvocations, statement);
+				}
+			}
+		}
 	}
 
 	public List<UMLOperation> getAddedOperationsSortedByCalls() {

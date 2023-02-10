@@ -7502,7 +7502,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
 					replacementAdded = processAnonymous(statement1, statement2, parameterToArgumentMap, replacementInfo,
 							invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
-							replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2);
+							replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2, lambdaMappers);
 				}
 			}
 			else {
@@ -7512,7 +7512,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(j);
 						replacementAdded = processAnonymous(statement1, statement2, parameterToArgumentMap, replacementInfo,
 								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
-								replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2);
+								replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2, lambdaMappers);
 					}
 				}
 			}
@@ -7666,13 +7666,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo,
 			AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
 			boolean replacementAdded, AnonymousClassDeclarationObject anonymousClassDeclaration1,
-			AnonymousClassDeclarationObject anonymousClassDeclaration2) throws RefactoringMinerTimedOutException {
+			AnonymousClassDeclarationObject anonymousClassDeclaration2, List<UMLOperationBodyMapper> lambdaMappers) throws RefactoringMinerTimedOutException {
 		String statementWithoutAnonymous1 = statementWithoutAnonymous(statement1, anonymousClassDeclaration1, container1);
 		String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, container2);
 		if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
 				(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+				invocationCoveringTheEntireStatement1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers) ||
 				invocationCoveringTheEntireStatement1.identicalWithOnlyChangesInAnonymousClassArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||

@@ -1715,6 +1715,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void checkForExtractedOperationsWithCallsInOtherMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		Set<UMLOperationBodyMapper> parentMappersToBeOptimized = new LinkedHashSet<UMLOperationBodyMapper>();
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			if((!mapper.getNonMappedLeavesT1().isEmpty() || !mapper.getNonMappedInnerNodesT1().isEmpty()) && mapper.getChildMappers().size() == 0) {
 				ExtractOperationDetection detection = new ExtractOperationDetection(mapper, addedOperations, this, modelDiff, true);
@@ -1727,13 +1728,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							refactorings.add(refactoring);
 							extractedOperationMappers.add(operationBodyMapper);
 							mapper.addChildMapper(operationBodyMapper);
+							parentMappersToBeOptimized.add(mapper);
 							operationsToBeRemoved.add(addedOperation);
 						}
 					}
 				}
 			}
 		}
-		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+		for(UMLOperationBodyMapper mapper : parentMappersToBeOptimized) {
 			optimizeDuplicateMappingsForExtract(mapper);
 		}
 		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {

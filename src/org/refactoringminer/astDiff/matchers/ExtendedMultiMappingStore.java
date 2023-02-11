@@ -225,4 +225,26 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 				this.replaceMapping(realSrc,realDst);
 		}
 	}
+
+	public void replaceWithOptimizedMappings(ExtendedMultiMappingStore optimizationMappings) {
+		for (Mapping optimizationMapping : optimizationMappings) {
+			Tree srcMapped = optimizationMapping.first;
+			Tree dstMapped = optimizationMapping.second;
+			if (this.getDsts(srcMapped) != null)
+			{
+				Set<Tree> dstForSrcList = new LinkedHashSet<>(this.getDsts(srcMapped));
+				for (Tree dstForSrc : dstForSrcList)
+					removeMapping(srcMapped,dstForSrc);
+			}
+			if (this.getSrcs(dstMapped) != null)
+			{
+				Set<Tree> srcForDstList = new LinkedHashSet<>(this.getSrcs(dstMapped));
+				for (Tree srcForDst : srcForDstList)
+					removeMapping(srcForDst,dstMapped);
+			}
+		}
+		for (Mapping optimizationMapping : optimizationMappings) {
+			this.addMapping(optimizationMapping.first,optimizationMapping.second);
+		}
+	}
 }

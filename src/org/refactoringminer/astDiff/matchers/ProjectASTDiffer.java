@@ -829,6 +829,26 @@ public class ProjectASTDiffer
 			if (srcImportStatement != null && dstImportStatement != null)
 				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 		}
+		//Grouped Imports
+		for (Map.Entry<Set<UMLImport>, UMLImport> setUMLImportEntry : importDiffList.getGroupedImports().entrySet()) {
+			Set<UMLImport> srcImportSet = setUMLImportEntry.getKey();
+			UMLImport dstImport = setUMLImportEntry.getValue();
+			Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,dstImport);
+			for (UMLImport srcUMLImport : srcImportSet) {
+				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,srcUMLImport);
+				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+			}
+		}
+		//UnGrouped Imports
+		for (Map.Entry<UMLImport, Set<UMLImport>> umlImportSetEntry : importDiffList.getUnGroupedImports().entrySet()) {
+			UMLImport srcImport = umlImportSetEntry.getKey();
+			Set<UMLImport> dstImportSet = umlImportSetEntry.getValue();
+			Tree srcImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,srcImport);
+			for (UMLImport dstUMLImport : dstImportSet) {
+				Tree dstImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,dstUMLImport);
+				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+			}
+		}
 	}
 
 	private Tree findImportByTypeAndLabel(List<Tree> inputTree, String searchingType, UMLImport label) {

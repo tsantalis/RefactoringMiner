@@ -533,6 +533,36 @@ public class ProjectASTDiffer
 					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
 				}
 			}
+			else if (refactoring instanceof InlineVariableRefactoring) {
+				//TODO: As same as ExVarRefactoring: API must be updated
+				InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring) refactoring;
+//				for(LeafMapping mapping : inlineVariableRefactoring.getSubExpressionMappings()) {
+//					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
+//				}
+			}
+			else if (refactoring instanceof ReplaceAttributeRefactoring)
+			{
+				//TODO:
+				ReplaceAttributeRefactoring replaceAttributeRefactoring = (ReplaceAttributeRefactoring) refactoring;
+			}
+			else if (refactoring instanceof InlineAttributeRefactoring)
+			{
+				InlineAttributeRefactoring inlineAttributeRefactoring = (InlineAttributeRefactoring) refactoring;
+				Tree srcAttrDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, inlineAttributeRefactoring.getVariableDeclaration().getLocationInfo());
+				for (AbstractCodeMapping reference : inlineAttributeRefactoring.getReferences()) {
+					Tree dstStatementTree = TreeUtilFunctions.findByLocationInfo(dstTree,reference.getFragment2().getLocationInfo());
+					new LeafMatcher(false).match(srcAttrDeclaration,dstStatementTree,reference,mappingStore);
+				}
+			}
+			else if (refactoring instanceof ExtractAttributeRefactoring)
+			{
+				ExtractAttributeRefactoring extractAttributeRefactoring = (ExtractAttributeRefactoring) refactoring;
+				Tree dstAttrDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, extractAttributeRefactoring.getVariableDeclaration().getLocationInfo());
+				for (AbstractCodeMapping reference : extractAttributeRefactoring.getReferences()) {
+					Tree srcStatementTree = TreeUtilFunctions.findByLocationInfo(srcTree,reference.getFragment1().getLocationInfo());
+					new LeafMatcher(false).match(srcStatementTree,dstAttrDeclaration,reference,mappingStore);
+				}
+			}
 			else if (refactoring instanceof MergeVariableRefactoring)
 			{
 				MergeVariableRefactoring mergeVariableRefactoring = (MergeVariableRefactoring) refactoring;

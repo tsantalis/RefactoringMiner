@@ -95,7 +95,7 @@ public class ProjectASTDiffer
 		TreeContext dstTreeContext = treeContextPair.second;
 		Tree srcTree = srcTreeContext.getRoot();
 		Tree dstTree = dstTreeContext.getRoot();
-		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTreeContext,dstTreeContext);
+		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		this.lastStepMappings = new ArrayList<>();
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);

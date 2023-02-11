@@ -7,7 +7,6 @@ import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.matchers.MultiMappingStore;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.utils.Pair;
 
@@ -16,13 +15,13 @@ import com.github.gumtreediff.utils.Pair;
  * @since   2022-12-26 12:19 a.m.
  */
 public class ExtendedMultiMappingStore extends MultiMappingStore implements Iterable<Mapping> {
-	private TreeContext srcTC;
-	private TreeContext dstTC;
+	private final Tree src;
+	private final Tree dst;
 
-	public ExtendedMultiMappingStore(TreeContext srcTC, TreeContext dstTC) {
+	public ExtendedMultiMappingStore(Tree srcTree, Tree dstTree) {
 		super();
-		this.srcTC = srcTC;
-		this.dstTC = dstTC;
+		this.src = srcTree;
+		this.dst = dstTree;
 	}
 
 	public boolean isDstMultiMapped(Tree dstTree) {
@@ -95,7 +94,7 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	}
 
 	public MappingStore getMonoMappingStore() {
-		MappingStore monoStore = new MappingStore(srcTC.getRoot(),dstTC.getRoot());
+		MappingStore monoStore = new MappingStore(src,dst);
 		for (Map.Entry<Tree,Tree> entry : getSrcToDstMono().entrySet())
 			monoStore.addMapping(entry.getKey(),entry.getValue());
 		return monoStore;

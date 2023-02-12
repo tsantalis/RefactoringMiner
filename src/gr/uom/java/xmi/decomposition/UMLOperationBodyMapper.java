@@ -4703,6 +4703,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
 				commonParentMappings.add(mapping);
 			}
+			else if(parent1.equals(mapping.getFragment1().getParent()) || parent2.equals(mapping.getFragment2().getParent())) {
+				if(mapping.getFragment1().getVariableDeclarations().size() != mapping.getFragment2().getVariableDeclarations().size()) {
+					commonParentMappings.add(mapping);
+				}
+			}
 		}
 		return mappings.size() > 1 && mappings.equals(commonParentMappings);
 	}

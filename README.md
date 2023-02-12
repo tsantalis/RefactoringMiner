@@ -545,6 +545,9 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
 
 # AST Diff API usage guidelines
 
+RefactoringMiner is actually the only tool that generates AST diff at commit level, supports multi-mappings (one-to-many, many-to-one, many-to-many mappings), matches AST nodes of different AST types, and supports semantic diff in a fully refactoring-aware fashion.
+You can explore its advanced AST diff capabilities in our [AST Diff Gallery](https://github.com/tsantalis/RefactoringMiner/wiki/AST-Diff-Gallery).
+
 All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
@@ -589,6 +592,8 @@ Path dir1 = Paths.get("/home/user/tmp/v1");
 Path dir1 = Paths.get("/home/user/tmp/v2");
 Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
 ```
+
+To **visualize** the diff, you can clone our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark) and execute [Run.java](https://github.com/pouryafard75/DiffBenchmark/blob/master/src/main/java/rm/Run.java) with a commit of your preference.
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

@@ -142,16 +142,16 @@ Currently, it supports the detection of the following refactorings:
 95. Split Method
 
 # Current precision and recall
-As of **February 7, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
+As of **February 12, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11461  | 23  | 278  | 0.998  | 0.976|
-|Extract Method|962  |  1  | 29  | 0.999  | 0.971|
+|**Total**|11513  | 23  | 278  | 0.998  | 0.976|
+|Extract Method|965  |  1  | 29  | 0.999  | 0.971|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|11  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|362  |  4  | 27  | 0.989  | 0.931|
 |Inline Method|111  |  0  |  2  | 1.000  | 0.982|
 |Move Method|352  |  3  |  9  | 0.992  | 0.975|
@@ -171,7 +171,7 @@ As of **February 7, 2023** the precision and recall of the tool on an oracle con
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|223  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|224  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|78  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
@@ -184,7 +184,7 @@ As of **February 7, 2023** the precision and recall of the tool on an oracle con
 |Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|75  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|

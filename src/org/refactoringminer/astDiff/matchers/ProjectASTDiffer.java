@@ -562,6 +562,9 @@ public class ProjectASTDiffer
 					Tree srcStatementTree = TreeUtilFunctions.findByLocationInfo(srcTree,reference.getFragment1().getLocationInfo());
 					new LeafMatcher(false).match(srcStatementTree,dstAttrDeclaration,reference,mappingStore);
 				}
+				for (UMLAnonymousClassDiff umlAnonymousClassDiff : extractAttributeRefactoring.getAnonymousClassDiffList()) {
+					processAnonymousClassDiff(srcTree,dstTree,umlAnonymousClassDiff,mappingStore);
+				}
 			}
 			else if (refactoring instanceof MergeVariableRefactoring)
 			{
@@ -663,10 +666,14 @@ public class ProjectASTDiffer
 		processFieldDeclaration(srcTree,dstTree,umlEnumConstantDiff.getRemovedEnumConstant(),umlEnumConstantDiff.getAddedEnumConstant(),mappingStore);
 		if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
 			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
-			List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
-			for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
-				processMethod(srcTree,dstTree,umlOperationBodyMapper,mappingStore);
-			}
+			processAnonymousClassDiff(srcTree, dstTree, anonymousClassDiff, mappingStore);
+		}
+	}
+
+	private void processAnonymousClassDiff(Tree srcTree, Tree dstTree, UMLAnonymousClassDiff anonymousClassDiff, ExtendedMultiMappingStore mappingStore) {
+		List<UMLOperationBodyMapper> operationBodyMapperList = anonymousClassDiff.getOperationBodyMapperList();
+		for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
+			processMethod(srcTree, dstTree,umlOperationBodyMapper, mappingStore);
 		}
 	}
 

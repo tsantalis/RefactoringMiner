@@ -10,6 +10,7 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
@@ -611,6 +612,24 @@ public class ProjectASTDiffer
 					new CompositeMatcher().match(srcTree,dstTree,
 							(AbstractStatement) eachMerged, (AbstractStatement) mergeCatchRefactoring.getNewCatchBlock()
 							,mappingStore);
+				}
+			}
+			else if (refactoring instanceof RenameVariableRefactoring)
+			{
+				RenameVariableRefactoring renameVariableRefactoring = (RenameVariableRefactoring) refactoring;
+				if (renameVariableRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_VARIABLE_WITH_ATTRIBUTE))
+				{
+					VariableDeclaration originalVariable = renameVariableRefactoring.getOriginalVariable();
+					VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
+					Tree srcVar = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
+					Tree dstVar = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
+					System.out.println();
+					new LeafMatcher(false).match(
+							TreeUtilFunctions.getParentUntilType(srcVar,Constants.VARIABLE_DECLARATION_STATEMENT),
+							TreeUtilFunctions.getParentUntilType(dstVar,Constants.FIELD_DECLARATION),
+							null,
+							mappingStore);
+					//TODO: need more cases to generalize the logic
 				}
 			}
 		}

@@ -696,14 +696,16 @@ public class VariableReplacementAnalysis {
 									while(it.hasNext()) {
 										Refactoring ref = it.next();
 										if(ref.equals(refactoring)) {
-											((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
+											List<Refactoring> anonymousClassDiffRefactorings = ((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
+											refactorings.addAll(anonymousClassDiffRefactorings);
 											break;
 										}
 									}
 								}
 								else {
-									refactoring.addReference(mapping, classDiff, modelDiff);
+									List<Refactoring> anonymousClassDiffRefactorings = refactoring.addReference(mapping, classDiff, modelDiff);
 									refactorings.add(refactoring);
+									refactorings.addAll(anonymousClassDiffRefactorings);
 								}
 							}
 							else {

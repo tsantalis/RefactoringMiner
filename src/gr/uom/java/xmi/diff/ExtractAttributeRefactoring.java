@@ -15,6 +15,7 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
+import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute attributeDeclaration;
@@ -34,8 +35,9 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		this.anonymousClassDiffList = new ArrayList<>();
 	}
 
-	public void addReference(AbstractCodeMapping mapping, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+	public List<Refactoring> addReference(AbstractCodeMapping mapping, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		references.add(mapping);
+		List<Refactoring> allRefactorings = new ArrayList<>();
 		List<UMLAnonymousClass> attributeAnonymousClassList = attributeDeclaration.getAnonymousClassList();
 		List<AnonymousClassDeclarationObject> fragmentAnonymousClassDeclarations = mapping.getFragment1().getAnonymousClassDeclarations();
 		if(attributeAnonymousClassList.size() > 0 && fragmentAnonymousClassDeclarations.size() > 0 &&
@@ -47,9 +49,15 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(before, after, classDiff, modelDiff);
 					anonymousClassDiff.process();
 					anonymousClassDiffList.add(anonymousClassDiff);
+					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+					if(matchedOperationMappers.size() > 0) {
+						List<Refactoring> anonymousClassDiffRefactorings = anonymousClassDiff.getRefactorings();
+						allRefactorings.addAll(anonymousClassDiffRefactorings);
+					}
 				}
 			}
 		}
+		return allRefactorings;
 	}
 
 	public RefactoringType getRefactoringType() {

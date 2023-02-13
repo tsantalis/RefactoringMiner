@@ -39,7 +39,8 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		references.add(mapping);
 		List<Refactoring> allRefactorings = new ArrayList<>();
 		List<UMLAnonymousClass> attributeAnonymousClassList = attributeDeclaration.getAnonymousClassList();
-		List<AnonymousClassDeclarationObject> fragmentAnonymousClassDeclarations = mapping.getFragment1().getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> fragmentAnonymousClassDeclarations = new ArrayList<>();
+		recursivelyCollectAnonymousClassDeclarations(fragmentAnonymousClassDeclarations, mapping.getFragment1().getAnonymousClassDeclarations());
 		if(attributeAnonymousClassList.size() > 0 && fragmentAnonymousClassDeclarations.size() > 0 &&
 				attributeAnonymousClassList.size() == fragmentAnonymousClassDeclarations.size()) {
 			for(int i=0; i<attributeAnonymousClassList.size(); i++) {
@@ -58,6 +59,13 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 			}
 		}
 		return allRefactorings;
+	}
+
+	private static void recursivelyCollectAnonymousClassDeclarations(List<AnonymousClassDeclarationObject> all, List<AnonymousClassDeclarationObject> current) {
+		for(AnonymousClassDeclarationObject anonymous : current) {
+			recursivelyCollectAnonymousClassDeclarations(all, anonymous.getAnonymousClassDeclarations());
+			all.add(anonymous);
+		}
 	}
 
 	public RefactoringType getRefactoringType() {

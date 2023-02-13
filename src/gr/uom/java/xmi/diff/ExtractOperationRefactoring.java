@@ -33,7 +33,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
-	private Set<AbstractCodeMapping> argumentMappings;
+	private List<AbstractCodeMapping> argumentMappings;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
@@ -44,7 +44,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -64,7 +64,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -177,7 +177,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
-	public Set<AbstractCodeMapping> getArgumentMappings() {
+	public List<AbstractCodeMapping> getArgumentMappings() {
 		return argumentMappings;
 	}
 

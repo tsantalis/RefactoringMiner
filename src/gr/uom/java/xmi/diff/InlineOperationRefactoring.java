@@ -33,7 +33,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
-	private Set<AbstractCodeMapping> argumentMappings;
+	private List<AbstractCodeMapping> argumentMappings;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
@@ -45,7 +45,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.inlinedCodeFragmentsFromInlinedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.inlinedCodeFragmentsInTargetOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap1();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -147,7 +147,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
-	public Set<AbstractCodeMapping> getArgumentMappings() {
+	public List<AbstractCodeMapping> getArgumentMappings() {
 		return argumentMappings;
 	}
 

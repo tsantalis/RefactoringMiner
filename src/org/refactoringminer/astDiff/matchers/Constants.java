@@ -40,4 +40,6 @@ public class Constants {
 	public static final String STATIC = "static";
 	public static final String EQUAL_OPERATOR = "=";
 
+	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+
 }

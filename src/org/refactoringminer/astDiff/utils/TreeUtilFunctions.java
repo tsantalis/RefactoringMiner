@@ -22,7 +22,25 @@ public class TreeUtilFunctions {
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
-		return getTreeBetweenPositions(tree, startoffset, endoffset);
+
+		Tree treeBetweenPositions = getTreeBetweenPositions(tree, startoffset, endoffset);
+		if (treeBetweenPositions == null) return null;
+		if (treeBetweenPositions.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+		{
+			if (treeBetweenPositions.getChildren().size() > 0 )
+			{
+				if (treeBetweenPositions.getChild(0).getPos() == startoffset
+						&& treeBetweenPositions.getChild(0).getEndPos() == endoffset)
+					return treeBetweenPositions.getChild(0);
+				else {
+					return treeBetweenPositions;
+				}
+			}
+			else {
+				return treeBetweenPositions;
+			}
+		}
+		return treeBetweenPositions;
 	}
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo, String type){

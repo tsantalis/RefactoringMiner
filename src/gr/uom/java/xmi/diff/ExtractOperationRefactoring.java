@@ -108,8 +108,8 @@ public class ExtractOperationRefactoring implements Refactoring {
 			}
 		}
 		if(!argumentMatchFound) {
-			for(Replacement replacement : mapping.getReplacements()) { 
-				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore()); 
+			for(Replacement replacement : mapping.getReplacements()) {
+				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
 				if(expressions1.size() > 0) {
 					List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 					for(AbstractCodeFragment leaf : leaves) {

@@ -9392,7 +9392,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean parentMapperContainsExactMapping(AbstractStatement statement) {
+	public boolean parentMapperContainsMapping(AbstractCodeFragment statement) {
+		if(parentMapper != null) {
+			for(AbstractCodeMapping mapping : parentMapper.mappings) {
+				AbstractCodeFragment fragment1 = mapping.getFragment1();
+				AbstractCodeFragment fragment2 = mapping.getFragment2();
+				if(fragment1.equals(statement) || fragment2.equals(statement)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean parentMapperContainsExactMapping(AbstractCodeFragment statement) {
 		if(parentMapper != null) {
 			for(AbstractCodeMapping mapping : parentMapper.mappings) {
 				AbstractCodeFragment fragment1 = mapping.getFragment1();

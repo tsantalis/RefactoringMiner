@@ -84,6 +84,19 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 	}
 
+	private boolean isMappedInParent(AbstractCodeFragment leaf) {
+		if(bodyMapper.parentMapperContainsMapping(leaf)) {
+			return true;
+		}
+		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
+			return true;
+		}
+		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
+			return true;
+		}
+		return false;
+	}
+
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : extractedOperationInvocations) {
@@ -93,7 +106,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 					if(expressions1.size() > 0) {
 						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions2 = leaf.findExpression(argument);
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
@@ -114,7 +127,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 					List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 					for(AbstractCodeFragment leaf : leaves) {
 						for(AbstractCall call : extractedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);

@@ -65,6 +65,19 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 	}
 
+	private boolean isMappedInParent(AbstractCodeFragment leaf) {
+		if(bodyMapper.parentMapperContainsMapping(leaf)) {
+			return true;
+		}
+		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
+			return true;
+		}
+		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
+			return true;
+		}
+		return false;
+	}
+
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
@@ -74,7 +87,7 @@ public class InlineOperationRefactoring implements Refactoring {
 					if(expressions2.size() > 0) {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions1 = leaf.findExpression(argument);
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
@@ -95,7 +108,7 @@ public class InlineOperationRefactoring implements Refactoring {
 					List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 					for(AbstractCodeFragment leaf : leaves) {
 						for(AbstractCall call : inlinedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);

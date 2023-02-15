@@ -66,6 +66,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
+		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
 			for(String argument : call.arguments()) {
 				if(!parameterToArgumentMap.containsKey(argument)) {
@@ -75,6 +76,27 @@ public class InlineOperationRefactoring implements Refactoring {
 						for(AbstractCodeFragment leaf : leaves) {
 							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
 								List<LeafExpression> expressions1 = leaf.findExpression(argument);
+								if(expressions1.size() == 1 && expressions2.size() == 1) {
+									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
+									argumentMappings.add(expressionMapping);
+									argumentMatchFound = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!argumentMatchFound) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+				if(expressions2.size() > 0) {
+					List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+					for(AbstractCodeFragment leaf : leaves) {
+						for(AbstractCall call : inlinedOperationInvocations) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+								List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
 									argumentMappings.add(expressionMapping);

@@ -593,7 +593,7 @@ Path dir1 = Paths.get("/home/user/tmp/v2");
 Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
 ```
 
-To **visualize** the diff, you can clone our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark) and execute [Run.java](https://github.com/pouryafard75/DiffBenchmark/blob/master/src/main/java/rm/Run.java) with a commit of your preference.
+To **visualize** the diff, you can use our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark).
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

@@ -1,14 +1,20 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.github.gumtreediff.io.TreeIoUtils;
 import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.refactoringminer.astDiff.matchers.Constants;
 
 /**
@@ -151,5 +157,24 @@ public class TreeUtilFunctions {
 			return getParentUntilType(tree.getParent(),matchingType);
 		else
 			return null;
+	}
+
+	public static Tree loadTree(String name) {
+		try {
+			InputStream resourceAsStream = FileUtils.openInputStream(new File(name));
+			return TreeIoUtils.fromXml().generateFrom().stream(resourceAsStream).getRoot();
+		} catch (IOException e) {
+			throw new RuntimeException(String.format("Unable to load test resource: %s", name), e);
+		}
+	}
+
+	public static void writeTree(Tree tree, String filePath) {
+		TreeContext srcTC = new TreeContext();
+		srcTC.setRoot(tree);
+		try {
+			TreeIoUtils.toXml(srcTC).writeTo(filePath);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

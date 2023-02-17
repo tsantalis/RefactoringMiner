@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
-import static org.refactoringminer.astDiff.utils.UtilMethods.getTestDir;
+import static org.refactoringminer.astDiff.utils.UtilMethods.getCommitsMappingsPath;
 
 public class AddCase {
 
@@ -48,12 +48,12 @@ public class AddCase {
 
     private static void addTestCase(String repo, String commit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = getTestDir() + getTestInfoFile();
+        String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
 
         Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
         for (ASTDiff astDiff : astDiffs) {
-            String finalPath = getFinalFilePath(astDiff, getTestDir(),  repo, commit);
-            Files.createDirectories(Paths.get(getFinalFolderPath(getTestDir(),repo,commit)));
+            String finalPath = getFinalFilePath(astDiff, getCommitsMappingsPath(),  repo, commit);
+            Files.createDirectories(Paths.get(getFinalFolderPath(getCommitsMappingsPath(),repo,commit)));
             MappingExportModel.exportToFile(new File(finalPath), astDiff.getMultiMappings());
         }
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});

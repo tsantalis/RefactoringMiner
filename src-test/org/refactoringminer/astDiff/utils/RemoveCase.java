@@ -44,7 +44,7 @@ public class RemoveCase {
 
     private static void removeTestCase(String repo, String commit) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = getTestDir() + getTestInfoFile();
+        String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         CaseInfo caseInfo = new CaseInfo(repo,commit);
         boolean confirm = false;
@@ -64,7 +64,7 @@ public class RemoveCase {
                 System.out.println("Testcase removed successfully");
                 System.out.println("Repo=" + repo);
                 System.out.println("Commit=" + commit);
-                String finalFolderPath = getFinalFolderPath(getTestDir(), repo, commit);
+                String finalFolderPath = getFinalFolderPath(getCommitsMappingsPath(), repo, commit);
                 FileUtils.deleteDirectory(new File(finalFolderPath));
             } catch (IOException e) {
                 throw new RuntimeException(e);

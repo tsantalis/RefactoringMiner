@@ -3,8 +3,8 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
 public class UtilMethods {
-    private static String dir = "src-test/org/refactoringminer/astDiff/data/";
-    private static String infoFile = "cases.json";
+    private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/";
+    private static final String infoFile = "cases.json";
 
     private static final String JSON_SUFFIX = ".json";
     private static final String JAVA_SUFFIX = ".java";
@@ -34,8 +34,8 @@ public class UtilMethods {
         return folderName.replace("/","_") + "/";
     }
 
-    public static String getTestDir(){
-        return dir;
+    public static String getCommitsMappingsPath(){
+        return COMMITS_MAPPINGS_PATH;
     }
 
     public static String getTestInfoFile(){

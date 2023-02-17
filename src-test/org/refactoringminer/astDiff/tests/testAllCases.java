@@ -53,11 +53,16 @@ public class testAllCases {
         String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         for (CaseInfo info : infos) {
-            //Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
-        	String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
-        	Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
-        	Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
+
+            //use url to download commits (uncomment the following line)
+            Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
+
+            //use tmp1 to get commits ( uncomment 3 following lines)
+//        	String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
+//        	Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
+//        	Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
+
             for (ASTDiff astDiff : astDiffs) {
                 String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
                 String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());

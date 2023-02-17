@@ -1,4 +1,4 @@
-package org.refactoringminer.astDiff.test;
+package org.refactoringminer.astDiff.tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

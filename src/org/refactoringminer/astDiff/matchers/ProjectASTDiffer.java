@@ -906,9 +906,9 @@ public class ProjectASTDiffer
 		for (Map.Entry<UMLImport, Set<UMLImport>> umlImportSetEntry : importDiffList.getUnGroupedImports().entrySet()) {
 			UMLImport srcImport = umlImportSetEntry.getKey();
 			Set<UMLImport> dstImportSet = umlImportSetEntry.getValue();
-			Tree srcImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,srcImport);
+			Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,srcImport);
 			for (UMLImport dstUMLImport : dstImportSet) {
-				Tree dstImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,dstUMLImport);
+				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,dstUMLImport);
 				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 			}
 		}

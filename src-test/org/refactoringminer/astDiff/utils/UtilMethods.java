@@ -4,6 +4,7 @@ import org.refactoringminer.astDiff.actions.ASTDiff;
 
 public class UtilMethods {
     private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/commits/";
+    private static final String TREES_PATH = "src-test/org/refactoringminer/astDiff/data/trees";
     private static final String infoFile = "cases.json";
 
     private static final String JSON_SUFFIX = ".json";
@@ -37,6 +38,7 @@ public class UtilMethods {
     public static String getCommitsMappingsPath(){
         return COMMITS_MAPPINGS_PATH;
     }
+    public static String getTreesPath() { return TREES_PATH; }
 
     public static String getTestInfoFile(){
         return infoFile;

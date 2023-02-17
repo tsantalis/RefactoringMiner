@@ -50,16 +50,16 @@ public class testAllCases {
     public static Iterable<Object[]> initData() throws Exception {
         List<Object[]> allCases = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = getTestDir() + getTestInfoFile();
+        String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         for (CaseInfo info : infos) {
             //Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
         	String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
         	Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
         	Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
-            List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getTestDir(), info.getRepo(), info.getCommit())).list())));
+            List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
             for (ASTDiff astDiff : astDiffs) {
-                String finalFilePath = getFinalFilePath(astDiff, getTestDir(), info.getRepo(), info.getCommit());
+                String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
                 String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
                 String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
                 allCases.add(new Object[]{info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated});

@@ -3,7 +3,7 @@ package org.refactoringminer.astDiff.utils;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
 public class UtilMethods {
-    private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/";
+    private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/commits/";
     private static final String infoFile = "cases.json";
 
     private static final String JSON_SUFFIX = ".json";

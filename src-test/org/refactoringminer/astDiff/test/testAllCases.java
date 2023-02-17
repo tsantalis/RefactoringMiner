@@ -42,7 +42,7 @@ public class testAllCases {
 
     @Test
     public void testChecker() {
-        assertEquals(String.format("Failed for the repo : %s, commit : %s , srcFileName: %s",repo,commit,srcFileName),
+        assertEquals(String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName),
                 expected,actual);
     }
 

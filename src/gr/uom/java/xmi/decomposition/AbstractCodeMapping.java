@@ -421,7 +421,16 @@ public abstract class AbstractCodeMapping {
 			}
 			String expression = invocation.getExpression();
 			if(expression != null && (expression.equals(replacedExpression) || ReplacementUtil.contains(expression, replacedExpression))) {
-				return true;
+				boolean subExpressionIsCallToSameMethod = false;
+				if(invocation instanceof OperationInvocation) {
+					String subExpression = ((OperationInvocation)invocation).subExpressionIsCallToSameMethod();
+					if(subExpression != null && ReplacementUtil.contains(subExpression, replacedExpression)) {
+						subExpressionIsCallToSameMethod = true;
+					}
+				}
+				if(!subExpressionIsCallToSameMethod) {
+					return true;
+				}
 			}
 		}
 		ObjectCreation creation = initializer.creationCoveringEntireFragment();

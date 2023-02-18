@@ -692,7 +692,7 @@ public class Visitor extends ASTVisitor {
 						break;
 					}
 				}
-				boolean qualifiedIsField = false;
+				boolean qualifierIsField = false;
 				if(!qualifierIsParameter && !parentMethodDeclaration.isConstructor()) {
 					AbstractTypeDeclaration parentTypeDeclaration = findParentTypeDeclaration(parentMethodDeclaration);
 					if(parentTypeDeclaration != null) {
@@ -703,18 +703,18 @@ public class Visitor extends ASTVisitor {
 								List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 								for(VariableDeclarationFragment fragment : fragments) {
 									if(fragment.getName().getIdentifier().equals(qualifierIdentifier)) {
-										qualifiedIsField = true;
+										qualifierIsField = true;
 										break;
 									}
 								}
-								if(qualifiedIsField) {
+								if(qualifierIsField) {
 									break;
 								}
 							}
 						}
 					}
 				}
-				if(qualifierIsParameter || qualifiedIsField) {
+				if(qualifierIsParameter || qualifierIsField/* || node.getName().getIdentifier().equals("length")*/) {
 					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 					variables.add(expression);
 					if(current.getUserObject() != null) {

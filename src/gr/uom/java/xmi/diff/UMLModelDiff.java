@@ -2854,7 +2854,7 @@ public class UMLModelDiff {
 							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, false);
 							if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 									!conflictingExpression(addedOperationInvocation, addedOperation, mapper.getContainer2().variableDeclarationMap()) &&
-									extractAndMoveMatchCondition(operationBodyMapper, mapper)) {
+									extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation)) {
 								if(className.equals(addedOperation.getClassName())) {
 									//extract inside moved or renamed class
 									ExtractOperationRefactoring extractOperationRefactoring =
@@ -2959,7 +2959,7 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
+	private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper, AbstractCall addedOperationInvocation) {
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		if(operationBodyMapper.getContainer2().isGetter() && mappingList.size() == 1) {
 			List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());
@@ -2996,6 +2996,13 @@ public class UMLModelDiff {
 						}
 					}
 				}
+			}
+		}
+		if(mappingList.size() == 1 && mappingList.get(0).getFragment1() instanceof AbstractExpression) {
+			AbstractExpression expression = (AbstractExpression)mappingList.get(0).getFragment1();
+			AbstractCall call = expression.invocationCoveringEntireFragment();
+			if(call != null && call.identicalName(addedOperationInvocation) && call.equalArguments(addedOperationInvocation)) {
+				return false;
 			}
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
@@ -3228,11 +3235,29 @@ public class UMLModelDiff {
 						if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
 								!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new PullUpOperationRefactoring(firstMapper);
+							boolean singleSuperConstructorInvocationMatch = false;
+							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+									singleSuperConstructorInvocationMatch = true;
+								}
+							}
+							if(!singleSuperConstructorInvocationMatch) {
+								refactoring = new PullUpOperationRefactoring(firstMapper);
+							}
 						}
 						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
-							refactoring = new PushDownOperationRefactoring(firstMapper);
+							boolean singleSuperConstructorInvocationMatch = false;
+							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+									singleSuperConstructorInvocationMatch = true;
+								}
+							}
+							if(!singleSuperConstructorInvocationMatch) {
+								refactoring = new PushDownOperationRefactoring(firstMapper);
+							}
 						}
 						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								movedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
@@ -3345,11 +3370,29 @@ public class UMLModelDiff {
 						if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
 								!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new PullUpOperationRefactoring(firstMapper);
+							boolean singleSuperConstructorInvocationMatch = false;
+							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+									singleSuperConstructorInvocationMatch = true;
+								}
+							}
+							if(!singleSuperConstructorInvocationMatch) {
+								refactoring = new PullUpOperationRefactoring(firstMapper);
+							}
 						}
 						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
-							refactoring = new PushDownOperationRefactoring(firstMapper);
+							boolean singleSuperConstructorInvocationMatch = false;
+							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+									singleSuperConstructorInvocationMatch = true;
+								}
+							}
+							if(!singleSuperConstructorInvocationMatch) {
+								refactoring = new PushDownOperationRefactoring(firstMapper);
+							}
 						}
 						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 								movedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {

@@ -721,4 +721,13 @@ public class OperationInvocation extends AbstractCall {
 				(subExpressionIntersection.size() >= this.subExpressions.size() - this.subExpressionsWithStringLiteralArgument() ||
 				subExpressionIntersection.size() >= other.subExpressions.size() - other.subExpressionsWithStringLiteralArgument());
 	}
+
+	public String subExpressionIsCallToSameMethod() {
+		for(String expression : subExpressions) {
+			if(expression.startsWith(this.getName() + "(")) {
+				return expression;
+			}
+		}
+		return null;
+	}
 }

@@ -9674,9 +9674,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(childMappers.size() > 0) {
 			for(UMLOperationBodyMapper childMapper : childMappers) {
-				if(!childMapper.operationInvocation.getName().equals(this.container2.getName()) &&
-						!childMapper.operationInvocation.getName().equals(this.container1.getName()) &&
-						childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
+				if(childMapper.containsExtractedOrInlinedOperationInvocation(mapping)) {
 					return true;
 				}
 			}

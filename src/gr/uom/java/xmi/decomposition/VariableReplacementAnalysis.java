@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -88,7 +89,7 @@ public class VariableReplacementAnalysis {
 	private Map<String, Set<String>> aliasedVariablesInNextMethod;
 
 	public VariableReplacementAnalysis(UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, UMLAbstractClassDiff classDiff,
-			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) {
+			Set<Pair<VariableDeclaration, VariableDeclaration>> previouslyMatchedVariables) throws RefactoringMinerTimedOutException {
 		this.mapper = mapper;
 		this.mappings = mapper.getMappings();
 		this.nonMappedLeavesT1 = mapper.getNonMappedLeavesT1();
@@ -638,7 +639,7 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private void findAttributeExtractions() {
+	private void findAttributeExtractions() throws RefactoringMinerTimedOutException {
 		if(classDiff != null) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
@@ -652,32 +653,78 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			for(AbstractCodeFragment fragment1 : mapper.getNonMappedLeavesT1()) {
+				for(VariableDeclaration declaration1 : fragment1.getVariableDeclarations()) {
+					for(UMLAttribute addedAttribute : addedAttributes) {
+						VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
+						if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+							if(variableReferences.size() > 0) {
+								RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+								refactorings.add(refactoring);
+								break;
+							}
+						}
+					}
+				}
+			}
+			for(AbstractCodeFragment fragment2 : mapper.getNonMappedLeavesT2()) {
+				for(VariableDeclaration declaration2 : fragment2.getVariableDeclarations()) {
+					for(UMLAttribute removedAttribute : removedAttributes) {
+						VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
+						if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+							Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+							if(variableReferences.size() > 0) {
+								RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+								refactorings.add(refactoring);
+								break;
+							}
+						}
+					}
+				}
+			}
+			Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<>();
 			for(AbstractCodeMapping mapping : mappings) {
 				for(Replacement replacement : mapping.getReplacements()) {
 					if(replacement.involvesVariable()) {
 						for(UMLAttribute addedAttribute : addedAttributes) {
-							VariableDeclaration variableDeclaration = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(replacement.getAfter()) && extractInlineCondition(variableDeclaration, replacement, replacement.getBefore())) {
+							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
+							if(addedAttribute.getName().equals(replacement.getAfter()) && extractInlineCondition(declaration2, replacement, replacement.getBefore())) {
 								ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 								if(refactorings.contains(refactoring)) {
 									Iterator<Refactoring> it = refactorings.iterator();
 									while(it.hasNext()) {
 										Refactoring ref = it.next();
 										if(ref.equals(refactoring)) {
-											((ExtractAttributeRefactoring)ref).addReference(mapping);
+											List<Refactoring> anonymousClassDiffRefactorings = ((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
+											refactorings.addAll(anonymousClassDiffRefactorings);
 											break;
 										}
 									}
 								}
 								else {
-									refactoring.addReference(mapping);
+									List<Refactoring> anonymousClassDiffRefactorings = refactoring.addReference(mapping, classDiff, modelDiff);
 									refactorings.add(refactoring);
+									refactorings.addAll(anonymousClassDiffRefactorings);
+								}
+							}
+							else {
+								for(VariableDeclaration declaration1 : mapping.getFragment1().getVariableDeclarations()) {
+									if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+										Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+										if(variableReferences.size() > 0 && mapping.getFragment2().getVariableDeclaration(declaration1.getVariableName()) == null) {
+											RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+											refactorings.add(refactoring);
+											mappingsToBeRemoved.add(mapping);
+											break;
+										}
+									}
 								}
 							}
 						}
 						for(UMLAttribute removedAttribute : removedAttributes) {
-							VariableDeclaration variableDeclaration = removedAttribute.getVariableDeclaration();
-							if(removedAttribute.getName().equals(replacement.getBefore()) && extractInlineCondition(variableDeclaration, replacement, replacement.getAfter())) {
+							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
+							if(removedAttribute.getName().equals(replacement.getBefore()) && extractInlineCondition(declaration1, replacement, replacement.getAfter())) {
 								InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
 								if(refactorings.contains(refactoring)) {
 									Iterator<Refactoring> it = refactorings.iterator();
@@ -694,9 +741,25 @@ public class VariableReplacementAnalysis {
 									refactorings.add(refactoring);
 								}
 							}
+							else {
+								for(VariableDeclaration declaration2 : mapping.getFragment2().getVariableDeclarations()) {
+									if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+										Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+										if(variableReferences.size() > 0 && mapping.getFragment1().getVariableDeclaration(declaration2.getVariableName()) == null) {
+											RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+											refactorings.add(refactoring);
+											mappingsToBeRemoved.add(mapping);
+											break;
+										}
+									}
+								}
+							}
 						}
 					}
 				}
+			}
+			for(AbstractCodeMapping mapping : mappingsToBeRemoved) {
+				mapper.removeMapping(mapping);
 			}
 		}
 	}

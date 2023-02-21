@@ -1,0 +1,238 @@
+/*
+ *  Licensed to GraphHopper and Peter Karich under one or more contributor
+ *  license agreements. See the NOTICE file distributed with this work for 
+ *  additional information regarding copyright ownership.
+ * 
+ *  GraphHopper licenses this file to you under the Apache License, 
+ *  Version 2.0 (the "License"); you may not use this file except in 
+ *  compliance with the License. You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package com.graphhopper.storage;
+
+import com.graphhopper.coll.GHBitSet;
+import com.graphhopper.coll.GHBitSetImpl;
+import com.graphhopper.coll.SparseIntIntArray;
+import com.graphhopper.routing.util.AllEdgesIterator;
+import com.graphhopper.routing.util.EdgeFilter;
+import com.graphhopper.routing.util.EncodingManager;
+import com.graphhopper.search.NameIndex;
+import com.graphhopper.util.BitUtil;
+import com.graphhopper.util.EdgeExplorer;
+import com.graphhopper.util.EdgeIterator;
+import com.graphhopper.util.EdgeIteratorState;
+import com.graphhopper.util.GHUtility;
+import com.graphhopper.util.Helper;
+import com.graphhopper.util.PointList;
+import com.graphhopper.util.shapes.BBox;
+
+import static com.graphhopper.util.Helper.nf;
+
+import java.io.UnsupportedEncodingException;
+
+/**
+ * The main implementation which handles nodes and edges file format. It can be used with different
+ * Directory implementations like RAMDirectory for fast access or via MMapDirectory for
+ * virtual-memory and not thread safe usage.
+ * <p/>
+ * Note: A RAM DataAccess Object is thread-safe in itself but if used in this Graph implementation
+ * it is not write thread safe.
+ * <p/>
+ * Life cycle: (1) object creation, (2) configuration via setters & getters, (3) create or
+ * loadExisting, (4) usage, (5) flush, (6) close
+ * <p/>
+ * @author Peter Karich
+ * @see GraphBuilder Use the GraphBuilder class to create a (Level)GraphStorage easier.
+ * @see LevelGraphStorage
+ */
+public class GraphHopperStorage implements GraphStorage {
+
+    /**
+     * This methods disconnects all edges from removed nodes. It does no edge compaction. Then it
+     * moves the last nodes into the deleted nodes, where it needs to update the node ids in every
+     * edge.
+     */
+    void inPlaceNodeRemove( int removeNodeCount )
+    {
+        // Prepare edge-update of nodes which are connected to deleted nodes        
+        int toMoveNodes = getNodes();
+        int itemsToMove = 0;
+
+        // sorted map when we access it via keyAt and valueAt - see below!
+        final SparseIntIntArray oldToNewMap = new SparseIntIntArray(removeNodeCount);
+        GHBitSet toRemoveSet = new GHBitSetImpl(removeNodeCount);
+        removedNodes.copyTo(toRemoveSet);
+
+        EdgeExplorer delExplorer = createEdgeExplorer(EdgeFilter.ALL_EDGES);
+        // create map of old node ids pointing to new ids        
+        for (int removeNode = removedNodes.next(0);
+                removeNode >= 0;
+                removeNode = removedNodes.next(removeNode + 1))
+        {
+            EdgeIterator delEdgesIter = delExplorer.setBaseNode(removeNode);
+            while (delEdgesIter.next())
+            {
+                toRemoveSet.add(delEdgesIter.getAdjNode());
+            }
+
+            toMoveNodes--;
+            for (; toMoveNodes >= 0; toMoveNodes--)
+            {
+                if (!removedNodes.contains(toMoveNodes))
+                    break;
+            }
+
+            if (toMoveNodes >= removeNode)
+                oldToNewMap.put(toMoveNodes, removeNode);
+
+            itemsToMove++;
+        }
+
+        EdgeIterable adjNodesToDelIter = (EdgeIterable) createEdgeExplorer();
+        // now similar process to disconnectEdges but only for specific nodes
+        // all deleted nodes could be connected to existing. remove the connections
+        for (int removeNode = toRemoveSet.next(0);
+                removeNode >= 0;
+                removeNode = toRemoveSet.next(removeNode + 1))
+        {
+            // remove all edges connected to the deleted nodes
+            adjNodesToDelIter.setBaseNode(removeNode);
+            long prev = EdgeIterator.NO_EDGE;
+            while (adjNodesToDelIter.next())
+            {
+                int nodeId = adjNodesToDelIter.getAdjNode();
+                // already invalidated
+                if (nodeId != NO_NODE && removedNodes.contains(nodeId))
+                {
+                    int edgeToRemove = adjNodesToDelIter.getEdge();
+                    long edgeToRemovePointer = (long) edgeToRemove * edgeEntryBytes;
+                    internalEdgeDisconnect(edgeToRemove, prev, removeNode, nodeId);
+                    invalidateEdge(edgeToRemovePointer);
+                } else
+                {
+                    prev = adjNodesToDelIter.getEdgePointer();
+                }
+            }
+        }
+
+        GHBitSet toMoveSet = new GHBitSetImpl(removeNodeCount * 3);
+        EdgeExplorer movedEdgeExplorer = createEdgeExplorer();
+        // marks connected nodes to rewrite the edges
+        for (int i = 0; i < itemsToMove; i++)
+        {
+            int oldI = oldToNewMap.keyAt(i);
+            EdgeIterator movedEdgeIter = movedEdgeExplorer.setBaseNode(oldI);
+            while (movedEdgeIter.next())
+            {
+                int nodeId = movedEdgeIter.getAdjNode();
+                if (nodeId == NO_NODE)
+                    continue;
+
+                if (removedNodes.contains(nodeId))
+                    throw new IllegalStateException("shouldn't happen the edge to the node "
+                            + nodeId + " should be already deleted. " + oldI);
+
+                toMoveSet.add(nodeId);
+            }
+        }
+
+        // move nodes into deleted nodes
+        for (int i = 0; i < itemsToMove; i++)
+        {
+            int oldI = oldToNewMap.keyAt(i);
+            int newI = oldToNewMap.valueAt(i);
+            long newOffset = (long) newI * nodeEntryBytes;
+            long oldOffset = (long) oldI * nodeEntryBytes;
+            for (long j = 0; j < nodeEntryBytes; j += 4)
+            {
+                nodes.setInt(newOffset + j, nodes.getInt(oldOffset + j));
+            }
+        }
+
+        // *rewrites* all edges connected to moved nodes
+        // go through all edges and pick the necessary <- this is easier to implement than
+        // a more efficient (?) breadth-first search
+        EdgeIterator iter = getAllEdges();
+        while (iter.next())
+        {
+            int nodeA = iter.getBaseNode();
+            int nodeB = iter.getAdjNode();
+            if (!toMoveSet.contains(nodeA) && !toMoveSet.contains(nodeB))
+                continue;
+
+            // now overwrite exiting edge with new node ids 
+            // also flags and links could have changed due to different node order
+            int updatedA = oldToNewMap.get(nodeA);
+            if (updatedA < 0)
+                updatedA = nodeA;
+
+            int updatedB = oldToNewMap.get(nodeB);
+            if (updatedB < 0)
+                updatedB = nodeB;
+
+            int edge = iter.getEdge();
+            long edgePointer = (long) edge * edgeEntryBytes;
+            int linkA = edges.getInt(getLinkPosInEdgeArea(nodeA, nodeB, edgePointer));
+            int linkB = edges.getInt(getLinkPosInEdgeArea(nodeB, nodeA, edgePointer));
+            long flags = getFlags_(propAccess, edgePointer, false);
+            writeEdge(edge, updatedA, updatedB, linkA, linkB);
+            setFlags_(propAccess, edgePointer, updatedA > updatedB, flags);
+            if (updatedA < updatedB != nodeA < nodeB)
+                setWayGeometry_(fetchWayGeometry_(edgePointer, true, 0, -1, -1), edgePointer, false);
+        }
+
+        if (removeNodeCount >= nodeCount)
+            throw new IllegalStateException("graph is empty after in-place removal but was " + removeNodeCount);
+
+        // we do not remove the invalid edges => edgeCount stays the same!
+        nodeCount -= removeNodeCount;
+
+        EdgeExplorer explorer = createEdgeExplorer();
+        // health check
+        if (isTestingEnabled())
+        {
+            iter = getAllEdges();
+            while (iter.next())
+            {
+                int base = iter.getBaseNode();
+                int adj = iter.getAdjNode();
+                String str = iter.getEdge()
+                        + ", r.contains(" + base + "):" + removedNodes.contains(base)
+                        + ", r.contains(" + adj + "):" + removedNodes.contains(adj)
+                        + ", tr.contains(" + base + "):" + toRemoveSet.contains(base)
+                        + ", tr.contains(" + adj + "):" + toRemoveSet.contains(adj)
+                        + ", base:" + base + ", adj:" + adj + ", nodeCount:" + nodeCount;
+                if (adj >= nodeCount)
+                    throw new RuntimeException("Adj.node problem with edge " + str);
+
+                if (base >= nodeCount)
+                    throw new RuntimeException("Base node problem with edge " + str);
+
+                try
+                {
+                    explorer.setBaseNode(adj).toString();
+                } catch (Exception ex)
+                {
+                    org.slf4j.LoggerFactory.getLogger(getClass()).error("adj:" + adj);
+                }
+                try
+                {
+                    explorer.setBaseNode(base).toString();
+                } catch (Exception ex)
+                {
+                    org.slf4j.LoggerFactory.getLogger(getClass()).error("base:" + base);
+                }
+            }
+            // access last node -> no error
+            explorer.setBaseNode(nodeCount - 1).toString();
+        }
+        removedNodes = null;
+    }
+}

@@ -33,7 +33,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> extractedCodeFragmentsToExtractedOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
-	private Set<AbstractCodeMapping> argumentMappings;
+	private List<AbstractCodeMapping> argumentMappings;
 
 	public ExtractOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer sourceOperationAfterExtraction, List<AbstractCall> operationInvocations) {
 		this.bodyMapper = bodyMapper;
@@ -44,7 +44,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -64,7 +64,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.extractedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.extractedCodeFragmentsToExtractedOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap2();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -84,6 +84,19 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 	}
 
+	private boolean isMappedInParent(AbstractCodeFragment leaf) {
+		if(bodyMapper.parentMapperContainsMapping(leaf)) {
+			return true;
+		}
+		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
+			return true;
+		}
+		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
+			return true;
+		}
+		return false;
+	}
+
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : extractedOperationInvocations) {
@@ -93,7 +106,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 					if(expressions1.size() > 0) {
 						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions2 = leaf.findExpression(argument);
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
@@ -108,13 +121,13 @@ public class ExtractOperationRefactoring implements Refactoring {
 			}
 		}
 		if(!argumentMatchFound) {
-			for(Replacement replacement : mapping.getReplacements()) { 
-				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore()); 
+			for(Replacement replacement : mapping.getReplacements()) {
+				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
 				if(expressions1.size() > 0) {
 					List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 					for(AbstractCodeFragment leaf : leaves) {
 						for(AbstractCall call : extractedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
@@ -177,7 +190,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
-	public Set<AbstractCodeMapping> getArgumentMappings() {
+	public List<AbstractCodeMapping> getArgumentMappings() {
 		return argumentMappings;
 	}
 

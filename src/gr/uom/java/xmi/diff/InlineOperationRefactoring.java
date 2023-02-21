@@ -33,7 +33,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
-	private Set<AbstractCodeMapping> argumentMappings;
+	private List<AbstractCodeMapping> argumentMappings;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
@@ -45,7 +45,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.inlinedCodeFragmentsFromInlinedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.inlinedCodeFragmentsInTargetOperation = new LinkedHashSet<AbstractCodeFragment>();
-		this.argumentMappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
 		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap1();
 		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
@@ -65,7 +65,21 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 	}
 
+	private boolean isMappedInParent(AbstractCodeFragment leaf) {
+		if(bodyMapper.parentMapperContainsMapping(leaf)) {
+			return true;
+		}
+		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
+			return true;
+		}
+		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
+			return true;
+		}
+		return false;
+	}
+
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
+		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
 			for(String argument : call.arguments()) {
 				if(!parameterToArgumentMap.containsKey(argument)) {
@@ -73,8 +87,29 @@ public class InlineOperationRefactoring implements Refactoring {
 					if(expressions2.size() > 0) {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 								List<LeafExpression> expressions1 = leaf.findExpression(argument);
+								if(expressions1.size() == 1 && expressions2.size() == 1) {
+									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
+									argumentMappings.add(expressionMapping);
+									argumentMatchFound = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!argumentMatchFound) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+				if(expressions2.size() > 0) {
+					List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+					for(AbstractCodeFragment leaf : leaves) {
+						for(AbstractCall call : inlinedOperationInvocations) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+								List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
 								if(expressions1.size() == 1 && expressions2.size() == 1) {
 									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
 									argumentMappings.add(expressionMapping);
@@ -147,7 +182,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		return replacements;
 	}
 
-	public Set<AbstractCodeMapping> getArgumentMappings() {
+	public List<AbstractCodeMapping> getArgumentMappings() {
 		return argumentMappings;
 	}
 

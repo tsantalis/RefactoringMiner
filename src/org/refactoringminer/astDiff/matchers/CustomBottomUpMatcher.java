@@ -24,7 +24,7 @@ public class CustomBottomUpMatcher implements Matcher {
 			if (t.isRoot()) {
 				if (t.getType().name.equals(dst.getType().name))
 				{
-					if (!mappings.isSrcMapped(t) && mappings.isDstMapped(dst))
+					if (!mappings.isSrcMapped(t) && !mappings.isDstMapped(dst))
 						mappings.addMapping(t, dst);
 				}
 				lastChanceMatch(mappings, t, dst);

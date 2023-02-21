@@ -142,16 +142,16 @@ Currently, it supports the detection of the following refactorings:
 95. Split Method
 
 # Current precision and recall
-As of **February 7, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
+As of **February 12, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11461  | 23  | 278  | 0.998  | 0.976|
-|Extract Method|962  |  1  | 29  | 0.999  | 0.971|
+|**Total**|11513  | 23  | 278  | 0.998  | 0.976|
+|Extract Method|965  |  1  | 29  | 0.999  | 0.971|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|11  |  0  |  0  | 1.000  | 1.000|
+|Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|362  |  4  | 27  | 0.989  | 0.931|
 |Inline Method|111  |  0  |  2  | 1.000  | 0.982|
 |Move Method|352  |  3  |  9  | 0.992  | 0.975|
@@ -171,7 +171,7 @@ As of **February 7, 2023** the precision and recall of the tool on an oracle con
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|223  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|224  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|78  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
@@ -184,7 +184,7 @@ As of **February 7, 2023** the precision and recall of the tool on an oracle con
 |Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|75  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
@@ -545,6 +545,9 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
 
 # AST Diff API usage guidelines
 
+RefactoringMiner is actually the only tool that generates AST diff at commit level, supports multi-mappings (one-to-many, many-to-one, many-to-many mappings), matches AST nodes of different AST types, and supports semantic diff in a fully refactoring-aware fashion.
+You can explore its advanced AST diff capabilities in our [AST Diff Gallery](https://github.com/tsantalis/RefactoringMiner/wiki/AST-Diff-Gallery).
+
 All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
@@ -589,6 +592,8 @@ Path dir1 = Paths.get("/home/user/tmp/v1");
 Path dir1 = Paths.get("/home/user/tmp/v2");
 Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
 ```
+
+To **visualize** the diff, you can use our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark).
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

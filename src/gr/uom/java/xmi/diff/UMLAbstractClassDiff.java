@@ -727,7 +727,7 @@ public abstract class UMLAbstractClassDiff {
 		return refactorings;
 	}
 
-	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) {
+	protected void processMapperRefactorings(UMLOperationBodyMapper mapper, List<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		Set<Refactoring> refactorings2 = new LinkedHashSet<>();
 		refactorings2.addAll(mapper.getRefactoringsAfterPostProcessing());
 		refactorings2.addAll(mapper.getRefactorings());

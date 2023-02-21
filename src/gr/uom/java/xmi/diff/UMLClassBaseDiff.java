@@ -1759,12 +1759,34 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<UMLOperation> sortedAddedOperations = detection.getAddedOperationsSortedByCalls();
 			for(UMLOperation addedOperation : sortedAddedOperations) {
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
+				List<ExtractOperationRefactoring> discarded = new ArrayList<>();
+				if(refs.size() > 1) {
+					for(ExtractOperationRefactoring refactoring : refs) {
+						Set<AbstractCodeMapping> mappings = refactoring.getBodyMapper().getMappings();
+						if(mappings.size() == 1) {
+							AbstractCodeMapping mapping = mappings.iterator().next();
+							if(!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+								AbstractCall call1 = mapping.getFragment1().invocationCoveringEntireFragment();
+								AbstractCall call2 = mapping.getFragment2().invocationCoveringEntireFragment();
+								if(call1 != null && call2 != null && call1.getName().equals(refactoring.getExtractedOperation().getName()) &&
+										call2.getName().equals(refactoring.getExtractedOperation().getName())) {
+									discarded.add(refactoring);
+								}
+							}
+						}
+					}
+				}
+				if(discarded.equals(refs)) {
+					discarded.clear();
+				}
 				for(ExtractOperationRefactoring refactoring : refs) {
-					refactorings.add(refactoring);
-					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
-					extractedOperationMappers.add(operationBodyMapper);
-					mapper.addChildMapper(operationBodyMapper);
-					operationsToBeRemoved.add(addedOperation);
+					if(!discarded.contains(refactoring)) {
+						refactorings.add(refactoring);
+						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+						extractedOperationMappers.add(operationBodyMapper);
+						mapper.addChildMapper(operationBodyMapper);
+						operationsToBeRemoved.add(addedOperation);
+					}
 				}
 			}
 		}

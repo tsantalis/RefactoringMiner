@@ -102,7 +102,8 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (tree.getType().name.equals(Constants.BLOCK)) return null;
+		if (tree.getType().name.equals(Constants.BLOCK))
+			if (tree.getChildren().size() != 0) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
 		if (tree.getType().name.equals(Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;

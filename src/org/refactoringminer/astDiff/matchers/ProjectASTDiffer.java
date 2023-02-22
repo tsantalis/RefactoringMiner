@@ -743,19 +743,9 @@ public class ProjectASTDiffer
 		Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo());
 		mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
 		new LeafMatcher(false).match(srcVarDeclaration,dstVarDeclaration,null,mappingStore);
-		processAttributeJavaDoc(srcTree,dstTree,srcUMLAttribute.getJavadoc(),dstUMLAttribute.getJavadoc(),mappingStore);
+		processJavaDocs(srcTree,dstTree,srcUMLAttribute.getJavadoc(),dstUMLAttribute.getJavadoc(),mappingStore);
 		mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
 	}
-
-	private void processAttributeJavaDoc(Tree srcTree,Tree dstTree, UMLJavadoc srcJavaDoc, UMLJavadoc dstJavaDoc, ExtendedMultiMappingStore mappingStore) {
-		if (srcJavaDoc == null || dstJavaDoc == null) return;
-		Tree srcJavaDocTree = TreeUtilFunctions.findByLocationInfo(srcTree,srcJavaDoc.getLocationInfo());
-		Tree dstJavaDocTree = TreeUtilFunctions.findByLocationInfo(dstTree,dstJavaDoc.getLocationInfo());
-		if (srcJavaDocTree != null && dstJavaDocTree != null)
-			if (srcJavaDocTree.isIsoStructuralTo(dstJavaDocTree))
-				mappingStore.addMappingRecursively(srcJavaDocTree,dstJavaDocTree);
-	}
-
 	private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
 		//Pair<Tree, Tree> attributeAccessModifierPair = findAttributeAccessModifierPair(srcFieldDeclaration, dstFieldDeclaration, srcUMLAttribute, dstUMLAttribute);
 		//if (attributeAccessModifierPair.first != null && attributeAccessModifierPair.second != null)

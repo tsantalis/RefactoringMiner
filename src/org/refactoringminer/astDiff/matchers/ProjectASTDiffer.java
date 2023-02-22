@@ -220,7 +220,7 @@ public class ProjectASTDiffer
 		if (umlOperationBodyMapper.getOperation1() != null & umlOperationBodyMapper.getOperation2() != null) {
 			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo());
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
-			processMethodJavaDoc(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
+			processJavaDocs(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
 			processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 			fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
@@ -382,19 +382,7 @@ public class ProjectASTDiffer
 		return new Pair<>(firstCommentVisitor.getComments(),secondCommentVisitor.getComments());
 	}
 	*/
-
-	private void processClassJavaDocs(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-		UMLJavadoc javadoc1 = classDiff.getOriginalClass().getJavadoc();
-		UMLJavadoc javadoc2 = classDiff.getNextClass().getJavadoc();
-		if (javadoc1 != null && javadoc2 != null) {
-			Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree, javadoc1.getLocationInfo());
-			Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree, javadoc2.getLocationInfo());
-			if (javadoc1.equalText(javadoc2))
-				mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
-		}
-	}
-
-	private void processMethodJavaDoc(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
+	private void processJavaDocs(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
 		if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
 			Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
 			Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
@@ -1013,7 +1001,7 @@ public class ProjectASTDiffer
 		processSuperClass(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
 		processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
 		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
-		processClassJavaDocs(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
+		processJavaDocs(srcTypeDeclaration,dstTypeDeclaration,classDiff.getOriginalClass().getJavadoc(),classDiff.getNextClass().getJavadoc(),mappingStore);
 		processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
 
 	}

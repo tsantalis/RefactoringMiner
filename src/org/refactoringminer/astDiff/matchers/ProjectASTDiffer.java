@@ -67,8 +67,10 @@ public class ProjectASTDiffer
 
 	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLClassBaseDiff classDiff : umlClassBaseDiffList) {
-			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff),mergeFlag);
-			ASTDiff append = findAppend(classASTDiff);
+			ASTDiff append = findAppend(classDiff);
+			boolean decision = (append != null) || mergeFlag;
+			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff), decision);
+
 			if (append != null)
 				append.getMultiMappings().mergeMappings(classASTDiff.getMultiMappings());
 			else {
@@ -76,11 +78,11 @@ public class ProjectASTDiffer
 			}
 		}
 	}
-	private ASTDiff findAppend(ASTDiff classASTDiff) {
+	private ASTDiff findAppend(UMLClassBaseDiff classBaseDiff) {
 		for (ASTDiff existing : diffSet) {
-			if (existing.getSrcPath().equals(classASTDiff.getSrcPath()))
+			if (existing.getSrcPath().equals(classBaseDiff.getOriginalClass().getSourceFile()))
 				return existing;
-			else if (existing.getDstPath().equals(classASTDiff.getDstPath()))
+			else if (existing.getDstPath().equals(classBaseDiff.getNextClass().getSourceFile()))
 				return existing;
 		}
 		return null;
@@ -101,8 +103,8 @@ public class ProjectASTDiffer
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);
 			processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
-			processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
 		}
+		processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
 		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);

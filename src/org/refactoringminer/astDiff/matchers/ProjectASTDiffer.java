@@ -394,13 +394,16 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processMethodJavaDoc(Tree srcTree, Tree dstTree, UMLJavadoc javadoc1, UMLJavadoc javadoc2, ExtendedMultiMappingStore mappingStore) {
-		if (javadoc1 != null && javadoc2 != null) {
-			if (javadoc1.equalText(javadoc2))
+	private void processMethodJavaDoc(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
+		if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
+			Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
+			Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
+			if (srcUMLJavaDoc.equalText(dstUMLJavaDoc))
 			{
-				Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,javadoc1.getLocationInfo());
-				Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,javadoc2.getLocationInfo());
 				mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
+			}
+			else {
+				new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,null,mappingStore);
 			}
 		}
 	}

@@ -1,0 +1,111 @@
+[ {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "",
+  "secondParentType" : "",
+  "firstPos" : 5235,
+  "secondPos" : 5113,
+  "firstEndPos" : 5261,
+  "secondEndPos" : 5139
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "Assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 5235,
+  "secondPos" : 5113,
+  "firstEndPos" : 5260,
+  "secondEndPos" : 5138
+}, {
+  "firstType" : "FieldAccess",
+  "secondType" : "FieldAccess",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 5235,
+  "secondPos" : 5113,
+  "firstEndPos" : 5250,
+  "secondEndPos" : 5128
+}, {
+  "firstType" : "ThisExpression",
+  "secondType" : "ThisExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "FieldAccess",
+  "firstPos" : 5235,
+  "secondPos" : 5113,
+  "firstEndPos" : 5239,
+  "secondEndPos" : 5117
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "statsStore",
+  "secondLabel" : "statsStore",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "FieldAccess",
+  "firstPos" : 5240,
+  "secondPos" : 5118,
+  "firstEndPos" : 5250,
+  "secondEndPos" : 5128
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "ASSIGNMENT_OPERATOR",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 5251,
+  "secondPos" : 5129,
+  "firstEndPos" : 5252,
+  "secondEndPos" : 5130
+}, {
+  "firstType" : "LambdaExpression",
+  "secondType" : "LambdaExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 5253,
+  "secondPos" : 5131,
+  "firstEndPos" : 5260,
+  "secondEndPos" : 5138
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "s",
+  "secondLabel" : "s",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 5253,
+  "secondPos" : 5131,
+  "firstEndPos" : 5254,
+  "secondEndPos" : 5132
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "LambdaExpression",
+  "secondParentType" : "LambdaExpression",
+  "firstPos" : 5253,
+  "secondPos" : 5131,
+  "firstEndPos" : 5254,
+  "secondEndPos" : 5132
+}, {
+  "firstType" : "Block",
+  "secondType" : "Block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "LambdaExpression",
+  "secondParentType" : "LambdaExpression",
+  "firstPos" : 5258,
+  "secondPos" : 5136,
+  "firstEndPos" : 5260,
+  "secondEndPos" : 5138
+} ]

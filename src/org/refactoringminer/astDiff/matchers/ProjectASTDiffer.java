@@ -222,8 +222,6 @@ public class ProjectASTDiffer
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
 			processJavaDocs(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
-			processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-			fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		}
 		else {
 			//Static Initializers
@@ -233,9 +231,9 @@ public class ProjectASTDiffer
 			if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer &&  umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)
 				if (((UMLInitializer)umlOperationBodyMapper.getContainer1()).isStatic() && ((UMLInitializer)umlOperationBodyMapper.getContainer2()).isStatic())
 					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));
-			processMethodSignature(srcOperationNode, dstOperationNode,umlOperationBodyMapper,  mappingStore);
-			fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		}
+		processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
+		fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		processOperationDiff(srcOperationNode,dstOperationNode,umlOperationBodyMapper,mappingStore);
 		processMethodParameters(srcOperationNode,dstOperationNode,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
 	}

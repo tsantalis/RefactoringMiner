@@ -512,20 +512,29 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
 				if(statement.getString().startsWith("return ")) {
+					boolean parameterUsed = false;
+					for(UMLParameter parameter : parameters) {
+						for(LeafExpression variableExpression : statement.getVariables()) {
+							if(variableExpression.getString().equals(parameter.getName())) {
+								parameterUsed = true;
+								break;
+							}
+						}
+					}
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().equals("return " + variable + ";\n") && parameters.size() == 0) {
+						if(statement.getString().equals("return " + variable + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals("return " + variable + ".keySet()" + ";\n") && parameters.size() == 0) {
+						else if(statement.getString().equals("return " + variable + ".keySet()" + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals("return " + variable + ".values()" + ";\n") && parameters.size() == 0) {
+						else if(statement.getString().equals("return " + variable + ".values()" + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
 					}
 					UMLParameter returnParameter = getReturnParameter();
-					if((name.startsWith("is") || name.startsWith("has")) && parameters.size() == 0 &&
+					if((name.startsWith("is") || name.startsWith("has")) && (parameters.size() == 0 || !parameterUsed) &&
 							returnParameter != null && returnParameter.getType().getClassType().equals("boolean")) {
 						return true;
 					}

@@ -230,6 +230,9 @@ public class InlineOperationDetection {
 	}
 
 	private boolean inlineMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper) {
+		if(operationBodyMapper.getContainer1().isGetter()) {
+			return false;
+		}
 		int delegateStatements = 0;
 		for(AbstractCodeFragment statement : operationBodyMapper.getNonMappedLeavesT1()) {
 			AbstractCall invocation = statement.invocationCoveringEntireFragment();

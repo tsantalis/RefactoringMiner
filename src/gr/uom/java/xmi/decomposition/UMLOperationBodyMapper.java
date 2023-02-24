@@ -4700,10 +4700,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				parent2 = mapping.getFragment2().getParent();
 				commonParentMappings.add(mapping);
 			}
-			else if(parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
+			else if(parent1 != null && parent2 != null && parent1.equals(mapping.getFragment1().getParent()) && parent2.equals(mapping.getFragment2().getParent())) {
 				commonParentMappings.add(mapping);
 			}
-			else if(parent1.equals(mapping.getFragment1().getParent()) || parent2.equals(mapping.getFragment2().getParent())) {
+			else if(parent1 != null && parent2 != null && (parent1.equals(mapping.getFragment1().getParent()) || parent2.equals(mapping.getFragment2().getParent()))) {
 				if(mapping.getFragment1().getVariableDeclarations().size() != mapping.getFragment2().getVariableDeclarations().size()) {
 					commonParentMappings.add(mapping);
 				}

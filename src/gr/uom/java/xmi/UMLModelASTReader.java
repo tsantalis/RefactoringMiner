@@ -211,7 +211,7 @@ public class UMLModelASTReader {
 
 		Map<PsiMember, VariableDeclarationContainer> map = processBodyDeclarations(cu, enumDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
 		
-		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, umlClass);
+		processAnonymousClassDeclarations(cu, enumDeclaration, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass);
 
 		for(PsiMember member : map.keySet()) {
 			if(member instanceof PsiMethod) {
@@ -324,7 +324,7 @@ public class UMLModelASTReader {
     	}
 
 		Map<PsiMember, VariableDeclarationContainer> map = processBodyDeclarations(cu, typeDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
-    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, umlClass);
+    	processAnonymousClassDeclarations(cu, typeDeclaration, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass);
     	
     	for(PsiMember member : map.keySet()) {
 			if(member instanceof PsiMethod) {
@@ -343,12 +343,27 @@ public class UMLModelASTReader {
 	}
 
 	private void processAnonymousClassDeclarations(PsiFile cu, PsiClass typeDeclaration,
-			String packageName, String sourceFile, String className, UMLClass umlClass) {
+			String packageName, String sourceFile, String className,
+			List<UMLImport> importedTypes, UMLJavadoc packageDoc, List<UMLComment> allComments, UMLClass umlClass) {
 		AnonymousClassDeclarationVisitor visitor = new AnonymousClassDeclarationVisitor();
     	typeDeclaration.accept(visitor);
     	Set<PsiAnonymousClass> anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
-    	
-    	DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+		Set<PsiDeclarationStatement> typeDeclarationStatements = visitor.getTypeDeclarationStatements();
+		for (PsiDeclarationStatement statement : typeDeclarationStatements) {
+			String methodNamePath = getMethodNamePath(statement);
+			String fullName = packageName + "." + className + "." + methodNamePath;
+			PsiClass psiClass = (PsiClass) statement.getDeclaredElements()[0];
+			if(psiClass.isEnum()) {
+				processEnumDeclaration(cu, psiClass, fullName, sourceFile, importedTypes, packageDoc, allComments);
+			}
+			else if(psiClass.isAnnotationType()) {
+				//
+			}
+			else {
+				processTypeDeclaration(cu, psiClass, fullName, sourceFile, importedTypes, packageDoc, allComments);
+			}
+		}
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
     	for(PsiAnonymousClass anonymous : anonymousClassDeclarations) {
     		insertNode(anonymous, root);
     	}
@@ -728,6 +743,24 @@ public class UMLModelASTReader {
 			}
 		}
 		parentNode.add(childNode);
+	}
+
+	private String getMethodNamePath(PsiDeclarationStatement statement) {
+		String name = "";
+		PsiElement parent = statement.getParent();
+		while(parent != null) {
+			if(parent instanceof PsiMethod) {
+				String methodName = ((PsiMethod)parent).getName();
+				if(name.isEmpty()) {
+					name = methodName;
+				}
+				else {
+					name = methodName + "." + name;
+				}
+			}
+			parent = parent.getParent();
+		}
+		return name;
 	}
 
 	private String getAnonymousCodePath(PsiAnonymousClass anonymous) {

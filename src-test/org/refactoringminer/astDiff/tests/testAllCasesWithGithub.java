@@ -3,7 +3,6 @@ package org.refactoringminer.astDiff.tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -25,7 +24,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  */
 
 @RunWith(Parameterized.class)
-public class testAllCases {
+public class testAllCasesWithGithub {
 	private static final String REPOS = "tmp1";
 	private static GitService gitService = new GitServiceImpl();
 	
@@ -55,13 +54,7 @@ public class testAllCases {
         for (CaseInfo info : infos) {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
 
-            //use url to download commits (uncomment the following line)
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
-
-            //use tmp1 to get commits ( uncomment 3 following lines)
-//        	String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
-//        	Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
-//        	Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
 
             for (ASTDiff astDiff : astDiffs) {
                 String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());

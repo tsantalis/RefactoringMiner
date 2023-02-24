@@ -6598,10 +6598,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//method invocation has been renamed (one name contains the other), both expressions are null, and one contains all the arguments of the other
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				invocationCoveringTheEntireStatement1.renamedWithNoExpressionAndArgumentIntersection(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
-			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
-			replacementInfo.addReplacement(replacement);
-			return replacementInfo.getReplacements();
+			int callsWithIdenticalNameFound = 0;
+			if(!invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
+				for(AbstractCodeFragment fragment1 : replacementInfo.statements1) {
+					AbstractCall call1 = fragment1.invocationCoveringEntireFragment();
+					if(call1 != null && call1.identicalName(invocationCoveringTheEntireStatement2) && call1.identicalExpression(invocationCoveringTheEntireStatement2)) {
+						callsWithIdenticalNameFound++;
+					}
+				}
+			}
+			if(callsWithIdenticalNameFound != 1) {
+				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

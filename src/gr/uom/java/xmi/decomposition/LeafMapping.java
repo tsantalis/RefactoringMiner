@@ -167,6 +167,31 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						}
 					}
 				}
+				if(intersection.size() == 1 && intersection.contains(ReplacementType.STRING_LITERAL) && this.stringLiteralRatio() > 0.5 && o.stringLiteralRatio() > 0.5) {
+					return Double.compare(distance1, distance2);
+				}
+				List<Double> levelParentEditDistance1 = this.levelParentEditDistance();
+				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
+				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;
+				int minSize = Math.min(levelParentEditDistance1.size(), levelParentEditDistance2.size());
+				for(int i=0; i<minSize; i++) {
+					double d1 = levelParentEditDistance1.get(i);
+					nLevelParentEditDistance1 += d1;
+					double d2 = levelParentEditDistance2.get(i);
+					nLevelParentEditDistance2 += d2;
+				}
+				if(levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2 &&
+						((levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
+						(levelParentEditDistance2.contains(0.0) && !levelParentEditDistance1.contains(0.0))) &&
+						(levelParentEditDistance1.get(0) == nLevelParentEditDistance1 ||
+						levelParentEditDistance2.get(0) == nLevelParentEditDistance2)) {
+					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && !levelParentEditDistance2.get(0).equals(0.0)) {
+						return -1;
+					}
+					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+						return 1;
+					}
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {
@@ -304,6 +329,23 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private double stringLiteralRatio() {
+		int length1 = getFragment1().getString().length();
+		int stringLiteralLength1 = 0;
+		for(LeafExpression s1 : getFragment1().getStringLiterals()) {
+			stringLiteralLength1 += s1.getString().length();
+		}
+		double ratio1 = (double)stringLiteralLength1/(double)length1;
+		
+		int length2 = getFragment2().getString().length();
+		int stringLiteralLength2 = 0;
+		for(LeafExpression s2 : getFragment2().getStringLiterals()) {
+			stringLiteralLength2 += s2.getString().length();
+		}
+		double ratio2 = (double)stringLiteralLength2/(double)length2;
+		return (ratio1 + ratio2)/2.0;
 	}
 
 	public double editDistance() {

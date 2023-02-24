@@ -1662,6 +1662,32 @@ public class VariableReplacementAnalysis {
 	}
 
 	private Set<Replacement> allConsistentRenames(Map<Replacement, Set<AbstractCodeMapping>> replacementOccurrenceMap) {
+		boolean variableDeclarationMappingFound = false;
+		for(Replacement r : replacementOccurrenceMap.keySet()) {
+			Set<AbstractCodeMapping> mappings = replacementOccurrenceMap.get(r);
+			for(AbstractCodeMapping mapping : mappings) {
+				AbstractCodeFragment fragment1 = mapping.getFragment1();
+				AbstractCodeFragment fragment2 = mapping.getFragment2();
+				if(fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT) &&
+						fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
+					variableDeclarationMappingFound = true;
+				}
+				if(fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+						fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+					CompositeStatementObject comp1 = (CompositeStatementObject)fragment1;
+					CompositeStatementObject comp2 = (CompositeStatementObject)fragment2;
+					if(comp1.getExpressions().size() == comp2.getExpressions().size() && comp1.getExpressions().size() == 2 &&
+							comp1.getVariableDeclarations().size() == comp2.getVariableDeclarations().size()) {
+						if(comp1.getExpressions().get(1).getString().equals(comp2.getExpressions().get(1).getString()) &&
+								comp1.getVariableDeclarations().get(0).getType().equals(comp2.getVariableDeclarations().get(0).getType())) {
+							if(!variableDeclarationMappingFound) {
+								return Set.of(r);
+							}
+						}
+					}
+				}
+			}
+		}
 		Set<Replacement> renames = replacementOccurrenceMap.keySet();
 		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();
 		Set<Replacement> allInconsistentRenames = new LinkedHashSet<Replacement>();

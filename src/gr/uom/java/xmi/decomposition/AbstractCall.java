@@ -132,7 +132,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean loggerExpression() {
 		if(expression != null) {
-			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER")) {
+			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER") || expression.equals("Log")) {
 				return true;
 			}
 		}
@@ -140,7 +140,8 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean matchesLogName() {
-		return logNames.contains(this.getName());
+		//special handling for Android Log.e()
+		return logNames.contains(this.getName()) || (expression != null && expression.equals("Log") && this.getName().equals("e"));
 	}
 
 	public boolean expressionIsNullOrThis() {
@@ -423,9 +424,10 @@ public abstract class AbstractCall extends LeafExpression {
 				!identicalName(call) && (equalArguments(call) || reorderedArguments(call) || this.arguments().size() == 0 || call.arguments().size() == 0);
 	}
 
-	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call) {
+	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
-				this.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call)) &&
+				this.arguments.size() > 0 && call.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call) ||
+				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size())) &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));
 	}
 

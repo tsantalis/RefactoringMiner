@@ -6,12 +6,10 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.util.*;
@@ -25,9 +23,6 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 @RunWith(Parameterized.class)
 public class testAllCasesWithGithub {
-	private static final String REPOS = "tmp1";
-	private static GitService gitService = new GitServiceImpl();
-	
     @Parameterized.Parameter(0)
     public String repo;
     @Parameterized.Parameter(1)

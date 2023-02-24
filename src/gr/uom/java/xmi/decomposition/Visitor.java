@@ -714,7 +714,7 @@ public class Visitor extends ASTVisitor {
 						}
 					}
 				}
-				if(qualifierIsParameter || qualifierIsField/* || node.getName().getIdentifier().equals("length")*/) {
+				if(qualifierIsParameter || qualifierIsField || node.getName().getIdentifier().equals("length")) {
 					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 					variables.add(expression);
 					if(current.getUserObject() != null) {

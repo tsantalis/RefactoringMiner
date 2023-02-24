@@ -6142,12 +6142,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			//search for previous variable declaration mappings having these for loops in their scope
+			String renamedVariable = null;
+			for(AbstractCodeMapping previousMapping : this.mappings) {
+				if(previousMapping.getFragment1().getVariableDeclarations().size() > 0 && previousMapping.getFragment2().getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration1 = previousMapping.getFragment1().getVariableDeclarations().get(0);
+					VariableDeclaration declaration2 = previousMapping.getFragment2().getVariableDeclarations().get(0);
+					if(declaration1.getScope().subsumes(for1.getLocationInfo()) && declaration2.getScope().subsumes(for2.getLocationInfo())) {
+						if(declaration2.getVariableName().equals(enhancedForExpression.getString())) {
+							renamedVariable = declaration1.getVariableName();
+							break;
+						}
+					}
+				}
+			}
 			for(AbstractExpression expression1 : for1.getExpressions()) {
 				if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
 					return replacementInfo.getReplacements();
+				}
+				if(renamedVariable != null) {
+					if(expression1.getString().contains(renamedVariable + ".length") ||
+							expression1.getString().contains(renamedVariable + ".size()") ||
+							expression1.getString().contains(renamedVariable + ".iterator()") ||
+							expression1.getString().contains(renamedVariable + ".listIterator()")) {
+						return replacementInfo.getReplacements();
+					}
 				}
 				if(inlinedVariableDeclaration != null &&
 						(expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".length") ||
@@ -6164,12 +6186,34 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
 			List<AbstractExpression> expressions1 = for1.getExpressions();
 			AbstractExpression enhancedForExpression = expressions1.get(expressions1.size()-1);
+			//search for previous variable declaration mappings having these for loops in their scope
+			String renamedVariable = null;
+			for(AbstractCodeMapping previousMapping : this.mappings) {
+				if(previousMapping.getFragment1().getVariableDeclarations().size() > 0 && previousMapping.getFragment2().getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration1 = previousMapping.getFragment1().getVariableDeclarations().get(0);
+					VariableDeclaration declaration2 = previousMapping.getFragment2().getVariableDeclarations().get(0);
+					if(declaration1.getScope().subsumes(for1.getLocationInfo()) && declaration2.getScope().subsumes(for2.getLocationInfo())) {
+						if(declaration1.getVariableName().equals(enhancedForExpression.getString())) {
+							renamedVariable = declaration2.getVariableName();
+							break;
+						}
+					}
+				}
+			}
 			for(AbstractExpression expression2 : for2.getExpressions()) {
 				if(expression2.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".size()") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
 					return replacementInfo.getReplacements();
+				}
+				if(renamedVariable != null) {
+					if(expression2.getString().contains(renamedVariable + ".length") ||
+							expression2.getString().contains(renamedVariable + ".size()") ||
+							expression2.getString().contains(renamedVariable + ".iterator()") ||
+							expression2.getString().contains(renamedVariable + ".listIterator()")) {
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}
@@ -6529,11 +6573,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		//method invocation has been renamed (one name contains the other), one expression is null, but the other is not null, and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithDifferentExpressionAndIdenticalArguments(invocationCoveringTheEntireStatement2)) {
-			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
-			replacementInfo.addReplacement(replacement);
-			return replacementInfo.getReplacements();
+				invocationCoveringTheEntireStatement1.renamedWithDifferentExpressionAndIdenticalArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
+			boolean variableDeclarationInitializer1 =  invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
+			boolean variableDeclarationInitializer2 =  invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
+			boolean logStatement1 = invocationCoveringTheEntireStatement1.isLog();
+			boolean logStatement2 = invocationCoveringTheEntireStatement2.isLog();
+			boolean setMatch = (invocationCoveringTheEntireStatement1.getName().equals("set") && !invocationCoveringTheEntireStatement2.getName().equals("set")) ||
+					(!invocationCoveringTheEntireStatement1.getName().equals("set") && invocationCoveringTheEntireStatement2.getName().equals("set"));
+			boolean getMatch = (invocationCoveringTheEntireStatement1.getName().equals("get") && !invocationCoveringTheEntireStatement2.getName().equals("get")) ||
+					(!invocationCoveringTheEntireStatement1.getName().equals("get") && invocationCoveringTheEntireStatement2.getName().equals("get"));
+			boolean callToAddedOperation = false;
+			boolean callToDeletedOperation = false;
+			if(classDiff != null) {
+				callToAddedOperation = matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
+				callToDeletedOperation = matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
+			}
+			if(variableDeclarationInitializer1 == variableDeclarationInitializer2 && logStatement1 == logStatement2 && !setMatch && !getMatch && callToAddedOperation == callToDeletedOperation) {
+				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
 		}
 		//method invocation has been renamed (one name contains the other), both expressions are null, and one contains all the arguments of the other
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

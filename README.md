@@ -138,24 +138,26 @@ Currently, it supports the detection of the following refactorings:
 91. Invert Condition
 92. Merge Conditional
 93. Merge Catch
+94. Merge Method
+95. Split Method
 
 # Current precision and recall
-As of **December 23, 2022** the precision and recall of the tool on an oracle consisting of **541 commits** from **186 open-source projects** is:
+As of **February 12, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11395  | 23  | 278  | 0.998  | 0.976|
-|Extract Method|960  |  1  | 29  | 0.999  | 0.971|
+|**Total**|11513  | 23  | 278  | 0.998  | 0.976|
+|Extract Method|965  |  1  | 29  | 0.999  | 0.971|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|10  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|357  |  4  | 27  | 0.989  | 0.930|
-|Inline Method|109  |  0  |  2  | 1.000  | 0.982|
+|Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|362  |  4  | 27  | 0.989  | 0.931|
+|Inline Method|111  |  0  |  2  | 1.000  | 0.982|
 |Move Method|352  |  3  |  9  | 0.992  | 0.975|
-|Move And Rename Method|116  |  0  |  6  | 1.000  | 0.951|
+|Move And Rename Method|122  |  0  |  6  | 1.000  | 0.953|
 |Pull Up Method|290  |  0  |  6  | 1.000  | 0.980|
-|Move Class|1093  |  0  |  4  | 1.000  | 0.996|
+|Move Class|1094  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|128  |  0  |  1  | 1.000  | 0.992|
@@ -169,25 +171,25 @@ As of **December 23, 2022** the precision and recall of the tool on an oracle co
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|221  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|224  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|76  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|78  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|302  |  3  | 11  | 0.990  | 0.965|
-|Rename Parameter|472  |  2  | 28  | 0.996  | 0.944|
+|Rename Variable|301  |  3  | 11  | 0.990  | 0.965|
+|Rename Parameter|473  |  2  | 28  | 0.996  | 0.944|
 |Rename Attribute|130  |  0  | 16  | 1.000  | 0.890|
-|Merge Variable| 4  |  0  |  0  | 1.000  | 1.000|
+|Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
-|Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
+|Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|20  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable|72  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|25  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|75  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|419  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|767  |  2  | 10  | 0.997  | 0.987|
+|Change Variable Type|768  |  2  | 10  | 0.997  | 0.987|
 |Change Parameter Type|628  |  1  | 16  | 0.998  | 0.975|
 |Change Attribute Type|224  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
@@ -202,25 +204,25 @@ As of **December 23, 2022** the precision and recall of the tool on an oracle co
 |Add Parameter Annotation|32  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|938  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|333  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|956  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|334  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|318  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|324  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|221  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|78  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Modifier|102  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Modifier|105  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|57  |  0  |  0  | 1.000  | 1.000|
-|Change Class Access Modifier|77  |  0  |  0  | 1.000  | 1.000|
-|Add Class Modifier|34  |  0  |  0  | 1.000  | 1.000|
+|Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
+|Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|
 |Split Package| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Package| 2  |  0  |  0  | 1.000  | 1.000|
@@ -235,6 +237,8 @@ As of **December 23, 2022** the precision and recall of the tool on an oracle co
 |Invert Condition| 5  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional| 5  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
+|Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 2  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 
@@ -541,6 +545,9 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
 
 # AST Diff API usage guidelines
 
+RefactoringMiner is actually the only tool that generates AST diff at commit level, supports multi-mappings (one-to-many, many-to-one, many-to-many mappings), matches AST nodes of different AST types, and supports semantic diff in a fully refactoring-aware fashion.
+You can explore its advanced AST diff capabilities in our [AST Diff Gallery](https://github.com/tsantalis/RefactoringMiner/wiki/AST-Diff-Gallery).
+
 All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
@@ -585,6 +592,8 @@ Path dir1 = Paths.get("/home/user/tmp/v1");
 Path dir1 = Paths.get("/home/user/tmp/v2");
 Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
 ```
+
+To **visualize** the diff, you can use our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark).
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

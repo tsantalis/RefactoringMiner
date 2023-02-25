@@ -1438,7 +1438,6 @@ public class TestStatementMappings {
 
 	@Test
 	public void testRestructuredStatementMappings11() throws Exception {
-		//TODO fix block mappings
 		Repository repository = gitService.cloneIfNotExists(
 			REPOS + "/jgit",
 		    "https://github.com/eclipse/jgit.git");

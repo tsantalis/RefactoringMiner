@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
+import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
@@ -35,7 +36,7 @@ public class testAllCases extends LightJavaCodeInsightFixtureTestCase {
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
             for (ASTDiff astDiff : astDiffs) {
                 String finalFilePath = getFinalFilePath(astDiff, getTestDir(), info.getRepo(), info.getCommit());
-                String calculated = astDiff.getMultiMappings().exportString();
+                String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
                 String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
                 assertEquals(String.format("Failed for the repo : %s, commit : %s , srcFileName: %s", info.getRepo(),info.getCommit(),astDiff.getSrcPath()),
                         expected, calculated);

@@ -22,9 +22,15 @@ public class BasicTreeMatcher implements TreeMatcher {
 
 	public void basicMatcher(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		//TODO: Migration fix
-		MappingStore match = new CustomGreedy(0, false).match(src, dst);
-		mappingStore.add(match);
-		greedyMatcher(src, dst,mappingStore);
+		try {
+			MappingStore match = new CustomGreedy(0, false).match(src, dst);
+			mappingStore.add(match);
+			greedyMatcher(src, dst, mappingStore);
+		}
+		catch (Exception exception)
+		{
+			System.out.println(exception.getMessage());
+		}
 	}
 
 	public void greedyMatcher(Tree src, Tree dst, ExtendedMultiMappingStore mappings) {

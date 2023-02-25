@@ -36,6 +36,12 @@ public class Constants {
 	 */
 	public static final String ENUM_DECLARATION = "PsiClass";
 	public static final String ENUM_CONSTANT_DECLARATION = "PsiEnumConstant";
+	/**
+	 *  <pre>{@code
+	 *     PsiDeclarationStatement.getDeclaredElements()[0] instanceof PsiClass
+	 *  }</pre>
+	 */
+	public static final String TYPE_DECLARATION_STATEMENT = "PsiDeclarationStatement";
 
 	// PSI node property labels
 	/**
@@ -81,8 +87,11 @@ public class Constants {
 	public static final String VOLATILE = "volatile";
 	public static final String SYNCHRONIZED = "synchronized";
 	public static final String ABSTRACT = "abstract";
+	public static final String NATIVE = "native";
 	public static final String FINAL = "final";
 	public static final String STATIC = "static";
 	public static final String EQUAL_OPERATOR = "=";
+
+	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
 
 }

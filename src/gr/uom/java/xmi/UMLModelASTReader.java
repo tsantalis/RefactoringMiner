@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 import com.github.gumtreediff.tree.TreeContext;
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 
 import java.util.*;
@@ -13,6 +14,7 @@ import javax.swing.tree.TreeNode;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.IncorrectOperationException;
 import gr.uom.java.xmi.decomposition.PsiUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -27,6 +29,16 @@ public class UMLModelASTReader {
 	public UMLModelASTReader(Map<String, String> javaFileContents, Set<String> repositoryDirectories, boolean astDiff) {
 		this.umlModel = new UMLModel(repositoryDirectories);
 		ApplicationManager.getApplication().runReadAction(() -> processJavaFileContents(javaFileContents, astDiff));
+	}
+
+	public static PsiCodeBlock processBlock(String methodBody) {
+		PsiElementFactory factory = JavaPsiFacade.getInstance(ProjectManager.getInstance().getDefaultProject()).getElementFactory();
+		try {
+			return factory.createCodeBlockFromText(methodBody, null);
+		}
+		catch (IncorrectOperationException e) {
+			return null;
+		}
 	}
 
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {

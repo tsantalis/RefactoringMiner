@@ -41,8 +41,11 @@ public class StringBasedHeuristics {
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
-		if(s.contains(" -> ") && lines.length > 1) {
-			return true;
+		if(s.contains(" -> ")) {
+			if(lines.length > 1)
+				return true;
+			else if(lines.length == 1 && s.endsWith(";\n"))
+				return true;
 		}
 		for(String line : lines) {
 			line = VariableReplacementAnalysis.prepareLine(line);
@@ -298,9 +301,29 @@ public class StringBasedHeuristics {
 		return differOnlyInPrefix(s1, s2, "", "throw ");
 	}
 
-	protected static boolean differOnlyInFinalModifier(String s1, String s2) {
+	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
-				differOnlyInPrefix(s1, s2, "catch(", "catch(final ");
+				differOnlyInPrefix(s1, s2, "catch(", "catch(final ") ||
+				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+	}
+
+	private static boolean catchDifferInFinalModifierAndExceptionName(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(s1.startsWith("catch(") && s2.startsWith("catch(")) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+				VariableDeclaration v1 = variableDeclarations1.get(0);
+				VariableDeclaration v2 = variableDeclarations2.get(0);
+				if(v1.getType().equals(v2.getType())) {
+					if((s1.startsWith("catch(final ") && s2.startsWith("catch(")) || (s1.startsWith("catch(") && s2.startsWith("catch(final "))) {
+						if(!v1.getVariableName().equals(v2.getVariableName())) {
+							Replacement r = new Replacement(v1.getVariableName(), v2.getVariableName(), ReplacementType.VARIABLE_NAME);
+							replacementInfo.addReplacement(r);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	protected static boolean differOnlyInThis(String s1, String s2) {
@@ -1193,10 +1216,10 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.startsWith("return ") && string2.endsWith(";\n")) {
@@ -1307,13 +1330,13 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean variableAssignmentWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			ReplacementInfo replacementInfo) {
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
@@ -1360,12 +1383,24 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter())))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
+						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
 					variableRename = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&
+						!mapper.getContainer1().isConstructor() && !mapper.getContainer2().isConstructor() && !mapper.getContainer1().getName().equals(mapper.getContainer2().getName()) &&
+						zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(mapper))
+					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement instanceof VariableReplacementWithMethodInvocation &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						!assignment1.startsWith(assignment2) && !assignment2.startsWith(assignment1) &&
+						!referencedParameter((VariableReplacementWithMethodInvocation)replacement, mapper.getContainer1(), mapper.getContainer2()))
 					rightHandSideReplacement = true;
 				else if(replacement.getType().equals(ReplacementType.CLASS_INSTANCE_CREATION) &&
 						assignment1.equals(replacement.getBefore()) &&
@@ -1406,14 +1441,71 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	private static boolean zeroCallsToExtractedMethodsOrParentMapperWithNonIdenticalSignature(UMLOperationBodyMapper mapper) {
+		if(mapper.getCallsToExtractedMethod() == 0) {
+			return true;
+		}
+		else if(mapper.getParentMapper() != null) {
+			return !mapper.getParentMapper().getContainer1().equals(mapper.getParentMapper().getContainer2());
+		}
+		return false;
+	}
+
+	private static boolean referencedParameter(VariableReplacementWithMethodInvocation replacement, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		int index1 = -1;
+		UMLType type1 = null;
+		int index2 = -1;
+		UMLType type2 = null;
+		if(replacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(replacement.getAfter().contains(parameter.getVariableName())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		else if(replacement.getDirection().equals(Direction.INVOCATION_TO_VARIABLE)) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(replacement.getBefore().contains(parameter.getVariableName())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		if(type1 != null && type2 != null && type1.equals(type2) && index1 == index2) {
+			return true;
+		}
+		return false;
+	}
+
 	protected static boolean operatorExpressionWithEverythingReplaced(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			ReplacementInfo replacementInfo, Map<String, String> parameterToArgumentMap) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1)) {
+		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2)) {
+		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		List<String> operators1 = statement1.getInfixOperators();

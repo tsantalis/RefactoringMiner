@@ -623,20 +623,20 @@ public class Visitor extends PsiRecursiveElementWalkingVisitor {
 							break;
 						}
 					}
-					boolean qualifiedIsField = false;
+					boolean qualifierIsField = false;
 					if (!qualifierIsParameter && !parentMethodDeclaration.isConstructor()) {
 						PsiClass psiClass = findParentTypeDeclaration(parentMethodDeclaration);
 						if (psiClass != null) {
 							PsiField[] fields = psiClass.getFields();
 							for (PsiField field : fields) {
 								if (field.getName().equals(qualifierIdentifier)) {
-									qualifiedIsField = true;
+									qualifierIsField = true;
 									break;
 								}
 							}
 						}
 					}
-					if (qualifierIsParameter || qualifiedIsField) {
+					if (qualifierIsParameter || qualifierIsField || expression.getString().endsWith(".length")) {
 						variables.add(expression);
 						if (current.getUserObject() != null) {
 							AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject) current.getUserObject();

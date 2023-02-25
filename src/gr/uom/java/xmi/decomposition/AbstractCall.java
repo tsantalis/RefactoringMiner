@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public abstract class AbstractCall extends LeafExpression {
@@ -55,9 +56,10 @@ public abstract class AbstractCall extends LeafExpression {
 	public abstract double normalizedNameDistance(AbstractCall call);
 	public abstract AbstractCall update(String oldExpression, String newExpression);
 	
-	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation, UMLModelDiff modelDiff) {
+	public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
+			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
 		if(this instanceof OperationInvocation) {
-			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, modelDiff);
+			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, classDiff, modelDiff);
 		}
 		return false;
 	}
@@ -129,7 +131,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean loggerExpression() {
 		if(expression != null) {
-			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER")) {
+			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER") || expression.equals("Log")) {
 				return true;
 			}
 		}
@@ -137,7 +139,8 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean matchesLogName() {
-		return logNames.contains(this.getName());
+		//special handling for Android Log.e()
+		return logNames.contains(this.getName()) || (expression != null && expression.equals("Log") && this.getName().equals("e"));
 	}
 
 	public boolean expressionIsNullOrThis() {
@@ -420,10 +423,21 @@ public abstract class AbstractCall extends LeafExpression {
 				!identicalName(call) && (equalArguments(call) || reorderedArguments(call) || this.arguments().size() == 0 || call.arguments().size() == 0);
 	}
 
-	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call) {
+	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
-				(equalArguments(call) || reorderedArguments(call)) && this.arguments.size() > 0 &&
+				this.arguments.size() > 0 && call.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call) ||
+				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size())) &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));
+	}
+
+	public boolean renamedWithNoExpressionAndArgumentIntersection(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+		int argumentIntersectionSize = argumentIntersection(call).size();
+		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
+				(this.getExpression() == null && call.getExpression() == null) &&
+				this.arguments.size() > 0 && call.arguments.size() > 0 &&
+				(argumentIntersectionSize >= Math.floor(Math.min(this.arguments.size(), call.arguments.size())/2) ||
+				(argumentIntersectionSize > 0 && this.getName().equals("super") && call.getName().equals("super")) ||
+				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size()));
 	}
 
 	public boolean renamedWithIdenticalArgumentsAndNoExpression(AbstractCall call, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
@@ -795,8 +809,17 @@ public abstract class AbstractCall extends LeafExpression {
 			}
 		}
 		for(Replacement r : replacements) {
-			if(r.isLiteral() && arguments().contains(r.getBefore()) && call.arguments().contains(r.getAfter())) {
-				argumentIntersectionSize++;
+			int index1 = arguments().indexOf(r.getBefore());
+			int index2 = call.arguments().indexOf(r.getAfter());
+			if(index1 != -1 && index2 != -1) {
+				if(arguments().size() == call.arguments().size()) {
+					if(index1 == index2) {
+						argumentIntersectionSize++;
+					}
+				}
+				else {
+					argumentIntersectionSize++;
+				}
 			}
 		}
 		return argumentIntersectionSize;

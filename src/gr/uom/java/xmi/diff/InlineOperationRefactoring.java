@@ -18,6 +18,8 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
@@ -31,6 +33,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	private Set<AbstractCodeFragment> inlinedCodeFragmentsInTargetOperation;
 	private UMLOperationBodyMapper bodyMapper;
 	private Map<String, String> parameterToArgumentMap;
+	private List<AbstractCodeMapping> argumentMappings;
 	
 	public InlineOperationRefactoring(UMLOperationBodyMapper bodyMapper, VariableDeclarationContainer targetOperationBeforeInline,
 			List<AbstractCall> operationInvocations) {
@@ -42,12 +45,14 @@ public class InlineOperationRefactoring implements Refactoring {
 		this.replacements = bodyMapper.getReplacements();
 		this.inlinedCodeFragmentsFromInlinedOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.inlinedCodeFragmentsInTargetOperation = new LinkedHashSet<AbstractCodeFragment>();
+		this.argumentMappings = new ArrayList<AbstractCodeMapping>();
+		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap1();
+		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			this.inlinedCodeFragmentsFromInlinedOperation.add(mapping.getFragment1());
 			this.inlinedCodeFragmentsInTargetOperation.add(mapping.getFragment2());
+			createArgumentMappings(mapping);
 		}
-		Optional<Map<String, String>> optionalMap = bodyMapper.getParameterToArgumentMap1();
-		this.parameterToArgumentMap = optionalMap.isPresent() ? optionalMap.get() : Collections.emptyMap();
 	}
 
 	public void updateMapperInfo() {
@@ -57,6 +62,64 @@ public class InlineOperationRefactoring implements Refactoring {
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
 			this.inlinedCodeFragmentsFromInlinedOperation.add(mapping.getFragment1());
 			this.inlinedCodeFragmentsInTargetOperation.add(mapping.getFragment2());
+		}
+	}
+
+	private boolean isMappedInParent(AbstractCodeFragment leaf) {
+		if(bodyMapper.parentMapperContainsMapping(leaf)) {
+			return true;
+		}
+		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
+			return true;
+		}
+		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
+			return true;
+		}
+		return false;
+	}
+
+	private void createArgumentMappings(AbstractCodeMapping mapping) {
+		boolean argumentMatchFound = false;
+		for(AbstractCall call : inlinedOperationInvocations) {
+			for(String argument : call.arguments()) {
+				if(!parameterToArgumentMap.containsKey(argument)) {
+					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
+					if(expressions2.size() > 0) {
+						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+						for(AbstractCodeFragment leaf : leaves) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+								List<LeafExpression> expressions1 = leaf.findExpression(argument);
+								if(expressions1.size() == 1 && expressions2.size() == 1) {
+									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
+									argumentMappings.add(expressionMapping);
+									argumentMatchFound = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		if(!argumentMatchFound) {
+			for(Replacement replacement : mapping.getReplacements()) {
+				List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+				if(expressions2.size() > 0) {
+					List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+					for(AbstractCodeFragment leaf : leaves) {
+						for(AbstractCall call : inlinedOperationInvocations) {
+							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+								List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
+								if(expressions1.size() == 1 && expressions2.size() == 1) {
+									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
+									argumentMappings.add(expressionMapping);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -117,6 +180,10 @@ public class InlineOperationRefactoring implements Refactoring {
 
 	public Set<Replacement> getReplacements() {
 		return replacements;
+	}
+
+	public List<AbstractCodeMapping> getArgumentMappings() {
+		return argumentMappings;
 	}
 
 	public Map<String, String> getParameterToArgumentMap() {

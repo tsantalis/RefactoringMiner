@@ -811,6 +811,12 @@ public abstract class AbstractCall extends LeafExpression {
 		for(Replacement r : replacements) {
 			int index1 = arguments().indexOf(r.getBefore());
 			int index2 = call.arguments().indexOf(r.getAfter());
+			if(index1 == -1 && arguments().contains(r.getBefore() + ".length")) {
+				index1 = arguments().indexOf(r.getBefore() + ".length");
+			}
+			if(index2 == -1 && call.arguments().contains(r.getAfter() + ".length")) {
+				index2 = call.arguments().indexOf(r.getAfter() + ".length");
+			}
 			if(index1 != -1 && index2 != -1) {
 				if(arguments().size() == call.arguments().size()) {
 					if(index1 == index2) {

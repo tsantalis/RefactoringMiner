@@ -2,6 +2,7 @@ package org.refactoringminer.api;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jgit.lib.Repository;
@@ -120,6 +121,17 @@ public interface GitHistoryRefactoringMiner {
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 */
 	void detectAtDirectories(File previousFile, File nextFile, RefactoringHandler handler);
+
+	/**
+	 * Detect refactorings performed in the specified file contents. 
+	 * 
+	 * @param fileContentsBefore A map where the keys are file paths, and the values are the corresponding file contents.
+	 * @param fileContentsAfter A map where the keys are file paths, and the values are the corresponding file contents.
+	 * @param handler A handler object that is responsible to process the detected refactorings. 
+	 * The keys should correspond to the file path starting from the root of the repository.
+	 * For example, {@code src/org/refactoringminer/api/GitHistoryRefactoringMiner.java}
+	 */
+	void detectAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter, RefactoringHandler handler);
 
 	/**
 	 * @return An ID that represents the current configuration for the Refactoring Miner algorithm in use.

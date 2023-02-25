@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -362,7 +363,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private void populateFileContents(File projectFolder, List<String> filePaths, Map<String, String> fileContents,	Set<String> repositoryDirectories) throws IOException {
+	private static void populateFileContents(File projectFolder, List<String> filePaths, Map<String, String> fileContents,	Set<String> repositoryDirectories) throws IOException {
 		for(String path : filePaths) {
 			String fullPath = projectFolder + File.separator + path.replaceAll("/", systemFileSeparator);
 			String contents = FileUtils.readFileToString(new File(fullPath));
@@ -570,6 +571,47 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				.collect(Collectors.toList());
 		walk.close();
 		return paths;
+	}
+
+	private static Set<String> populateDirectories(Map<String, String> fileContents) {
+		Set<String> repositoryDirectories = new LinkedHashSet<>();
+		for(String path : fileContents.keySet()) {
+			String directory = new String(path);
+			while(directory.contains("/")) {
+				directory = directory.substring(0, directory.lastIndexOf("/"));
+				repositoryDirectories.add(directory);
+			}
+		}
+		return repositoryDirectories;
+	}
+
+	@Override
+	public void detectAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter, RefactoringHandler handler) {
+		List<Refactoring> refactorings = Collections.emptyList();
+		Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
+		Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
+		String rootDirBefore = repositoryDirectoriesBefore.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .findFirst()
+                .orElse("");
+		String rootDirCurrent = repositoryDirectoriesCurrent.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .findFirst()
+                .orElse("");
+		String id = rootDirBefore + " -> " + rootDirCurrent;
+		try {
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap()); 
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = createModel(fileContentsAfter, repositoryDirectoriesCurrent);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactorings = modelDiff.getRefactorings();
+			refactorings.addAll(moveSourceFolderRefactorings);
+			refactorings = filter(refactorings);
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", id), e);
+			handler.handleException(id, e);
+		}
+		handler.handle(id, refactorings);
 	}
 
 	@Override

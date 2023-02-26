@@ -147,7 +147,8 @@ public class UMLModelASTReader {
 		List<UMLImport> importedTypes = new ArrayList<UMLImport>();
 		for(ImportDeclaration importDeclaration : imports) {
 			String elementName = importDeclaration.getName().getFullyQualifiedName();
-			UMLImport imported = new UMLImport(elementName, importDeclaration.isOnDemand(), importDeclaration.isStatic());
+			LocationInfo locationInfo = generateLocationInfo(compilationUnit, sourceFilePath, importDeclaration, CodeElementType.IMPORT_DECLARATION);
+			UMLImport imported = new UMLImport(elementName, importDeclaration.isOnDemand(), importDeclaration.isStatic(), locationInfo);
 			importedTypes.add(imported);
 		}
 		List<AbstractTypeDeclaration> topLevelTypeDeclarations = compilationUnit.types();
@@ -598,6 +599,10 @@ public class UMLModelASTReader {
 				Annotation annotation = (Annotation)extendedModifier;
 				umlClass.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
 			}
+			else if(extendedModifier.isModifier()) {
+				Modifier modifier = (Modifier)extendedModifier;
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifier));
+			}
 		}
 	}
 
@@ -667,6 +672,10 @@ public class UMLModelASTReader {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
 				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+			}
+			else if(extendedModifier.isModifier()) {
+				Modifier modifier = (Modifier)extendedModifier;
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifier));
 			}
 		}
 		

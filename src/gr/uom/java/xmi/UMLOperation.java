@@ -42,6 +42,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLType> thrownExceptionTypes;
 	private UMLJavadoc javadoc;
 	private List<UMLAnnotation> annotations;
+	private List<UMLModifier> modifiers;
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
 	
@@ -53,6 +54,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.thrownExceptionTypes = new ArrayList<UMLType>();
         this.annotations = new ArrayList<UMLAnnotation>();
+        this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
     }
 
@@ -71,6 +73,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	public void addAnnotation(UMLAnnotation annotation) {
 		annotations.add(annotation);
 	}
+
+    public List<UMLModifier> getModifiers() {
+		return modifiers;
+	}
+
+    public void addModifier(UMLModifier modifier) {
+    	modifiers.add(modifier);
+    }
 
 	public List<UMLType> getThrownExceptionTypes() {
 		return thrownExceptionTypes;

@@ -23,6 +23,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
@@ -40,9 +41,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private VariableScope scope;
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
+	private List<UMLModifier> modifiers;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		List<IExtendedModifier> extendedModifiers = null;
 		if(fragment.getParent() instanceof VariableDeclarationStatement) {
 			VariableDeclarationStatement parent = (VariableDeclarationStatement)fragment.getParent();
@@ -74,6 +77,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 					Annotation annotation = (Annotation)extendedModifier;
 					this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
 				}
+				else if(extendedModifier.isModifier()) {
+					Modifier modifier = (Modifier)extendedModifier;
+					this.modifiers.add(new UMLModifier(cu, filePath, modifier));
+				}
 			}
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
@@ -98,6 +105,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();
 		if((modifiers & Modifier.FINAL) != 0) {
 			this.isFinal = true;
@@ -107,6 +115,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+			else if(extendedModifier.isModifier()) {
+				Modifier modifier = (Modifier)extendedModifier;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifier));
 			}
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
@@ -130,6 +142,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();
 		if((modifiers & Modifier.FINAL) != 0) {
 			this.isFinal = true;
@@ -140,6 +153,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+			}
+			else if(extendedModifier.isModifier()) {
+				Modifier modifier = (Modifier)extendedModifier;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifier));
 			}
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.ENUM_CONSTANT_DECLARATION);
@@ -205,6 +222,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
+	}
+
+	public List<UMLModifier> getModifiers() {
+		return modifiers;
 	}
 
 	@Override

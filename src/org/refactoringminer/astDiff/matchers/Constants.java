@@ -58,5 +58,4 @@ public class Constants {
 	public static final String SYNCHRONIZED_STATEMENT = "SynchronizedStatement";
 	public static final String THROW_STATEMENT = "ThrowStatement";
 	public static final String WHILE_STATEMENT = "WhileStatement";
-;
 }

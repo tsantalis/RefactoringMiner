@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
 
 public class AddMethodModifierRefactoring implements Refactoring {
@@ -20,6 +21,15 @@ public class AddMethodModifierRefactoring implements Refactoring {
 		this.modifier = modifier;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	public UMLModifier getAddedModifier() {
+		for(UMLModifier m : operationAfter.getModifiers()) {
+			if(m.getKeyword().equals(modifier)) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public String getModifier() {

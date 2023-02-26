@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -29,6 +30,15 @@ public class AddVariableModifierRefactoring implements Refactoring {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
+	}
+
+	public UMLModifier getAddedModifier() {
+		for(UMLModifier m : variableAfter.getModifiers()) {
+			if(m.getKeyword().equals(modifier)) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public String getModifier() {

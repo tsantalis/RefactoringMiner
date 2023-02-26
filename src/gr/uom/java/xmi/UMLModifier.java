@@ -17,6 +17,10 @@ public class UMLModifier implements Serializable, LocationInfoProvider {
 		this.locationInfo = new LocationInfo(cu, filePath, modifier, CodeElementType.MODIFIER);
 	}
 
+	public String getKeyword() {
+		return keyword;
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

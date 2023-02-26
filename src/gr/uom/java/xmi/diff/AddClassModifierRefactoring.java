@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLModifier;
 
 public class AddClassModifierRefactoring implements Refactoring {
 	private String modifier;
@@ -20,6 +21,15 @@ public class AddClassModifierRefactoring implements Refactoring {
 		this.modifier = modifier;
 		this.classBefore = classBefore;
 		this.classAfter = classAfter;
+	}
+
+	public UMLModifier getAddedModifier() {
+		for(UMLModifier m : classAfter.getModifiers()) {
+			if(m.getKeyword().equals(modifier)) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public String getModifier() {

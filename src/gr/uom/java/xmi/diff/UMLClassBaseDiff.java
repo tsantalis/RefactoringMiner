@@ -587,6 +587,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private int computeAbsoluteDifferenceInPositionWithinClass(UMLOperation removedOperation, UMLOperation addedOperation) {
 		int index1 = originalClass.getOperations().indexOf(removedOperation);
 		int index2 = nextClass.getOperations().indexOf(addedOperation);
+		for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
+			int splitMethodsBefore = 0;
+			for(VariableDeclarationContainer splitMethod : candidate.getSplitMethods()) {
+				int index = nextClass.getOperations().indexOf(splitMethod);
+				if(index != -1 && index < index2) {
+					splitMethodsBefore++;
+				}
+			}
+			if(splitMethodsBefore == candidate.getSplitMethods().size()) {
+				index2 -= (splitMethodsBefore-1);
+			}
+		}
 		return Math.abs(index1-index2);
 	}
 
@@ -708,6 +720,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 							}
 						}
+						if(candidateMethodMerges.size() > 0 || candidateMethodSplits.size() > 0) {
+							removedOperationIterator.remove();
+						}
 						addedOperations.removeAll(addedOperationsToBeRemoved);
 					}
 				}
@@ -824,6 +839,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								mapper.computeRefactoringsWithinBody();
 								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 							}
+						}
+						if(candidateMethodMerges.size() > 0 || candidateMethodSplits.size() > 0) {
+							addedOperationIterator.remove();
 						}
 						removedOperations.removeAll(removedOperationsToBeRemoved);
 					}

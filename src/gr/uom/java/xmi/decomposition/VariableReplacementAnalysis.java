@@ -1663,6 +1663,7 @@ public class VariableReplacementAnalysis {
 
 	private Set<Replacement> allConsistentRenames(Map<Replacement, Set<AbstractCodeMapping>> replacementOccurrenceMap) {
 		boolean variableDeclarationMappingFound = false;
+		Set<Replacement> enhancedForParameterReplacements = new LinkedHashSet<>();
 		for(Replacement r : replacementOccurrenceMap.keySet()) {
 			Set<AbstractCodeMapping> mappings = replacementOccurrenceMap.get(r);
 			for(AbstractCodeMapping mapping : mappings) {
@@ -1681,12 +1682,15 @@ public class VariableReplacementAnalysis {
 						if(comp1.getExpressions().get(1).getString().equals(comp2.getExpressions().get(1).getString()) &&
 								comp1.getVariableDeclarations().get(0).getType().equals(comp2.getVariableDeclarations().get(0).getType())) {
 							if(!variableDeclarationMappingFound) {
-								return Set.of(r);
+								enhancedForParameterReplacements.add(r);
 							}
 						}
 					}
 				}
 			}
+		}
+		if(!enhancedForParameterReplacements.isEmpty()) {
+			return enhancedForParameterReplacements;
 		}
 		Set<Replacement> renames = replacementOccurrenceMap.keySet();
 		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();

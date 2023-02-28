@@ -610,25 +610,26 @@ public class ProjectASTDiffer
 				RenameVariableRefactoring renameVariableRefactoring = (RenameVariableRefactoring) refactoring;
 				VariableDeclaration originalVariable = renameVariableRefactoring.getOriginalVariable();
 				VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
-				Tree srcVar = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
-				Tree dstVar = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
+				Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
+				Tree dstInput = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
+				if (srcInput == null || dstInput == null) continue;
+				boolean _processed = true;
 				switch (renameVariableRefactoring.getRefactoringType()) {
 					case REPLACE_VARIABLE_WITH_ATTRIBUTE:
-						new LeafMatcher(false).match(
-								TreeUtilFunctions.getParentUntilType(srcVar,Constants.VARIABLE_DECLARATION_STATEMENT),
-								TreeUtilFunctions.getParentUntilType(dstVar,Constants.FIELD_DECLARATION),
-								null,
-								mappingStore);
+						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.VARIABLE_DECLARATION_STATEMENT);
+						dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.FIELD_DECLARATION);
 						//TODO: need more cases to generalize the logic
 						break;
 					case RENAME_PARAMETER:
-						new LeafMatcher(false).match(
-								srcVar,
-								dstVar,
-								null,
-								mappingStore);
 						break;
+					default:
+						_processed = false;
 				}
+				if (_processed) new LeafMatcher(false).match(
+						srcInput,
+						dstInput,
+						null,
+						mappingStore);
 			}
 		}
 	}

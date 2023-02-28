@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.RefactoringRelationship;
 
 public class RefactoringCrawlerRefactoring {
 

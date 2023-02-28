@@ -1,6 +1,6 @@
 package org.refactoringminer.utils;
 
-import static org.refactoringminer.utils.RefactoringRelationship.parentOf;
+import static org.refactoringminer.util.RefactoringRelationship.parentOf;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -19,6 +19,7 @@ import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.GitServiceImpl;
+import org.refactoringminer.util.RefactoringRelationship;
 
 public class ResultComparator {
 

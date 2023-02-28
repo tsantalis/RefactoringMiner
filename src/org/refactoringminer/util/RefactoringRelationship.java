@@ -1,4 +1,4 @@
-package org.refactoringminer.utils;
+package org.refactoringminer.util;
 
 import java.util.EnumSet;
 

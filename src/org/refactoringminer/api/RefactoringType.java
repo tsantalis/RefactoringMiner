@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.refactoringminer.util.AstUtils;
-import org.refactoringminer.utils.RefactoringRelationship;
+import org.refactoringminer.util.RefactoringRelationship;
 
 public enum RefactoringType {
 

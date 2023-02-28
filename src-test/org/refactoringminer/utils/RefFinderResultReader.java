@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.util.RefactoringRelationship;
 
 public class RefFinderResultReader {
 

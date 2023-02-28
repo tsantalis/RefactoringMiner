@@ -2401,6 +2401,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int tryMappings = 0;
 		int mappingsWithTypeReplacement = 0;
 		int mappingsWithVariableReplacement = 0;
+		int mappingsWithMethodInvocationRename = 0;
 		for(AbstractCodeMapping mapping : this.getMappings()) {
 			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
 				tryMappings++;
@@ -2411,6 +2412,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mapping.containsOnlyReplacement(ReplacementType.VARIABLE_NAME)) {
 				mappingsWithVariableReplacement++;
 			}
+			if(mapping.containsOnlyReplacement(ReplacementType.METHOD_INVOCATION_NAME)) {
+				mappingsWithMethodInvocationRename++;
+			}
+			if(mapping.getReplacements().size() == 2 && mapping.containsReplacement(ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT) &&
+					mapping.containsReplacement(ReplacementType.VARIABLE_NAME)) {
+				AbstractCall call1 = mapping.getFragment1().invocationCoveringEntireFragment();
+				AbstractCall call2 = mapping.getFragment2().invocationCoveringEntireFragment();
+				if(call1 != null && call2 != null) {
+					for(Replacement r : mapping.getReplacements()) {
+						if(r.getType().equals(ReplacementType.VARIABLE_NAME) && call1.arguments().contains(r.getBefore()) && call2.arguments().contains(r.getAfter())) {
+							mappingsWithMethodInvocationRename++;
+							break;
+						}
+					}
+				}
+			}
 		}
 		if(mappings == this.exactMatches() + tryMappings) {
 			return true;
@@ -2419,6 +2436,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return true;
 		}
 		if(mappings == this.exactMatches() + tryMappings + mappingsWithVariableReplacement && mappings > mappingsWithVariableReplacement) {
+			return true;
+		}
+		if(mappings == this.exactMatches() + tryMappings + mappingsWithMethodInvocationRename && mappings > mappingsWithMethodInvocationRename) {
 			return true;
 		}
 		return false;

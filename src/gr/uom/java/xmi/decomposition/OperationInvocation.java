@@ -310,6 +310,39 @@ public class OperationInvocation extends AbstractCall {
     				inferredArgumentTypes.add(null);
     			}
     		}
+    		else if(arg.contains("[") && openingSquareBracketBeforeParenthesis && arg.lastIndexOf("]") == arg.length() -1) {
+    			//array access
+    			String arrayVariable = arg.substring(0, indexOfOpeningSquareBracket);
+    			if(variableDeclarationMap.containsKey(arrayVariable)) {
+        			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(arrayVariable);
+        			for(VariableDeclaration variableDeclaration : variableDeclarations) {
+        				if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+        					UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+        					inferredArgumentTypes.add(elementType);
+        					break;
+        				}
+        			}
+        		}
+        		else if((parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arrayVariable)) ||
+        				(childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arrayVariable))) {
+        			boolean variableDeclarationFound = false;
+        			if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arrayVariable)) {
+    	    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arrayVariable);
+    	    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+    	    				UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+        					inferredArgumentTypes.add(elementType);
+    						variableDeclarationFound = true;
+    					}
+        			}
+        			if(!variableDeclarationFound && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arrayVariable)) {
+        				VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arrayVariable);
+            			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
+            				UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+        					inferredArgumentTypes.add(elementType);
+        				}
+        			}
+        		}
+    		}
     		else {
     			inferredArgumentTypes.add(null);
     		}

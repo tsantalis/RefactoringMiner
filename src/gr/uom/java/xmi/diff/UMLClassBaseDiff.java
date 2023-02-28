@@ -1309,11 +1309,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		if(mismatchesConsistentMethodInvocationRename(bestMapper, consistentMethodInvocationRenames.keySet()) && !exactMappings(bestMapper)) {
+		int consistentMethodInvocationRenameMismatchesForBestMapper = mismatchesConsistentMethodInvocationRename(bestMapper);
+		if(consistentMethodInvocationRenameMismatchesForBestMapper > 0 && !exactMappings(bestMapper)) {
 			for(int i=1; i<mapperList.size(); i++) {
 				UMLOperationBodyMapper mapper = mapperList.get(i);
-				boolean inconsistent = mismatchesConsistentMethodInvocationRename(mapper, consistentMethodInvocationRenames.keySet()) && !exactMappings(mapper);
-				if(!inconsistent) {
+				int consistentMethodInvocationRenameMismatchesForCurrentMapper = mismatchesConsistentMethodInvocationRename(mapper);
+				if(consistentMethodInvocationRenameMismatchesForCurrentMapper < consistentMethodInvocationRenameMismatchesForBestMapper) {
 					return mapper;
 				}
 			}
@@ -1505,16 +1506,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private boolean mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper, Set<MethodInvocationReplacement> consistentMethodInvocationRenames) {
-		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames) {
-			if(mapper.getContainer1().getName().equals(rename.getBefore()) && !mapper.getContainer2().getName().equals(rename.getAfter())) {
-				return true;
+	private int mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper) {
+		int mismatchCount = 0;
+		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames.keySet()) {
+			UMLOperationBodyMapper referringMapper = consistentMethodInvocationRenames.get(rename);
+			AbstractCall callBefore = rename.getInvokedOperationBefore();
+			AbstractCall callAfter = rename.getInvokedOperationAfter();
+			if(callBefore.matchesOperation(mapper.getContainer1(), referringMapper.getContainer1(), this, modelDiff) &&
+					!callAfter.matchesOperation(mapper.getContainer2(), referringMapper.getContainer2(), this, modelDiff)) {
+				mismatchCount++;
 			}
-			else if(!mapper.getContainer1().getName().equals(rename.getBefore()) && mapper.getContainer2().getName().equals(rename.getAfter())) {
-				return true;
+			else if(!callBefore.matchesOperation(mapper.getContainer1(), referringMapper.getContainer1(), this, modelDiff) &&
+					callAfter.matchesOperation(mapper.getContainer2(), referringMapper.getContainer2(), this, modelDiff)) {
+				mismatchCount++;
 			}
 		}
-		return false;
+		return mismatchCount;
 	}
 
 	private boolean operationContainsMethodInvocationWithTheSameNameAndCommonArguments(AbstractCall invocation, List<UMLOperation> operations) {

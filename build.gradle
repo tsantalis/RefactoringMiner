@@ -15,7 +15,6 @@ sourceSets {
     main {
         java {
             srcDir 'src'
-            srcDir 'src-test'
         }
         resources {
             srcDir 'res'
@@ -39,7 +38,6 @@ dependencies {
     implementation 'org.eclipse.jgit:org.eclipse.jgit:5.13.0.202109080827-r'
     implementation 'org.slf4j:slf4j-api:2.0.6'
     implementation 'org.slf4j:slf4j-simple:2.0.6'
-    implementation 'junit:junit:4.13.2'
     //implementation platform('fr.jmini.ecentral:eclipse-platform-dependencies:4.24')
     //implementation 'org.eclipse.jdt:org.eclipse.jdt.core'
     implementation 'org.eclipse.jdt:org.eclipse.jdt.core:3.30.0'

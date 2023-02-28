@@ -1689,8 +1689,16 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		if(!enhancedForParameterReplacements.isEmpty()) {
-			return enhancedForParameterReplacements;
+		for(Replacement r : enhancedForParameterReplacements) {
+			Set<Replacement> renamesToBeRemoved = new LinkedHashSet<>();
+			for(Replacement rename : replacementOccurrenceMap.keySet()) {
+				if(!r.equals(rename) && (r.getBefore().equals(rename.getBefore()) || r.getAfter().equals(rename.getAfter()))) {
+					renamesToBeRemoved.add(rename);
+				}
+			}
+			for(Replacement rename : renamesToBeRemoved) {
+				replacementOccurrenceMap.remove(rename);
+			}
 		}
 		Set<Replacement> renames = replacementOccurrenceMap.keySet();
 		Set<Replacement> allConsistentRenames = new LinkedHashSet<Replacement>();

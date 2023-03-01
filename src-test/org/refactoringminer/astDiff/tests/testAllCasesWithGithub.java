@@ -37,7 +37,6 @@ public class testAllCasesWithGithub {
         assertEquals(String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName),
                 expected,actual);
     }
-
     @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     public static Iterable<Object[]> initData() throws Exception {
         List<Object[]> allCases = new ArrayList<>();

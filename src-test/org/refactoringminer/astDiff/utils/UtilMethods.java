@@ -1,6 +1,12 @@
 package org.refactoringminer.astDiff.utils;
 
+import org.apache.commons.io.FileUtils;
 import org.refactoringminer.astDiff.actions.ASTDiff;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 public class UtilMethods {
     private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/commits/";
@@ -42,5 +48,23 @@ public class UtilMethods {
 
     public static String getTestInfoFile(){
         return infoFile;
+    }
+
+    public static void makeAllCases(List<Object[]> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs) throws IOException {
+        for (ASTDiff astDiff : astDiffs) {
+            String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
+            String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
+            String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
+            allCases.add(new Object[]{info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated});
+            expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
+        }
+        for (String expectedButNotGeneratedFile : expectedFilesList) {
+            String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
+            allCases.add(new Object[]
+                    {
+                    info.getRepo(),info.getCommit(),expectedDiffName,"{JSON}","NOT GENERATED"
+                    }
+            );
+        }
     }
 }

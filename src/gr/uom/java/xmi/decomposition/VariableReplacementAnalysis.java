@@ -2022,7 +2022,8 @@ public class VariableReplacementAnalysis {
 				set.add(new SimpleEntry<>(parameter, operation1));
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//inline method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(replacement.getBefore())) {
 					set.add(new SimpleEntry<>(parameter, callSiteOperation));
@@ -2052,7 +2053,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation1);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//inline method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(variableName)) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
@@ -2076,7 +2078,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation2);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//extract method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(replacement.getAfter())) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
@@ -2108,7 +2111,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation2);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//extract method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(variableName)) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
@@ -2148,7 +2152,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation2);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//extract method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(replacement.getAfter())) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
@@ -2349,11 +2354,13 @@ public class VariableReplacementAnalysis {
 
 	private boolean potentialParameterRename(Replacement replacement, Set<AbstractCodeMapping> set) {
 		int index1 = operation1.getParameterNameList().indexOf(replacement.getBefore());
-		if(index1 == -1 && callSiteOperation != null) {
+		if(index1 == -1 && callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//inline method scenario
 			index1 = callSiteOperation.getParameterNameList().indexOf(replacement.getBefore());
 		}
 		int index2 = operation2.getParameterNameList().indexOf(replacement.getAfter());
-		if(index2 == -1 && callSiteOperation != null) {
+		if(index2 == -1 && callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//extract method scenario
 			index2 = callSiteOperation.getParameterNameList().indexOf(replacement.getAfter());
 		}
 		if(fieldAssignmentToPreviouslyExistingAttribute(set)) {
@@ -2377,7 +2384,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation1);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//inline method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(replacement.getBefore())) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
@@ -2399,7 +2407,8 @@ public class VariableReplacementAnalysis {
 				return new SimpleEntry<>(parameter, operation2);
 			}
 		}
-		if(callSiteOperation != null) {
+		if(callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
+			//extract method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
 				if(parameter.getVariableName().equals(replacement.getAfter())) {
 					return new SimpleEntry<>(parameter, callSiteOperation);

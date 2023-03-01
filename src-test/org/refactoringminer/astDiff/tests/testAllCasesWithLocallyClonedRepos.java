@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import org.junit.runners.Parameterized;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
-import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
@@ -59,21 +57,7 @@ public class testAllCasesWithLocallyClonedRepos {
             Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
 
-            for (ASTDiff astDiff : astDiffs) {
-                String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
-                String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
-                String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
-                allCases.add(new Object[]{info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated});
-                expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
-            }
-            for (String expectedButNotGeneratedFile : expectedFilesList) {
-                String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
-                allCases.add(new Object[]
-                        {
-                        info.getRepo(),info.getCommit(),expectedDiffName,"{JSON}","NOT GENERATED"
-                        }
-                );
-            }
+            makeAllCases(allCases, info, expectedFilesList, astDiffs);
         }
         return allCases;
     }

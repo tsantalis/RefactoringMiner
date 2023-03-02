@@ -614,9 +614,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
 									!nonMappedLeaf2.getString().endsWith("=" + initializer + ";\n") && !nonMappedLeaf2.getString().contains("=" + initializer + ".") &&
 									nonMappedLeaf2.getString().contains(initializer.getString())) {
-								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
-								refactorings.add(ref);
-								leavesToBeRemovedT1.add(statement);
+								UMLOperation extractedOperation = callToExtractedMethod(nonMappedLeaf2);
+								boolean matchingExtractedOperationLeaf = false;
+								if(extractedOperation != null) {
+									List<AbstractCodeFragment> extractedOperationLeaves = extractedOperation.getBody().getCompositeStatement().getLeaves();
+									for(AbstractCodeFragment extractedOperationLeaf : extractedOperationLeaves) {
+										if(statement.getString().equals(extractedOperationLeaf.getString())) {
+											matchingExtractedOperationLeaf = true;
+											break;
+										}
+									}
+								}
+								if(!matchingExtractedOperationLeaf) {
+									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializer.getString());
+									for(LeafExpression subExpression : subExpressions) {
+										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+										ref.addSubExpressionMapping(leafMapping);
+									}
+									refactorings.add(ref);
+									leavesToBeRemovedT1.add(statement);
+								}
 							}
 						}
 					}
@@ -2270,8 +2288,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else {
 					for(Refactoring refactoring : this.refactorings) {
 						if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-							Set<AbstractCodeMapping> references = ((InlineVariableRefactoring)newRefactoring).getReferences();
-							((InlineVariableRefactoring)refactoring).addReferences(references);
+							InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+							Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+							InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
+							oldInlineVariableRefactoring.addReferences(newReferences);
+							for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+								oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+							}
 							break;
 						}
 					}
@@ -9619,6 +9642,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private UMLOperation callToExtractedMethod(AbstractCodeFragment leaf2) {
+		if(classDiff != null) {
+			List<UMLOperation> addedOperations = classDiff.getAddedOperations();
+			if(addedOperations.size() > 0) {
+				AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+				if(invocation == null) {
+					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+				}
+				UMLOperation matchingOperation = null;
+				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					return matchingOperation;
+				}
+			}
+		}
+		return null;
 	}
 
 	private UMLOperation callToInlinedMethod(AbstractCodeFragment leaf1) {

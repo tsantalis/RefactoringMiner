@@ -526,11 +526,10 @@ public class ProjectASTDiffer
 				}
 			}
 			else if (refactoring instanceof InlineVariableRefactoring) {
-				//TODO: As same as ExVarRefactoring: API must be updated
 				InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring) refactoring;
-//				for(LeafMapping mapping : inlineVariableRefactoring.getSubExpressionMappings()) {
-//					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
-//				}
+				for(LeafMapping mapping : inlineVariableRefactoring.getSubExpressionMappings()) {
+					processLeafMatcherForExtractVariables(srcTree,dstTree,mapping,mappingStore);
+				}
 			}
 			else if (refactoring instanceof ReplaceAttributeRefactoring)
 			{

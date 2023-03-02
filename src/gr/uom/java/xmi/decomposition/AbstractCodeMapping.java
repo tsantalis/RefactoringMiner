@@ -331,6 +331,11 @@ public abstract class AbstractCodeMapping {
 							if(initializer.toString().equals(prefixAfter) ||
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
 								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> subExpressions = getFragment2().findExpression(prefixAfter);
+								for(LeafExpression subExpression : subExpressions) {
+									LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
 								processInlineVariableRefactoring(ref, refactorings);
 								if(identical()) {
 									identicalWithInlinedVariable = true;
@@ -349,6 +354,11 @@ public abstract class AbstractCodeMapping {
 							wrappedAsArgument(initializer, replacement.getAfter()) ||
 							reservedTokenMatch(initializer, replacement, replacement.getAfter())) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						List<LeafExpression> subExpressions = getFragment2().findExpression(replacement.getAfter());
+						for(LeafExpression subExpression : subExpressions) {
+							LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
 						processInlineVariableRefactoring(ref, refactorings);
 						if(identical()) {
 							identicalWithInlinedVariable = true;
@@ -376,6 +386,14 @@ public abstract class AbstractCodeMapping {
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
 							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+							List<LeafExpression> subExpressions = getFragment2().findExpression(replacement.getAfter());
+							for(LeafExpression subExpression : subExpressions) {
+								List<LeafExpression> initializerSubExpressions = statement.findExpression(initializer);
+								if(initializerSubExpressions.size() > 0) {
+									LeafMapping leafMapping = new LeafMapping(initializerSubExpressions.get(0), subExpression, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+							}
 							processInlineVariableRefactoring(ref, refactorings);
 							if(identical()) {
 								identicalWithInlinedVariable = true;
@@ -502,7 +520,11 @@ public abstract class AbstractCodeMapping {
 		else {
 			for(Refactoring refactoring : refactorings) {
 				if(refactoring.equals(ref)) {
-					((InlineVariableRefactoring)refactoring).addReference(this);
+					InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
+					inlineVariableRefactoring.addReference(this);
+					for(LeafMapping newLeafMapping : ref.getSubExpressionMappings()) {
+						inlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+					}
 					break;
 				}
 			}

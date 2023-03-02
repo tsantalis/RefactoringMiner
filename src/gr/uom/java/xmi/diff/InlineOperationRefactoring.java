@@ -79,21 +79,34 @@ public class InlineOperationRefactoring implements Refactoring {
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
+		if(mapping.getReplacements().isEmpty()) {
+			return;
+		}
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
 			for(String argument : call.arguments()) {
-				if(!parameterToArgumentMap.containsKey(argument)) {
-					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
-					if(expressions2.size() > 0) {
-						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
-						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions1 = leaf.findExpression(argument);
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
-									argumentMappings.add(expressionMapping);
-									argumentMatchFound = true;
-									break;
+				if(!parameterToArgumentMap.containsKey(argument) && parameterToArgumentMap.containsValue(argument)) {
+					Replacement replacementFound = null;
+					for(Replacement replacement : mapping.getReplacements()) {
+						if(replacement.getAfter().equals(argument) && parameterToArgumentMap.containsKey(replacement.getBefore()) &&
+								parameterToArgumentMap.get(replacement.getBefore()).equals(argument)) {
+							replacementFound = replacement;
+							break;
+						}
+					}
+					if(replacementFound != null) {
+						List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
+						if(expressions2.size() > 0) {
+							List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+							for(AbstractCodeFragment leaf : leaves) {
+								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+									List<LeafExpression> expressions1 = leaf.findExpression(argument);
+									if(expressions1.size() == 1 && expressions2.size() == 1) {
+										LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
+										argumentMappings.add(expressionMapping);
+										argumentMatchFound = true;
+										break;
+									}
 								}
 							}
 						}

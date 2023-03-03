@@ -157,7 +157,13 @@ public class ExtractOperationDetection {
 				List<String> arguments = invocation.arguments();
 				int occurrences = 0;
 				for(String argument : arguments) {
-					occurrences += Collections.frequency(allVariables, argument);
+					if(argument.startsWith("this.") && !allVariables.contains(argument)) {
+						String substringAfterThis = argument.substring(5);
+						occurrences += Collections.frequency(allVariables, substringAfterThis);
+					}
+					else {
+						occurrences += Collections.frequency(allVariables, argument);
+					}
 				}
 				if(occurrences > max) {
 					sorted.add(0, invocation);

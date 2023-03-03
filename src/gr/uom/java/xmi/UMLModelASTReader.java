@@ -67,7 +67,7 @@ public class UMLModelASTReader {
 	}
 
 	public static ASTNode processBlock(String methodBody) {
-		ASTParser parser = ASTParser.newParser(AST.JLS18);
+		ASTParser parser = ASTParser.newParser(AST.JLS19);
 		Map<String, String> options = JavaCore.getOptions();
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
 		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
@@ -90,7 +90,7 @@ public class UMLModelASTReader {
 	}
 
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
-		ASTParser parser = ASTParser.newParser(AST.JLS18);
+		ASTParser parser = ASTParser.newParser(AST.JLS19);
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
 			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);

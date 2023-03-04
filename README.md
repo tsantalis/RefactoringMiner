@@ -17,7 +17,9 @@ Table of Contents
    * [API usage guidelines](#api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
+      * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
+      * [With a GitHub pull request](#with-a-github-pull-request)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
@@ -125,13 +127,13 @@ Currently, it supports the detection of the following refactorings:
 84. Replace Loop with Pipeline
 85. Replace Anonymous with Lambda
 
-**<ins>supported by RefactoringMiner 2.3  and newer versions</ins>**
+**<ins>supported by RefactoringMiner 2.3 and newer versions</ins>**
 
 86. Merge Class
 87. Inline Attribute
 88. Replace Pipeline with Loop
 
-**<ins>supported by RefactoringMiner 2.3.2</ins>**
+**<ins>supported by RefactoringMiner 2.4 and newer versions</ins>**
 
 89. Split Class
 90. Split Conditional
@@ -256,7 +258,7 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.3.2</version>
+      <version>2.4.0</version>
     </dependency>
 
 # Chrome Extension
@@ -508,6 +510,30 @@ miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
 });
 ```
 
+## With file contents as strings
+
+You can provide two maps (before and after the changes) where the keys are file paths, and the values are the corresponding file contents.
+The keys should correspond to the file path starting from the root of the repository. For example, `src/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
+
+After populating the maps, you can use the following code snippet:
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+Map<String, String> fileContentsBefore;
+Map<String, String> fileContentsAfter;
+// populate the maps
+miner.detectAtFileContents(fileContentsBefore, fileContentsAfter, new RefactoringHandler() {
+  @Override
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
 ## With all information fetched directly from GitHub
 
 To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
@@ -528,6 +554,12 @@ miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
   }
 }, 10);
 ```
+
+## With a GitHub pull request
+
+To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
 If you want to analyze all commits of a pull request, you can use the following code snippet:
 
 ```java

@@ -513,13 +513,13 @@ miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
 ## With file contents as strings
 
 You can provide two maps (before and after the changes) where the keys are file paths, and the values are the corresponding file contents.
-The keys should correspond to the file path starting from the root of the repository. For example, `src/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
+Each key should correspond to a file path starting from the root of the repository. For example, `src/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
 
 After populating the maps, you can use the following code snippet:
 
 ```java
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-// You must provide absolute paths to the directories. Relative paths will cause exceptions.
+// Each key should correspond to a file path starting from the root of the repository
 Map<String, String> fileContentsBefore;
 Map<String, String> fileContentsAfter;
 // populate the maps

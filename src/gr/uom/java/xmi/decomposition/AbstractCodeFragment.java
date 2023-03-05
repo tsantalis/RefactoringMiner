@@ -175,6 +175,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean isAssertCall() {
+		AbstractCall call = invocationCoveringEntireFragment();
+		if(call != null && call.getName().startsWith("assert")) {
+			return true;
+		}
+		return false;
+	}
+
 	public void replaceParametersWithArguments(Map<String, String> parameterToArgumentMap) {
 		String afterReplacements = getString();
 		for(String parameter : parameterToArgumentMap.keySet()) {

@@ -197,7 +197,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return 1;
 					}
 				}
-				if(equalNumberOfAssertions) {
+				if(equalNumberOfAssertions && this.getFragment1().isAssertCall() && this.getFragment2().isAssertCall() && o.getFragment1().isAssertCall() && o.getFragment2().isAssertCall()) {
 					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
 					if(indexDiff1 != indexDiff2) {

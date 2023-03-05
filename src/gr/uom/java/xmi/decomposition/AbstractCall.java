@@ -62,6 +62,10 @@ public abstract class AbstractCall extends LeafExpression {
 		if(this instanceof OperationInvocation) {
 			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, classDiff, modelDiff);
 		}
+		else if(this instanceof MethodReference) {
+			MethodReference methodReference = (MethodReference)this;
+			return methodReference.getName().equals(operation.getName());
+		}
 		return false;
 	}
 

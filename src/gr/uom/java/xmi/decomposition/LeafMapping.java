@@ -179,11 +179,19 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
 				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;
 				int minSize = Math.min(levelParentEditDistance1.size(), levelParentEditDistance2.size());
+				int headZeros1 = 0;
+				int headZeros2 = 0;
 				for(int i=0; i<minSize; i++) {
 					double d1 = levelParentEditDistance1.get(i);
 					nLevelParentEditDistance1 += d1;
+					if(d1 == 0 && nLevelParentEditDistance1 == 0) {
+						headZeros1++;
+					}
 					double d2 = levelParentEditDistance2.get(i);
 					nLevelParentEditDistance2 += d2;
+					if(d2 == 0 && nLevelParentEditDistance2 == 0) {
+						headZeros2++;
+					}
 				}
 				if(levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2 &&
 						((levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
@@ -194,6 +202,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return -1;
 					}
 					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+						return 1;
+					}
+					if(headZeros1 > headZeros2) {
+						return -1;
+					}
+					else if(headZeros2 > headZeros1) {
 						return 1;
 					}
 				}
@@ -264,6 +278,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return -1;
 					}
 					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+						return 1;
+					}
+					if(headZeros1 > headZeros2) {
+						return -1;
+					}
+					else if(headZeros2 > headZeros1) {
 						return 1;
 					}
 				}

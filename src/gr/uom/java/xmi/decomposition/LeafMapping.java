@@ -20,10 +20,15 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 	private List<Double> levelParentEditDistance;
+	private boolean equalNumberOfAssertions;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(statement1, statement2, operation1, operation2);
+	}
+
+	public void setEqualNumberOfAssertions(boolean equalNumberOfAssertions) {
+		this.equalNumberOfAssertions = equalNumberOfAssertions;
 	}
 
 	@Override
@@ -190,6 +195,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					}
 					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
 						return 1;
+					}
+				}
+				if(equalNumberOfAssertions) {
+					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
+					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
+					if(indexDiff1 != indexDiff2) {
+						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 					}
 				}
 				return Double.compare(distance1, distance2);

@@ -217,7 +217,14 @@ public class UMLOperationDiff {
 					found = true;
 					Pair<UMLType, UMLType> pair = Pair.of(exceptionType1, exceptionType2);
 					if(!commonExceptionTypes.contains(pair)) {
-						commonExceptionTypes.add(pair);
+						if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType && !exceptionType1.toString().equals(exceptionType1.toQualifiedString())) {
+							UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();
+							UMLType type2 = ((LeafType)exceptionType2).cloneAsQualified();
+							commonExceptionTypes.add(Pair.of(type1, type2));
+						}
+						else {
+							commonExceptionTypes.add(pair);
+						}
 					}
 					else if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType) {
 						UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();
@@ -238,7 +245,14 @@ public class UMLOperationDiff {
 					found = true;
 					Pair<UMLType, UMLType> pair = Pair.of(exceptionType1, exceptionType2);
 					if(!commonExceptionTypes.contains(pair)) {
-						commonExceptionTypes.add(pair);
+						if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType && !exceptionType1.toString().equals(exceptionType1.toQualifiedString())) {
+							UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();
+							UMLType type2 = ((LeafType)exceptionType2).cloneAsQualified();
+							commonExceptionTypes.add(Pair.of(type1, type2));
+						}
+						else {
+							commonExceptionTypes.add(pair);
+						}
 					}
 					else if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType) {
 						UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();

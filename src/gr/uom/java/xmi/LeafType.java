@@ -2,7 +2,7 @@ package gr.uom.java.xmi;
 
 import java.util.regex.Pattern;
 
-public class LeafType extends UMLType {
+public class LeafType extends UMLType implements Cloneable {
 	private String classType;
 	private String nonQualifiedClassType;
 	private volatile int hashCode = 0;
@@ -11,6 +11,16 @@ public class LeafType extends UMLType {
 	public LeafType(String type) {
 		this.classType = type;
 		this.nonQualifiedClassType = simpleNameOf(type);
+	}
+
+	public LeafType cloneAsQualified() {
+		try {
+			LeafType type = (LeafType)super.clone();
+			type.nonQualifiedClassType = type.classType;
+			return type;
+		} catch (CloneNotSupportedException e) {
+			return this;
+		}
 	}
 
 	@Override

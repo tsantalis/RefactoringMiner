@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
@@ -212,9 +213,17 @@ public class UMLOperationDiff {
 		for(UMLType exceptionType1 : exceptionTypes1) {
 			boolean found = false;
 			for(UMLType exceptionType2 : exceptionTypes2) {
-				if(exceptionType1.equals(exceptionType2)) {
+				if(exceptionType1.equals(exceptionType2) && exceptionType1.getClassType().equals(exceptionType2.getClassType())) {
 					found = true;
-					commonExceptionTypes.add(Pair.of(exceptionType1, exceptionType2));
+					Pair<UMLType, UMLType> pair = Pair.of(exceptionType1, exceptionType2);
+					if(!commonExceptionTypes.contains(pair)) {
+						commonExceptionTypes.add(pair);
+					}
+					else if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType) {
+						UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();
+						UMLType type2 = ((LeafType)exceptionType2).cloneAsQualified();
+						commonExceptionTypes.add(Pair.of(type1, type2));
+					}
 					break;
 				}
 			}
@@ -225,9 +234,17 @@ public class UMLOperationDiff {
 		for(UMLType exceptionType2 : exceptionTypes2) {
 			boolean found = false;
 			for(UMLType exceptionType1 : exceptionTypes1) {
-				if(exceptionType1.equals(exceptionType2)) {
+				if(exceptionType1.equals(exceptionType2) && exceptionType1.getClassType().equals(exceptionType2.getClassType())) {
 					found = true;
-					commonExceptionTypes.add(Pair.of(exceptionType1, exceptionType2));
+					Pair<UMLType, UMLType> pair = Pair.of(exceptionType1, exceptionType2);
+					if(!commonExceptionTypes.contains(pair)) {
+						commonExceptionTypes.add(pair);
+					}
+					else if(exceptionType1 instanceof LeafType && exceptionType2 instanceof LeafType) {
+						UMLType type1 = ((LeafType)exceptionType1).cloneAsQualified();
+						UMLType type2 = ((LeafType)exceptionType2).cloneAsQualified();
+						commonExceptionTypes.add(Pair.of(type1, type2));
+					}
 					break;
 				}
 			}

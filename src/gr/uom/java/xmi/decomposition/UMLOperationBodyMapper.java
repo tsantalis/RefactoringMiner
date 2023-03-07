@@ -1677,6 +1677,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+						mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 0) {
+						AbstractCodeFragment fragment = mapping.getFragment1();
+						if(fragment instanceof CompositeStatementObject) {
+							CompositeStatementObject statement = (CompositeStatementObject)fragment;
+							if(!innerNodes1.contains(statement)) {
+								innerNodes1.add(statement);
+								addedInnerNodes1.add(statement);
+							}
+						}
+					}
+					else {
+						//search for leaf mappings being inexact
+						int subsumedLeafMappings = 0;
+						int inExactSubsumedLeafMappings = 0;
+						for(AbstractCodeMapping mapping2 : operationBodyMapper.getMappings()) {
+							if(mapping2.equals(mapping)) {
+								break;
+							}
+							if((mapping.getFragment1().getLocationInfo().subsumes(mapping2.getFragment1().getLocationInfo()) ||
+									mapping.getFragment2().getLocationInfo().subsumes(mapping2.getFragment2().getLocationInfo())) &&
+									!mapping.getFragment1().equals(mapping2.getFragment1()) && !mapping.getFragment2().equals(mapping2.getFragment2())) {
+								subsumedLeafMappings++;
+								if(!mapping2.getReplacements().isEmpty() || !mapping2.getFragment1().equalFragment(mapping2.getFragment2())) {
+									inExactSubsumedLeafMappings++;
+								}
+							}
+						}
+						if(inExactSubsumedLeafMappings == subsumedLeafMappings && subsumedLeafMappings > 0) {
+							AbstractCodeFragment fragment = mapping.getFragment1();
+							if(fragment instanceof CompositeStatementObject) {
+								CompositeStatementObject statement = (CompositeStatementObject)fragment;
+								if(!innerNodes1.contains(statement)) {
+									innerNodes1.add(statement);
+									addedInnerNodes1.add(statement);
+								}
+							}
+						}
+					}
+				}
 			}
 			innerNodes2.remove(composite2);
 			innerNodes2.addAll(addedInnerNodes2);

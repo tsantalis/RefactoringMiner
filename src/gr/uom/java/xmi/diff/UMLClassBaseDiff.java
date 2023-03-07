@@ -1943,6 +1943,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 			List<Double> editDistances = new ArrayList<>();
+			//check if mappings are the same references
+			Set<AbstractCodeMapping> mappingsAsSet = new LinkedHashSet<>();
+			mappingsAsSet.addAll(mappings);
+			if(mappingsAsSet.size() == 1) {
+				continue;
+			}
 			while(mappingIterator.hasNext()) {
 				AbstractCodeMapping mapping = mappingIterator.next();
 				UMLOperationBodyMapper mapper = mapperIterator.next();

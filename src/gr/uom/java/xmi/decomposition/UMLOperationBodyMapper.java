@@ -6736,6 +6736,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
 			replacementInfo.addReplacement(replacement);
+			if(invocationCoveringTheEntireStatement2.arguments().size() > 0) {
+				for(String argument2 : invocationCoveringTheEntireStatement2.arguments()) {
+					LeafExpression matchingVariable = null;
+					for(LeafExpression variable : statement2.getVariables()) {
+						if(argument2.startsWith(variable.getString())) {
+							matchingVariable = variable;
+							break;
+						}
+					}
+					if(matchingVariable != null) {
+						for(AbstractCodeFragment codeFragment : replacementInfo.statements2) {
+							if(codeFragment.getString().startsWith(matchingVariable.getString() + "." + "add")) {
+								for(String argument1 : invocationCoveringTheEntireStatement1.arguments()) {
+									List<LeafExpression> leafExpressions2 = codeFragment.findExpression(argument1);
+									if(leafExpressions2.size() == 1) {
+										List<LeafExpression> leafExpressions1 = statement1.findExpression(argument1);
+										if(leafExpressions1.size() == 1) {
+											LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), container1, container2);
+											mappings.add(leafMapping);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			return replacementInfo.getReplacements();
 		}
 		if(!methodInvocations1.isEmpty() && invocationCoveringTheEntireStatement2 != null) {

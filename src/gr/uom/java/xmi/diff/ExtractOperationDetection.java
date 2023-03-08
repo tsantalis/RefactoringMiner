@@ -127,7 +127,7 @@ public class ExtractOperationDetection {
 				if(otherAddedMethodsCalledWithSameOrMoreCallSites == 0 && (otherAddedMethodsCalled == 0 || mapper.getContainer1().stringRepresentation().size() > addedOperationInvocations.size() * addedOperation.stringRepresentation().size())) {
 					List<AbstractCall> sortedInvocations = sortInvocationsBasedOnArgumentOccurrences(addedOperationInvocations);
 					for(AbstractCall addedOperationInvocation : sortedInvocations) {
-						processAddedOperation(addedOperation, refactorings, addedOperationInvocations, addedOperationInvocation);
+						processAddedOperation(addedOperation, refactorings, sortedInvocations, addedOperationInvocation);
 					}
 				}
 				else {

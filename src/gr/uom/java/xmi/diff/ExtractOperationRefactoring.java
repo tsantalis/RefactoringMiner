@@ -128,17 +128,19 @@ public class ExtractOperationRefactoring implements Refactoring {
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
-				if(expressions1.size() > 0) {
-					List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
-					for(AbstractCodeFragment leaf : leaves) {
-						for(AbstractCall call : extractedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-									argumentMappings.add(expressionMapping);
-									break;
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals("this." + replacement.getAfter()) || replacement.getAfter().equals("this." + replacement.getBefore())) {
+					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
+					if(expressions1.size() > 0) {
+						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+						for(AbstractCodeFragment leaf : leaves) {
+							for(AbstractCall call : extractedOperationInvocations) {
+								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+									List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
+									if(expressions1.size() == 1 && expressions2.size() == 1) {
+										LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+										argumentMappings.add(expressionMapping);
+										break;
+									}
 								}
 							}
 						}

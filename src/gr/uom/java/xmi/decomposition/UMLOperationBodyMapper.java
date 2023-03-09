@@ -3949,6 +3949,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									leaves1.remove(mapping.getFragment1());
 								}
 								leafIterator2.remove();
+								checkForMatchingVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
 							}
 							else {
 								if(!duplicateMappingInParentMapper(mappingSet)) {
@@ -3976,6 +3977,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										leaves1.remove(mapping.getFragment1());
 									}
 									leafIterator2.remove();
+									checkForMatchingVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
 								}
 								else {
 									if(!duplicateMappingInParentMapper(mappingSet)) {
@@ -4227,6 +4229,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										leaves1.remove(mapping.getFragment1());
 									}
 									leafIterator2.remove();
+									checkForMatchingVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
 								}
 								else {
 									if(!duplicateMappingInParentMapper(mappingSet)) {
@@ -4277,6 +4280,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					leaves1.remove(minStatementMapping.getFragment1());
 					leaves2.remove(minStatementMapping.getFragment2());
 				}
+			}
+		}
+	}
+
+	private void checkForMatchingVariableDeclaration(AbstractCodeFragment leaf2, List<? extends AbstractCodeFragment> leaves1,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions) {
+		if(leaf2.getVariableDeclarations().size() > 0) {
+			VariableDeclaration declaration2 = leaf2.getVariableDeclarations().get(0);
+			Set<AbstractCodeFragment> matchingVariableDeclarations1 = new LinkedHashSet<>();
+			for(AbstractCodeFragment leaf1 : leaves1) {
+				if(!alreadyMatched1(leaf1)) {
+					if(leaf1.getVariableDeclarations().size() > 0) {
+						VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
+						if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
+								declaration1.getType().equals(declaration2.getType())) {
+							matchingVariableDeclarations1.add(leaf1);
+						}
+					}
+				}
+			}
+			if(matchingVariableDeclarations1.size() == 1) {
+				LeafMapping mapping = createLeafMapping(matchingVariableDeclarations1.iterator().next(), leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+				addMapping(mapping);
+				leaves1.remove(mapping.getFragment1());
 			}
 		}
 	}
@@ -4696,8 +4723,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			if(initializersMergedToVariableDeclaration(mappingSet)) {
+				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
+			}
 		}
 		return Set.of(mappingSet.first());
+	}
+
+	private boolean initializersMergedToVariableDeclaration(TreeSet<? extends AbstractCodeMapping> mappingSet) {
+		if(mappingSet.size() > 1) {
+			VariableDeclaration variableDeclaration = null;
+			int matches = 0;
+			for(AbstractCodeMapping mapping : mappingSet) {
+				if(mapping.getFragment2().getVariableDeclarations().size() > 0) {
+					if(variableDeclaration == null) {
+						variableDeclaration = mapping.getFragment2().getVariableDeclarations().get(0);
+						String fragment1 = mapping.getFragment1().getString();
+						if(variableDeclaration.getInitializer() != null) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + ";\n")) {
+								matches++;
+							}
+						}
+					}
+					else if(variableDeclaration.equals(mapping.getFragment2().getVariableDeclarations().get(0))) {
+						String fragment1 = mapping.getFragment1().getString();
+						if(variableDeclaration.getInitializer() != null) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + ";\n")) {
+								matches++;
+							}
+						}
+					}
+				}
+			}
+			return matches == mappingSet.size();
+		}
+		return false;
 	}
 
 	private boolean nestedUnderLoop(Set<CompositeStatementObject> blocks) {

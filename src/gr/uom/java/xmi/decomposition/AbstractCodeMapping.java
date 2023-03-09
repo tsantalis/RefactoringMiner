@@ -211,10 +211,20 @@ public abstract class AbstractCodeMapping {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
 			for(Replacement replacement : getReplacements()) {
-				if(replacement.getAfter().startsWith(variableName + ".")) {
-					String suffixAfter = replacement.getAfter().substring(variableName.length(), replacement.getAfter().length());
-					if(replacement.getBefore().endsWith(suffixAfter)) {
-						String prefixBefore = replacement.getBefore().substring(0, replacement.getBefore().indexOf(suffixAfter));
+				String after = replacement.getAfter();
+				String before = replacement.getBefore();
+				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION)) {
+					if(after.startsWith("(") && after.endsWith(")")) {
+						after = after.substring(1, after.length()-1);
+					}
+					if(before.startsWith("(") && before.endsWith(")")) {
+						before = before.substring(1, before.length()-1);
+					}
+				}
+				if(after.startsWith(variableName + ".")) {
+					String suffixAfter = after.substring(variableName.length(), after.length());
+					if(before.endsWith(suffixAfter)) {
+						String prefixBefore = before.substring(0, before.indexOf(suffixAfter));
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixBefore) ||
 									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
@@ -233,16 +243,16 @@ public abstract class AbstractCodeMapping {
 						}
 					}
 				}
-				if(variableName.equals(replacement.getAfter()) && initializer != null) {
-					if(initializer.toString().equals(replacement.getBefore()) ||
-							overlappingExtractVariable(initializer, replacement.getBefore(), nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
-							(initializer.toString().equals("(" + declaration.getType() + ")" + replacement.getBefore()) && !containsVariableNameReplacement(variableName)) ||
-							ternaryMatch(initializer, replacement.getBefore()) ||
-							infixOperandMatch(initializer, replacement.getBefore()) ||
-							wrappedAsArgument(initializer, replacement.getBefore()) ||
-							reservedTokenMatch(initializer, replacement, replacement.getBefore())) {
+				if(variableName.equals(after) && initializer != null) {
+					if(initializer.toString().equals(before) ||
+							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
+							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
+							ternaryMatch(initializer, before) ||
+							infixOperandMatch(initializer, before) ||
+							wrappedAsArgument(initializer, before) ||
+							reservedTokenMatch(initializer, replacement, before)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());
+						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
 						for(LeafExpression subExpression : subExpressions) {
 							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 							ref.addSubExpressionMapping(leafMapping);
@@ -323,10 +333,20 @@ public abstract class AbstractCodeMapping {
 			for(Replacement replacement : getReplacements()) {
 				String variableName = declaration.getVariableName();
 				AbstractExpression initializer = declaration.getInitializer();
-				if(replacement.getBefore().startsWith(variableName + ".")) {
-					String suffixBefore = replacement.getBefore().substring(variableName.length(), replacement.getBefore().length());
-					if(replacement.getAfter().endsWith(suffixBefore)) {
-						String prefixAfter = replacement.getAfter().substring(0, replacement.getAfter().indexOf(suffixBefore));
+				String after = replacement.getAfter();
+				String before = replacement.getBefore();
+				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION)) {
+					if(after.startsWith("(") && after.endsWith(")")) {
+						after = after.substring(1, after.length()-1);
+					}
+					if(before.startsWith("(") && before.endsWith(")")) {
+						before = before.substring(1, before.length()-1);
+					}
+				}
+				if(before.startsWith(variableName + ".")) {
+					String suffixBefore = before.substring(variableName.length(), before.length());
+					if(after.endsWith(suffixBefore)) {
+						String prefixAfter = after.substring(0, after.indexOf(suffixBefore));
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixAfter) ||
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
@@ -345,16 +365,16 @@ public abstract class AbstractCodeMapping {
 						}
 					}
 				}
-				if(variableName.equals(replacement.getBefore()) && initializer != null) {
-					if(initializer.toString().equals(replacement.getAfter()) ||
-							overlappingExtractVariable(initializer, replacement.getAfter(), nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
-							(initializer.toString().equals("(" + declaration.getType() + ")" + replacement.getAfter()) && !containsVariableNameReplacement(variableName)) ||
-							ternaryMatch(initializer, replacement.getAfter()) ||
-							infixOperandMatch(initializer, replacement.getAfter()) ||
-							wrappedAsArgument(initializer, replacement.getAfter()) ||
-							reservedTokenMatch(initializer, replacement, replacement.getAfter())) {
+				if(variableName.equals(before) && initializer != null) {
+					if(initializer.toString().equals(after) ||
+							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
+							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
+							ternaryMatch(initializer, after) ||
+							infixOperandMatch(initializer, after) ||
+							wrappedAsArgument(initializer, after) ||
+							reservedTokenMatch(initializer, replacement, after)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment2().findExpression(replacement.getAfter());
+						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
 						for(LeafExpression subExpression : subExpressions) {
 							LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 							ref.addSubExpressionMapping(leafMapping);

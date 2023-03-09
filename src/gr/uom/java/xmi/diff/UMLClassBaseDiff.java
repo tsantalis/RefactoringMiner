@@ -1946,7 +1946,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			//check if mappings are the same references
 			Set<AbstractCodeMapping> mappingsAsSet = new LinkedHashSet<>();
 			mappingsAsSet.addAll(mappings);
-			if(mappingsAsSet.size() == 1) {
+			Set<UMLOperationBodyMapper> mappersAsSet = new LinkedHashSet<>();
+			mappersAsSet.addAll(mappers);
+			if(mappingsAsSet.size() == 1 || (mappersAsSet.size() == 1 && !(fragment instanceof CompositeStatementObject))) {
 				continue;
 			}
 			while(mappingIterator.hasNext()) {

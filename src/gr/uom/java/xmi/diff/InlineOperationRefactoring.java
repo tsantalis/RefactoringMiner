@@ -117,9 +117,11 @@ public class InlineOperationRefactoring implements Refactoring {
 							for(AbstractCall call : inlinedOperationInvocations) {
 								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 									List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
-									if(expressions1.size() == 1 && expressions2.size() == 1) {
-										LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
-										argumentMappings.add(expressionMapping);
+									if(expressions1.size() == 1) {
+										for(LeafExpression expression2 : expressions2) {
+											LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expression2, targetOperationBeforeInline, targetOperationAfterInline);
+											argumentMappings.add(expressionMapping);
+										}
 										break;
 									}
 								}
@@ -138,9 +140,11 @@ public class InlineOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions1 = leaf.findExpression(argument);
-					if(expressions1.size() == 1 && expressions2.size() == 1) {
-						LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
-						argumentMappings.add(expressionMapping);
+					if(expressions1.size() == 1) {
+						for(LeafExpression expression2 : expressions2) {
+							LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expression2, targetOperationBeforeInline, targetOperationAfterInline);
+							argumentMappings.add(expressionMapping);
+						}
 						return true;
 					}
 				}

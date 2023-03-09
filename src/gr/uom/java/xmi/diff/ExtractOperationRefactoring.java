@@ -136,9 +136,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 							for(AbstractCall call : extractedOperationInvocations) {
 								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 									List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
-									if(expressions1.size() == 1 && expressions2.size() == 1) {
-										LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-										argumentMappings.add(expressionMapping);
+									if(expressions2.size() == 1) {
+										for(LeafExpression expression1 : expressions1) {
+											LeafMapping expressionMapping = new LeafMapping(expression1, expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+											argumentMappings.add(expressionMapping);
+										}
 										break;
 									}
 								}
@@ -157,9 +159,11 @@ public class ExtractOperationRefactoring implements Refactoring {
 			for(AbstractCodeFragment leaf : leaves) {
 				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
 					List<LeafExpression> expressions2 = leaf.findExpression(argument);
-					if(expressions1.size() == 1 && expressions2.size() == 1) {
-						LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-						argumentMappings.add(expressionMapping);
+					if(expressions2.size() == 1) {
+						for(LeafExpression expression1 : expressions1) {
+							LeafMapping expressionMapping = new LeafMapping(expression1, expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+							argumentMappings.add(expressionMapping);
+						}
 						return true;
 					}
 				}

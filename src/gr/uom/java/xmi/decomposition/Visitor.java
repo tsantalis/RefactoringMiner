@@ -85,6 +85,7 @@ public class Visitor extends ASTVisitor {
 	private List<LeafExpression> thisExpressions = new ArrayList<>();
 	private List<LeafExpression> arguments = new ArrayList<>();
 	private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
+	private List<LeafExpression> castExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
@@ -239,6 +240,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
 			removeLast(this.thisExpressions, anonymous.getThisExpressions());
 			removeLast(this.parenthesizedExpressions, anonymous.getParenthesizedExpressions());
+			removeLast(this.castExpressions, anonymous.getCastExpressions());
 			removeLast(this.arguments, anonymous.getArguments());
 			this.ternaryOperatorExpressions.removeAll(anonymous.getTernaryOperatorExpressions());
 			this.anonymousClassDeclarations.removeAll(anonymous.getAnonymousClassDeclarations());
@@ -714,7 +716,7 @@ public class Visitor extends ASTVisitor {
 						}
 					}
 				}
-				if(qualifierIsParameter || qualifierIsField/* || node.getName().getIdentifier().equals("length")*/) {
+				if(qualifierIsParameter || qualifierIsField || node.getName().getIdentifier().equals("length")) {
 					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 					variables.add(expression);
 					if(current.getUserObject() != null) {
@@ -780,6 +782,12 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getVariables().add(expression);
 			}
+		}
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CAST_EXPRESSION, container);
+		castExpressions.add(expression);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getCastExpressions().add(expression);
 		}
 		return super.visit(node);
 	}
@@ -874,6 +882,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
+	}
+
+	public List<LeafExpression> getCastExpressions() {
+		return castExpressions;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

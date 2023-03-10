@@ -13,6 +13,7 @@ import gr.uom.java.xmi.diff.MoveClassRefactoring;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.RenameClassRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
+import org.refactoringminer.util.RefactoringRelationship;
 
 public class RefactoringCollector extends RefactoringHandler {
   private final RefactoringSet rs;

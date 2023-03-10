@@ -62,6 +62,10 @@ public abstract class AbstractCall extends LeafExpression {
 		if(this instanceof OperationInvocation) {
 			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, classDiff, modelDiff);
 		}
+		else if(this instanceof MethodReference) {
+			MethodReference methodReference = (MethodReference)this;
+			return methodReference.getName().equals(operation.getName());
+		}
 		return false;
 	}
 
@@ -132,7 +136,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean loggerExpression() {
 		if(expression != null) {
-			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER")) {
+			if(expression.equals("log") || expression.equals("LOG") || expression.equals("logger") || expression.equals("LOGGER") || expression.equals("Log")) {
 				return true;
 			}
 		}
@@ -140,7 +144,8 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean matchesLogName() {
-		return logNames.contains(this.getName());
+		//special handling for Android Log.e()
+		return logNames.contains(this.getName()) || (expression != null && expression.equals("Log") && this.getName().equals("e"));
 	}
 
 	public boolean expressionIsNullOrThis() {
@@ -423,9 +428,10 @@ public abstract class AbstractCall extends LeafExpression {
 				!identicalName(call) && (equalArguments(call) || reorderedArguments(call) || this.arguments().size() == 0 || call.arguments().size() == 0);
 	}
 
-	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call) {
+	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
-				this.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call)) &&
+				this.arguments.size() > 0 && call.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call) ||
+				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size())) &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));
 	}
 
@@ -810,6 +816,12 @@ public abstract class AbstractCall extends LeafExpression {
 		for(Replacement r : replacements) {
 			int index1 = arguments().indexOf(r.getBefore());
 			int index2 = call.arguments().indexOf(r.getAfter());
+			if(index1 == -1 && arguments().contains(r.getBefore() + ".length")) {
+				index1 = arguments().indexOf(r.getBefore() + ".length");
+			}
+			if(index2 == -1 && call.arguments().contains(r.getAfter() + ".length")) {
+				index2 = call.arguments().indexOf(r.getAfter() + ".length");
+			}
 			if(index1 != -1 && index2 != -1) {
 				if(arguments().size() == call.arguments().size()) {
 					if(index1 == index2) {

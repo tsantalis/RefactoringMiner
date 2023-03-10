@@ -59,6 +59,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getThisExpressions();
 	public abstract List<LeafExpression> getArguments();
 	public abstract List<LeafExpression> getParenthesizedExpressions();
+	public abstract List<LeafExpression> getCastExpressions();
 	public abstract List<TernaryOperatorExpression> getTernaryOperatorExpressions();
 	public abstract List<LambdaExpressionObject> getLambdas();
 	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
@@ -145,6 +146,12 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				locations.add(expression.getLocationInfo());
 			}
 		}
+		for(LeafExpression expression : getCastExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
 		for(LeafExpression expression : getParenthesizedExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
@@ -170,6 +177,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public boolean isLogCall() {
 		AbstractCall call = invocationCoveringEntireFragment();
 		if(call != null && call.isLog()) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isAssertCall() {
+		AbstractCall call = invocationCoveringEntireFragment();
+		if(call != null && call.getName().startsWith("assert")) {
 			return true;
 		}
 		return false;

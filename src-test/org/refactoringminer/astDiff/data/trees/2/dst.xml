@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<root>
+  <context></context>
+  <tree type="ExpressionStatement" pos="5113" length="26">
+    <tree type="Assignment" pos="5113" length="25">
+      <tree type="FieldAccess" pos="5113" length="15">
+        <tree type="ThisExpression" pos="5113" length="4"></tree>
+        <tree type="SimpleName" label="statsStore" pos="5118" length="10"></tree>
+      </tree>
+      <tree type="ASSIGNMENT_OPERATOR" label="=" pos="5129" length="1"></tree>
+      <tree type="LambdaExpression" pos="5131" length="7">
+        <tree type="VariableDeclarationFragment" pos="5131" length="1">
+          <tree type="SimpleName" label="s" pos="5131" length="1"></tree>
+        </tree>
+        <tree type="Block" pos="5136" length="2"></tree>
+      </tree>
+    </tree>
+  </tree>
+</root>

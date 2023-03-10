@@ -14,7 +14,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.utils.RefactoringRelationship.GroupKey;
+import org.refactoringminer.util.RefactoringRelationship;
+import org.refactoringminer.util.RefactoringRelationship.GroupKey;
 
 public class RefactoringSet {
 

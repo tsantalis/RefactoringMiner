@@ -1,0 +1,203 @@
+package org.neo4j.ndp.messaging.v1;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.neo4j.graphdb.DynamicLabel;
+import org.neo4j.graphdb.DynamicRelationshipType;
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.PropertyContainer;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.helpers.collection.Iterables;
+import org.neo4j.kernel.api.exceptions.Status;
+import org.neo4j.ndp.messaging.NDPIOException;
+import org.neo4j.ndp.messaging.v1.infrastructure.ValueNode;
+import org.neo4j.ndp.messaging.v1.infrastructure.ValuePath;
+import org.neo4j.ndp.messaging.v1.infrastructure.ValueRelationship;
+import org.neo4j.ndp.messaging.v1.message.Message;
+import org.neo4j.packstream.PackStream;
+import org.neo4j.packstream.PackType;
+import org.neo4j.ndp.runtime.spi.Record;
+
+import static org.neo4j.ndp.messaging.v1.infrastructure.ValueParser.parseId;
+import static org.neo4j.ndp.runtime.internal.Neo4jError.codeFromString;
+import static org.neo4j.ndp.runtime.spi.Records.record;
+
+public class PackStreamMessageFormatV1 implements MessageFormat
+{
+        private void packValue( Object obj ) throws IOException
+        {
+            // Note: below uses instanceof for quick implementation, this should be swapped over to a dedicated
+            // visitable type that the serializer can simply visit. This would create explicit contract for what can
+            // be serialized and allow performant method dispatch rather than if branching.
+            if ( obj == null )
+            {
+                packer.packNull();
+            }
+            else if ( obj instanceof Boolean )
+            {
+                packer.pack( (boolean) obj );
+            }
+            else if ( obj instanceof Byte || obj instanceof Short || obj instanceof Integer || obj instanceof Long )
+            {
+                packer.pack( ((Number) obj).longValue() );
+            }
+            else if ( obj instanceof Float || obj instanceof Double )
+            {
+                packer.pack( ((Number) obj).doubleValue() );
+            }
+            else if ( obj instanceof String )
+            {
+                packer.pack( (String) obj );
+            }
+            else if ( obj instanceof Map )
+            {
+                Map<Object,Object> map = (Map<Object,Object>) obj;
+
+                packer.packMapHeader( map.size() );
+                for ( Map.Entry<?,?> entry : map.entrySet() )
+                {
+                    packer.pack( entry.getKey().toString() );
+                    packValue( entry.getValue() );
+                }
+            }
+            else if ( obj instanceof Collection )
+            {
+                List list = (List) obj;
+                packer.packListHeader( list.size() );
+                for ( Object item : list )
+                {
+                    packValue( item );
+                }
+            }
+            else if ( obj instanceof byte[] )
+            {
+                // Pending decision
+                throw new UnsupportedOperationException( "Binary values cannot be packed." );
+            }
+            else if ( obj instanceof short[] )
+            {
+                short[] arr = (short[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj instanceof int[] )
+            {
+                int[] arr = (int[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj instanceof long[] )
+            {
+                long[] arr = (long[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj instanceof float[] )
+            {
+                float[] arr = (float[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj instanceof double[] )
+            {
+                double[] arr = (double[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj instanceof boolean[] )
+            {
+                boolean[] arr = (boolean[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packer.pack( arr[i] );
+                }
+            }
+            else if ( obj.getClass().isArray() )
+            {
+                Object[] arr = (Object[]) obj;
+                packer.packListHeader( arr.length );
+                for ( int i = 0; i < arr.length; i++ )
+                {
+                    packValue( arr[i] );
+                }
+            }
+            else if ( obj instanceof Node )
+            {
+                Node node = (Node) obj;
+                packer.packStructHeader( 3, NODE );
+                packer.pack( "node/" + node.getId() );
+
+                Collection<Label> labels = Iterables.toList( node.getLabels() );
+                packer.packListHeader( labels.size() );
+                for ( Label label : labels )
+                {
+                    packer.pack( label.name() );
+                }
+
+                Collection<String> propertyKeys = Iterables.toList( node.getPropertyKeys() );
+                packer.packMapHeader( propertyKeys.size() );
+                for ( String propertyKey : propertyKeys )
+                {
+                    packer.pack( propertyKey );
+                    packValue( node.getProperty( propertyKey ) );
+                }
+            }
+            else if ( obj instanceof Relationship )
+            {
+                Relationship rel = (Relationship) obj;
+                packer.packStructHeader( 5, RELATIONSHIP );
+                packer.pack( "rel/" + rel.getId() );
+                packer.pack( "node/" + rel.getStartNode().getId() );
+                packer.pack( "node/" + rel.getEndNode().getId() );
+
+                packer.pack( rel.getType().name() );
+
+                Collection<String> propertyKeys = Iterables.toList( rel.getPropertyKeys() );
+                packer.packMapHeader( propertyKeys.size() );
+                for ( String propertyKey : propertyKeys )
+                {
+                    packer.pack( propertyKey );
+                    packValue( rel.getProperty( propertyKey ) );
+                }
+            }
+            else if ( obj instanceof Path )
+            {
+                Path path = (Path) obj;
+                packer.packStructHeader( 1, PATH );
+                packer.packListHeader( path.length() * 2 + 1 );
+                for ( PropertyContainer pc : path )
+                {
+                    packValue( pc );
+                }
+            }
+            else
+            {
+                throw new NDPIOException( Status.General.UnknownFailure, "Unpackable value " + obj + " of type " + obj.getClass().getName() );
+            }
+        }
+}

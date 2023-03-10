@@ -20,10 +20,15 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 	private List<Double> levelParentEditDistance;
+	private boolean equalNumberOfAssertions;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(statement1, statement2, operation1, operation2);
+	}
+
+	public void setEqualNumberOfAssertions(boolean equalNumberOfAssertions) {
+		this.equalNumberOfAssertions = equalNumberOfAssertions;
 	}
 
 	@Override
@@ -167,6 +172,52 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						}
 					}
 				}
+				if(intersection.size() == 1 && intersection.contains(ReplacementType.STRING_LITERAL) && this.stringLiteralRatio() > 0.5 && o.stringLiteralRatio() > 0.5) {
+					return Double.compare(distance1, distance2);
+				}
+				List<Double> levelParentEditDistance1 = this.levelParentEditDistance();
+				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
+				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;
+				int minSize = Math.min(levelParentEditDistance1.size(), levelParentEditDistance2.size());
+				int headZeros1 = 0;
+				int headZeros2 = 0;
+				for(int i=0; i<minSize; i++) {
+					double d1 = levelParentEditDistance1.get(i);
+					nLevelParentEditDistance1 += d1;
+					if(d1 == 0 && nLevelParentEditDistance1 == 0) {
+						headZeros1++;
+					}
+					double d2 = levelParentEditDistance2.get(i);
+					nLevelParentEditDistance2 += d2;
+					if(d2 == 0 && nLevelParentEditDistance2 == 0) {
+						headZeros2++;
+					}
+				}
+				if(levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2 &&
+						((levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
+						(levelParentEditDistance2.contains(0.0) && !levelParentEditDistance1.contains(0.0))) &&
+						(levelParentEditDistance1.get(0) == nLevelParentEditDistance1 ||
+						levelParentEditDistance2.get(0) == nLevelParentEditDistance2)) {
+					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && !levelParentEditDistance2.get(0).equals(0.0)) {
+						return -1;
+					}
+					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+						return 1;
+					}
+					if(headZeros1 > headZeros2) {
+						return -1;
+					}
+					else if(headZeros2 > headZeros1) {
+						return 1;
+					}
+				}
+				if(equalNumberOfAssertions && this.getFragment1().isAssertCall() && this.getFragment2().isAssertCall() && o.getFragment1().isAssertCall() && o.getFragment2().isAssertCall()) {
+					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
+					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
+					if(indexDiff1 != indexDiff2) {
+						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+					}
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {
@@ -227,6 +278,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return -1;
 					}
 					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+						return 1;
+					}
+					if(headZeros1 > headZeros2) {
+						return -1;
+					}
+					else if(headZeros2 > headZeros1) {
 						return 1;
 					}
 				}
@@ -304,6 +361,23 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private double stringLiteralRatio() {
+		int length1 = getFragment1().getString().length();
+		int stringLiteralLength1 = 0;
+		for(LeafExpression s1 : getFragment1().getStringLiterals()) {
+			stringLiteralLength1 += s1.getString().length();
+		}
+		double ratio1 = (double)stringLiteralLength1/(double)length1;
+		
+		int length2 = getFragment2().getString().length();
+		int stringLiteralLength2 = 0;
+		for(LeafExpression s2 : getFragment2().getStringLiterals()) {
+			stringLiteralLength2 += s2.getString().length();
+		}
+		double ratio2 = (double)stringLiteralLength2/(double)length2;
+		return (ratio1 + ratio2)/2.0;
 	}
 
 	public double editDistance() {

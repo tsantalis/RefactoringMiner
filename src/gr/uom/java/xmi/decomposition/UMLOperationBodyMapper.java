@@ -9604,7 +9604,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
-						!logGuard(comp1) && !nullCheck(comp1) &&
+						!logGuard(comp1) && !nullCheck(comp1, comp2) &&
 						!parentMapperContainsExactMapping(comp1) && !equalIfElseIfChain) {
 					return 0.01;
 				}
@@ -9695,11 +9695,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Collections.emptySet();
 	}
 
-	private boolean nullCheck(CompositeStatementObject comp) {
-		if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-			for(AbstractExpression expression : comp.getExpressions()) {
+	private boolean nullCheck(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+		if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			for(AbstractExpression expression : comp1.getExpressions()) {
 				if(expression.getString().endsWith(" == null")) {
-					return true;
+					List<String> commentsWithinStatement1 = extractCommentsWithinStatement(comp1, container1);
+					List<String> commentsWithinStatement2 = extractCommentsWithinStatement(comp2, container2);
+					if(commentsWithinStatement1.size() > 0 || commentsWithinStatement2.size() > 0) {
+						Set<String> intersection = new LinkedHashSet<>(commentsWithinStatement1);
+						intersection.retainAll(commentsWithinStatement2);
+						if(intersection.isEmpty()) {
+							return true;
+						}
+					}
 				}
 			}
 		}

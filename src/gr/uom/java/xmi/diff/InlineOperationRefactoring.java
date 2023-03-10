@@ -83,9 +83,6 @@ public class InlineOperationRefactoring implements Refactoring {
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
-		if(mapping.getReplacements().isEmpty()) {
-			return;
-		}
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
 			for(String argument : call.arguments()) {

@@ -102,9 +102,6 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
-		if(mapping.getReplacements().isEmpty()) {
-			return;
-		}
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : extractedOperationInvocations) {
 			for(String argument : call.arguments()) {

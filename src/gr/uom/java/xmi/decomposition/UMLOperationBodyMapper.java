@@ -5852,7 +5852,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							if(inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 && !existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && container2 != null && container2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
+							if((inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 || mappingsForStatementsInScope(statement1, statement2, v1, v2) == 0) &&
+									!existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && container2 != null && container2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 								replacement = null;
 							}
 						}
@@ -9287,6 +9288,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private int mappingsForStatementsInScope(AbstractCodeFragment statement1, AbstractCodeFragment statement2, VariableDeclaration v1, VariableDeclaration v2) {
+		boolean increment = v1 != null && v2 != null && statement1.getString().startsWith(v1.getVariableName() + "+=") && statement2.getString().startsWith(v2.getVariableName() + "+=");
+		boolean decrement = v1 != null && v2 != null && statement1.getString().startsWith(v1.getVariableName() + "-=") && statement2.getString().startsWith(v2.getVariableName() + "-=");
+		if(v1 != null && v2 != null && (increment || decrement) && !mappings.isEmpty()) {
+			int count = 0;
+			Set<AbstractCodeFragment> statementsInScope1 = v1.getScope().getStatementsInScopeUsingVariable();
+			Set<AbstractCodeFragment> statementsInScope2 = v2.getScope().getStatementsInScopeUsingVariable();
+			for(AbstractCodeMapping mapping : mappings) {
+				if(statementsInScope1.contains(mapping.getFragment1()) && statementsInScope2.contains(mapping.getFragment2())) {
+					count++;
+				}
+				if(mapping.getFragment1().getVariableDeclarations().contains(v1) && mapping.getFragment2().getVariableDeclarations().contains(v2)) {
+					count++;
+				}
+			}
+			return count;
+		}
+		return -1;
 	}
 
 	private int inconsistentVariableMappingCount(AbstractCodeFragment statement1, AbstractCodeFragment statement2, VariableDeclaration v1, VariableDeclaration v2) {

@@ -727,6 +727,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		for(AbstractCodeMapping previousMapping : this.mappings) {
+			if(previousMapping.getFragment1() instanceof CompositeStatementObject) {
+				CompositeStatementObject comp = (CompositeStatementObject)previousMapping.getFragment1();
+				if(comp.getExpressions().contains(mapping.getFragment1())) {
+					break;
+				}
+			}
+			for(Refactoring r : previousMapping.getRefactorings()) {
+				if(r instanceof ExtractVariableRefactoring) {
+					ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+					if(mapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 

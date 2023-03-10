@@ -612,7 +612,7 @@ public class ProjectASTDiffer
 				Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
 				Tree dstInput = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
 				if (srcInput == null || dstInput == null) continue;
-				boolean _processed = true;
+				boolean eligibility = true;
 				switch (renameVariableRefactoring.getRefactoringType()) {
 					case REPLACE_VARIABLE_WITH_ATTRIBUTE:
 						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.VARIABLE_DECLARATION_STATEMENT);
@@ -620,11 +620,12 @@ public class ProjectASTDiffer
 						//TODO: need more cases to generalize the logic
 						break;
 					case RENAME_PARAMETER:
+						eligibility = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						break;
 					default:
-						_processed = false;
+						eligibility = false;
 				}
-				if (_processed) new LeafMatcher(false).match(
+				if (eligibility) new LeafMatcher(false).match(
 						srcInput,
 						dstInput,
 						null,

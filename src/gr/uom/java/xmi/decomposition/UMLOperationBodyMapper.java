@@ -3669,9 +3669,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										lineDistance2 = entry.getKey();
 									}
 								}
-								boolean validParentEditDistance = levelParentEditDistanceSum.firstEntry().getKey() == 0 ||
-										(parentMapper != null && levelParentEditDistanceSum.firstEntry().getKey() == 1);
-								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2) && (validParentEditDistance || leaf1.isKeyword())) {
+								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2)) {
 									minLineDistanceStatementMapping = levelParentEditDistanceSum.firstEntry().getValue();
 								}
 								else {
@@ -3945,9 +3943,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										lineDistance2 = entry.getKey();
 									}
 								}
-								boolean validParentEditDistance = levelParentEditDistanceSum.firstEntry().getKey() == 0 ||
-										(parentMapper != null && levelParentEditDistanceSum.firstEntry().getKey() == 1);
-								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2) && (validParentEditDistance || leaf2.isKeyword())) {
+								if(levelParentEditDistanceSum.size() > 1 && Math.abs(lineDistance1 - lineDistance2) <= Math.min(lineDistance1, lineDistance2)) {
 									minLineDistanceStatementMapping = levelParentEditDistanceSum.firstEntry().getValue();
 								}
 								else {

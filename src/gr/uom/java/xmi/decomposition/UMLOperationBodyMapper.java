@@ -3802,6 +3802,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									addToMappings(minStatementMapping, mappingSet);
 									leaves2.remove(minStatementMapping.getFragment2());
 									leafIterator1.remove();
+									checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
+									checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
 								}
 							}
 						}
@@ -4263,7 +4265,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											addToMappings(minStatementMapping, mappingSet);
 											leaves1.remove(minStatementMapping.getFragment1());
 											leafIterator2.remove();
-											checkForMatchingVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
+											checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
+											checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
 										}
 									}
 								}
@@ -4334,7 +4337,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void checkForMatchingVariableDeclaration(AbstractCodeFragment leaf1, List<? extends AbstractCodeFragment> leaves2,
+	private void checkForMergedVariableDeclaration(AbstractCodeFragment leaf2, List<? extends AbstractCodeFragment> leaves1,
+			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions) {
+		if(leaf2.getVariableDeclarations().size() > 0 && mapping.getFragment1().getVariableDeclarations().size() == 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
+			VariableDeclaration declaration2 = leaf2.getVariableDeclarations().get(0);
+			Set<AbstractCodeFragment> matchingVariableDeclarations1 = new LinkedHashSet<>();
+			for(AbstractCodeFragment leaf1 : leaves1) {
+				if(!alreadyMatched1(leaf1)) {
+					if(leaf1.getVariableDeclarations().size() > 0) {
+						VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
+						boolean variableRenamed = false;
+						for(Replacement r : mapping.getReplacements()) {
+							if(r.getBefore().equals(declaration1.getVariableName()) &&
+									r.getAfter().equals(declaration2.getVariableName())) {
+								variableRenamed = true;
+								break;
+							}
+						}
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + "=");
+						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
+							matchingVariableDeclarations1.add(leaf1);
+						}
+					}
+				}
+			}
+			if(matchingVariableDeclarations1.size() == 1) {
+				LeafMapping newMapping = createLeafMapping(matchingVariableDeclarations1.iterator().next(), leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+				addMapping(newMapping);
+			}
+		}
+	}
+
+	private void checkForSplitVariableDeclaration(AbstractCodeFragment leaf1, List<? extends AbstractCodeFragment> leaves2,
 			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions) {
 		if(leaf1.getVariableDeclarations().size() > 0 && mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() == 0) {
 			VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
@@ -4351,8 +4385,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if((declaration1.getVariableName().equals(declaration2.getVariableName()) || variableRenamed) &&
-								declaration1.getType().equals(declaration2.getType())) {
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + "=");
+						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
 					}

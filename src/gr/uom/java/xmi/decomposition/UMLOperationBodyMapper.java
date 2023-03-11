@@ -193,7 +193,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int totalNodes2 = leaves2.size() + innerNodes2.size();
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
 			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
-				if(anonymous1.size() == 1 && anonymous2.size() == 0) {
+				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||
+						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() == 0)) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf1 : leaves1) {
 						if(leaf1.getAnonymousClassDeclarations().size() > 0) {
@@ -217,7 +218,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(lambdaFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
 					}
 				}
-				else if(anonymous1.size() == 0 && anonymous2.size() == 1) {
+				else if((anonymous1.size() == 0 && anonymous2.size() == 1) ||
+						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() == 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
 						if(leaf2.getAnonymousClassDeclarations().size() > 0) {
@@ -447,6 +449,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									break;
 								}
 								if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && parent2.getParent().getParent() == null) {
+									break;
+								}
+								if(child1.getAnonymousClassDeclarations().size() > 0 && child2.getAnonymousClassDeclarations().size() > 0) {
 									break;
 								}
 								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) != parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
@@ -8048,6 +8053,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocationCoveringTheEntireStatement1.identicalWithOnlyChangesInAnonymousClassArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithMergedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
 				invocationCoveringTheEntireStatement1.identicalWithDifferentNumberOfArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap) ||
+				invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2()) != null ||
 				(invocationCoveringTheEntireStatement1 instanceof ObjectCreation && invocationCoveringTheEntireStatement2 instanceof ObjectCreation && invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2))))) {
 			UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
 			UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);

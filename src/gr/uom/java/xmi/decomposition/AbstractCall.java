@@ -276,6 +276,11 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean equalArguments(AbstractCall call) {
+		if(this instanceof MethodReference && call instanceof MethodReference) {
+			if(!this.identicalName(call)) {
+				return false;
+			}
+		}
 		return arguments().equals(call.arguments());
 	}
 
@@ -289,6 +294,11 @@ public abstract class AbstractCall extends LeafExpression {
 		List<String> arguments2 = call.arguments();
 		if(arguments1.size() != arguments2.size())
 			return false;
+		if(this instanceof MethodReference && call instanceof MethodReference) {
+			if(!this.identicalName(call)) {
+				return false;
+			}
+		}
 		for(int i=0; i<arguments1.size(); i++) {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);

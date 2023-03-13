@@ -6,6 +6,8 @@ import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.*;
+import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
@@ -317,7 +319,35 @@ public class ProjectASTDiffer
 				lastStepMappings.add(abstractCodeMapping);
 			}
 			else
+			{
 				new LeafMatcher(false).match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
+				additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
+			}
+
+		}
+	}
+
+	private static void additionallyMatchedStatements(Tree srcTree, Tree dstTree, Tree srcStatementNode, Tree dstStatementNode, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+		if (abstractCodeMapping != null) {
+			for (Replacement replacement : abstractCodeMapping.getReplacements()) {
+				if (replacement instanceof CompositeReplacement) {
+					CompositeReplacement compositeReplacement = (CompositeReplacement) replacement;
+					if (compositeReplacement.getAdditionallyMatchedStatements1().size() > 0) {
+						for (AbstractCodeFragment abstractCodeFragment : compositeReplacement.getAdditionallyMatchedStatements1()) {
+							Tree srcAdditionalTree = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeFragment.getLocationInfo());
+							new LeafMatcher(false).match(srcAdditionalTree, dstStatementNode, null, mappingStore);
+						}
+					} else if (compositeReplacement.getAdditionallyMatchedStatements2().size() > 0) {
+						for (AbstractCodeFragment abstractCodeFragment : compositeReplacement.getAdditionallyMatchedStatements2()) {
+							Tree dstAdditionalTree = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeFragment.getLocationInfo());
+							new LeafMatcher(false).match(srcStatementNode, dstAdditionalTree, null, mappingStore);
+						}
+					} else {
+
+					}
+
+				}
+			}
 		}
 	}
 

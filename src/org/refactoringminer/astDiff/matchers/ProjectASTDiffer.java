@@ -653,8 +653,10 @@ public class ProjectASTDiffer
 				VariableDeclaration renamedVariable = renameVariableRefactoring.getRenamedVariable();
 				Tree srcInput = TreeUtilFunctions.findByLocationInfo(srcTree,originalVariable.getLocationInfo());
 				Tree dstInput = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getLocationInfo());
+				Tree srcType, dstType, srcName, dstName;
+
 				if (srcInput == null || dstInput == null) continue;
-				boolean eligibility = true;
+				boolean eligible = true;
 				switch (renameVariableRefactoring.getRefactoringType()) {
 					case REPLACE_VARIABLE_WITH_ATTRIBUTE:
 						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.VARIABLE_DECLARATION_STATEMENT);
@@ -662,16 +664,52 @@ public class ProjectASTDiffer
 						//TODO: need more cases to generalize the logic
 						break;
 					case RENAME_PARAMETER:
-						eligibility = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
+						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						break;
 					case PARAMETERIZE_VARIABLE:
-						Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
-						Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
+						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
+						if (!eligible)
+							break;
+						srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
+						dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
 						new LeafMatcher(false).match(srcType,dstType,null,mappingStore);
+						if (srcInput.getChildren().size() > 0) {
+							srcName = srcInput.getChild(0);
+							if (srcName.getType().name.equals(Constants.SIMPLE_NAME)) {
+								for (Tree dstChild : dstInput.getChildren()) {
+									if (dstChild.getType().name.equals(Constants.SIMPLE_NAME)) {
+										mappingStore.addMapping(srcName,dstChild);
+										break;
+									}
+								}
+							}
+						}
+						eligible = false;
+						break;
+					case LOCALIZE_PARAMETER:
+						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
+						if (!eligible)
+							break;
+						srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
+						dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
+						new LeafMatcher(false).match(srcType,dstType,null,mappingStore);
+						if (dstInput.getChildren().size() > 0) {
+							dstName = dstInput.getChild(0);
+							if (dstName.getType().name.equals(Constants.SIMPLE_NAME)) {
+								for (Tree srcChild : srcInput.getChildren()) {
+									if (srcChild.getType().name.equals(Constants.SIMPLE_NAME)) {
+										mappingStore.addMapping(srcChild,dstName);
+										break;
+									}
+								}
+							}
+						}
+						eligible = false;
+						break;
 					default:
-						eligibility = false;
+						eligible = false;
 				}
-				if (eligibility) new LeafMatcher(false).match(
+				if (eligible) new LeafMatcher(false).match(
 						srcInput,
 						dstInput,
 						null,

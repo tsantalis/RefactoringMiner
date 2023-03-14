@@ -664,6 +664,10 @@ public class ProjectASTDiffer
 					case RENAME_PARAMETER:
 						eligibility = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						break;
+					case PARAMETERIZE_VARIABLE:
+						Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
+						Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
+						new LeafMatcher(false).match(srcType,dstType,null,mappingStore);
 					default:
 						eligibility = false;
 				}

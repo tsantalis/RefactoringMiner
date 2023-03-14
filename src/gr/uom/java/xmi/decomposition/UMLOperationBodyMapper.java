@@ -3663,7 +3663,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!leaf1.isKeyword()) {
 							codeUnderIfMovedUnderElse = codeUnderIfMovedUnderElse(mappingSet);
 						}
-						if(mappingSet.size() > 1 && (parentMapper != null || codeUnderIfMovedUnderElse) && mappings.size() > 1) {
+						boolean identicalPreviousAndNextStatement = parentMapper == null && mappingSet.first().hasIdenticalPreviousAndNextStatement();
+						if(mappingSet.size() > 1 && (parentMapper != null || codeUnderIfMovedUnderElse) && mappings.size() > 1 && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
@@ -3939,7 +3940,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0) {
+						boolean identicalPreviousAndNextStatement = parentMapper == null && mappingSet.first().hasIdenticalPreviousAndNextStatement();
+						if(mappingSet.size() > 1 && (parentMapper != null || (!identicalDepthAndIndex && !leaf2.isKeyword() && !leaf2.isLogCall())) && mappings.size() > 0 && !identicalPreviousAndNextStatement) {
 							TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
@@ -4485,13 +4487,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		return codeUnderIfMovedUnderElse;
 	}
-
-	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
+/*
+	private ScopedMappingData findParentMappingContainingOperationInvocation(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2) {
 		//Extract Method scenario
+		ScopedMappingData data = new ScopedMappingData();
 		AbstractCodeFragment statementContainingOperationInvocation = null;
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) {
 			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 				statementContainingOperationInvocation = leaf;
+				findPreviousAndNextParentMappingForExtract(leaves1, leaves2, data);
 				break;
 			}
 		}
@@ -4499,23 +4503,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mapping instanceof LeafMapping) {
 				if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 					statementContainingOperationInvocation = mapping.getFragment2();
+					findPreviousAndNextParentMappingForExtract(leaves1, leaves2, data);
 				}
 			}
 			if(statementContainingOperationInvocation != null) {
 				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) {
-					return mapping;
+					data.setParentMapping(mapping);
+					return data;
 				}
 				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
 						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) {
-					return mapping;
+					data.setParentMapping(mapping);
+					return data;
 				}
 			}
+		}
+		if(statementContainingOperationInvocation != null) {
+			return data;
 		}
 		//Inline Method scenario
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) {
 			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 				statementContainingOperationInvocation = leaf;
+				findPreviousAndNextParentMappingForInline(leaves1, leaves2, data);
 				break;
 			}
 		}
@@ -4523,21 +4534,175 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mapping instanceof LeafMapping) {
 				if(mapping.getFragment1().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 					statementContainingOperationInvocation = mapping.getFragment1();
+					findPreviousAndNextParentMappingForInline(leaves1, leaves2, data);
 				}
 			}
 			if(statementContainingOperationInvocation != null) {
 				if(mapping.getFragment1().equals(statementContainingOperationInvocation.getParent())) {
-					return mapping;
+					data.setParentMapping(mapping);
+					return data;
 				}
 				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null &&
 						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
 						mapping.getFragment1().equals(statementContainingOperationInvocation.getParent().getParent())) {
-					return mapping;
+					data.setParentMapping(mapping);
+					return data;
 				}
 			}
 		}
-		return null;
+		return data;
 	}
+
+	private void findPreviousAndNextParentMappingForExtract(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2, ScopedMappingData data) {
+		AbstractCodeFragment firstLeaf2 = null;
+		AbstractCodeFragment lastLeaf2 = null;
+		for(AbstractCodeFragment fragment : leaves2) {
+			if(firstLeaf2 == null && !fragment.getString().startsWith("return ") && !(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().get(0).getInitializer() == null)) {
+				firstLeaf2 = fragment;
+			}
+			else if(firstLeaf2 != null && fragment.getLocationInfo().getStartLine() < firstLeaf2.getLocationInfo().getStartLine()) {
+				firstLeaf2 = fragment;
+			}
+			if(lastLeaf2 == null) {
+				lastLeaf2 = fragment;
+			}
+			else if(fragment.getLocationInfo().getStartLine() > lastLeaf2.getLocationInfo().getStartLine() && !fragment.getString().startsWith("return ")) {
+				lastLeaf2 = fragment;
+			}
+		}
+		List<AbstractCodeFragment> matchingFirstLeaves1 = new ArrayList<>();
+		List<AbstractCodeFragment> matchingLastLeaves1 = new ArrayList<>();
+		for(AbstractCodeFragment fragment : leaves1) {
+			if(firstLeaf2 != null && fragment.getString().equals(firstLeaf2.getString())) {
+				matchingFirstLeaves1.add(fragment);
+			}
+			if(lastLeaf2 != null && fragment.getString().equals(lastLeaf2.getString())) {
+				matchingLastLeaves1.add(fragment);
+			}
+		}
+		if(matchingFirstLeaves1.size() > 0 && matchingLastLeaves1.size() > 0) {
+			int minBefore = Integer.MAX_VALUE;
+			int minAfter = Integer.MAX_VALUE;
+			AbstractCodeMapping previousMapping = null;
+			AbstractCodeMapping nextMapping = null;
+			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				int lineDistanceBefore = matchingFirstLeaves1.get(0).getLocationInfo().getStartLine() - mapping.getFragment1().getLocationInfo().getStartLine();
+				if(lineDistanceBefore > 0 && lineDistanceBefore < minBefore) {
+					previousMapping = mapping;
+					minBefore = lineDistanceBefore;
+				}
+				int lineDistanceAfter = mapping.getFragment1().getLocationInfo().getStartLine() - matchingLastLeaves1.get(matchingLastLeaves1.size()-1).getLocationInfo().getStartLine();
+				if(lineDistanceAfter > 0 && lineDistanceAfter < minAfter) {
+					nextMapping = mapping;
+					minAfter = lineDistanceAfter;
+				}
+			}
+			data.setPreviousMapping(previousMapping);
+			data.setNextMapping(nextMapping);
+		}
+	}
+
+	private void findPreviousAndNextParentMappingForInline(List<? extends AbstractCodeFragment> leaves1, List<? extends AbstractCodeFragment> leaves2, ScopedMappingData data) {
+		AbstractCodeFragment firstLeaf1 = null;
+		AbstractCodeFragment lastLeaf1 = null;
+		for(AbstractCodeFragment fragment : leaves1) {
+			if(firstLeaf1 == null && !fragment.getString().startsWith("return ") && !(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().get(0).getInitializer() == null)) {
+				firstLeaf1 = fragment;
+			}
+			else if(firstLeaf1 != null && fragment.getLocationInfo().getStartLine() < firstLeaf1.getLocationInfo().getStartLine()) {
+				firstLeaf1 = fragment;
+			}
+			if(lastLeaf1 == null) {
+				lastLeaf1 = fragment;
+			}
+			else if(fragment.getLocationInfo().getStartLine() > lastLeaf1.getLocationInfo().getStartLine() && !fragment.getString().startsWith("return ")) {
+				lastLeaf1 = fragment;
+			}
+		}
+		List<AbstractCodeFragment> matchingFirstLeaves2 = new ArrayList<>();
+		List<AbstractCodeFragment> matchingLastLeaves2 = new ArrayList<>();
+		for(AbstractCodeFragment fragment : leaves2) {
+			if(firstLeaf1 != null && fragment.getString().equals(firstLeaf1.getString())) {
+				matchingFirstLeaves2.add(fragment);
+			}
+			if(lastLeaf1 != null && fragment.getString().equals(lastLeaf1.getString())) {
+				matchingLastLeaves2.add(fragment);
+			}
+		}
+		if(matchingFirstLeaves2.size() > 0 && matchingLastLeaves2.size() > 0) {
+			int minBefore = Integer.MAX_VALUE;
+			int minAfter = Integer.MAX_VALUE;
+			AbstractCodeMapping previousMapping = null;
+			AbstractCodeMapping nextMapping = null;
+			for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+				int lineDistanceBefore = matchingFirstLeaves2.get(0).getLocationInfo().getStartLine() - mapping.getFragment2().getLocationInfo().getStartLine();
+				if(lineDistanceBefore > 0 && lineDistanceBefore < minBefore) {
+					previousMapping = mapping;
+					minBefore = lineDistanceBefore;
+				}
+				int lineDistanceAfter = mapping.getFragment2().getLocationInfo().getStartLine() - matchingLastLeaves2.get(matchingLastLeaves2.size()-1).getLocationInfo().getStartLine();
+				if(lineDistanceAfter > 0 && lineDistanceAfter < minAfter) {
+					nextMapping = mapping;
+					minAfter = lineDistanceAfter;
+				}
+			}
+			data.setPreviousMapping(previousMapping);
+			data.setNextMapping(nextMapping);
+		}
+	}
+*/
+	private AbstractCodeMapping findParentMappingContainingOperationInvocation() { 
+		//Extract Method scenario 
+		AbstractCodeFragment statementContainingOperationInvocation = null; 
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) { 
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+				statementContainingOperationInvocation = leaf; 
+				break; 
+			} 
+		} 
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) { 
+			if(mapping instanceof LeafMapping) { 
+				if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+					statementContainingOperationInvocation = mapping.getFragment2(); 
+				} 
+			} 
+			if(statementContainingOperationInvocation != null) { 
+				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) { 
+					return mapping; 
+				} 
+				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null && 
+						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) { 
+					return mapping; 
+				} 
+			} 
+		} 
+		//Inline Method scenario 
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) { 
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+				statementContainingOperationInvocation = leaf; 
+				break; 
+			} 
+		} 
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) { 
+			if(mapping instanceof LeafMapping) { 
+				if(mapping.getFragment1().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+					statementContainingOperationInvocation = mapping.getFragment1(); 
+				} 
+			} 
+			if(statementContainingOperationInvocation != null) { 
+				if(mapping.getFragment1().equals(statementContainingOperationInvocation.getParent())) { 
+					return mapping; 
+				} 
+				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null && 
+						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+						mapping.getFragment1().equals(statementContainingOperationInvocation.getParent().getParent())) { 
+					return mapping; 
+				} 
+			} 
+		} 
+		return null; 
+	} 
 
 	private boolean duplicateMapping(AbstractCodeMapping mapping) {
 		AbstractCodeFragment fragment2 = null;

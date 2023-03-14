@@ -20,11 +20,16 @@ import gr.uom.java.xmi.diff.StringDistance;
 
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 	private List<Double> levelParentEditDistance;
+	private boolean identicalPreviousAndNextStatement;
 	private boolean equalNumberOfAssertions;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(statement1, statement2, operation1, operation2);
+	}
+
+	public boolean hasIdenticalPreviousAndNextStatement() {
+		return identicalPreviousAndNextStatement;
 	}
 
 	public void setEqualNumberOfAssertions(boolean equalNumberOfAssertions) {
@@ -296,6 +301,39 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 					int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
 					if(indexDiff1 != indexDiff2) {
+						CompositeStatementObject thisComp1 = this.getFragment1().getParent();
+						CompositeStatementObject thisComp2 = this.getFragment2().getParent();
+						CompositeStatementObject oComp1 = o.getFragment1().getParent();
+						CompositeStatementObject oComp2 = o.getFragment2().getParent();
+						if(thisComp1 != null && this.getFragment1().getIndex() > 0 && this.getFragment1().getIndex() < thisComp1.getStatements().size()-1 &&
+								thisComp2 != null && this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() < thisComp2.getStatements().size()-1 &&
+								oComp1 != null && o.getFragment1().getIndex() > 0 && o.getFragment1().getIndex() < oComp1.getStatements().size()-1 &&
+								oComp2 != null && o.getFragment2().getIndex() > 0 && o.getFragment2().getIndex() < oComp2.getStatements().size()-1) {
+							AbstractCodeFragment thisPrevious1 = thisComp1.getStatements().get(this.getFragment1().getIndex()-1);
+							AbstractCodeFragment thisNext1 = thisComp1.getStatements().get(this.getFragment1().getIndex()+1);
+							AbstractCodeFragment thisPrevious2 = thisComp2.getStatements().get(this.getFragment2().getIndex()-1);
+							AbstractCodeFragment thisNext2 = thisComp2.getStatements().get(this.getFragment2().getIndex()+1);
+							
+							AbstractCodeFragment oPrevious1 = oComp1.getStatements().get(o.getFragment1().getIndex()-1);
+							AbstractCodeFragment oNext1 = oComp1.getStatements().get(o.getFragment1().getIndex()+1);
+							AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
+							AbstractCodeFragment oNext2 = oComp2.getStatements().get(o.getFragment2().getIndex()+1);
+							
+							boolean thisEqualPreviousAndNext = thisPrevious1.getString().equals(thisPrevious2.getString()) && thisNext1.getString().equals(thisNext2.getString());
+							if(thisEqualPreviousAndNext) {
+								this.identicalPreviousAndNextStatement = true;
+							}
+							boolean oEqualPreviousAndNext = oPrevious1.getString().equals(oPrevious2.getString()) && oNext1.getString().equals(oNext2.getString());
+							if(oEqualPreviousAndNext) {
+								o.identicalPreviousAndNextStatement = true;
+							}
+							if(thisEqualPreviousAndNext && !oEqualPreviousAndNext) {
+								return -1;
+							}
+							else if(!thisEqualPreviousAndNext && oEqualPreviousAndNext) {
+								return 1;
+							}
+						}
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 					}
 					else {
@@ -352,6 +390,39 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 							}
 						}
 						if(parentEditDistance1 == parentEditDistance2) {
+							CompositeStatementObject thisComp1 = this.getFragment1().getParent();
+							CompositeStatementObject thisComp2 = this.getFragment2().getParent();
+							CompositeStatementObject oComp1 = o.getFragment1().getParent();
+							CompositeStatementObject oComp2 = o.getFragment2().getParent();
+							if(thisComp1 != null && this.getFragment1().getIndex() > 0 && this.getFragment1().getIndex() < thisComp1.getStatements().size()-1 &&
+									thisComp2 != null && this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() < thisComp2.getStatements().size()-1 &&
+									oComp1 != null && o.getFragment1().getIndex() > 0 && o.getFragment1().getIndex() < oComp1.getStatements().size()-1 &&
+									oComp2 != null && o.getFragment2().getIndex() > 0 && o.getFragment2().getIndex() < oComp2.getStatements().size()-1) {
+								AbstractCodeFragment thisPrevious1 = thisComp1.getStatements().get(this.getFragment1().getIndex()-1);
+								AbstractCodeFragment thisNext1 = thisComp1.getStatements().get(this.getFragment1().getIndex()+1);
+								AbstractCodeFragment thisPrevious2 = thisComp2.getStatements().get(this.getFragment2().getIndex()-1);
+								AbstractCodeFragment thisNext2 = thisComp2.getStatements().get(this.getFragment2().getIndex()+1);
+								
+								AbstractCodeFragment oPrevious1 = oComp1.getStatements().get(o.getFragment1().getIndex()-1);
+								AbstractCodeFragment oNext1 = oComp1.getStatements().get(o.getFragment1().getIndex()+1);
+								AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
+								AbstractCodeFragment oNext2 = oComp2.getStatements().get(o.getFragment2().getIndex()+1);
+								
+								boolean thisEqualPreviousAndNext = thisPrevious1.getString().equals(thisPrevious2.getString()) && thisNext1.getString().equals(thisNext2.getString());
+								if(thisEqualPreviousAndNext) {
+									this.identicalPreviousAndNextStatement = true;
+								}
+								boolean oEqualPreviousAndNext = oPrevious1.getString().equals(oPrevious2.getString()) && oNext1.getString().equals(oNext2.getString());
+								if(oEqualPreviousAndNext) {
+									o.identicalPreviousAndNextStatement = true;
+								}
+								if(thisEqualPreviousAndNext && !oEqualPreviousAndNext) {
+									return -1;
+								}
+								else if(!thisEqualPreviousAndNext && oEqualPreviousAndNext) {
+									return 1;
+								}
+							}
 							int locationSum1 = this.getFragment1().getLocationInfo().getStartLine() + this.getFragment2().getLocationInfo().getStartLine();
 							int locationSum2 = o.getFragment1().getLocationInfo().getStartLine() + o.getFragment2().getLocationInfo().getStartLine();
 							return Integer.valueOf(locationSum1).compareTo(Integer.valueOf(locationSum2));

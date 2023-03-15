@@ -1214,12 +1214,16 @@ public class VariableReplacementAnalysis {
 			VariableDeclarationContainer operation2 = vdReplacement.getOperation2();
 			if((variableReferences.size() > 1 && consistencyCheck(variableDeclaration1, variableDeclaration2, variableReferences)) ||
 					(variableReferences.size() == 1 && replacementInLocalVariableDeclaration(vdReplacement.getVariableNameReplacement(), variableReferences))) {
-				RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+				Set<AbstractCodeMapping> additionalReferences = VariableReferenceExtractor.findReferences(variableDeclaration1, variableDeclaration2, mappings, classDiff, modelDiff);
+				Set<AbstractCodeMapping> allReferences = new LinkedHashSet<AbstractCodeMapping>();
+				allReferences.addAll(variableReferences);
+				allReferences.addAll(additionalReferences);
+				RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, allReferences, insideExtractedOrInlinedMethod);
 				if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref)) {
 					variableRenames.add(ref);
 					removedVariables.remove(variableDeclaration1);
 					addedVariables.remove(variableDeclaration2);
-					getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, variableReferences, ref);
+					getVariableRefactorings(variableDeclaration1, variableDeclaration2, operation1, operation2, allReferences, ref);
 				}
 			}
 			else {
@@ -1265,6 +1269,8 @@ public class VariableReplacementAnalysis {
 							actualReferences.add(mapping);
 						}
 					}
+					Set<AbstractCodeMapping> additionalReferences = VariableReferenceExtractor.findReferences(variableDeclaration1, variableDeclaration2, mappings, classDiff, modelDiff);
+					actualReferences.addAll(additionalReferences);
 					RenameVariableRefactoring ref = new RenameVariableRefactoring(variableDeclaration1, variableDeclaration2, operation1, operation2, actualReferences, insideExtractedOrInlinedMethod);
 					if(!existsConflictingExtractVariableRefactoring(ref) && !existsConflictingMergeVariableRefactoring(ref) && !existsConflictingSplitVariableRefactoring(ref) && !existsConflictingParameter(ref) &&
 							variableDeclaration1.isVarargsParameter() == variableDeclaration2.isVarargsParameter()) {

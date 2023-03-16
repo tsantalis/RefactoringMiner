@@ -226,16 +226,16 @@ public class TestBuilder {
 
 		private final String cloneUrl;
 		private final String branch;
-		private Map<String, CommitMatcher> expected = new HashMap<>();
-		private boolean ignoreNonSpecifiedCommits = true;
-		private int truePositiveCount = 0;
-		private int falsePositiveCount = 0;
-		private int falseNegativeCount = 0;
-		private int trueNegativeCount = 0;
-		private int unknownCount = 0;
+		protected Map<String, CommitMatcher> expected = new HashMap<>();
+		protected boolean ignoreNonSpecifiedCommits = true;
+		protected int truePositiveCount = 0;
+		protected int falsePositiveCount = 0;
+		protected int falseNegativeCount = 0;
+		protected int trueNegativeCount = 0;
+		protected int unknownCount = 0;
 		// private int errorsCount = 0;
 
-		private ProjectMatcher(String cloneUrl, String branch) {
+		protected ProjectMatcher(String cloneUrl, String branch) {
 			this.cloneUrl = cloneUrl;
 			this.branch = branch;
 		}
@@ -335,7 +335,7 @@ public class TestBuilder {
 			}
 		}
 
-		private List<Refactoring> filterRefactoring(List<Refactoring> refactorings) {
+		protected List<Refactoring> filterRefactoring(List<Refactoring> refactorings) {
 			List<Refactoring> filteredRefactorings = new ArrayList<>();
 
 			for (Refactoring refactoring : refactorings) {
@@ -483,6 +483,89 @@ public class TestBuilder {
 
 			public RefactoringHandler getProject() {
 				return project;
+			}
+		}
+	}
+	public class RelaxedProjectMatcher extends ProjectMatcher {
+		protected RelaxedProjectMatcher(String cloneUrl, String branch) {
+			super(cloneUrl, branch);
+		}
+
+
+
+		@Override
+		public void handle(String commitId, List<Refactoring> refactorings) {
+			refactorings= filterRefactoring(refactorings);
+			CommitMatcher matcher;
+			commitsCount++;
+			//String commitId = curRevision.getId().getName();
+			if (expected.containsKey(commitId)) {
+				matcher = expected.get(commitId);
+			} else if (!this.ignoreNonSpecifiedCommits) {
+				matcher = this.atCommit(commitId);
+				matcher.containsOnly();
+			} else {
+				// ignore this commit
+				matcher = null;
+			}
+			if (matcher != null) {
+				matcher.analyzed = true;
+				Set<String> refactoringsFound = new HashSet<String>();
+				for (Refactoring refactoring : refactorings) {
+					refactoringsFound.addAll(normalize(refactoring.toString()));
+				}
+				// count true positives
+				for (Iterator<String> expectedIter = matcher.expected.iterator(); expectedIter.hasNext();) {
+					String expectedRefactoring = expectedIter.next();
+					if (refactoringsFound.stream().anyMatch(r -> r.startsWith(expectedRefactoring))) {
+						for (Iterator<String> foundIter = refactoringsFound.iterator(); foundIter.hasNext();) {
+							String refactoringFound = foundIter.next();
+							if (refactoringFound.startsWith(expectedRefactoring)) {
+								logger.info("Found " + expectedRefactoring);
+								foundIter.remove();
+								refactoringsFound.remove(refactoringFound);
+								this.truePositiveCount++;
+								count(TP, expectedRefactoring);
+								matcher.truePositive.add(expectedRefactoring);
+							}
+						}
+						expectedIter.remove();
+					}
+				}
+
+				// count false positives
+				for (Iterator<String> iter = matcher.notExpected.iterator(); iter.hasNext();) {
+					String notExpectedRefactoring = iter.next();
+					if (refactoringsFound.contains(notExpectedRefactoring)) {
+						refactoringsFound.remove(notExpectedRefactoring);
+						this.falsePositiveCount++;
+						count(FP, notExpectedRefactoring);
+					} else {
+						this.trueNegativeCount++;
+						count(TN, notExpectedRefactoring);
+						iter.remove();
+					}
+				}
+				// count false positives when using containsOnly
+				if (matcher.ignoreNonSpecified) {
+					for (String refactoring : refactoringsFound) {
+						matcher.unknown.add(refactoring);
+						this.unknownCount++;
+						count(UNK, refactoring);
+					}
+				} else {
+					for (String refactoring : refactoringsFound) {
+						matcher.notExpected.add(refactoring);
+						this.falsePositiveCount++;
+						count(FP, refactoring);
+					}
+				}
+
+				// count false negatives
+				for (String expectedButNotFound : matcher.expected) {
+					this.falseNegativeCount++;
+					count(FN, expectedButNotFound);
+				}
 			}
 		}
 	}

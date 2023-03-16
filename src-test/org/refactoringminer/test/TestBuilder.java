@@ -464,6 +464,26 @@ public class TestBuilder {
 				}
 				return ProjectMatcher.this;
 			}
+
+			public String getCloneUrl() {
+				return project.cloneUrl;
+			}
+
+			public boolean getIgnoreNonSpecifiedCommits() {
+				return project.ignoreNonSpecifiedCommits;
+			}
+
+			public Set<String> getCommits() {
+				return project.getCommits();
+			}
+
+			public String getBranch() {
+				return project.branch;
+			}
+
+			public RefactoringHandler getProject() {
+				return project;
+			}
 		}
 	}
 }

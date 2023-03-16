@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers;
 
+import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
@@ -30,6 +31,7 @@ public class ProjectASTDiffer
 	private final boolean CHECK_COMMENTS = false;
 	private final UMLModelDiff modelDiff;
 	private List<AbstractCodeMapping> lastStepMappings;
+	private ExtendedMultiMappingStore optimizationMappingStore;
 	private List<Refactoring> modelDiffRefactorings;
 	private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
 
@@ -54,6 +56,7 @@ public class ProjectASTDiffer
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
+
 		computeAllEditScripts();
 	}
 
@@ -71,7 +74,6 @@ public class ProjectASTDiffer
 			ASTDiff append = findAppend(classDiff);
 			boolean decision = (append != null) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff), decision);
-
 			if (append != null)
 				append.getMultiMappings().mergeMappings(classASTDiff.getMultiMappings());
 			else {
@@ -101,6 +103,7 @@ public class ProjectASTDiffer
 		Tree dstTree = dstTreeContext.getRoot();
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		this.lastStepMappings = new ArrayList<>();
+		this.optimizationMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);
 			processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
@@ -150,15 +153,26 @@ public class ProjectASTDiffer
 	}
 
 	private void processLastStepMappings(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-		ExtendedMultiMappingStore optimizationMappings = new ExtendedMultiMappingStore(srcTree,dstTree);
+		ExtendedMultiMappingStore lastStepMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		for (AbstractCodeMapping lastStepMapping : lastStepMappings) {
 			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(lastStepMapping.getFragment2().getLocationInfo().getFilePath())) {
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
 				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
-				new LeafMatcher(false).match(srcExp, dstExp, lastStepMapping, optimizationMappings);
+				new LeafMatcher(false).match(srcExp, dstExp, lastStepMapping, lastStepMappingStore);
 			}
 		}
-		mappingStore.replaceWithOptimizedMappings(optimizationMappings);
+		mappingStore.replaceWithOptimizedMappings(lastStepMappingStore);
+		prepareOptimization(mappingStore);
+		mappingStore.replaceWithOptimizedMappings(optimizationMappingStore);
+	}
+
+	private void prepareOptimization(ExtendedMultiMappingStore mappingStore) {
+		for (Mapping mapping : optimizationMappingStore) {
+			Set<Tree> dsts = mappingStore.getDsts(mapping.first);
+			if (dsts == null) continue;
+			if (dsts.contains(mapping.second))
+				optimizationMappingStore.removeMapping(mapping.first,mapping.second);
+		}
 	}
 
 	private void processEnumConstants(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<UMLEnumConstant, UMLEnumConstant>> commonEnumConstants, ExtendedMultiMappingStore mappingStore) {
@@ -666,6 +680,14 @@ public class ProjectASTDiffer
 					case RENAME_PARAMETER:
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						break;
+					case RENAME_VARIABLE:
+						Set<AbstractCodeMapping> references = renameVariableRefactoring.getReferences();
+						for (AbstractCodeMapping abstractCodeMapping : references) {
+							if (abstractCodeMapping instanceof LeafMapping)
+								findVariablesAndMatch(srcTree,dstTree,abstractCodeMapping,renameVariableRefactoring.getOriginalVariable().getVariableName(),renameVariableRefactoring.getRenamedVariable().getVariableName(),mappingStore);
+						}
+						eligible = false;
+						break;
 					case PARAMETERIZE_VARIABLE:
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						if (!eligible)
@@ -716,6 +738,17 @@ public class ProjectASTDiffer
 						mappingStore);
 			}
 		}
+	}
+
+	private void findVariablesAndMatch(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, String originalVariableName, String renamedVariableName, ExtendedMultiMappingStore mappingStore) {
+		Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo());
+		Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo());
+		Tree srcName = TreeUtilFunctions.findVariable(srcStatement ,originalVariableName);
+		Tree dstName = TreeUtilFunctions.findVariable(dstStatement ,renamedVariableName);
+		if (srcName != null & dstName != null) {
+			optimizationMappingStore.addMapping(srcName,dstName);
+		}
+
 	}
 
 	private void processClassImplementedInterfaces(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {

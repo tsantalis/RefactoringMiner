@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
@@ -1382,7 +1383,7 @@ public class StringBasedHeuristics {
 					if(string1.contains("new " + replacement.getBefore() + "(") && string2.contains("new " + replacement.getAfter() + "("))
 						classInstanceCreationReplacement = true;
 				}
-				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+				else if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
 						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
 						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
@@ -1395,6 +1396,11 @@ public class StringBasedHeuristics {
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						!referencedParameterForClassInstanceCreationReplacement(replacement, mapper.getContainer1(), mapper.getContainer2()))
 					rightHandSideReplacement = true;
 				else if(replacement instanceof VariableReplacementWithMethodInvocation &&
 						assignment1.equals(replacement.getBefore()) &&
@@ -1414,7 +1420,18 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(variableRename && rightHandSideReplacement) {
-				return true;
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName1);
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName2);
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0)
+					return true;
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
 				if(inv1.arguments().size() > inv2.arguments().size()) {
@@ -1447,6 +1464,53 @@ public class StringBasedHeuristics {
 		}
 		else if(mapper.getParentMapper() != null) {
 			return !mapper.getParentMapper().getContainer1().equals(mapper.getParentMapper().getContainer2());
+		}
+		return false;
+	}
+
+	private static boolean referencedParameterForClassInstanceCreationReplacement(Replacement replacement, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		int index1 = -1;
+		UMLType type1 = null;
+		int index2 = -1;
+		UMLType type2 = null;
+		if(replacement.getAfter().contains("new ")) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(replacement.getAfter().contains(parameter.getVariableName())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		else if(replacement.getBefore().contains("new ")) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(replacement.getBefore().contains(parameter.getVariableName())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		if(type1 != null && type2 != null && type1.equals(type2) && index1 == index2) {
+			return true;
 		}
 		return false;
 	}

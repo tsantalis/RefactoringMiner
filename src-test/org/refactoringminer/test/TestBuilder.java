@@ -79,9 +79,7 @@ public class TestBuilder {
 
 	public TestExpectation expect(String cloneUrl, String branch, String commitId) {
 		return new TestExpectation() {
-			@Override
-			public void toHave(Map<RefactoringType, Integer> refactorings) {
-				String[] refactoringNames = refactorings.keySet().stream().map(RefactoringType::getDisplayName).toArray(String[]::new);
+			private void toHave(String[] refactoringNames) {
 				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
 				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
 				commitMatcher.containsOnly(refactoringNames);
@@ -91,6 +89,12 @@ public class TestBuilder {
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
+			}
+
+			@Override
+			public void toHave(Map<RefactoringType, Integer> refactorings) {
+				String[] refactoringNames = refactorings.keySet().stream().map(RefactoringType::getDisplayName).toArray(String[]::new);
+				toHave(refactoringNames);
 				refactorings.forEach((refactoringType, count) -> {
 					Assert.assertEquals(refactoringType.getDisplayName(), count.intValue(), get(TP, get(refactoringType)));
 				});
@@ -98,15 +102,7 @@ public class TestBuilder {
 
 			@Override
 			public void toHave(List<String> refactorings) {
-				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
-				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
-				commitMatcher.containsOnly(refactorings.toArray(new String[0]));
-				resetCounters();
-				try {
-					detect(commitMatcher, new GitServiceImpl(), null);
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
+				toHave(refactorings.toArray(new String[0]));
 				Assert.assertEquals(refactorings.size(), get(TP));
 			}
 		};

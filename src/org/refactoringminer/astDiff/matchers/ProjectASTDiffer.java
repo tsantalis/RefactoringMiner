@@ -344,12 +344,14 @@ public class ProjectASTDiffer
 		List<VariableDeclaration> variableDeclarations1 = abstractCodeMapping.getFragment1().getVariableDeclarations();
 		List<VariableDeclaration> variableDeclarations2 = abstractCodeMapping.getFragment2().getVariableDeclarations();
 		if (variableDeclarations1.size() == 1 && variableDeclarations2.size() == 0){
-			if (abstractCodeMapping.getFragment2().toString().contains(variableDeclarations1.get(0).getInitializer().toString()))
-				lastStepMappings.add(new LeafMapping(variableDeclarations1.get(0).getInitializer(), abstractCodeMapping.getFragment2(),null,null));
+			if (variableDeclarations1.get(0).getInitializer() != null)
+				if (abstractCodeMapping.getFragment2().toString().contains(variableDeclarations1.get(0).getInitializer().toString()))
+					lastStepMappings.add(new LeafMapping(variableDeclarations1.get(0).getInitializer(), abstractCodeMapping.getFragment2(),null,null));
 		}
 		if (variableDeclarations1.size() == 0 && variableDeclarations2.size() == 1){
-			if (abstractCodeMapping.getFragment1().toString().contains(variableDeclarations2.get(0).getInitializer().toString()))
-				lastStepMappings.add(new LeafMapping(abstractCodeMapping.getFragment1(),variableDeclarations2.get(0).getInitializer(),null,null));
+			if (variableDeclarations2.get(0).getInitializer() != null)
+				if (abstractCodeMapping.getFragment1().toString().contains(variableDeclarations2.get(0).getInitializer().toString()))
+					lastStepMappings.add(new LeafMapping(abstractCodeMapping.getFragment1(),variableDeclarations2.get(0).getInitializer(),null,null));
 		}
 	}
 

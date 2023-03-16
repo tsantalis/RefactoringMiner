@@ -105,6 +105,14 @@ public class TestBuilder {
 		}
 		return projectMatcher;
 	}
+	public final ProjectMatcher relaxedProject(String cloneUrl, String branch) {
+		ProjectMatcher projectMatcher = this.map.get(cloneUrl);
+		if (projectMatcher == null) {
+			projectMatcher = new RelaxedProjectMatcher(cloneUrl, branch);
+			this.map.put(cloneUrl, projectMatcher);
+		}
+		return projectMatcher;
+	}
 
 	public void assertExpectations(int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
 		c = new Counter();

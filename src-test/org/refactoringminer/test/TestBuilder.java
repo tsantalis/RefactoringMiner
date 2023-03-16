@@ -70,6 +70,67 @@ public class TestBuilder {
 		return this;
 	}
 
+	Counter get(RefactoringType refactoringType) {
+		return cMap.get(refactoringType);
+	}
+
+
+	public TestExpectation expect(String cloneUrl, String branch, String commitId) {
+		return new TestExpectation() {
+			@Override
+			public void toHave(Map<RefactoringType, Integer> refactorings) {
+				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
+				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
+				String[] refactoringNames = refactorings.keySet().stream().map(RefactoringType::getDisplayName).toArray(String[]::new);
+				commitMatcher.containsOnly(refactoringNames);
+				detect(commitMatcher);
+				refactorings.forEach((refactoringType, count) -> {
+					Assert.assertEquals(refactoringType.getDisplayName(), count.intValue(), get(TP, get(refactoringType)));
+				});
+			}
+
+			@Override
+			public void toHave(List<String> refactorings) {
+				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
+				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
+				commitMatcher.containsOnly(refactorings.toArray(new String[0]));
+				detect(commitMatcher);
+				Assert.assertEquals(refactorings.size(), get(TP));
+			}
+		};
+	}
+
+	private void detect(ProjectMatcher.CommitMatcher m) {
+		c = new Counter();
+		cMap = new HashMap<RefactoringType, Counter>();
+		commitsCount = 0;
+		errorCommitsCount = 0;
+		GitService gitService = new GitServiceImpl();
+		ExecutorService pool = Executors.newWorkStealingPool();
+		String folder = tempDir + "/"
+				+ m.getCloneUrl().substring(m.getCloneUrl().lastIndexOf('/') + 1, m.getCloneUrl().lastIndexOf('.'));
+		try (var rep = gitService.cloneIfNotExists(folder,
+				m.getCloneUrl()/* , m.branch */)) {
+			if (m.getIgnoreNonSpecifiedCommits()) {
+				// It is faster to only look at particular commits
+				for (String a : m.getCommits()) {
+					refactoringDetector.detectAtCommit(rep, m.commitId, m.getProject());
+				}
+			} else {
+				// Iterate over each commit
+				refactoringDetector.detectAll(rep, m.getBranch(), m.getProject());
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		pool.shutdown();
+		try {
+			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private static class Counter {
 		int[] c = new int[5];
 	}

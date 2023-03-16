@@ -248,7 +248,7 @@ public class TestBuilder {
 		public CommitMatcher atCommit(String commitId) {
 			CommitMatcher m = expected.get(commitId);
 			if (m == null) {
-				m = new CommitMatcher();
+				m = new CommitMatcher(this, commitId);
 				expected.put(commitId, m);
 			}
 			return m;
@@ -418,6 +418,8 @@ public class TestBuilder {
 		// }
 
 		public class CommitMatcher {
+			private final ProjectMatcher project;
+			private final String commitId;
 			private Set<String> expected = new HashSet<String>();
 			private Set<String> notExpected = new HashSet<String>();
 			private Set<String> truePositive = new HashSet<String>();
@@ -426,7 +428,13 @@ public class TestBuilder {
 			private boolean analyzed = false;
 			private String error = null;
 
-			private CommitMatcher() {
+			public String getCommitId() {
+				return commitId;
+			}
+
+			private CommitMatcher(ProjectMatcher projectMatcher, String commitId) {
+				this.commitId = commitId;
+				project = projectMatcher;
 			}
 
 			public ProjectMatcher contains(String... refactorings) {

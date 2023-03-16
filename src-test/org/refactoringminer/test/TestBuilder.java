@@ -23,8 +23,11 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.test.RefactoringPopulator.Refactorings;
 import org.refactoringminer.util.GitServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestBuilder {
+	Logger logger = LoggerFactory.getLogger(TestBuilder.class);
 
 	private final String tempDir;
 	private final Map<String, ProjectMatcher> map;

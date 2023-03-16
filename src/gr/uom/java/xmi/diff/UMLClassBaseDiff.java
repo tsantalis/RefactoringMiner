@@ -1256,6 +1256,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
 		int nonMappedElementsT2CallingAddedOperation = operationBodyMapper.nonMappedElementsT2CallingAddedOperation(addedOperations);
 		int nonMappedElementsT2WithoutThoseCallingAddedOperation = nonMappedElementsT2 - nonMappedElementsT2CallingAddedOperation;
+		boolean matchFound = false;
+		for(AbstractCodeFragment nonMappedLeafT1 : operationBodyMapper.getNonMappedLeavesT1()) {
+			if(nonMappedLeafT1.getVariableDeclarations().size() > 0) {
+				for(AbstractCodeFragment nonMappedLeafT2 : operationBodyMapper.getNonMappedLeavesT2()) {
+					if(nonMappedLeafT1.getVariableDeclarations().toString().equals(nonMappedLeafT2.getVariableDeclarations().toString())) {
+						mappings++;
+						nonMappedElementsT2--;
+						matchFound = true;
+						break;
+					}
+				}
+				if(matchFound) {
+					break;
+				}
+			}
+		}
 		return mappings > nonMappedElementsT2 || (mappings >= nonMappedElementsT2WithoutThoseCallingAddedOperation &&
 				nonMappedElementsT2CallingAddedOperation >= nonMappedElementsT2WithoutThoseCallingAddedOperation) ||
 				(operationBodyMapper.getMappings().size() > nonMappedElementsT2 && nonMappedElementsT2CallingAddedOperation > 0 &&
@@ -1266,6 +1282,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT1CallingRemovedOperation = operationBodyMapper.nonMappedElementsT1CallingRemovedOperation(removedOperations);
 		int nonMappedElementsT1WithoutThoseCallingRemovedOperation = nonMappedElementsT1 - nonMappedElementsT1CallingRemovedOperation;
+		boolean matchFound = false;
+		for(AbstractCodeFragment nonMappedLeafT1 : operationBodyMapper.getNonMappedLeavesT1()) {
+			if(nonMappedLeafT1.getVariableDeclarations().size() > 0) {
+				for(AbstractCodeFragment nonMappedLeafT2 : operationBodyMapper.getNonMappedLeavesT2()) {
+					if(nonMappedLeafT1.getVariableDeclarations().toString().equals(nonMappedLeafT2.getVariableDeclarations().toString())) {
+						mappings++;
+						nonMappedElementsT1--;
+						matchFound = true;
+						break;
+					}
+				}
+				if(matchFound) {
+					break;
+				}
+			}
+		}
 		return mappings > nonMappedElementsT1 || (mappings >= nonMappedElementsT1WithoutThoseCallingRemovedOperation &&
 				nonMappedElementsT1CallingRemovedOperation >= nonMappedElementsT1WithoutThoseCallingRemovedOperation);
 	}
@@ -2174,7 +2206,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean stringBasedInvocationMatch(AbstractCodeFragment callFragment, AbstractCall operationInvocation) {
 		AbstractCall invocation = callFragment.invocationCoveringEntireFragment();
 		if(invocation == null) {
-			invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement();
+			invocation = callFragment.fieldAssignmentInvocationCoveringEntireStatement(this);
 			if(invocation != null && invocation.actualString().equals(operationInvocation.actualString())) {
 				return true;
 			}

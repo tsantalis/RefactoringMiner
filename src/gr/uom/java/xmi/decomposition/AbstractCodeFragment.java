@@ -12,6 +12,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
+import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 
 public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	private int depth;
@@ -402,10 +403,17 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return null;
 	}
 
-	public AbstractCall fieldAssignmentInvocationCoveringEntireStatement() {
+	public AbstractCall fieldAssignmentInvocationCoveringEntireStatement(UMLAbstractClassDiff classDiff) {
 		for(AbstractCall invocation : getMethodInvocations()) {
-			if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(invocation.getString())) {
+			if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(invocation.getString(), classDiff)) {
 				return invocation;
+			}
+			for(AbstractCall creation : getCreations()) {
+				if(creation.arguments().contains(invocation.actualString())) {
+					if(expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(creation.getString(), classDiff)) {
+						return invocation;
+					}
+				}
 			}
 		}
 		return null;
@@ -486,14 +494,15 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
-	private boolean expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(String expression) {
+	private boolean expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(String expression, UMLAbstractClassDiff classDiff) {
 		String statement = getString();
 		if(statement.contains("=")) {
 			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
 				String s = variable + "=" + expression + ";\n";
-				if(statement.equals(s) && variable.startsWith("this.")) {
+				if(statement.equals(s) && (variable.startsWith("this.") || classDiff.getOriginalClass().getFieldDeclarationMap().containsKey(variable) ||
+						classDiff.getNextClass().getFieldDeclarationMap().containsKey(variable))) {
 					return true;
 				}
 				String beforeAssignment = statement.substring(0, statement.indexOf("="));

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
 import org.eclipse.jgit.lib.Repository;
 import org.junit.Assert;
@@ -80,11 +81,16 @@ public class TestBuilder {
 		return new TestExpectation() {
 			@Override
 			public void toHave(Map<RefactoringType, Integer> refactorings) {
+				String[] refactoringNames = refactorings.keySet().stream().map(RefactoringType::getDisplayName).toArray(String[]::new);
 				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
 				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
-				String[] refactoringNames = refactorings.keySet().stream().map(RefactoringType::getDisplayName).toArray(String[]::new);
 				commitMatcher.containsOnly(refactoringNames);
-				detect(commitMatcher);
+				resetCounters();
+				try {
+					detect(commitMatcher, new GitServiceImpl(), null);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
 				refactorings.forEach((refactoringType, count) -> {
 					Assert.assertEquals(refactoringType.getDisplayName(), count.intValue(), get(TP, get(refactoringType)));
 				});
@@ -95,19 +101,25 @@ public class TestBuilder {
 				ProjectMatcher projectMatcher = relaxedProject(cloneUrl, branch);
 				ProjectMatcher.CommitMatcher commitMatcher = projectMatcher.atCommit(commitId);
 				commitMatcher.containsOnly(refactorings.toArray(new String[0]));
-				detect(commitMatcher);
+				resetCounters();
+				try {
+					detect(commitMatcher, new GitServiceImpl(), null);
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				}
 				Assert.assertEquals(refactorings.size(), get(TP));
 			}
 		};
 	}
+	private interface Matcher {
+		String getCloneUrl();
+		String getBranch();
+		Set<String> getCommits();
+		boolean getIgnoreNonSpecifiedCommits();
+		RefactoringHandler getHandler();
+	}
 
-	private void detect(ProjectMatcher.CommitMatcher m) {
-		c = new Counter();
-		cMap = new HashMap<RefactoringType, Counter>();
-		commitsCount = 0;
-		errorCommitsCount = 0;
-		GitService gitService = new GitServiceImpl();
-		ExecutorService pool = Executors.newWorkStealingPool();
+	private void detect(Matcher m, GitService gitService, ExecutorService pool) throws Exception {
 		String folder = tempDir + "/"
 				+ m.getCloneUrl().substring(m.getCloneUrl().lastIndexOf('/') + 1, m.getCloneUrl().lastIndexOf('.'));
 		try (var rep = gitService.cloneIfNotExists(folder,
@@ -115,21 +127,24 @@ public class TestBuilder {
 			if (m.getIgnoreNonSpecifiedCommits()) {
 				// It is faster to only look at particular commits
 				for (String a : m.getCommits()) {
-					refactoringDetector.detectAtCommit(rep, m.commitId, m.getProject());
+					if (Objects.isNull(pool)) {
+						refactoringDetector.detectAtCommit(rep, a, m.getHandler());
+					} else {
+						pool.submit(() -> refactoringDetector.detectAtCommit(rep, a, m.getHandler()));
+					}
 				}
 			} else {
 				// Iterate over each commit
-				refactoringDetector.detectAll(rep, m.getBranch(), m.getProject());
+				refactoringDetector.detectAll(rep, m.getBranch(), m.getHandler());
 			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
 		}
-		pool.shutdown();
-		try {
-			pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+	}
+
+	private void resetCounters() {
+		c = new Counter();
+		cMap = new HashMap<RefactoringType, Counter>();
+		commitsCount = 0;
+		errorCommitsCount = 0;
 	}
 
 	private static class Counter {
@@ -177,28 +192,11 @@ public class TestBuilder {
 	}
 
 	public void assertExpectations(int expectedTPs, int expectedFPs, int expectedFNs) throws Exception {
-		c = new Counter();
-		cMap = new HashMap<RefactoringType, Counter>();
-		commitsCount = 0;
-		errorCommitsCount = 0;
+		resetCounters();
 		GitService gitService = new GitServiceImpl();
 		ExecutorService pool = Executors.newWorkStealingPool();
 		for (ProjectMatcher m : map.values()) {
-			String folder = tempDir + "/"
-					+ m.cloneUrl.substring(m.cloneUrl.lastIndexOf('/') + 1, m.cloneUrl.lastIndexOf('.'));
-			try (Repository rep = gitService.cloneIfNotExists(folder,
-					m.cloneUrl/* , m.branch */)) {
-				if (m.ignoreNonSpecifiedCommits) {
-					// It is faster to only look at particular commits
-					for (String commitId : m.getCommits()) {
-						Runnable r = () -> refactoringDetector.detectAtCommit(rep, commitId, m);
-						pool.submit(r);
-					}
-				} else {
-					// Iterate over each commit
-					refactoringDetector.detectAll(rep, m.branch, m);
-				}
-			}
+			detect(m, gitService, pool);
 		}
 		pool.shutdown();
 		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
@@ -292,7 +290,7 @@ public class TestBuilder {
 		return sb.toString();
 	}
 
-	public class ProjectMatcher extends RefactoringHandler {
+	public class ProjectMatcher extends RefactoringHandler implements Matcher {
 
 		private final String cloneUrl;
 		private final String branch;
@@ -487,7 +485,23 @@ public class TestBuilder {
 		// }
 		// }
 
-		public class CommitMatcher {
+		public String getCloneUrl() {
+			return cloneUrl;
+		}
+
+		public boolean getIgnoreNonSpecifiedCommits() {
+			return ignoreNonSpecifiedCommits;
+		}
+
+		public String getBranch() {
+			return branch;
+		}
+
+		public RefactoringHandler getHandler() {
+			return this;
+		}
+
+		public class CommitMatcher implements Matcher {
 			private final ProjectMatcher project;
 			private final String commitId;
 			private Set<String> expected = new HashSet<String>();
@@ -551,7 +565,7 @@ public class TestBuilder {
 				return project.branch;
 			}
 
-			public RefactoringHandler getProject() {
+			public RefactoringHandler getHandler() {
 				return project;
 			}
 		}

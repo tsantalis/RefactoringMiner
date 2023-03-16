@@ -178,4 +178,25 @@ public class TreeUtilFunctions {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static Tree findVariable(Tree inputTree, String variableName) {
+		//FIXME: This method only works when there is only one instance of variable in the Tree
+		//In case of having more occurrences, the logic must be improved.
+		if (inputTree == null) return null;
+		boolean _seen = false;
+		Tree found = null;
+		for (Tree tree : inputTree.preOrder()) {
+			if (tree.getType().name.equals(Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
+			{
+				if (_seen)
+				{
+					found = null;
+					break;
+				}
+				_seen = true;
+				found = tree;
+			}
+		}
+		return found;
+	}
 }

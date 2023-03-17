@@ -8595,7 +8595,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
-					List<CompositeStatementObject> ifNodes1 = new ArrayList<>(), ifNodes2 = new ArrayList<>();
+					Set<CompositeStatementObject> ifNodes1 = new LinkedHashSet<>(), ifNodes2 = new LinkedHashSet<>();
 					if(root1 != null && root1.getParent() != null && root1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(root1.getParent())) {
 						ifNodes1.add(root1.getParent());
 						if(hasElseIfBranch(root1.getParent())) {
@@ -8937,6 +8937,56 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					invertedConditionals++;
 					break;
 				}
+				if(subCondition1.contains("==") && subCondition2.contains("!=")) {
+					String prefix1 = subCondition1.substring(0, subCondition1.indexOf("==")).trim();
+					String prefix2 = subCondition2.substring(0, subCondition2.indexOf("!=")).trim();
+					String suffix1 = subCondition1.substring(subCondition1.indexOf("==")+2).trim();
+					String suffix2 = subCondition2.substring(subCondition2.indexOf("!=")+2).trim();
+					boolean prefixReplaced = false;
+					boolean suffixReplaced = false;
+					for(Replacement r : info.getReplacements()) {
+						if(!r.getBefore().equals(r.getAfter())) {
+							if(r.getAfter().equals(prefix1) && r.getAfter().equals(prefix2)) {
+								prefixReplaced = true;
+							}
+							if(r.getAfter().equals(suffix1) && r.getAfter().equals(suffix2)) {
+								suffixReplaced = true;
+							}
+						}
+					}
+					boolean bothPrefixAndSuffixReplaced = prefixReplaced && suffixReplaced;
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2) && !bothPrefixAndSuffixReplaced) {
+						Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+						info.addReplacement(r2);
+						invertedConditionals++;
+						break;
+					}
+				}
+				else if(subCondition1.contains("!=") && subCondition2.contains("==")) {
+					String prefix1 = subCondition1.substring(0, subCondition1.indexOf("!=")).trim();
+					String prefix2 = subCondition2.substring(0, subCondition2.indexOf("==")).trim();
+					String suffix1 = subCondition1.substring(subCondition1.indexOf("!=")+2).trim();
+					String suffix2 = subCondition2.substring(subCondition2.indexOf("==")+2).trim();
+					boolean prefixReplaced = false;
+					boolean suffixReplaced = false;
+					for(Replacement r : info.getReplacements()) {
+						if(!r.getBefore().equals(r.getAfter())) {
+							if(r.getAfter().equals(prefix1) && r.getAfter().equals(prefix2)) {
+								prefixReplaced = true;
+							}
+							if(r.getAfter().equals(suffix1) && r.getAfter().equals(suffix2)) {
+								suffixReplaced = true;
+							}
+						}
+					}
+					boolean bothPrefixAndSuffixReplaced = prefixReplaced && suffixReplaced;
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2) && !bothPrefixAndSuffixReplaced) {
+						Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+						info.addReplacement(r2);
+						invertedConditionals++;
+						break;
+					}
+				}
 			}
 		}
 		return invertedConditionals;
@@ -8990,7 +9040,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return matches;
 	}
 
-	private static boolean containsIdenticalIfNode(List<CompositeStatementObject> ifNodes1, CompositeStatementObject ifNode2) {
+	private static boolean containsIdenticalIfNode(Set<CompositeStatementObject> ifNodes1, CompositeStatementObject ifNode2) {
 		for(CompositeStatementObject ifNode1 : ifNodes1) {
 			if(ifNode1.getString().equals(ifNode2.getString())) {
 				return true;

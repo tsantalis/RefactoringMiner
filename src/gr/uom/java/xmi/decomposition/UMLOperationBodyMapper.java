@@ -8618,9 +8618,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								ifNodes1.add(innerNode);
 							}
 						}
+						if(root1.getParent() != null && parentMapper == null) {
+							for(CompositeStatementObject innerNode : root1.getParent().getInnerNodes()) {
+								if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched1(innerNode)) {
+									ifNodes1.add(innerNode);
+								}
+							}
+						}
 						for(CompositeStatementObject innerNode : root2.getInnerNodes()) {
 							if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(innerNode)) {
 								ifNodes2.add(innerNode);
+							}
+						}
+						if(root2.getParent() != null && parentMapper == null) {
+							for(CompositeStatementObject innerNode : root2.getParent().getInnerNodes()) {
+								if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && !alreadyMatched2(innerNode)) {
+									ifNodes2.add(innerNode);
+								}
 							}
 						}
 					}
@@ -10525,6 +10539,46 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(leafConditional1 && leafConditional2) {
 			return true;
 		}
+		//check if all mergedConditionals have inverted conditions
+		if(statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			List<String> subConditionsAsList2 = new ArrayList<String>();
+			CompositeStatementObject comp2 = (CompositeStatementObject)statement2;
+			String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString());
+			String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+			for(String s : subConditions2) {
+				subConditionsAsList2.add(s.trim());
+			}
+			int invertedMergedConditionals = 0;
+			for(AbstractCodeFragment mergedConditional : mergedConditionals) {
+				List<String> subConditionsAsList1 = new ArrayList<String>();
+				if(mergedConditional.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+					CompositeStatementObject comp1 = (CompositeStatementObject)mergedConditional;
+					String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString());
+					String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+					for(String s : subConditions1) {
+						subConditionsAsList1.add(s.trim());
+					}
+				}
+				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+				int invertedConditions = 0;
+				for(String intersectionElement : intersection) {
+					if(!subConditionsAsList2.contains(intersectionElement)) {
+						invertedConditions++;
+					}
+				}
+				if(invertedConditions == intersection.size()) {
+					invertedMergedConditionals++;
+				}
+			}
+			if(invertedMergedConditionals == mergedConditionals.size()) {
+				for(AbstractCodeFragment leaf : comp2.getLeaves()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 
@@ -10544,7 +10598,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo());
+			boolean nestedFragment2 = false;
+			if(statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo())) {
+				nestedFragment2 = true;
+			}
+			else if(statement2 instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement2;
+				for(AbstractCodeFragment leaf : composite.getLeaves()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
+						nestedFragment2 = true;
+						break;
+					}
+				}
+			}
 			if(nestedFragment1 && nestedFragment2) {
 				return true;
 			}
@@ -10597,6 +10664,46 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(leafConditional1 && leafConditional2) {
 			return true;
 		}
+		//check if all splitConditionals have inverted conditions
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			List<String> subConditionsAsList1 = new ArrayList<String>();
+			CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+			String conditional1 = prepareConditional(comp1.getExpressions().get(0).getString());
+			String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
+			for(String s : subConditions1) {
+				subConditionsAsList1.add(s.trim());
+			}
+			int invertedSplitConditionals = 0;
+			for(AbstractCodeFragment splitConditional : splitConditionals) {
+				List<String> subConditionsAsList2 = new ArrayList<String>();
+				if(splitConditional.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+					CompositeStatementObject comp2 = (CompositeStatementObject)splitConditional;
+					String conditional2 = prepareConditional(comp2.getExpressions().get(0).getString());
+					String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
+					for(String s : subConditions2) {
+						subConditionsAsList2.add(s.trim());
+					}
+				}
+				Set<String> intersection = subConditionIntersection(subConditionsAsList2, subConditionsAsList1);
+				int invertedConditions = 0;
+				for(String intersectionElement : intersection) {
+					if(!subConditionsAsList1.contains(intersectionElement)) {
+						invertedConditions++;
+					}
+				}
+				if(invertedConditions == intersection.size()) {
+					invertedSplitConditionals++;
+				}
+			}
+			if(invertedSplitConditionals == splitConditionals.size()) {
+				for(AbstractCodeFragment leaf : comp1.getLeaves()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 
@@ -10616,7 +10723,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
+			boolean nestedFragment1 = false;
+			if(statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+				nestedFragment1 = true;
+			}
+			else if(statement1 instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement1;
+				for(AbstractCodeFragment leaf : composite.getLeaves()) {
+					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
+						nestedFragment1 = true;
+						break;
+					}
+				}
+			}
 			if(nestedFragment2 && nestedFragment1) {
 				return true;
 			}

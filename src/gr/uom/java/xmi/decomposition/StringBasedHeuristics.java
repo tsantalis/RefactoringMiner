@@ -1839,6 +1839,26 @@ public class StringBasedHeuristics {
 					intersection.add(c1);
 					break;
 				}
+				else if(c1.contains("!=") && c2.contains("==")) {
+					String prefix1 = c1.substring(0, c1.indexOf("!="));
+					String prefix2 = c2.substring(0, c2.indexOf("=="));
+					String suffix1 = c1.substring(c1.indexOf("!=")+2);
+					String suffix2 = c2.substring(c2.indexOf("==")+2);
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2)) {
+						intersection.add(c1);
+						break;
+					}
+				}
+				else if(c1.contains("==") && c2.contains("!=")) {
+					String prefix1 = c1.substring(0, c1.indexOf("=="));
+					String prefix2 = c2.substring(0, c2.indexOf("!="));
+					String suffix1 = c1.substring(c1.indexOf("==")+2);
+					String suffix2 = c2.substring(c2.indexOf("!=")+2);
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2)) {
+						intersection.add(c1);
+						break;
+					}
+				}
 			}
 		}
 		return intersection;

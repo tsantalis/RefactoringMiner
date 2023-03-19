@@ -3721,6 +3721,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			
 			// exact matching with variable renames
+			Set<AbstractCodeFragment> leaves1ToBeRemoved = new LinkedHashSet<>();
+			Set<AbstractCodeFragment> leaves2ToBeRemoved = new LinkedHashSet<>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 				AbstractCodeFragment leaf1 = leafIterator1.next();
 				if(!alreadyMatched1(leaf1)) {
@@ -3803,14 +3805,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									addToMappings(minStatementMapping, mappingSet);
 									leaves2.remove(minStatementMapping.getFragment2());
 									leafIterator1.remove();
-									checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
-									checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
+									checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
+									checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
 								}
 							}
 						}
 					}
 				}
 			}
+			leaves1.removeAll(leaves1ToBeRemoved);
+			leaves2.removeAll(leaves2ToBeRemoved);
 		}
 		else {
 			//exact string+depth matching - leaf nodes
@@ -4078,6 +4082,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			// exact matching with variable renames
+			Set<AbstractCodeFragment> leaves1ToBeRemoved = new LinkedHashSet<>();
+			Set<AbstractCodeFragment> leaves2ToBeRemoved = new LinkedHashSet<>();
 			for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 				AbstractCodeFragment leaf2 = leafIterator2.next();
 				if(!alreadyMatched2(leaf2)) {
@@ -4263,8 +4269,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											addToMappings(minStatementMapping, mappingSet);
 											leaves1.remove(minStatementMapping.getFragment1());
 											leafIterator2.remove();
-											checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
-											checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions);
+											checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
+											checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
 										}
 									}
 								}
@@ -4273,6 +4279,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			leaves1.removeAll(leaves1ToBeRemoved);
+			leaves2.removeAll(leaves2ToBeRemoved);
 		}
 		for(TreeSet<LeafMapping> postponed : postponedMappingSets) {
 			Set<LeafMapping> mappingsToBeAdded = new LinkedHashSet<LeafMapping>();
@@ -4336,7 +4344,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void checkForMergedVariableDeclaration(AbstractCodeFragment leaf2, List<? extends AbstractCodeFragment> leaves1,
-			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions) {
+			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, Set<AbstractCodeFragment> leaves1ToBeRemoved) {
 		if(leaf2.getVariableDeclarations().size() > 0 && mapping.getFragment1().getVariableDeclarations().size() == 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
 			VariableDeclaration declaration2 = leaf2.getVariableDeclarations().get(0);
 			Set<AbstractCodeFragment> matchingVariableDeclarations1 = new LinkedHashSet<>();
@@ -4360,14 +4368,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(matchingVariableDeclarations1.size() == 1) {
-				LeafMapping newMapping = createLeafMapping(matchingVariableDeclarations1.iterator().next(), leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+				AbstractCodeFragment matchingVariableDeclaration1 = matchingVariableDeclarations1.iterator().next();
+				LeafMapping newMapping = createLeafMapping(matchingVariableDeclaration1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
+				leaves1ToBeRemoved.add(matchingVariableDeclaration1);
 			}
 		}
 	}
 
 	private void checkForSplitVariableDeclaration(AbstractCodeFragment leaf1, List<? extends AbstractCodeFragment> leaves2,
-			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions) {
+			AbstractCodeMapping mapping, Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions, Set<AbstractCodeFragment> leaves2ToBeRemoved) {
 		if(leaf1.getVariableDeclarations().size() > 0 && mapping.getFragment1().getVariableDeclarations().size() > 0 && mapping.getFragment2().getVariableDeclarations().size() == 0) {
 			VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
 			Set<AbstractCodeFragment> matchingVariableDeclarations2 = new LinkedHashSet<>();
@@ -4391,8 +4401,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(matchingVariableDeclarations2.size() == 1) {
-				LeafMapping newMapping = createLeafMapping(leaf1, matchingVariableDeclarations2.iterator().next(), parameterToArgumentMap, equalNumberOfAssertions);
+				AbstractCodeFragment matchingVariableDeclaration2 = matchingVariableDeclarations2.iterator().next();
+				LeafMapping newMapping = createLeafMapping(leaf1, matchingVariableDeclaration2, parameterToArgumentMap, equalNumberOfAssertions);
 				addMapping(newMapping);
+				leaves2ToBeRemoved.add(matchingVariableDeclaration2);
 			}
 		}
 	}

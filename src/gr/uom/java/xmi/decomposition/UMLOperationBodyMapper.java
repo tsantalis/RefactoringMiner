@@ -6237,7 +6237,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
 		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
-				!statement1.getString().endsWith("=0;\n")) {
+				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {
 			findReplacements(numberLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_NUMBER_LITERAL);
 		}
 		findReplacements(variables1, arrayAccesses2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS);

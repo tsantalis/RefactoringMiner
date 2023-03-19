@@ -128,6 +128,16 @@ public class ExtractOperationDetection {
 					List<AbstractCall> sortedInvocations = sortInvocationsBasedOnArgumentOccurrences(addedOperationInvocations);
 					for(AbstractCall addedOperationInvocation : sortedInvocations) {
 						processAddedOperation(addedOperation, refactorings, sortedInvocations, addedOperationInvocation);
+						if(sortedInvocations.size() == 1 && addedOperationInvocation.arguments().size() == 1) {
+							String argument = addedOperationInvocation.arguments().get(0);
+							Set<VariableDeclaration> declarations = mapper.getContainer2().variableDeclarationMap().get(argument);
+							if(declarations != null && declarations.size() == 1) {
+								VariableDeclaration declaration = declarations.iterator().next();
+								if(declaration.getInitializer() != null && declaration.getInitializer().getTernaryOperatorExpressions().size() == 1) {
+									processAddedOperation(addedOperation, refactorings, sortedInvocations, addedOperationInvocation);
+								}
+							}
+						}
 					}
 				}
 				else {

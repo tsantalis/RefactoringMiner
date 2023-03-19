@@ -124,6 +124,12 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("this.")) {
 				return true;
 			}
+			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith("=")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith("=")) {
+				return true;
+			}
 			if(cast(diff1, diff2)) {
 				for(Replacement r : info.getReplacements()) {
 					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {

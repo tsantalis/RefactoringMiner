@@ -1108,7 +1108,7 @@ public class StringBasedHeuristics {
 					if(arg1.equals(arg2)) {
 						equalArguments++;
 					}
-					else if(!arg1.contains("+") && arg2.contains("+") && !arg2.contains("++")) {
+					else if(!arg1.contains(" + ") && arg2.contains(" + ")) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg2)));
 						StringBuilder sb = new StringBuilder();
@@ -1141,7 +1141,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 					}
-					else if(!arg2.contains("+") && arg1.contains("+") && !arg1.contains("++")) {
+					else if(!arg2.contains(" + ") && arg1.contains(" + ")) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();

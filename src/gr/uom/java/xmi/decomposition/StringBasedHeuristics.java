@@ -38,7 +38,8 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
-	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
+	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
+	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
@@ -1001,7 +1002,7 @@ public class StringBasedHeuristics {
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if(s1.contains("+") && s2.contains("+") && !s1.contains("++") && !s2.contains("++")) {
+			if(s1.contains(" + ") && s2.contains(" + ")) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);
@@ -1041,6 +1042,34 @@ public class StringBasedHeuristics {
 						return false;
 					}
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONCATENATION);
+					info.getReplacements().add(r);
+					return true;
+				}
+			}
+			else if(s1.contains(" + ") && !s2.contains(" + ") && !s1.contains(",") && s2.contains(",")) {
+				List<String> tokens1 = Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1));
+				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
+				List<String> commonTokens = new ArrayList<>();
+				for(String token1 : tokens1) {
+					if(tokens2.contains(token1)) {
+						commonTokens.add(token1);
+					}
+				}
+				Set<String> filteredIntersection = new LinkedHashSet<>();
+				for(String common : commonTokens) {
+					boolean foundInReplacements = false;
+					for(Replacement r : info.getReplacements()) {
+						if(r.getBefore().contains(common) || r.getAfter().contains(common)) {
+							foundInReplacements = true;
+							break;
+						}
+					}
+					if(!foundInReplacements) {
+						filteredIntersection.add(common);
+					}
+				}
+				if(filteredIntersection.size() > 0) {
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, filteredIntersection, ReplacementType.CONCATENATION);
 					info.getReplacements().add(r);
 					return true;
 				}

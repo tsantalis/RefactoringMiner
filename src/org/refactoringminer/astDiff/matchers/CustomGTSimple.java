@@ -3,13 +3,9 @@ package org.refactoringminer.astDiff.matchers;
 import com.github.gumtreediff.matchers.*;
 import com.github.gumtreediff.matchers.heuristic.gt.*;
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -130,56 +126,69 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		filterMappings(multiMappings);
 		return this.mappings;
 	}
+	@Override
+	public void filterMappings(MultiMappingStore multiMappings) {
+		// Select unique mappings first and extract ambiguous mappings.
+		List<Mapping> ambiguousList = new ArrayList<>();
+		Set<Tree> ignored = new HashSet<>();
+		for (var src : multiMappings.allMappedSrcs()) {
+			var isMappingUnique = false;
+			if (multiMappings.isSrcUnique(src)) {
+				var dst = multiMappings.getDsts(src).stream().findAny().get();
+				if (multiMappings.isDstUnique(dst)) {
+					mappings.addMappingRecursively(src, dst);
+					isMappingUnique = true;
+				}
+			}
 
-	public void handleAmbiguousMappings(List<Pair<Set<Tree>, Set<Tree>>> ambiguousMappings) {
-		MappingComparators.FullMappingComparator comparator = new MappingComparators.FullMappingComparator(mappings);
-		ambiguousMappings.sort(new AmbiguousMappingsComparator());
-		ambiguousMappings.forEach((pair) -> {
-			List<Mapping> candidates = convertToMappings(pair);
-			candidates.sort(comparator);
-			candidates.forEach(mapping -> {
-				if (mappings.areBothUnmapped(mapping.first, mapping.second)) {
-					if (original)
-						mappings.addMappingRecursively(mapping.first, mapping.second);
-					else {
-						String SimpleNameType = Constants.SIMPLE_NAME;
-						if (mapping.first.getType().name.equals(SimpleNameType) &&
-								mapping.second.getType().name.equals(SimpleNameType)) {
-							if (
-									!mapping.first.getParent().getType().name.equals(mapping.second.getParent().getType().name)
-									&&
-									(
-											((mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) && !mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
-											||
-											((mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) && !mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
-											)
-									) {
-								//pass
-							} else {
-								mappings.addMappingRecursively(mapping.first, mapping.second);
+			if (!(ignored.contains(src) || isMappingUnique)) {
+				var adsts = multiMappings.getDsts(src);
+				var asrcs = multiMappings.getSrcs(multiMappings.getDsts(src).iterator().next());
+				for (Tree asrc : asrcs)
+					for (Tree adst : adsts) {
+						ambiguousList.add(new Mapping(asrc, adst));
+					}
+				ignored.addAll(asrcs);
+			}
+		}
+
+		// Rank the mappings by score.
+		Set<Tree> srcIgnored = new HashSet<>();
+		Set<Tree> dstIgnored = new HashSet<>();
+
+		Collections.sort(ambiguousList, new MappingComparators.FullMappingComparator(mappings));
+		if (ambiguousList.size() > 1)
+			ambiguousStringLiteralModification(ambiguousList,srcIgnored,dstIgnored);
+		// Select the best ambiguous mappings
+		retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
+	}
+
+	private void ambiguousStringLiteralModification(List<Mapping> ambiguousList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		List<Mapping> ret = new ArrayList<>();
+		for (Mapping mapping : ambiguousList) {
+			Tree asrc = mapping.first;
+			Tree adst = mapping.second;
+			if (asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL)) {
+				if (asrc.getParent() != null && adst.getParent() != null) {
+					int i = asrc.positionInParent();
+					int j = adst.positionInParent();
+					if (i > 0 && j > 0) {
+						Tree srcYoungerSibling = asrc.getParent().getChild(i - 1);
+						Tree dstYoungerSibling = adst.getParent().getChild(j - 1);
+						if (mappings.getSrcForDst(dstYoungerSibling) != null)
+							if (mappings.getSrcForDst(dstYoungerSibling).equals(srcYoungerSibling)) {
+								ret.add(mapping);
+								srcIgnored.add(asrc);
+								dstIgnored.add(adst);
 							}
-
-						}
 					}
 				}
-			});
-		});
-	}
-
-	public static class AmbiguousMappingsComparator implements Comparator<Pair<Set<Tree>, Set<Tree>>> {
-		@Override
-		public int compare(Pair<Set<Tree>, Set<Tree>> m1, Pair<Set<Tree>, Set<Tree>> m2) {
-			int s1 = m1.first.stream().max(Comparator.comparingInt(t -> t.getMetrics().size)).get().getMetrics().size;
-			int s2 = m1.first.stream().max(Comparator.comparingInt(t -> t.getMetrics().size)).get().getMetrics().size;
-			return Integer.compare(s2, s1);
+			}
+			else {
+				break;
+			}
 		}
-	}
-
-	public static final List<Mapping> convertToMappings(Pair<Set<Tree>, Set<Tree>> ambiguousMapping) {
-		List<Mapping> mappings = new ArrayList<>();
-		for (Tree src : ambiguousMapping.first)
-			for (Tree dst : ambiguousMapping.second)
-				mappings.add(new Mapping(src, dst));
-		return mappings;
+		if (ret.size() > 0)
+			retainBestMapping(ret,new HashSet<>(),new HashSet<>());
 	}
 }

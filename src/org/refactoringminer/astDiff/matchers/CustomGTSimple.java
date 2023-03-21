@@ -4,6 +4,7 @@ import com.github.gumtreediff.matchers.*;
 import com.github.gumtreediff.matchers.heuristic.gt.*;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -44,12 +45,41 @@ class CustomGreedy extends GreedySubtreeMatcher {
 	}
 
 	private static boolean isAcceptableMatch(Mapping mapping) {
+		Tree first = mapping.first;
+		Tree second = mapping.second;
+		if (isPartOfConditional(first) && isPartOfConditional(second))
+			if (!isSamePositionInConditional(first,second))
+				return false;
+
 		return (!mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
 				||
 				mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) &&
 				(!mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
 						||
 						mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION));
+	}
+
+	private static boolean isPartOfConditional(Tree input) {
+		if (input.getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
+			return true;
+		else {
+			Tree parent = input.getParent();
+			if (parent == null) return false;
+			if (TreeUtilFunctions.isStatement(parent.getType().name)) return false;
+			return isPartOfConditional(parent);
+		}
+	}
+	private static boolean isSamePositionInConditional(Tree input1, Tree input2)
+	{
+		int input1Index = 0;
+		int input2Index = 0;
+		while (!input1.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
+			input1 = input1.getParent();
+		while (!input2.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
+			input2 = input2.getParent();
+		input1Index = input1.positionInParent();
+		input2Index = input2.positionInParent();
+		return input1Index == input2Index;
 	}
 
 	public void handleAmbiguousMappings(List<Pair<Set<Tree>, Set<Tree>>> ambiguousMappings) {

@@ -179,6 +179,36 @@ public class TreeUtilFunctions {
 		}
 	}
 
+	public static boolean isStatement(String type){
+		switch (type){
+			case Constants.ASSERT_STATEMENT: //Leaf
+			case Constants.BLOCK: // Composite
+			case Constants.BREAK_STATEMENT: //Leaf
+			case Constants.CONSTRUCTOR_INVOCATION: //leaf
+			case Constants.CONTINUE_STATEMENT: //leaf
+			case Constants.DO_STATEMENT: //composite
+			case Constants.EMPTY_STATEMENT: //leaf
+			case Constants.ENHANCED_FOR_STATEMENT: //composite
+			case Constants.EXPRESSION_STATEMENT: //leaf
+			case Constants.FOR_STATEMENT: //composite
+			case Constants.IF_STATEMENT: //composite
+			case Constants.LABELED_STATEMENT: //composite
+			case Constants.RETURN_STATEMENT: //leaf
+			case Constants.SUPER_CONSTRUCTOR_INVOCATION: //leaf
+			case Constants.SWITCH_CASE: //leaf
+			case Constants.SWITCH_STATEMENT: //composite
+			case Constants.SYNCHRONIZED_STATEMENT: //composite
+			case Constants.THROW_STATEMENT://leaf
+			case Constants.TRY_STATEMENT: //composite
+			case Constants.TYPE_DECLARATION_STATEMENT: //composite!!!!!!
+			case Constants.VARIABLE_DECLARATION_STATEMENT: //leaf
+			case Constants.WHILE_STATEMENT: //composite
+				return true;
+			default:
+				return false;
+		}   //Update the jdt version (website)
+	}
+
 	public static Tree findVariable(Tree inputTree, String variableName) {
 		//FIXME: This method only works when there is only one instance of variable in the Tree
 		//In case of having more occurrences, the logic must be improved.

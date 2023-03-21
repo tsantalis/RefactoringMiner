@@ -29,6 +29,29 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		this.original = original;
 	}
 
+	@Override
+	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		List<Mapping> verifiedList = new ArrayList<>();
+		for (Mapping mapping : mappingList) {
+			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME)
+			&& mapping.second.getType().name.equals(Constants.SIMPLE_NAME)) {
+				if (isAcceptableMatch(mapping))
+					verifiedList.add(mapping);
+			}
+			else verifiedList.add(mapping);
+		}
+		super.retainBestMapping(verifiedList, srcIgnored, dstIgnored);
+	}
+
+	private static boolean isAcceptableMatch(Mapping mapping) {
+		return (!mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
+				||
+				mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) &&
+				(!mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
+						||
+						mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION));
+	}
+
 	public void handleAmbiguousMappings(List<Pair<Set<Tree>, Set<Tree>>> ambiguousMappings) {
 		MappingComparators.FullMappingComparator comparator = new MappingComparators.FullMappingComparator(mappings);
 		ambiguousMappings.sort(new AmbiguousMappingsComparator());

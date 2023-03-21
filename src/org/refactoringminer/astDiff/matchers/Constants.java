@@ -59,4 +59,5 @@ public class Constants {
 	public static final String THROW_STATEMENT = "ThrowStatement";
 	public static final String WHILE_STATEMENT = "WhileStatement";
 	public static final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
+	public static final String STRING_LITERAL = "StringLiteral";
 }

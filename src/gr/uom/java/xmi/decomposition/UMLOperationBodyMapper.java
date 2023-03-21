@@ -1651,6 +1651,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+							if(fragment instanceof CompositeStatementObject) {
+								CompositeStatementObject comp = (CompositeStatementObject)fragment;
+								if(!innerNodes1.contains(comp)) {
+									innerNodes1.add(comp);
+									addedInnerNodes1.add(comp);
+								}
+								if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									if(!innerNodes1.contains(comp.getStatements().get(0))) {
+										innerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
+										addedInnerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
+									}
+								}
+							}
 						}
 					}
 					for(AbstractCodeFragment fragment : childMapper.getNonMappedLeavesT1()) {
@@ -1989,6 +2002,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
 							AbstractCodeFragment fragment = mapping.getFragment2();
 							expandAnonymousAndLambdas(fragment, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, childMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+							if(fragment instanceof CompositeStatementObject) {
+								CompositeStatementObject comp = (CompositeStatementObject)fragment;
+								if(!innerNodes2.contains(comp)) {
+									innerNodes2.add(comp);
+									addedInnerNodes2.add(comp);
+								}
+								if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									if(!innerNodes2.contains(comp.getStatements().get(0))) {
+										innerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
+										addedInnerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
+									}
+								}
+							}
 						}
 					}
 					for(AbstractCodeFragment fragment : childMapper.getNonMappedLeavesT2()) {

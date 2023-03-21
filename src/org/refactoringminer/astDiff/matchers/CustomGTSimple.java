@@ -59,6 +59,17 @@ class CustomGreedy extends GreedySubtreeMatcher {
 						mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION));
 	}
 
+	private static boolean isOnlyOneMethodInvocation(Tree input1, Tree input2)
+	{
+		if (input1 == null || input2 == null) return false;
+		if (input1.getParent() == null || input2.getParent() == null) return false;
+		if (input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && !input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+			return true;
+		else if (!input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+			return true;
+		return false;
+
+	}
 	private static boolean isPartOfConditional(Tree input) {
 		if (input.getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
 			return true;
@@ -80,6 +91,44 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		input1Index = input1.positionInParent();
 		input2Index = input2.positionInParent();
 		return input1Index == input2Index;
+	}
+
+	@Override
+	public MappingStore match(Tree src, Tree dst, MappingStore mappings) {
+		this.src = src;
+		this.dst = dst;
+		this.mappings = mappings;
+
+		var multiMappings = new MultiMappingStore();
+		PriorityTreeQueue srcTrees = new DefaultPriorityTreeQueue(src, this.minPriority, this.priorityCalculator);
+		PriorityTreeQueue dstTrees = new DefaultPriorityTreeQueue(dst, this.minPriority, this.priorityCalculator);
+
+		while (!(srcTrees.isEmpty() || dstTrees.isEmpty())) {
+			PriorityTreeQueue.synchronize(srcTrees, dstTrees);
+			if (srcTrees.isEmpty() || dstTrees.isEmpty())
+				break;
+
+			var currentPrioritySrcTrees = srcTrees.pop();
+			var currentPriorityDstTrees = dstTrees.pop();
+
+			for (var currentSrc : currentPrioritySrcTrees)
+				for (var currentDst : currentPriorityDstTrees)
+					if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash)
+						if (currentSrc.isIsomorphicTo(currentDst)) {
+							if (!isOnlyOneMethodInvocation(currentSrc,currentDst))
+								multiMappings.addMapping(currentSrc, currentDst);
+						}
+
+			for (var t : currentPrioritySrcTrees)
+				if (!multiMappings.hasSrc(t))
+					srcTrees.open(t);
+			for (var t : currentPriorityDstTrees)
+				if (!multiMappings.hasDst(t))
+					dstTrees.open(t);
+		}
+
+		filterMappings(multiMappings);
+		return this.mappings;
 	}
 
 	public void handleAmbiguousMappings(List<Pair<Set<Tree>, Set<Tree>>> ambiguousMappings) {

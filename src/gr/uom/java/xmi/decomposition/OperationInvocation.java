@@ -198,7 +198,11 @@ public class OperationInvocation extends AbstractCall {
 
     public boolean matchesOperation(VariableDeclarationContainer operation, VariableDeclarationContainer callerOperation,
     		UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
-    	if(!this.methodName.equals(operation.getName())) {
+    	boolean constructorCall = false;
+    	if(this.methodName.equals("this") && operation.getClassName().equals(callerOperation.getClassName()) && operation.getName().equals(callerOperation.getName())) {
+    		constructorCall = true;
+    	}
+    	if(!this.methodName.equals(operation.getName()) && !constructorCall) {
     		return false;
     	}
     	Map<String, Set<VariableDeclaration>> variableDeclarationMap = callerOperation.variableDeclarationMap();

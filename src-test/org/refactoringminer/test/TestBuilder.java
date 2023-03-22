@@ -553,7 +553,7 @@ public class TestBuilder {
 			}
 
 			public Set<String> getCommits() {
-				return project.getCommits();
+				return Set.of(commitId);
 			}
 
 			public String getBranch() {

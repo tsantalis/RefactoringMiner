@@ -1603,6 +1603,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!mapping.getFragment1().getClass().equals(mapping.getFragment2().getClass()))) {
 					AbstractCodeFragment fragment = mapping.getFragment1();
 					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)fragment;
+						if(!innerNodes1.contains(comp)) {
+							innerNodes1.add(comp);
+							addedInnerNodes1.add(comp);
+						}
+						if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+							if(!innerNodes1.contains(comp.getStatements().get(0))) {
+								innerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
+								addedInnerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
+							}
+						}
+					}
 				}
 				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
 					for(AbstractCodeFragment leaf2 : leaves2) {
@@ -1982,6 +1995,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						!mapping.getFragment1().getClass().equals(mapping.getFragment2().getClass()))) {
 					AbstractCodeFragment fragment = mapping.getFragment2();
 					expandAnonymousAndLambdas(fragment, leaves2, innerNodes2, addedLeaves2, addedInnerNodes2, operationBodyMapper.anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+					if(fragment instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)fragment;
+						if(!innerNodes2.contains(comp)) {
+							innerNodes2.add(comp);
+							addedInnerNodes2.add(comp);
+						}
+						if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+							if(!innerNodes2.contains(comp.getStatements().get(0))) {
+								innerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
+								addedInnerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
+							}
+						}
+					}
 				}
 				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
 					for(AbstractCodeFragment leaf1 : leaves1) {

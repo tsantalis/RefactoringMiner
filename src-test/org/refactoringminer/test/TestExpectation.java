@@ -1,4 +1,4 @@
-package org.victor.refactoringminer.test;
+package org.refactoringminer.test;
 
 import org.refactoringminer.api.RefactoringType;
 

@@ -1,15 +1,13 @@
-package org.victor.refactoringminer.test;
+package org.refactoringminer.test;
 
 import org.junit.Test;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.test.RefactoringPopulator;
-import org.refactoringminer.test.TestBuilder;
 
 import java.util.List;
 import java.util.Map;
 
-public class TestRefactorings {
+public class TestOneCommit {
     @Test
     public void testAllRefactoringsWithinOneCommit_StringList() {
         GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();

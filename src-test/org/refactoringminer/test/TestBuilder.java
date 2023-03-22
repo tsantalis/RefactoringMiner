@@ -26,7 +26,6 @@ import org.refactoringminer.test.RefactoringPopulator.Refactorings;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.victor.refactoringminer.test.TestExpectation;
 
 public class TestBuilder {
 	Logger logger = LoggerFactory.getLogger(TestBuilder.class);

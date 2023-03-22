@@ -32,6 +32,7 @@ public class ProjectASTDiffer
 	private final UMLModelDiff modelDiff;
 	private List<AbstractCodeMapping> lastStepMappings;
 	private ExtendedMultiMappingStore optimizationMappingStore;
+	private ExtendedMultiMappingStore finalOptimization;
 	private List<Refactoring> modelDiffRefactorings;
 	private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
 
@@ -104,6 +105,7 @@ public class ProjectASTDiffer
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		this.lastStepMappings = new ArrayList<>();
 		this.optimizationMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+		this.finalOptimization = new ExtendedMultiMappingStore(srcTree,dstTree);
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);
 			processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
@@ -164,6 +166,7 @@ public class ProjectASTDiffer
 		mappingStore.replaceWithOptimizedMappings(lastStepMappingStore);
 		prepareOptimization(mappingStore);
 		mappingStore.replaceWithOptimizedMappings(optimizationMappingStore);
+		mappingStore.replaceWithOptimizedMappings(finalOptimization);
 	}
 
 	private void prepareOptimization(ExtendedMultiMappingStore mappingStore) {
@@ -250,7 +253,7 @@ public class ProjectASTDiffer
 					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));
 		}
 		processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-		fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
+		fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);
 		processOperationDiff(srcOperationNode,dstOperationNode,umlOperationBodyMapper,mappingStore);
 		processMethodParameters(srcOperationNode,dstOperationNode,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
 	}
@@ -272,7 +275,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void fromRefMiner(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
+	private void fromRefMiner(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
 		if (bodyMapper.getAnonymousClassDiffs() != null) {
 			for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
 				processClassAttributes(srcTree,dstTree,anonymousClassDiff,mappingStore);
@@ -286,7 +289,7 @@ public class ProjectASTDiffer
 		for (AbstractCodeMapping abstractCodeMapping : mappings)
 		{
 			if (abstractCodeMapping instanceof LeafMapping)
-				processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
+				processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore, isPartOfExtractedMethod);
 			else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
 				processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
 		}
@@ -315,7 +318,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+	private void processLeafMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
 		LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
 		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
 		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
@@ -324,19 +327,20 @@ public class ProjectASTDiffer
 			System.err.println("Tree not found for " + abstractCodeMapping);
 			return;
 		}
-		{
-			if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
-				mappingStore.addMapping(srcStatementNode, dstStatementNode);
+		if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
+			mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
-			if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression) {
-				lastStepMappings.add(abstractCodeMapping);
-			}
-			else
-			{
-				new LeafMatcher(false).match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
-				additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
-			}
-			optimizeVariableDeclarations(abstractCodeMapping);
+		if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression) {
+			lastStepMappings.add(abstractCodeMapping);
+		}
+		else
+		{
+			new LeafMatcher(false).match(srcStatementNode,dstStatementNode,abstractCodeMapping,mappingStore);
+			additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
+		}
+		optimizeVariableDeclarations(abstractCodeMapping);
+		if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(Constants.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(Constants.RETURN_STATEMENT)) {
+			finalOptimization.addMapping(srcStatementNode,dstStatementNode);
 		}
 	}
 
@@ -552,19 +556,19 @@ public class ProjectASTDiffer
 			else if (refactoring instanceof MergeOperationRefactoring) {
 				MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {
-					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
 				}
 			}
 			else if (refactoring instanceof SplitOperationRefactoring) {
 				SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : splitOperationRefactoring.getMappers()) {
-					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
 				}
 			}
 			else if (refactoring instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, true);
 				for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
 					lastStepMappings.add(expressionMapping);
 				}
@@ -572,7 +576,7 @@ public class ProjectASTDiffer
 			else if (refactoring instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore);
+				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
 				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
 					lastStepMappings.add(expressionMapping);
 				}

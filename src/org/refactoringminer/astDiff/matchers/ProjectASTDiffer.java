@@ -858,6 +858,11 @@ public class ProjectASTDiffer
 			mappingStore.addMappingRecursively(srcFieldDeclaration,dstFieldDeclaration);
 			return;
 		}
+		if (srcAttr.getMetrics().hash == dstAttr.getMetrics().hash)
+		{
+			mappingStore.addMappingRecursively(srcAttr,dstAttr);
+		}
+
 		mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
 		matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
 		if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {

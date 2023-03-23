@@ -94,6 +94,9 @@ public class ExtractOperationRefactoring implements Refactoring {
 		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
 			return true;
 		}
+		if(extractedOperationInvocations.size() == 1) {
+			return true;
+		}
 		return false;
 	}
 

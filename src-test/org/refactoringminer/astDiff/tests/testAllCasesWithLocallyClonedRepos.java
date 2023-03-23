@@ -40,8 +40,9 @@ public class testAllCasesWithLocallyClonedRepos {
 
     @Test
     public void testChecker() {
-        assertEquals(String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName),
-                expected,actual);
+        String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
+        assertEquals(msg, expected.length(),actual.length());
+        assertEquals(msg, expected,actual);
     }
 
     @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")

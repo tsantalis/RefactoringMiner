@@ -9,6 +9,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -288,6 +289,33 @@ public abstract class AbstractCodeMapping {
 					}
 				}
 			}
+			if(classDiff != null && getFragment1().getVariableDeclarations().size() > 0 && initializer != null && getFragment1().getVariableDeclarations().toString().equals(getFragment2().getVariableDeclarations().toString())) {
+				VariableDeclaration variableDeclaration1 = getFragment1().getVariableDeclarations().get(0);
+				if(variableDeclaration1.getInitializer() != null && variableDeclaration1.getInitializer().toString().contains(initializer.toString())) {
+					boolean callToAddedOperation = false;
+					boolean callToDeletedOperation = false;
+					AbstractCall invocationCoveringTheEntireStatement1 = getFragment1().invocationCoveringEntireFragment();
+					if(invocationCoveringTheEntireStatement1 != null) {
+						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), operation1) != null;
+					}
+					AbstractCall invocationCoveringTheEntireStatement2 = getFragment2().invocationCoveringEntireFragment();
+					if(invocationCoveringTheEntireStatement2 != null) {
+						callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), operation2) != null;
+					}
+					boolean equalInvocations = invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+							(invocationCoveringTheEntireStatement1.equals(invocationCoveringTheEntireStatement2) || containsOnlyReplacement(ReplacementType.METHOD_INVOCATION_NAME));
+					if(callToAddedOperation != callToDeletedOperation && !equalInvocations) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						List<LeafExpression> subExpressions = getFragment1().findExpression(initializer.toString());
+						for(LeafExpression subExpression : subExpressions) {
+							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
+						processExtractVariableRefactoring(ref, refactorings);
+						return;
+					}
+				}
+			}
 		}
 		String argumentizedString = statement.getArgumentizedString();
 		if(argumentizedString.contains("=")) {
@@ -328,11 +356,11 @@ public abstract class AbstractCodeMapping {
 	}
 
 	public void inlinedVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlinedMethod) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
+			AbstractExpression initializer = declaration.getInitializer();
+			String variableName = declaration.getVariableName();
 			for(Replacement replacement : getReplacements()) {
-				String variableName = declaration.getVariableName();
-				AbstractExpression initializer = declaration.getInitializer();
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();
 				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION)) {
@@ -373,16 +401,45 @@ public abstract class AbstractCodeMapping {
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after)) {
+						if(!checkIfStatementIsExtracted(statement, classDiff)) {
+							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+							List<LeafExpression> subExpressions = getFragment2().findExpression(after);
+							for(LeafExpression subExpression : subExpressions) {
+								LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+								ref.addSubExpressionMapping(leafMapping);
+							}
+							processInlineVariableRefactoring(ref, refactorings);
+							if(identical()) {
+								identicalWithInlinedVariable = true;
+							}
+							return;
+						}
+					}
+				}
+			}
+			if(classDiff != null && getFragment1().getVariableDeclarations().size() > 0 && initializer != null && getFragment1().getVariableDeclarations().toString().equals(getFragment2().getVariableDeclarations().toString())) {
+				VariableDeclaration variableDeclaration2 = getFragment2().getVariableDeclarations().get(0);
+				if(variableDeclaration2.getInitializer() != null && variableDeclaration2.getInitializer().toString().contains(initializer.toString())) {
+					boolean callToAddedOperation = false;
+					boolean callToDeletedOperation = false;
+					AbstractCall invocationCoveringTheEntireStatement1 = getFragment1().invocationCoveringEntireFragment();
+					if(invocationCoveringTheEntireStatement1 != null) {
+						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), operation1) != null;
+					}
+					AbstractCall invocationCoveringTheEntireStatement2 = getFragment2().invocationCoveringEntireFragment();
+					if(invocationCoveringTheEntireStatement2 != null) {
+						callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), operation2) != null;
+					}
+					boolean equalInvocations = invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+							(invocationCoveringTheEntireStatement1.equals(invocationCoveringTheEntireStatement2) || containsOnlyReplacement(ReplacementType.METHOD_INVOCATION_NAME));
+					if(callToAddedOperation != callToDeletedOperation && !equalInvocations) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
+						List<LeafExpression> subExpressions = getFragment2().findExpression(initializer.toString());
 						for(LeafExpression subExpression : subExpressions) {
 							LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 							ref.addSubExpressionMapping(leafMapping);
 						}
 						processInlineVariableRefactoring(ref, refactorings);
-						if(identical()) {
-							identicalWithInlinedVariable = true;
-						}
 						return;
 					}
 				}
@@ -424,6 +481,26 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 		}
+	}
+
+	private boolean checkIfStatementIsExtracted(AbstractCodeFragment statement, UMLAbstractClassDiff classDiff) {
+		if(classDiff != null) { 
+			AbstractCall invocationCoveringTheEntireStatement2 = getFragment2().invocationCoveringEntireFragment();
+			if(invocationCoveringTheEntireStatement2 != null) {
+				UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), operation2);
+				if(addedOperation != null && addedOperation.getBody() != null) {
+					for(AbstractCodeFragment fragment : addedOperation.getBody().getCompositeStatement().getLeaves()) {
+						if(fragment.getString().equals(statement.getString())) {
+							return true;
+						}
+						if(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().toString().equals(statement.getVariableDeclarations().toString())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean identical() {

@@ -2387,8 +2387,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void inlinedVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
+		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, parentMapper != null);
+			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
 			for(Refactoring newRefactoring : mapping.getRefactorings()) {
 				if(!this.refactorings.contains(newRefactoring)) {
 					this.refactorings.add(newRefactoring);
@@ -2412,8 +2413,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void temporaryVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
+		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
 			for(Refactoring newRefactoring : mapping.getRefactorings()) {
 				if(!this.refactorings.contains(newRefactoring)) {
@@ -2952,9 +2953,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
+								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
-										UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithExtractedVariable()) {
 											break;
@@ -2963,7 +2964,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								for(AbstractCodeFragment leaf : leaves1) {
 									if(leaf.getLocationInfo().before(mapping.getFragment1().getLocationInfo())) {
-										mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithInlinedVariable()) {
 											break;
 										}
@@ -3146,9 +3147,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
+								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
-										UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithExtractedVariable()) {
 											break;
@@ -3157,7 +3158,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								for(AbstractCodeFragment leaf : leaves1) {
 									if(leaf.getLocationInfo().before(mapping.getFragment1().getLocationInfo())) {
-										mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithInlinedVariable()) {
 											break;
 										}
@@ -3202,7 +3203,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 				}
 				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+				if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
 					List<String> fragmentStringRepresentation = ((CompositeStatementObject)mapping.getFragment1()).stringRepresentation();
 					List<String> operationStringRepresentation = matchingOperation.stringRepresentation();
 					for(int index = 0; index<operationStringRepresentation.size(); index++) {
@@ -3787,11 +3788,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
+								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.equals(leaf2)) {
 										break;
 									}
-									UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 									mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 									if(mapping.isIdenticalWithExtractedVariable()) {
 										break;
@@ -3801,7 +3802,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf.equals(leaf1)) {
 										break;
 									}
-									mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+									mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 									if(mapping.isIdenticalWithInlinedVariable()) {
 										break;
 									}
@@ -3809,7 +3810,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeReplacement composite = mapping.containsCompositeReplacement();
 								if(composite != null) {
 									for(AbstractCodeFragment leaf : composite.getAdditionallyMatchedStatements1()) {
-										mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithInlinedVariable()) {
 											break;
 										}
@@ -4149,11 +4150,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
+								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.equals(leaf2)) {
 										break;
 									}
-									UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 									mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 									if(mapping.isIdenticalWithExtractedVariable()) {
 										break;
@@ -4163,7 +4164,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf.equals(leaf1)) {
 										break;
 									}
-									mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+									mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 									if(mapping.isIdenticalWithInlinedVariable()) {
 										break;
 									}
@@ -4171,7 +4172,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeReplacement composite = mapping.containsCompositeReplacement();
 								if(composite != null) {
 									for(AbstractCodeFragment leaf : composite.getAdditionallyMatchedStatements1()) {
-										mapping.inlinedVariableAssignment(leaf, leaves2, parentMapper != null);
+										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithInlinedVariable()) {
 											break;
 										}
@@ -7205,8 +7206,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;
 			if(classDiff != null) {
-				callToAddedOperation = matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
-				callToDeletedOperation = matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
+				callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
+				callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
 			}
 			if(variableDeclarationInitializer1 == variableDeclarationInitializer2 && logStatement1 == logStatement2 && !setMatch && !getMatch && callToAddedOperation == callToDeletedOperation) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
@@ -7221,7 +7222,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;
 			if(classDiff != null && !invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
-				UMLOperation matchedAddedOperation = matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2);
+				UMLOperation matchedAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2);
 				if(matchedAddedOperation != null) {
 					callToAddedOperation = true;
 					for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
@@ -7231,7 +7232,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				UMLOperation matchedRemovedOperation = matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1);
+				UMLOperation matchedRemovedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1);
 				if(matchedRemovedOperation != null) {
 					callToDeletedOperation = true;
 					for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
@@ -8161,6 +8162,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
+			}
+		}
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+			boolean variableDeclarationInitializer1 =  invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
+			boolean variableDeclarationInitializer2 =  invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
+			if(variableDeclarationInitializer1 && variableDeclarationInitializer2 && statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString()) &&
+					statement1.getVariableDeclarations().size() > 0) {
+				boolean callToAddedOperation = false;
+				boolean callToDeletedOperation = false;
+				if(classDiff != null) {
+					callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
+					callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
+				}
+				if(callToAddedOperation != callToDeletedOperation) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
 			}
 		}
 		return null;
@@ -10055,15 +10075,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 						}
 						UMLOperation matchingOperation = null;
-						if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
+						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
 							int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
 						}
-						if(invocation != null && invocation.actualString().contains(" -> ")) {
+						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
-									if((matchingOperation = matchesOperation(inv, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
+									if((matchingOperation = classDiff.matchesOperation(inv, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
 										int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 										mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 										leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -10071,9 +10091,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						if(matchingOperation == null) {
+						if(matchingOperation == null && classDiff != null) {
 							for(AbstractCall call : leaf2.getMethodInvocations()) {
-								if((matchingOperation = matchesOperation(call, addedOperations, container2)) != null && !matchingOperation.equals(container2) && matchingOperation.stringRepresentation().size() > 3) {
+								if((matchingOperation = classDiff.matchesOperation(call, addedOperations, container2)) != null && !matchingOperation.equals(container2) && matchingOperation.stringRepresentation().size() > 3) {
 									int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 									mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 									leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -10089,15 +10109,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 						}
 						UMLOperation matchingOperation = null;
-						if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
+						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
 							int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
 						}
-						if(invocation != null && invocation.actualString().contains(" -> ")) {
+						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf1.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
-									if((matchingOperation = matchesOperation(inv, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
+									if((matchingOperation = classDiff.matchesOperation(inv, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
 										int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 										mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 										leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -10105,9 +10125,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						if(matchingOperation == null) {
+						if(matchingOperation == null && classDiff != null) {
 							for(AbstractCall call : leaf1.getMethodInvocations()) {
-								if((matchingOperation = matchesOperation(call, removedOperations, container1)) != null && !matchingOperation.equals(container1) && matchingOperation.stringRepresentation().size() > 3) {
+								if((matchingOperation = classDiff.matchesOperation(call, removedOperations, container1)) != null && !matchingOperation.equals(container1) && matchingOperation.stringRepresentation().size() > 3) {
 									int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 									mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 									leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -10350,14 +10370,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return counter;
 	}
 
-	private UMLOperation matchesOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {
-		for(UMLOperation operation : operations) {
-			if(invocation.matchesOperation(operation, callerOperation, classDiff, modelDiff))
-				return operation;
-		}
-		return null;
-	}
-
 	private boolean matchPairOfRemovedAddedOperationsWithIdenticalBody(AbstractCall call1, AbstractCall call2) {
 		if(classDiff != null) {
 			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
@@ -10384,7 +10396,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 				}
 				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+				if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
 					return matchingOperation;
 				}
 			}
@@ -10401,7 +10413,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 				}
 				UMLOperation matchingOperation = null;
-				if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container1)) != null && matchingOperation.getBody() != null) {
+				if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, removedOperations, container1)) != null && matchingOperation.getBody() != null) {
 					return matchingOperation;
 				}
 			}
@@ -10419,7 +10431,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 					}
 					UMLOperation matchingOperation = null;
-					if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
 						boolean removedMethodWithIdenticalBodyFound = false;
 						for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 							if(removedOperation.getBodyHashCode() == matchingOperation.getBodyHashCode()) {
@@ -10448,7 +10460,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 					}
 					UMLOperation matchingOperation = null;
-					if(invocation != null && (matchingOperation = matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && matchingOperation.getBody() != null) {
 						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
 						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
 					}
@@ -10482,7 +10494,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 					}
 					UMLOperation matchingOperation = null;
-					if(invocation != null && (matchingOperation = matchesOperation(invocation, removedOperations, container2)) != null && matchingOperation.getBody() != null) {
+					if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, removedOperations, container2)) != null && matchingOperation.getBody() != null) {
 						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getLeaves());
 						statementsToBeIgnored.addAll(matchingOperation.getBody().getCompositeStatement().getInnerNodes());
 					}

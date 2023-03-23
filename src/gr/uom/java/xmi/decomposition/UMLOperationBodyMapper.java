@@ -8267,9 +8267,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(int i=0; i<anonymousClassDeclarations1.size(); i++) {
 					AnonymousClassDeclarationObject anonymousClassDeclaration1 = anonymousClassDeclarations1.get(i);
 					AnonymousClassDeclarationObject anonymousClassDeclaration2 = anonymousClassDeclarations2.get(i);
-					replacementAdded = processAnonymous(statement1, statement2, parameterToArgumentMap, replacementInfo,
-							invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
-							replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2, lambdaMappers);
+					UMLAnonymousClass anonymousClass1 = findAnonymousClass1(anonymousClassDeclaration1);
+					UMLAnonymousClass anonymousClass2 = findAnonymousClass2(anonymousClassDeclaration2);
+					boolean anonymousClassDiffFound = false;
+					for(UMLAnonymousClassDiff anonymousClassDiff : this.anonymousClassDiffs) {
+						if(anonymousClassDiff.getOriginalClass().equals(anonymousClass1) || anonymousClassDiff.getNextClass().equals(anonymousClass2)) {
+							anonymousClassDiffFound = true;
+							break;
+						}
+					}
+					if(!anonymousClassDiffFound) {
+						replacementAdded = processAnonymous(statement1, statement2, parameterToArgumentMap, replacementInfo,
+								invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2,
+								replacementAdded, anonymousClassDeclaration1, anonymousClassDeclaration2, lambdaMappers);
+					}
 				}
 			}
 			else {

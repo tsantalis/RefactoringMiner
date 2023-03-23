@@ -158,6 +158,14 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
+	public UMLOperation matchesOperation(AbstractCall invocation, List<UMLOperation> operations, VariableDeclarationContainer callerOperation) {
+		for(UMLOperation operation : operations) {
+			if(invocation.matchesOperation(operation, callerOperation, this, modelDiff))
+				return operation;
+		}
+		return null;
+	}
+
 	public abstract void process() throws RefactoringMinerTimedOutException;
 	
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;

@@ -65,19 +65,6 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 	}
 
-	private boolean isMappedInParent(AbstractCodeFragment leaf) {
-		if(bodyMapper.parentMapperContainsMapping(leaf)) {
-			return true;
-		}
-		else if(leaf.getParent() != null && bodyMapper.parentMapperContainsMapping(leaf.getParent())) {
-			return true;
-		}
-		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
-			return true;
-		}
-		return false;
-	}
-
 	private boolean isDefaultValue(String argument) {
 		return argument.equals("null") || argument.equals("0") || argument.equals("false") || argument.equals("true");
 	}
@@ -112,7 +99,7 @@ public class InlineOperationRefactoring implements Refactoring {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 						for(AbstractCodeFragment leaf : leaves) {
 							for(AbstractCall call : inlinedOperationInvocations) {
-								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+								if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
 									List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
 									if(expressions1.size() == 1) {
 										for(LeafExpression expression2 : expressions2) {
@@ -135,7 +122,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		if(expressions2.size() > 0) {
 			List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {
-				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+				if(leaf.getLocationInfo().subsumes(call.getLocationInfo())) {
 					List<LeafExpression> expressions1 = leaf.findExpression(argument);
 					if(expressions1.size() == 1) {
 						for(LeafExpression expression2 : expressions2) {

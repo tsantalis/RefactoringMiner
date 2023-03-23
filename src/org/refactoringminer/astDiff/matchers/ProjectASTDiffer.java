@@ -961,8 +961,9 @@ public class ProjectASTDiffer
 		if (srcParentUML != null && dstParentUML != null) {
 			Tree srcParentClassTree =TreeUtilFunctions.findByLocationInfo(srcTree, srcParentUML.getLocationInfo());
 			Tree dstParentClassTree =TreeUtilFunctions.findByLocationInfo(dstTree, dstParentUML.getLocationInfo());
-			if (srcParentClassTree.isIsomorphicTo(dstParentClassTree))
-				mappingStore.addMappingRecursively(srcParentClassTree,dstParentClassTree);
+			if (srcParentClassTree != null && dstParentClassTree != null)
+				if (srcParentClassTree.isIsoStructuralTo(dstParentClassTree))
+					mappingStore.addMappingRecursively(srcParentClassTree,dstParentClassTree);
 		}
 	}
 

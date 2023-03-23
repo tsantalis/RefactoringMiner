@@ -10383,6 +10383,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(call1.matchesOperation(mapper.getContainer1(), container1, classDiff, modelDiff) &&
+						call2.matchesOperation(mapper.getContainer2(), container2, classDiff, modelDiff)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}

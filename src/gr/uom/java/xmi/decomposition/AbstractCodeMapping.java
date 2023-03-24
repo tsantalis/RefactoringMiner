@@ -401,19 +401,17 @@ public abstract class AbstractCodeMapping {
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after)) {
-						if(!checkIfStatementIsExtracted(statement, classDiff)) {
-							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-							List<LeafExpression> subExpressions = getFragment2().findExpression(after);
-							for(LeafExpression subExpression : subExpressions) {
-								LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
-								ref.addSubExpressionMapping(leafMapping);
-							}
-							processInlineVariableRefactoring(ref, refactorings);
-							if(identical()) {
-								identicalWithInlinedVariable = true;
-							}
-							return;
+						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
+						for(LeafExpression subExpression : subExpressions) {
+							LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
 						}
+						processInlineVariableRefactoring(ref, refactorings);
+						if(identical()) {
+							identicalWithInlinedVariable = true;
+						}
+						return;
 					}
 				}
 			}
@@ -481,26 +479,6 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 		}
-	}
-
-	private boolean checkIfStatementIsExtracted(AbstractCodeFragment statement, UMLAbstractClassDiff classDiff) {
-		if(classDiff != null) { 
-			AbstractCall invocationCoveringTheEntireStatement2 = getFragment2().invocationCoveringEntireFragment();
-			if(invocationCoveringTheEntireStatement2 != null) {
-				UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), operation2);
-				if(addedOperation != null && addedOperation.getBody() != null) {
-					for(AbstractCodeFragment fragment : addedOperation.getBody().getCompositeStatement().getLeaves()) {
-						if(fragment.getString().equals(statement.getString())) {
-							return true;
-						}
-						if(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().toString().equals(statement.getVariableDeclarations().toString())) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	private boolean identical() {

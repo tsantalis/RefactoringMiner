@@ -8172,11 +8172,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					statement1.getVariableDeclarations().size() > 0) {
 				boolean callToAddedOperation = false;
 				boolean callToDeletedOperation = false;
+				boolean statementIsExtracted = false;
 				if(classDiff != null) {
-					callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
+					UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2);
+					statementIsExtracted = checkIfStatementIsExtracted(statement1, statement2, addedOperation);
+					callToAddedOperation = addedOperation != null;
 					callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
 				}
-				if(callToAddedOperation != callToDeletedOperation) {
+				if(callToAddedOperation != callToDeletedOperation && !statementIsExtracted) {
 					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
@@ -8185,6 +8188,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean checkIfStatementIsExtracted(AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperation addedOperation) {
+		if(classDiff != null) { 
+			AbstractCall invocationCoveringTheEntireStatement2 = statement1.invocationCoveringEntireFragment();
+			if(invocationCoveringTheEntireStatement2 != null) {
+				if(addedOperation != null && addedOperation.getBody() != null) {
+					for(AbstractCodeFragment fragment : addedOperation.getBody().getCompositeStatement().getLeaves()) {
+						if(fragment.getString().equals(statement1.getString())) {
+							return true;
+						}
+						if(fragment.getVariableDeclarations().size() > 0 && fragment.getVariableDeclarations().toString().equals(statement1.getVariableDeclarations().toString())) {
+							return true;
+						}
+						if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getInitializer() != null &&
+								fragment.getString().equals("return " + statement1.getVariableDeclarations().get(0).getInitializer().getString() + ";\n") &&
+								!fragment.getParent().equals(addedOperation.getBody().getCompositeStatement())) {
+							return true;
+						}
+						for(AnonymousClassDeclarationObject anonymous : fragment.getAnonymousClassDeclarations()) {
+							UMLAnonymousClass anonymousClass = addedOperation.findAnonymousClass(anonymous);
+							if(anonymousClass != null) {
+								for(UMLOperation anonymousOperation : anonymousClass.getOperations()) {
+									for(AbstractCodeFragment anonymousFragment : anonymousOperation.getBody().getCompositeStatement().getLeaves()) {
+										if(anonymousFragment.getString().equals(statement1.getString())) {
+											return true;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static Map<String, List<AbstractCall>> convertToMap(List<AbstractCall> calls) {

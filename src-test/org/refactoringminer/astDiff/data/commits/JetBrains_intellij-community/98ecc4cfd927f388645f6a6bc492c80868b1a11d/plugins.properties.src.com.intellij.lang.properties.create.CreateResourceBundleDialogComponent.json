@@ -5763,6 +5763,105 @@
   "firstEndPos" : 4973,
   "secondEndPos" : 6186
 }, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "VariableDeclarationStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4981,
+  "secondPos" : 5556,
+  "firstEndPos" : 5297,
+  "secondEndPos" : 5609
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "final",
+  "secondLabel" : "final",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 4981,
+  "secondPos" : 5556,
+  "firstEndPos" : 4986,
+  "secondEndPos" : 5561
+}, {
+  "firstType" : "ParameterizedType",
+  "secondType" : "ParameterizedType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 4987,
+  "secondPos" : 5562,
+  "firstEndPos" : 4998,
+  "secondEndPos" : 5573
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Set",
+  "secondLabel" : "Set",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4987,
+  "secondPos" : 5562,
+  "firstEndPos" : 4990,
+  "secondEndPos" : 5565
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
+  "secondParentType" : "ParameterizedType",
+  "firstPos" : 4987,
+  "secondPos" : 5562,
+  "firstEndPos" : 4990,
+  "secondEndPos" : 5565
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4991,
+  "secondPos" : 5566,
+  "firstEndPos" : 4997,
+  "secondEndPos" : 5572
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ParameterizedType",
+  "secondParentType" : "ParameterizedType",
+  "firstPos" : 4991,
+  "secondPos" : 5566,
+  "firstEndPos" : 4997,
+  "secondEndPos" : 5572
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 4999,
+  "secondPos" : 5574,
+  "firstEndPos" : 5296,
+  "secondEndPos" : 5608
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "fileNames",
+  "secondLabel" : "fileNames",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 4999,
+  "secondPos" : 5574,
+  "firstEndPos" : 5008,
+  "secondEndPos" : 5583
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",

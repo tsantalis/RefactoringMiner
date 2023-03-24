@@ -41,6 +41,7 @@ public class Constants {
 	public static final String EQUAL_OPERATOR = "=";
 
 	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+	public static final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
 	public static final String ASSERT_STATEMENT = "AssertStatement";
 	public static final String BREAK_STATEMENT = "BreakStatement";

@@ -29,8 +29,10 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.RevWalkUtils;
 import org.eclipse.jgit.revwalk.filter.RevFilter;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.TrackingRefUpdate;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 import org.refactoringminer.api.Churn;
@@ -47,6 +49,11 @@ public class GitServiceImpl implements GitService {
 	
 	@Override
 	public Repository cloneIfNotExists(String projectPath, String cloneUrl/*, String branch*/) throws Exception {
+		return cloneIfNotExists(projectPath, cloneUrl, null, null);
+	}
+
+	@Override
+	public Repository cloneIfNotExists(String projectPath, String cloneUrl, String username, String token) throws Exception {
 		File folder = new File(projectPath);
 		Repository repository;
 		if (folder.exists()) {
@@ -69,10 +76,15 @@ public class GitServiceImpl implements GitService {
 			
 		} else {
 			logger.info("Cloning {} ...", cloneUrl);
+			CredentialsProvider credentialsProvider = null;
+			if (username != null && token != null){
+				credentialsProvider = new UsernamePasswordCredentialsProvider(username, token);
+			}
 			Git git = Git.cloneRepository()
 					.setDirectory(folder)
 					.setURI(cloneUrl)
 					.setCloneAllBranches(true)
+					.setCredentialsProvider(credentialsProvider)
 					.call();
 			repository = git.getRepository();
 			//logger.info("Done cloning {}, current branch is {}", cloneUrl, repository.getBranch());

@@ -6,6 +6,7 @@ import java.util.Set;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
+import org.eclipse.jgit.transport.CredentialsProvider;
 
 /**
  * Simple service to make git related tasks easier.  
@@ -22,6 +23,18 @@ public interface GitService {
 	 * @throws Exception propagated from JGit library.
 	 */
 	Repository cloneIfNotExists(String folder, String cloneUrl/*, String branch*/) throws Exception;
+
+	/**
+	 * Clone the git repository given by {@code cloneUrl} only if is does not exist yet in {@code folder}.
+	 * 
+	 * @param folder The folder to store the local repo.
+	 * @param cloneUrl The repository URL.
+	 * @param username Username used for private repository access.
+	 * @param token Personal Access Token used for private repository access.
+	 * @return The repository object (JGit library).
+	 * @throws Exception propagated from JGit library.
+	 */
+	Repository cloneIfNotExists(String folder, String cloneUrl, String username, String token) throws Exception;
 	
 	Repository openRepository(String folder) throws Exception;
 

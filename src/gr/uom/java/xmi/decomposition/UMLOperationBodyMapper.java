@@ -4057,22 +4057,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								leafIterator2.remove();
 							}
 							else {
-								Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
-								if(movedOutOfIfElseBranch.size() > 1) {
-									for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
-										addMapping(mapping);
-										processAnonymousClassDeclarationsInIdenticalStatements((LeafMapping) mapping);
-										leaves1.remove(mapping.getFragment1());
+								if(parentMapping != null && parentOrSiblingMapperContainsMapping(mappingSet.first())) {
+									TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
+									for(LeafMapping mapping : mappingSet) {
+										if(parentMapping.getFragment1().getLocationInfo().subsumes(mappingSet.first().getFragment1().getLocationInfo()) &&
+												parentMapping.getFragment2().getLocationInfo().subsumes(mappingSet.first().getFragment2().getLocationInfo())) {
+											scopedMappingSet.add(mapping);
+										}
 									}
-									leafIterator2.remove();
+									if(!scopedMappingSet.isEmpty()) {
+										if(allUnderTheSameParent(scopedMappingSet)) {
+											LeafMapping minStatementMapping = scopedMappingSet.first();
+											if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+												addToMappings(minStatementMapping, scopedMappingSet);
+												leaves1.remove(minStatementMapping.getFragment1());
+												leafIterator2.remove();
+											}
+										}
+									}
 								}
 								else {
-									if(!duplicateMappingInParentMapper(mappingSet)) {
-										LeafMapping minStatementMapping = mappingSet.first();
-										addMapping(minStatementMapping);
-										processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
-										leaves1.remove(minStatementMapping.getFragment1());
+									Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
+									if(movedOutOfIfElseBranch.size() > 1) {
+										for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
+											addMapping(mapping);
+											processAnonymousClassDeclarationsInIdenticalStatements((LeafMapping) mapping);
+											leaves1.remove(mapping.getFragment1());
+										}
 										leafIterator2.remove();
+									}
+									else {
+										if(!duplicateMappingInParentMapper(mappingSet)) {
+											LeafMapping minStatementMapping = mappingSet.first();
+											addMapping(minStatementMapping);
+											processAnonymousClassDeclarationsInIdenticalStatements(minStatementMapping);
+											leaves1.remove(minStatementMapping.getFragment1());
+											leafIterator2.remove();
+										}
 									}
 								}
 							}
@@ -10325,6 +10346,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(call.loggerExpression()) {
 						return true;
 					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean parentOrSiblingMapperContainsMapping(AbstractCodeMapping mapping) {
+		if(parentMapper != null) {
+			if(parentMapper.mappings.contains(mapping)) {
+				return true;
+			}
+			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+				if(childMapper.mappings.contains(mapping)) {
+					return true;
 				}
 			}
 		}

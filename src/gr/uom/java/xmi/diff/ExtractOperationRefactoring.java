@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractOperationRefactoring implements Refactoring {
@@ -153,6 +154,19 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	private boolean processArgument(AbstractCodeMapping mapping, AbstractCall call, String argument) {
+		for(AbstractCodeMapping m : bodyMapper.getMappings()) {
+			VariableDeclaration variableDeclaration1 = m.getFragment1().getVariableDeclaration(argument);
+			VariableDeclaration variableDeclaration2 = m.getFragment2().getVariableDeclaration(argument);
+			if(variableDeclaration1 != null && variableDeclaration2 != null) {
+				if(m.getFragment1().equals(mapping.getFragment1()) && m.getFragment2().equals(mapping.getFragment2())) {
+					return false;
+				}
+				if(variableDeclaration1.getStatementsInScopeUsingVariable().contains(mapping.getFragment1()) &&
+						variableDeclaration2.getStatementsInScopeUsingVariable().contains(mapping.getFragment2())) {
+					return false;
+				}
+			}
+		}
 		List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
 		if(expressions1.size() > 0) {
 			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();

@@ -1,0 +1,77 @@
+public resolve(mavenCoords String...) : void -> private resolveLib(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Prebuilt
+line range:156-156==line range:190-190
+line range:144-148==line range:182-186
+public resolve(mavenCoords String...) : void -> private getProjectName(artifact Artifact) : String
+line range:133-133==line range:233-233
+line range:130-130==line range:230-230
+line range:131-131==line range:231-231
+line range:132-134==line range:232-234
+line range:132-134==line range:232-234
+public resolve(mavenCoords String...) : void -> private getProjectName(artifact Artifact) : String
+line range:169-169==line range:230-230
+line range:170-170==line range:231-231
+line range:172-172==line range:233-233
+line range:171-173==line range:232-234
+line range:171-173==line range:232-234
+public resolve(mavenCoords String...) : void -> private getProjectName(artifact Artifact) : String
+line range:188-188==line range:230-230
+line range:189-189==line range:231-231
+line range:191-191==line range:233-233
+line range:190-192==line range:232-234
+line range:190-192==line range:232-234
+public resolve(mavenCoords String...) : void -> private resolveArtifact(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Path
+line range:151-153==line range:205-207
+line range:154-154==line range:208-208
+public resolve(mavenCoords String...) : void -> private resolveArtifact(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path) : Path
+line range:160-160==line range:205-207
+line range:161-161==line range:208-208
+public resolve(mavenCoords String...) : void -> private downloadSources(artifact Artifact, repoSys RepositorySystem, session RepositorySystemSession, project Path, library Prebuilt) : void
+line range:149-149==line range:217-217
+line range:162-162==line range:220-220
+line range:164-164==line range:222-222
+line range:159-165==line range:218-223
+line range:163-165==line range:221-223
+public resolve(mavenCoords String...) : void -> private downloadArtifact(artifactToDownload Artifact, repoSys RepositorySystem, session RepositorySystemSession, buckFiles Map<Path,SortedSet<Prebuilt>>, graph MutableDirectedGraph<Artifact>) : void
+line range:135-135==line range:144-144
+line range:136-136==line range:145-145
+line range:138-138==line range:147-147
+line range:140-140==line range:149-149
+line range:141-141==line range:150-150
+line range:157-157==line range:154-154
+line range:175-175==line range:161-161
+line range:167-167==line range:157-157
+line range:177-182==line range:163-163
+line range:186-186==line range:168-168
+line range:194-199==line range:172-172
+line range:139-142==line range:148-151
+line range:174-183==line range:160-164
+line range:168-184==line range:158-165
+line range:193-200==line range:171-173
+line range:187-201==line range:169-174
+line range:139-142==line range:148-151
+line range:174-176==line range:160-162
+line range:176-183==line range:162-164
+line range:168-184==line range:158-165
+line range:193-200==line range:171-173
+line range:187-201==line range:169-174
+public resolve(mavenCoords String...) : void -> private createBuckFiles(buckFilesData Map<Path,SortedSet<Prebuilt>>) : void
+line range:204-204==line range:239-239
+line range:205-205==line range:240-240
+line range:206-206==line range:241-241
+line range:209-209==line range:244-244
+line range:211-211==line range:246-246
+line range:214-214==line range:249-249
+line range:215-215==line range:250-250
+line range:216-216==line range:251-251
+line range:210-212==line range:245-247
+line range:208-217==line range:243-252
+line range:210-212==line range:245-247
+line range:208-217==line range:243-252
+public resolve(mavenCoords String...) : void -> public resolve(mavenCoords String...) : void
+line range:111-111==line range:111-111
+line range:112-112==line range:112-112
+line range:114-117==line range:114-117
+line range:122-122==line range:122-122
+line range:127-127==line range:127-127
+line range:129-202==line range:129-131
+line range:129-202==line range:129-131

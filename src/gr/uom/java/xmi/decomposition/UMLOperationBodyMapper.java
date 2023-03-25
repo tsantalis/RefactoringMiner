@@ -4057,7 +4057,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								leafIterator2.remove();
 							}
 							else {
-								if(parentMapping != null && parentOrSiblingMapperContainsMapping(mappingSet.first())) {
+								if(parentMapping != null && parentOrSiblingMapperContainsMapping(mappingSet) != null) {
 									TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 									for(LeafMapping mapping : mappingSet) {
 										if(parentMapping.getFragment1().getLocationInfo().subsumes(mappingSet.first().getFragment1().getLocationInfo()) &&
@@ -4339,13 +4339,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								else {
 									if(!duplicateMappingInParentMapper(mappingSet)) {
-										LeafMapping minStatementMapping = mappingSet.first();
-										if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-											addToMappings(minStatementMapping, mappingSet);
-											leaves1.remove(minStatementMapping.getFragment1());
-											leafIterator2.remove();
-											checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
-											checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
+										AbstractCodeMapping alreadyMatched = null;
+										if((alreadyMatched = parentOrSiblingMapperContainsMapping(mappingSet)) != null && mappingSet.size() > 1) {
+											Iterator<LeafMapping> iterator = mappingSet.iterator();
+											LeafMapping minStatementMapping = null;
+											while(iterator.hasNext()) {
+												LeafMapping next = iterator.next();
+												if(!next.equals(alreadyMatched)) {
+													minStatementMapping = next;
+													break;
+												}
+											}
+											if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+												addToMappings(minStatementMapping, mappingSet);
+												leaves1.remove(minStatementMapping.getFragment1());
+												leafIterator2.remove();
+											}
+										}
+										else {
+											LeafMapping minStatementMapping = mappingSet.first();
+											if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
+												addToMappings(minStatementMapping, mappingSet);
+												leaves1.remove(minStatementMapping.getFragment1());
+												leafIterator2.remove();
+												checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
+												checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
+											}
 										}
 									}
 								}
@@ -5214,6 +5233,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return true;
 				}
 				if(startMapping.equals(endMapping)) {
+					boolean isNextStatement = mappingToCheck.getFragment1().getLocationInfo().getStartLine() == startMapping.getFragment1().getLocationInfo().getEndLine() + 1 &&
+							mappingToCheck.getFragment2().getLocationInfo().getStartLine() == startMapping.getFragment2().getLocationInfo().getEndLine() + 1;
+					if(isNextStatement) {
+						return true;
+					}
 					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
 				}
@@ -10352,18 +10376,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean parentOrSiblingMapperContainsMapping(AbstractCodeMapping mapping) {
+	private LeafMapping parentOrSiblingMapperContainsMapping(Set<LeafMapping> mappings) {
 		if(parentMapper != null) {
-			if(parentMapper.mappings.contains(mapping)) {
-				return true;
-			}
-			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
-				if(childMapper.mappings.contains(mapping)) {
-					return true;
+			for(LeafMapping mapping : mappings) {
+				if(parentMapper.mappings.contains(mapping)) {
+					return mapping;
+				}
+				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+					if(childMapper.mappings.contains(mapping)) {
+						return mapping;
+					}
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public boolean parentMapperContainsMapping(AbstractCodeFragment statement) {

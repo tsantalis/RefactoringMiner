@@ -142,23 +142,24 @@ Currently, it supports the detection of the following refactorings:
 93. Merge Catch
 94. Merge Method
 95. Split Method
+96. Move Code (between methods)
 
 # Current precision and recall
-As of **March 3, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **March 26, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11554  | 23  | 275  | 0.998  | 0.977|
-|Extract Method|966  |  1  | 29  | 0.999  | 0.971|
+|**Total**|11611  | 23  | 273  | 0.998  | 0.977|
+|Extract Method|996  |  1  | 27  | 0.999  | 0.974|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|365  |  4  | 26  | 0.989  | 0.934|
-|Inline Method|111  |  0  |  2  | 1.000  | 0.982|
-|Move Method|352  |  3  |  9  | 0.992  | 0.975|
+|Inline Method|116  |  0  |  2  | 1.000  | 0.983|
+|Move Method|351  |  3  |  9  | 0.992  | 0.975|
 |Move And Rename Method|123  |  0  |  5  | 1.000  | 0.961|
-|Pull Up Method|290  |  0  |  6  | 1.000  | 0.980|
+|Pull Up Method|289  |  0  |  6  | 1.000  | 0.980|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
@@ -173,12 +174,12 @@ As of **March 3, 2023** the precision and recall of the tool on an oracle consis
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|225  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|226  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|77  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|83  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|308  |  3  | 12  | 0.990  | 0.963|
-|Rename Parameter|476  |  2  | 27  | 0.996  | 0.946|
+|Rename Variable|312  |  3  | 12  | 0.990  | 0.963|
+|Rename Parameter|477  |  2  | 27  | 0.996  | 0.946|
 |Rename Attribute|133  |  0  | 16  | 1.000  | 0.893|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -189,10 +190,10 @@ As of **March 3, 2023** the precision and recall of the tool on an oracle consis
 |Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|77  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|420  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|770  |  2  | 10  | 0.997  | 0.987|
-|Change Parameter Type|634  |  1  | 15  | 0.998  | 0.977|
+|Change Variable Type|773  |  2  | 10  | 0.997  | 0.987|
+|Change Parameter Type|633  |  1  | 15  | 0.998  | 0.977|
 |Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
@@ -206,8 +207,8 @@ As of **March 3, 2023** the precision and recall of the tool on an oracle consis
 |Add Parameter Annotation|32  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|957  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|336  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|961  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|332  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
@@ -222,7 +223,7 @@ As of **March 3, 2023** the precision and recall of the tool on an oracle consis
 |Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|57  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|58  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|
@@ -235,12 +236,13 @@ As of **March 3, 2023** the precision and recall of the tool on an oracle consis
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional|15  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|16  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 5  |  0  |  0  | 1.000  | 1.000|
-|Merge Conditional| 5  |  0  |  0  | 1.000  | 1.000|
+|Merge Conditional| 8  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 

@@ -106,7 +106,8 @@ public enum RefactoringType {
 	MERGE_CONDITIONAL("Merge Conditional", "Merge Conditional \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
 	MERGE_CATCH("Merge Catch", "Merge Catch \\[(.+)\\] to (.+) in method (.+) from class (.+)"),
 	MERGE_OPERATION("Merge Method", "Merge Method \\[(.+)\\] to (.+) in class (.+)"),
-	SPLIT_OPERATION("Split Method", "Split Method (.+) to \\[(.+)\\] in class (.+)");
+	SPLIT_OPERATION("Split Method", "Split Method (.+) to \\[(.+)\\] in class (.+)"),
+	MOVE_CODE("Move Code", "Move Code from (.+) to (.+) in class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -207,7 +208,8 @@ public enum RefactoringType {
 		MERGE_CONDITIONAL,
 		MERGE_CATCH,
 		MERGE_OPERATION,
-		SPLIT_OPERATION
+		SPLIT_OPERATION,
+		MOVE_CODE
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

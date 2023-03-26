@@ -217,4 +217,14 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	public boolean hasTestAnnotation() {
 		return false;
 	}
+
+	@Override
+	public boolean hasSetUpAnnotation() {
+		return false;
+	}
+
+	@Override
+	public boolean hasTearDownAnnotation() {
+		return false;
+	}
 }

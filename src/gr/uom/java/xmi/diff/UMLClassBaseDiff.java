@@ -102,6 +102,53 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForInlinedOperations();
 		checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
+		checkForMovedCodeBetweenOperations();
+	}
+
+	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {
+		//find setUp and tearDown methods
+		Set<UMLOperationBodyMapper> setUpMappers = new LinkedHashSet<>();
+		Set<UMLOperationBodyMapper> tearDownMappers = new LinkedHashSet<>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
+				setUpMappers.add(mapper);
+			}
+			if(mapper.getContainer1().getName().equals("setUp") && mapper.getContainer2().getName().equals("setUp")) {
+				setUpMappers.add(mapper);
+			}
+			if(mapper.getContainer1().hasTearDownAnnotation() && mapper.getContainer2().hasTearDownAnnotation()) {
+				tearDownMappers.add(mapper);
+			}
+			if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
+				tearDownMappers.add(mapper);
+			}
+		}
+		for(UMLOperationBodyMapper setUpMapper : setUpMappers) {
+			if(setUpMapper.nonMappedElementsT2() > 0 || setUpMapper.nonMappedElementsT1() > 0) {
+				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+					if(!mapper.equals(setUpMapper)) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, setUpMapper, this);
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
+		for(UMLOperationBodyMapper tearDownMapper : tearDownMappers) {
+			if(tearDownMapper.nonMappedElementsT2() > 0 || tearDownMapper.nonMappedElementsT1() > 0) {
+				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+					if(!mapper.equals(tearDownMapper)) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, tearDownMapper, this);
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void processTypeParameters() {

@@ -84,7 +84,7 @@ public class InlineOperationRefactoring implements Refactoring {
 	}
 
 	private boolean isDefaultValue(String argument) {
-		return argument.equals("null") || argument.equals("0") || argument.equals("false") || argument.equals("true");
+		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {

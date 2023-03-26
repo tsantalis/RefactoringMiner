@@ -581,6 +581,11 @@ public class ProjectASTDiffer
 					lastStepMappings.add(expressionMapping);
 				}
 			}
+			else if (refactoring instanceof MoveCodeRefactoring) {
+				MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
+				UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
+				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {

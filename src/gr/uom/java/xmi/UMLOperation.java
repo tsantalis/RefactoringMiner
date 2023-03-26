@@ -192,6 +192,30 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasSetUpAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			//JUnit 4
+			if(annotation.getTypeName().equals("Before") || annotation.getTypeName().equals("BeforeClass") ||
+					//JUnit 5
+					annotation.getTypeName().equals("BeforeEach") || annotation.getTypeName().equals("BeforeAll")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasTearDownAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			//JUnit 4
+			if(annotation.getTypeName().equals("After") || annotation.getTypeName().equals("AfterClass") ||
+					//JUnit 5
+					annotation.getTypeName().equals("AfterEach") || annotation.getTypeName().equals("AfterAll")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasDataProviderAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("DataProvider")) {

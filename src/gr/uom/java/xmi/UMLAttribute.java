@@ -237,11 +237,16 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	}
 
 	public boolean hasTestAnnotation() {
-		for(UMLAnnotation annotation : variableDeclaration.getAnnotations()) {
-			if(annotation.getTypeName().equals("Test")) {
-				return true;
-			}
-		}
+		return false;
+	}
+
+	@Override
+	public boolean hasSetUpAnnotation() {
+		return false;
+	}
+
+	@Override
+	public boolean hasTearDownAnnotation() {
 		return false;
 	}
 

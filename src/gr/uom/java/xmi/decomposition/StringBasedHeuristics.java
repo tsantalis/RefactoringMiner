@@ -924,6 +924,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean equalAfterArgumentMerge(String s1, String s2, ReplacementInfo replacementInfo) {
 		Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
+		boolean mergeFound = false;
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 				String key = replacement.getAfter();
@@ -931,7 +932,7 @@ public class StringBasedHeuristics {
 					commonVariableReplacementMap.get(key).add(replacement);
 					int index = s1.indexOf(key);
 					if(index != -1) {
-						if(s1.charAt(index+key.length()) == ',') {
+						if(!s1.endsWith(key) && s1.charAt(index+key.length()) == ',') {
 							s1 = s1.substring(0, index) + s1.substring(index+key.length()+1, s1.length());
 						}
 						else if(index > 0 && s1.charAt(index-1) == ',') {
@@ -944,9 +945,76 @@ public class StringBasedHeuristics {
 					replacements.add(replacement);
 					commonVariableReplacementMap.put(key, replacements);
 				}
+				if(s1.equals(s2)) {
+					mergeFound = true;
+				}
+			}
+			else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION)) {
+				String key = replacement.getAfter();
+				int index = s1.indexOf(key);
+				if(index != -1) {
+					if(!s1.endsWith(key) && s1.charAt(index+key.length()) == ',') {
+						s1 = s1.substring(0, index) + s1.substring(index+key.length()+1, s1.length());
+						String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+						String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+						if(compatibleReservedTokens(reservedTokens1, reservedTokens2)) {
+							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+							replacements.add(replacement);
+							commonVariableReplacementMap.put(key, replacements);
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith("return ") && s2.startsWith("return ")) {
+								s1 = s1.substring(s1.indexOf("=") + 1);
+								s2 = s2.substring(7);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+							if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+								int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS1 = s1.lastIndexOf(commonSuffix);
+								String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+								int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS2 = s2.lastIndexOf(commonSuffix);
+								String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+								if(!diff1.isEmpty() && !diff2.isEmpty() && diff2.equals(key)) {
+									Replacement r = new Replacement(diff1, diff2, replacement.getType());
+									commonVariableReplacementMap.get(key).add(r);
+									mergeFound = true;
+								}
+							}
+						}
+					}
+					else if(index > 0 && s1.charAt(index-1) == ',') {
+						s1 = s1.substring(0, index-1) + s1.substring(index+key.length(), s1.length());
+						String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+						String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+						if(compatibleReservedTokens(reservedTokens1, reservedTokens2)) {
+							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+							replacements.add(replacement);
+							commonVariableReplacementMap.put(key, replacements);
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith("return ") && s2.startsWith("return ")) {
+								s1 = s1.substring(s1.indexOf("=") + 1);
+								s2 = s2.substring(7);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+							if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+								int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS1 = s1.lastIndexOf(commonSuffix);
+								String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+								int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS2 = s2.lastIndexOf(commonSuffix);
+								String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+								if(!diff1.isEmpty() && !diff2.isEmpty() && diff2.equals(key)) {
+									Replacement r = new Replacement(diff1, diff2, replacement.getType());
+									commonVariableReplacementMap.get(key).add(r);
+									mergeFound = true;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-		if(s1.equals(s2)) {
+		if(mergeFound) {
 			for(String key : commonVariableReplacementMap.keySet()) {
 				Set<Replacement> replacements = commonVariableReplacementMap.get(key);
 				if(replacements.size() > 1) {
@@ -960,6 +1028,18 @@ public class StringBasedHeuristics {
 				}
 			}
 			return true;
+		}
+		return false;
+	}
+
+	private static boolean compatibleReservedTokens(String reservedTokens1, String reservedTokens2) {
+		if(reservedTokens1.equals(reservedTokens2)) {
+			return true;
+		}
+		else if(reservedTokens1.contains("(") && reservedTokens1.contains("(")) {
+			String s1 = reservedTokens1.substring(reservedTokens1.indexOf("("));
+			String s2 = reservedTokens2.substring(reservedTokens2.indexOf("("));
+			return s1.equals(s2);
 		}
 		return false;
 	}

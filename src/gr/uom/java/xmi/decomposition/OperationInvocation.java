@@ -242,7 +242,7 @@ public class OperationInvocation extends AbstractCall {
     			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(arg);
     			for(VariableDeclaration variableDeclaration : variableDeclarations) {
     				if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-    					inferredArgumentTypes.add(variableDeclaration.getType());
+    					inferredArgumentTypes.add(variableDeclaration.getType() != null ? variableDeclaration.getType() : null);
     					break;
     				}
     			}
@@ -253,14 +253,14 @@ public class OperationInvocation extends AbstractCall {
     			if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arg)) {
 	    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arg);
 	    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-						inferredArgumentTypes.add(variableDeclaration.getType());
+						inferredArgumentTypes.add(variableDeclaration.getType() != null ? variableDeclaration.getType() : null);
 						variableDeclarationFound = true;
 					}
     			}
     			if(!variableDeclarationFound && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arg)) {
     				VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arg);
         			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-    					inferredArgumentTypes.add(variableDeclaration.getType());
+    					inferredArgumentTypes.add(variableDeclaration.getType() != null ? variableDeclaration.getType() : null);
     				}
     			}
     		}
@@ -321,7 +321,7 @@ public class OperationInvocation extends AbstractCall {
         			Set<VariableDeclaration> variableDeclarations = variableDeclarationMap.get(arrayVariable);
         			for(VariableDeclaration variableDeclaration : variableDeclarations) {
         				if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-        					UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+        					UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
         					inferredArgumentTypes.add(elementType);
         					break;
         				}
@@ -333,7 +333,7 @@ public class OperationInvocation extends AbstractCall {
         			if(parentFieldDeclarationMap != null && parentFieldDeclarationMap.containsKey(arrayVariable)) {
     	    			VariableDeclaration variableDeclaration = parentFieldDeclarationMap.get(arrayVariable);
     	    			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-    	    				UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+    	    				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
         					inferredArgumentTypes.add(elementType);
     						variableDeclarationFound = true;
     					}
@@ -341,7 +341,7 @@ public class OperationInvocation extends AbstractCall {
         			if(!variableDeclarationFound && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(arrayVariable)) {
         				VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(arrayVariable);
             			if(variableDeclaration.getScope().subsumes(this.getLocationInfo())) {
-            				UMLType elementType = UMLType.extractTypeObject(variableDeclaration.getType().getClassType());
+            				UMLType elementType = variableDeclaration.getType() != null ? UMLType.extractTypeObject(variableDeclaration.getType().getClassType()) : null;
         					inferredArgumentTypes.add(elementType);
         				}
         			}

@@ -4836,7 +4836,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 */
-	private AbstractCodeMapping findParentMappingContainingOperationInvocation() { 
+	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
+		if(operationInvocation == null) {
+			return null;
+		}
 		//Extract Method scenario 
 		AbstractCodeFragment statementContainingOperationInvocation = null; 
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) { 

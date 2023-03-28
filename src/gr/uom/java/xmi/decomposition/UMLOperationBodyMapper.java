@@ -2855,8 +2855,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 						for(int i = numberOfMappings; i < mappings.size(); i++) {
 							AbstractCodeMapping mapping = mappings.get(i);
-							innerNodes2.remove(mapping.getFragment2());
-							innerNodes1ToBeRemoved.add((CompositeStatementObject)mapping.getFragment1());
+							if(mapping instanceof CompositeStatementObjectMapping) {
+								innerNodes2.remove(mapping.getFragment2());
+								innerNodes1ToBeRemoved.add((CompositeStatementObject)mapping.getFragment1());
+							}
 						}
 						continue;
 					}

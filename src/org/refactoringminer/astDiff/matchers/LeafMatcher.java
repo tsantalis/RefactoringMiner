@@ -31,34 +31,39 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Map<Tree,Tree> srcCopy = new HashMap<>();
 		Map<Tree,Tree> dstCopy = new HashMap<>();
 		Pair<Tree, Tree> prunedPair = pruneTrees(src, dst, srcCopy, dstCopy);
+		MappingStore match;
 		try {
-			MappingStore match = new CustomGreedy(0, false).match(prunedPair.first, prunedPair.second);
-			CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
-			customBottomUpMatcher.match(prunedPair.first, prunedPair.second, match);
-			List<Pair<Tree,Tree>> removeList = new ArrayList<>();
-			for (Mapping mapping : match) {
-				if (mapping.first.getType().name.equals(Constants.METHOD_INVOCATION))
-				{
-					Tree srcMethodName = TreeUtilFunctions.findChildByType(mapping.first, Constants.SIMPLE_NAME);
-					Tree dstMethodName = TreeUtilFunctions.findChildByType(mapping.second, Constants.SIMPLE_NAME);
-					if (srcMethodName == null || dstMethodName == null) continue;
-					if (!srcMethodName.getLabel().equals(dstMethodName.getLabel()))
-					{
-						Tree srcMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.first,Constants.METHOD_INVOCATION_RECEIVER);
-						Tree dstMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.second,Constants.METHOD_INVOCATION_RECEIVER);
-						if ((srcMethodInvocationReceiver == null && dstMethodInvocationReceiver != null)
-							||
-							(srcMethodInvocationReceiver != null && dstMethodInvocationReceiver == null))
-						{
-							removeList.add(new Pair<>(mapping.first, mapping.second));
-							removeList.add(new Pair<>(srcMethodName, dstMethodName));
-							break;
+			if (prunedPair.first.isIsoStructuralTo(prunedPair.second))
+			{
+				match = new MappingStore(src, dst);
+				match.addMappingRecursively(prunedPair.first, prunedPair.second);
+			}
+			else {
+				match = new CustomGreedy(0, false).match(prunedPair.first, prunedPair.second);
+				CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
+				customBottomUpMatcher.match(prunedPair.first, prunedPair.second, match);
+				List<Pair<Tree, Tree>> removeList = new ArrayList<>();
+				for (Mapping mapping : match) {
+					if (mapping.first.getType().name.equals(Constants.METHOD_INVOCATION)) {
+						Tree srcMethodName = TreeUtilFunctions.findChildByType(mapping.first, Constants.SIMPLE_NAME);
+						Tree dstMethodName = TreeUtilFunctions.findChildByType(mapping.second, Constants.SIMPLE_NAME);
+						if (srcMethodName == null || dstMethodName == null) continue;
+						if (!srcMethodName.getLabel().equals(dstMethodName.getLabel())) {
+							Tree srcMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.first, Constants.METHOD_INVOCATION_RECEIVER);
+							Tree dstMethodInvocationReceiver = TreeUtilFunctions.findChildByType(mapping.second, Constants.METHOD_INVOCATION_RECEIVER);
+							if ((srcMethodInvocationReceiver == null && dstMethodInvocationReceiver != null)
+									||
+									(srcMethodInvocationReceiver != null && dstMethodInvocationReceiver == null)) {
+								removeList.add(new Pair<>(mapping.first, mapping.second));
+								removeList.add(new Pair<>(srcMethodName, dstMethodName));
+								break;
+							}
 						}
 					}
 				}
-			}
-			for (Pair<Tree, Tree> treeTreePair : removeList) {
-				match.removeMapping(treeTreePair.first,treeTreePair.second);
+				for (Pair<Tree, Tree> treeTreePair : removeList) {
+					match.removeMapping(treeTreePair.first, treeTreePair.second);
+				}
 			}
 			if (!overwrite)
 				mappingStore.addWithMaps(match, srcCopy, dstCopy);

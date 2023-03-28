@@ -6271,8 +6271,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations1.addAll(variables1);
 		
 		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION);
-		if(variablesAndMethodInvocations1.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS || variablesAndMethodInvocations2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS ||
-				variablesAndMethodInvocations1.size()*variablesAndMethodInvocations2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS*10) {
+		if(variablesAndMethodInvocations1.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS || variablesAndMethodInvocations2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS) {
 			return null;
 		}
 		if (replacementInfo.getRawDistance() > 0) {

@@ -1006,6 +1006,42 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testExtractMethodStatementMappings9() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/cassandra",
+		    "https://github.com/apache/cassandra.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "9a3fa887cfa03c082f249d1d4003d87c14ba5d24", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						if(ex.getExtractedOperation().getName().equals("getSpecifiedTokens")) {
+							UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+							if(!bodyMapper.isNested()) {
+								if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+									parentMappers.add(bodyMapper.getParentMapper());
+								}
+							}
+							mapperInfo(bodyMapper, actual);
+						}
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/cassandra-9a3fa887cfa03c082f249d1d4003d87c14ba5d24.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSlidedStatementMappings() throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 		    ".",

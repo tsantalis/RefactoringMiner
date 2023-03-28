@@ -575,6 +575,11 @@ public abstract class AbstractCodeMapping {
 			if(!initializerInvocation.getName().equals(replacementInvocation.getName())) {
 				methodInvocationMatch = false;
 			}
+			if(initializerInvocation.identicalName(replacementInvocation) && initializerInvocation.identicalExpression(replacementInvocation)) {
+				MethodInvocationReplacement r = new MethodInvocationReplacement(replacementInvocation.actualString(), initializerInvocation.actualString(), replacementInvocation, initializerInvocation, ReplacementType.METHOD_INVOCATION_ARGUMENT);
+				this.replacements.add(r);
+				return true;
+			}
 		}
 		else if(initializerInvocation != null && replacementInvocation == null) {
 			methodInvocationMatch = false;

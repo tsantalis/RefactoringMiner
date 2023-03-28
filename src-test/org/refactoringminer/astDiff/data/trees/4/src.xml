@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<root>
+  <context></context>
+  <tree type="VariableDeclarationStatement" pos="56" length="143">
+    <tree type="SimpleType" pos="56" length="8">
+      <tree type="SimpleName" label="Artifact" pos="56" length="8"></tree>
+    </tree>
+    <tree type="VariableDeclarationFragment" pos="65" length="133">
+      <tree type="SimpleName" label="jar" pos="65" length="3"></tree>
+      <tree type="ClassInstanceCreation" pos="71" length="127">
+        <tree type="SimpleType" pos="75" length="15">
+          <tree type="SimpleName" label="DefaultArtifact" pos="75" length="15"></tree>
+        </tree>
+        <tree type="MethodInvocation" pos="102" length="17">
+          <tree type="METHOD_INVOCATION_RECEIVER" pos="102" length="4">
+            <tree type="SimpleName" label="root" pos="102" length="4"></tree>
+          </tree>
+          <tree type="SimpleName" label="getGroupId" pos="107" length="10"></tree>
+        </tree>
+        <tree type="MethodInvocation" pos="131" length="20">
+          <tree type="METHOD_INVOCATION_RECEIVER" pos="131" length="4">
+            <tree type="SimpleName" label="root" pos="131" length="4"></tree>
+          </tree>
+          <tree type="SimpleName" label="getArtifactId" pos="136" length="13"></tree>
+        </tree>
+        <tree type="StringLiteral" label="&quot;jar&quot;" pos="163" length="5"></tree>
+        <tree type="MethodInvocation" pos="180" length="17">
+          <tree type="METHOD_INVOCATION_RECEIVER" pos="180" length="4">
+            <tree type="SimpleName" label="root" pos="180" length="4"></tree>
+          </tree>
+          <tree type="SimpleName" label="getVersion" pos="185" length="10"></tree>
+        </tree>
+      </tree>
+    </tree>
+  </tree>
+</root>

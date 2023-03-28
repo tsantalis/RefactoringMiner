@@ -18,6 +18,11 @@ public class StringDistance {
 	private static final Pattern COMMENT_LINE = Pattern.compile("^\\s*(//|\\*|import\\s).*");
 	
 	public static int editDistance(String a, String b, int threshold) {
+		int length1 = a.length();
+		int length2 = b.length();
+		if(length1 > MAX_STRING_LENGTH || length2 > MAX_STRING_LENGTH) {
+			return threshold;
+		}
 		return new LevenshteinDistance(threshold).apply(a, b);
 	}
 

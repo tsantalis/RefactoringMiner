@@ -3816,7 +3816,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
-								extractInlineVariableAnalysis(leaves1, leaves2, leaf2, leaf1, mapping);
+								extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf2, mapping);
 								mappingSet.add(mapping);
 							}
 						}
@@ -3845,7 +3845,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else {
+							//checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
+							Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
 							if(movedInIfElseBranch.size() > 1) {
 								for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 									addToMappings((LeafMapping) mapping, mappingSet);
@@ -3853,6 +3855,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								leafIterator1.remove();
 								checkForMatchingSplitVariableDeclaration(leaf1, leaves2, parameterToArgumentMap, equalNumberOfAssertions);
+							}
+							else if(movedOutOfIfElseBranch.size() > 1) {
+								for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
+									addToMappings((LeafMapping) mapping, mappingSet);
+									leaves2.remove(mapping.getFragment2());
+									leaves1ToBeRemoved.add(mapping.getFragment1());
+								}
+								leafIterator1.remove();
 							}
 							else {
 								LeafMapping minStatementMapping = mappingSet.first();
@@ -4172,7 +4182,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
-								extractInlineVariableAnalysis(leaves1, leaves2, leaf2, leaf1, mapping);
+								extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf2, mapping);
 								mappingSet.add(mapping);
 							}
 						}
@@ -4253,7 +4263,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											}
 										}
 										else {
-											checkForOtherPossibleMatches(leaves1, leaves2, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+											checkForOtherPossibleMatchesForFragment1(leaves1, leaves2, leaf2, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 											LeafMapping minStatementMapping = mappingSet.first();
 											if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
 												addToMappings(minStatementMapping, mappingSet);
@@ -4311,7 +4321,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private void extractInlineVariableAnalysis(List<? extends AbstractCodeFragment> leaves1,
-			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, AbstractCodeFragment leaf1,
+			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,
 			LeafMapping mapping) {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeFragment leaf : leaves2) {
@@ -4343,7 +4353,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void checkForOtherPossibleMatches(List<? extends AbstractCodeFragment> leaves1,
+	private void checkForOtherPossibleMatchesForFragment2(List<? extends AbstractCodeFragment> leaves1,
+			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			throws RefactoringMinerTimedOutException {
+		AbstractCodeFragment leaf2 = mappingSet.first().getFragment2();
+		for(AbstractCodeFragment leaf : leaves1) {
+			if(!leaf.equals(leaf1)) {
+				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
+				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo);
+				if (replacements != null) {
+					LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+					mapping.addReplacements(replacements);
+					extractInlineVariableAnalysis(leaves1, leaves2, leaf, leaf2, mapping);
+					mappingSet.add(mapping);
+				}
+			}
+		}
+	}
+
+	private void checkForOtherPossibleMatchesForFragment1(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, TreeSet<LeafMapping> mappingSet,
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
 			throws RefactoringMinerTimedOutException {
@@ -4372,7 +4401,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						if(allowAdd) {
-							extractInlineVariableAnalysis(leaves1, leaves2, leaf, leaf1, mapping);
+							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping);
 							mappingSet.add(mapping);
 						}
 					}
@@ -4978,26 +5007,45 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeMapping mapping : mappingSet) {
 				AbstractCodeFragment fragment = mapping.getFragment2();
 				if(fragment.getParent() != null && fragment.getParent().getParent() != null) {
-					boolean isWithinIfBranch = isIfBranch(fragment.getParent(), fragment.getParent().getParent());
-					boolean isWithinElseBranch = isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					boolean directlyNested = false;
+					boolean isBlock = fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+					boolean isWithinIfBranch = isBlock ? isIfBranch(fragment, fragment.getParent()) : isIfBranch(fragment.getParent(), fragment.getParent().getParent());
+					if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							fragment.getParent().getStatements().indexOf(fragment) == 0) {
+						isWithinIfBranch = true;
+						directlyNested = true;
+					}
+					boolean isWithinElseBranch = isBlock ? isElseBranch(fragment, fragment.getParent()) : isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							fragment.getParent().getStatements().size() == 2 && fragment.getParent().getStatements().indexOf(fragment) == 1) {
+						isWithinElseBranch = true;
+						directlyNested = true;
+					}
 					boolean isWithinElseIfBranch = false;
-					if(fragment.getParent().getParent().getParent() != null) {
-						isWithinElseIfBranch = isElseIfBranch(fragment.getParent().getParent(), fragment.getParent().getParent().getParent());
+					CompositeStatementObject grandGrandParent = fragment.getParent().getParent().getParent();
+					if(grandGrandParent != null) {
+						isWithinElseIfBranch = isBlock ? isElseIfBranch(fragment.getParent(), fragment.getParent().getParent()) : isElseIfBranch(fragment.getParent().getParent(), grandGrandParent);
+						if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment.getParent().getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment.getParent().getParent().getStatements().size() == 2 && fragment.getParent().getParent().getStatements().indexOf(fragment.getParent()) == 1) {
+							isWithinElseIfBranch = true;
+							directlyNested = true;
+						}
 					}
 					int depthDifference = fragment.getDepth() - mapping.getFragment1().getDepth();
-					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2) {
+					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							ifFound = true;
 						}
 					}
-					else if(isWithinElseIfBranch && depthDifference >= 3) {
+					else if(isWithinElseIfBranch && depthDifference >= 3 - (directlyNested ? 2 : 0)) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							elseIfFound = true;
 						}
 					}
-					else if(isWithinElseBranch && depthDifference >= 2) {
+					else if(isWithinElseBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!map.containsKey(fragment.getParent())) {
 							map.put(fragment.getParent(), mapping);
 							elseFound = true;
@@ -5054,7 +5102,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							fragment1IsInsideIfElseIf = true;
 						}
 					}
-					if(parentMapper != null && mappingSet.first().getFragment2().getParent().getParent() != null && parentMapper.alreadyMatched2(mappingSet.first().getFragment2().getParent().getParent())) {
+					if(parentMapper != null && mappingSet.first().getFragment2().getParent() != null && mappingSet.first().getFragment2().getParent().getParent() != null && parentMapper.alreadyMatched2(mappingSet.first().getFragment2().getParent().getParent())) {
 						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 						if(parentMapping != null && parentMapping.getFragment2().equals(mappingSet.first().getFragment2().getParent().getParent())) {
 							fragment1IsInsideIfElseIf = true;
@@ -5077,46 +5125,70 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeMapping mapping : mappingSet) {
 				AbstractCodeFragment fragment = mapping.getFragment1();
 				if(fragment.getParent() != null && fragment.getParent().getParent() != null) {
-					boolean isWithinIfBranch = fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) ? isIfBranch(fragment, fragment.getParent()) : isIfBranch(fragment.getParent(), fragment.getParent().getParent());
-					boolean isWithinElseBranch = fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) ? isElseBranch(fragment, fragment.getParent()) : isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					boolean directlyNested = false;
+					boolean isBlock = fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+					boolean isWithinIfBranch = isBlock ? isIfBranch(fragment, fragment.getParent()) : isIfBranch(fragment.getParent(), fragment.getParent().getParent());
+					if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							fragment.getParent().getStatements().indexOf(fragment) == 0) {
+						isWithinIfBranch = true;
+						directlyNested = true;
+					}
+					boolean isWithinElseBranch = isBlock ? isElseBranch(fragment, fragment.getParent()) : isElseBranch(fragment.getParent(), fragment.getParent().getParent());
+					if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							fragment.getParent().getStatements().size() == 2 && fragment.getParent().getStatements().indexOf(fragment) == 1) {
+						isWithinElseBranch = true;
+						directlyNested = true;
+					}
 					boolean isWithinElseIfBranch = false;
 					CompositeStatementObject grandGrandParent = fragment.getParent().getParent().getParent();
 					if(grandGrandParent != null) {
-						isWithinElseIfBranch = fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) ? isElseIfBranch(fragment.getParent(), fragment.getParent().getParent()) : isElseIfBranch(fragment.getParent().getParent(), grandGrandParent);
+						isWithinElseIfBranch = isBlock ? isElseIfBranch(fragment.getParent(), fragment.getParent().getParent()) : isElseIfBranch(fragment.getParent().getParent(), grandGrandParent);
+						if(!isBlock && fragment.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment.getParent().getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment.getParent().getParent().getStatements().size() == 2 && fragment.getParent().getParent().getStatements().indexOf(fragment.getParent()) == 1) {
+							isWithinElseIfBranch = true;
+							directlyNested = true;
+						}
 					}
 					int depthDifference = fragment.getDepth() - mapping.getFragment2().getDepth();
-					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2) {
+					if(isWithinIfBranch && !isWithinElseIfBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!parentMap.containsKey(fragment.getParent())) {
 							parentMap.put(fragment.getParent(), mapping);
-							if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-								grandParentMap.put(grandGrandParent, mapping);
-							}
-							else {
-								grandParentMap.put(fragment.getParent().getParent(), mapping);
+							if(!directlyNested) {
+								if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									grandParentMap.put(grandGrandParent, mapping);
+								}
+								else {
+									grandParentMap.put(fragment.getParent().getParent(), mapping);
+								}
 							}
 							ifFound = true;
 						}
 					}
-					else if(isWithinElseIfBranch && depthDifference >= 3) {
+					else if(isWithinElseIfBranch && depthDifference >= 3 - (directlyNested ? 2 : 0)) {
 						if(!parentMap.containsKey(fragment.getParent())) {
 							parentMap.put(fragment.getParent(), mapping);
-							if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-								grandParentMap.put(grandGrandParent, mapping);
-							}
-							else {
-								grandParentMap.put(fragment.getParent().getParent(), mapping);
+							if(!directlyNested) {
+								if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									grandParentMap.put(grandGrandParent, mapping);
+								}
+								else {
+									grandParentMap.put(fragment.getParent().getParent(), mapping);
+								}
 							}
 							elseIfFound = true;
 						}
 					}
-					else if(isWithinElseBranch && depthDifference >= 2) {
+					else if(isWithinElseBranch && depthDifference >= 2 - (directlyNested ? 2 : 0)) {
 						if(!parentMap.containsKey(fragment.getParent())) {
 							parentMap.put(fragment.getParent(), mapping);
-							if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-								grandParentMap.put(grandGrandParent, mapping);
-							}
-							else {
-								grandParentMap.put(fragment.getParent().getParent(), mapping);
+							if(!directlyNested) {
+								if(grandGrandParent != null && grandGrandParent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+									grandParentMap.put(grandGrandParent, mapping);
+								}
+								else {
+									grandParentMap.put(fragment.getParent().getParent(), mapping);
+								}
 							}
 							elseFound = true;
 						}
@@ -5174,7 +5246,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							fragment2IsInsideIfElseIf = true;
 						}
 					}
-					if(parentMapper != null && mappingSet.first().getFragment1().getParent().getParent() != null && parentMapper.alreadyMatched1(mappingSet.first().getFragment1().getParent().getParent())) {
+					if(parentMapper != null && mappingSet.first().getFragment1().getParent() != null && mappingSet.first().getFragment1().getParent().getParent() != null && parentMapper.alreadyMatched1(mappingSet.first().getFragment1().getParent().getParent())) {
 						AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 						if(parentMapping != null && parentMapping.getFragment1().equals(mappingSet.first().getFragment1().getParent().getParent())) {
 							fragment2IsInsideIfElseIf = true;

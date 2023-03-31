@@ -489,6 +489,16 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				if(statement.equals(s)) {
 					return true;
 				}
+				if(statement.startsWith(variables.get(0).getString() + "=")) {
+					String suffix = statement.substring(statement.indexOf("=") + 1);
+					if(suffix.endsWith(expression + ";\n")) {
+						int index = suffix.indexOf(expression + ";\n");
+						String prefix = suffix.substring(0, index);
+						if(prefix.startsWith("(") && prefix.endsWith(")")) {
+							return true;
+						}
+					}
+				}
 			}
 		}
 		return false;

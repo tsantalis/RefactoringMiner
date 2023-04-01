@@ -2130,7 +2130,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
-					if(parentIsContainerBody.get(i) == false) {
+					if(parentIsContainerBody.get(i) == false && !nestedMapper.get(parentIsContainerBody.indexOf(true))) {
 						indicesToBeRemoved.add(i);
 					}
 				}
@@ -2310,6 +2310,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 			else {
+				boolean allReplacementsCoverEntireStatement = false;
 				if(replacementCoversEntireStatement.contains(false)) {
 					for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
 						if(replacementCoversEntireStatement.get(i) == true) {
@@ -2317,21 +2318,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				int minimum = replacementTypeCount.get(0);
-				for(int i=1; i<replacementTypeCount.size(); i++) {
-					if(replacementTypeCount.get(i) < minimum) {
-						minimum = replacementTypeCount.get(i);
-					}
+				else {
+					allReplacementsCoverEntireStatement = true;
 				}
-				for(int i=0; i<replacementTypeCount.size(); i++) {
-					if(replacementTypeCount.get(i) > minimum) {
-						indicesToBeRemoved.add(i);
+				if(!allReplacementsCoverEntireStatement) {
+					int minimum = replacementTypeCount.get(0);
+					for(int i=1; i<replacementTypeCount.size(); i++) {
+						if(replacementTypeCount.get(i) < minimum) {
+							minimum = replacementTypeCount.get(i);
+						}
+					}
+					for(int i=0; i<replacementTypeCount.size(); i++) {
+						if(replacementTypeCount.get(i) > minimum) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
 				if(indicesToBeRemoved.isEmpty()) {
 					double minimumEditDistance = editDistances.get(0);
 					for(int i=1; i<editDistances.size(); i++) {
-						if(editDistances.get(i) < minimum) {
+						if(editDistances.get(i) < minimumEditDistance) {
 							minimumEditDistance = editDistances.get(i);
 						}
 					}

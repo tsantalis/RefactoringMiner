@@ -1635,12 +1635,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							innerNodes1.add(comp);
 							addedInnerNodes1.add(comp);
 						}
-						if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-							if(!innerNodes1.contains(comp.getStatements().get(0))) {
-								innerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
-								addedInnerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
-							}
-						}
+						handleBlocks(comp, innerNodes1, addedInnerNodes1);
 					}
 				}
 				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
@@ -1696,12 +1691,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									innerNodes1.add(comp);
 									addedInnerNodes1.add(comp);
 								}
-								if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-									if(!innerNodes1.contains(comp.getStatements().get(0))) {
-										innerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
-										addedInnerNodes1.add((CompositeStatementObject)comp.getStatements().get(0));
-									}
-								}
+								handleBlocks(comp, innerNodes1, addedInnerNodes1);
 							}
 						}
 					}
@@ -1895,6 +1885,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private void handleBlocks(CompositeStatementObject comp, List<CompositeStatementObject> innerNodes,
+			Set<CompositeStatementObject> addedInnerNodes) {
+		if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			if(!innerNodes.contains(comp.getStatements().get(0))) {
+				innerNodes.add((CompositeStatementObject)comp.getStatements().get(0));
+				addedInnerNodes.add((CompositeStatementObject)comp.getStatements().get(0));
+			}
+		}
+		if(comp.getStatements().size() == 2 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+				comp.getStatements().get(1).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			if(!innerNodes.contains(comp.getStatements().get(0))) {
+				innerNodes.add((CompositeStatementObject)comp.getStatements().get(0));
+				addedInnerNodes.add((CompositeStatementObject)comp.getStatements().get(0));
+			}
+			if(!innerNodes.contains(comp.getStatements().get(1))) {
+				innerNodes.add((CompositeStatementObject)comp.getStatements().get(1));
+				addedInnerNodes.add((CompositeStatementObject)comp.getStatements().get(1));
+			}
+		}
+	}
+
 	private void expandAnonymousAndLambdas(AbstractCodeFragment fragment, List<AbstractCodeFragment> leaves, List<CompositeStatementObject> innerNodes,
 			Set<AbstractCodeFragment> addedLeaves, Set<CompositeStatementObject> addedInnerNodes,
 			List<UMLAnonymousClass> anonymousClassList, Map<AbstractCodeFragment, VariableDeclarationContainer> map, VariableDeclarationContainer parentOperation, boolean excludeRootBlock) {
@@ -2027,12 +2038,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							innerNodes2.add(comp);
 							addedInnerNodes2.add(comp);
 						}
-						if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-							if(!innerNodes2.contains(comp.getStatements().get(0))) {
-								innerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
-								addedInnerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
-							}
-						}
+						handleBlocks(comp, innerNodes2, addedInnerNodes2);
 					}
 				}
 				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
@@ -2060,12 +2066,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									innerNodes2.add(comp);
 									addedInnerNodes2.add(comp);
 								}
-								if(comp.getStatements().size() == 1 && comp.getStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-									if(!innerNodes2.contains(comp.getStatements().get(0))) {
-										innerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
-										addedInnerNodes2.add((CompositeStatementObject)comp.getStatements().get(0));
-									}
-								}
+								handleBlocks(comp, innerNodes2, addedInnerNodes2);
 							}
 						}
 					}
@@ -2856,7 +2857,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(compStatement.getParent().isLoop() && forEach2) {
 						skip = true;
 					}
-					if(parentMapper != null) {
+					if(compStatement.getStatements().isEmpty()) {
+						skip = true;
+					}
+					if(!skip && parentMapper != null) {
 						for(AbstractCodeMapping mapping : parentMapper.mappings) {
 							if(mapping.isExact() && compStatement.getStatements().contains(mapping.getFragment1())) {
 								skip = true;
@@ -2864,10 +2868,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					for(AbstractCodeMapping mapping : this.mappings) {
-						if(compStatement.getStatements().contains(mapping.getFragment1())) {
-							skip = true;
-							break;
+					if(!skip) {
+						for(AbstractCodeMapping mapping : this.mappings) {
+							if(compStatement.getStatements().contains(mapping.getFragment1())) {
+								skip = true;
+								break;
+							}
 						}
 					}
 					if(!skip) {
@@ -2885,13 +2891,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(compStatement.getParent().isLoop() && forEach1) {
 						skip = true;
 					}
-					if(parentMapper != null) {
-						for(AbstractCodeMapping mapping : parentMapper.mappings) {
-							if(mapping.isExact() && compStatement.getStatements().contains(mapping.getFragment2())) {
-								skip = true;
-								break;
-							}
-						}
+					if(compStatement.getStatements().isEmpty()) {
+						skip = true;
 					}
 					for(AbstractStatement nestedStatement : compStatement.getStatements()) {
 						AbstractCall call = nestedStatement.invocationCoveringEntireFragment();
@@ -2903,10 +2904,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							break;
 						}
 					}
-					for(AbstractCodeMapping mapping : this.mappings) {
-						if(compStatement.getStatements().contains(mapping.getFragment2())) {
-							skip = true;
-							break;
+					if(!skip && parentMapper != null) {
+						for(AbstractCodeMapping mapping : parentMapper.mappings) {
+							if(mapping.isExact() && compStatement.getStatements().contains(mapping.getFragment2())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(!skip) {
+						for(AbstractCodeMapping mapping : this.mappings) {
+							if(compStatement.getStatements().contains(mapping.getFragment2())) {
+								skip = true;
+								break;
+							}
 						}
 					}
 					if(!skip) {

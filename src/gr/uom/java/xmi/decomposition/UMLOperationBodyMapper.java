@@ -2864,6 +2864,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+					for(AbstractCodeMapping mapping : this.mappings) {
+						if(compStatement.getStatements().contains(mapping.getFragment1())) {
+							skip = true;
+							break;
+						}
+					}
 					if(!skip) {
 						blocksOfUnmatchedNonBlocks1.add(compStatement);
 					}
@@ -2893,6 +2899,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							call = nestedStatement.assignmentInvocationCoveringEntireStatement();
 						}
 						if(call != null && call.getName().equals("apply")) {
+							skip = true;
+							break;
+						}
+					}
+					for(AbstractCodeMapping mapping : this.mappings) {
+						if(compStatement.getStatements().contains(mapping.getFragment2())) {
 							skip = true;
 							break;
 						}

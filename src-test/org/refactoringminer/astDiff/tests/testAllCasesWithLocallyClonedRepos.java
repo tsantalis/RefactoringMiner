@@ -46,7 +46,7 @@ public class testAllCasesWithLocallyClonedRepos {
     }
 
     @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
-    public static Iterable<Object[]> initData() throws Exception {
+    public static Iterable<Object[]> initDataWithClonedRepos() throws Exception {
         List<Object[]> allCases = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
@@ -57,6 +57,22 @@ public class testAllCasesWithLocallyClonedRepos {
             String repoFolder = info.getRepo().substring(info.getRepo().lastIndexOf("/"), info.getRepo().indexOf(".git"));
             Repository repo = gitService.cloneIfNotExists(REPOS + repoFolder, info.getRepo());
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, info.getCommit());
+
+            makeAllCases(allCases, info, expectedFilesList, astDiffs);
+        }
+        return allCases;
+    }
+
+//    @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
+    public static Iterable<Object[]> initDataWithGithub() throws Exception {
+        List<Object[]> allCases = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
+        List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
+        for (CaseInfo info : infos) {
+            List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
+
+            Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
 
             makeAllCases(allCases, info, expectedFilesList, astDiffs);
         }

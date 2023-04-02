@@ -83,16 +83,20 @@ public class TestStatementMappings extends LightJavaCodeInsightFixtureTestCase {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				List<UMLOperationBodyMapper> mappers = new ArrayList<>();
 				for (Refactoring ref : refactorings) {
 					if(ref instanceof InlineOperationRefactoring) {
 						InlineOperationRefactoring ex = (InlineOperationRefactoring)ref;
 						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
+						if (!mappers.contains(bodyMapper)) {
+							mappers.add(bodyMapper);
+							if (!bodyMapper.isNested()) {
+								if (!parentMappers.contains(bodyMapper.getParentMapper())) {
+									parentMappers.add(bodyMapper.getParentMapper());
+								}
 							}
+							mapperInfo(bodyMapper, actual);
 						}
-						mapperInfo(bodyMapper, actual);
 					}
 				}
 				for(UMLOperationBodyMapper parentMapper : parentMappers) {

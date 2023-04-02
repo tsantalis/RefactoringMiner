@@ -7680,6 +7680,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.getName().equals("add") && invocationCoveringTheEntireStatement2.getName().equals("setWidget") &&
+				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
+				invocationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2).size() > 0) {
+			if(invocationCoveringTheEntireStatement1.identicalExpression(invocationCoveringTheEntireStatement2)) {
+				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
+			for(Replacement r : replacementInfo.getReplacements()) {
+				if(invocationCoveringTheEntireStatement1.getExpression().equals(r.getBefore()) && invocationCoveringTheEntireStatement2.getExpression().equals(r.getAfter())) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		//check if the argument of the method call in the first statement is returned in the second statement
 		Replacement r;
 		if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {

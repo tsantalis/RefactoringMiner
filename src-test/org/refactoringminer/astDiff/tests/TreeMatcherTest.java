@@ -25,7 +25,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.getTreesPath;
 
 @RunWith(Parameterized.class)
 /* Created by pourya on 2023-02-15 10:52 p.m. */
-public class testTreeMatcher {
+public class TreeMatcherTest {
     private static final String srcFilePath = "src.xml";
     private static final String dstFilePath = "dst.xml";
     private static final String mappingsFilePath = "mappings.json";

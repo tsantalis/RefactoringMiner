@@ -33,6 +33,7 @@ public abstract class UMLAbstractClass {
     private List<UMLType> implementedInterfaces;
     private List<UMLImport> importedTypes;
     private List<UMLAnnotation> annotations;
+    private List<UMLModifier> modifiers;
     private List<UMLEnumConstant> enumConstants;
 
 	public UMLAbstractClass(String packageName, String name, LocationInfo locationInfo, List<UMLImport> importedTypes) {
@@ -49,6 +50,7 @@ public abstract class UMLAbstractClass {
         this.superclass = null;
         this.implementedInterfaces = new ArrayList<UMLType>();
         this.annotations = new ArrayList<UMLAnnotation>();
+        this.modifiers = new ArrayList<UMLModifier>();
         this.enumConstants = new ArrayList<UMLEnumConstant>();
 	}
 
@@ -141,6 +143,14 @@ public abstract class UMLAbstractClass {
 
     public void addAnnotation(UMLAnnotation annotation) {
     	annotations.add(annotation);
+    }
+
+    public List<UMLModifier> getModifiers() {
+		return modifiers;
+	}
+
+    public void addModifier(UMLModifier modifier) {
+    	modifiers.add(modifier);
     }
 
 	public boolean hasDeprecatedAnnotation() {
@@ -746,6 +756,9 @@ public abstract class UMLAbstractClass {
 			if(operation.hasTestAnnotation()) {
 				return true;
 			}
+		}
+		if(superclass != null && superclass.getClassType().equals("TestCase")) {
+			return true;
 		}
 		return false;
 	}

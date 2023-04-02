@@ -84,7 +84,8 @@ public class UMLModelASTReader {
 			PsiJavaCodeReferenceElement importReference = importDeclaration.getImportReference();
 			boolean isStatic = importDeclaration instanceof PsiImportStaticStatement;
 			String elementName = importReference.getQualifiedName();
-			UMLImport imported = new UMLImport(elementName, importDeclaration.isOnDemand(), isStatic);
+			LocationInfo locationInfo = generateLocationInfo(compilationUnit, sourceFilePath, importDeclaration, CodeElementType.IMPORT_DECLARATION);
+			UMLImport imported = new UMLImport(elementName, importDeclaration.isOnDemand(), isStatic, locationInfo);
 			importedTypes.add(imported);
 		}
 
@@ -530,19 +531,31 @@ public class UMLModelASTReader {
 	private void processModifiers(PsiFile cu, String sourceFile, PsiClass typeDeclaration, UMLClass umlClass) {
 		PsiModifierList modifiers = typeDeclaration.getModifierList();
 		if(modifiers != null) {
-			if (modifiers.hasExplicitModifier(PsiModifier.ABSTRACT))
+			if (modifiers.hasExplicitModifier(PsiModifier.ABSTRACT)) {
 				umlClass.setAbstract(true);
-			if (modifiers.hasExplicitModifier(PsiModifier.STATIC))
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "abstract"));
+			}
+			if (modifiers.hasExplicitModifier(PsiModifier.STATIC)) {
 				umlClass.setStatic(true);
-			if (modifiers.hasExplicitModifier(PsiModifier.FINAL))
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "static"));
+			}
+			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				umlClass.setFinal(true);
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "final"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.PUBLIC))
+			if (modifiers.hasExplicitModifier(PsiModifier.PUBLIC)) {
 				umlClass.setVisibility(Visibility.PUBLIC);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "public"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED)) {
 				umlClass.setVisibility(Visibility.PROTECTED);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "protected"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE)) {
 				umlClass.setVisibility(Visibility.PRIVATE);
+				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifiers, "private"));
+			}
 			else
 				umlClass.setVisibility(Visibility.PACKAGE);
 
@@ -589,31 +602,47 @@ public class UMLModelASTReader {
 
 		PsiModifierList modifiers = methodDeclaration.getModifierList();
 		if(modifiers != null) {
-			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC))
+			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC)) {
 				umlOperation.setVisibility(Visibility.PUBLIC);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "public"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED)) {
 				umlOperation.setVisibility(Visibility.PROTECTED);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "protected"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE)) {
 				umlOperation.setVisibility(Visibility.PRIVATE);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "private"));
+			}
 			else if (isInterfaceMethod)
 				umlOperation.setVisibility(Visibility.PUBLIC);
 			else
 				umlOperation.setVisibility(Visibility.PACKAGE);
 
-			if (modifiers.hasExplicitModifier(PsiModifier.ABSTRACT))
+			if (modifiers.hasExplicitModifier(PsiModifier.ABSTRACT)) {
 				umlOperation.setAbstract(true);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "abstract"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.FINAL))
+			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				umlOperation.setFinal(true);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "final"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.STATIC))
+			if (modifiers.hasExplicitModifier(PsiModifier.STATIC)) {
 				umlOperation.setStatic(true);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "static"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.SYNCHRONIZED))
+			if (modifiers.hasExplicitModifier(PsiModifier.SYNCHRONIZED)) {
 				umlOperation.setSynchronized(true);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "synchronized"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.NATIVE))
+			if (modifiers.hasExplicitModifier(PsiModifier.NATIVE)) {
 				umlOperation.setNative(true);
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifiers, "native"));
+			}
 
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
@@ -686,28 +715,42 @@ public class UMLModelASTReader {
 
 		PsiModifierList modifiers = fieldDeclaration.getModifierList();
 		if(modifiers != null) {
-			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC))
+			if (modifiers.hasModifierProperty(PsiModifier.PUBLIC)) {
 				umlAttribute.setVisibility(Visibility.PUBLIC);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED))
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "public"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PROTECTED)) {
 				umlAttribute.setVisibility(Visibility.PROTECTED);
-			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE))
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "protected"));
+			}
+			else if (modifiers.hasExplicitModifier(PsiModifier.PRIVATE)) {
 				umlAttribute.setVisibility(Visibility.PRIVATE);
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "private"));
+			}
 			else if (isInterfaceField)
 				umlAttribute.setVisibility(Visibility.PUBLIC);
 			else
 				umlAttribute.setVisibility(Visibility.PACKAGE);
 
-			if (modifiers.hasExplicitModifier(PsiModifier.FINAL))
+			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				umlAttribute.setFinal(true);
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "final"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.STATIC))
+			if (modifiers.hasExplicitModifier(PsiModifier.STATIC)) {
 				umlAttribute.setStatic(true);
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "static"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.VOLATILE))
+			if (modifiers.hasExplicitModifier(PsiModifier.VOLATILE)) {
 				umlAttribute.setVolatile(true);
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "volatile"));
+			}
 
-			if (modifiers.hasExplicitModifier(PsiModifier.TRANSIENT))
+			if (modifiers.hasExplicitModifier(PsiModifier.TRANSIENT)) {
 				umlAttribute.setTransient(true);
+				variableDeclaration.addModifier(new UMLModifier(cu, sourceFile, modifiers, "transient"));
+			}
 		}
 		attributes.add(umlAttribute);
 		return attributes;

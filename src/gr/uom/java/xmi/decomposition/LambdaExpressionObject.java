@@ -301,6 +301,16 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public boolean hasSetUpAnnotation() {
+		return false;
+	}
+
+	@Override
+	public boolean hasTearDownAnnotation() {
+		return false;
+	}
+
+	@Override
 	public boolean isDeclaredInAnonymousClass() {
 		return false;
 	}

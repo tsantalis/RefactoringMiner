@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.Visibility;
 
 public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
@@ -24,6 +25,24 @@ public class ChangeAttributeAccessModifierRefactoring implements Refactoring {
 		this.changedAccessModifier = changedAccessModifier;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+
+	public UMLModifier getOldModifier() {
+		for(UMLModifier m : attributeBefore.getVariableDeclaration().getModifiers()) {
+			if(m.getKeyword().equals(originalAccessModifier.toString())) {
+				return m;
+			}
+		}
+		return null;
+	}
+
+	public UMLModifier getNewModifier() {
+		for(UMLModifier m : attributeAfter.getVariableDeclaration().getModifiers()) {
+			if(m.getKeyword().equals(changedAccessModifier.toString())) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public Visibility getOriginalAccessModifier() {

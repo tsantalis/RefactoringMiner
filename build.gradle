@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "org.jetbrains.intellij" version "1.13.0"
+    id "org.jetbrains.intellij" version "1.13.3"
 }
 
 apply {
@@ -11,13 +11,12 @@ apply {
 }
 
 group = "com.github.tsantalis"
-version = "2.3.2-SNAPSHOT"
+version = "2.4.0-SNAPSHOT"
 
 sourceSets {
     main {
         java {
             srcDir 'src'
-            srcDir 'src-test'
         }
         resources {
             srcDir 'res'

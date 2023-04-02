@@ -35,6 +35,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LeafExpression> thisExpressions = new ArrayList<>();
 	private List<LeafExpression> arguments = new ArrayList<>();
 	private List<LeafExpression> parenthesizedExpressions = new ArrayList<>();
+	private List<LeafExpression> castExpressions = new ArrayList<>();
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	
@@ -161,6 +162,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
+	}
+
+	public List<LeafExpression> getCastExpressions() {
+		return castExpressions;
 	}
 
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {

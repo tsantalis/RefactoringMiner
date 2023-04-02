@@ -27,7 +27,9 @@ public class VariableReferenceExtractor {
 				//add recursive calls to the mappings
 				if(invocation1.matchesOperation(mapping.getOperation1(), mapping.getOperation1(), classDiff, modelDiff) &&
 						invocation2.matchesOperation(mapping.getOperation2(), mapping.getOperation2(), classDiff, modelDiff)) {
-					references.add(mapping);
+					if(statementsUsingVariable1.contains(fragment1) && statementsUsingVariable2.contains(fragment2)) {
+						references.add(mapping);
+					}
 				}
 			}
 		}

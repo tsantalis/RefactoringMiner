@@ -93,5 +93,25 @@ public class Constants {
 	public static final String EQUAL_OPERATOR = "=";
 
 	public static final String METHOD_INVOCATION_ARGUMENTS = "METHOD_INVOCATION_ARGUMENTS";
+	public static final String METHOD_INVOCATION_RECEIVER = "METHOD_INVOCATION_RECEIVER";
 
+	public static final String ASSERT_STATEMENT = "PsiAssertStatement";
+	public static final String BREAK_STATEMENT = "PsiBreakStatement";
+	public static final String CONSTRUCTOR_INVOCATION = "PsiConstructorCall";
+	public static final String CONTINUE_STATEMENT = "PsiContinueStatement";
+	public static final String DO_STATEMENT = "PsiDoWhileStatement";
+	public static final String EMPTY_STATEMENT = "PsiEmptyStatement";
+	public static final String ENHANCED_FOR_STATEMENT = "PsiForEachStatement";
+	public static final String FOR_STATEMENT = "PsiForStatement";
+	public static final String IF_STATEMENT = "PsiIfStatement";
+	public static final String RETURN_STATEMENT = "PsiReturnStatement";
+	// there is no distinction between constructor and super-constructor calls in PSI
+	public static final String SUPER_CONSTRUCTOR_INVOCATION = "PsiConstructorCall";
+	public static final String SWITCH_CASE = "PsiSwitchBlock";
+	public static final String SWITCH_STATEMENT = "PsiSwitchStatement";
+	public static final String SYNCHRONIZED_STATEMENT = "PsiSynchronizedStatement";
+	public static final String THROW_STATEMENT = "PsiThrowStatement";
+	public static final String WHILE_STATEMENT = "PsiWhileStatement";
+	public static final String CONDITIONAL_EXPRESSION = "PsiConditionalExpression";
+	public static final String STRING_LITERAL = "PsiLiteral";
 }

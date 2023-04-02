@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.UMLModifier;
 
 public class RemoveAttributeModifierRefactoring implements Refactoring {
 	private String modifier;
@@ -21,6 +22,15 @@ public class RemoveAttributeModifierRefactoring implements Refactoring {
 		this.modifier = modifier;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+
+	public UMLModifier getRemovedModifier() {
+		for(UMLModifier m : attributeBefore.getVariableDeclaration().getModifiers()) {
+			if(m.getKeyword().equals(modifier)) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public String getModifier() {

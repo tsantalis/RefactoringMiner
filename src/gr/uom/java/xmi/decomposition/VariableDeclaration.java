@@ -23,13 +23,16 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private VariableScope scope;
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
+	private List<UMLModifier> modifiers;
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiResourceVariable fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				this.isFinal = true;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifiers, "final"));
 			}
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
@@ -47,10 +50,12 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiLocalVariable fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				this.isFinal = true;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifiers, "final"));
 			}
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
@@ -73,10 +78,12 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiField fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				this.isFinal = true;
+				// the modifier is added in UMLModelASTReader.processFieldDeclaration()
 			}
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
@@ -94,10 +101,12 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiParameter fragment, CodeElementType codeElementType, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				this.isFinal = true;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifiers, "final"));
 			}
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
@@ -123,10 +132,12 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public VariableDeclaration(PsiFile cu, String filePath, PsiEnumConstant fragment, UMLType type) {
 		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
 		PsiModifierList modifiers = fragment.getModifierList();
 		if(modifiers != null) {
 			if (modifiers.hasExplicitModifier(PsiModifier.FINAL)) {
 				this.isFinal = true;
+				this.modifiers.add(new UMLModifier(cu, filePath, modifiers, "final"));
 			}
 			for (PsiAnnotation annotation : modifiers.getAnnotations()) {
 				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
@@ -193,6 +204,14 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 
 	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
+	}
+
+	public void addModifier(UMLModifier modifier) {
+		modifiers.add(modifier);
+	}
+
+	public List<UMLModifier> getModifiers() {
+		return modifiers;
 	}
 
 	@Override

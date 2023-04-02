@@ -20,7 +20,9 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class InlineOperationRefactoring implements Refactoring {
@@ -75,45 +77,55 @@ public class InlineOperationRefactoring implements Refactoring {
 		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
 			return true;
 		}
+		if(inlinedOperationInvocations.size() == 1) {
+			return true;
+		}
 		return false;
+	}
+
+	private boolean isDefaultValue(String argument) {
+		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : inlinedOperationInvocations) {
 			for(String argument : call.arguments()) {
-				if(!parameterToArgumentMap.containsKey(argument)) {
-					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
-					if(expressions2.size() > 0) {
-						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
-						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions1 = leaf.findExpression(argument);
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
-									argumentMappings.add(expressionMapping);
-									argumentMatchFound = true;
-									break;
-								}
-							}
+				if(!parameterToArgumentMap.containsKey(argument) && parameterToArgumentMap.containsValue(argument)) {
+					Replacement replacementFound = null;
+					for(Replacement replacement : mapping.getReplacements()) {
+						if(replacement.getAfter().equals(argument) && parameterToArgumentMap.containsKey(replacement.getBefore()) &&
+								parameterToArgumentMap.get(replacement.getBefore()).equals(argument)) {
+							replacementFound = replacement;
+							break;
 						}
+					}
+					if(replacementFound != null) {
+						argumentMatchFound = processArgument(mapping, call, argument);
+					}
+					else if(!isDefaultValue(argument)) {
+						argumentMatchFound = processArgument(mapping, call, argument);
 					}
 				}
 			}
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
-				if(expressions2.size() > 0) {
-					List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
-					for(AbstractCodeFragment leaf : leaves) {
-						for(AbstractCall call : inlinedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), targetOperationBeforeInline, targetOperationAfterInline);
-									argumentMappings.add(expressionMapping);
-									break;
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals("this." + replacement.getAfter()) || replacement.getAfter().equals("this." + replacement.getBefore())) {
+					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+					if(expressions2.size() > 0) {
+						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+						for(AbstractCodeFragment leaf : leaves) {
+							for(AbstractCall call : inlinedOperationInvocations) {
+								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+									List<LeafExpression> expressions1 = leaf.findExpression(replacement.getBefore());
+									if(expressions1.size() == 1) {
+										for(LeafExpression expression2 : expressions2) {
+											LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expression2, targetOperationBeforeInline, targetOperationAfterInline);
+											argumentMappings.add(expressionMapping);
+										}
+										break;
+									}
 								}
 							}
 						}
@@ -121,6 +133,93 @@ public class InlineOperationRefactoring implements Refactoring {
 				}
 			}
 		}
+	}
+
+	private boolean processArgument(AbstractCodeMapping mapping, AbstractCall call, String argument) {
+		for(AbstractCodeMapping m : bodyMapper.getMappings()) {
+			VariableDeclaration variableDeclaration1 = m.getFragment1().getVariableDeclaration(argument);
+			VariableDeclaration variableDeclaration2 = m.getFragment2().getVariableDeclaration(argument);
+			if(variableDeclaration1 != null && variableDeclaration2 != null) {
+				if(m.getFragment1().equals(mapping.getFragment1()) && m.getFragment2().equals(mapping.getFragment2())) {
+					return false;
+				}
+				if(variableDeclaration1.getStatementsInScopeUsingVariable().contains(mapping.getFragment1()) &&
+						variableDeclaration2.getStatementsInScopeUsingVariable().contains(mapping.getFragment2())) {
+					return false;
+				}
+			}
+		}
+		AbstractCall invocation1 = mapping.getFragment1().invocationCoveringEntireFragment();
+		if(invocation1 == null) {
+			invocation1 = mapping.getFragment1().assignmentInvocationCoveringEntireStatement();
+		}
+		AbstractCall invocation2 = mapping.getFragment2().invocationCoveringEntireFragment();
+		if(invocation2 == null) {
+			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
+		}
+		ObjectCreation creation1 = mapping.getFragment1().creationCoveringEntireFragment();
+		if(creation1 == null) {
+			creation1 = mapping.getFragment1().assignmentCreationCoveringEntireStatement();
+		}
+		ObjectCreation creation2 = mapping.getFragment2().creationCoveringEntireFragment();
+		if(creation2 == null) {
+			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
+		}
+		List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(argument);
+		if(expressions2.size() > 0) {
+			List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();
+			for(AbstractCodeFragment leaf : leaves) {
+				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+					List<LeafExpression> expressions1 = leaf.findExpression(argument);
+					if(expressions1.size() == 1) {
+						int occurrence = 0;
+						for(LeafExpression expression2 : expressions2) {
+							boolean equalArgument = false;
+							if(invocation1 != null && invocation2 != null && invocation1.arguments().size() == invocation2.arguments().size()) {
+								int index = indexInArguments(invocation2, expression2, occurrence);
+								if(index != -1) {
+									String argument1 = invocation1.arguments().get(index);
+									if(argument1.equals(expression2.getString())) {
+										equalArgument = true;
+									}
+								}
+							}
+							if(creation1 != null && creation2 != null && creation1.arguments().size() == creation2.arguments().size()) {
+								int index = indexInArguments(creation2, expression2, occurrence);
+								if(index != -1) {
+									String argument1 = creation1.arguments().get(index);
+									if(argument1.equals(expression2.getString())) {
+										equalArgument = true;
+									}
+								}
+							}
+							if(!equalArgument) {
+								LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expression2, targetOperationBeforeInline, targetOperationAfterInline);
+								argumentMappings.add(expressionMapping);
+							}
+							occurrence++;
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private int indexInArguments(AbstractCall call, LeafExpression expression, int occurrence) {
+		int index = 0;
+		int matches = 0;
+		for(String argument : call.arguments()) {
+			if(argument.equals(expression.getString())) {
+				if(matches == occurrence) {
+					return index;
+				}
+				matches++;
+			}
+			index++;
+		}
+		return -1;
 	}
 
 	public String toString() {

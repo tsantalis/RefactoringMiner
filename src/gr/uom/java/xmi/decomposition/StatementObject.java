@@ -35,6 +35,7 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> thisExpressions;
 	private List<LeafExpression> arguments;
 	private List<LeafExpression> parenthesizedExpressions;
+	private List<LeafExpression> castExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	
@@ -62,6 +63,7 @@ public class StatementObject extends AbstractStatement {
 		this.thisExpressions = visitor.getThisExpressions();
 		this.arguments = visitor.getArguments();
 		this.parenthesizedExpressions = visitor.getParenthesizedExpressions();
+		this.castExpressions = visitor.getCastExpressions();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
 		setDepth(depth);
@@ -172,6 +174,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<LeafExpression> getParenthesizedExpressions() {
 		return parenthesizedExpressions;
+	}
+
+	@Override
+	public List<LeafExpression> getCastExpressions() {
+		return castExpressions;
 	}
 
 	@Override

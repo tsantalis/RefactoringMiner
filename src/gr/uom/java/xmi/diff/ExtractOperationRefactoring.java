@@ -20,7 +20,9 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.ObjectCreation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class ExtractOperationRefactoring implements Refactoring {
@@ -94,45 +96,55 @@ public class ExtractOperationRefactoring implements Refactoring {
 		else if(leaf.getParent() != null && leaf.getParent().getParent() == null) {
 			return true;
 		}
+		if(extractedOperationInvocations.size() == 1) {
+			return true;
+		}
 		return false;
+	}
+
+	private boolean isDefaultValue(String argument) {
+		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {
 		boolean argumentMatchFound = false;
 		for(AbstractCall call : extractedOperationInvocations) {
 			for(String argument : call.arguments()) {
-				if(!parameterToArgumentMap.containsKey(argument)) {
-					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
-					if(expressions1.size() > 0) {
-						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
-						for(AbstractCodeFragment leaf : leaves) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions2 = leaf.findExpression(argument);
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-									argumentMappings.add(expressionMapping);
-									argumentMatchFound = true;
-									break;
-								}
-							}
+				if(!parameterToArgumentMap.containsKey(argument) && parameterToArgumentMap.containsValue(argument)) {
+					Replacement replacementFound = null;
+					for(Replacement replacement : mapping.getReplacements()) {
+						if(replacement.getBefore().equals(argument) && parameterToArgumentMap.containsKey(replacement.getAfter()) &&
+								parameterToArgumentMap.get(replacement.getAfter()).equals(argument)) {
+							replacementFound = replacement;
+							break;
 						}
+					}
+					if(replacementFound != null) {
+						argumentMatchFound = processArgument(mapping, call, argument);
+					}
+					else if(!isDefaultValue(argument)) {
+						argumentMatchFound = processArgument(mapping, call, argument);
 					}
 				}
 			}
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
-				if(expressions1.size() > 0) {
-					List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
-					for(AbstractCodeFragment leaf : leaves) {
-						for(AbstractCall call : extractedOperationInvocations) {
-							if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
-								List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
-								if(expressions1.size() == 1 && expressions2.size() == 1) {
-									LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
-									argumentMappings.add(expressionMapping);
-									break;
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals("this." + replacement.getAfter()) || replacement.getAfter().equals("this." + replacement.getBefore())) {
+					List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
+					if(expressions1.size() > 0) {
+						List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+						for(AbstractCodeFragment leaf : leaves) {
+							for(AbstractCall call : extractedOperationInvocations) {
+								if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+									List<LeafExpression> expressions2 = leaf.findExpression(replacement.getAfter());
+									if(expressions2.size() == 1) {
+										for(LeafExpression expression1 : expressions1) {
+											LeafMapping expressionMapping = new LeafMapping(expression1, expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+											argumentMappings.add(expressionMapping);
+										}
+										break;
+									}
 								}
 							}
 						}
@@ -140,6 +152,93 @@ public class ExtractOperationRefactoring implements Refactoring {
 				}
 			}
 		}
+	}
+
+	private boolean processArgument(AbstractCodeMapping mapping, AbstractCall call, String argument) {
+		for(AbstractCodeMapping m : bodyMapper.getMappings()) {
+			VariableDeclaration variableDeclaration1 = m.getFragment1().getVariableDeclaration(argument);
+			VariableDeclaration variableDeclaration2 = m.getFragment2().getVariableDeclaration(argument);
+			if(variableDeclaration1 != null && variableDeclaration2 != null) {
+				if(m.getFragment1().equals(mapping.getFragment1()) && m.getFragment2().equals(mapping.getFragment2())) {
+					return false;
+				}
+				if(variableDeclaration1.getStatementsInScopeUsingVariable().contains(mapping.getFragment1()) &&
+						variableDeclaration2.getStatementsInScopeUsingVariable().contains(mapping.getFragment2())) {
+					return false;
+				}
+			}
+		}
+		AbstractCall invocation1 = mapping.getFragment1().invocationCoveringEntireFragment();
+		if(invocation1 == null) {
+			invocation1 = mapping.getFragment1().assignmentInvocationCoveringEntireStatement();
+		}
+		AbstractCall invocation2 = mapping.getFragment2().invocationCoveringEntireFragment();
+		if(invocation2 == null) {
+			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
+		}
+		ObjectCreation creation1 = mapping.getFragment1().creationCoveringEntireFragment();
+		if(creation1 == null) {
+			creation1 = mapping.getFragment1().assignmentCreationCoveringEntireStatement();
+		}
+		ObjectCreation creation2 = mapping.getFragment2().creationCoveringEntireFragment();
+		if(creation2 == null) {
+			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
+		}
+		List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
+		if(expressions1.size() > 0) {
+			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
+			for(AbstractCodeFragment leaf : leaves) {
+				if(leaf.getLocationInfo().subsumes(call.getLocationInfo()) && isMappedInParent(leaf)) {
+					List<LeafExpression> expressions2 = leaf.findExpression(argument);
+					if(expressions2.size() == 1) {
+						int occurrence = 0;
+						for(LeafExpression expression1 : expressions1) {
+							boolean equalArgument = false;
+							if(invocation1 != null && invocation2 != null && invocation1.arguments().size() == invocation2.arguments().size()) {
+								int index = indexInArguments(invocation1, expression1, occurrence);
+								if(index != -1) {
+									String argument2 = invocation2.arguments().get(index);
+									if(argument2.equals(expression1.getString())) {
+										equalArgument = true;
+									}
+								}
+							}
+							if(creation1 != null && creation2 != null && creation1.arguments().size() == creation2.arguments().size()) {
+								int index = indexInArguments(creation1, expression1, occurrence);
+								if(index != -1) {
+									String argument2 = creation2.arguments().get(index);
+									if(argument2.equals(expression1.getString())) {
+										equalArgument = true;
+									}
+								}
+							}
+							if(!equalArgument) {
+								LeafMapping expressionMapping = new LeafMapping(expression1, expressions2.get(0), sourceOperationBeforeExtraction, sourceOperationAfterExtraction);
+								argumentMappings.add(expressionMapping);
+							}
+							occurrence++;
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private int indexInArguments(AbstractCall call, LeafExpression expression, int occurrence) {
+		int index = 0;
+		int matches = 0;
+		for(String argument : call.arguments()) {
+			if(argument.equals(expression.getString())) {
+				if(matches == occurrence) {
+					return index;
+				}
+				matches++;
+			}
+			index++;
+		}
+		return -1;
 	}
 
 	public String toString() {

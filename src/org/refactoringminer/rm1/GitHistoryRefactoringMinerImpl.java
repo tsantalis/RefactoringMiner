@@ -608,6 +608,47 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return paths;
 	}
 
+	private static Set<String> populateDirectories(Map<String, String> fileContents) {
+		Set<String> repositoryDirectories = new LinkedHashSet<>();
+		for(String path : fileContents.keySet()) {
+			String directory = new String(path);
+			while(directory.contains("/")) {
+				directory = directory.substring(0, directory.lastIndexOf("/"));
+				repositoryDirectories.add(directory);
+			}
+		}
+		return repositoryDirectories;
+	}
+
+	@Override
+	public void detectAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter, RefactoringHandler handler) {
+		List<Refactoring> refactorings = Collections.emptyList();
+		Set<String> repositoryDirectoriesBefore = populateDirectories(fileContentsBefore);
+		Set<String> repositoryDirectoriesCurrent = populateDirectories(fileContentsAfter);
+		String rootDirBefore = repositoryDirectoriesBefore.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .findFirst()
+                .orElse("");
+		String rootDirCurrent = repositoryDirectoriesCurrent.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .findFirst()
+                .orElse("");
+		String id = rootDirBefore + " -> " + rootDirCurrent;
+		try {
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsAfter, Collections.emptyMap()); 
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModel currentUMLModel = createModel(fileContentsAfter, repositoryDirectoriesCurrent);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactorings = modelDiff.getRefactorings();
+			refactorings.addAll(moveSourceFolderRefactorings);
+			refactorings = filter(refactorings);
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", id), e);
+			handler.handleException(id, e);
+		}
+		handler.handle(id, refactorings);
+	}
+
 	@Override
 	public void detectAtDirectories(Path previousPath, Path nextPath, RefactoringHandler handler) {
 		File previousFile = previousPath.toFile();

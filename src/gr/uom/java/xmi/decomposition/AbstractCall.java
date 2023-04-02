@@ -61,6 +61,10 @@ public abstract class AbstractCall extends LeafExpression {
 		if(this instanceof OperationInvocation) {
 			return ((OperationInvocation)this).matchesOperation(operation, callerOperation, classDiff, modelDiff);
 		}
+		else if(this instanceof MethodReference) {
+			MethodReference methodReference = (MethodReference)this;
+			return methodReference.getName().equals(operation.getName());
+		}
 		return false;
 	}
 
@@ -271,6 +275,11 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean equalArguments(AbstractCall call) {
+		if(this instanceof MethodReference && call instanceof MethodReference) {
+			if(!this.identicalName(call)) {
+				return false;
+			}
+		}
 		return arguments().equals(call.arguments());
 	}
 
@@ -284,6 +293,11 @@ public abstract class AbstractCall extends LeafExpression {
 		List<String> arguments2 = call.arguments();
 		if(arguments1.size() != arguments2.size())
 			return false;
+		if(this instanceof MethodReference && call instanceof MethodReference) {
+			if(!this.identicalName(call)) {
+				return false;
+			}
+		}
 		for(int i=0; i<arguments1.size(); i++) {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);
@@ -330,7 +344,7 @@ public abstract class AbstractCall extends LeafExpression {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);
 			boolean argumentConcatenated = false;
-			if((argument1.contains("+") || argument2.contains("+")) && !argument1.contains("++") && !argument2.contains("++")) {
+			if(argument1.contains(" + ") || argument2.contains(" + ")) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);
@@ -424,7 +438,33 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean renamedWithDifferentExpressionAndIdenticalArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName())) &&
+		boolean expressionBecomesArgument = false;
+		int commonTokens = 0;
+		if(this.getExpression() != null && call.getExpression() == null && call.arguments().contains(this.getExpression())) {
+			expressionBecomesArgument = true;
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
+			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
+			for(String token1 : tokens1) {
+				for(String token2 : tokens2) {
+					if(token1.equals(token2)) {
+						commonTokens++;
+					}
+				}
+			}
+		}
+		else if(this.getExpression() == null && call.getExpression() != null && this.arguments().contains(call.getExpression())) {
+			expressionBecomesArgument = true;
+			String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
+			String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
+			for(String token1 : tokens1) {
+				for(String token2 : tokens2) {
+					if(token1.equals(token2)) {
+						commonTokens++;
+					}
+				}
+			}
+		}
+		return (this.getName().contains(call.getName()) || call.getName().contains(this.getName()) || (expressionBecomesArgument && commonTokens > 1)) &&
 				this.arguments.size() > 0 && call.arguments.size() > 0 && (equalArguments(call) || reorderedArguments(call) ||
 				argumentIntersectionSize(call, replacements, parameterToArgumentMap) == Math.min(this.arguments.size(), call.arguments.size())) &&
 				((this.getExpression() == null && call.getExpression() != null) || (call.getExpression() == null && this.getExpression() != null));

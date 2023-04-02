@@ -1,14 +1,20 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.github.gumtreediff.io.TreeIoUtils;
 import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.LocationInfo;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.refactoringminer.astDiff.matchers.Constants;
 
 /**
@@ -96,7 +102,8 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (tree.getType().name.equals(Constants.BLOCK)) return null;
+		if (tree.getType().name.equals(Constants.BLOCK))
+			if (tree.getChildren().size() != 0) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
 		if (tree.getType().name.equals(Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;
@@ -151,5 +158,74 @@ public class TreeUtilFunctions {
 			return getParentUntilType(tree.getParent(),matchingType);
 		else
 			return null;
+	}
+
+	public static Tree loadTree(String name) {
+		try {
+			InputStream resourceAsStream = FileUtils.openInputStream(new File(name));
+			return TreeIoUtils.fromXml().generateFrom().stream(resourceAsStream).getRoot();
+		} catch (IOException e) {
+			throw new RuntimeException(String.format("Unable to load test resource: %s", name), e);
+		}
+	}
+
+	public static void writeTree(Tree tree, String filePath) {
+		TreeContext srcTC = new TreeContext();
+		srcTC.setRoot(tree);
+		try {
+			TreeIoUtils.toXml(srcTC).writeTo(filePath);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static boolean isStatement(String type){
+		switch (type){
+			case Constants.ASSERT_STATEMENT: //Leaf
+			case Constants.BLOCK: // Composite
+			case Constants.BREAK_STATEMENT: //Leaf
+			case Constants.CONSTRUCTOR_INVOCATION: //leaf
+			case Constants.CONTINUE_STATEMENT: //leaf
+			case Constants.DO_STATEMENT: //composite
+			case Constants.EMPTY_STATEMENT: //leaf
+			case Constants.ENHANCED_FOR_STATEMENT: //composite
+			case Constants.EXPRESSION_STATEMENT: //leaf
+			case Constants.FOR_STATEMENT: //composite
+			case Constants.IF_STATEMENT: //composite
+			case Constants.LABELED_STATEMENT: //composite
+			case Constants.RETURN_STATEMENT: //leaf
+			case Constants.SWITCH_CASE: //leaf
+			case Constants.SWITCH_STATEMENT: //composite
+			case Constants.SYNCHRONIZED_STATEMENT: //composite
+			case Constants.THROW_STATEMENT://leaf
+			case Constants.TRY_STATEMENT: //composite
+			case Constants.TYPE_DECLARATION_STATEMENT: //composite!!!!!!
+			case Constants.VARIABLE_DECLARATION_STATEMENT: //leaf
+			case Constants.WHILE_STATEMENT: //composite
+				return true;
+			default:
+				return false;
+		}   //Update the jdt version (website)
+	}
+
+	public static Tree findVariable(Tree inputTree, String variableName) {
+		//FIXME: This method only works when there is only one instance of variable in the Tree
+		//In case of having more occurrences, the logic must be improved.
+		if (inputTree == null) return null;
+		boolean _seen = false;
+		Tree found = null;
+		for (Tree tree : inputTree.preOrder()) {
+			if (tree.getType().name.equals(Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
+			{
+				if (_seen)
+				{
+					found = null;
+					break;
+				}
+				_seen = true;
+				found = tree;
+			}
+		}
+		return found;
 	}
 }

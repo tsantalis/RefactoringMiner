@@ -129,7 +129,7 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 					int mappings = mapper.mappingsWithoutBlocks();
 					boolean emptyBodiesWithIdenticalComments = operation1.emptyBodiesWithIdenticalComments(operation2);
-					boolean emptyBodiesWithEqualSignature = operation1.hasEmptyBody() && operation2.hasEmptyBody() && operation1.equals(operation2);
+					boolean emptyBodiesWithEqualSignature = operation1.hasEmptyBody() && operation2.hasEmptyBody() && (operation1.equals(operation2) || operation1.equalSignature(operation2));
 					boolean matchingEmptyBodies = emptyBodiesWithIdenticalComments || emptyBodiesWithEqualSignature;
 					if(mappings > 0 || matchingEmptyBodies) {
 						int nonMappedElementsT1 = mapper.nonMappedElementsT1();

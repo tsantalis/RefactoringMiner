@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import org.refactoringminer.util.PrefixSuffixUtils;
 
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
@@ -37,7 +38,8 @@ import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class StringBasedHeuristics {
 	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
-	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*(\\+)(\\s)*");
+	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
+	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
@@ -121,6 +123,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			else if(diff2.isEmpty() && diff1.equals("this.")) {
+				return true;
+			}
+			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith("=")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith("=")) {
 				return true;
 			}
 			if(cast(diff1, diff2)) {
@@ -916,6 +924,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean equalAfterArgumentMerge(String s1, String s2, ReplacementInfo replacementInfo) {
 		Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
+		boolean mergeFound = false;
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			if(replacement.getType().equals(ReplacementType.VARIABLE_NAME)) {
 				String key = replacement.getAfter();
@@ -923,7 +932,7 @@ public class StringBasedHeuristics {
 					commonVariableReplacementMap.get(key).add(replacement);
 					int index = s1.indexOf(key);
 					if(index != -1) {
-						if(s1.charAt(index+key.length()) == ',') {
+						if(!s1.endsWith(key) && s1.charAt(index+key.length()) == ',') {
 							s1 = s1.substring(0, index) + s1.substring(index+key.length()+1, s1.length());
 						}
 						else if(index > 0 && s1.charAt(index-1) == ',') {
@@ -936,9 +945,76 @@ public class StringBasedHeuristics {
 					replacements.add(replacement);
 					commonVariableReplacementMap.put(key, replacements);
 				}
+				if(s1.equals(s2)) {
+					mergeFound = true;
+				}
+			}
+			else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION)) {
+				String key = replacement.getAfter();
+				int index = s1.indexOf(key);
+				if(index != -1) {
+					if(!s1.endsWith(key) && s1.charAt(index+key.length()) == ',') {
+						s1 = s1.substring(0, index) + s1.substring(index+key.length()+1, s1.length());
+						String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+						String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+						if(compatibleReservedTokens(reservedTokens1, reservedTokens2)) {
+							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+							replacements.add(replacement);
+							commonVariableReplacementMap.put(key, replacements);
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith("return ") && s2.startsWith("return ")) {
+								s1 = s1.substring(s1.indexOf("=") + 1);
+								s2 = s2.substring(7);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+							if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+								int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS1 = s1.lastIndexOf(commonSuffix);
+								String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+								int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS2 = s2.lastIndexOf(commonSuffix);
+								String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+								if(!diff1.isEmpty() && !diff2.isEmpty() && diff2.equals(key)) {
+									Replacement r = new Replacement(diff1, diff2, replacement.getType());
+									commonVariableReplacementMap.get(key).add(r);
+									mergeFound = true;
+								}
+							}
+						}
+					}
+					else if(index > 0 && s1.charAt(index-1) == ',') {
+						s1 = s1.substring(0, index-1) + s1.substring(index+key.length(), s1.length());
+						String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+						String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+						if(compatibleReservedTokens(reservedTokens1, reservedTokens2)) {
+							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+							replacements.add(replacement);
+							commonVariableReplacementMap.put(key, replacements);
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith("return ") && s2.startsWith("return ")) {
+								s1 = s1.substring(s1.indexOf("=") + 1);
+								s2 = s2.substring(7);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+							if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+								int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS1 = s1.lastIndexOf(commonSuffix);
+								String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
+								int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
+								int endIndexS2 = s2.lastIndexOf(commonSuffix);
+								String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
+								if(!diff1.isEmpty() && !diff2.isEmpty() && diff2.equals(key)) {
+									Replacement r = new Replacement(diff1, diff2, replacement.getType());
+									commonVariableReplacementMap.get(key).add(r);
+									mergeFound = true;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-		if(s1.equals(s2)) {
+		if(mergeFound) {
 			for(String key : commonVariableReplacementMap.keySet()) {
 				Set<Replacement> replacements = commonVariableReplacementMap.get(key);
 				if(replacements.size() > 1) {
@@ -952,6 +1028,18 @@ public class StringBasedHeuristics {
 				}
 			}
 			return true;
+		}
+		return false;
+	}
+
+	private static boolean compatibleReservedTokens(String reservedTokens1, String reservedTokens2) {
+		if(reservedTokens1.equals(reservedTokens2)) {
+			return true;
+		}
+		else if(reservedTokens1.contains("(") && reservedTokens1.contains("(")) {
+			String s1 = reservedTokens1.substring(reservedTokens1.indexOf("("));
+			String s2 = reservedTokens2.substring(reservedTokens2.indexOf("("));
+			return s1.equals(s2);
 		}
 		return false;
 	}
@@ -994,7 +1082,7 @@ public class StringBasedHeuristics {
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if(s1.contains("+") && s2.contains("+") && !s1.contains("++") && !s2.contains("++")) {
+			if(s1.contains(" + ") && s2.contains(" + ")) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);
@@ -1038,6 +1126,34 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
+			else if(s1.contains(" + ") && !s2.contains(" + ") && !s1.contains(",") && s2.contains(",")) {
+				List<String> tokens1 = Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1));
+				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
+				List<String> commonTokens = new ArrayList<>();
+				for(String token1 : tokens1) {
+					if(tokens2.contains(token1)) {
+						commonTokens.add(token1);
+					}
+				}
+				Set<String> filteredIntersection = new LinkedHashSet<>();
+				for(String common : commonTokens) {
+					boolean foundInReplacements = false;
+					for(Replacement r : info.getReplacements()) {
+						if(r.getBefore().contains(common) || r.getAfter().contains(common)) {
+							foundInReplacements = true;
+							break;
+						}
+					}
+					if(!foundInReplacements) {
+						filteredIntersection.add(common);
+					}
+				}
+				if(filteredIntersection.size() > 0) {
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, filteredIntersection, ReplacementType.CONCATENATION);
+					info.getReplacements().add(r);
+					return true;
+				}
+			}
 			List<String> arguments1 = null;
 			AbstractCall invocation1 = null;
 			if(creationCoveringTheEntireStatement1 != null) {
@@ -1072,7 +1188,7 @@ public class StringBasedHeuristics {
 					if(arg1.equals(arg2)) {
 						equalArguments++;
 					}
-					else if(!arg1.contains("+") && arg2.contains("+") && !arg2.contains("++")) {
+					else if(!arg1.contains(" + ") && arg2.contains(" + ")) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg2)));
 						StringBuilder sb = new StringBuilder();
@@ -1105,7 +1221,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 					}
-					else if(!arg2.contains("+") && arg1.contains("+") && !arg1.contains("++")) {
+					else if(!arg2.contains(" + ") && arg1.contains(" + ")) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();
@@ -1382,7 +1498,7 @@ public class StringBasedHeuristics {
 					if(string1.contains("new " + replacement.getBefore() + "(") && string2.contains("new " + replacement.getAfter() + "("))
 						classInstanceCreationReplacement = true;
 				}
-				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
+				else if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
 						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
 						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
@@ -1395,6 +1511,11 @@ public class StringBasedHeuristics {
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_NULL_LITERAL) &&
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+				else if(replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) &&
+						assignment1.equals(replacement.getBefore()) &&
+						assignment2.equals(replacement.getAfter()) &&
+						!referencedParameterForClassInstanceCreationReplacement(replacement, mapper.getContainer1(), mapper.getContainer2()))
 					rightHandSideReplacement = true;
 				else if(replacement instanceof VariableReplacementWithMethodInvocation &&
 						assignment1.equals(replacement.getBefore()) &&
@@ -1414,7 +1535,18 @@ public class StringBasedHeuristics {
 				return true;
 			}
 			if(variableRename && rightHandSideReplacement) {
-				return true;
+				String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName1);
+				String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableName2);
+				int commonTokens = 0;
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							commonTokens++;
+						}
+					}
+				}
+				if(commonTokens < Math.max(tokens1.length, tokens2.length)/2.0)
+					return true;
 			}
 			if(variableRename && inv1 != null && inv2 != null && inv1.differentExpressionNameAndArguments(inv2)) {
 				if(inv1.arguments().size() > inv2.arguments().size()) {
@@ -1447,6 +1579,53 @@ public class StringBasedHeuristics {
 		}
 		else if(mapper.getParentMapper() != null) {
 			return !mapper.getParentMapper().getContainer1().equals(mapper.getParentMapper().getContainer2());
+		}
+		return false;
+	}
+
+	private static boolean referencedParameterForClassInstanceCreationReplacement(Replacement replacement, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		int index1 = -1;
+		UMLType type1 = null;
+		int index2 = -1;
+		UMLType type2 = null;
+		if(replacement.getAfter().contains("new ")) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getBefore())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(replacement.getAfter().contains(parameter.getVariableName())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		else if(replacement.getBefore().contains("new ")) {
+			int counter = 0;
+			for(VariableDeclaration parameter : container1.getParameterDeclarationList()) {
+				if(replacement.getBefore().contains(parameter.getVariableName())) {
+					index1 = counter;
+					type1 = parameter.getType();
+				}
+				counter++;
+			}
+			counter = 0;
+			for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
+				if(parameter.getVariableName().equals(replacement.getAfter())) {
+					index2 = counter;
+					type2 = parameter.getType();
+				}
+				counter++;
+			}
+		}
+		if(type1 != null && type2 != null && type1.equals(type2) && index1 == index2) {
+			return true;
 		}
 		return false;
 	}
@@ -1774,6 +1953,26 @@ public class StringBasedHeuristics {
 				else if(c2.equals("!" + c1) || c2.equals("!(" + c1 + ")")) {
 					intersection.add(c1);
 					break;
+				}
+				else if(c1.contains("!=") && c2.contains("==")) {
+					String prefix1 = c1.substring(0, c1.indexOf("!="));
+					String prefix2 = c2.substring(0, c2.indexOf("=="));
+					String suffix1 = c1.substring(c1.indexOf("!=")+2);
+					String suffix2 = c2.substring(c2.indexOf("==")+2);
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2)) {
+						intersection.add(c1);
+						break;
+					}
+				}
+				else if(c1.contains("==") && c2.contains("!=")) {
+					String prefix1 = c1.substring(0, c1.indexOf("=="));
+					String prefix2 = c2.substring(0, c2.indexOf("!="));
+					String suffix1 = c1.substring(c1.indexOf("==")+2);
+					String suffix2 = c2.substring(c2.indexOf("!=")+2);
+					if(prefix1.equals(prefix2) && suffix1.equals(suffix2)) {
+						intersection.add(c1);
+						break;
+					}
 				}
 			}
 		}

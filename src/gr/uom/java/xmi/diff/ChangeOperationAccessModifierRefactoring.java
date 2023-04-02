@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.Visibility;
 
@@ -24,6 +25,24 @@ public class ChangeOperationAccessModifierRefactoring implements Refactoring {
 		this.changedAccessModifier = changedAccessModifier;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	public UMLModifier getOldModifier() {
+		for(UMLModifier m : operationBefore.getModifiers()) {
+			if(m.getKeyword().equals(originalAccessModifier.toString())) {
+				return m;
+			}
+		}
+		return null;
+	}
+
+	public UMLModifier getNewModifier() {
+		for(UMLModifier m : operationAfter.getModifiers()) {
+			if(m.getKeyword().equals(changedAccessModifier.toString())) {
+				return m;
+			}
+		}
+		return null;
 	}
 
 	public Visibility getOriginalAccessModifier() {

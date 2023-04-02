@@ -23,7 +23,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2023-02-28 4:48 p.m. */
 @RunWith(Enclosed.class)
-public class testSpecificCases {
+public class SpecificCasesTest {
     public static class SpecificRefactoringsTest {
         @Test
         public void testRenameParameter() {

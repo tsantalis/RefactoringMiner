@@ -23,7 +23,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  */
 
 @RunWith(Parameterized.class)
-public class testAllCasesWithLocallyClonedRepos {
+public class AllCasesWithLocallyClonedReposTest {
 	private static final String REPOS = "tmp1";
 	private static GitService gitService = new GitServiceImpl();
 	

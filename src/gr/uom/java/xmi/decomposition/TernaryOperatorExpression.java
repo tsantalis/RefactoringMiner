@@ -9,18 +9,17 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
-public class TernaryOperatorExpression {
+public class TernaryOperatorExpression extends LeafExpression {
 
 	private AbstractExpression condition;
 	private AbstractExpression thenExpression;
 	private AbstractExpression elseExpression;
-	private String expression;
 
 	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression, VariableDeclarationContainer container) {
+		super(cu, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);
 		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
 		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
 		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
-		this.expression = stringify(expression);
 	}
 
 	public AbstractExpression getCondition() {
@@ -36,7 +35,7 @@ public class TernaryOperatorExpression {
 	}
 
 	public String getExpression() {
-		return expression;
+		return getString();
 	}
 
 	public Replacement makeReplacementWithTernaryOnTheRight(String statement) {

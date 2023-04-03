@@ -330,7 +330,8 @@ public abstract class AbstractCodeMapping {
 				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
 			}
 			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
+				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
+						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()))) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {

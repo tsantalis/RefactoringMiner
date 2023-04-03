@@ -11,8 +11,25 @@ import org.jetbrains.annotations.NotNull;
  * 2. With formatting similar to Eclipse format
  */
 public class FormattingVisitor extends PsiRecursiveElementWalkingVisitor {
+    /*
+    AssignmentOperator:
+    = ASSIGN
+    += PLUS_ASSIGN
+    -= MINUS_ASSIGN
+    *= TIMES_ASSIGN
+    /= DIVIDE_ASSIGN
+    &= BIT_AND_ASSIGN
+    |= BIT_OR_ASSIGN
+    ^= BIT_XOR_ASSIGN
+    %= REMAINDER_ASSIGN
+    <<= LEFT_SHIFT_ASSIGN
+    >>= RIGHT_SHIFT_SIGNED_ASSIGN
+    >>>= RIGHT_SHIFT_UNSIGNED_ASSIGN
+     */
     private static final TokenSet noSpaces = TokenSet.create(
-        JavaTokenType.EQ, JavaTokenType.LT, JavaTokenType.GT,
+        JavaTokenType.EQ, JavaTokenType.PLUSEQ, JavaTokenType.MINUSEQ, JavaTokenType.ASTERISKEQ, JavaTokenType.DIVEQ,
+        JavaTokenType.ANDEQ, JavaTokenType.OREQ, JavaTokenType.XOREQ, JavaTokenType.PERCEQ, JavaTokenType.LTLTEQ, JavaTokenType.GTGTEQ, JavaTokenType.GTGTGTEQ,
+        JavaTokenType.LT, JavaTokenType.GT,
         JavaTokenType.DOT, JavaTokenType.COMMA,
         JavaTokenType.RBRACKET, JavaTokenType.LBRACKET,
         JavaTokenType.LPARENTH, JavaTokenType.RPARENTH,

@@ -17,7 +17,9 @@ Table of Contents
    * [API usage guidelines](#api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
+      * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
+      * [With a GitHub pull request](#with-a-github-pull-request)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
@@ -125,13 +127,13 @@ Currently, it supports the detection of the following refactorings:
 84. Replace Loop with Pipeline
 85. Replace Anonymous with Lambda
 
-**<ins>supported by RefactoringMiner 2.3  and newer versions</ins>**
+**<ins>supported by RefactoringMiner 2.3 and newer versions</ins>**
 
 86. Merge Class
 87. Inline Attribute
 88. Replace Pipeline with Loop
 
-**<ins>supported by RefactoringMiner 2.3.2</ins>**
+**<ins>supported by RefactoringMiner 2.4 and newer versions</ins>**
 
 89. Split Class
 90. Split Conditional
@@ -140,23 +142,24 @@ Currently, it supports the detection of the following refactorings:
 93. Merge Catch
 94. Merge Method
 95. Split Method
+96. Move Code (between methods)
 
 # Current precision and recall
-As of **February 12, 2023** the precision and recall of the tool on an oracle consisting of **545 commits** from **187 open-source projects** is:
+As of **March 26, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11513  | 23  | 278  | 0.998  | 0.976|
-|Extract Method|965  |  1  | 29  | 0.999  | 0.971|
+|**Total**|11611  | 23  | 273  | 0.998  | 0.977|
+|Extract Method|996  |  1  | 27  | 0.999  | 0.974|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|362  |  4  | 27  | 0.989  | 0.931|
-|Inline Method|111  |  0  |  2  | 1.000  | 0.982|
-|Move Method|352  |  3  |  9  | 0.992  | 0.975|
-|Move And Rename Method|122  |  0  |  6  | 1.000  | 0.953|
-|Pull Up Method|290  |  0  |  6  | 1.000  | 0.980|
+|Rename Method|365  |  4  | 26  | 0.989  | 0.934|
+|Inline Method|116  |  0  |  2  | 1.000  | 0.983|
+|Move Method|351  |  3  |  9  | 0.992  | 0.975|
+|Move And Rename Method|123  |  0  |  5  | 1.000  | 0.961|
+|Pull Up Method|289  |  0  |  6  | 1.000  | 0.980|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
@@ -171,13 +174,13 @@ As of **February 12, 2023** the precision and recall of the tool on an oracle co
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|224  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|226  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|78  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|83  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|301  |  3  | 11  | 0.990  | 0.965|
-|Rename Parameter|473  |  2  | 28  | 0.996  | 0.944|
-|Rename Attribute|130  |  0  | 16  | 1.000  | 0.890|
+|Rename Variable|312  |  3  | 12  | 0.990  | 0.963|
+|Rename Parameter|477  |  2  | 27  | 0.996  | 0.946|
+|Rename Attribute|133  |  0  | 16  | 1.000  | 0.893|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
@@ -185,13 +188,13 @@ As of **February 12, 2023** the precision and recall of the tool on an oracle co
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable|75  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|77  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|419  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|768  |  2  | 10  | 0.997  | 0.987|
-|Change Parameter Type|628  |  1  | 16  | 0.998  | 0.975|
-|Change Attribute Type|224  |  0  |  8  | 1.000  | 0.966|
+|Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
+|Change Return Type|420  |  0  | 12  | 1.000  | 0.972|
+|Change Variable Type|773  |  2  | 10  | 0.997  | 0.987|
+|Change Parameter Type|633  |  1  | 15  | 0.998  | 0.977|
+|Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
@@ -204,23 +207,23 @@ As of **February 12, 2023** the precision and recall of the tool on an oracle co
 |Add Parameter Annotation|32  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|956  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|334  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|961  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|332  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
 |Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|324  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|221  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|326  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|223  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|105  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|57  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|58  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|
@@ -233,12 +236,13 @@ As of **February 12, 2023** the precision and recall of the tool on an oracle co
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional|15  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|16  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition| 5  |  0  |  0  | 1.000  | 1.000|
-|Merge Conditional| 5  |  0  |  0  | 1.000  | 1.000|
+|Merge Conditional| 8  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Method| 2  |  0  |  0  | 1.000  | 1.000|
+|Split Method| 5  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 
@@ -256,7 +260,7 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.3.2</version>
+      <version>2.4.0</version>
     </dependency>
 
 # Chrome Extension
@@ -508,6 +512,30 @@ miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
 });
 ```
 
+## With file contents as strings
+
+You can provide two maps (before and after the changes) where the keys are file paths, and the values are the corresponding file contents.
+Each key should correspond to a file path starting from the root of the repository. For example, `src/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
+
+After populating the maps, you can use the following code snippet:
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+// Each key should correspond to a file path starting from the root of the repository
+Map<String, String> fileContentsBefore;
+Map<String, String> fileContentsAfter;
+// populate the maps
+miner.detectAtFileContents(fileContentsBefore, fileContentsAfter, new RefactoringHandler() {
+  @Override
+  public void handle(String commitId, List<Refactoring> refactorings) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+    }
+  }
+});
+```
+
 ## With all information fetched directly from GitHub
 
 To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
@@ -528,6 +556,12 @@ miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
   }
 }, 10);
 ```
+
+## With a GitHub pull request
+
+To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
 If you want to analyze all commits of a pull request, you can use the following code snippet:
 
 ```java

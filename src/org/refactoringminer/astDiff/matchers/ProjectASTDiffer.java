@@ -1041,7 +1041,16 @@ public class ProjectASTDiffer
 		for (Tree srcStatement: inputTree) {
 			if (srcStatement.getType().name.equals(searchingType)) {
 				if (srcStatement.getChild(0).getLabel().equals(label.getName())) //TODO getChild 0 will cause a lot of problem
-					return srcStatement;
+					if (label.isOnDemand())
+					{
+						if (srcStatement.getChild(0).getEndPos() + 3 == srcStatement.getEndPos())
+						{
+							return srcStatement;
+						}
+					}
+					else {
+						return srcStatement;
+					}
 			}
 		}
 		return null;

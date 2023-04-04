@@ -129,13 +129,23 @@ public class ProjectASTDiffer
 			Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
 			Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
 			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue;
-			//TODO: improve the condition by checking the name of the class while considering the anonymous classes!
-			if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(involvedClassesBeforeRefactoring.iterator().next().getLeft())
-//					&& classDiff.getOriginalClass().getName().equals(involvedClassesBeforeRefactoring.iterator().next().getRight())
-					&& classDiff.getNextClass().getLocationInfo().getFilePath().equals(involvedClassesAfterRefactoring.iterator().next().getLeft())
-//					&& classDiff.getNextClass().getName().equals(involvedClassesAfterRefactoring.iterator().next().getRight())
-			)
-				classDiffRefactorings.add(modelDiffRefactoring);
+			//TODO: Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
+			UMLClass umlClassBefore = classDiff.getOriginalClass();
+			UMLClass umlClassAfter = classDiff.getNextClass();
+			ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();
+			ImmutablePair<String, String> refactoringClassAfter = involvedClassesAfterRefactoring.iterator().next();
+			if (umlClassBefore.getLocationInfo().getFilePath().equals(refactoringClassBefore.getLeft())
+					&& umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft()))
+			{
+				String refactoringClassNameBefore = refactoringClassBefore.getRight();
+				String refactoringClassNameAfter = refactoringClassAfter.getRight();
+				boolean isNameMatchingConsideringAnonymous = (refactoringClassNameBefore.equals(umlClassBefore.getName()) || refactoringClassNameBefore.startsWith(umlClassBefore.getName() + "."))
+						&&
+						(refactoringClassNameAfter.equals(umlClassAfter.getName()) || refactoringClassNameAfter.startsWith(umlClassAfter.getName() + "."));
+				if (isNameMatchingConsideringAnonymous)
+					classDiffRefactorings.add(modelDiffRefactoring);
+			}
+
 		}
 		return classDiffRefactorings;
 	}

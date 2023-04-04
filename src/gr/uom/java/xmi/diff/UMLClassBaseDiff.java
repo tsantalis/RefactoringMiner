@@ -122,6 +122,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
 				tearDownMappers.add(mapper);
 			}
+			if(mapper.getAnonymousClassDiffs().size() > 0 && mapper.nonMappedElementsT1() > 0) {
+				for(UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
+					for(UMLOperationBodyMapper anonymousMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+						if(anonymousMapper.nonMappedElementsT2() > 0) {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, anonymousMapper, this);
+							int invalidMappings = 0;
+							for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+								if(mapper.alreadyMatched1(mapping.getFragment1()) || anonymousMapper.getNonMappedLeavesT1().contains(mapping.getFragment1()) ||
+										anonymousMapper.getNonMappedInnerNodesT1().contains(mapping.getFragment1())) {
+									invalidMappings++;
+								}
+							}
+							if(moveCodeMapper.getMappings().size() > invalidMappings) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								refactorings.add(ref);
+							}
+						}
+					}
+				}
+			}
 		}
 		for(UMLOperationBodyMapper setUpMapper : setUpMappers) {
 			if(setUpMapper.nonMappedElementsT2() > 0 || setUpMapper.nonMappedElementsT1() > 0) {

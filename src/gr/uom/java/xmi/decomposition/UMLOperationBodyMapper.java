@@ -3557,7 +3557,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return commentsWithinStatement1;
 	}
 
-	private boolean alreadyMatched1(AbstractCodeFragment fragment) {
+	public boolean alreadyMatched1(AbstractCodeFragment fragment) {
 		if(fragment instanceof AbstractExpression) {
 			for(AbstractCodeMapping mapping : mappings) {
 				if(!(mapping instanceof CompositeStatementObjectMapping) && mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
@@ -3569,7 +3569,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return mappingHashcodesT1.contains(fragment.hashCode());
 	}
 
-	private boolean alreadyMatched2(AbstractCodeFragment fragment) {
+	public boolean alreadyMatched2(AbstractCodeFragment fragment) {
 		if(fragment instanceof AbstractExpression) {
 			for(AbstractCodeMapping mapping : mappings) {
 				if(!(mapping instanceof CompositeStatementObjectMapping) && mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {

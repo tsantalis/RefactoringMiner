@@ -129,10 +129,12 @@ public class ProjectASTDiffer
 			Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
 			Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
 			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue;
+			//TODO: improve the condition by checking the name of the class while considering the anonymous classes!
 			if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(involvedClassesBeforeRefactoring.iterator().next().getLeft())
-					&& classDiff.getOriginalClass().getName().equals(involvedClassesBeforeRefactoring.iterator().next().getRight())
+//					&& classDiff.getOriginalClass().getName().equals(involvedClassesBeforeRefactoring.iterator().next().getRight())
 					&& classDiff.getNextClass().getLocationInfo().getFilePath().equals(involvedClassesAfterRefactoring.iterator().next().getLeft())
-					&& classDiff.getNextClass().getName().equals(involvedClassesAfterRefactoring.iterator().next().getRight()))
+//					&& classDiff.getNextClass().getName().equals(involvedClassesAfterRefactoring.iterator().next().getRight())
+			)
 				classDiffRefactorings.add(modelDiffRefactoring);
 		}
 		return classDiffRefactorings;

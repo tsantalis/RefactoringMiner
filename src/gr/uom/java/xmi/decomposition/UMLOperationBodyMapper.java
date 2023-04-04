@@ -3327,6 +3327,75 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		Set<CompositeStatementObject> switchStatements1 = new LinkedHashSet<>();
+		Set<CompositeStatementObject> ifStatements1 = new LinkedHashSet<>();
+		Set<AbstractCodeFragment> switchCases1 = new LinkedHashSet<>();
+		for(CompositeStatementObject comp : innerNodes1) {
+			if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+				switchStatements1.add(comp);
+			}
+			else if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				ifStatements1.add(comp);
+			}
+		}
+		for(AbstractCodeFragment leaf : leaves1) {
+			if(leaf.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE)) {
+				switchCases1.add(leaf);
+			}
+		}
+		
+		Set<CompositeStatementObject> switchStatements2 = new LinkedHashSet<>();
+		Set<CompositeStatementObject> ifStatements2 = new LinkedHashSet<>();
+		Set<AbstractCodeFragment> switchCases2 = new LinkedHashSet<>();
+		for(CompositeStatementObject comp : innerNodes2) {
+			if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+				switchStatements2.add(comp);
+			}
+			else if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				ifStatements2.add(comp);
+			}
+		}
+		for(AbstractCodeFragment leaf : leaves2) {
+			if(leaf.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE)) {
+				switchCases2.add(leaf);
+			}
+		}
+		
+		if(switchStatements1.size() == 0 && ifStatements1.size() > 0 && switchStatements2.size() > 0) {
+			for(CompositeStatementObject switchStatement2 : switchStatements2) {
+				AbstractExpression switchExpression = switchStatement2.getExpressions().get(0);
+				for(CompositeStatementObject ifStatement1 : ifStatements1) {
+					AbstractExpression ifExpression = ifStatement1.getExpressions().get(0);
+					if(ifExpression.getString().contains(switchExpression.getString())) {
+						for(AbstractCodeFragment switchCase2 : switchCases2) {
+							if(switchCase2.getString().startsWith("case ")) {
+								String caseExpression = switchCase2.getString().substring(5, switchCase2.getString().length()-1);
+								if(ifExpression.getString().contains(switchExpression.getString() + " == " + caseExpression) ||
+										ifExpression.getString().contains(caseExpression + " == " + switchExpression.getString()) ||
+										ifExpression.getString().contains(switchExpression.getString() + ".equals(" + caseExpression + ")") ||
+										ifExpression.getString().contains(caseExpression + ".equals(" + switchExpression.getString() + ")")) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(ifStatement1, switchStatement2, parameterToArgumentMap, 0);
+									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+									additionallyMatchedStatements2.add(switchCase2);
+									CompositeReplacement composite = new CompositeReplacement(ifStatement1.getString(), switchStatement2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+									mapping.addReplacement(composite);
+									addMapping(mapping);
+									List<LeafExpression> subExpressions1 = ifExpression.findExpression(caseExpression);
+									List<LeafExpression> subExpressions2 = switchCase2.findExpression(caseExpression);
+									if(subExpressions1.size() == 1 && subExpressions2.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(subExpressions1.get(0), subExpressions2.get(0), container1, container2);
+										addMapping(leafMapping);
+									}
+									leaves2.remove(switchCase2);
+									innerNodes1.remove(ifStatement1);
+									innerNodes2.remove(switchStatement2);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private boolean mappingExistsIdenticalInExtractedMethod(CompositeStatementObjectMapping mapping,

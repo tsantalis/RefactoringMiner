@@ -3396,6 +3396,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(switchStatements2.size() == 0 && ifStatements2.size() > 0 && switchStatements1.size() > 0) {
+			for(CompositeStatementObject switchStatement1 : switchStatements1) {
+				AbstractExpression switchExpression = switchStatement1.getExpressions().get(0);
+				for(CompositeStatementObject ifStatement2 : ifStatements2) {
+					AbstractExpression ifExpression = ifStatement2.getExpressions().get(0);
+					if(ifExpression.getString().contains(switchExpression.getString())) {
+						for(AbstractCodeFragment switchCase1 : switchCases1) {
+							if(switchCase1.getString().startsWith("case ")) {
+								String caseExpression = switchCase1.getString().substring(5, switchCase1.getString().length()-1);
+								if(ifExpression.getString().contains(switchExpression.getString() + " == " + caseExpression) ||
+										ifExpression.getString().contains(caseExpression + " == " + switchExpression.getString()) ||
+										ifExpression.getString().contains(switchExpression.getString() + ".equals(" + caseExpression + ")") ||
+										ifExpression.getString().contains(caseExpression + ".equals(" + switchExpression.getString() + ")")) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(switchStatement1, ifStatement2, parameterToArgumentMap, 0);
+									Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+									additionallyMatchedStatements1.add(switchCase1);
+									CompositeReplacement composite = new CompositeReplacement(switchStatement1.getString(), ifStatement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
+									mapping.addReplacement(composite);
+									addMapping(mapping);
+									List<LeafExpression> subExpressions1 = switchCase1.findExpression(caseExpression);
+									List<LeafExpression> subExpressions2 = ifExpression.findExpression(caseExpression);
+									if(subExpressions1.size() == 1 && subExpressions2.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(subExpressions1.get(0), subExpressions2.get(0), container1, container2);
+										addMapping(leafMapping);
+									}
+									leaves1.remove(switchCase1);
+									innerNodes2.remove(ifStatement2);
+									innerNodes1.remove(switchStatement1);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private boolean mappingExistsIdenticalInExtractedMethod(CompositeStatementObjectMapping mapping,

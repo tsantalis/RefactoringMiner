@@ -6823,6 +6823,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(methodInvocations2.contains("Optional.empty()")) {
 				findReplacements(nullLiterals1, methodInvocations2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_OPTIONAL_EMPTY);
 			}
+			if(parentMapper == null && variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
+					variableDeclarations1.get(0).getType() != null && variableDeclarations2.get(0).getType() != null &&
+					variableDeclarations1.get(0).getType().equals(variableDeclarations2.get(0).getType()) &&
+					statement1.getString().endsWith("=null;\n") && invocationCoveringTheEntireStatement2 != null) {
+				findReplacements(nullLiterals1, Set.of(invocationCoveringTheEntireStatement2.actualString()), replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_NULL_LITERAL);
+			}
 		}
 
 		if(statement1.getTernaryOperatorExpressions().isEmpty() && !statement2.getTernaryOperatorExpressions().isEmpty()) {

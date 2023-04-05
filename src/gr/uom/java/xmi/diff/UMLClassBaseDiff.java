@@ -2278,6 +2278,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				return true;
 			}
 		}
+		if(invocation == null && callFragment.getVariableDeclarations().size() > 0) {
+			for(AbstractCall call : callFragment.getMethodInvocations()) {
+				if(call.actualString().equals(operationInvocation.actualString())) {
+					return true;
+				}
+			}
+		}
 		if(invocation != null && invocation.actualString().equals(operationInvocation.actualString())) {
 			if(invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
 				return true;

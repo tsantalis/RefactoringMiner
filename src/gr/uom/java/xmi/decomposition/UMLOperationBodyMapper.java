@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
+import gr.uom.java.xmi.decomposition.replacement.InitializerReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
@@ -8640,8 +8641,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			boolean variableDeclarationInitializer1 =  invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
 			boolean variableDeclarationInitializer2 =  invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
-			if(variableDeclarationInitializer1 && variableDeclarationInitializer2 && statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString()) &&
-					statement1.getVariableDeclarations().size() > 0) {
+			if(variableDeclarationInitializer1 && variableDeclarationInitializer2 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
+					variableDeclarations1.size() > 0) {
 				boolean callToAddedOperation = false;
 				boolean callToDeletedOperation = false;
 				boolean statementIsExtracted = false;
@@ -8654,6 +8655,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(callToAddedOperation != callToDeletedOperation && !statementIsExtracted) {
 					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
+		else if(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && methodInvocationMap2.size() > 0) {
+			if(variableDeclarations1.toString().equals(variableDeclarations2.toString()) && variableDeclarations1.size() > 0 &&
+					variableDeclarations1.get(0).getInitializer() != null && variableDeclarations2.get(0).getInitializer() != null) {
+				boolean callToAddedOperation = false;
+				boolean statementIsExtracted = false;
+				if(classDiff != null) {
+					for(String key : methodInvocationMap2.keySet()) {
+						AbstractCall call = methodInvocationMap2.get(key).get(0);
+						UMLOperation addedOperation = classDiff.matchesOperation(call, classDiff.getAddedOperations(), container2);
+						statementIsExtracted = checkIfStatementIsExtracted(statement1, statement2, addedOperation);
+						callToAddedOperation = addedOperation != null;
+						if(callToAddedOperation) {
+							break;
+						}
+					}
+				}
+				if(callToAddedOperation && !statementIsExtracted) {
+					Replacement replacement = new InitializerReplacement(variableDeclarations1.get(0).getInitializer(), variableDeclarations2.get(0).getInitializer());
 					replacementInfo.addReplacement(replacement);
 					return replacementInfo.getReplacements();
 				}

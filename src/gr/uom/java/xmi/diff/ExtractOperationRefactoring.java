@@ -198,7 +198,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 								int index = indexInArguments(invocation1, expression1, occurrence);
 								if(index != -1) {
 									String argument2 = invocation2.arguments().get(index);
-									if(argument2.equals(expression1.getString())) {
+									if(argument2.equals(expression1.getString()) || argument2.equals(invocation1.arguments().get(index))) {
 										equalArgument = true;
 									}
 								}
@@ -207,7 +207,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 								int index = indexInArguments(creation1, expression1, occurrence);
 								if(index != -1) {
 									String argument2 = creation2.arguments().get(index);
-									if(argument2.equals(expression1.getString())) {
+									if(argument2.equals(expression1.getString()) || argument2.equals(creation1.arguments().get(index))) {
 										equalArgument = true;
 									}
 								}
@@ -230,7 +230,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 		int index = 0;
 		int matches = 0;
 		for(String argument : call.arguments()) {
-			if(argument.equals(expression.getString())) {
+			if(argument.equals(expression.getString()) || argument.contains(expression.getString())) {
 				if(matches == occurrence) {
 					return index;
 				}

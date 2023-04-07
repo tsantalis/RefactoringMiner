@@ -153,6 +153,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
+	public List<AbstractCall> getAllCreations() {
+		return body.getAllCreations();
+	}
+
+	@Override
 	public List<String> getAllVariables() {
 		return body.getAllVariables();
 	}

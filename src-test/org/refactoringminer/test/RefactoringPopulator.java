@@ -127,7 +127,8 @@ public class RefactoringPopulator {
 		MergeMethod(new BigInteger("19807040628566084398385987584")),
 		SplitMethod(new BigInteger("39614081257132168796771975168")),
 		MoveCode(new BigInteger("79228162514264337593543950336")),
-		All(new BigInteger("158456325028528675187087900671"));
+		ReplaceAnonymousWithClass(new BigInteger("158456325028528675187087900672")),
+		All(new BigInteger("316912650057057350374175801343"));
 
 		private BigInteger value;
 

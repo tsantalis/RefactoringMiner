@@ -5735,6 +5735,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(matchedOperationMappers.size() > 0) {
 					this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 					this.anonymousClassDiffs.add(anonymousClassDiff);
+					if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+						classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+					}
+					if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+						classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+					}
 					for(UMLOperationBodyMapper mapper : matchedOperationMappers) {
 						addAllMappings(mapper.mappings);
 					}
@@ -9014,6 +9020,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.refactorings.addAll(anonymousClassDiffRefactorings);
 				this.anonymousClassDiffs.add(anonymousClassDiff);
+				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+				}
+				if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+					classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+				}
 				if(!anonymousClassDeclaration1.toString().equals(anonymousClassDeclaration2.toString())) {
 					Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), anonymousClassDeclaration2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION);
 					replacementInfo.addReplacement(replacement);

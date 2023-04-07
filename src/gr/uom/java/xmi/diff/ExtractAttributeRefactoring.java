@@ -49,11 +49,17 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 				if(before != null && after != null) {
 					UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(before, after, classDiff, modelDiff);
 					anonymousClassDiff.process();
-					anonymousClassDiffList.add(anonymousClassDiff);
 					List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 					if(matchedOperationMappers.size() > 0) {
+						anonymousClassDiffList.add(anonymousClassDiff);
 						List<Refactoring> anonymousClassDiffRefactorings = anonymousClassDiff.getRefactorings();
 						allRefactorings.addAll(anonymousClassDiffRefactorings);
+						if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(before)) {
+							classDiff.getRemovedAnonymousClasses().remove(before);
+						}
+						if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(after)) {
+							classDiff.getAddedAnonymousClasses().remove(after);
+						}
 					}
 				}
 			}

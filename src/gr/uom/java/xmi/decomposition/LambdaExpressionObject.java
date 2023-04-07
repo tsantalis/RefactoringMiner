@@ -257,6 +257,17 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public List<AbstractCall> getAllCreations() {
+		if(expression != null) {
+			return new ArrayList<>(expression.getCreations());
+		}
+		if(body != null) {
+			return body.getAllCreations();
+		}
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<String> getAllVariables() {
 		if(expression != null) {
 			List<String> variables = new ArrayList<>();

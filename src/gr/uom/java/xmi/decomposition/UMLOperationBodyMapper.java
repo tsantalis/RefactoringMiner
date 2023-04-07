@@ -10107,7 +10107,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(parameterToArgumentMap1 != null && parameterToArgumentMap1.containsKey(variable1) && !parameterToArgumentMap1.get(variable1).equals(variable1)) {
 				variable1 = parameterToArgumentMap1.get(variable1);
 			}
-			if(s1.contains(variable1) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
+			if((ReplacementUtil.contains(s1, variable1) || s1.endsWith(variable1)) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
 				String substringAfterIndex1 = s1.substring(startIndex1 + variable1.length(), s1.length());
@@ -10115,7 +10115,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(variable2.endsWith(substringAfterIndex1) && substringAfterIndex1.length() > 1) {
 						variable2 = variable2.substring(0, variable2.indexOf(substringAfterIndex1));
 					}
-					if(s2.contains(variable2) && !s2.equals(variable2)) {
+					if((ReplacementUtil.contains(s2, variable2) || s2.endsWith(variable2)) && !s2.equals(variable2)) {
 						int startIndex2 = s2.indexOf(variable2);
 						String substringBeforeIndex2 = s2.substring(0, startIndex2);
 						String substringAfterIndex2 = s2.substring(startIndex2 + variable2.length(), s2.length());

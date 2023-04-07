@@ -143,13 +143,14 @@ Currently, it supports the detection of the following refactorings:
 94. Merge Method
 95. Split Method
 96. Move Code (between methods)
+97. Replace Anonymous with Class
 
 # Current precision and recall
-As of **March 26, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **188 open-source projects** is:
+As of **April 7, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11611  | 23  | 273  | 0.998  | 0.977|
+|**Total**|11632  | 23  | 272  | 0.998  | 0.977|
 |Extract Method|996  |  1  | 27  | 0.999  | 0.974|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -159,7 +160,7 @@ As of **March 26, 2023** the precision and recall of the tool on an oracle consi
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
 |Move Method|351  |  3  |  9  | 0.992  | 0.975|
 |Move And Rename Method|123  |  0  |  5  | 1.000  | 0.961|
-|Pull Up Method|289  |  0  |  6  | 1.000  | 0.980|
+|Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
@@ -174,9 +175,9 @@ As of **March 26, 2023** the precision and recall of the tool on an oracle consi
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|226  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|229  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|83  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|91  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|312  |  3  | 12  | 0.990  | 0.963|
 |Rename Parameter|477  |  2  | 27  | 0.996  | 0.946|
@@ -242,7 +243,8 @@ As of **March 26, 2023** the precision and recall of the tool on an oracle consi
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 4  |  0  |  0  | 1.000  | 1.000|
+|Move Code| 6  |  0  |  0  | 1.000  | 1.000|
+|Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 

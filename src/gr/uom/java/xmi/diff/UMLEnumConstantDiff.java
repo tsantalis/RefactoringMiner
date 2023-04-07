@@ -9,6 +9,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnnotation;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
@@ -30,11 +31,19 @@ public class UMLEnumConstantDiff {
 			argumentsChanged = true;
 		this.annotationListDiff = new UMLAnnotationListDiff(removedEnumConstant.getAnnotations(), addedEnumConstant.getAnnotations());
 		if(removedEnumConstant.getAnonymousClassList().size() == 1 && addedEnumConstant.getAnonymousClassList().size() == 1) {
-			this.anonymousClassDiff = new UMLAnonymousClassDiff(removedEnumConstant.getAnonymousClassList().get(0), addedEnumConstant.getAnonymousClassList().get(0), classDiff, modelDiff);
+			UMLAnonymousClass anonymousClass1 = removedEnumConstant.getAnonymousClassList().get(0);
+			UMLAnonymousClass anonymousClass2 = addedEnumConstant.getAnonymousClassList().get(0);
+			this.anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass1, anonymousClass2, classDiff, modelDiff);
 			this.anonymousClassDiff.process();
 			List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 			if(matchedOperationMappers.size() > 0) {
 				this.refactorings.addAll(anonymousClassDiff.getRefactorings());
+				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
+					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
+				}
+				if(classDiff != null && classDiff.getAddedAnonymousClasses().contains(anonymousClass2)) {
+					classDiff.getAddedAnonymousClasses().remove(anonymousClass2);
+				}
 			}
 		}
 	}

@@ -407,6 +407,28 @@ public class CompositeStatementObject extends AbstractStatement {
 		return list;
 	}
 
+	public List<AbstractCall> getAllCreations() {
+		List<AbstractCall> list = new ArrayList<>();
+		list.addAll(getCreations());
+		for(AbstractStatement statement : statementList) {
+			if(statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject)statement;
+				list.addAll(composite.getAllCreations());
+			}
+			else if(statement instanceof StatementObject) {
+				StatementObject statementObject = (StatementObject)statement;
+				list.addAll(statementObject.getCreations());
+				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
+					list.addAll(lambda.getAllCreations());
+				}
+				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
+					list.addAll(anonymous.getCreations());
+				}
+			}
+		}
+		return list;
+	}
+
 	public List<AbstractCall> getAllMethodInvocations() {
 		List<AbstractCall> list = new ArrayList<>();
 		list.addAll(getMethodInvocations());

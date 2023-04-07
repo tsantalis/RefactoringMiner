@@ -1220,6 +1220,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 						if(tokenMatchesArgument) {
+							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}
 					}
@@ -1253,6 +1254,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 						if(tokenMatchesArgument) {
+							concatReplacements.add(new Replacement(arg1, arg2, ReplacementType.CONCATENATION));
 							concatenatedArguments++;
 						}
 					}

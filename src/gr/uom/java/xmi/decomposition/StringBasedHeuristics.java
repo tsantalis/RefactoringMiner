@@ -259,6 +259,8 @@ public class StringBasedHeuristics {
 							return false;
 						}
 					}
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, Set.of(infix), ReplacementType.CONCATENATION);
+					info.getReplacements().add(r);
 					return true;
 				}
 			}

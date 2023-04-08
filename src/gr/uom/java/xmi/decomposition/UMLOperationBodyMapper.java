@@ -11536,6 +11536,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return types;
 	}
 
+	public int exactMappingsNestedUnderCompositeExcludingBlocks(CompositeStatementObjectMapping compositeMapping) {
+		int count = 0;
+		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.equals(compositeMapping)) {
+				break;
+			}
+			if(compositeMapping.getFragment1().getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo()) &&
+					compositeMapping.getFragment2().getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) &&
+					!mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+					!mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+					(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()) ||
+					mapping.editDistance() < 0.1)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public Set<VariableDeclaration> getRemovedVariables() {
 		return removedVariables;
 	}

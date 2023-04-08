@@ -1735,8 +1735,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-						mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				else if(mapping instanceof CompositeStatementObjectMapping) {
 					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 0) {
 						AbstractCodeFragment fragment = mapping.getFragment1();
 						if(fragment instanceof CompositeStatementObject) {
@@ -1811,9 +1810,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//match expressions in inner nodes from T1 with leaves from T2
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
 			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT1()) {
-				for(AbstractExpression expression : composite.getExpressions()) {
-					expression.replaceParametersWithArguments(parameterToArgumentMap1);
-					expressionsT1.add(expression);
+				if(!addedInnerNodes1.contains(composite)) {
+					for(AbstractExpression expression : composite.getExpressions()) {
+						expression.replaceParametersWithArguments(parameterToArgumentMap1);
+						expressionsT1.add(expression);
+					}
 				}
 			}
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
@@ -2120,6 +2121,46 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				else if(mapping instanceof CompositeStatementObjectMapping) {
+					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 0) {
+						AbstractCodeFragment fragment = mapping.getFragment2();
+						if(fragment instanceof CompositeStatementObject) {
+							CompositeStatementObject statement = (CompositeStatementObject)fragment;
+							if(!innerNodes2.contains(statement)) {
+								innerNodes2.add(statement);
+								addedInnerNodes2.add(statement);
+							}
+						}
+					}
+					else {
+						//search for leaf mappings being inexact
+						int subsumedLeafMappings = 0;
+						int inExactSubsumedLeafMappings = 0;
+						for(AbstractCodeMapping mapping2 : operationBodyMapper.getMappings()) {
+							if(mapping2.equals(mapping)) {
+								break;
+							}
+							if((mapping.getFragment1().getLocationInfo().subsumes(mapping2.getFragment1().getLocationInfo()) ||
+									mapping.getFragment2().getLocationInfo().subsumes(mapping2.getFragment2().getLocationInfo())) &&
+									!mapping.getFragment1().equals(mapping2.getFragment1()) && !mapping.getFragment2().equals(mapping2.getFragment2())) {
+								subsumedLeafMappings++;
+								if(!mapping2.getReplacements().isEmpty() || !mapping2.getFragment1().equalFragment(mapping2.getFragment2())) {
+									inExactSubsumedLeafMappings++;
+								}
+							}
+						}
+						if(inExactSubsumedLeafMappings == subsumedLeafMappings && subsumedLeafMappings > 0) {
+							AbstractCodeFragment fragment = mapping.getFragment2();
+							if(fragment instanceof CompositeStatementObject) {
+								CompositeStatementObject statement = (CompositeStatementObject)fragment;
+								if(!innerNodes2.contains(statement)) {
+									innerNodes2.add(statement);
+									addedInnerNodes2.add(statement);
+								}
+							}
+						}
+					}
+				}
 			}
 			innerNodes1.remove(composite1);
 			innerNodes1.addAll(addedInnerNodes1);
@@ -2155,9 +2196,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//match expressions in inner nodes from T2 with leaves from T1
 			List<AbstractExpression> expressionsT2 = new ArrayList<AbstractExpression>();
 			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
-				for(AbstractExpression expression : composite.getExpressions()) {
-					expression.replaceParametersWithArguments(parameterToArgumentMap2);
-					expressionsT2.add(expression);
+				if(!addedInnerNodes2.contains(composite)) {
+					for(AbstractExpression expression : composite.getExpressions()) {
+						expression.replaceParametersWithArguments(parameterToArgumentMap2);
+						expressionsT2.add(expression);
+					}
 				}
 			}
 			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {

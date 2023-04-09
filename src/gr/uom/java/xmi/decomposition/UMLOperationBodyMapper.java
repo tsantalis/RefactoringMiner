@@ -7035,6 +7035,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			else if(statement1.getString().equals("return null;\n") && statement2.getString().equals("return;\n")) {
 				return replacementInfo.getReplacements();
 			}
+			if(statement1.getString().equals("return false;\n") && statement2.getString().equals("return null;\n")) {
+				return replacementInfo.getReplacements();
+			}
+			else if(statement1.getString().equals("return null;\n") && statement2.getString().equals("return false;\n")) {
+				return replacementInfo.getReplacements();
+			}
 		}
 		else if(parentMapper == null && statement1.getParent() != null && statement2.getParent() != null &&
 				statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {

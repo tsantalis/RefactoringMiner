@@ -4629,16 +4629,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					int matchingMappings = 0;
 					for(LeafMapping m : mappingSet) {
 						int matchingReplacements = 0;
-						if(replacements.size() == m.getReplacements().size()) {
-							Iterator<Replacement> iterator1 = replacements.iterator();
-							Iterator<Replacement> iterator2 = m.getReplacements().iterator();
-							while(iterator1.hasNext()) {
-								Replacement r1 = iterator1.next();
-								Replacement r2 = iterator2.next();
-								if(r1.getBefore().equals(r2.getBefore()) || r1.getAfter().equals(r2.getAfter())) {
-									matchingReplacements++;
-								}
+						int min = Math.min(replacements.size(), m.getReplacements().size());
+						Iterator<Replacement> iterator1 = replacements.iterator();
+						Iterator<Replacement> iterator2 = m.getReplacements().iterator();
+						int counter = 0;
+						while(iterator1.hasNext() && counter < min) {
+							Replacement r1 = iterator1.next();
+							Replacement r2 = iterator2.next();
+							if(r1.getBefore().equals(r2.getBefore()) || r1.getAfter().equals(r2.getAfter())) {
+								matchingReplacements++;
 							}
+							counter++;
 						}
 						if(matchingReplacements == replacements.size()) {
 							matchingMappings++;

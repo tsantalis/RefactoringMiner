@@ -612,9 +612,19 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2) {
+	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonSuffix.equals("null;\n") && !commonSuffix.equals("true;\n") && !commonSuffix.equals("false;\n") && !commonSuffix.equals("0;\n")) {
+			if(s1.startsWith("return ") && s1.substring(7, s1.length()).equals(commonSuffix) &&
+					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
+				return true;
+			}
+			if(s2.startsWith("return ") && s2.substring(7, s2.length()).equals(commonSuffix) &&
+					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
+				return true;
+			}
+		}
+		if(variableDeclarations1.size() == 0 && variableDeclarations2.size() == 0 && commonSuffix.equals("0;\n")) {
 			if(s1.startsWith("return ") && s1.substring(7, s1.length()).equals(commonSuffix) &&
 					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
 				return true;

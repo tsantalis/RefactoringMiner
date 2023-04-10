@@ -13,6 +13,7 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
@@ -217,7 +218,7 @@ public class ProjectASTDiffer
 					processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
 				}
 			}
-			if (refactoring instanceof MoveAttributeRefactoring)
+			else if (refactoring instanceof MoveAttributeRefactoring)
 			{
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
 					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
@@ -230,6 +231,16 @@ public class ProjectASTDiffer
 					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
 				}
 			}
+			else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
+				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
+				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
+				String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
+				String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
+				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+				fromRefMiner(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
+			}
+
 		}
 	}
 

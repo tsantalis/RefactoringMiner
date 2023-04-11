@@ -7184,6 +7184,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 					replacementInfo.addReplacement(replacement);
 				}
+				for(Replacement r : replacementInfo.getReplacements()) {
+					if(r instanceof VariableReplacementWithMethodInvocation) {
+						VariableReplacementWithMethodInvocation replacement = (VariableReplacementWithMethodInvocation)r;
+						AbstractCall call = replacement.getInvokedOperation();
+						if(call.getName().equals("of") || call.getName().equals("asList")) {
+							if(replacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+								for(String argument2 : call.arguments()) {
+									List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
+									for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
+										AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
+										if(invocation1 != null && invocation1.getExpression() != null && invocation1.getExpression().equals(replacement.getBefore())) {
+											boolean argumentMatched = false;
+											for(String argument1 : invocation1.arguments()) {
+												List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
+												if(argument1.equals(argument2)) {
+													if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
+														LeafMapping mapping = createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+														addMapping(mapping);
+													}
+													argumentMatched = true;
+												}
+											}
+											if(argumentMatched) {
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 			if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 					!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&

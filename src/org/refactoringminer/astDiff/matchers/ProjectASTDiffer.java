@@ -526,7 +526,7 @@ public class ProjectASTDiffer
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
 				for (AbstractCodeFragment abstractCodeFragment : replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore()) {
-					if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+					if (abstractCodeFragment instanceof CompositeStatementObject && ((CompositeStatementObject)abstractCodeFragment).isLoop()) {
 						enhancedFor = abstractCodeFragment;
 						break;
 					}
@@ -536,9 +536,11 @@ public class ProjectASTDiffer
 					for (VariableDeclaration parameter : lambda.getParameters()) {
 						String variableName = parameter.getVariableName();
 						VariableDeclaration variableDeclaration = enhancedFor.getVariableDeclaration(variableName);
-						Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo());
-						Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo());
-						new LeafMatcher(false).match(srcNode,dstNode,null,mappingStore);
+						if (variableDeclaration != null) {
+							Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo());
+							Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo());
+							new LeafMatcher(false).match(srcNode,dstNode,null,mappingStore);
+						}
 					}
 				}
 				Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,enhancedFor.getLocationInfo());

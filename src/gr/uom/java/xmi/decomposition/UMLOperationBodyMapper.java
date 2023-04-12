@@ -7191,19 +7191,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(call.getName().equals("of") || call.getName().equals("asList")) {
 							if(replacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
 								for(String argument2 : call.arguments()) {
-									List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 									for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
 										AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
 										if(invocation1 != null && invocation1.getExpression() != null && invocation1.getExpression().equals(replacement.getBefore())) {
 											boolean argumentMatched = false;
 											for(String argument1 : invocation1.arguments()) {
-												List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 												if(argument1.equals(argument2)) {
+													List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
+													List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 													if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
 														LeafMapping mapping = createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
 														addMapping(mapping);
 													}
 													argumentMatched = true;
+													break;
 												}
 											}
 											if(argumentMatched) {
@@ -8525,8 +8526,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							boolean argumentMatched = false;
 							for(String argument1 : invocation1.arguments()) {
 								if(argument1.equals(argument2)) {
-									additionallyMatchedStatements1.add(fragment1);
+									List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
+									List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
+									if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
+										LeafMapping mapping = createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+										addMapping(mapping);
+										additionallyMatchedStatements1.add(fragment1);
+									}
 									argumentMatched = true;
+									break;
 								}
 							}
 							if(argumentMatched) {
@@ -8536,9 +8544,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(additionallyMatchedStatements1.size() > 0) {
-					CompositeReplacement composite = new CompositeReplacement(creationCoveringTheEntireStatement1.getName(),
-							invocationCoveringTheEntireStatement2.getName(), additionallyMatchedStatements1, new LinkedHashSet<>());
-					replacementInfo.addReplacement(composite);
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -8575,8 +8580,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													boolean argumentMatched = false;
 													for(String argument1 : invocation1.arguments()) {
 														if(argument1.equals(argument2)) {
-															additionallyMatchedStatements1.add(fragment1);
+															List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
+															List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
+															if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
+																LeafMapping mapping = createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+																addMapping(mapping);
+																additionallyMatchedStatements1.add(fragment1);
+															}
 															argumentMatched = true;
+															break;
 														}
 													}
 													if(argumentMatched) {
@@ -8586,9 +8598,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											}
 										}
 										if(additionallyMatchedStatements1.size() > 0) {
-											CompositeReplacement composite = new CompositeReplacement(creation1.getName(),
-													invocation2.getName(), additionallyMatchedStatements1, new LinkedHashSet<>());
-											replacementInfo.addReplacement(composite);
 											return replacementInfo.getReplacements();
 										}
 									}

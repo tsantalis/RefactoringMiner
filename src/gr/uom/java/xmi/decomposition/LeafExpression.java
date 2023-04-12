@@ -23,6 +23,11 @@ public class LeafExpression extends AbstractCodeFragment {
     	this.string = stringify(expression);
 	}
 
+	protected LeafExpression(String string, LocationInfo locationInfo) {
+		this.string = string;
+		this.locationInfo = locationInfo;
+	}
+
 	protected LeafExpression() {
 		
 	}

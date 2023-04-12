@@ -40,6 +40,10 @@ public abstract class AbstractCall extends LeafExpression {
 		
 	}
 
+	public LeafExpression asLeafExpression() {
+		return new LeafExpression(getString(), getLocationInfo());
+	}
+
 	public String getExpression() {
 		return expression;
 	}

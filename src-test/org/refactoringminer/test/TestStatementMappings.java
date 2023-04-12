@@ -15,7 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -70,7 +70,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "infinispan-043030723632627b0908dca6b24dae91d3dfd938-reverse.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -171,7 +171,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "duplicatedCode-d01dfd14c0f8cae6ad4f78171011cd839b980e00.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-fbd80e76c68558ba58b62311aa1c34fb38baf53a.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -269,7 +269,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -318,7 +318,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -367,7 +367,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-e0a4ee07084bc6ab56a20fbc4a18863462da93eb.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -401,7 +401,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "k9mail-23c49d834d3859fc76a604da32d1789d2e863303.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -435,7 +435,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -471,7 +471,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jadx-2d8d4164830631d3125575f055b417c5addaa22f.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -505,7 +505,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -539,7 +539,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-447005f5c62ad6236aad9116e932f13c4d449546.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -593,7 +593,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "phishman-ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -629,7 +629,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "deeplearning4j-91cdfa1ffd937a4cb01cdc0052874ef7831955e2.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -663,7 +663,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "alluxio-9aeefcd8120bb3b89cdb437d8c32d2ed84b8a825.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -697,7 +697,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "android-iconify-eb500cca282e39d01a9882e1d0a83186da6d1a26.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -731,7 +731,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-boot-becced5f0b7bac8200df7a5706b568687b517b90.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -765,7 +765,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "thymeleaf-378ba37750a9cb1b19a6db434dfa59308f721ea6.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -799,7 +799,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-2d3f5e219af9d1ba916f1dc21a6169a41a254632.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -833,7 +833,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "checkstyle-ab2f93f9bf61816d84154e636d32c81c05854e24.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -867,7 +867,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hive-102b23b16bf26cbf439009b4b95542490a082710.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -901,7 +901,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "OsmAnd-c45b9e6615181b7d8f4d7b5b1cc141169081c02c.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -935,7 +935,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-boot-20d39f7af2165c67d5221f556f58820c992d2cc6.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -969,7 +969,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "languagetool-01cddc5afb590b4d36cb784637a8ea8aa31d3561.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1003,7 +1003,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hive-4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1039,7 +1039,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "cassandra-9a3fa887cfa03c082f249d1d4003d87c14ba5d24.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1073,7 +1073,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commafeed-18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1107,7 +1107,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "buck-f26d234e8d3458f34454583c22e3bd5f4b2a5da8.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1141,7 +1141,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "nutz-de7efe40dad0f4bb900c4fffa80ed377745532b3.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1193,7 +1193,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-48bb4cfd773ac2363019daf4b38456d91cdc1fb1.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1227,7 +1227,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-77ba11175b7d3a3297be5352a512e48e2526569d.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1261,7 +1261,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "miner-6095e8477aeb633c5c647776cdeb22f7cdc5031b.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1310,7 +1310,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-536675b03a5050fda9c3e1fd403818cb50dcc6ff.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1336,7 +1336,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "undertow-d5b2bb8cd1393f1c5a5bb623e3d8906cd57e53c4.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1362,7 +1362,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "graphhopper-7f80425b6a0af9bdfef12c8a873676e39e0a04a6.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1388,7 +1388,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "neo4j-e0072aac53b3b88de787e7ca653c7e17f9499018.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1414,7 +1414,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "intellij-community-ce5f9ff96e2718e4014655f819314ac2ac4bd8bf.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1464,7 +1464,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-7407076d3990752eb5fa4072cd036efd2f656cbc.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1513,7 +1513,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-ad2e0d45875651d9a707b514dd3966fa81a9048c.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1562,7 +1562,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jetty.project-06454f64098e01b42347841211afed229d8798a0.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1611,7 +1611,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-orm-5329bba1ea724eabf5783c71e5127b8f84ad0fcc.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1659,7 +1659,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-289f35da3a57bb5e491b30c7351072b4e801c519.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1708,7 +1708,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "terasology-543a9808a85619dbe5acc2373cb4fe5344442de7.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1756,7 +1756,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-298486a7c320629de12f9506e0133686a7382b01.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1806,7 +1806,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jline2-1eb3b624b288a4b1a054420d3efb05b8f1d28517.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1855,7 +1855,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1903,7 +1903,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-lang-4f514d5eb3e80703012df9be190ae42d35d25bdc.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1946,7 +1946,7 @@ public class TestStatementMappings {
 			}
 		});
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-6658f367682932c0a77061a5aa37c06e480a0c62.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -1995,7 +1995,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-a959dd5034127161aafcf9c56222c7d08aa80e54.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2043,7 +2043,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-7dd8dc62a5fa08e3cc99d2388ff62f5825151fb9.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2092,7 +2092,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "spring-framework-981aefc2c0d2a6fbf9c08d4d54d17923a75a2e01.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2126,7 +2126,7 @@ public class TestStatementMappings {
 		});
 		
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "liferay-plugins-7c7ecf4cffda166938efd0ae34830e2979c25c73.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2175,7 +2175,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jfinal-881baed894540031bd55e402933bcad28b74ca88.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2223,7 +2223,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "gradle-f841d8dda2bf461f595755f85c3eba786783702d.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2272,7 +2272,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-d726f0c1e02c196e2dd87de53b54338be15503f1.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2321,7 +2321,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-45e79a526c7ffebaf8e4758a6cb6b7af05716707.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2371,7 +2371,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-9bebb1eae78401e1d3289dc3d84006c10d10c0ef.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2420,7 +2420,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "checkstyle-f020066f8bdfb378df36904af3df8b5bc48858fd.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2469,7 +2469,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-lang-4d46f014fb8ee44386feb5fec52509f35d0e36ea.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2518,7 +2518,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-b2bbd9941be6b132a83d27c0ae02c935e1dec5dd.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2567,7 +2567,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-a25f53f8871fd178b6791d1194d7358b55d1ba37.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2616,7 +2616,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "okhttp-084b06b48bae2b566bb1be3415b6c847d8ea3682.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2665,7 +2665,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-733780e8a158b7bc45b8b687ac353ecadc905a63.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2718,7 +2718,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-lang-5111ae7db08a70323a51a21df0bbaf46f21e072e.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	@Test
@@ -2766,7 +2766,7 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "Aeron-35893c115ba23bd62a7036a33390420f074ce660.txt"));
-		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
 	private void mapperInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {

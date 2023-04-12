@@ -3778,8 +3778,8 @@ public class UMLModelDiff {
 			if(c1.isLoop()) {
 				for(CompositeStatementObject c2 : operationBodyMapper.getNonMappedInnerNodesT2()) {
 					if(c2.isLoop()) {
-						Set<LeafExpression> intersection = new LinkedHashSet<>(c1.getVariables());
-						intersection.retainAll(c2.getVariables());
+						Set<String> intersection = convertToStringSet(c1.getVariables());
+						intersection.retainAll(convertToStringSet(c2.getVariables()));
 						if(!intersection.isEmpty()) {
 							nonMappedLoopsIteratingOverSameVariable++;
 						}
@@ -3793,6 +3793,14 @@ public class UMLModelDiff {
 						mappings >= nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable) ||
 				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT1/2.0));
+	}
+
+	private static Set<String> convertToStringSet(List<? extends LeafExpression> expressions) {
+		Set<String> set = new LinkedHashSet<>();
+		for(LeafExpression expression : expressions) {
+			set.add(expression.getString());
+		}
+		return set;
 	}
 
 	private boolean isPartOfMethodExtracted(UMLOperation removedOperation, UMLOperation addedOperation, List<UMLOperation> addedOperations, UMLAbstractClassDiff classDiff) {

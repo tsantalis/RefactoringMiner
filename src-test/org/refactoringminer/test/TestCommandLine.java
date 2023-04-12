@@ -2,7 +2,7 @@ package org.refactoringminer.test;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.refactoringminer.RefactoringMiner;
 
 import java.io.FileReader;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Triple;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class GHRepositoryWrapperTest {

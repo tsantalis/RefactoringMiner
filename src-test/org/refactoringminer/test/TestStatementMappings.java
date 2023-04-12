@@ -17,6 +17,8 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -732,7 +734,19 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	private void testExtractMethodStatementMappings(String url, String commit, String folderName, String testResultFileName) throws Exception {
+	@ParameterizedTest
+	@CsvSource({"https://github.com/k9mail/k-9.git, 23c49d834d3859fc76a604da32d1789d2e863303, /k-9, k9mail-23c49d834d3859fc76a604da32d1789d2e863303.txt",
+			"https://github.com/javaparser/javaparser.git, 2d3f5e219af9d1ba916f1dc21a6169a41a254632, /javaparser, javaparser-2d3f5e219af9d1ba916f1dc21a6169a41a254632.txt",
+			"https://github.com/checkstyle/checkstyle.git, ab2f93f9bf61816d84154e636d32c81c05854e24, /checkstyle, checkstyle-ab2f93f9bf61816d84154e636d32c81c05854e24.txt",
+			"https://github.com/apache/hive.git, 102b23b16bf26cbf439009b4b95542490a082710, /hive, hive-102b23b16bf26cbf439009b4b95542490a082710.txt",
+			"https://github.com/osmandapp/OsmAnd.git, c45b9e6615181b7d8f4d7b5b1cc141169081c02c, /OsmAnd, OsmAnd-c45b9e6615181b7d8f4d7b5b1cc141169081c02c.txt",
+			"https://github.com/spring-projects/spring-boot.git, 20d39f7af2165c67d5221f556f58820c992d2cc6, /spring-boot, spring-boot-20d39f7af2165c67d5221f556f58820c992d2cc6.txt",
+			"https://github.com/languagetool-org/languagetool.git, 01cddc5afb590b4d36cb784637a8ea8aa31d3561, /languagetool, languagetool-01cddc5afb590b4d36cb784637a8ea8aa31d3561.txt",
+			"https://github.com/apache/hive.git, 4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6, /hive, hive-4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6.txt",
+			"https://github.com/Athou/commafeed.git, 18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7, /commafeed, commafeed-18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7.txt",
+			"https://github.com/facebook/buck.git, f26d234e8d3458f34454583c22e3bd5f4b2a5da8, /buck, buck-f26d234e8d3458f34454583c22e3bd5f4b2a5da8.txt",
+			"https://github.com/nutzam/nutz.git, de7efe40dad0f4bb900c4fffa80ed377745532b3, /nutz, nutz-de7efe40dad0f4bb900c4fffa80ed377745532b3.txt"})
+	public void testExtractMethodStatementMappings(String url, String commit, String folderName, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 				REPOS + folderName,
@@ -764,39 +778,6 @@ public class TestStatementMappings {
 
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/" + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-
-	@Test
-	public void testExtractMethodStatementMappings1() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/k9mail/k-9.git","23c49d834d3859fc76a604da32d1789d2e863303","/k-9","k9mail-23c49d834d3859fc76a604da32d1789d2e863303.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings2() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/javaparser/javaparser.git","2d3f5e219af9d1ba916f1dc21a6169a41a254632","/javaparser","javaparser-2d3f5e219af9d1ba916f1dc21a6169a41a254632.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings3() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/checkstyle/checkstyle.git","ab2f93f9bf61816d84154e636d32c81c05854e24","/checkstyle","checkstyle-ab2f93f9bf61816d84154e636d32c81c05854e24.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings4() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/apache/hive.git","102b23b16bf26cbf439009b4b95542490a082710","/hive","hive-102b23b16bf26cbf439009b4b95542490a082710.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings5() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/osmandapp/OsmAnd.git","c45b9e6615181b7d8f4d7b5b1cc141169081c02c","/OsmAnd","OsmAnd-c45b9e6615181b7d8f4d7b5b1cc141169081c02c.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings6() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/spring-projects/spring-boot.git","20d39f7af2165c67d5221f556f58820c992d2cc6","/spring-boot","spring-boot-20d39f7af2165c67d5221f556f58820c992d2cc6.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings7() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/languagetool-org/languagetool.git","01cddc5afb590b4d36cb784637a8ea8aa31d3561","/languagetool","languagetool-01cddc5afb590b4d36cb784637a8ea8aa31d3561.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings8() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/apache/hive.git","4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6","/hive","hive-4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6.txt");
 	}
 	@Test
 	public void testExtractMethodStatementMappings9() throws Exception {
@@ -832,18 +813,6 @@ public class TestStatementMappings {
 
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/cassandra-9a3fa887cfa03c082f249d1d4003d87c14ba5d24.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-	@Test
-	public void testExtractMethodStatementMappings10() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/Athou/commafeed.git","18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7","/commafeed","commafeed-18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings11() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/facebook/buck.git","f26d234e8d3458f34454583c22e3bd5f4b2a5da8","/buck","buck-f26d234e8d3458f34454583c22e3bd5f4b2a5da8.txt");
-	}
-	@Test
-	public void testExtractMethodStatementMappings12() throws Exception {
-		testExtractMethodStatementMappings("https://github.com/nutzam/nutz.git","de7efe40dad0f4bb900c4fffa80ed377745532b3","/nutz","nutz-de7efe40dad0f4bb900c4fffa80ed377745532b3.txt");
 	}
 	@Test
 	public void testSlidedStatementMappings() throws Exception {

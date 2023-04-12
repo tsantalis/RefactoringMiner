@@ -92,22 +92,22 @@ public class SpecificCasesTest {
         @Parameterized.Parameter(4)
         public String actual;
 
-        @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
-        public static Iterable<Object[]> data() throws IOException {
-            String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
-            List<Object[]> allCases = new ArrayList<>();
-            String repo = URLHelper.getRepo(url);
-            String commit = URLHelper.getCommit(url);
-            boolean executed = false;
-            List<CaseInfo> infos = new ArrayList<>();
-            infos.add(new CaseInfo(repo,commit));
-            for (CaseInfo info : infos) {
-                List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
-                Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
-                makeAllCases(allCases, info, expectedFilesList, astDiffs);
-            }
-            return allCases;
-        }
+//        @Parameterized.Parameters(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
+//        public static Iterable<Object[]> data() throws IOException {
+//            String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
+//            List<Object[]> allCases = new ArrayList<>();
+//            String repo = URLHelper.getRepo(url);
+//            String commit = URLHelper.getCommit(url);
+//            boolean executed = false;
+//            List<CaseInfo> infos = new ArrayList<>();
+//            infos.add(new CaseInfo(repo,commit));
+//            for (CaseInfo info : infos) {
+//                List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
+//                Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
+//                makeAllCases(allCases, info, expectedFilesList, astDiffs);
+//            }
+//            return allCases;
+//        }
         @Test
         public void testChecker() {
             String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);

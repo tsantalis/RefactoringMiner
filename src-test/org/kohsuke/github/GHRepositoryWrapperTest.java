@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Triple;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
@@ -29,10 +29,10 @@ public class GHRepositoryWrapperTest {
     public void testNumberOfChangedFiles() {
         int numberOfTestCase = 0;
         for (Triple<String, String, Integer> testCase : TEST_CASES_LIST) {
-            Assert.assertEquals(testCase.getRight().intValue(), getNumberOfChangedFile(testCase.getLeft(), testCase.getMiddle()));
+            Assertions.assertEquals(testCase.getRight().intValue(), getNumberOfChangedFile(testCase.getLeft(), testCase.getMiddle()));
             numberOfTestCase++;
         }
-        Assert.assertEquals(10, numberOfTestCase);
+        Assertions.assertEquals(10, numberOfTestCase);
     }
 
 

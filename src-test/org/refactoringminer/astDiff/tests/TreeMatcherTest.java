@@ -3,8 +3,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.gumtreediff.tree.Tree;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runners.Parameterized;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.LeafMatcher;
@@ -23,24 +24,15 @@ import java.util.stream.Stream;
 import static org.refactoringminer.astDiff.utils.UtilMethods.getTreesPath;
 
 
-@RunWith(Parameterized.class)
 /* Created by pourya on 2023-02-15 10:52 p.m. */
 public class TreeMatcherTest {
     private static final String srcFilePath = "src.xml";
     private static final String dstFilePath = "dst.xml";
     private static final String mappingsFilePath = "mappings.json";
 
-    @Parameterized.Parameter(0)
-    public Tree srcTree;
-    @Parameterized.Parameter(1)
-    public Tree dstTree;
-    @Parameterized.Parameter(2)
-    public String expectedMappings;
-    @Parameterized.Parameter(3)
-    public String folderPath;
-
-    @Test
-    public void testMappings()
+    @ParameterizedTest(name= "{index}: Folder: {3}")
+    @MethodSource("initData")
+    public void testMappings(Tree srcTree, Tree dstTree, String expectedMappings, String folderPath)
     {
         ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
         new LeafMatcher(true).match(srcTree,dstTree,null,mappings);
@@ -52,9 +44,8 @@ public class TreeMatcherTest {
         }
     }
 
-    @Parameterized.Parameters(name= "{index}: Folder: {3}")
-    public static Iterable<Object[]> initData() throws Exception {
-        List<Object[]> allCases = new ArrayList<>();
+    public static Stream<Arguments> initData() throws Exception {
+        List<Arguments> allCases = new ArrayList<>();
         try (Stream<Path> stream = Files.walk(Paths.get(getTreesPath()))) {
             stream.filter(path -> Files.isDirectory(path) && !path.toString().equals(getTreesPath()))
                     .forEach(path ->
@@ -63,17 +54,17 @@ public class TreeMatcherTest {
                         Path dstPath = path.resolve(dstFilePath);
                         Path mappingsPath = path.resolve(mappingsFilePath);
                         try {
-                            allCases.add(new Object[]{
+                            allCases.add(Arguments.of(
                                     TreeUtilFunctions.loadTree(srcPath.toString()),
                                     TreeUtilFunctions.loadTree(dstPath.toString()),
                                     FileUtils.readFileToString(new File(mappingsPath.toUri()), "utf-8"),
                                     path.toString()
-                            });
+                            ));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     });
         }
-        return allCases;
+        return allCases.stream();
     }
 }

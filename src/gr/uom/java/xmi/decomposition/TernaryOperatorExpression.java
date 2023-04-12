@@ -7,7 +7,6 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
-import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 public class TernaryOperatorExpression extends LeafExpression {
 

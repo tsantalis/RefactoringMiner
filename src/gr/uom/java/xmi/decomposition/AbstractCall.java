@@ -1017,6 +1017,16 @@ public abstract class AbstractCall extends LeafExpression {
 		String parenthesizedS2 = "("+s2+")";
 		if(parenthesizedS2.equals(s1))
 			return true;
+		if(s1.contains(".<") && !s2.contains(".<")) {
+			String s1WithoutGenerics = s1.substring(0, s1.indexOf(".<") + 1) + s1.substring(s1.indexOf(">") + 1, s1.length());
+			if(s1WithoutGenerics.equals(s2))
+				return true;
+		}
+		if(s2.contains(".<") && !s1.contains(".<")) {
+			String s2WithoutGenerics = s2.substring(0, s2.indexOf(".<") + 1) + s2.substring(s2.indexOf(">") + 1, s2.length());
+			if(s2WithoutGenerics.equals(s1))
+				return true;
+		}
 		return false;
 	}
 

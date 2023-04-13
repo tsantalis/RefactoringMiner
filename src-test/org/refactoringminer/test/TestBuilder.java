@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jgit.lib.Repository;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
@@ -148,7 +148,7 @@ public class TestBuilder {
 			}
 		}
 		System.out.println(buildMarkup());
-		Assert.assertTrue(mainResultMessage, success);
+		Assertions.assertTrue(success, mainResultMessage);
 	}
 
 	private String buildMarkup() {

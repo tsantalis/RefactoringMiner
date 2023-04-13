@@ -16,7 +16,7 @@ import java.io.File;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /**
@@ -30,8 +30,8 @@ public class AllCasesWithLocallyClonedReposTest {
     @MethodSource("initDataWithClonedRepos")
     public void testChecker(String repo, String commit, String srcFileName, String expected, String actual) {
         String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
-        assertEquals(msg, expected.length(),actual.length());
-        assertEquals(msg, expected,actual);
+        assertEquals(expected.length(), actual.length(), msg);
+        assertEquals(expected, actual, msg);
     }
 
     public static Stream<Arguments> initDataWithClonedRepos() throws Exception {

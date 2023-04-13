@@ -18,8 +18,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2023-02-28 4:48 p.m. */
@@ -45,12 +45,12 @@ public class SpecificCasesTest {
                 if (mapping.toString().equals(m2)) m2Check = true;
                 if (mapping.toString().equals(m3)) m3Check = true;
             }
-            assertTrue("SingleVariableDeclaration For RenameParameter Refactoring ", m1Check);
-            assertTrue("PrimitiveType Long For RenameParameter Refactoring ", m2Check);
-            assertTrue("SimpleName For RenameParameter Refactoring ", m3Check);
+            assertTrue(m1Check, "SingleVariableDeclaration For RenameParameter Refactoring ");
+            assertTrue(m2Check, "PrimitiveType Long For RenameParameter Refactoring ");
+            assertTrue(m3Check, "SimpleName For RenameParameter Refactoring ");
             executed = true;
         }
-        assertTrue("RenameParameter test case not executed properly", executed);
+        assertTrue(executed, "RenameParameter test case not executed properly");
 
     }
 
@@ -72,9 +72,9 @@ public class SpecificCasesTest {
                     numOfMappingsForReturnSubTree += 1;
             }
             executed = true;
-            assertEquals(String.format("Number of mappings for %s not equal to 1", returnTreeSrc), 1, numOfMappingsForReturnSubTree);
+            assertEquals(1, numOfMappingsForReturnSubTree, String.format("Number of mappings for %s not equal to 1", returnTreeSrc));
         }
-        assertTrue("ExtractMethodReturnStatement not executed properly", executed);
+        assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
 
     public static Stream<Arguments> initData() throws IOException {
@@ -96,8 +96,8 @@ public class SpecificCasesTest {
     @MethodSource("initData")
     public void testChecker(String repo, String commit, String srcFileName, String expected, String actual) {
         String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
-        assertEquals(msg, expected.length(),actual.length());
-        assertEquals(msg, expected,actual);
+        assertEquals(expected.length(),actual.length(), msg);
+        assertEquals(expected, actual, msg);
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class TestCommandLine {
     private static final String REPOS = "tmp1";
+    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/Data/";
     @Test
     public void testBetweenCommits() throws Exception {
         String jsonPath = REPOS + "/mondrian/mondrian-bc-actual.json";
@@ -23,7 +24,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectBetweenCommits(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/mondrian-bc-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "mondrian-bc-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
@@ -41,7 +42,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectBetweenTags(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/mondrian-bt-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "mondrian-bt-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
@@ -57,7 +58,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectAll(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-all-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-all-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
@@ -74,7 +75,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectAll(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-branch-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-branch-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
@@ -91,7 +92,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectAtCommit(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-commit-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-commit-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }
@@ -120,7 +121,7 @@ public class TestCommandLine {
     		};
     		RefactoringMiner.detectAtGitHubCommit(args);
 
-    		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/drill-" + commit + "-expected.json"));
+    		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-" + commit + "-expected.json"));
     		List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
     		Assert.assertEquals(expected, actual);
     	}
@@ -139,7 +140,7 @@ public class TestCommandLine {
         };
         RefactoringMiner.detectAtGitHubPullRequest(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/drill-gp-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-gp-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assert.assertEquals(expected, actual);
     }

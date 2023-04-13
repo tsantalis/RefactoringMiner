@@ -1282,7 +1282,13 @@ public class TestStatementMappings {
 	}
 
 
-	private void innerTryBlockDeleted(String folderName, String url, String commitId, String containerName, String testResultFileName) throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"/jgit, https://github.com/eclipse/jgit.git, d726f0c1e02c196e2dd87de53b54338be15503f1, call, jgit-d726f0c1e02c196e2dd87de53b54338be15503f1.txt",
+		"/jgit, https://github.com/eclipse/jgit.git, 45e79a526c7ffebaf8e4758a6cb6b7af05716707, call, jgit-45e79a526c7ffebaf8e4758a6cb6b7af05716707.txt",
+		"/jgit, https://github.com/eclipse/jgit.git, 9bebb1eae78401e1d3289dc3d84006c10d10c0ef, call, jgit-9bebb1eae78401e1d3289dc3d84006c10d10c0ef.txt" //improve the mapping of statements: throw new ManifestErrorException(e);
+	})
+	public void innerTryBlockDeleted(String folderName, String url, String commitId, String containerName, String testResultFileName) throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 				REPOS + folderName,
 				url);
@@ -1328,21 +1334,6 @@ public class TestStatementMappings {
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/" + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-	@Test
-	public void innerTryBlockDeleted1() throws Exception {
-		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","d726f0c1e02c196e2dd87de53b54338be15503f1","call","jgit-d726f0c1e02c196e2dd87de53b54338be15503f1.txt");
-	}
-
-	@Test
-	public void innerTryBlockDeleted2() throws Exception {
-		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","45e79a526c7ffebaf8e4758a6cb6b7af05716707","call","jgit-45e79a526c7ffebaf8e4758a6cb6b7af05716707.txt");
-	}
-
-	@Test
-	public void innerTryBlockDeleted3() throws Exception {
-		//improve the mapping of statements: throw new ManifestErrorException(e);
-		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","9bebb1eae78401e1d3289dc3d84006c10d10c0ef","call","jgit-9bebb1eae78401e1d3289dc3d84006c10d10c0ef.txt");
 	}
 
 	@Test

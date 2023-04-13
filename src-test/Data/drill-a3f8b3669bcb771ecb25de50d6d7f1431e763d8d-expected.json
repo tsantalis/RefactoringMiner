@@ -488,6 +488,57 @@
 }]
 },
 {
+	"type": "Extract Variable",
+	"description": "Extract Variable node : DrillNode in method private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 80,
+		"endLine": 80,
+		"startColumn": 9,
+		"endColumn": 51,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 78,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 19,
+		"endColumn": 49,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "node : DrillNode"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 83,
+		"endLine": 83,
+		"startColumn": 9,
+		"endColumn": 64,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 80,
+		"endLine": 86,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
+}]
+},
+{
 	"type": "Move Class",
 	"description": "Move Class org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder moved to org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder",
 	"leftSideLocations": [{

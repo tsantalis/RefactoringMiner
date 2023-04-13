@@ -114,7 +114,7 @@ public class TestCommandLine {
     				"-gc",
     				"https://github.com/apache/drill.git",
     				commit,
-    				"100",
+    				"1000",
     				"-json",
     				jsonPath
     		};

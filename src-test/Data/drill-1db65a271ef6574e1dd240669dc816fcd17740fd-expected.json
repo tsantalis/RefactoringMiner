@@ -677,6 +677,39 @@
 }]
 },
 {
+	"type": "Extract Attribute",
+	"description": "Extract Attribute private CURRENT_VERSION : int in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 39,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 22,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted attribute",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 48,
+		"endLine": 48,
+		"startColumn": 28,
+		"endColumn": 47,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "extracted attribute declaration",
+		"codeElement": "private CURRENT_VERSION : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 28,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted attribute",
+		"codeElement": null
+}]
+},
+{
 	"type": "Extract Method",
 	"description": "Extract Method private reserveAndRunFragments() : void extracted from private startQueryProcessing() : void in class org.apache.drill.exec.work.foreman.Foreman",
 	"leftSideLocations": [{
@@ -718,13 +751,13 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
-		"startLine": 488,
-		"endLine": 498,
+		"startLine": 500,
+		"endLine": 506,
 		"startColumn": 3,
 		"endColumn": 4,
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "source method declaration after extraction",
-		"codeElement": "private startQueryProcessing() : void"
+		"codeElement": "private startAdmittedQuery() : void"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
 		"startLine": 505,
@@ -792,7 +825,7 @@
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/Foreman.java",
 		"startLine": 520,
 		"endLine": 522,
-		"startColumn": 28,
+		"startColumn": 7,
 		"endColumn": 6,
 		"codeElementType": "CATCH_CLAUSE",
 		"description": "added statement in extracted method declaration",
@@ -884,6 +917,102 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "added statement in extracted method declaration",
 		"codeElement": null
+}]
+},
+{
+	"type": "Extract Method",
+	"description": "Extract Method public NodeResources(version int, memoryInBytes long, numVirtualCpu int) extracted from public NodeResources(memoryInBytes long, numVirtualCpu int) in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 36,
+		"endLine": 40,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu int)"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 37,
+		"endLine": 37,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 39,
+		"endLine": 39,
+		"startColumn": 5,
+		"endColumn": 22,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 54,
+		"endLine": 61,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu int)"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 59,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 60,
+		"endLine": 60,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 5,
+		"endColumn": 28,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu int)"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 51,
+		"startColumn": 5,
+		"endColumn": 57,
+		"codeElementType": "CONSTRUCTOR_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "this(CURRENT_VERSION,memoryInBytes,numVirtualCpu)"
 }]
 },
 {
@@ -1100,6 +1229,57 @@
 		"codeElementType": "METHOD_INVOCATION",
 		"description": "extracted method invocation",
 		"codeElement": "mode(PersistentStoreMode.PERSISTENT)"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable unregisteredBit : DrillbitEndpoint in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 304,
+		"endLine": 304,
+		"startColumn": 11,
+		"endColumn": 55,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 273,
+		"endLine": 338,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private updateEndpoints() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 306,
+		"endLine": 306,
+		"startColumn": 34,
+		"endColumn": 77,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "unregisteredBit : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 307,
+		"endLine": 307,
+		"startColumn": 11,
+		"endColumn": 49,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 282,
+		"endLine": 347,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "private updateEndpoints() : void"
 }]
 },
 {

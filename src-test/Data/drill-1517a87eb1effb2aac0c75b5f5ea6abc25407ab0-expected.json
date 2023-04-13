@@ -236,18 +236,18 @@
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 156,
 		"endLine": 158,
-		"startColumn": 39,
+		"startColumn": 5,
 		"endColumn": 6,
-		"codeElementType": "BLOCK",
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
 		"description": "extracted code from source method declaration",
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 156,
 		"endLine": 158,
-		"startColumn": 5,
+		"startColumn": 39,
 		"endColumn": 6,
-		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"codeElementType": "BLOCK",
 		"description": "extracted code from source method declaration",
 		"codeElement": null
 }],
@@ -282,18 +282,18 @@
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 123,
 		"endLine": 125,
-		"startColumn": 39,
+		"startColumn": 5,
 		"endColumn": 6,
-		"codeElementType": "BLOCK",
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
 		"description": "extracted code to extracted method declaration",
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 123,
 		"endLine": 125,
-		"startColumn": 5,
+		"startColumn": 39,
 		"endColumn": 6,
-		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"codeElementType": "BLOCK",
 		"description": "extracted code to extracted method declaration",
 		"codeElement": null
 }, {
@@ -314,6 +314,57 @@
 		"codeElementType": "METHOD_INVOCATION",
 		"description": "extracted method invocation",
 		"codeElement": "visit(op,fragment)"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable bufferedOperatorsMemoryLimit : Long in method private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 194,
+		"endLine": 194,
+		"startColumn": 11,
+		"endColumn": 120,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 166,
+		"endLine": 220,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 211,
+		"endLine": 211,
+		"startColumn": 14,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "bufferedOperatorsMemoryLimit : Long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 220,
+		"endLine": 222,
+		"startColumn": 11,
+		"endColumn": 147,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 187,
+		"endLine": 246,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
 }]
 },
 {
@@ -383,6 +434,15 @@
 		"codeElementType": "RETURN_STATEMENT",
 		"description": "inlined code in target method declaration",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 76,
+		"endLine": 76,
+		"startColumn": 11,
+		"endColumn": 36,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
 }]
 },
 {
@@ -449,6 +509,15 @@
 		"endLine": 72,
 		"startColumn": 11,
 		"endColumn": 34,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "inlined code in target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 76,
+		"endLine": 76,
+		"startColumn": 11,
+		"endColumn": 36,
 		"codeElementType": "RETURN_STATEMENT",
 		"description": "inlined code in target method declaration",
 		"codeElement": null

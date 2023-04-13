@@ -142,6 +142,12 @@ public class TestStatementMappings {
 	}
 
 
+	@ParameterizedTest
+	@CsvSource({
+		"., https://github.com/tsantalis/RefactoringMiner.git, fbd80e76c68558ba58b62311aa1c34fb38baf53a, processLeaves, miner-fbd80e76c68558ba58b62311aa1c34fb38baf53a.txt",
+		"tmp1/javaparser, https://github.com/javaparser/javaparser.git, f4ce6ce924ffbd03518c64cea9b830d04f75b849, apply, javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt",
+		"tmp1/commons-lang, https://github.com/apache/commons-lang.git, 50c1fdecb4ed33ec1bb0d449f294c299d5369701, createNumber, commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt"
+	})
 	public void testCopiedStatementMappings(String fullFolderName, String url, String commitId, String containerName, String testResultFileName) throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 				fullFolderName,
@@ -187,19 +193,6 @@ public class TestStatementMappings {
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/" + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-	@Test
-	public void testCopiedStatementMappings() throws Exception {
-		testCopiedStatementMappings(".", "https://github.com/tsantalis/RefactoringMiner.git", "fbd80e76c68558ba58b62311aa1c34fb38baf53a", "processLeaves", "miner-fbd80e76c68558ba58b62311aa1c34fb38baf53a.txt");
-	}
-	@Test
-	public void testCopiedStatementMappings2() throws Exception {
-		testCopiedStatementMappings("tmp1/javaparser", "https://github.com/javaparser/javaparser.git", "f4ce6ce924ffbd03518c64cea9b830d04f75b849", "apply", "javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt");
-	}
-
-	@Test
-	public void testCopiedStatementMappings3() throws Exception {
-		testCopiedStatementMappings("tmp1/commons-lang", "https://github.com/apache/commons-lang.git", "50c1fdecb4ed33ec1bb0d449f294c299d5369701", "createNumber", "commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt");
 	}
 
 	@Test

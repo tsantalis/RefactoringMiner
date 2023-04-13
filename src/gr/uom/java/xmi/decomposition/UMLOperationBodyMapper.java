@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
@@ -6692,6 +6693,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							String typeTolowerCase = variableType.toString().toLowerCase();
 							if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
 								typeContainsVariableName = true;
+							}
+							if(!typeContainsVariableName && statement1.getString().contains(s1 + "=") && statement2.getString().contains(s2 + "=")) {
+								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableType.toString());
+								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s2);
+								int commonTokens = 0;
+								for(String token1 : tokens1) {
+									for(String token2 : tokens2) {
+										if(token1.toLowerCase().equals(token2.toLowerCase()) || 
+												token1.toLowerCase().startsWith(token2.toLowerCase()) ||
+												token2.toLowerCase().startsWith(token1.toLowerCase())) {
+											commonTokens++;
+										}
+									}
+								}
+								if(commonTokens > 1) {
+									typeContainsVariableName = true;
+								}
 							}
 						}
 					}

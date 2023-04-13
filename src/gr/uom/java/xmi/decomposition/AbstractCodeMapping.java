@@ -221,6 +221,16 @@ public abstract class AbstractCodeMapping {
 						before = before.substring(1, before.length()-1);
 					}
 				}
+				if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+					AbstractCall callBefore = r.getInvokedOperationBefore();
+					AbstractCall callAfter = r.getInvokedOperationAfter();
+					int indexOfArgument2 = callAfter.arguments().indexOf(variableName);
+					if(indexOfArgument2 != -1 && callBefore.arguments().size() == callAfter.arguments().size()) {
+						after = variableName;
+						before = callBefore.arguments().get(indexOfArgument2);
+					}
+				}
 				if(after.startsWith(variableName + ".")) {
 					String suffixAfter = after.substring(variableName.length(), after.length());
 					if(before.endsWith(suffixAfter)) {

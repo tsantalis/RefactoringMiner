@@ -3021,57 +3021,6 @@
 },
 {
 	"type": "Extract Variable",
-	"description": "Extract Variable activeEndpointsUUID : Map<DrillNode,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 309,
-		"endLine": 313,
-		"startColumn": 11,
-		"endColumn": 12,
-		"codeElementType": "IF_STATEMENT",
-		"description": "statement with the initializer of the extracted variable",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 286,
-		"endLine": 287,
-		"startColumn": 36,
-		"endColumn": 91,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "extracted variable declaration",
-		"codeElement": "activeEndpointsUUID : Map<DrillNode,String>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 311,
-		"endLine": 315,
-		"startColumn": 11,
-		"endColumn": 12,
-		"codeElementType": "IF_STATEMENT",
-		"description": "statement with the name of the extracted variable",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 280,
-		"endLine": 348,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with extracted variable",
-		"codeElement": "private updateEndpoints() : void"
-}]
-},
-{
-	"type": "Extract Variable",
 	"description": "Extract Variable drillEndpointNode : DrillNode in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -3135,6 +3084,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 103,
+		"endLine": 103,
+		"startColumn": 11,
+		"endColumn": 90,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 91,
 		"endLine": 116,
 		"startColumn": 3,
@@ -3163,6 +3121,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 105,
+		"endLine": 105,
+		"startColumn": 11,
+		"endColumn": 108,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
 		"startLine": 92,
 		"endLine": 118,
 		"startColumn": 3,
@@ -3179,6 +3146,15 @@
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 100,
 		"endLine": 100,
+		"startColumn": 7,
+		"endColumn": 71,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 101,
+		"endLine": 101,
 		"startColumn": 7,
 		"endColumn": 71,
 		"codeElementType": "EXPRESSION_STATEMENT",
@@ -3214,6 +3190,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 127,
+		"endLine": 127,
+		"startColumn": 5,
+		"endColumn": 59,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 91,
 		"endLine": 185,
 		"startColumn": 3,
@@ -3230,6 +3215,15 @@
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 104,
 		"endLine": 104,
+		"startColumn": 7,
+		"endColumn": 71,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 105,
+		"endLine": 105,
 		"startColumn": 7,
 		"endColumn": 71,
 		"codeElementType": "EXPRESSION_STATEMENT",
@@ -3265,6 +3259,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 133,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 59,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 91,
 		"endLine": 185,
 		"startColumn": 3,
@@ -3281,6 +3284,15 @@
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 108,
 		"endLine": 108,
+		"startColumn": 7,
+		"endColumn": 71,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 109,
+		"endLine": 109,
 		"startColumn": 7,
 		"endColumn": 71,
 		"codeElementType": "EXPRESSION_STATEMENT",
@@ -3309,6 +3321,15 @@
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
 		"startLine": 137,
 		"endLine": 137,
+		"startColumn": 5,
+		"endColumn": 59,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 138,
+		"endLine": 138,
 		"startColumn": 5,
 		"endColumn": 59,
 		"codeElementType": "EXPRESSION_STATEMENT",
@@ -3441,6 +3462,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/BestFitQueueSelection.java",
+		"startLine": 88,
+		"endLine": 90,
+		"startColumn": 5,
+		"endColumn": 34,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/BestFitQueueSelection.java",
 		"startLine": 70,
 		"endLine": 92,
 		"startColumn": 3,
@@ -3469,6 +3499,15 @@
 		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/BestFitQueueSelection.java",
+		"startLine": 90,
+		"endLine": 91,
+		"startColumn": 5,
+		"endColumn": 55,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/BestFitQueueSelection.java",
 		"startLine": 71,
 		"endLine": 93,
 		"startColumn": 3,
@@ -3488,6 +3527,15 @@
 		"startColumn": 9,
 		"endColumn": 116,
 		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/DefaultQueueSelection.java",
+		"startLine": 49,
+		"endLine": 50,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "THROW_STATEMENT",
 		"description": "statement with the initializer of the extracted variable",
 		"codeElement": null
 }, {
@@ -3516,6 +3564,15 @@
 		"startColumn": 9,
 		"endColumn": 104,
 		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/config/selectionpolicy/DefaultQueueSelection.java",
+		"startLine": 51,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 44,
+		"codeElementType": "THROW_STATEMENT",
 		"description": "statement with the name of the extracted variable",
 		"codeElement": null
 }, {
@@ -3687,6 +3744,15 @@
 	"description": "Extract Variable unregisteredNode : DrillNode in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 310,
+		"endLine": 312,
+		"startColumn": 13,
+		"endColumn": 62,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 309,
 		"endLine": 313,
 		"startColumn": 11,
@@ -3715,6 +3781,15 @@
 		"codeElement": "unregisteredNode : DrillNode"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 312,
+		"endLine": 314,
+		"startColumn": 13,
+		"endColumn": 67,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
 		"startLine": 311,
 		"endLine": 315,
 		"startColumn": 11,
@@ -3730,57 +3805,6 @@
 		"endColumn": 4,
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "method declaration with extracted variable",
-		"codeElement": "private updateEndpoints() : void"
-}]
-},
-{
-	"type": "Inline Variable",
-	"description": "Inline Variable UUIDtoEndpoints : Map<DrillbitEndpoint,String> in method private updateEndpoints() : void from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 288,
-		"endLine": 289,
-		"startColumn": 43,
-		"endColumn": 75,
-		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
-		"description": "inlined variable declaration",
-		"codeElement": "UUIDtoEndpoints : Map<DrillbitEndpoint,String>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 309,
-		"endLine": 313,
-		"startColumn": 11,
-		"endColumn": 12,
-		"codeElementType": "IF_STATEMENT",
-		"description": "statement with the name of the inlined variable",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 311,
-		"endLine": 315,
-		"startColumn": 11,
-		"endColumn": 12,
-		"codeElementType": "IF_STATEMENT",
-		"description": "statement with the initializer of the inlined variable",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 280,
-		"endLine": 348,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with inlined variable",
 		"codeElement": "private updateEndpoints() : void"
 }]
 },
@@ -3875,6 +3899,192 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "method declaration with renamed variable",
 		"codeElement": "public drillbitUnregistered(unregisteredDrillbitsUUID Map<DrillbitEndpoint,String>) : void"
+}]
+},
+{
+	"type": "Move Code",
+	"description": "Move Code from public testRMStateBlobSerDe() : void to public testSetup() : void in class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 132,
+		"endLine": 158,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public testRMStateBlobSerDe() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 139,
+		"endLine": 139,
+		"startColumn": 7,
+		"endColumn": 71,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 142,
+		"endLine": 142,
+		"startColumn": 7,
+		"endColumn": 69,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 143,
+		"endLine": 143,
+		"startColumn": 7,
+		"endColumn": 75,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 146,
+		"endLine": 146,
+		"startColumn": 9,
+		"endColumn": 87,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 9,
+		"endColumn": 63,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 134,
+		"endLine": 136,
+		"startColumn": 5,
+		"endColumn": 22,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 140,
+		"endLine": 140,
+		"startColumn": 7,
+		"endColumn": 92,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 145,
+		"endLine": 148,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 145,
+		"endLine": 148,
+		"startColumn": 53,
+		"endColumn": 8,
+		"codeElementType": "BLOCK",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 91,
+		"endLine": 185,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "public testSetup() : void"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 179,
+		"endLine": 179,
+		"startColumn": 5,
+		"endColumn": 69,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 170,
+		"endLine": 170,
+		"startColumn": 5,
+		"endColumn": 67,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 171,
+		"endLine": 171,
+		"startColumn": 5,
+		"endColumn": 73,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 174,
+		"endLine": 174,
+		"startColumn": 7,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 175,
+		"endLine": 175,
+		"startColumn": 7,
+		"endColumn": 61,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 159,
+		"endLine": 164,
+		"startColumn": 5,
+		"endColumn": 22,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 183,
+		"endLine": 183,
+		"startColumn": 5,
+		"endColumn": 90,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 173,
+		"endLine": 176,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 173,
+		"endLine": 176,
+		"startColumn": 60,
+		"endColumn": 6,
+		"codeElementType": "BLOCK",
+		"description": "moved code to target method declaration",
+		"codeElement": null
 }]
 },
 {
@@ -5414,6 +5624,132 @@
 }]
 },
 {
+	"type": "Replace Attribute With Variable",
+	"description": "Replace Attribute With Variable endpoint : DrillbitEndpoint to endpoint : DrillbitEndpoint in method public update(handle RegistrationHandle, state State) : RegistrationHandle from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 28,
+		"endColumn": 36,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 215,
+		"endLine": 235,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public update(handle RegistrationHandle, state State) : RegistrationHandle"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 219,
+		"endLine": 219,
+		"startColumn": 28,
+		"endColumn": 36,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "endpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 211,
+		"endLine": 233,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public update(handle RegistrationHandle, state State) : RegistrationHandle"
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute blobsToSerialize : Map<String,RMStateBlob> to blobsToSerialize : Map<String,RMStateBlob> in method public testRMStateBlobSerDe() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 141,
+		"endLine": 141,
+		"startColumn": 32,
+		"endColumn": 66,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "blobsToSerialize : Map<String,RMStateBlob>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 132,
+		"endLine": 158,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public testRMStateBlobSerDe() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 87,
+		"endLine": 87,
+		"startColumn": 42,
+		"endColumn": 76,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "blobsToSerialize : Map<String,RMStateBlob>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 208,
+		"endLine": 218,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public testRMStateBlobSerDe() : void"
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute drillUUID : List<String> to drillUUID : List<String> in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 84,
+		"endLine": 84,
+		"startColumn": 26,
+		"endColumn": 55,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "drillUUID : List<String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 66,
+		"endLine": 130,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public testSetup() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 85,
+		"endLine": 85,
+		"startColumn": 30,
+		"endColumn": 59,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "drillUUID : List<String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/resourcemgr/RMBlobManagerTest.java",
+		"startLine": 91,
+		"endLine": 185,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public testSetup() : void"
+}]
+},
+{
 	"type": "Replace Variable With Attribute",
 	"description": "Replace Variable With Attribute foreman1 : ForemanResourceUsage to foreman1RsrcUsage : ForemanResourceUsage in method public testSetup() : void from class org.apache.drill.exec.resourcemgr.RMBlobManagerTest",
 	"leftSideLocations": [{
@@ -5537,6 +5873,132 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "method declaration with renamed variable",
 		"codeElement": "public testSetup() : void"
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithGroupByProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 216,
+		"endLine": 216,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 214,
+		"endLine": 226,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 228,
+		"endLine": 236,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestSingleMajorFragmentWithGroupByProjectAndScan() : void"
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestSingleMajorFragmentWithProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 201,
+		"endLine": 201,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 199,
+		"endLine": 211,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 217,
+		"endLine": 225,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestSingleMajorFragmentWithProjectAndScan() : void"
+}]
+},
+{
+	"type": "Replace Variable With Attribute",
+	"description": "Replace Variable With Attribute onlineEndpoints : Map<DrillbitEndpoint,String> to onlineEndpoints : Map<DrillbitEndpoint,String> in method public TestTwoMajorFragmentWithSortyProjectAndScan() : void from class org.apache.drill.exec.planner.rm.TestMemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 231,
+		"endLine": 231,
+		"startColumn": 35,
+		"endColumn": 85,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 229,
+		"endLine": 241,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 92,
+		"endLine": 92,
+		"startColumn": 48,
+		"endColumn": 63,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "onlineEndpoints : Map<DrillbitEndpoint,String>"
+}, {
+		"filePath": "exec/java-exec/src/test/java/org/apache/drill/exec/planner/rm/TestMemoryCalculator.java",
+		"startLine": 239,
+		"endLine": 248,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public TestTwoMajorFragmentWithSortyProjectAndScan() : void"
 }]
 },
 {

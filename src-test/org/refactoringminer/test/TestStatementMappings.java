@@ -36,7 +36,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestStatementMappings {
 	private static final String REPOS = "tmp1";
-	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/Data/";
+	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/mappings/";
 	private GitService gitService = new GitServiceImpl();
 
 	@Test

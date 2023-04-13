@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TestCommandLine {
     private static final String REPOS = "tmp1";
-    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/Data/";
+    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/commandline/";
     @Test
     public void testBetweenCommits() throws Exception {
         String jsonPath = REPOS + "/mondrian/mondrian-bc-actual.json";

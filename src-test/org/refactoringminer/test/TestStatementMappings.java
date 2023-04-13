@@ -41,40 +41,6 @@ public class TestStatementMappings {
 	private GitService gitService = new GitServiceImpl();
 
 	@Test
-	public void testNestedExtractMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-				REPOS + "/infinispan",
-				"https://github.com/infinispan/infinispan.git");
-
-		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "043030723632627b0908dca6b24dae91d3dfd938", new RefactoringHandler() {
-			@Override
-			public void handle(String commitId, List<Refactoring> refactorings) {
-				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
-				for (Refactoring ref : refactorings) {
-					if(ref instanceof ExtractOperationRefactoring) {
-						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
-						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
-						if(!bodyMapper.isNested()) {
-							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
-								parentMappers.add(bodyMapper.getParentMapper());
-							}
-						}
-						mapperInfo(bodyMapper, actual);
-					}
-				}
-				for(UMLOperationBodyMapper parentMapper : parentMappers) {
-					mapperInfo(parentMapper, actual);
-				}
-			}
-		});
-
-		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt"));
-		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-
-	@Test
 	public void testNestedInlineMethodStatementMappings() throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
@@ -368,6 +334,40 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/flink-e0a4ee07084bc6ab56a20fbc4a18863462da93eb.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testNestedExtractMethodStatementMappings() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+				REPOS + "/infinispan",
+				"https://github.com/infinispan/infinispan.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "043030723632627b0908dca6b24dae91d3dfd938", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 	@Test

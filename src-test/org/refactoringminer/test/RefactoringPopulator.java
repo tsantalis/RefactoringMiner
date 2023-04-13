@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefactoringPopulator {
-	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/Data/";
+	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/oracle/";
 
 	public enum Systems {
 		FSE(1), All(2);

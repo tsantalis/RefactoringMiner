@@ -2,7 +2,7 @@ package org.refactoringminer.astDiff.tests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.gumtreediff.tree.Tree;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,7 +38,7 @@ public class TreeMatcherTest {
         new LeafMatcher(true).match(srcTree,dstTree,null,mappings);
         try {
             String actual = MappingExportModel.exportString(mappings);
-            Assert.assertEquals(expectedMappings,actual);
+            assertEquals(expectedMappings,actual);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

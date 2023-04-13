@@ -336,27 +336,14 @@ public class TestStatementMappings {
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/flink-e0a4ee07084bc6ab56a20fbc4a18863462da93eb.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
-
-	@Test
-	public void testNestedExtractMethodStatementMappings1() throws Exception {
-		testNestedExtractMethodStatementMappings("tmp1/infinispan","https://github.com/infinispan/infinispan.git","043030723632627b0908dca6b24dae91d3dfd938","infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt");
-	}
-
-	@Test
-	public void testNestedExtractMethodStatementMappings2() throws Exception {
-		testNestedExtractMethodStatementMappings("tmp1/j2objc","https://github.com/google/j2objc.git","d05d92de40542e85f9f26712d976e710be82914e","j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt");
-	}
-
-	@Test
-	public void testNestedExtractMethodStatementMappings4() throws Exception {
-		testNestedExtractMethodStatementMappings("tmp1/buck","https://github.com/facebook/buck.git","7e104c3ed4b80ec8e9b72356396f879d1067cc40","buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt");
-	}
-
-	@Test
-	public void testNestedExtractMethodStatementMappingsWithIntermediateDelegate() throws Exception {
-		testNestedExtractMethodStatementMappings(".","https://github.com/tsantalis/RefactoringMiner.git","447005f5c62ad6236aad9116e932f13c4d449546","miner-447005f5c62ad6236aad9116e932f13c4d449546.txt");
-	}
-	private void testNestedExtractMethodStatementMappings(String fullFolderName, String url, String commitId, String testResultFileName) throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+			"tmp1/infinispan, https://github.com/infinispan/infinispan.git, 043030723632627b0908dca6b24dae91d3dfd938, infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt",
+			"tmp1/j2objc, https://github.com/google/j2objc.git, d05d92de40542e85f9f26712d976e710be82914e, j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt",
+			"tmp1/buck, https://github.com/facebook/buck.git, 7e104c3ed4b80ec8e9b72356396f879d1067cc40, buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt",
+			"., https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt" // WithIntermediateDelegate
+	})
+	public void testNestedExtractMethodStatementMappings(String fullFolderName, String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(
 				fullFolderName,

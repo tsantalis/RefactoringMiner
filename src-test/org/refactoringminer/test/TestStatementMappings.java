@@ -1281,14 +1281,14 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void innerTryBlockDeleted() throws Exception {
+
+	private void innerTryBlockDeleted(String folderName, String url, String commitId, String containerName, String testResultFileName) throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
-				REPOS + "/jgit",
-				"https://github.com/eclipse/jgit.git");
+				REPOS + folderName,
+				url);
 
 		final List<String> actual = new ArrayList<>();
-		String commitId = "d726f0c1e02c196e2dd87de53b54338be15503f1";
+
 		List<Refactoring> refactoringsAtRevision;
 		try (RevWalk walk = new RevWalk(repository)) {
 			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
@@ -1317,7 +1317,7 @@ public class TestStatementMappings {
 					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
 					for(UMLClassDiff classDiff : commonClassDiff) {
 						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("call") && mapper.getContainer2().getName().equals("call")) {
+							if(mapper.getContainer1().getName().equals(containerName) && mapper.getContainer2().getName().equals(containerName)) {
 								mapperInfo(mapper, actual);
 								break;
 							}
@@ -1326,107 +1326,23 @@ public class TestStatementMappings {
 				}
 			}
 		}
-		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/jgit-d726f0c1e02c196e2dd87de53b54338be15503f1.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/" + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+	@Test
+	public void innerTryBlockDeleted1() throws Exception {
+		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","d726f0c1e02c196e2dd87de53b54338be15503f1","call","jgit-d726f0c1e02c196e2dd87de53b54338be15503f1.txt");
 	}
 
 	@Test
 	public void innerTryBlockDeleted2() throws Exception {
-		Repository repository = gitService.cloneIfNotExists(
-				REPOS + "/jgit",
-				"https://github.com/eclipse/jgit.git");
-
-		final List<String> actual = new ArrayList<>();
-		String commitId = "45e79a526c7ffebaf8e4758a6cb6b7af05716707";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("call") && mapper.getContainer2().getName().equals("call")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/jgit-45e79a526c7ffebaf8e4758a6cb6b7af05716707.txt"));
-		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","45e79a526c7ffebaf8e4758a6cb6b7af05716707","call","jgit-45e79a526c7ffebaf8e4758a6cb6b7af05716707.txt");
 	}
 
 	@Test
 	public void innerTryBlockDeleted3() throws Exception {
 		//improve the mapping of statements: throw new ManifestErrorException(e);
-		Repository repository = gitService.cloneIfNotExists(
-				REPOS + "/jgit",
-				"https://github.com/eclipse/jgit.git");
-
-		final List<String> actual = new ArrayList<>();
-		String commitId = "9bebb1eae78401e1d3289dc3d84006c10d10c0ef";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("call") && mapper.getContainer2().getName().equals("call")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/jgit-9bebb1eae78401e1d3289dc3d84006c10d10c0ef.txt"));
-		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+		innerTryBlockDeleted("/jgit","https://github.com/eclipse/jgit.git","9bebb1eae78401e1d3289dc3d84006c10d10c0ef","call","jgit-9bebb1eae78401e1d3289dc3d84006c10d10c0ef.txt");
 	}
 
 	@Test

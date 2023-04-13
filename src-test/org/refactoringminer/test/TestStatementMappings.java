@@ -1087,7 +1087,20 @@ public class TestStatementMappings {
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/flink-7407076d3990752eb5fa4072cd036efd2f656cbc.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
-	private void testRestructuredStatementMappings(String folderName, String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+			"/flink, https://github.com/apache/flink.git, 536675b03a5050fda9c3e1fd403818cb50dcc6ff, getUnguardedFileSystem, true, flink-536675b03a5050fda9c3e1fd403818cb50dcc6ff.txt",
+			"/spring-framework, https://github.com/spring-projects/spring-framework.git, ad2e0d45875651d9a707b514dd3966fa81a9048c, writeWithMessageConverters, true, spring-framework-ad2e0d45875651d9a707b514dd3966fa81a9048c.txt",
+			"/jetty.project, https://github.com/eclipse/jetty.project.git, 06454f64098e01b42347841211afed229d8798a0, send, true, jetty.project-06454f64098e01b42347841211afed229d8798a0.txt",
+			"/hibernate-orm, https://github.com/hibernate/hibernate-orm.git, 5329bba1ea724eabf5783c71e5127b8f84ad0fcc, bindClass, true, hibernate-orm-5329bba1ea724eabf5783c71e5127b8f84ad0fcc.txt",
+			"/spring-framework, https://github.com/spring-projects/spring-framework.git, 289f35da3a57bb5e491b30c7351072b4e801c519, writeWithMessageConverters, false, spring-framework-289f35da3a57bb5e491b30c7351072b4e801c519.txt",
+			"/Terasology, https://github.com/MovingBlocks/Terasology.git, 543a9808a85619dbe5acc2373cb4fe5344442de7, cleanup, true, terasology-543a9808a85619dbe5acc2373cb4fe5344442de7.txt",
+			"/jgit, https://github.com/eclipse/jgit.git, 298486a7c320629de12f9506e0133686a7382b01, diff, false, jgit-298486a7c320629de12f9506e0133686a7382b01.txt",
+			"/jline2, https://github.com/jline/jline2.git, 1eb3b624b288a4b1a054420d3efb05b8f1d28517, drawBuffer, true, jline2-1eb3b624b288a4b1a054420d3efb05b8f1d28517.txt", // TODO fix block mappings
+			"/jgit, https://github.com/eclipse/jgit.git, 5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd, call, true, jgit-5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd.txt",
+			"/commons-lang, https://github.com/apache/commons-lang.git, 4f514d5eb3e80703012df9be190ae42d35d25bdc, formatPeriod, false, commons-lang-4f514d5eb3e80703012df9be190ae42d35d25bdc.txt"
+	})
+	public void testRestructuredStatementMappings(String folderName, String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 				REPOS + folderName,
 				url);
@@ -1133,57 +1146,6 @@ public class TestStatementMappings {
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/" + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-
-	@Test
-	public void testRestructuredStatementMappings1() throws Exception {
-		testRestructuredStatementMappings("/flink", "https://github.com/apache/flink.git", "536675b03a5050fda9c3e1fd403818cb50dcc6ff", "getUnguardedFileSystem", true, "flink-536675b03a5050fda9c3e1fd403818cb50dcc6ff.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings4() throws Exception {
-		testRestructuredStatementMappings("/spring-framework", "https://github.com/spring-projects/spring-framework.git", "ad2e0d45875651d9a707b514dd3966fa81a9048c", "writeWithMessageConverters", true, "spring-framework-ad2e0d45875651d9a707b514dd3966fa81a9048c.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings5() throws Exception {
-		testRestructuredStatementMappings("/jetty.project", "https://github.com/eclipse/jetty.project.git", "06454f64098e01b42347841211afed229d8798a0", "send", true, "jetty.project-06454f64098e01b42347841211afed229d8798a0.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings6() throws Exception {
-		testRestructuredStatementMappings("/hibernate-orm", "https://github.com/hibernate/hibernate-orm.git", "5329bba1ea724eabf5783c71e5127b8f84ad0fcc", "bindClass", true, "hibernate-orm-5329bba1ea724eabf5783c71e5127b8f84ad0fcc.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings7() throws Exception {
-		testRestructuredStatementMappings("/spring-framework", "https://github.com/spring-projects/spring-framework.git", "289f35da3a57bb5e491b30c7351072b4e801c519", "writeWithMessageConverters", false, "spring-framework-289f35da3a57bb5e491b30c7351072b4e801c519.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings8() throws Exception {
-		testRestructuredStatementMappings("/Terasology", "https://github.com/MovingBlocks/Terasology.git", "543a9808a85619dbe5acc2373cb4fe5344442de7", "cleanup", true, "terasology-543a9808a85619dbe5acc2373cb4fe5344442de7.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings9() throws Exception {
-		testRestructuredStatementMappings("/jgit", "https://github.com/eclipse/jgit.git", "298486a7c320629de12f9506e0133686a7382b01", "diff", false, "jgit-298486a7c320629de12f9506e0133686a7382b01.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings10() throws Exception {
-		//TODO fix block mappings
-		testRestructuredStatementMappings("/jline2", "https://github.com/jline/jline2.git", "1eb3b624b288a4b1a054420d3efb05b8f1d28517", "drawBuffer", true, "jline2-1eb3b624b288a4b1a054420d3efb05b8f1d28517.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings11() throws Exception {
-		testRestructuredStatementMappings("/jgit", "https://github.com/eclipse/jgit.git", "5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd", "call", true, "jgit-5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd.txt");
-	}
-
-	@Test
-	public void testRestructuredStatementMappings12() throws Exception {
-		testRestructuredStatementMappings("/commons-lang", "https://github.com/apache/commons-lang.git", "4f514d5eb3e80703012df9be190ae42d35d25bdc", "formatPeriod", false, "commons-lang-4f514d5eb3e80703012df9be190ae42d35d25bdc.txt");
 	}
 
 

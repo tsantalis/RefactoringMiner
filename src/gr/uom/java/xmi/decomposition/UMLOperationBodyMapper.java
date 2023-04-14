@@ -2667,7 +2667,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		double editDistance = 0;
 		double maxLength = 0;
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable()) {
+			if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable() ||
+					mapping.containsReplacement(ReplacementType.METHOD_INVOCATION_EXPRESSION_ARGUMENT_SWAPPED)) {
 				continue;
 			}
 			String s1 = preprocessInput1(mapping.getFragment1(), mapping.getFragment2());
@@ -2677,6 +2678,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				maxLength += Math.max(s1.length(), s2.length());
 			}
 		}
+		if(maxLength == 0)
+			return 0;
 		return editDistance/maxLength;
 	}
 
@@ -7695,6 +7698,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+		}
+		//method invocation is identical if expression and one arguments are swapped
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.identicalWithExpressionArgumentSwap(invocationCoveringTheEntireStatement2)) {
+			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_EXPRESSION_ARGUMENT_SWAPPED);
+			replacementInfo.addReplacement(replacement);
+			return replacementInfo.getReplacements();
 		}
 		//method invocation is identical if arguments are wrapped or concatenated
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

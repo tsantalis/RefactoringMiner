@@ -790,6 +790,20 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {
+		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || this.getName().contains(call.getName()) || call.getName().contains(this.getName()))) {
+			int argumentIndex1 = arguments().indexOf(call.getExpression());
+			int argumentIndex2 = call.arguments().indexOf(getExpression());
+			if(argumentIndex1 != -1 && argumentIndex2 != -1 && argumentIndex1 == argumentIndex2) {
+				Set<String> argumentIntersection = argumentIntersection(call);
+				if(argumentIntersection.size() == arguments().size()-1 && argumentIntersection.size() == call.arguments().size()-1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean identical(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<UMLOperationBodyMapper> lambdaMappers) {
 		return identicalExpression(call, replacements, parameterToArgumentMap) &&
 				identicalName(call) &&

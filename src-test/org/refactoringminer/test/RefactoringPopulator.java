@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RefactoringPopulator {
+	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/oracle/";
 
 	public enum Systems {
 		FSE(1), All(2);
@@ -127,7 +128,8 @@ public class RefactoringPopulator {
 		MergeMethod(new BigInteger("19807040628566084398385987584")),
 		SplitMethod(new BigInteger("39614081257132168796771975168")),
 		MoveCode(new BigInteger("79228162514264337593543950336")),
-		All(new BigInteger("158456325028528675187087900671"));
+		ReplaceAnonymousWithClass(new BigInteger("158456325028528675187087900672")),
+		All(new BigInteger("316912650057057350374175801343"));
 
 		private BigInteger value;
 
@@ -177,7 +179,7 @@ public class RefactoringPopulator {
 
 	private static List<String> getDeletedCommits() {
 		List<String> deletedCommits = new ArrayList<String>();
-		String file = System.getProperty("user.dir") + "/src-test/Data/deleted_commits.txt";
+		String file = EXPECTED_PATH + "deleted_commits.txt";
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -196,7 +198,7 @@ public class RefactoringPopulator {
 	public static List<Root> getFSERefactorings(BigInteger flag) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
-		String jsonFile = System.getProperty("user.dir") + "/src-test/Data/data.json";
+		String jsonFile = EXPECTED_PATH + "data.json";
 
 		List<Root> roots = mapper.readValue(new File(jsonFile),
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));

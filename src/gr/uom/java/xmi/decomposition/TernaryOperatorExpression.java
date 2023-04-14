@@ -3,20 +3,19 @@ package gr.uom.java.xmi.decomposition;
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiFile;
 
-import gr.uom.java.xmi.Formatter;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
-public class TernaryOperatorExpression {
+public class TernaryOperatorExpression extends LeafExpression {
 
 	private AbstractExpression condition;
 	private AbstractExpression thenExpression;
 	private AbstractExpression elseExpression;
-	private String expression;
 
 	public TernaryOperatorExpression(PsiFile cu, String filePath, PsiConditionalExpression expression, VariableDeclarationContainer container) {
+		super(cu, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);
 		this.condition = new AbstractExpression(cu, filePath, expression.getCondition(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
 		if(expression.getThenExpression() != null) {
 			this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
@@ -24,7 +23,6 @@ public class TernaryOperatorExpression {
 		if(expression.getElseExpression() != null) {
 			this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
 		}
-		this.expression = Formatter.format(expression);
 	}
 
 	public AbstractExpression getCondition() {
@@ -40,7 +38,7 @@ public class TernaryOperatorExpression {
 	}
 
 	public String getExpression() {
-		return expression;
+		return getString();
 	}
 
 	public Replacement makeReplacementWithTernaryOnTheRight(String statement) {

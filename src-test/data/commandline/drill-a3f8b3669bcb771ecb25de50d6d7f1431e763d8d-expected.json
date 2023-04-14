@@ -1,0 +1,1665 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/apache/drill.git",
+	"sha1": "a3f8b3669bcb771ecb25de50d6d7f1431e763d8d",
+	"url": "https://github.com/apache/drill/commit/a3f8b3669bcb771ecb25de50d6d7f1431e763d8d",
+	"refactorings": [{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier package to private in attribute private logger : Logger from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 33,
+		"endColumn": 111,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "package logger : Logger"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 50,
+		"endLine": 50,
+		"startColumn": 41,
+		"endColumn": 119,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "private logger : Logger"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type bufferedOperators : Multimap<DrillbitEndpoint,PhysicalOperator> to bufferedOperators : Map<DrillNode,List<PhysicalOperator>> in class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 64,
+		"endColumn": 81,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "bufferedOperators : Multimap<DrillbitEndpoint,PhysicalOperator>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 74,
+		"endLine": 74,
+		"startColumn": 58,
+		"endColumn": 75,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "bufferedOperators : Map<DrillNode,List<PhysicalOperator>>"
+}]
+},
+{
+	"type": "Change Attribute Type",
+	"description": "Change Attribute Type numVirtualCpu : long to numVirtualCpu : int in class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 16,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "numVirtualCpu : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 15,
+		"endColumn": 28,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "changed-type attribute declaration",
+		"codeElement": "numVirtualCpu : int"
+}]
+},
+{
+	"type": "Change Class Access Modifier",
+	"description": "Change Class Access Modifier protected to public in class org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Fragment.java",
+		"startLine": 174,
+		"endLine": 190,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 69,
+		"endLine": 85,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with changed access modifier",
+		"codeElement": "org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type cpu : long to cpu : int in method public create(cpu int) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 143,
+		"startColumn": 38,
+		"endColumn": 46,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "cpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 145,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long) : NodeResources"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 143,
+		"startColumn": 38,
+		"endColumn": 45,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "cpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 143,
+		"endLine": 145,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public create(cpu int) : NodeResources"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type cpu : long to cpu : int in method public create(cpu int, memory long) : NodeResources from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 38,
+		"endColumn": 46,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "cpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public create(cpu long, memory long) : NodeResources"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 147,
+		"startColumn": 38,
+		"endColumn": 45,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "cpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 147,
+		"endLine": 149,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public create(cpu int, memory long) : NodeResources"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type numVirtualCpu : long to numVirtualCpu : int in method public NodeResources(memoryInBytes long, numVirtualCpu int) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 51,
+		"startColumn": 44,
+		"endColumn": 62,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "numVirtualCpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 53,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu long)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 51,
+		"startColumn": 44,
+		"endColumn": 61,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "numVirtualCpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 51,
+		"endLine": 53,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu int)"
+}]
+},
+{
+	"type": "Change Parameter Type",
+	"description": "Change Parameter Type numVirtualCpu : long to numVirtualCpu : int in method public NodeResources(version int, memoryInBytes long, numVirtualCpu int) from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 24,
+		"endColumn": 73,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "numVirtualCpu : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 55,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu long)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 24,
+		"endColumn": 72,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "numVirtualCpu : int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 55,
+		"endLine": 62,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu int)"
+}]
+},
+{
+	"type": "Change Return Type",
+	"description": "Change Return Type long to int in method public getNumVirtualCpu() : int from class org.apache.drill.exec.resourcemgr.NodeResources",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 10,
+		"endColumn": 14,
+		"codeElementType": "TYPE",
+		"description": "original return type",
+		"codeElement": "long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 84,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getNumVirtualCpu() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 10,
+		"endColumn": 13,
+		"codeElementType": "TYPE",
+		"description": "changed return type",
+		"codeElement": "int"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
+		"startLine": 82,
+		"endLine": 84,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed return type",
+		"codeElement": "public getNumVirtualCpu() : int"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type endpointCollectionMap : Map<DrillbitEndpoint,Collection<PhysicalOperator>> to endpointCollectionMap : Map<DrillNode,List<PhysicalOperator>> in method public getNodeMap() : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 106,
+		"endLine": 106,
+		"startColumn": 59,
+		"endColumn": 108,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "endpointCollectionMap : Map<DrillbitEndpoint,Collection<PhysicalOperator>>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 105,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 110,
+		"endLine": 110,
+		"startColumn": 46,
+		"endColumn": 87,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "endpointCollectionMap : Map<DrillNode,List<PhysicalOperator>>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 109,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type entry : Map.Entry<DrillbitEndpoint,Collection<PhysicalOperator>> to entry : Map.Entry<DrillNode,List<PhysicalOperator>> in method public getNodeMap() : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 12,
+		"endColumn": 75,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "entry : Map.Entry<DrillbitEndpoint,Collection<PhysicalOperator>>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 105,
+		"endLine": 113,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 112,
+		"endLine": 112,
+		"startColumn": 12,
+		"endColumn": 62,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "changed-type variable declaration",
+		"codeElement": "entry : Map.Entry<DrillNode,List<PhysicalOperator>>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 109,
+		"endLine": 117,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type operatorsMemory : Long to operatorsMemory : long in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 16,
+		"endColumn": 80,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "operatorsMemory : Long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 65,
+		"endLine": 83,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 69,
+		"endLine": 69,
+		"startColumn": 12,
+		"endColumn": 57,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "operatorsMemory : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 67,
+		"endLine": 81,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+}]
+},
+{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.apache.drill.exec.util.memory.MemoryAllocationUtilities from classes [org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities, org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities]",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 40,
+		"endLine": 256,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
+		"startLine": 34,
+		"endLine": 169,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 27,
+		"endLine": 128,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
+		"startLine": 27,
+		"endLine": 87,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 31,
+		"endLine": 113,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.apache.drill.exec.util.memory.MemoryAllocationUtilities"
+}]
+},
+{
+	"type": "Extract Variable",
+	"description": "Extract Variable node : DrillNode in method private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void from class org.apache.drill.exec.planner.fragment.ZKQueueParallelizer.Collector",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 80,
+		"endLine": 80,
+		"startColumn": 9,
+		"endColumn": 51,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 78,
+		"endLine": 82,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 82,
+		"endLine": 82,
+		"startColumn": 19,
+		"endColumn": 49,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "node : DrillNode"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 83,
+		"endLine": 83,
+		"startColumn": 9,
+		"endColumn": 64,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
+		"startLine": 80,
+		"endLine": 86,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with extracted variable",
+		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder moved to org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/Fragment.java",
+		"startLine": 174,
+		"endLine": 190,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.apache.drill.exec.planner.fragment.Fragment.BufferedOpFinder"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 69,
+		"endLine": 85,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.apache.drill.exec.util.memory.MemoryAllocationUtilities.BufferedOpFinder"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities to public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
+		"startLine": 108,
+		"endLine": 132,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 88,
+		"endLine": 112,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities to public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 195,
+		"endLine": 219,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 88,
+		"endLine": 112,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public computeOperatorMemory(optionManager OptionSet, maxAllocPerNode long, opCount int) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities to public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
+		"startLine": 134,
+		"endLine": 168,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 33,
+		"endLine": 67,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities to public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long from class org.apache.drill.exec.util.memory.MemoryAllocationUtilities",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 221,
+		"endLine": 255,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
+		"startLine": 33,
+		"endLine": 67,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public computeQueryMemory(config DrillConfig, optionManager OptionSet, directMemory long) : long"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute ENDPOINTUUID_FIELD_NUMBER : int to ASSIGNEDENDPOINTUUID_FIELD_NUMBER : int in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5067,
+		"endLine": 5067,
+		"startColumn": 29,
+		"endColumn": 59,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "ENDPOINTUUID_FIELD_NUMBER : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5067,
+		"endLine": 5067,
+		"startColumn": 29,
+		"endColumn": 67,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "ASSIGNEDENDPOINTUUID_FIELD_NUMBER : int"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute MINIMUM_MEMORY_FOR_BUFFER_OPERS : long to minimum_memory_for_buffer_opers : long in class org.apache.drill.exec.planner.fragment.MemoryCalculator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 22,
+		"endColumn": 53,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "MINIMUM_MEMORY_FOR_BUFFER_OPERS : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/MemoryCalculator.java",
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 22,
+		"endColumn": 53,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "minimum_memory_for_buffer_opers : long"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute OPTIMAL_MEM_ALLOCATION_FIELD_NUMBER : int to MAX_ALLOCATION_FIELD_NUMBER : int in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22676,
+		"endLine": 22676,
+		"startColumn": 29,
+		"endColumn": 69,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "OPTIMAL_MEM_ALLOCATION_FIELD_NUMBER : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22676,
+		"endLine": 22676,
+		"startColumn": 29,
+		"endColumn": 61,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "MAX_ALLOCATION_FIELD_NUMBER : int"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute endpointUUID : String to assignedEndpointUUID : String in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 69,
+		"endLine": 69,
+		"startColumn": 20,
+		"endColumn": 32,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "endpointUUID : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 69,
+		"endLine": 69,
+		"startColumn": 20,
+		"endColumn": 40,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "assignedEndpointUUID : String"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute endpointUUID_ : Object to assignedEndpointUUID_ : Object in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5068,
+		"endLine": 5068,
+		"startColumn": 39,
+		"endColumn": 52,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "endpointUUID_ : Object"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5068,
+		"endLine": 5068,
+		"startColumn": 39,
+		"endColumn": 60,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "assignedEndpointUUID_ : Object"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute endpointUUID_ : Object to assignedEndpointUUID_ : Object in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7130,
+		"endLine": 7130,
+		"startColumn": 32,
+		"endColumn": 50,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "endpointUUID_ : Object"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7130,
+		"endLine": 7130,
+		"startColumn": 32,
+		"endColumn": 58,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "assignedEndpointUUID_ : Object"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute optimalMemAllocation : long to maxAllocation : long in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 60,
+		"endLine": 60,
+		"startColumn": 18,
+		"endColumn": 38,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "optimalMemAllocation : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 60,
+		"endLine": 60,
+		"startColumn": 18,
+		"endColumn": 31,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "maxAllocation : long"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute optimalMemAllocation_ : long to maxAllocation_ : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22677,
+		"endLine": 22677,
+		"startColumn": 18,
+		"endColumn": 39,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "optimalMemAllocation_ : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22677,
+		"endLine": 22677,
+		"startColumn": 18,
+		"endColumn": 32,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "maxAllocation_ : long"
+}]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute optimalMemAllocation_ : long to maxAllocation_ : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23943,
+		"endLine": 23943,
+		"startColumn": 20,
+		"endColumn": 41,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "optimalMemAllocation_ : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23943,
+		"endLine": 23943,
+		"startColumn": 20,
+		"endColumn": 34,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "maxAllocation_ : long"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public clearEndpointUUID() : Builder renamed to public clearAssignedEndpointUUID() : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7183,
+		"endLine": 7191,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public clearEndpointUUID() : Builder"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7183,
+		"endLine": 7191,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public clearAssignedEndpointUUID() : Builder"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public clearOptimalMemAllocation() : Builder renamed to public clearMaxAllocation() : Builder in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23965,
+		"endLine": 23973,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public clearOptimalMemAllocation() : Builder"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23965,
+		"endLine": 23973,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public clearMaxAllocation() : Builder"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5075,
+		"endLine": 5091,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5075,
+		"endLine": 5091,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7137,
+		"endLine": 7153,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7137,
+		"endLine": 7153,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4499,
+		"endLine": 4502,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4499,
+		"endLine": 4502,
+		"startColumn": 5,
+		"endColumn": 48,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 275,
+		"endLine": 278,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 275,
+		"endLine": 278,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5092,
+		"endLine": 5107,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUIDBytes() : ByteString"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5092,
+		"endLine": 5107,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUIDBytes() : ByteString"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7154,
+		"endLine": 7169,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUIDBytes() : ByteString"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7154,
+		"endLine": 7169,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUIDBytes() : ByteString"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4503,
+		"endLine": 4507,
+		"startColumn": 5,
+		"endColumn": 32,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUIDBytes() : ByteString"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4503,
+		"endLine": 4507,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUIDBytes() : ByteString"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22684,
+		"endLine": 22689,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getOptimalMemAllocation() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22684,
+		"endLine": 22689,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23950,
+		"endLine": 23955,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getOptimalMemAllocation() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23950,
+		"endLine": 23955,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22371,
+		"endLine": 22374,
+		"startColumn": 5,
+		"endColumn": 36,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getOptimalMemAllocation() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22371,
+		"endLine": 22374,
+		"startColumn": 5,
+		"endColumn": 29,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getOptimalMemAllocation() : long renamed to public getMaxAllocation() : long in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 175,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getOptimalMemAllocation() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 175,
+		"endLine": 178,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getMaxAllocation() : long"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5069,
+		"endLine": 5074,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasEndpointUUID() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5069,
+		"endLine": 5074,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasAssignedEndpointUUID() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7131,
+		"endLine": 7136,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasEndpointUUID() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7131,
+		"endLine": 7136,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasAssignedEndpointUUID() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasEndpointUUID() : boolean renamed to public hasAssignedEndpointUUID() : boolean in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4495,
+		"endLine": 4498,
+		"startColumn": 5,
+		"endColumn": 31,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasEndpointUUID() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4495,
+		"endLine": 4498,
+		"startColumn": 5,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasAssignedEndpointUUID() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22678,
+		"endLine": 22683,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasOptimalMemAllocation() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22678,
+		"endLine": 22683,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasMaxAllocation() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23944,
+		"endLine": 23949,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasOptimalMemAllocation() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23944,
+		"endLine": 23949,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasMaxAllocation() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public hasOptimalMemAllocation() : boolean renamed to public hasMaxAllocation() : boolean in class org.apache.drill.exec.proto.UserBitShared.OperatorProfileOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22367,
+		"endLine": 22370,
+		"startColumn": 5,
+		"endColumn": 39,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hasOptimalMemAllocation() : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 22367,
+		"endLine": 22370,
+		"startColumn": 5,
+		"endColumn": 32,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public hasMaxAllocation() : boolean"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public setEndpointUUID(endpointUUID String) : PlanFragment renamed to public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment in class org.apache.drill.exec.proto.beans.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 284,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setEndpointUUID(endpointUUID String) : PlanFragment"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 284,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public setEndpointUUID(value String) : Builder renamed to public setAssignedEndpointUUID(value String) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7170,
+		"endLine": 7182,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setEndpointUUID(value String) : Builder"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7170,
+		"endLine": 7182,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public setAssignedEndpointUUID(value String) : Builder"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public setEndpointUUIDBytes(value ByteString) : Builder renamed to public setAssignedEndpointUUIDBytes(value ByteString) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7192,
+		"endLine": 7204,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setEndpointUUIDBytes(value ByteString) : Builder"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7192,
+		"endLine": 7204,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public setAssignedEndpointUUIDBytes(value ByteString) : Builder"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile renamed to public setMaxAllocation(maxAllocation long) : OperatorProfile in class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 184,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 184,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public setMaxAllocation(maxAllocation long) : OperatorProfile"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public setOptimalMemAllocation(value long) : Builder renamed to public setMaxAllocation(value long) : Builder in class org.apache.drill.exec.proto.UserBitShared.OperatorProfile.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23956,
+		"endLine": 23964,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setOptimalMemAllocation(value long) : Builder"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/UserBitShared.java",
+		"startLine": 23956,
+		"endLine": 23964,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public setMaxAllocation(value long) : Builder"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter endpointUUID : String to assignedEndpointUUID : String in method public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment from class org.apache.drill.exec.proto.beans.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 280,
+		"startColumn": 41,
+		"endColumn": 60,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "endpointUUID : String"
+}, {
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 284,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setEndpointUUID(endpointUUID String) : PlanFragment"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 280,
+		"startColumn": 49,
+		"endColumn": 76,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "assignedEndpointUUID : String"
+}, {
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
+		"startLine": 280,
+		"endLine": 284,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter initialAllocation : long to optimalMemAllocation : long in method public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, optimalMemAllocation long) from class org.apache.drill.exec.ops.OperatorStats",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 91,
+		"endLine": 91,
+		"startColumn": 101,
+		"endColumn": 123,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "initialAllocation : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 90,
+		"endLine": 101,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, initialAllocation long)"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 91,
+		"endLine": 91,
+		"startColumn": 101,
+		"endColumn": 126,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "optimalMemAllocation : long"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
+		"startLine": 90,
+		"endLine": 101,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, optimalMemAllocation long)"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter optimalMemAllocation : long to maxAllocation : long in method public setMaxAllocation(maxAllocation long) : OperatorProfile from class org.apache.drill.exec.proto.beans.OperatorProfile",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 180,
+		"startColumn": 52,
+		"endColumn": 77,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "optimalMemAllocation : long"
+}, {
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 184,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 180,
+		"startColumn": 45,
+		"endColumn": 63,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "maxAllocation : long"
+}, {
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
+		"startLine": 180,
+		"endLine": 184,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public setMaxAllocation(maxAllocation long) : OperatorProfile"
+}]
+},
+{
+	"type": "Rename Parameter",
+	"description": "Rename Parameter other : Object to obj : Object in method public equals(obj Object) : boolean from class org.apache.drill.common.DrillNode",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 25,
+		"endColumn": 37,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "original variable declaration",
+		"codeElement": "other : Object"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 49,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(other Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 38,
+		"startColumn": 25,
+		"endColumn": 35,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "obj : Object"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 70,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+},
+{
+	"type": "Rename Variable",
+	"description": "Rename Variable otherEndpoint : DrillbitEndpoint to other : DrillbitEndpoint in method public equals(obj Object) : boolean from class org.apache.drill.common.DrillNode",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 22,
+		"endColumn": 66,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "otherEndpoint : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 49,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(other Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 45,
+		"endLine": 45,
+		"startColumn": 22,
+		"endColumn": 55,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "renamed variable declaration",
+		"codeElement": "other : DrillbitEndpoint"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 38,
+		"endLine": 70,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+}
+]
+}]
+}

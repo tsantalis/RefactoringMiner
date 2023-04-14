@@ -179,7 +179,7 @@ public class InlineOperationRefactoring implements Refactoring {
 								int index = indexInArguments(invocation2, expression2, occurrence);
 								if(index != -1) {
 									String argument1 = invocation1.arguments().get(index);
-									if(argument1.equals(expression2.getString())) {
+									if(argument1.equals(expression2.getString()) || argument1.equals(invocation2.arguments().get(index))) {
 										equalArgument = true;
 									}
 								}
@@ -188,7 +188,7 @@ public class InlineOperationRefactoring implements Refactoring {
 								int index = indexInArguments(creation2, expression2, occurrence);
 								if(index != -1) {
 									String argument1 = creation1.arguments().get(index);
-									if(argument1.equals(expression2.getString())) {
+									if(argument1.equals(expression2.getString()) || argument1.equals(creation2.arguments().get(index))) {
 										equalArgument = true;
 									}
 								}
@@ -211,7 +211,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		int index = 0;
 		int matches = 0;
 		for(String argument : call.arguments()) {
-			if(argument.equals(expression.getString())) {
+			if(argument.equals(expression.getString()) || argument.contains(expression.getString())) {
 				if(matches == occurrence) {
 					return index;
 				}

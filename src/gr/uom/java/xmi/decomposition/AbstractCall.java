@@ -39,6 +39,10 @@ public abstract class AbstractCall extends LeafExpression {
 		
 	}
 
+	public LeafExpression asLeafExpression() {
+		return new LeafExpression(getString(), getLocationInfo());
+	}
+
 	public String getExpression() {
 		return expression;
 	}
@@ -785,6 +789,20 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {
+		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || this.getName().contains(call.getName()) || call.getName().contains(this.getName()))) {
+			int argumentIndex1 = arguments().indexOf(call.getExpression());
+			int argumentIndex2 = call.arguments().indexOf(getExpression());
+			if(argumentIndex1 != -1 && argumentIndex2 != -1 && argumentIndex1 == argumentIndex2) {
+				Set<String> argumentIntersection = argumentIntersection(call);
+				if(argumentIntersection.size() == arguments().size()-1 && argumentIntersection.size() == call.arguments().size()-1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean identical(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, List<UMLOperationBodyMapper> lambdaMappers) {
 		return identicalExpression(call, replacements, parameterToArgumentMap) &&
 				identicalName(call) &&
@@ -871,78 +889,90 @@ public abstract class AbstractCall extends LeafExpression {
 		return argumentIntersectionSize;
 	}
 
-	private boolean argumentIsStatement(String statement) {
+	private int argumentIsStatement(String statement) {
 		if(statement.endsWith(";\n")) {
+			int index = 0;
 			for(String argument : arguments()) {
 				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
-					return false;
+					return -1;
 				}
 				//length()-2 to remove ";\n" from the end of the statement
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-2))) {
-					return true;
+					return index;
 				}
+				index++;
 			}
 		}
-		return false;
+		return -1;
 	}
 
-	private boolean argumentIsExpression(String expression) {
+	private int argumentIsExpression(String expression) {
 		if(!expression.endsWith(";\n")) {
 			//statement is actually an expression
+			int index = 0;
 			for(String argument : arguments()) {
 				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
-					return false;
+					return -1;
 				}
 				if(equalsIgnoringExtraParenthesis(argument, expression)) {
-					return true;
+					return index;
 				}
+				index++;
 			}
 		}
-		return false;
+		return -1;
 	}
 
-	private boolean argumentIsReturned(String statement) {
+	private int argumentIsReturned(String statement) {
 		if(statement.startsWith("return ")) {
+			int index = 0;
 			for(String argument : arguments()) {
 				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
-					return false;
+					return -1;
 				}
 				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
 				if(equalsIgnoringExtraParenthesis(argument, statement.substring(7, statement.length()-2))) {
-					return true;
+					return index;
 				}
+				index++;
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {
-		if(argumentIsReturned(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(arguments().get(0), statement.substring(7, statement.length()-2),
+		int index = -1;
+		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			String arg = statement.substring(7, statement.length()-2);
+			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsStatement(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(arguments().get(0), statement.substring(0, statement.length()-2),
+		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			String arg = statement.substring(0, statement.length()-2);
+			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if(argumentIsExpression(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(arguments().get(0), statement,
+		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			return new Replacement(arguments().get(index), statement,
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
 		return null;
 	}
 
 	public Replacement makeReplacementForWrappedCall(String statement) {
-		if(argumentIsReturned(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(statement.substring(7, statement.length()-2), arguments().get(0),
+		int index = -1;
+		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			String arg = statement.substring(7, statement.length()-2);
+			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if(argumentIsStatement(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(statement.substring(0, statement.length()-2), arguments().get(0),
+		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			String arg = statement.substring(0, statement.length()-2);
+			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if(argumentIsExpression(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
-			return new Replacement(statement, arguments().get(0),
+		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+			return new Replacement(statement, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
 		return null;
@@ -1000,6 +1030,16 @@ public abstract class AbstractCall extends LeafExpression {
 		String parenthesizedS2 = "("+s2+")";
 		if(parenthesizedS2.equals(s1))
 			return true;
+		if(s1.contains(".<") && !s2.contains(".<")) {
+			String s1WithoutGenerics = s1.substring(0, s1.indexOf(".<") + 1) + s1.substring(s1.indexOf(">") + 1, s1.length());
+			if(s1WithoutGenerics.equals(s2))
+				return true;
+		}
+		if(s2.contains(".<") && !s1.contains(".<")) {
+			String s2WithoutGenerics = s2.substring(0, s2.indexOf(".<") + 1) + s2.substring(s2.indexOf(">") + 1, s2.length());
+			if(s2WithoutGenerics.equals(s1))
+				return true;
+		}
 		return false;
 	}
 

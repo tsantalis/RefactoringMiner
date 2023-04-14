@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
     private static final String REPOS = "tmp1";
+    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/commandline/";
     private static final Pattern INTEGER = Pattern.compile("-?\\d+");
 
     private static void assertJSON(List<String> expected, List<String> actual) {
@@ -68,7 +69,7 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         };
         miner.detectBetweenCommits(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/mondrian-bc-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "mondrian-bc-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         assertJSON(expected, actual);
     }
@@ -87,7 +88,7 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         };
         miner.detectBetweenTags(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/mondrian-bt-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "mondrian-bt-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         assertJSON(expected, actual);
     }
@@ -104,7 +105,7 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         };
         miner.detectAll(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-all-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-all-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         assertJSON(expected, actual);
     }
@@ -122,7 +123,7 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         };
         miner.detectAll(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-branch-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-branch-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         assertJSON(expected, actual);
     }
@@ -140,7 +141,7 @@ public class TestCommandLine extends LightJavaCodeInsightFixtureTestCase {
         };
         miner.detectAtCommit(args);
 
-        List<String> expected = IOUtils.readLines(new FileReader(System.getProperty("user.dir") + "/src-test/Data/refactoring-toy-example-commit-expected.json"));
+        List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "refactoring-toy-example-commit-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         assertJSON(expected, actual);
     }

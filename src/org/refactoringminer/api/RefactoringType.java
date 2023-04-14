@@ -27,7 +27,7 @@ public enum RefactoringType {
 	EXTRACT_CLASS("Extract Class", "Extract Class (.+) from class (.+)"),
 	EXTRACT_AND_MOVE_OPERATION("Extract And Move Method", "Extract And Move Method (.+) extracted from (.+) in class (.+) & moved to class (.+)"),
 	MOVE_AND_INLINE_OPERATION("Move And Inline Method", "Move And Inline Method (.+) moved from class (.+) to class (.+) & inlined to (.+)"),
-	CONVERT_ANONYMOUS_CLASS_TO_TYPE("Convert Anonymous Class to Type", ".+"),
+	REPLACE_ANONYMOUS_WITH_CLASS("Replace Anonymous With Class", "Replace Anonymous With Class (.+) with (.+)"),
 	INTRODUCE_POLYMORPHISM("Introduce Polymorphism", ".+"),
 	RENAME_PACKAGE("Rename Package", "Rename Package (.+) to (.+)"),
 	MOVE_PACKAGE("Move Package", "Move Package (.+) to (.+)"),
@@ -205,7 +205,8 @@ public enum RefactoringType {
 		MERGE_CATCH,
 		MERGE_OPERATION,
 		SPLIT_OPERATION,
-		MOVE_CODE
+		MOVE_CODE,
+		REPLACE_ANONYMOUS_WITH_CLASS
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

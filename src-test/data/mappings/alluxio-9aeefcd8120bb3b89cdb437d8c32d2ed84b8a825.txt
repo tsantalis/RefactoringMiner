@@ -1,0 +1,31 @@
+public allocateBlock(userId long, blockId long, blockSize long, location BlockStoreLocation) : TempBlockMeta -> private getCandidateDirInTier(tier StorageTier, blockSize long) : StorageDir
+line range:49-49==line range:78-78
+line range:50-50==line range:79-79
+line range:43-43==line range:75-75
+line range:47-52==line range:76-81
+line range:48-51==line range:77-80
+line range:47-52==line range:76-81
+line range:48-51==line range:77-80
+public allocateBlock(userId long, blockId long, blockSize long, location BlockStoreLocation) : TempBlockMeta -> private getCandidateDirInTier(tier StorageTier, blockSize long) : StorageDir
+line range:58-58==line range:78-78
+line range:59-59==line range:79-79
+line range:56-61==line range:76-81
+line range:57-60==line range:77-80
+line range:56-61==line range:76-81
+line range:57-60==line range:77-80
+public allocateBlock(userId long, blockId long, blockSize long, location BlockStoreLocation) : TempBlockMeta -> public allocateBlock(userId long, blockId long, blockSize long, location BlockStoreLocation) : TempBlockMeta
+line range:42-42==line range:42-42
+line range:55-55==line range:52-52
+line range:63-63==line range:55-55
+line range:64-64==line range:56-56
+line range:66-66==line range:58-58
+line range:70-71==line range:62-63
+line range:46-53==line range:45-50
+line range:65-67==line range:57-59
+line range:54-68==line range:51-60
+line range:45-68==line range:44-60
+line range:46-53==line range:45-50
+line range:65-67==line range:57-59
+line range:54-62==line range:51-54
+line range:62-68==line range:54-60
+line range:45-54==line range:44-51

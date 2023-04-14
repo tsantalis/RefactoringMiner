@@ -241,6 +241,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return Collections.emptyList();
 	}
 
+	public List<AbstractCall> getAllCreations() {
+		if(operationBody != null)
+			return operationBody.getAllCreations();
+		return Collections.emptyList();
+	}
+
 	public boolean containsAssertion() {
 		if(operationBody != null)
 			return operationBody.containsAssertion();
@@ -663,6 +669,17 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				equalTypeParameters(operation);
 		}
 		return false;
+	}
+
+	public boolean equalsIgoringTypeParameters(UMLOperation operation) {
+		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
+		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+		return this.className.equals(operation.className) &&
+			this.name.equals(operation.name) &&
+			this.visibility.equals(operation.visibility) &&
+			this.isAbstract == operation.isAbstract &&
+			thisEmptyBody == otherEmptyBody &&
+			this.getParameterTypeList().equals(operation.getParameterTypeList());
 	}
 
 	public boolean equalsQualified(UMLOperation operation) {

@@ -1,0 +1,2499 @@
+{
+"commits": [
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "d4bce13a443cf12da40a77c16c1e591f4f985b47",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/d4bce13a443cf12da40a77c16c1e591f4f985b47",
+	"refactorings": [{
+	"type": "Add Parameter",
+	"description": "Add Parameter dog : Dog in method public barkBark(dog Dog) : void from class org.DogManager",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public barkBark(manager DogManager) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/DogManager.java",
+		"startLine": 25,
+		"endLine": 25,
+		"startColumn": 23,
+		"endColumn": 30,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "dog : Dog"
+}, {
+		"filePath": "src/org/DogManager.java",
+		"startLine": 25,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public barkBark(dog Dog) : void"
+}]
+},
+{
+	"type": "Remove Parameter",
+	"description": "Remove Parameter manager : DogManager in method public barkBark(manager DogManager) : void from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 14,
+		"startColumn": 23,
+		"endColumn": 41,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "removed parameter",
+		"codeElement": "manager : DogManager"
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public barkBark(manager DogManager) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/DogManager.java",
+		"startLine": 25,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed parameter",
+		"codeElement": "public barkBark(dog Dog) : void"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public barkBark(manager DogManager) : void from class org.animals.Dog to public barkBark(dog Dog) : void from class org.DogManager",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public barkBark(manager DogManager) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/DogManager.java",
+		"startLine": 25,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public barkBark(dog Dog) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "9a5c33b16d07d62651ea80552e8782974c96bb8a",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/9a5c33b16d07d62651ea80552e8782974c96bb8a",
+	"refactorings": [{
+	"type": "Move Attribute",
+	"description": "Move Attribute public magicNumber : int from class org.DogManager to public magicNumber : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/DogManager.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 13,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "public magicNumber : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 13,
+		"endColumn": 29,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "moved attribute declaration",
+		"codeElement": "public magicNumber : int"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5",
+	"refactorings": [{
+	"type": "Add Parameter",
+	"description": "Add Parameter manager : DogManager in method public barkBark(manager DogManager) : void from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 11,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public barkBark() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 23,
+		"endColumn": 41,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "added parameter",
+		"codeElement": "manager : DogManager"
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 13,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with added parameter",
+		"codeElement": "public barkBark(manager DogManager) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "0bb0526b70870d57cbac9fcc8c4a7346a4ce5879",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/0bb0526b70870d57cbac9fcc8c4a7346a4ce5879",
+	"refactorings": [{
+	"type": "Rename Method",
+	"description": "Rename Method public bark() : void renamed to public barkBark() : void in class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 11,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public bark() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 11,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public barkBark() : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "f3b628f8f9c71a2cdfa052025c4a1ed78ee4c45d",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/f3b628f8f9c71a2cdfa052025c4a1ed78ee4c45d",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "1328d7873efe6caaffaf635424e19a4bb5e786a8",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/1328d7873efe6caaffaf635424e19a4bb5e786a8",
+	"refactorings": [{
+	"type": "Extract Interface",
+	"description": "Extract Interface org.felines.AnimalSuper from classes [org.felines.Animal]",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Animal.java",
+		"startLine": 3,
+		"endLine": 6,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.felines.Animal"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Animal.java",
+		"startLine": 3,
+		"endLine": 4,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.felines.Animal"
+}, {
+		"filePath": "src/org/felines/AnimalSuper.java",
+		"startLine": 3,
+		"endLine": 7,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.felines.AnimalSuper"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public action() : void from class org.felines.Animal to public action() : void from class org.felines.AnimalSuper",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Animal.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 3,
+		"endColumn": 17,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public action() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/AnimalSuper.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 2,
+		"endColumn": 16,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public action() : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "0a46ed5c56c8b1576dfc92f3ec5bc2f0ea68aafe",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/0a46ed5c56c8b1576dfc92f3ec5bc2f0ea68aafe",
+	"refactorings": [{
+	"type": "Push Down Attribute",
+	"description": "Push Down Attribute protected age : int from class org.reptile.AnimalMarilho to protected age : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 9,
+		"endLine": 9,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pushed down attribute declaration",
+		"codeElement": "protected age : int"
+}]
+},
+{
+	"type": "Push Down Attribute",
+	"description": "Push Down Attribute protected name : int from class org.reptile.AnimalMarilho to protected name : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 10,
+		"endLine": 10,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected name : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pushed down attribute declaration",
+		"codeElement": "protected name : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public getName() : int from class org.reptile.AnimalMarilho to public getName() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 16,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getName() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 19,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public getName() : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public setName(name int) : void from class org.reptile.AnimalMarilho to public setName(name int) : void from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 20,
+		"endLine": 22,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setName(name int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 23,
+		"endLine": 25,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public setName(name int) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "638f37ca6b4dcdbb6a4735f93e37445aeef79749",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/638f37ca6b4dcdbb6a4735f93e37445aeef79749",
+	"refactorings": [{
+	"type": "Push Down Method",
+	"description": "Push Down Method public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleMarinha",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 26,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleMarinha.java",
+		"startLine": 38,
+		"endLine": 59,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.TurtleTerrarium",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 26,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleTerrarium.java",
+		"startLine": 13,
+		"endLine": 34,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "0e193b7d02902c6f2abf7c88eebe937d1ac5fc51",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/0e193b7d02902c6f2abf7c88eebe937d1ac5fc51",
+	"refactorings": [{
+	"type": "Push Down Method",
+	"description": "Push Down Method public hashCode() : int from class org.reptile.AnimalMarilho to public hashCode() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 42,
+		"endLine": 51,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hashCode() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 28,
+		"endLine": 37,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public hashCode() : int"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "b61e75b773f48e680f5bb7362445ba0642c2ee91",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/b61e75b773f48e680f5bb7362445ba0642c2ee91",
+	"refactorings": [{
+	"type": "Push Down Method",
+	"description": "Push Down Method public equals(obj Object) : boolean from class org.reptile.AnimalMarilho to public equals(obj Object) : boolean from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 53,
+		"endLine": 74,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 26,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "6bbfab9e7051362aad9d993f5f6a013b73e75117",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/6bbfab9e7051362aad9d993f5f6a013b73e75117",
+	"refactorings": [{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected age : int from class org.reptile.Reptile to protected age : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 9,
+		"endLine": 9,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected age : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected name : int from class org.reptile.Reptile to protected name : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected name : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 10,
+		"endLine": 10,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected name : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected spead : int from class org.reptile.Reptile to protected spead : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 16,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected spead : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 11,
+		"endLine": 11,
+		"startColumn": 16,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected spead : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute protected action : String from class org.reptile.Reptile to protected action : String from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 19,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "protected action : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 12,
+		"endLine": 12,
+		"startColumn": 19,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected action : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getName() : int from class org.reptile.Reptile to public getName() : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getName() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 16,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getName() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setName(name int) : void from class org.reptile.Reptile to public setName(name int) : void from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 18,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setName(name int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 20,
+		"endLine": 22,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setName(name int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getSpead() : int from class org.reptile.Reptile to public getSpead() : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 22,
+		"endLine": 24,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSpead() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 24,
+		"endLine": 26,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getSpead() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setSpead(spead int) : void from class org.reptile.Reptile to public setSpead(spead int) : void from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 26,
+		"endLine": 28,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setSpead(spead int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 28,
+		"endLine": 30,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setSpead(spead int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAction() : String from class org.reptile.Reptile to public getAction() : String from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 30,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAction() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 32,
+		"endLine": 34,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAction() : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setAction(action String) : void from class org.reptile.Reptile to public setAction(action String) : void from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 34,
+		"endLine": 36,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAction(action String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 36,
+		"endLine": 38,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setAction(action String) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hashCode() : int from class org.reptile.Reptile to public hashCode() : int from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 40,
+		"endLine": 49,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hashCode() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 42,
+		"endLine": 51,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hashCode() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public equals(obj Object) : boolean from class org.reptile.Reptile to public equals(obj Object) : boolean from class org.reptile.AnimalMarilho",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 51,
+		"endLine": 72,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 53,
+		"endLine": 74,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "bbd8dc082406a950adf73b7211c887bfab6480f1",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/bbd8dc082406a950adf73b7211c887bfab6480f1",
+	"refactorings": [{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.reptile.AnimalMarilho from classes [org.reptile.Reptile]",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 3,
+		"endLine": 74,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.reptile.Reptile"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 3,
+		"endLine": 74,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.reptile.Reptile"
+}, {
+		"filePath": "src/org/reptile/AnimalMarilho.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.reptile.AnimalMarilho"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "9803046111744317efaa65a83e65ce8ceb0c15c2",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/9803046111744317efaa65a83e65ce8ceb0c15c2",
+	"refactorings": [{
+	"type": "Push Down Method",
+	"description": "Push Down Method public getAge() : int from class org.reptile.Reptile to public getAge() : int from class org.reptile.TurtleMarinha",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleMarinha.java",
+		"startLine": 32,
+		"endLine": 34,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public getAge() : int from class org.reptile.Reptile to public getAge() : int from class org.reptile.TurtleTerrarium",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleTerrarium.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public setAge(age int) : void from class org.reptile.Reptile to public setAge(age int) : void from class org.reptile.TurtleMarinha",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 18,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAge(age int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleMarinha.java",
+		"startLine": 35,
+		"endLine": 37,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public setAge(age int) : void"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public setAge(age int) : void from class org.reptile.Reptile to public setAge(age int) : void from class org.reptile.TurtleTerrarium",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 18,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAge(age int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleTerrarium.java",
+		"startLine": 9,
+		"endLine": 11,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public setAge(age int) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "9b23cc2184438f93923c972c45b7caeb43d77d24",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/9b23cc2184438f93923c972c45b7caeb43d77d24",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "a1b3a91d1a423f2b7360e009e47f30aedb663b6f",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/a1b3a91d1a423f2b7360e009e47f30aedb663b6f",
+	"refactorings": [{
+	"type": "Rename Class",
+	"description": "Rename Class org.reptile.Turtle renamed to org.reptile.TurtleMarinha",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 3,
+		"endLine": 36,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.reptile.Turtle"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/TurtleMarinha.java",
+		"startLine": 3,
+		"endLine": 36,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "renamed type declaration",
+		"codeElement": "org.reptile.TurtleMarinha"
+}]
+},
+{
+	"type": "Change Variable Type",
+	"description": "Change Variable Type other : Turtle to other : TurtleMarinha in method public equals(obj Object) : boolean from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 75,
+		"endLine": 75,
+		"startColumn": 10,
+		"endColumn": 30,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "other : Turtle"
+}, {
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 67,
+		"endLine": 88,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 75,
+		"endLine": 75,
+		"startColumn": 17,
+		"endColumn": 44,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "changed-type variable declaration",
+		"codeElement": "other : TurtleMarinha"
+}, {
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 67,
+		"endLine": 88,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with changed variable type",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "802e21bffe95f0740f44d1a45e3c22adae0ba48c",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/802e21bffe95f0740f44d1a45e3c22adae0ba48c",
+	"refactorings": [{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.reptile.Reptile from classes [org.reptile.Turtle]",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 3,
+		"endLine": 110,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.reptile.Turtle"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 3,
+		"endLine": 36,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.reptile.Turtle"
+}, {
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 3,
+		"endLine": 90,
+		"startColumn": 0,
+		"endColumn": 0,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.reptile.Reptile"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.reptile.Turtle to public getAge() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 38,
+		"endLine": 40,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 14,
+		"endLine": 16,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setAge(age int) : void from class org.reptile.Turtle to public setAge(age int) : void from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 41,
+		"endLine": 43,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAge(age int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 18,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setAge(age int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getName() : int from class org.reptile.Turtle to public getName() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 44,
+		"endLine": 46,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getName() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 22,
+		"endLine": 24,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getName() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setName(name int) : void from class org.reptile.Turtle to public setName(name int) : void from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 47,
+		"endLine": 49,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setName(name int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 26,
+		"endLine": 28,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setName(name int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getSpead() : int from class org.reptile.Turtle to public getSpead() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 50,
+		"endLine": 52,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSpead() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 30,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getSpead() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setSpead(spead int) : void from class org.reptile.Turtle to public setSpead(spead int) : void from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 53,
+		"endLine": 55,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setSpead(spead int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 34,
+		"endLine": 36,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setSpead(spead int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAction() : String from class org.reptile.Turtle to public getAction() : String from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 56,
+		"endLine": 58,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAction() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 38,
+		"endLine": 40,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAction() : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setAction(action String) : void from class org.reptile.Turtle to public setAction(action String) : void from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 59,
+		"endLine": 61,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAction(action String) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 42,
+		"endLine": 44,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setAction(action String) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public toString() : String from class org.reptile.Turtle to public toString() : String from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 65,
+		"endLine": 73,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public toString() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 46,
+		"endLine": 54,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public toString() : String"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public hashCode() : int from class org.reptile.Turtle to public hashCode() : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 74,
+		"endLine": 83,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public hashCode() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 56,
+		"endLine": 65,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public hashCode() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public equals(obj Object) : boolean from class org.reptile.Turtle to public equals(obj Object) : boolean from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 84,
+		"endLine": 105,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 67,
+		"endLine": 88,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public equals(obj Object) : boolean"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.reptile.Turtle to protected age : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected age : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected age : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 16,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected age : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private name : int from class org.reptile.Turtle to protected name : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 14,
+		"endColumn": 18,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private name : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected name : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected name : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 14,
+		"endColumn": 18,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private name : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 16,
+		"endColumn": 20,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected name : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private spead : int from class org.reptile.Turtle to protected spead : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private spead : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 16,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected spead : int"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected spead : int from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private spead : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 16,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected spead : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private action : String from class org.reptile.Turtle to protected action : String from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 17,
+		"endColumn": 23,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private action : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 19,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "protected action : String"
+}]
+},
+{
+	"type": "Change Attribute Access Modifier",
+	"description": "Change Attribute Access Modifier private to protected in attribute protected action : String from class org.reptile.Reptile",
+	"leftSideLocations": [{
+		"filePath": "src/org/reptile/Turtle.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 17,
+		"endColumn": 23,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private action : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/reptile/Reptile.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 19,
+		"endColumn": 25,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with changed access modifier",
+		"codeElement": "protected action : String"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "5849e143567474f037950f005d994729de0775fc",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/5849e143567474f037950f005d994729de0775fc",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "3f3552830d3e464f96f99bd55641a7c7b16bdd11",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/3f3552830d3e464f96f99bd55641a7c7b16bdd11",
+	"refactorings": [{
+	"type": "Push Down Attribute",
+	"description": "Push Down Attribute private speed : int from class org.felines.Feline to private speed : int from class org.felines.Tiger",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private speed : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pushed down attribute declaration",
+		"codeElement": "private speed : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public getSpeed() : int from class org.felines.Feline to public getSpeed() : int from class org.felines.Tiger",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 30,
+		"endLine": 32,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getSpeed() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 9,
+		"endLine": 11,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public getSpeed() : int"
+}]
+},
+{
+	"type": "Push Down Method",
+	"description": "Push Down Method public setSpeed(speed int) : void from class org.felines.Feline to public setSpeed(speed int) : void from class org.felines.Tiger",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 33,
+		"endLine": 35,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setSpeed(speed int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 12,
+		"endLine": 14,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pushed down method declaration",
+		"codeElement": "public setSpeed(speed int) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "f35b2c8eb8c320f173237e44d04eefb4634649a2",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/f35b2c8eb8c320f173237e44d04eefb4634649a2",
+	"refactorings": [{
+	"type": "Extract Method",
+	"description": "Extract Method private sleepNight() : void extracted from public sleep() : void in class org.felines.Cat",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 7,
+		"endLine": 17,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public sleep() : void"
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 10,
+		"endLine": 10,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 11,
+		"endLine": 11,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 12,
+		"endLine": 12,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 13,
+		"endLine": 13,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 14,
+		"endLine": 14,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 15,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "private sleepNight() : void"
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 16,
+		"endLine": 16,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 17,
+		"endLine": 17,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 18,
+		"endLine": 18,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 19,
+		"endLine": 19,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 20,
+		"endLine": 20,
+		"startColumn": 3,
+		"endColumn": 14,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 7,
+		"endLine": 13,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public sleep() : void"
+}, {
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 10,
+		"endLine": 10,
+		"startColumn": 3,
+		"endColumn": 15,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "sleepNight()"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "c0a051fdeb02fd4374ebe625d6af9e3125a2b9af",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/c0a051fdeb02fd4374ebe625d6af9e3125a2b9af",
+	"refactorings": [{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private speed : int from class org.felines.Tiger to private speed : int from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private speed : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 19,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private speed : int"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "7ebd3deba1ae42ff1e9c8585fc304839c5288863",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/7ebd3deba1ae42ff1e9c8585fc304839c5288863",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "217e55ff9d01038a23508d24fe4b8af33ac449d1",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/217e55ff9d01038a23508d24fe4b8af33ac449d1",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "32bf625304762aaad475fa817150634038f07af5",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/32bf625304762aaad475fa817150634038f07af5",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "92b201345f730110445d83f4fefe8ae88bc4872b",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/92b201345f730110445d83f4fefe8ae88bc4872b",
+	"refactorings": [{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.felines.Tiger to private age : int from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 6,
+		"endLine": 6,
+		"startColumn": 14,
+		"endColumn": 17,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private age : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private name : int from class org.felines.Tiger to private name : int from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 8,
+		"endLine": 8,
+		"startColumn": 14,
+		"endColumn": 18,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private name : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 7,
+		"endLine": 7,
+		"startColumn": 14,
+		"endColumn": 18,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private name : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.felines.Tiger to public getAge() : int from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 10,
+		"endLine": 12,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 9,
+		"endLine": 11,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setAge(age int) : void from class org.felines.Tiger to public setAge(age int) : void from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 13,
+		"endLine": 15,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setAge(age int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 12,
+		"endLine": 14,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setAge(age int) : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getName() : int from class org.felines.Tiger to public getName() : int from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 16,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getName() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 15,
+		"endLine": 17,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getName() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public setName(name int) : void from class org.felines.Tiger to public setName(name int) : void from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 19,
+		"endLine": 21,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public setName(name int) : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 18,
+		"endLine": 20,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public setName(name int) : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "9a9878aeb62a6bb6ff2bed6c03dd1dd7ed1f202b",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/9a9878aeb62a6bb6ff2bed6c03dd1dd7ed1f202b",
+	"refactorings": [{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public meow() : void from class org.felines.Cat to public meow() : void from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public meow() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public meow() : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "c946700398fc43a437d124f027a9bd3ba25bcafc",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/c946700398fc43a437d124f027a9bd3ba25bcafc",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "16be1426aeb34352ba5d97811f3a721b11e3ae00",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/16be1426aeb34352ba5d97811f3a721b11e3ae00",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "0c5c24356f3179ee320c3318f91278520caafb3a",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/0c5c24356f3179ee320c3318f91278520caafb3a",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.felines.Feline moved to org.birds.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.felines.Feline"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/birds/Feline.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.birds.Feline"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "12b11bf39cb4800e3fa57fb1112c5fbda26de3df",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/12b11bf39cb4800e3fa57fb1112c5fbda26de3df",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.animals.Tiger moved to org.felines.Tiger",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Tiger.java",
+		"startLine": 5,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Tiger"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Tiger.java",
+		"startLine": 4,
+		"endLine": 8,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.felines.Tiger"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "b2c7be7001d4833d14d7fee8c7c989279b4ad039",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/b2c7be7001d4833d14d7fee8c7c989279b4ad039",
+	"refactorings": []
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "05c1e773878bbacae64112f70964f4f2f7944398",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/05c1e773878bbacae64112f70964f4f2f7944398",
+	"refactorings": [{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.felines.Feline from classes [org.felines.Cat]",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.felines.Cat"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 3,
+		"endLine": 5,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.felines.Cat"
+}, {
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.felines.Feline"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public meow() : void from class org.felines.Cat to public meow() : void from class org.felines.Feline",
+	"leftSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public meow() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Feline.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public meow() : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "60226924fead7d0c4646df4f4fd65667e83da6dc",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/60226924fead7d0c4646df4f4fd65667e83da6dc",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.animals.Bird moved to org.birds.Bird",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Bird.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Bird"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/birds/Bird.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.birds.Bird"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.animals.Chicken moved to org.birds.Chicken",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Chicken.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Chicken"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/birds/Chicken.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.birds.Chicken"
+}]
+},
+{
+	"type": "Move Class",
+	"description": "Move Class org.animals.Duck moved to org.birds.Duck",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Duck.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Duck"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/birds/Duck.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.birds.Duck"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "70b71b7fd3c5973511904c468e464d4910597928",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/70b71b7fd3c5973511904c468e464d4910597928",
+	"refactorings": [{
+	"type": "Move Class",
+	"description": "Move Class org.animals.Cat moved to org.felines.Cat",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Cat.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Cat"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/felines/Cat.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved type declaration",
+		"codeElement": "org.felines.Cat"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "63cbed99a601e79c6a0ae389b2a57acdbd3e1b44",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/63cbed99a601e79c6a0ae389b2a57acdbd3e1b44",
+	"refactorings": [{
+	"type": "Rename Class",
+	"description": "Rename Class org.animals.Cow renamed to org.animals.CowRenamed",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Cow.java",
+		"startLine": 3,
+		"endLine": 12,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.animals.Cow"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/CowRenamed.java",
+		"startLine": 3,
+		"endLine": 12,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "renamed type declaration",
+		"codeElement": "org.animals.CowRenamed"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "58495630295833c9d73559bd958c2f95339f9c62",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/58495630295833c9d73559bd958c2f95339f9c62",
+	"refactorings": [{
+	"type": "Extract Superclass",
+	"description": "Extract Superclass org.animals.Bird from classes [org.animals.Chicken, org.animals.Duck]",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Chicken.java",
+		"startLine": 3,
+		"endLine": 13,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.animals.Chicken"
+}, {
+		"filePath": "src/org/animals/Duck.java",
+		"startLine": 3,
+		"endLine": 13,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original sub-type declaration",
+		"codeElement": "org.animals.Duck"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Chicken.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.animals.Chicken"
+}, {
+		"filePath": "src/org/animals/Duck.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.animals.Duck"
+}, {
+		"filePath": "src/org/animals/Bird.java",
+		"startLine": 3,
+		"endLine": 9,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "extracted super-type declaration",
+		"codeElement": "org.animals.Bird"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public layEgg() : void from class org.animals.Chicken to public layEgg() : void from class org.animals.Bird",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Chicken.java",
+		"startLine": 9,
+		"endLine": 11,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public layEgg() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Bird.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public layEgg() : void"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public layEgg() : void from class org.animals.Duck to public layEgg() : void from class org.animals.Bird",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Duck.java",
+		"startLine": 9,
+		"endLine": 11,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public layEgg() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Bird.java",
+		"startLine": 5,
+		"endLine": 7,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public layEgg() : void"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "40950c317bd52ea5ce4cf0d19707fe426b66649c",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/40950c317bd52ea5ce4cf0d19707fe426b66649c",
+	"refactorings": [{
+	"type": "Extract Method",
+	"description": "Extract Method public takeABreath() : void extracted from public bark() : void in class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 11,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration before extraction",
+		"codeElement": "public bark() : void"
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 14,
+		"startColumn": 3,
+		"endColumn": 29,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 20,
+		"endLine": 22,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "extracted method declaration",
+		"codeElement": "public takeABreath() : void"
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 21,
+		"endLine": 21,
+		"startColumn": 3,
+		"endColumn": 29,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "extracted code to extracted method declaration",
+		"codeElement": null
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 11,
+		"endLine": 18,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration after extraction",
+		"codeElement": "public bark() : void"
+}, {
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 14,
+		"endLine": 14,
+		"startColumn": 3,
+		"endColumn": 16,
+		"codeElementType": "METHOD_INVOCATION",
+		"description": "extracted method invocation",
+		"codeElement": "takeABreath()"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+	"refactorings": [{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.animals.Labrador to private age : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Labrador.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private age : int"
+}]
+},
+{
+	"type": "Pull Up Attribute",
+	"description": "Pull Up Attribute private age : int from class org.animals.Poodle to private age : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Poodle.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private age : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 5,
+		"endLine": 5,
+		"startColumn": 14,
+		"endColumn": 21,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "pulled up attribute declaration",
+		"codeElement": "private age : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Labrador.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+},
+{
+	"type": "Pull Up Method",
+	"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+	"leftSideLocations": [{
+		"filePath": "src/org/animals/Poodle.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getAge() : int"
+}],
+	"rightSideLocations": [{
+		"filePath": "src/org/animals/Dog.java",
+		"startLine": 7,
+		"endLine": 9,
+		"startColumn": 2,
+		"endColumn": 3,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "pulled up method declaration",
+		"codeElement": "public getAge() : int"
+}]
+}
+]
+},
+{
+	"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+	"sha1": "cd61fd2a70828030ccb3cf46d8719f8b204c52ed",
+	"url": "https://github.com/danilofes/refactoring-toy-example/commit/cd61fd2a70828030ccb3cf46d8719f8b204c52ed",
+	"refactorings": []
+}]
+}

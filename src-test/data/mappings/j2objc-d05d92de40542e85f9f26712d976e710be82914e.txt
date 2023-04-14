@@ -1,0 +1,37 @@
+public visit(node LambdaExpression) : boolean -> public printLambdaCallWithoutBlocks(functionalInterface IMethodBinding, functionalClassName String, newClassName String, methodBinding IMethodBinding, isCapturing boolean) : void
+line range:640-640==line range:743-743
+line range:644-644==line range:745-745
+line range:646-646==line range:747-747
+line range:647-647==line range:748-748
+line range:648-648==line range:749-749
+line range:649-649==line range:750-750
+line range:650-650==line range:751-751
+line range:652-652==line range:753-753
+line range:653-653==line range:754-754
+line range:651-651==line range:752-752
+line range:654-654==line range:755-755
+line range:639-645==line range:742-746
+line range:639-643==line range:742-744
+line range:643-645==line range:744-746
+public visit(node LambdaExpression) : boolean -> public printLambdaCallBlocks(functionalInterface IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void
+line range:655-655==line range:767-767
+line range:657-657==line range:769-769
+line range:659-659==line range:771-771
+line range:660-660==line range:772-772
+line range:661-661==line range:773-773
+line range:662-662==line range:774-774
+line range:663-663==line range:775-775
+line range:665-665==line range:777-777
+line range:658-664==line range:770-776
+line range:658-664==line range:770-776
+public visit(node LambdaExpression) : boolean -> public printBlockCallWrapper(binding IMethodBinding) : void
+line range:642-642==line range:704-704
+line range:641-641==line range:705-705
+public visit(node LambdaExpression) : boolean -> public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void
+line range:638-638==line range:729-729
+public visit(node LambdaExpression) : boolean -> public visit(node LambdaExpression) : boolean
+line range:635-636==line range:681-682
+line range:637-637==line range:683-683
+line range:666-666==line range:686-686
+line range:667-667==line range:687-687
+line range:668-668==line range:688-688

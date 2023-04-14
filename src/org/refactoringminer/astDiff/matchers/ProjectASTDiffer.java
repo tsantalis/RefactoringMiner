@@ -13,6 +13,7 @@ import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
@@ -129,11 +130,22 @@ public class ProjectASTDiffer
 			Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
 			Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
 			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue;
-			if (classDiff.getOriginalClass().getLocationInfo().getFilePath().equals(involvedClassesBeforeRefactoring.iterator().next().getLeft())
-					&& classDiff.getOriginalClass().getName().equals(involvedClassesBeforeRefactoring.iterator().next().getRight())
-					&& classDiff.getNextClass().getLocationInfo().getFilePath().equals(involvedClassesAfterRefactoring.iterator().next().getLeft())
-					&& classDiff.getNextClass().getName().equals(involvedClassesAfterRefactoring.iterator().next().getRight()))
-				classDiffRefactorings.add(modelDiffRefactoring);
+			//TODO: Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
+			UMLClass umlClassBefore = classDiff.getOriginalClass();
+			UMLClass umlClassAfter = classDiff.getNextClass();
+			ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();
+			ImmutablePair<String, String> refactoringClassAfter = involvedClassesAfterRefactoring.iterator().next();
+			if (umlClassBefore.getLocationInfo().getFilePath().equals(refactoringClassBefore.getLeft())
+					&& umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft()))
+			{
+				String refactoringClassNameBefore = refactoringClassBefore.getRight();
+				String refactoringClassNameAfter = refactoringClassAfter.getRight();
+				// Relied on || in order to ascertain at least one class involves (handling move to anonymous and vice versa)
+				boolean isNameMatching = refactoringClassNameBefore.equals(umlClassBefore.getName()) || refactoringClassNameAfter.equals(umlClassAfter.getName());
+				if (isNameMatching)
+					classDiffRefactorings.add(modelDiffRefactoring);
+			}
+
 		}
 		return classDiffRefactorings;
 	}
@@ -205,7 +217,7 @@ public class ProjectASTDiffer
 					processMethod(srcTotalTree, dstTotalTree, moveOperationRefactoring.getBodyMapper(), mappingStore);
 				}
 			}
-			if (refactoring instanceof MoveAttributeRefactoring)
+			else if (refactoring instanceof MoveAttributeRefactoring)
 			{
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
 					beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName()))
@@ -218,6 +230,16 @@ public class ProjectASTDiffer
 					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
 				}
 			}
+			else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
+				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
+				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
+				String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
+				String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
+				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+				fromRefMiner(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
+			}
+
 		}
 	}
 
@@ -504,7 +526,7 @@ public class ProjectASTDiffer
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
 				for (AbstractCodeFragment abstractCodeFragment : replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore()) {
-					if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+					if (abstractCodeFragment instanceof CompositeStatementObject && ((CompositeStatementObject)abstractCodeFragment).isLoop()) {
 						enhancedFor = abstractCodeFragment;
 						break;
 					}
@@ -514,9 +536,11 @@ public class ProjectASTDiffer
 					for (VariableDeclaration parameter : lambda.getParameters()) {
 						String variableName = parameter.getVariableName();
 						VariableDeclaration variableDeclaration = enhancedFor.getVariableDeclaration(variableName);
-						Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo());
-						Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo());
-						new LeafMatcher(false).match(srcNode,dstNode,null,mappingStore);
+						if (variableDeclaration != null) {
+							Tree srcNode = TreeUtilFunctions.findByLocationInfo(srcTree,variableDeclaration.getLocationInfo());
+							Tree dstNode = TreeUtilFunctions.findByLocationInfo(dstTree,parameter.getLocationInfo());
+							new LeafMatcher(false).match(srcNode,dstNode,null,mappingStore);
+						}
 					}
 				}
 				Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,enhancedFor.getLocationInfo());

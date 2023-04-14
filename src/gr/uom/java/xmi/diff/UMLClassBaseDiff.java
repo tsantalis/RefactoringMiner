@@ -110,6 +110,26 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
 				tearDownMappers.add(mapper);
 			}
+			if(mapper.getAnonymousClassDiffs().size() > 0 && mapper.nonMappedElementsT1() > 0) {
+				for(UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
+					for(UMLOperationBodyMapper anonymousMapper : anonymousClassDiff.getOperationBodyMapperList()) {
+						if(anonymousMapper.nonMappedElementsT2() > 0) {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, anonymousMapper, this);
+							int invalidMappings = 0;
+							for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+								if(mapper.alreadyMatched1(mapping.getFragment1()) || anonymousMapper.getNonMappedLeavesT1().contains(mapping.getFragment1()) ||
+										anonymousMapper.getNonMappedInnerNodesT1().contains(mapping.getFragment1())) {
+									invalidMappings++;
+								}
+							}
+							if(moveCodeMapper.getMappings().size() > invalidMappings) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								refactorings.add(ref);
+							}
+						}
+					}
+				}
+			}
 		}
 		for(UMLOperationBodyMapper setUpMapper : setUpMappers) {
 			if(setUpMapper.nonMappedElementsT2() > 0 || setUpMapper.nonMappedElementsT1() > 0) {
@@ -2005,6 +2025,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			List<Boolean> nestedMapper = new ArrayList<>();
 			List<Boolean> identical = new ArrayList<>();
 			List<Integer> identicalStatementsForCompositeMappings = new ArrayList<>();
+			List<Integer> exactMappingsNestedUnderCompositeExcludingBlocks = new ArrayList<>();
 			List<Integer> nonMappedNodes = new ArrayList<>();
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
@@ -2035,9 +2056,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					identicalStatementsForCompositeMappings.add(identicalStatements);
+					exactMappingsNestedUnderCompositeExcludingBlocks.add(mapper.exactMappingsNestedUnderCompositeExcludingBlocks((CompositeStatementObjectMapping)mapping));
 				}
 				else {
 					identicalStatementsForCompositeMappings.add(0);
+					exactMappingsNestedUnderCompositeExcludingBlocks.add(0);
 				}
 				callsExtractedInlinedMethod.add(mapper.containsExtractedOrInlinedOperationInvocation(mapping));
 				parentMappingFound.add(mapper.containsParentMapping(mapping));
@@ -2084,7 +2107,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								indicesToBeRemoved.add(i);
 							}
 						}
-						determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 					}
 				}
 			}
@@ -2114,7 +2137,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 				}
 				if(!anonymousClassDeclarationMatch)
-					determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
@@ -2122,7 +2145,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						indicesToBeRemoved.add(i);
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
@@ -2246,6 +2269,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				return true;
 			}
 		}
+		if(invocation == null && callFragment.getVariableDeclarations().size() > 0) {
+			for(AbstractCall call : callFragment.getMethodInvocations()) {
+				if(call.actualString().equals(operationInvocation.actualString())) {
+					return true;
+				}
+			}
+		}
 		if(invocation != null && invocation.actualString().equals(operationInvocation.actualString())) {
 			if(invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
 				return true;
@@ -2280,6 +2310,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
+			List<Integer> exactMappingsNestedUnderCompositeExcludingBlocks,
 			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
 			Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
 		if(indicesToBeRemoved.isEmpty()) {
@@ -2294,6 +2325,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(int i=0; i<identical.size(); i++) {
 					if(identical.get(i) == false) {
 						indicesToBeRemoved.add(i);
+					}
+				}
+				if(indicesToBeRemoved.isEmpty()) {
+					int zeroCount = 0;
+					for(int i=0; i<exactMappingsNestedUnderCompositeExcludingBlocks.size(); i++) {
+						if(exactMappingsNestedUnderCompositeExcludingBlocks.get(i) == 0) {
+							zeroCount++;
+						}
+					}
+					if(zeroCount == 1) {
+						for(int i=0; i<exactMappingsNestedUnderCompositeExcludingBlocks.size(); i++) {
+							if(exactMappingsNestedUnderCompositeExcludingBlocks.get(i) == 0) {
+								indicesToBeRemoved.add(i);
+							}
+						}
 					}
 				}
 			}

@@ -75,9 +75,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				locations.add(expression.getLocationInfo());
 			}
 		}
-		for(LeafExpression expression : getMethodInvocations()) {
+		for(AbstractCall expression : getMethodInvocations()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
 		}
@@ -111,9 +111,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				locations.add(expression.getLocationInfo());
 			}
 		}
-		for(LeafExpression expression : getCreations()) {
+		for(AbstractCall expression : getCreations()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
 		}
@@ -154,6 +154,12 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		for(LeafExpression expression : getParenthesizedExpressions()) {
+			if(expression.getString().equals(s)) {
+				matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
+		for(LeafExpression expression : getTernaryOperatorExpressions()) {
 			if(expression.getString().equals(s)) {
 				matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());

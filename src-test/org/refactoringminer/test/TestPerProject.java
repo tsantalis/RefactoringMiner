@@ -32,12 +32,12 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/ReactiveX/RxJava.git", 16, 0, 0);
         processRepositoryCommits("https://github.com/CyanogenMod/android_frameworks_base.git", 54, 0, 1);
         processRepositoryCommits("https://github.com/real-logic/Aeron.git", 33, 0, 1);
-        processRepositoryCommits("https://github.com/gradle/gradle.git", 143, 0, 4);
+        processRepositoryCommits("https://github.com/gradle/gradle.git", 144, 0, 4);
         processRepositoryCommits("https://github.com/geometer/FBReaderJ.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/spring-projects/spring-data-neo4j.git", 108, 0, 2);
-        processRepositoryCommits("https://github.com/wildfly/wildfly.git", 169, 0, 2);
+        processRepositoryCommits("https://github.com/wildfly/wildfly.git", 170, 0, 2);
         processRepositoryCommits("https://github.com/fabric8io/fabric8.git", 22, 0, 0);
-        processRepositoryCommits("https://github.com/joel-costigliola/assertj-core.git", 100, 0, 1);
+        processRepositoryCommits("https://github.com/joel-costigliola/assertj-core.git", 100, 0, 0);
         processRepositoryCommits("https://github.com/structr/structr.git", 9, 0, 0);
         processRepositoryCommits("https://github.com/ignatov/intellij-erlang.git", 53, 0, 0);
         processRepositoryCommits("https://github.com/geoserver/geoserver.git", 81, 0, 4);
@@ -52,7 +52,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/phishman3579/java-algorithms-implementation.git", 472, 0, 0);
         processRepositoryCommits("https://github.com/square/wire.git", 47, 0, 2);
         processRepositoryCommits("https://github.com/abarisain/dmix.git", 3, 0, 0);
-        processRepositoryCommits("https://github.com/netty/netty.git", 158, 1, 9);
+        processRepositoryCommits("https://github.com/netty/netty.git", 161, 1, 9);
         processRepositoryCommits("https://github.com/HdrHistogram/HdrHistogram.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/grails/grails-core.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/cwensel/cascading.git", 13, 0, 5);
@@ -82,7 +82,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/brettwooldridge/HikariCP.git", 8, 0, 0);
         processRepositoryCommits("https://github.com/eucalyptus/eucalyptus.git", 42, 0, 1);
         processRepositoryCommits("https://github.com/dreamhead/moco.git", 2, 0, 0);
-        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 867, 4, 36);
+        processRepositoryCommits("https://github.com/neo4j/neo4j.git", 870, 4, 36);
         processRepositoryCommits("https://github.com/skylot/jadx.git", 30, 1, 0);
         processRepositoryCommits("https://github.com/vaadin/vaadin.git", 3, 0, 0);
         processRepositoryCommits("https://github.com/restlet/restlet-framework-java.git", 5, 0, 0);
@@ -102,7 +102,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/querydsl/querydsl.git", 17, 0, 0);
         processRepositoryCommits("https://github.com/mockito/mockito.git", 164, 0, 2);
         processRepositoryCommits("https://github.com/mrniko/redisson.git", 1, 0, 0);
-        processRepositoryCommits("https://github.com/clojure/clojure.git", 10, 0, 1);
+        processRepositoryCommits("https://github.com/clojure/clojure.git", 11, 0, 1);
         processRepositoryCommits("https://github.com/belaban/JGroups.git", 7, 0, 0);
         processRepositoryCommits("https://github.com/WhisperSystems/Signal-Android.git", 68, 0, 3);
         processRepositoryCommits("https://github.com/Activiti/Activiti.git", 16, 0, 0);
@@ -192,7 +192,7 @@ public class TestPerProject extends LightJavaCodeInsightFixtureTestCase {
         processRepositoryCommits("https://github.com/puniverse/quasar.git", 17, 0, 1);
         processRepositoryCommits("https://github.com/Jasig/cas.git", 4, 0, 0);
         processRepositoryCommits("https://github.com/cucumber/cucumber-jvm.git", 6, 0, 0);
-        processRepositoryCommits("https://github.com/JetBrains/intellij-community.git", 203, 0, 6);
+        processRepositoryCommits("https://github.com/JetBrains/intellij-community.git", 209, 0, 6);
         processRepositoryCommits("https://github.com/orientechnologies/orientdb.git", 62, 0, 1);
         processRepositoryCommits("https://github.com/spotify/helios.git", 25, 0, 0);
         processRepositoryCommits("https://github.com/SlimeKnights/TinkersConstruct.git", 7, 0, 3);

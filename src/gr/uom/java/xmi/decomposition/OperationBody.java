@@ -81,6 +81,10 @@ public class OperationBody {
 		return new ArrayList<AbstractCall>(compositeStatement.getAllMethodInvocations());
 	}
 
+	public List<AbstractCall> getAllCreations() {
+		return new ArrayList<AbstractCall>(compositeStatement.getAllCreations());
+	}
+
 	public List<LambdaExpressionObject> getAllLambdas() {
 		return new ArrayList<LambdaExpressionObject>(compositeStatement.getAllLambdas());
 	}

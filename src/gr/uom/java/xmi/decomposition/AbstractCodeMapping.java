@@ -9,7 +9,6 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -222,6 +221,16 @@ public abstract class AbstractCodeMapping {
 						before = before.substring(1, before.length()-1);
 					}
 				}
+				if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+					AbstractCall callBefore = r.getInvokedOperationBefore();
+					AbstractCall callAfter = r.getInvokedOperationAfter();
+					int indexOfArgument2 = callAfter.arguments().indexOf(variableName);
+					if(indexOfArgument2 != -1 && callBefore.arguments().size() == callAfter.arguments().size()) {
+						after = variableName;
+						before = callBefore.arguments().get(indexOfArgument2);
+					}
+				}
 				if(after.startsWith(variableName + ".")) {
 					String suffixAfter = after.substring(variableName.length(), after.length());
 					if(before.endsWith(suffixAfter)) {
@@ -330,7 +339,8 @@ public abstract class AbstractCodeMapping {
 				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
 			}
 			for(Replacement replacement : getReplacements()) {
-				if(variable.endsWith(replacement.getAfter()) &&	initializer.equals(replacement.getBefore())) {
+				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
+						initializer.contains(": " + replacement.getBefore()) || initializer.contains("? " + replacement.getBefore()))) {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {

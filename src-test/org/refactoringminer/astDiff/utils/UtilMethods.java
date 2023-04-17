@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 public class UtilMethods {
-    private static final String COMMITS_MAPPINGS_PATH = "src-test/org/refactoringminer/astDiff/data/commits/";
-    private static final String TREES_PATH = "src-test/org/refactoringminer/astDiff/data/trees";
+    private static final String DIFF_DATA_PATH = "src-test/data/astDiff/";
+    private static final String COMMITS_MAPPINGS_PATH = DIFF_DATA_PATH + "commits/";
+    private static final String TREES_PATH = DIFF_DATA_PATH + "trees";
     private static final String infoFile = "cases.json";
 
     private static final String JSON_SUFFIX = ".json";

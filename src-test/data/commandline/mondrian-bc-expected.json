@@ -605,6 +605,90 @@
 }]
 },
 {
+	"type": "Move Code",
+	"description": "Move Code from public runDateRangeOnAxis(mdx String) : void to protected setUp() : void in class mondrian.rolap.NativeRangeTest",
+	"leftSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 47,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public runDateRangeOnAxis(mdx String) : void"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 48,
+		"endLine": 48,
+		"startColumn": 9,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeRangeTest.java",
+		"startLine": 59,
+		"endLine": 63,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "protected setUp() : void"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeRangeTest.java",
+		"startLine": 62,
+		"endLine": 62,
+		"startColumn": 9,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
+	"type": "Move Code",
+	"description": "Move Code from public runTimeRangeOnAxis(mdx String) : void to protected setUp() : void in class mondrian.rolap.NativeRangeTest",
+	"leftSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 160,
+		"endLine": 234,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "source method declaration",
+		"codeElement": "public runTimeRangeOnAxis(mdx String) : void"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 161,
+		"endLine": 161,
+		"startColumn": 9,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code from source method declaration",
+		"codeElement": null
+}],
+	"rightSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeRangeTest.java",
+		"startLine": 59,
+		"endLine": 63,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "target method declaration",
+		"codeElement": "protected setUp() : void"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeRangeTest.java",
+		"startLine": 62,
+		"endLine": 62,
+		"startColumn": 9,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "moved code to target method declaration",
+		"codeElement": null
+}]
+},
+{
 	"type": "Add Variable Modifier",
 	"description": "Add Variable Modifier final in variable patterns : SqlPattern[] in method public runDateRangeOnAxis(mdx String) : void from class mondrian.rolap.NativeRangeTest",
 	"leftSideLocations": [{

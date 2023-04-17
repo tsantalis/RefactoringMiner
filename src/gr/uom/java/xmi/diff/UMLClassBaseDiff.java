@@ -67,6 +67,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private UMLImportListDiff importDiffList;
 	private UMLTypeParameterListDiff typeParameterDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
+	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -167,6 +168,40 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+			}
+		}
+		for(UMLOperation removedOperation : removedOperations) {
+			if(removedOperation.hasSetUpAnnotation() || removedOperation.hasTearDownAnnotation() ||
+					removedOperation.getName().equals("setUp") || removedOperation.getName().equals("tearDown")) {
+				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+					if(mapper.nonMappedElementsT2() > 0) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
+		for(UMLOperation addedOperation : addedOperations) {
+			if(addedOperation.hasSetUpAnnotation() || addedOperation.hasTearDownAnnotation() ||
+					addedOperation.getName().equals("setUp") || addedOperation.getName().equals("tearDown")) {
+				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+					if(mapper.nonMappedElementsT1() > 0) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+				}
+			}
+		}
+		for(UMLOperationBodyMapper moveCodeMapper : potentialCodeMoveBetweenSetUpTearDownMethods) {
+			if(moveCodeMapper.getMappings().size() > 0) {
+				MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+				refactorings.add(ref);
 			}
 		}
 	}
@@ -1104,6 +1139,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				mapperSet.add(operationBodyMapper);
 			}
 			else {
+				if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {
+					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
+				}
+				else if((removedOperation.hasTearDownAnnotation() || removedOperation.getName().equals("tearDown")) && (addedOperation.hasTearDownAnnotation() || addedOperation.getName().equals("tearDown"))) {
+					potentialCodeMoveBetweenSetUpTearDownMethods.add(operationBodyMapper);
+				}
 				for(MethodInvocationReplacement replacement : consistentMethodInvocationRenames.keySet()) {
 					UMLOperationBodyMapper mapper = consistentMethodInvocationRenames.get(replacement);
 					if(replacement.getInvokedOperationBefore().matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff) &&

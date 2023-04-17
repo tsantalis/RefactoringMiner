@@ -166,6 +166,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return streamAPICalls;
 	}
 
+	//Mappers for Move Code
 	public UMLOperationBodyMapper(UMLOperationBodyMapper mapper1, UMLOperationBodyMapper mapper2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
@@ -190,6 +191,64 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		nonMappedLeavesT2.addAll(leaves2);
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
+	}
+
+	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper mapper2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		this.container1 = removedOperation;
+		this.container2 = mapper2.getContainer2();
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		OperationBody body1 = removedOperation.getBody();
+		if(body1 != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<>(body1.getCompositeStatement().getLeaves());
+			List<AbstractCodeFragment> leaves2 = new ArrayList<>(mapper2.getNonMappedLeavesT2());
+			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(body1.getCompositeStatement().getInnerNodes());
+			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(mapper2.getNonMappedInnerNodesT2());
+			resetNodes(leaves1);
+			resetNodes(leaves2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			resetNodes(innerNodes1);
+			resetNodes(innerNodes2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			nonMappedLeavesT1.addAll(leaves1);
+			nonMappedLeavesT2.addAll(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
+		}
+	}
+
+	public UMLOperationBodyMapper(UMLOperationBodyMapper mapper1, UMLOperation addedOperation, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
+		this.container1 = mapper1.getContainer1();
+		this.container2 = addedOperation;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		OperationBody body2 = addedOperation.getBody();
+		if(body2 != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<>(mapper1.getNonMappedLeavesT1());
+			List<AbstractCodeFragment> leaves2 = new ArrayList<>(body2.getCompositeStatement().getLeaves());
+			List<CompositeStatementObject> innerNodes1 = new ArrayList<>(mapper1.getNonMappedInnerNodesT1());
+			List<CompositeStatementObject> innerNodes2 = new ArrayList<>(body2.getCompositeStatement().getInnerNodes());
+			resetNodes(leaves1);
+			resetNodes(leaves2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			resetNodes(innerNodes1);
+			resetNodes(innerNodes2);
+			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+			nonMappedLeavesT1.addAll(leaves1);
+			nonMappedLeavesT2.addAll(leaves2);
+			nonMappedInnerNodesT1.addAll(innerNodes1);
+			nonMappedInnerNodesT2.addAll(innerNodes2);
+		}
 	}
 
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {

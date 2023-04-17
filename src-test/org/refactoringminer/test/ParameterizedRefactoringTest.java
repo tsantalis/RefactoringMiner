@@ -24,7 +24,7 @@ public class ParameterizedRefactoringTest {
 
     @Disabled("This test is disabled because it is redundant with the testAllRefactorings")
     @ParameterizedTest
-    @JsonFileSource(resources = "/data.json")
+    @JsonFileSource(resources = "/oracle/data.json")
     public void testAllRefactoringsParameterized(@ConvertWith(RefactoringJsonConverter.class) RefactoringPopulator.Root testCase) throws Exception {
         GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
         GitService gitService = new GitServiceImpl();

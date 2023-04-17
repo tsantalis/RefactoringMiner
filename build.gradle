@@ -24,6 +24,11 @@ sourceSets {
         java {
             srcDir 'src-test'
         }
+        resources {
+            srcDir 'src-test/data/'
+            srcDir 'src-test/org/refactoringminer/astDiff/data/'
+        }
+
     }
 }
 

@@ -7178,6 +7178,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return replacementInfo.getReplacements();
 						}
 					}
+					//match break with already matched return
+					if(statement1.getString().equals("break;\n")) {
+						Set<AbstractCodeMapping> mappingsToBeAdded = new LinkedHashSet<>();
+						for(AbstractCodeMapping mapping : this.mappings) {
+							AbstractCodeFragment fragment2 = mapping.getFragment2();
+							if(fragment2.getParent() != null && fragment2.getString().startsWith("return ")) {
+								CompositeStatementObject parent1 = statement1.getParent();
+								CompositeStatementObject parent2 = fragment2.getParent();
+								String signature1 = parent1.getSignature();
+								String signature2 = parent2.getSignature();
+								if(signature1.equals(signature2)) {
+									LeafMapping leafMapping = createLeafMapping(statement1, fragment2, parameterToArgumentMap, false);
+									mappingsToBeAdded.add(leafMapping);
+									break;
+								}
+							}
+						}
+						for(AbstractCodeMapping mapping : mappingsToBeAdded) {
+							addMapping(mapping);
+						}
+					}
 				}
 			}
 		}

@@ -16,6 +16,9 @@ import org.refactoringminer.utils.RefactoringJsonConverter;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * @author  Victor Guerra Veloso victorgvbh@gmail.com
@@ -31,7 +34,7 @@ public class ParameterizedRefactoringTest {
         String folder = "tmp1/" + testCase.repository.substring(testCase.repository.lastIndexOf('/') + 1, testCase.repository.lastIndexOf('.'));
         try (Repository rep = gitService.cloneIfNotExists(folder, testCase.repository)) {
             detector.detectAtCommit(rep, testCase.sha1, new RefactoringHandler() {
-                Set<String> refactorings = null;
+                Set<String> foundRefactorings = null;
 
                 @Override
                 public boolean skipCommit(String commitId) {
@@ -40,10 +43,13 @@ public class ParameterizedRefactoringTest {
 
                 @Override
                 public void handle(String commitId, List<Refactoring> refactorings) {
-                    this.refactorings = refactorings.stream().map(refactoring -> refactoring.getRefactoringType().getDisplayName()).collect(Collectors.toSet());
-                    testCase.refactorings.forEach(refactoring -> {
-                        Assertions.assertTrue(this.refactorings.contains(refactoring.type), String.format("Refactoring %s not found in commit %s (%s)%n", refactoring.type, testCase.sha1, this.refactorings));
-                    });
+                    foundRefactorings = new HashSet<>(refactorings.size());
+                    for (Refactoring found : refactorings) {
+                        foundRefactorings.add(found.getRefactoringType().getDisplayName());
+                    }
+                    for (RefactoringPopulator.Refactoring expectedRefactoring : testCase.refactorings) {
+                        Assertions.assertTrue(foundRefactorings.remove(expectedRefactoring.type), String.format("Should find expected %s refactoring %s, but it is not found at commit %s%n", expectedRefactoring.validation, expectedRefactoring.type, testCase.sha1));
+                    }
                 }
             });
         }

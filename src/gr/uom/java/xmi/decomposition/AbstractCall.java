@@ -518,6 +518,10 @@ public abstract class AbstractCall extends LeafExpression {
 		if(normalizedNameDistance(call) <= distance) {
 			return true;
 		}
+		return compatibleName(call);
+	}
+
+	public boolean compatibleName(AbstractCall call) {
 		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.getName());
 		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(call.getName());
 		int commonTokens = 0;

@@ -146,11 +146,11 @@ Currently, it supports the detection of the following refactorings:
 97. Replace Anonymous with Class
 
 # Current precision and recall
-As of **April 7, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **188 open-source projects** is:
+As of **April 19, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11632  | 23  | 272  | 0.998  | 0.977|
+|**Total**|11650  | 23  | 269  | 0.998  | 0.977|
 |Extract Method|996  |  1  | 27  | 0.999  | 0.974|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -159,7 +159,7 @@ As of **April 7, 2023** the precision and recall of the tool on an oracle consis
 |Rename Method|365  |  4  | 26  | 0.989  | 0.934|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
 |Move Method|351  |  3  |  9  | 0.992  | 0.975|
-|Move And Rename Method|123  |  0  |  5  | 1.000  | 0.961|
+|Move And Rename Method|124  |  0  |  5  | 1.000  | 0.961|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
@@ -193,8 +193,8 @@ As of **April 7, 2023** the precision and recall of the tool on an oracle consis
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|420  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|773  |  2  | 10  | 0.997  | 0.987|
-|Change Parameter Type|633  |  1  | 15  | 0.998  | 0.977|
+|Change Variable Type|774  |  2  | 10  | 0.997  | 0.987|
+|Change Parameter Type|636  |  1  | 12  | 0.998  | 0.981|
 |Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
@@ -205,8 +205,8 @@ As of **April 7, 2023** the precision and recall of the tool on an oracle consis
 |Add Class Annotation|52  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
 |Modify Class Annotation|32  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Annotation|32  |  0  |  0  | 1.000  | 1.000|
-|Remove Parameter Annotation| 3  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Annotation|33  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|961  |  2  |  1  | 0.998  | 0.999|
 |Remove Parameter|332  |  0  |  0  | 1.000  | 1.000|
@@ -216,7 +216,7 @@ As of **April 7, 2023** the precision and recall of the tool on an oracle consis
 |Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|326  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|327  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|223  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|78  |  0  |  0  | 1.000  | 1.000|
@@ -243,7 +243,7 @@ As of **April 7, 2023** the precision and recall of the tool on an oracle consis
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code| 6  |  0  |  0  | 1.000  | 1.000|
+|Move Code|16  |  0  |  0  | 1.000  | 1.000|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner

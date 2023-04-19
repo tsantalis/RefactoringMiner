@@ -45,10 +45,10 @@ public class ParameterizedRefactoringTest {
                 public void handle(String commitId, List<Refactoring> refactorings) {
                     foundRefactorings = new HashSet<>(refactorings.size());
                     for (Refactoring found : refactorings) {
-                        foundRefactorings.add(found.getRefactoringType().getDisplayName());
+                        foundRefactorings.add(found.toString().replace("\t"," "));
                     }
                     for (RefactoringPopulator.Refactoring expectedRefactoring : testCase.refactorings) {
-                        Assertions.assertTrue(foundRefactorings.remove(expectedRefactoring.type), String.format("Should find expected %s refactoring %s, but it is not found at commit %s%n", expectedRefactoring.validation, expectedRefactoring.type, testCase.sha1));
+                        Assertions.assertTrue(foundRefactorings.remove(expectedRefactoring.description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s%n", expectedRefactoring.validation, expectedRefactoring.description, testCase.sha1));
                     }
                 }
             });

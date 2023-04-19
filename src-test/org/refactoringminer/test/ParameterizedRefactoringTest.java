@@ -47,9 +47,15 @@ public class ParameterizedRefactoringTest {
                     for (Refactoring found : refactorings) {
                         foundRefactorings.add(found.toString().replace("\t"," "));
                     }
-                    for (RefactoringPopulator.Refactoring expectedRefactoring : testCase.refactorings) {
-                        Assertions.assertTrue(foundRefactorings.remove(expectedRefactoring.description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s%n", expectedRefactoring.validation, expectedRefactoring.description, testCase.sha1));
+                    Iterator<RefactoringPopulator.Refactoring> iter = testCase.refactorings.iterator();
+                    while(iter.hasNext()){
+                        RefactoringPopulator.Refactoring expectedRefactoring = iter.next();
+                        String description = expectedRefactoring.description;
+                        iter.remove();
+                        Assertions.assertTrue(foundRefactorings.remove(description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s (%s)%n", expectedRefactoring.validation, description, testCase.sha1,foundRefactorings));
                     }
+                    Assertions.assertEquals(Collections.emptySet(), foundRefactorings, String.format("Should have zero False Positives, but False Positives were found: %s", foundRefactorings.toString()));
+                    Assertions.assertEquals(Collections.emptyList(), testCase.refactorings, String.format("Should have zero False Negatives, but False Negatives were found: %s", testCase.refactorings.toString()));
                 }
             });
         }

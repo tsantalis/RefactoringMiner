@@ -2105,6 +2105,12 @@ public class StringBasedHeuristics {
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
 			List<String> ternaryConditionals1 = new ArrayList<>();
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
+				String condition = ternary.getCondition().getString();
+				String temp0 = new String(condition);
+				for(Replacement replacement : info.getReplacements()) {
+					temp0 = ReplacementUtil.performReplacement(temp0, replacement.getBefore(), replacement.getAfter());
+				}
+				ternaryConditionals1.add(temp0);
 				String thenExpression = ternary.getThenExpression().getString();
 				String temp1 = new String(thenExpression);
 				for(Replacement replacement : info.getReplacements()) {
@@ -2120,6 +2126,7 @@ public class StringBasedHeuristics {
 			}
 			List<String> ternaryConditionals2 = new ArrayList<>();
 			for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+				ternaryConditionals2.add(ternary.getCondition().getString());
 				ternaryConditionals2.add(ternary.getThenExpression().getString());
 				ternaryConditionals2.add(ternary.getElseExpression().getString());
 			}
@@ -2130,13 +2137,13 @@ public class StringBasedHeuristics {
 				}
 			}
 			boolean ternaryConditions = !containsTernaryOperatorReplacement && ternaryConditionals1.isEmpty() != ternaryConditionals2.isEmpty() &&
-					statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType());
+					(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) || statement1 instanceof AbstractExpression);
 			boolean containLogicalOperator = s1.contains("||") || s1.contains("&&") || s2.contains("||") || s2.contains("&&");
 			boolean containsNotOperator = s1.contains("!") != s2.contains("!");
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
-				if(ternaryConditions && !containLogicalOperator) {
+				if(ternaryConditions && (!containLogicalOperator || statement1 instanceof AbstractExpression)) {
 					if(ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) {
 						String conditional1 = prepareConditional(s1);
 						String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
@@ -2234,7 +2241,7 @@ public class StringBasedHeuristics {
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
-							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2, statement2, mappings)) {
+							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !ifNode2.getExpressions().contains(statement2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2, statement2, mappings)) {
 								AbstractExpression ifExpression2 = expressions2.get(0);
 								String conditional = ifExpression2.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -2359,7 +2366,14 @@ public class StringBasedHeuristics {
 						if(splitConditional) {
 							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
 							Set<AbstractCodeFragment> splitConditionals = new LinkedHashSet<>();
-							splitConditionals.add(statement2);
+							if(statement2 instanceof AbstractExpression) {
+								CompositeStatementObject owner = ((AbstractExpression)statement2).getOwner();
+								if(owner != null)
+									splitConditionals.add(owner);
+							}
+							else {
+								splitConditionals.add(statement2);
+							}
 							for(Replacement compositeReplacement : compositeReplacements) {
 								splitConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements2());
 							}
@@ -2373,7 +2387,7 @@ public class StringBasedHeuristics {
 						boolean mergeConditional = false;
 						for(CompositeStatementObject ifNode1 : ifNodes1) {
 							List<AbstractExpression> expressions1 = ifNode1.getExpressions();
-							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement1, statement2, mappings)) {
+							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !ifNode1.getExpressions().contains(statement1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement1, statement2, mappings)) {
 								AbstractExpression ifExpression1 = expressions1.get(0);
 								String conditional = ifExpression1.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
@@ -2402,7 +2416,14 @@ public class StringBasedHeuristics {
 						if(mergeConditional) {
 							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
 							Set<AbstractCodeFragment> mergedConditionals = new LinkedHashSet<>();
-							mergedConditionals.add(statement1);
+							if(statement1 instanceof AbstractExpression) {
+								CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
+								if(owner != null)
+									mergedConditionals.add(owner);
+							}
+							else {
+								mergedConditionals.add(statement1);
+							}
 							for(Replacement compositeReplacement : compositeReplacements) {
 								mergedConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements1());
 							}
@@ -2427,8 +2448,17 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(matches == invertedConditionals && (booleanOperatorReversed || !containLogicalOperator)) {
-						InvertConditionRefactoring invert = new InvertConditionRefactoring(statement1, statement2, container1, container2);
-						refactorings.add(invert);
+						if(statement1 instanceof AbstractExpression) {
+							CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
+							if(owner != null) {
+								InvertConditionRefactoring invert = new InvertConditionRefactoring(owner, statement2, container1, container2);
+								refactorings.add(invert);
+							}
+						}
+						else {
+							InvertConditionRefactoring invert = new InvertConditionRefactoring(statement1, statement2, container1, container2);
+							refactorings.add(invert);
+						}
 					}
 					return true;
 				}
@@ -2471,6 +2501,10 @@ public class StringBasedHeuristics {
 			for(String element : intersection) {
 				boolean replacementFound = false;
 				for(Replacement r : info.getReplacements()) {
+					boolean getterReplacement = false;
+					if(r instanceof VariableReplacementWithMethodInvocation) {
+						getterReplacement = ((VariableReplacementWithMethodInvocation)r).getterReplacement();
+					}
 					if(element.equals(r.getAfter()) || element.equals("(" + r.getAfter()) || element.equals(r.getAfter() + ")")) {
 						replacementFound = true;
 						break;
@@ -2487,7 +2521,7 @@ public class StringBasedHeuristics {
 						replacementFound = true;
 						break;
 					}
-					if(ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
+					if(!getterReplacement && ReplacementUtil.contains(element, r.getAfter()) && element.startsWith(r.getAfter()) &&
 							(element.endsWith(" != null") || element.endsWith(" == null") || element.endsWith(" != 0") || element.endsWith(" == 0"))) {
 						replacementFound = true;
 						break;
@@ -2590,7 +2624,7 @@ public class StringBasedHeuristics {
 					nestedFragment1++;
 				}
 			}
-			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo());
+			boolean nestedFragment2 = statement2.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || statement2.getTernaryOperatorExpressions().size() > 0;
 			if(nestedFragment1 == mergedConditionals.size() && nestedFragment2) {
 				return true;
 			}
@@ -2697,7 +2731,7 @@ public class StringBasedHeuristics {
 					nestedFragment2++;
 				}
 			}
-			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo());
+			boolean nestedFragment1 = statement1.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo()) || statement1.getTernaryOperatorExpressions().size() > 0;
 			if(nestedFragment2 == splitConditionals.size() && nestedFragment1) {
 				return true;
 			}

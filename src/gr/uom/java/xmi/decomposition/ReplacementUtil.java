@@ -158,6 +158,8 @@ public class ReplacementUtil {
 				return true;
 			if(characterBefore1.equals("") && characterBefore2.equals(" "))
 				return true;
+			if(characterBefore1.equals("") && characterBefore2.equals("!"))
+				return true;
 		}
 		return false;
 	}

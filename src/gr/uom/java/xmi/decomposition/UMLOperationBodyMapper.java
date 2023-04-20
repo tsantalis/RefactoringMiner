@@ -475,7 +475,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			//match expressions in inner nodes from T1 with leaves from T2
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
+			int remainingUnmatchedIfStatements1 = 0;
 			for(CompositeStatementObject composite : innerNodes1) {
+				if(composite.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+					remainingUnmatchedIfStatements1++;
+				}
 				for(AbstractExpression expression : composite.getExpressions()) {
 					expression.replaceParametersWithArguments(parameterToArgumentMap1);
 					expressionsT1.add(expression);
@@ -488,6 +492,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expression.replaceParametersWithArguments(parameterToArgumentMap1);
 						expressionsT1.add(expression);
 					}
+				}
+				if(remainingUnmatchedIfStatements1 > 0 && mapping instanceof LeafMapping && mapping.getFragment1().getTernaryOperatorExpressions().size() == 0 &&
+						mapping.getFragment2().getTernaryOperatorExpressions().size() > 0 && !leaves2.contains(mapping.getFragment2())) {
+					leaves2.add(mapping.getFragment2());
+					//remove from hashCodes, so that it can be re-matched
+					mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
 				}
 			}
 			int numberOfMappings = mappings.size();

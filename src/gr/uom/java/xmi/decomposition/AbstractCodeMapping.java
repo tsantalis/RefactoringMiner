@@ -213,7 +213,8 @@ public abstract class AbstractCodeMapping {
 			for(Replacement replacement : getReplacements()) {
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();
-				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION)) {
+				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION) ||
+						replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION)) {
 					if(after.startsWith("(") && after.endsWith(")")) {
 						after = after.substring(1, after.length()-1);
 					}
@@ -373,7 +374,8 @@ public abstract class AbstractCodeMapping {
 			for(Replacement replacement : getReplacements()) {
 				String after = replacement.getAfter();
 				String before = replacement.getBefore();
-				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION)) {
+				if(replacement.getType().equals(ReplacementType.PARENTHESIZED_EXPRESSION) ||
+						replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION)) {
 					if(after.startsWith("(") && after.endsWith(")")) {
 						after = after.substring(1, after.length()-1);
 					}

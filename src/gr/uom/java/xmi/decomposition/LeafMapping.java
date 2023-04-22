@@ -39,12 +39,27 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		this.equalNumberOfAssertions = equalNumberOfAssertions;
 	}
 
+	private boolean identicalAfterConcatenation() {
+		String s1 = getFragment1().getString();
+		if(s1.endsWith(";\n")) {
+			s1 = s1.substring(0, s1.length()-2);
+		}
+		String s2 = getFragment2().getString();
+		if(s2.endsWith(";\n")) {
+			s2 = s2.substring(0, s2.length()-2);
+		}
+		if(s1.contains(s2) || s2.contains(s1)) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public int compareTo(LeafMapping o) {
 		CompositeReplacement compositeReplacement1 = this.containsCompositeReplacement();
 		CompositeReplacement compositeReplacement2 = o.containsCompositeReplacement();
-		boolean concatenationReplacement1 = this.containsReplacement(ReplacementType.CONCATENATION);
-		boolean concatenationReplacement2 = o.containsReplacement(ReplacementType.CONCATENATION);
+		boolean concatenationReplacement1 = this.containsReplacement(ReplacementType.CONCATENATION) && !this.identicalAfterConcatenation();
+		boolean concatenationReplacement2 = o.containsReplacement(ReplacementType.CONCATENATION) && !o.identicalAfterConcatenation();
 		if(compositeReplacement1 != null || compositeReplacement2 != null) {
 			if(compositeReplacement1 != null && compositeReplacement2 == null) {
 				return -1;

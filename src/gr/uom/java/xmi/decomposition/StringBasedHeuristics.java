@@ -1104,8 +1104,20 @@ public class StringBasedHeuristics {
 			if(s1.contains(" + ") && s2.contains(" + ")) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
-				Set<String> intersection = new LinkedHashSet<String>(tokens1);
-				intersection.retainAll(tokens2);
+				Set<String> intersection = new LinkedHashSet<String>();
+				for(String token1 : tokens1) {
+					for(String token2 : tokens2) {
+						if(token1.equals(token2)) {
+							intersection.add(token1);
+						}
+						else if(token1.equals(token2 + ";\n")) {
+							intersection.add(token2);
+						}
+						else if(token2.equals(token1 + ";\n")) {
+							intersection.add(token1);
+						}
+					}
+				}
 				Set<String> filteredIntersection = new LinkedHashSet<String>();
 				for(String common : intersection) {
 					boolean foundInReplacements = false;

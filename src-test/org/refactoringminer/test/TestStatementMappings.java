@@ -146,8 +146,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"., https://github.com/tsantalis/RefactoringMiner.git, fbd80e76c68558ba58b62311aa1c34fb38baf53a, processLeaves, miner-fbd80e76c68558ba58b62311aa1c34fb38baf53a.txt",
-		"tmp1/javaparser, https://github.com/javaparser/javaparser.git, f4ce6ce924ffbd03518c64cea9b830d04f75b849, apply, javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt",
-		"tmp1/commons-lang, https://github.com/apache/commons-lang.git, 50c1fdecb4ed33ec1bb0d449f294c299d5369701, createNumber, commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt"
+		REPOS + "/javaparser, https://github.com/javaparser/javaparser.git, f4ce6ce924ffbd03518c64cea9b830d04f75b849, apply, javaparser-f4ce6ce924ffbd03518c64cea9b830d04f75b849.txt",
+		REPOS + "/commons-lang, https://github.com/apache/commons-lang.git, 50c1fdecb4ed33ec1bb0d449f294c299d5369701, createNumber, commons-lang-50c1fdecb4ed33ec1bb0d449f294c299d5369701.txt"
 	})
 	public void testCopiedStatementMappings(String fullFolderName, String url, String commitId, String containerName, String testResultFileName) throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
@@ -246,9 +246,9 @@ public class TestStatementMappings {
 	}
 	@ParameterizedTest
 	@CsvSource({
-			"tmp1/infinispan, https://github.com/infinispan/infinispan.git, 043030723632627b0908dca6b24dae91d3dfd938, infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt",
-			"tmp1/j2objc, https://github.com/google/j2objc.git, d05d92de40542e85f9f26712d976e710be82914e, j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt",
-			"tmp1/buck, https://github.com/facebook/buck.git, 7e104c3ed4b80ec8e9b72356396f879d1067cc40, buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt",
+			REPOS + "/infinispan, https://github.com/infinispan/infinispan.git, 043030723632627b0908dca6b24dae91d3dfd938, infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt",
+			REPOS + "/j2objc, https://github.com/google/j2objc.git, d05d92de40542e85f9f26712d976e710be82914e, j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt",
+			REPOS + "/buck, https://github.com/facebook/buck.git, 7e104c3ed4b80ec8e9b72356396f879d1067cc40, buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt",
 			"., https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt" // WithIntermediateDelegate
 	})
 	public void testNestedExtractMethodStatementMappings(String fullFolderName, String url, String commitId, String testResultFileName) throws Exception {

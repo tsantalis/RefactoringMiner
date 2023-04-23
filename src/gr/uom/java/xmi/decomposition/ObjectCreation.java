@@ -1,8 +1,10 @@
 package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_COMMA_PATTERN;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ArrayCreation;
@@ -121,7 +123,19 @@ public class ObjectCreation extends AbstractCall {
     public boolean identicalArrayInitializer(ObjectCreation other) {
     	if(this.isArray && other.isArray) {
     		if(this.anonymousClassDeclaration != null && other.anonymousClassDeclaration != null) {
-    			return this.anonymousClassDeclaration.equals(other.anonymousClassDeclaration);
+    			if(this.anonymousClassDeclaration.equals(other.anonymousClassDeclaration)) {
+    				return true;
+    			}
+    			if(this.anonymousClassDeclaration.startsWith("{") && this.anonymousClassDeclaration.endsWith("}") &&
+    					other.anonymousClassDeclaration.startsWith("{") && other.anonymousClassDeclaration.endsWith("}")) {
+    				String s1 = this.anonymousClassDeclaration.substring(1, this.anonymousClassDeclaration.length()-1);
+    				String s2 = other.anonymousClassDeclaration.substring(1, other.anonymousClassDeclaration.length()-1);
+    				List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1));
+    				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
+    				if(tokens1.size() > 0 && tokens2.size() > 0 && (tokens1.containsAll(tokens2) || tokens2.containsAll(tokens1))) {
+    					return true;
+    				}
+    			}
     		}
     		else if(this.anonymousClassDeclaration == null && other.anonymousClassDeclaration == null) {
     			return true;

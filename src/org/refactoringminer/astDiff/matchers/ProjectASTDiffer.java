@@ -308,6 +308,9 @@ public class ProjectASTDiffer
 		}
 		Set<AbstractCodeMapping> mappingSet = bodyMapper.getMappings();
 		ArrayList<AbstractCodeMapping> mappings = new ArrayList<>(mappingSet);
+//		mappings.add(new LeafMapping(
+//				bodyMapper.getNonMappedLeavesT1().get(0)
+//				,bodyMapper.getNonMappedLeavesT2().get(0),null,null));
 		for (AbstractCodeMapping abstractCodeMapping : mappings)
 		{
 			if (abstractCodeMapping instanceof LeafMapping)

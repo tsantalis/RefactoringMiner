@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
+public class CompositeMatcher implements TreeMatcher {
 
 	@Override
 	public void match(Tree src, Tree dst, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
@@ -60,7 +60,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Tree srcFakeTree = makeFakeTree(src,fragment1, cpyToSrc);
 		Tree dstFakeTree = makeFakeTree(dst,fragment2, cpyToDst);
 		ExtendedMultiMappingStore tempMapping = new ExtendedMultiMappingStore(null,null);
-		basicMatcher(srcFakeTree,dstFakeTree,tempMapping);
+		new BasicTreeMatcher().match(srcFakeTree,dstFakeTree,null,tempMapping);
 		for(Mapping mapping : tempMapping) {
 			if (mapping.first == srcFakeTree) continue;
 			mappingStore.addMapping(cpyToSrc.get(mapping.first), cpyToDst.get(mapping.second));

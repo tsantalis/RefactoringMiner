@@ -3728,6 +3728,50 @@
   "firstEndPos" : 10496,
   "secondEndPos" : 12503
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6456,
+  "secondPos" : 7084,
+  "firstEndPos" : 6765,
+  "secondEndPos" : 7457
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 6467,
+  "secondPos" : 7095,
+  "firstEndPos" : 6732,
+  "secondEndPos" : 7424
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Ensures the ",
+  "secondLabel" : "Ensures ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6467,
+  "secondPos" : 7095,
+  "firstEndPos" : 6479,
+  "secondEndPos" : 7103
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " is updated prior to methods that commit the response. We delegate all methods",
+  "secondLabel" : " is invoked before calling the prior to methods that commit the response. We delegate all methods",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6502,
+  "secondPos" : 7159,
+  "firstEndPos" : 6580,
+  "secondEndPos" : 7256
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "to the original ",
@@ -10987,6 +11031,50 @@
   "secondPos" : 12509,
   "firstEndPos" : 13472,
   "secondEndPos" : 16436
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10502,
+  "secondPos" : 12509,
+  "firstEndPos" : 10834,
+  "secondEndPos" : 12903
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 10513,
+  "secondPos" : 12520,
+  "firstEndPos" : 10794,
+  "secondEndPos" : 12863
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Ensures the ",
+  "secondLabel" : "Ensures",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10513,
+  "secondPos" : 12520,
+  "firstEndPos" : 10525,
+  "secondEndPos" : 12527
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " is updated prior to methods that commit the response. We delegate all methods",
+  "secondLabel" : " is invoked before calling methods that commit the response. We delegate all methods",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10548,
+  "secondPos" : 12583,
+  "firstEndPos" : 10626,
+  "secondEndPos" : 12667
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

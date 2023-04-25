@@ -19,13 +19,22 @@ public class URLHelper{
         return result;
     }
     public static String getRepo(String url) {
+        url = removeAdditionalPart(url);
         int index = nthIndexOf(url,'/',5);
         return url.substring(0,index) + ".git";
     }
 
     public static String getCommit(String url) {
+        url = removeAdditionalPart(url);
         int index = nthIndexOf(url,'/',6);
         return url.substring(index+1);
+    }
+    private static String removeAdditionalPart(String url){
+        int index = url.lastIndexOf('#');
+        if (index == -1)
+            return url;
+        else
+            return url.substring(0,index);
     }
     public static int nthIndexOf(String text, char needle, int n)
     {

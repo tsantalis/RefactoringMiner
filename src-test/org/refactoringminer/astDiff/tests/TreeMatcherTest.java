@@ -35,7 +35,7 @@ public class TreeMatcherTest {
     public void testMappings(Tree srcTree, Tree dstTree, String expectedMappings, String folderPath)
     {
         ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
-        new LeafMatcher(true).match(srcTree,dstTree,null,mappings);
+        new LeafMatcher(true).match(srcTree,dstTree,mappings);
         try {
             String actual = MappingExportModel.exportString(mappings);
             assertEquals(expectedMappings,actual);

@@ -18,12 +18,9 @@ public class CustomGTSimple extends CompositeMatchers.CompositeMatcher {
 }
 
 class CustomGreedy extends GreedySubtreeMatcher {
-	private final boolean original;
-
 	public CustomGreedy(int minP, boolean original) {
 		super();
 		setMinPriority(minP);
-		this.original = original;
 	}
 
 	@Override

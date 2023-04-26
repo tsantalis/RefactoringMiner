@@ -8,7 +8,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+/** Use this matcher when both code fragments are {@link gr.uom.java.xmi.decomposition.CompositeStatementObject}. <br>
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
@@ -46,10 +46,6 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 			if (mapping.first == srcFakeTree) continue;
 			mappingStore.addMapping(cpyToSrc.get(mapping.first), cpyToDst.get(mapping.second));
 		}
-	}
-
-	private void compositeMatcher(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
-		process(src, dst, mappingStore);
 	}
 
 	private static Tree makeFakeTree(Tree tree, CompositeStatementObject fragment, Map<Tree, Tree> cpyMap) {

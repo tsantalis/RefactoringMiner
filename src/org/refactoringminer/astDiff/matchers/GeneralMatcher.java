@@ -6,12 +6,15 @@ import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
-/* Created by pourya on 2023-04-25 1:08 p.m. */
-public class GeneralTreeMatcher extends BasicTreeMatcher implements TreeMatcher {
+/** Use this matcher when two code fragments must be matched. <br>
+ * If you know that both fragments are composite, use {@link org.refactoringminer.astDiff.matchers.CompositeMatcher} instead. <br>
+ * @author  Pourya Alikhani Fard pouryafard75@gmail.com
+*/
+public class GeneralMatcher extends BasicTreeMatcher implements TreeMatcher {
     AbstractCodeFragment st1;
     AbstractCodeFragment st2;
 
-    public GeneralTreeMatcher(AbstractCodeFragment st1, AbstractCodeFragment st2) {
+    public GeneralMatcher(AbstractCodeFragment st1, AbstractCodeFragment st2) {
         this.st1 = st1;
         this.st2 = st2;
     }
@@ -37,6 +40,9 @@ public class GeneralTreeMatcher extends BasicTreeMatcher implements TreeMatcher 
                 Tree srcExpTree = TreeUtilFunctions.findByLocationInfo(src, expression.getLocationInfo());
                 new LeafMatcher(false).match(srcExpTree,dst,mappingStore);
             }
+        }
+        else {
+            new LeafMatcher(false).match(src,dst,mappingStore);
         }
 
     }

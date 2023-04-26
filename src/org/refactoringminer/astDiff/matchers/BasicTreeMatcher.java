@@ -19,10 +19,10 @@ public class BasicTreeMatcher implements TreeMatcher {
 		basicMatcher(src, dst, mappingStore);
 	}
 	private void basicMatcher(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
-		mappingStore.add(apply(src, dst));
+		mappingStore.add(process(src, dst));
 	}
 
-	public MappingStore apply(Tree src, Tree dst) {
+	public static MappingStore process(Tree src, Tree dst) {
 		MappingStore match;
 		match = new CustomGreedy(0, false).match(src, dst);
 		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();

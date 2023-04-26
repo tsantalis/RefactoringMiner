@@ -32,7 +32,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 				match.addMappingRecursively(prunedPair.first, prunedPair.second);
 			}
 			else {
-				match = apply(prunedPair.first, prunedPair.second);
+				match = process(prunedPair.first, prunedPair.second);
 			}
 			if (!overwrite)
 				mappingStore.addWithMaps(match, srcCopy, dstCopy);

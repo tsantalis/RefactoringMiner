@@ -2565,12 +2565,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public int nonMappedElementsT2CallingAddedOperation(List<UMLOperation> addedOperations) {
+	public int nonMappedElementsT2CallingAddedOperation(List<? extends VariableDeclarationContainer> addedOperations) {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT2()) {
 			if(composite.countableStatement()) {
 				for(AbstractCall invocation : composite.getMethodInvocations()) {
-					for(UMLOperation operation : addedOperations) {
+					for(VariableDeclarationContainer operation : addedOperations) {
 						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
 							nonMappedInnerNodeCount++;
 							break;
@@ -2583,7 +2583,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
 			if(statement.countableStatement()) {
 				for(AbstractCall invocation : statement.getMethodInvocations()) {
-					for(UMLOperation operation : addedOperations) {
+					for(VariableDeclarationContainer operation : addedOperations) {
 						if(invocation.matchesOperation(operation, container2, classDiff, modelDiff)) {
 							nonMappedLeafCount++;
 							break;
@@ -2595,12 +2595,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return nonMappedLeafCount + nonMappedInnerNodeCount;
 	}
 
-	public int nonMappedElementsT1CallingRemovedOperation(List<UMLOperation> removedOperations) {
+	public int nonMappedElementsT1CallingRemovedOperation(List<? extends VariableDeclarationContainer> removedOperations) {
 		int nonMappedInnerNodeCount = 0;
 		for(CompositeStatementObject composite : getNonMappedInnerNodesT1()) {
 			if(composite.countableStatement()) {
 				for(AbstractCall invocation : composite.getMethodInvocations()) {
-					for(UMLOperation operation : removedOperations) {
+					for(VariableDeclarationContainer operation : removedOperations) {
 						if(invocation.matchesOperation(operation, container1, classDiff, modelDiff)) {
 							nonMappedInnerNodeCount++;
 							break;
@@ -2613,7 +2613,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 			if(statement.countableStatement()) {
 				for(AbstractCall invocation : statement.getMethodInvocations()) {
-					for(UMLOperation operation : removedOperations) {
+					for(VariableDeclarationContainer operation : removedOperations) {
 						if(invocation.matchesOperation(operation, container1, classDiff, modelDiff)) {
 							nonMappedLeafCount++;
 							break;

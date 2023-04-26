@@ -558,7 +558,12 @@ public class TestStatementMappings {
 		REPOS + "/hive, https://github.com/apache/hive.git, 4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6, hive-4ccc0c37aabbd90ecaa36fcc491e2270e7e9bea6.txt",
 		REPOS + "/commafeed, https://github.com/Athou/commafeed.git, 18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7, commafeed-18a7bd1fd1a83b3b8d1b245e32f78c0b4443b7a7.txt",
 		REPOS + "/buck, https://github.com/facebook/buck.git, f26d234e8d3458f34454583c22e3bd5f4b2a5da8, buck-f26d234e8d3458f34454583c22e3bd5f4b2a5da8.txt",
-		REPOS + "/nutz, https://github.com/nutzam/nutz.git, de7efe40dad0f4bb900c4fffa80ed377745532b3, nutz-de7efe40dad0f4bb900c4fffa80ed377745532b3.txt"})
+		REPOS + "/nutz, https://github.com/nutzam/nutz.git, de7efe40dad0f4bb900c4fffa80ed377745532b3, nutz-de7efe40dad0f4bb900c4fffa80ed377745532b3.txt",
+		"., https://github.com/tsantalis/RefactoringMiner.git, e4c0aff02b2ed6cb53b5e48b14714c9dc0f451ad, miner-e4c0aff02b2ed6cb53b5e48b14714c9dc0f451ad.txt",
+		"., https://github.com/tsantalis/RefactoringMiner.git, cec58c7141e9994509268690b91f98e965d3f0b5, miner-cec58c7141e9994509268690b91f98e965d3f0b5.txt",
+		"., https://github.com/tsantalis/RefactoringMiner.git, 7841a00088cea73a8a6d20e63f63f1eb13f528a5, miner-7841a00088cea73a8a6d20e63f63f1eb13f528a5.txt",
+		"., https://github.com/tsantalis/RefactoringMiner.git, 1aab3114cdfcddf44d35c820e643c932c5433122, miner-1aab3114cdfcddf44d35c820e643c932c5433122.txt"
+	})
 	public void testExtractMethodStatementMappings(String folderName, String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 		Repository repo = gitService.cloneIfNotExists(

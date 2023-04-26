@@ -679,27 +679,33 @@ public class ProjectASTDiffer
 			else if (refactoring instanceof SplitConditionalRefactoring)
 			{
 				SplitConditionalRefactoring splitConditionalRefactoring = (SplitConditionalRefactoring) refactoring;
+				Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,splitConditionalRefactoring.getOriginalConditional().getLocationInfo());
 				Set<AbstractCodeFragment> splitConditionals = splitConditionalRefactoring.getSplitConditionals();
 				for (AbstractCodeFragment splitConditional : splitConditionals) {
-					new GeneralTreeMatcher(splitConditionalRefactoring.getOriginalConditional(), splitConditional).
-							match(srcTree,dstTree,mappingStore);
+					Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,splitConditional.getLocationInfo());
+					new GeneralMatcher(splitConditionalRefactoring.getOriginalConditional(), splitConditional).
+							match(srcSubTree,dstSubTree,mappingStore);
 				}
 			}
 			else if (refactoring instanceof MergeConditionalRefactoring)
 			{
 				MergeConditionalRefactoring mergeConditionalRefactoring = (MergeConditionalRefactoring) refactoring;
+				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeConditionalRefactoring.getNewConditional().getLocationInfo());
 				Set<AbstractCodeFragment> mergedConditionals = mergeConditionalRefactoring.getMergedConditionals();
 				for (AbstractCodeFragment eachMerged : mergedConditionals) {
-					new GeneralTreeMatcher(eachMerged, mergeConditionalRefactoring.getNewConditional())
-							.match(srcTree,dstTree,mappingStore);
+					Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,eachMerged.getLocationInfo());
+					new GeneralMatcher(eachMerged, mergeConditionalRefactoring.getNewConditional())
+							.match(srcSubTree,dstSubTree,mappingStore);
 				}
 			}
 			else if (refactoring instanceof MergeCatchRefactoring)
 			{
 				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
+				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());
 				for (AbstractCodeFragment eachMerged : mergeCatchRefactoring.getMergedCatchBlocks()) {
-					new GeneralTreeMatcher(eachMerged, mergeCatchRefactoring.getNewCatchBlock())
-							.match(srcTree,dstTree,mappingStore);
+					Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,eachMerged.getLocationInfo());
+					new GeneralMatcher(eachMerged, mergeCatchRefactoring.getNewCatchBlock())
+							.match(srcSubTree,dstSubTree,mappingStore);
 				}
 			}
 			else if (refactoring instanceof RenameVariableRefactoring)

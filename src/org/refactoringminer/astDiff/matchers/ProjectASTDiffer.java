@@ -610,6 +610,11 @@ public class ProjectASTDiffer
 				UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
 				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
 			}
+			else if (refactoring instanceof ParameterizeTestRefactoring) {
+				ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
+				UMLOperationBodyMapper bodyMapper = parameterizeTestRefactoring.getBodyMapper();
+				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+			}
 			else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {

@@ -129,7 +129,8 @@ public class RefactoringPopulator {
 		SplitMethod(new BigInteger("39614081257132168796771975168")),
 		MoveCode(new BigInteger("79228162514264337593543950336")),
 		ReplaceAnonymousWithClass(new BigInteger("158456325028528675187087900672")),
-		All(new BigInteger("316912650057057350374175801343"));
+		ParameterizeTest(new BigInteger("316912650057057350374175801344")),
+		All(new BigInteger("633825300114114700748351602687"));
 
 		private BigInteger value;
 

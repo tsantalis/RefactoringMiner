@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -725,6 +726,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
 							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
 						}
+						else if(removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation()) {
+							maxDifferenceInPosition = initialNumberOfRemovedOperations + initialNumberOfAddedOperations;
+						}
 						else {
 							maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
 						}
@@ -845,6 +849,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
 							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
 						}
+						else if(removedOperation.hasTestAnnotation() && addedOperation.hasParameterizedTestAnnotation()) {
+							maxDifferenceInPosition = initialNumberOfRemovedOperations + initialNumberOfAddedOperations;
+						}
 						else {
 							maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
 						}
@@ -906,20 +913,94 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-						if(bestMapper != null) {
-							UMLOperation removedOperation = bestMapper.getOperation1();
-							addedOperation = bestMapper.getOperation2();
-							removedOperations.remove(removedOperation);
-							addedOperationIterator.remove();
-							if(!removedOperation.getName().equals(addedOperation.getName()) &&
-									!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
-								Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
-								RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
-								refactorings.add(rename);
+						if(addedOperation.hasParameterizedTestAnnotation()) {
+							List<List<String>> testParameters = new ArrayList<>();
+							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
+								if(annotation.getTypeName().equals("CsvSource")) {
+									if(annotation.getValue() != null) {
+										List<LeafExpression> stringLiterals = annotation.getValue().getStringLiterals();
+										for(LeafExpression stringLiteral : stringLiterals) {
+											List<String> parameters = new ArrayList<>();
+											String s = stringLiteral.getString();
+											String[] tokens = s.split(",");
+											for(String token : tokens) {
+												String trimmed = token.trim();
+												if(trimmed.startsWith("\"")) {
+													trimmed = trimmed.substring(1, trimmed.length());
+												}
+												if(trimmed.endsWith("\"")) {
+													trimmed = trimmed.substring(0, trimmed.length()-1);
+												}
+												parameters.add(trimmed);
+											}
+											testParameters.add(parameters);
+										}
+									}
+								}
 							}
-							this.addOperationBodyMapper(bestMapper);
-							consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+							List<String> parameterNames = addedOperation.getParameterNameList();
+							int overallMaxMatchingTestParameters = -1;
+							for(UMLOperationBodyMapper mapper : mapperSet) {
+								Set<Replacement> replacements = mapper.getReplacements();
+								Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
+								for(Replacement r : replacements) {
+									if(parameterNames.contains(r.getAfter())) {
+										int parameterRow = 0;
+										for(List<String> testParams : testParameters) {
+											if(r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) {
+												String removedDoubleQuotes = r.getBefore().substring(1, r.getBefore().length()-1);
+												if(testParams.contains(removedDoubleQuotes)) {
+													if(matchingTestParameters.containsKey(parameterRow)) {
+														matchingTestParameters.put(parameterRow, matchingTestParameters.get(parameterRow) + 1);
+													}
+													else {
+														matchingTestParameters.put(parameterRow, 1);
+													}
+												}
+											}
+											else if(testParams.contains(r.getBefore())) {
+												if(matchingTestParameters.containsKey(parameterRow)) {
+													matchingTestParameters.put(parameterRow, matchingTestParameters.get(parameterRow) + 1);
+												}
+												else {
+													matchingTestParameters.put(parameterRow, 1);
+												}
+											}
+											parameterRow++;
+										}
+									}
+								}
+								int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
+								if(max > 1 && (overallMaxMatchingTestParameters == -1 || max == overallMaxMatchingTestParameters)) {
+									if(max > overallMaxMatchingTestParameters) {
+										overallMaxMatchingTestParameters = max;
+									}
+									ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
+									refactorings.add(refactoring);
+									UMLOperation removedOperation = mapper.getOperation1();
+									removedOperations.remove(removedOperation);
+								}
+							}
+							if(overallMaxMatchingTestParameters > -1) {
+								addedOperationIterator.remove();
+							}
+						}
+						else {
+							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
+							if(bestMapper != null) {
+								UMLOperation removedOperation = bestMapper.getOperation1();
+								addedOperation = bestMapper.getOperation2();
+								removedOperations.remove(removedOperation);
+								addedOperationIterator.remove();
+								if(!removedOperation.getName().equals(addedOperation.getName()) &&
+										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+									Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+									RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
+									refactorings.add(rename);
+								}
+								this.addOperationBodyMapper(bestMapper);
+								consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
+							}
 						}
 					}
 					else {

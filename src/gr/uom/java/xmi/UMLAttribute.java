@@ -244,7 +244,13 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return variableDeclarationMap;
 	}
 
+	@Override
 	public boolean hasTestAnnotation() {
+		return false;
+	}
+
+	@Override
+	public boolean hasParameterizedTestAnnotation() {
 		return false;
 	}
 

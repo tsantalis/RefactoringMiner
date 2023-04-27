@@ -91,6 +91,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
 	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);
 	boolean hasTestAnnotation();
+	boolean hasParameterizedTestAnnotation();
 	boolean hasSetUpAnnotation();
 	boolean hasTearDownAnnotation();
 	boolean isDeclaredInAnonymousClass();

@@ -354,6 +354,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public boolean hasParameterizedTestAnnotation() {
+		return false;
+	}
+
+	@Override
 	public boolean hasSetUpAnnotation() {
 		return false;
 	}

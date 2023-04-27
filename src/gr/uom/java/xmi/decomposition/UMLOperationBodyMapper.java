@@ -2742,6 +2742,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return StringDistance.editDistance(this.container1.getName(), this.container2.getName());
 	}
 
+	public int packageNameEditDistance() {
+		String className1 = this.container1.getClassName();
+		String className2 = this.container2.getClassName();
+		if(className1 != null && className2 != null) {
+			if(className1.contains(".") && className2.contains(".")) {
+				String packageName1 = className1.substring(0, className1.lastIndexOf("."));
+				String packageName2 = className2.substring(0, className2.lastIndexOf("."));
+				return StringDistance.editDistance(packageName1, packageName2);
+			}
+			return StringDistance.editDistance(className1, className2);
+		}
+		return Integer.MAX_VALUE;
+	}
+
 	public Set<Replacement> getReplacements() {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -9957,7 +9971,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else {
 						int thisOperationNameEditDistance = this.operationNameEditDistance();
 						int otherOperationNameEditDistance = operationBodyMapper.operationNameEditDistance();
-						return Integer.compare(thisOperationNameEditDistance, otherOperationNameEditDistance);
+						if(thisOperationNameEditDistance != otherOperationNameEditDistance) {
+							return Integer.compare(thisOperationNameEditDistance, otherOperationNameEditDistance);
+						}
+						if(this.container1.getClassName().equals(this.container2.getClassName()) && operationBodyMapper.container1.getClassName().equals(operationBodyMapper.container2.getClassName())) {
+							int locationSum1 = this.container1.getLocationInfo().getStartLine() + this.container2.getLocationInfo().getStartLine();
+							int locationSum2 = operationBodyMapper.container1.getLocationInfo().getStartLine() + operationBodyMapper.container2.getLocationInfo().getStartLine();
+							return Integer.valueOf(locationSum1).compareTo(Integer.valueOf(locationSum2));
+						}
+						else {
+							//move method scenario
+							return Integer.compare(this.packageNameEditDistance(), operationBodyMapper.packageNameEditDistance());
+						}
 					}
 				}
 			}

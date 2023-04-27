@@ -192,6 +192,15 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
+	public boolean hasParameterizedTestAnnotation() {
+		for(UMLAnnotation annotation : annotations) {
+			if(annotation.getTypeName().equals("ParameterizedTest")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean hasSetUpAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			//JUnit 4

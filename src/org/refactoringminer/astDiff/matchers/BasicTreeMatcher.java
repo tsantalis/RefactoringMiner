@@ -18,6 +18,7 @@ public class BasicTreeMatcher implements TreeMatcher {
 	public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		basicMatcher(src, dst, mappingStore);
 	}
+
 	private void basicMatcher(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		mappingStore.add(process(src, dst));
 	}
@@ -27,6 +28,11 @@ public class BasicTreeMatcher implements TreeMatcher {
 		match = new CustomGreedy(0, false).match(src, dst);
 		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
 		customBottomUpMatcher.match(src, dst, match);
+		optimizeMappings(match);
+		return match;
+	}
+
+	private static void optimizeMappings(MappingStore match) {
 		List<Pair<Tree, Tree>> removeList = new ArrayList<>();
 		for (Mapping mapping : match) {
 			if (mapping.first.getType().name.equals(Constants.METHOD_INVOCATION)) {
@@ -39,9 +45,10 @@ public class BasicTreeMatcher implements TreeMatcher {
 					if ((srcMethodInvocationReceiver == null && dstMethodInvocationReceiver != null)
 							||
 							(srcMethodInvocationReceiver != null && dstMethodInvocationReceiver == null)) {
-						removeList.add(new Pair<>(mapping.first, mapping.second));
-						removeList.add(new Pair<>(srcMethodName, dstMethodName));
-						break;
+						if (true) {
+							removeList.add(new Pair<>(mapping.first, mapping.second));
+							removeList.add(new Pair<>(srcMethodName, dstMethodName));
+						}
 					}
 				}
 			}
@@ -49,6 +56,5 @@ public class BasicTreeMatcher implements TreeMatcher {
 		for (Pair<Tree, Tree> treeTreePair : removeList) {
 			match.removeMapping(treeTreePair.first, treeTreePair.second);
 		}
-		return match;
 	}
 }

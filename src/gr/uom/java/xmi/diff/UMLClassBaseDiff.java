@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -70,6 +72,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private UMLTypeParameterListDiff typeParameterDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
+	Set<String> newValue;
+	AbstractExpression addedParameter;
 	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
@@ -107,6 +111,124 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForMovedCodeBetweenOperations();
+	}
+
+	/**
+	 * This method checks whether test methods have been parameterized.
+	 * If so, it creates a {@link TestParameterizationRefactoring} object.
+	 */
+	void checkForTestParameterizations() {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if (mapper.getOperation2().hasTestAnnotation()) {
+				List<UMLAnnotation> sourcesAnnotations = new ArrayList<>();
+				boolean hasParameterizedTestAnnotation = false;
+				Set<String> sourceAnnotationTypes = Set.of("CsvSource",
+						"CsvFileSource",
+						"MethodSource",
+						"ValueSource",
+						"NullSource",
+						"EmptySource",
+						"NullAndEmptySource",
+						"EnumSource",
+						"ArgumentsSource");
+				for (UMLAnnotation annotation : mapper.getOperation2().getAnnotations()) {
+					hasParameterizedTestAnnotation = hasParameterizedTestAnnotation || (annotation.isMarkerAnnotation() && annotation.getTypeName().equals("ParameterizedTest"));
+					if (sourceAnnotationTypes.contains(annotation.getTypeName())) {
+						sourcesAnnotations.add(annotation);
+					}
+				}
+				if (!hasParameterizedTestAnnotation || sourcesAnnotations.isEmpty()) {
+					continue;
+				}
+				boolean parameterizationAdded = false;
+				if (mapper.getOperationSignatureDiff().isPresent()) {
+					newValue = extractAddedParameters(mapper, sourcesAnnotations, sourceAnnotationTypes, parameterizationAdded);
+				}
+			}
+		}
+	}
+
+	private Set<String> extractAddedParameters(UMLOperationBodyMapper mapper, List<UMLAnnotation> sourcesAnnotations, Set<String> sourceAnnotationTypes, boolean parameterizationAdded) {
+		for (UMLAnnotation addedAnnotation : mapper.getOperationSignatureDiff().get().getAnnotationListDiff().getAddedAnnotations()) {
+			if (addedAnnotation.getTypeName().equals("ParameterizedTest")) {
+				parameterizationAdded = true;
+			}
+			else if (sourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
+				parameterizationAdded = true;
+				if (addedAnnotation.isSingleMemberAnnotation()) {
+					addedParameter = addedAnnotation.getValue();
+				}
+				else if (addedAnnotation.isNormalAnnotation()) {
+					List<String> keys = List.of(
+							"value",
+							"strings",
+							"booleans",
+							"bytes",
+							"chars",
+							"doubles",
+							"floats",
+							"ints",
+							"longs",
+							"shorts",
+							"classes",
+							"textBlocks"
+					);
+					for (String key : keys) {
+						addedParameter = addedAnnotation.getMemberValuePairs().get(key);
+						if (addedParameter != null) {
+							break;
+						}
+					}
+				}
+				else if (addedAnnotation.isMarkerAnnotation()) {
+					switch (addedAnnotation.getTypeName()) {
+						//TODO: provide AbstractExpression for all marker annotation cases (i.e. @NullSource, @EmptySource, @NullAndEmptySource)
+						case "NullSource":
+							break;
+						case "EmptySource":
+							break;
+						case "NullAndEmptySource":
+							addedParameter = new AbstractExpression(null, getNextClass().getSourceFile(), null, null, null);
+							break;
+						default:
+							throw new IllegalStateException("Unexpectedly added invalid annotation value: " + addedAnnotation.getTypeName());
+					}
+					return Collections.emptySet();
+				}
+				String expression = addedParameter.getExpression();
+				// trim surrounding curly brackets
+				return expression.substring(1, expression.length()-1).lines().flatMap(line -> Arrays.asList(line.split(",")).stream()).map(item -> item.substring(1, item.length()-1)).collect(Collectors.toSet());
+			}
+		}
+		if (!parameterizationAdded) {
+			for (Pair<UMLAnnotation, UMLAnnotation> commonAnnotation : mapper.getOperationSignatureDiff().get().getAnnotationListDiff().getCommonAnnotations()) {
+				if (sourcesAnnotations.contains(commonAnnotation.getRight().getTypeName())) {
+					Set<String> oldValue = Collections.emptySet();
+					Set<String> newValue = Collections.emptySet();
+					if (commonAnnotation.getRight().isSingleMemberAnnotation()) {
+						oldValue = commonAnnotation.getLeft().getValue().getExpression().lines().collect(Collectors.toSet());
+						addedParameter = commonAnnotation.getRight().getValue();
+						newValue = addedParameter.getExpression().lines().collect(Collectors.toSet());
+					}
+					else if (commonAnnotation.getRight().isNormalAnnotation()) {
+						oldValue = commonAnnotation.getLeft().getMemberValuePairs().getOrDefault("value", commonAnnotation.getLeft().getMemberValuePairs().get("textBlock")).getExpression().lines().collect(Collectors.toSet());
+						addedParameter = commonAnnotation.getRight().getMemberValuePairs().getOrDefault("value", commonAnnotation.getRight().getMemberValuePairs().get("textBlock"));
+						newValue = addedParameter.getExpression().lines().collect(Collectors.toSet());
+					}
+					newValue.removeAll(oldValue);
+					return newValue;
+				}
+			}
+		}
+		return Collections.emptySet();
+	}
+
+	private static boolean isHomonymous(UMLAnnotation a, String expectedName) {
+		return a.getTypeName().equals(expectedName);
+	}
+
+	private static boolean hasIncreased(Pair<UMLAnnotation, UMLAnnotation> a) {
+		return a.getLeft().toString().length() < a.getRight().toString().length();
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {

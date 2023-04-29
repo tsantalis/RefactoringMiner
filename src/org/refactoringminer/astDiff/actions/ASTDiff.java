@@ -31,7 +31,18 @@ public class ASTDiff extends Diff {
 		this.multiMappings = mappings;
 	}
 
+	/**
+	 * @deprecated
+	 * This method is going to be replaced due to the misleading name
+	 * <p> Use {@link ASTDiff#getAllMappings()} instead.
+	 * @return {@link ExtendedMultiMappingStore} for the current diff which contains all the mappings
+	 */
+	@Deprecated(forRemoval = true)
 	public ExtendedMultiMappingStore getMultiMappings() {
+		return getAllMappings();
+	}
+
+	public ExtendedMultiMappingStore getAllMappings() {
 		return multiMappings;
 	}
 

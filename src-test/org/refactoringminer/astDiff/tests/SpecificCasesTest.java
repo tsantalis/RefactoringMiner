@@ -94,7 +94,7 @@ public class SpecificCasesTest {
     }
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initData")
-    public void testChecker(String repo, String commit, String srcFileName, String expected, String actual) {
+    public void toyExampleTest(String repo, String commit, String srcFileName, String expected, String actual) {
         String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
         assertEquals(expected.length(),actual.length(), msg);
         assertEquals(expected, actual, msg);

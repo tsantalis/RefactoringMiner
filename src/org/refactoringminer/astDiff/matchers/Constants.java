@@ -61,4 +61,8 @@ public class Constants {
 	public static final String WHILE_STATEMENT = "WhileStatement";
 	public static final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
 	public static final String STRING_LITERAL = "StringLiteral";
+
+	public static final String COMPILATION_UNIT = "CompilationUnit";
+	public static final String JAVA_DOC = "Javadoc";
+	public static final String SIMPLE_TYPE = "SimpleType";
 }

@@ -52,8 +52,7 @@ class CustomGreedy extends GreedySubtreeMatcher {
 						mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION));
 	}
 
-	private static boolean isOnlyOneMethodInvocation(Tree input1, Tree input2)
-	{
+	private static boolean isOnlyOneMethodInvocation(Tree input1, Tree input2) {
 		if (input1 == null || input2 == null) return false;
 		if (input1.getParent() == null || input2.getParent() == null) return false;
 		if (input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && !input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
@@ -63,6 +62,7 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		return false;
 
 	}
+
 	private static boolean isPartOfConditional(Tree input) {
 		if (input.getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
 			return true;
@@ -73,8 +73,8 @@ class CustomGreedy extends GreedySubtreeMatcher {
 			return isPartOfConditional(parent);
 		}
 	}
-	private static boolean isSamePositionInConditional(Tree input1, Tree input2)
-	{
+
+	private static boolean isSamePositionInConditional(Tree input1, Tree input2) {
 		int input1Index = 0;
 		int input2Index = 0;
 		while (!input1.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
@@ -106,11 +106,23 @@ class CustomGreedy extends GreedySubtreeMatcher {
 
 			for (var currentSrc : currentPrioritySrcTrees)
 				for (var currentDst : currentPriorityDstTrees)
-					if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash)
+					if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash) {
 						if (currentSrc.isIsomorphicTo(currentDst)) {
-							if (!isOnlyOneMethodInvocation(currentSrc,currentDst))
+							if (!isOnlyOneMethodInvocation(currentSrc, currentDst))
 								multiMappings.addMapping(currentSrc, currentDst);
 						}
+					}
+					else {
+						if (currentSrc.getLabel().equals(currentDst.getLabel()))
+						{
+							if (currentSrc.getType().name.contains("_EXPRESSION_OPERATOR")
+									&&
+									currentDst.getType().name.contains("_EXPRESSION_OPERATOR"))
+								multiMappings.addMapping(currentSrc, currentDst);
+						}
+					}
+
+
 
 			for (var t : currentPrioritySrcTrees)
 				if (!multiMappings.hasSrc(t))
@@ -123,6 +135,7 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		filterMappings(multiMappings);
 		return this.mappings;
 	}
+
 	@Override
 	public void filterMappings(MultiMappingStore multiMappings) {
 		// Select unique mappings first and extract ambiguous mappings.
@@ -152,7 +165,6 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		// Rank the mappings by score.
 		Set<Tree> srcIgnored = new HashSet<>();
 		Set<Tree> dstIgnored = new HashSet<>();
-
 		Collections.sort(ambiguousList, new MappingComparators.FullMappingComparator(mappings));
 		if (ambiguousList.size() > 1)
 			ambiguousStringLiteralModification(ambiguousList,srcIgnored,dstIgnored);
@@ -180,8 +192,7 @@ class CustomGreedy extends GreedySubtreeMatcher {
 							}
 					}
 				}
-			}
-			else {
+			} else {
 				break;
 			}
 		}

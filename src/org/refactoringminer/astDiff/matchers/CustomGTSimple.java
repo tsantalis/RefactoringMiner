@@ -13,12 +13,12 @@ import java.util.*;
  */
 public class CustomGTSimple extends CompositeMatchers.CompositeMatcher {
 	public CustomGTSimple() {
-		super(new CustomGreedy(0,false), new SimpleBottomUpMatcher());
+		super(new CustomGreedy(0), new SimpleBottomUpMatcher());
 	}
 }
 
 class CustomGreedy extends GreedySubtreeMatcher {
-	public CustomGreedy(int minP, boolean original) {
+	public CustomGreedy(int minP) {
 		super();
 		setMinPriority(minP);
 	}

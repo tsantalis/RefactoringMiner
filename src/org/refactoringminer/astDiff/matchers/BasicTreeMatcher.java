@@ -45,7 +45,12 @@ public class BasicTreeMatcher implements TreeMatcher {
 					if ((srcMethodInvocationReceiver == null && dstMethodInvocationReceiver != null)
 							||
 							(srcMethodInvocationReceiver != null && dstMethodInvocationReceiver == null)) {
-						if (true) {
+						Tree srcMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.first, Constants.METHOD_INVOCATION_ARGUMENTS);
+						Tree dstMethodInvocationArguments = TreeUtilFunctions.findChildByType(mapping.second, Constants.METHOD_INVOCATION_ARGUMENTS);
+						boolean _notEmptyIsoStructuralArguments = false;
+						if (srcMethodInvocationArguments != null && dstMethodInvocationArguments != null)
+							_notEmptyIsoStructuralArguments = srcMethodInvocationArguments.isIsoStructuralTo(dstMethodInvocationArguments);
+						if (!_notEmptyIsoStructuralArguments) {
 							removeList.add(new Pair<>(mapping.first, mapping.second));
 							removeList.add(new Pair<>(srcMethodName, dstMethodName));
 						}

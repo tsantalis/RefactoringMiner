@@ -89,7 +89,7 @@ public class ProjectASTDiffer
 			boolean decision = (append != null) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff), decision);
 			if (append != null)
-				append.getMultiMappings().mergeMappings(classASTDiff.getMultiMappings());
+				append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
 			else {
 				diffSet.add(classASTDiff);
 			}

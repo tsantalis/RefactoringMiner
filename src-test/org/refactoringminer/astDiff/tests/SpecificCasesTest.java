@@ -38,7 +38,7 @@ public class SpecificCasesTest {
             System.out.println();
             if (!astDiff.getSrcPath().equals("src/java/org/apache/commons/lang/time/DurationFormatUtils.java"))
                 continue;
-            Set<Mapping> mappings = astDiff.getMultiMappings().getMappings();
+            Set<Mapping> mappings = astDiff.getAllMappings().getMappings();
             boolean m1Check = false, m2Check = false, m3Check = false;
             for (Mapping mapping : mappings) {
                 if (mapping.toString().equals(m1)) m1Check = true;
@@ -65,7 +65,7 @@ public class SpecificCasesTest {
         for (ASTDiff astDiff : astDiffs) {
             if (!astDiff.getSrcPath().equals("src/test/java/rx/observables/BlockingObservableTest.java"))
                 continue;
-            Set<Mapping> mappings = astDiff.getMultiMappings().getMappings();
+            Set<Mapping> mappings = astDiff.getAllMappings().getMappings();
             int numOfMappingsForReturnSubTree = 0;
             for (Mapping mapping : mappings) {
                 if (mapping.first.toString().equals(returnTreeSrc))

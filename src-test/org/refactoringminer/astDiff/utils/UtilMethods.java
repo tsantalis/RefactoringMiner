@@ -55,7 +55,7 @@ public class UtilMethods {
     public static void makeAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs) throws IOException {
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
-            String calculated = MappingExportModel.exportString(astDiff.getMultiMappings());
+            String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
             String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
             allCases.add(Arguments.of(info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated));
             expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));

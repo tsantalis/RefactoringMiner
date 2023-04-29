@@ -48,16 +48,16 @@ public class ExtendedOnlyRootsClassifier extends ExtendedAbstractITreeClassifier
 				dstAddTrees.add(a.getNode());
 			else if (a instanceof Update) {
 				srcUpdTrees.add(a.getNode());
-				dstUpdTrees.addAll(astDiff.getMultiMappings().getDsts(a.getNode()));
+				dstUpdTrees.addAll(astDiff.getAllMappings().getDsts(a.getNode()));
 			}
 			else if (a instanceof Move) {
 				srcMvTrees.add(a.getNode());
-				dstMvTrees.addAll(astDiff.getMultiMappings().getDsts(a.getNode()));
+				dstMvTrees.addAll(astDiff.getAllMappings().getDsts(a.getNode()));
 			}
 			else if (a instanceof MultiMove)
 			{
 				srcMmTrees.put(a.getNode(),a);
-				for (Tree tree : astDiff.getMultiMappings().getDsts(a.getNode()))
+				for (Tree tree : astDiff.getAllMappings().getDsts(a.getNode()))
 					dstMmTrees.put(tree,a);
 			}
 			else if (a instanceof MoveIn)

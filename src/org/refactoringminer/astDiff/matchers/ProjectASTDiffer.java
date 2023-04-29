@@ -56,12 +56,24 @@ public class ProjectASTDiffer
 		makeASTDiff(modelDiff.getClassRenameDiffList(),false);
 		makeASTDiff(modelDiff.getClassMoveDiffList(),false);
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
+		makeASTDiff(getExtraDiffs(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 
 		computeAllEditScripts();
 	}
 
+	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
+		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
+		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
+			if ((modelDiffRefactoring.getRefactoringType() == RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS))
+			{
+				ReplaceAnonymousWithClassRefactoring replaceAnonymousWithClassRefactoring = (ReplaceAnonymousWithClassRefactoring) modelDiffRefactoring;
+				extraDiffs.add(replaceAnonymousWithClassRefactoring.getDiff());
+			}
+		}
+		return extraDiffs;
+	}
 	private void computeAllEditScripts() {
 		long editScript_start = System.currentTimeMillis();
 		for (ASTDiff diff : diffSet) {
@@ -71,8 +83,8 @@ public class ProjectASTDiffer
 		logger.info("EditScript execution: " + (editScript_end - editScript_start)/ 1000 + " seconds");
 	}
 
-	private void makeASTDiff(List<? extends UMLClassBaseDiff> umlClassBaseDiffList, boolean mergeFlag){
-		for (UMLClassBaseDiff classDiff : umlClassBaseDiffList) {
+	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
+		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
 			ASTDiff append = findAppend(classDiff);
 			boolean decision = (append != null) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff), decision);
@@ -83,7 +95,8 @@ public class ProjectASTDiffer
 			}
 		}
 	}
-	private ASTDiff findAppend(UMLClassBaseDiff classBaseDiff) {
+
+	private ASTDiff findAppend(UMLAbstractClassDiff classBaseDiff) {
 		for (ASTDiff existing : diffSet) {
 			if (existing.getSrcPath().equals(classBaseDiff.getOriginalClass().getSourceFile()))
 				return existing;
@@ -93,12 +106,12 @@ public class ProjectASTDiffer
 		return null;
 	}
 
-	private Pair<TreeContext, TreeContext> findTreeContexts(UMLClassBaseDiff classDiff) {
+	private Pair<TreeContext, TreeContext> findTreeContexts(UMLAbstractClassDiff classDiff) {
 		return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(classDiff.getOriginalClass().getSourceFile()),
 				modelDiff.getChildModel().getTreeContextMap().get(classDiff.getNextClass().getSourceFile()));
 	}
 
-	private ASTDiff process(UMLClassBaseDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){
+	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){
 		TreeContext srcTreeContext = treeContextPair.first;
 		TreeContext dstTreeContext = treeContextPair.second;
 		Tree srcTree = srcTreeContext.getRoot();
@@ -111,11 +124,16 @@ public class ProjectASTDiffer
 			mappingStore.addMapping(srcTree, dstTree);
 			processPackageDeclaration(srcTree,dstTree,classDiff,mappingStore);
 		}
-		processImports(srcTree,dstTree,classDiff.getImportDiffList(),mappingStore);
+		boolean isBaseDiff = classDiff instanceof UMLClassBaseDiff;
+		if (isBaseDiff) {
+			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
+			processImports(srcTree, dstTree, (baseClassDiff).getImportDiffList(), mappingStore);
+			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
+			processClassDeclarationMapping(srcTree,dstTree, baseClassDiff,mappingStore);
+		}
+
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
-		processClassDeclarationMapping(srcTree,dstTree,classDiff,mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
-		processRefactorings(srcTree,dstTree,getClassDiffRefactorings(classDiff),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
 		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processLastStepMappings(srcTree,dstTree,mappingStore);
@@ -136,26 +154,25 @@ public class ProjectASTDiffer
 			ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();
 			ImmutablePair<String, String> refactoringClassAfter = involvedClassesAfterRefactoring.iterator().next();
 			if (umlClassBefore.getLocationInfo().getFilePath().equals(refactoringClassBefore.getLeft())
-					&& umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft()))
-			{
+					&& umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft())) {
 				String refactoringClassNameBefore = refactoringClassBefore.getRight();
 				String refactoringClassNameAfter = refactoringClassAfter.getRight();
 				// Relied on || in order to ascertain at least one class involves (handling move to anonymous and vice versa)
 				boolean isNameMatching = refactoringClassNameBefore.equals(umlClassBefore.getName()) || refactoringClassNameAfter.equals(umlClassAfter.getName());
-				boolean isReplaceWithAnonymousWithClassWhileContainsSameName = false;
-				if (modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
-					modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA))
-					if (refactoringClassNameBefore.contains(umlClassBefore.getName()) &&  refactoringClassNameAfter.contains(umlClassAfter.getName()))
-						isReplaceWithAnonymousWithClassWhileContainsSameName = true;
-				if (isNameMatching || isReplaceWithAnonymousWithClassWhileContainsSameName)
+//				boolean isReplaceWithAnonymousWithClassWhileContainsSameName = false;
+//				if (modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
+//						modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA))
+//					if (refactoringClassNameBefore.contains(umlClassBefore.getName()) &&  refactoringClassNameAfter.contains(umlClassAfter.getName()))
+//						isReplaceWithAnonymousWithClassWhileContainsSameName = true;
+				if (isNameMatching)
 					classDiffRefactorings.add(modelDiffRefactoring);
 			}
 
-	}
+		}
 		return classDiffRefactorings;
 	}
 
-	private void processMovedAttributes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+	private void processMovedAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		List<UMLAttributeDiff> movedAttributeDiffList = modelDiff.getMovedAttributeDiffList();
 		for (UMLAttributeDiff umlAttributeDiff : movedAttributeDiffList) {
 			UMLAttribute srcAttr = umlAttributeDiff.getRemovedAttribute();
@@ -205,7 +222,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processModelDiffRefactorings(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+	private void processModelDiffRefactorings(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		for(Refactoring refactoring : modelDiffRefactorings) {
 			List<String> beforeRefactoringClasses = refactoring.getInvolvedClassesBeforeRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
 			List<String> afterRefactoringClasses = refactoring.getInvolvedClassesAfterRefactoring().stream().map(ImmutablePair::getRight).collect(Collectors.toList());
@@ -236,7 +253,7 @@ public class ProjectASTDiffer
 				String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
 				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
 				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				fromRefMiner(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
+				processBodyMapper(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
 			}
 
 		}
@@ -272,7 +289,7 @@ public class ProjectASTDiffer
 					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));
 		}
 		processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-		fromRefMiner(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);
+		processBodyMapper(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);
 		processOperationDiff(srcOperationNode,dstOperationNode,umlOperationBodyMapper,mappingStore);
 		processMethodParameters(srcOperationNode,dstOperationNode,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
 	}
@@ -294,7 +311,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void fromRefMiner(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
+	private void processBodyMapper(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {
 		if (bodyMapper.getAnonymousClassDiffs() != null) {
 			for (UMLAnonymousClassDiff anonymousClassDiff : bodyMapper.getAnonymousClassDiffs()) {
 				processClassAttributes(srcTree,dstTree,anonymousClassDiff,mappingStore);
@@ -561,35 +578,35 @@ public class ProjectASTDiffer
 			} else if (refactoring instanceof MergeOperationRefactoring) {
 				MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {
-					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+					processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 				}
 			} else if (refactoring instanceof SplitOperationRefactoring) {
 				SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : splitOperationRefactoring.getMappers()) {
-					fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+					processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 				}
 			} else if (refactoring instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, true);
+				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, true);
 				for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
 					lastStepMappings.add(expressionMapping);
 				}
 			} else if (refactoring instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
 					lastStepMappings.add(expressionMapping);
 				}
 			} else if (refactoring instanceof MoveCodeRefactoring) {
 				MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 			} else if (refactoring instanceof ParameterizeTestRefactoring) {
 				ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = parameterizeTestRefactoring.getBodyMapper();
-				fromRefMiner(srcTree,dstTree,bodyMapper,mappingStore, false);
+				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 			} else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
@@ -737,8 +754,6 @@ public class ProjectASTDiffer
 						srcInput,
 						dstInput,
 						mappingStore);
-			} else if (refactoring instanceof ReplaceAnonymousWithClassRefactoring) {
-				ReplaceAnonymousWithClassRefactoring replaceAnonymousWithClassRefactoring = (ReplaceAnonymousWithClassRefactoring) refactoring;
 			}
 		}
 	}
@@ -956,7 +971,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processPackageDeclaration(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+	private void processPackageDeclaration(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		//TODO: In current implementation, I assumed that these two package-statements are matched since they both belong to the same class
 		//TODO : Question: Can single file have multiple package declaration? if yes, I have to use list of pairs
 		Tree srcPackageDeclaration = findPackageDeclaration(srcTree);

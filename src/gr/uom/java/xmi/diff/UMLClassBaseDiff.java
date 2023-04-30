@@ -2252,7 +2252,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			mappingsAsSet.addAll(mappings);
 			Set<UMLOperationBodyMapper> mappersAsSet = new LinkedHashSet<>();
 			mappersAsSet.addAll(mappers);
-			if(mappingsAsSet.size() == 1 || (mappersAsSet.size() == 1 && !(fragment instanceof CompositeStatementObject))) {
+			if(mappingsAsSet.size() == 1 || (mappersAsSet.size() == 1 && mappersAsSet.iterator().next().getParentMapper() == null)) {
 				continue;
 			}
 			while(mappingIterator.hasNext()) {

@@ -6543,6 +6543,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			boolean foundInDeclaration1 = false;
+			boolean foundInInitializer1 = false;
 			for(VariableDeclaration declaration : variableDeclarations1) {
 				if(declaration.getVariableName().equals(variable)) {
 					foundInDeclaration1 = true;
@@ -6552,8 +6553,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					break;
 				}
+				AbstractExpression initializer = declaration.getInitializer();
+				if(initializer != null && initializer.getString().endsWith("." + variable)) {
+					foundInInitializer1 = true;
+				}
 			}
 			boolean foundInDeclaration2 = false;
+			boolean foundInInitializer2 = false;
 			for(VariableDeclaration declaration : variableDeclarations2) {
 				if(declaration.getVariableName().equals(variable)) {
 					foundInDeclaration2 = true;
@@ -6563,8 +6569,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					break;
 				}
+				AbstractExpression initializer = declaration.getInitializer();
+				if(initializer != null && initializer.getString().endsWith("." + variable)) {
+					foundInInitializer2 = true;
+				}
 			}
-			if(foundInDeclaration1 != foundInDeclaration2) {
+			if(foundInDeclaration1 != foundInDeclaration2 || foundInInitializer1 != foundInInitializer2) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			else if(!variable.contains(".")) {

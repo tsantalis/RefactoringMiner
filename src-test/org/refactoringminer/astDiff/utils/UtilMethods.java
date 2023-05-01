@@ -1,8 +1,12 @@
 package org.refactoringminer.astDiff.utils;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.lib.Repository;
 import org.junit.jupiter.params.provider.Arguments;
+import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,9 +18,10 @@ public class UtilMethods {
     private static final String COMMITS_MAPPINGS_PATH = DIFF_DATA_PATH + "commits/";
     private static final String TREES_PATH = DIFF_DATA_PATH + "trees";
     private static final String infoFile = "cases.json";
-
     private static final String JSON_SUFFIX = ".json";
     private static final String JAVA_SUFFIX = ".java";
+    private static final String REPOS = "tmp1";
+    private static final GitService gitService = new GitServiceImpl();
 
     public static String getFinalFilePath(ASTDiff astDiff, String dir, String repo, String commit) {
         String exportName = getFileNameFromSrcDiff(astDiff.getSrcPath());
@@ -69,4 +74,16 @@ public class UtilMethods {
             );
         }
     }
+    public static Set<ASTDiff> getProjectDiffLocally(String url) throws Exception {
+        String repo = URLHelper.getRepo(url);
+        String commit = URLHelper.getCommit(url);
+        String repoFolder = repo.substring(repo.lastIndexOf("/"), repo.indexOf(".git"));
+        Repository repository = gitService.cloneIfNotExists(REPOS + repoFolder, repo);
+        return new GitHistoryRefactoringMinerImpl().diffAtCommit(repository, commit);
+    }
+
+    public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
+        return getProjectDiffLocally(info.makeURL());
+    }
+
 }

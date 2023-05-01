@@ -8,10 +8,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.URLHelper;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.astDiff.utils.UtilMethods;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,14 +24,13 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 /* Created by pourya on 2023-02-28 4:48 p.m. */
 public class SpecificCasesTest {
     @Test
-    public void testRenameParameter() {
+    public void testRenameParameter() throws Exception {
+
         String m1 = "SingleVariableDeclaration [3886,3897] -> SingleVariableDeclaration [2778,2797]";
         String m2 = "PrimitiveType: long [3886,3890] -> PrimitiveType: long [2778,2782]";
         String m3 = "SimpleName: millis [3891,3897] -> SimpleName: durationMillis [2783,2797]";
         String url = "https://github.com/apache/commons-lang/commit/5111ae7db08a70323a51a21df0bbaf46f21e072e";
-        String repo = URLHelper.getRepo(url);
-        String commit = URLHelper.getCommit(url);
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
+        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         boolean executed = false;
         for (ASTDiff astDiff : astDiffs) {
             System.out.println();
@@ -53,14 +51,11 @@ public class SpecificCasesTest {
         assertTrue(executed, "RenameParameter test case not executed properly");
 
     }
-
     @Test
-    public void testExtractMethodReturnStatement() {
+    public void testExtractMethodReturnStatement() throws Exception {
         String returnTreeSrc = "ReturnStatement [17511,17714]";
         String url = "https://github.com/ReactiveX/RxJava/commit/8ad226067434cd39ce493b336bd0659778625959";
-        String repo = URLHelper.getRepo(url);
-        String commit = URLHelper.getCommit(url);
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
+        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         boolean executed = false;
         for (ASTDiff astDiff : astDiffs) {
             if (!astDiff.getSrcPath().equals("src/test/java/rx/observables/BlockingObservableTest.java"))
@@ -77,17 +72,16 @@ public class SpecificCasesTest {
         assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
 
-    public static Stream<Arguments> initData() throws IOException {
+    public static Stream<Arguments> initData() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
         List<Arguments> allCases = new ArrayList<>();
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
-        boolean executed = false;
         List<CaseInfo> infos = new ArrayList<>();
         infos.add(new CaseInfo(repo,commit));
         for (CaseInfo info : infos) {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
-            Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000);
+            Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
             makeAllCases(allCases, info, expectedFilesList, astDiffs);
         }
         return allCases.stream();

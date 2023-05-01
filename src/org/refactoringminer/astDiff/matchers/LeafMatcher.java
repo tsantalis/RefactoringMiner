@@ -12,10 +12,12 @@ import java.util.Map;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
-	private final boolean overwrite;
+	private boolean overwrite = false;
+	public LeafMatcher() {}
 
-	public LeafMatcher(boolean overwrite) {
+	public LeafMatcher setOverwrite(boolean overwrite) {
 		this.overwrite = overwrite;
+		return this;
 	}
 
 	@Override

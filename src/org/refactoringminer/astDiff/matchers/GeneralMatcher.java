@@ -31,18 +31,18 @@ public class GeneralMatcher extends BasicTreeMatcher implements TreeMatcher {
             CompositeStatementObject fragment2 = (CompositeStatementObject) st2;
             for (AbstractExpression expression : fragment2.getExpressions()) {
                 Tree dstExpTree = TreeUtilFunctions.findByLocationInfo(dst, expression.getLocationInfo());
-                new LeafMatcher(false).match(src,dstExpTree,mappingStore);
+                new LeafMatcher().match(src,dstExpTree,mappingStore);
             }
         } else if ((st1 instanceof CompositeStatementObject) &&
                 !(st2 instanceof CompositeStatementObject)) {
             CompositeStatementObject fragment1 = (CompositeStatementObject) st1;
             for (AbstractExpression expression : fragment1.getExpressions()) {
                 Tree srcExpTree = TreeUtilFunctions.findByLocationInfo(src, expression.getLocationInfo());
-                new LeafMatcher(false).match(srcExpTree,dst,mappingStore);
+                new LeafMatcher().match(srcExpTree,dst,mappingStore);
             }
         }
         else {
-            new LeafMatcher(false).match(src,dst,mappingStore);
+            new LeafMatcher().match(src,dst,mappingStore);
         }
 
     }

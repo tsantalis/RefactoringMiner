@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runners.Parameterized;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.LeafMatcher;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
@@ -35,7 +34,7 @@ public class TreeMatcherTest {
     public void testMappings(Tree srcTree, Tree dstTree, String expectedMappings, String folderPath)
     {
         ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
-        new LeafMatcher(true).match(srcTree,dstTree,mappings);
+        new LeafMatcher().match(srcTree,dstTree,mappings);
         try {
             String actual = MappingExportModel.exportString(mappings);
             assertEquals(expectedMappings,actual);

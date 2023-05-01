@@ -5539,7 +5539,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(parentMap.size() == grandParentMap.size()) {
 				elseCondition = true;
 			}
-			else if(grandParentMap.size() == 1) {
+			else if(grandParentMap.size() == 1 && !(mappingSet.first().getFragment1() instanceof CompositeStatementObject)) {
 				CompositeStatementObject grandParent = grandParentMap.keySet().iterator().next();
 				if(grandParent.getParent() == null) {
 					elseCondition = true;

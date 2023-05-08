@@ -264,10 +264,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				boolean identicalCompositeChildren1 = this.identicalCompositeChildrenStructure();
 				boolean identicalCompositeChildren2 = o.identicalCompositeChildrenStructure();
-				if(identicalCompositeChildren1 && !identicalCompositeChildren2) {
+				boolean zeroDistanceWithMoreThanTwoParents1 = nLevelParentEditDistance1 == 0 && levelParentEditDistance1.size() > 2;
+				boolean zeroDistanceWithMoreThanTwoParents2 = nLevelParentEditDistance2 == 0 && levelParentEditDistance2.size() > 2;
+				if(identicalCompositeChildren1 && !identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents2) {
 					return -1;
 				}
-				else if(!identicalCompositeChildren1 && identicalCompositeChildren2) {
+				else if(!identicalCompositeChildren1 && identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents1) {
 					return 1;
 				}
 				if(levelParentEditDistance1.size() == levelParentEditDistance2.size()) {

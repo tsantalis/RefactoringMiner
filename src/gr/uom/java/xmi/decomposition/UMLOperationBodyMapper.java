@@ -7061,6 +7061,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
+		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL);
 		if((statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
@@ -7139,8 +7140,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
 				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
 				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
-				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString()) &&
-						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString())) {
+				if((thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString())) ||
+						(elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString()))) {
 					ternaryExpressions2.add(ternary.getExpression());
 					tmpVariables1.addAll(convertToStringSet(ternary.getCondition().getVariables()));
 					tmpVariables1.addAll(convertToStringSet(ternary.getThenExpression().getVariables()));
@@ -7171,8 +7172,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
 				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
 				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
-				if(thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString()) &&
-						elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString())) {
+				if((thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString())) ||
+						(elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString()))) {
 					ternaryExpressions1.add(ternary.getExpression());
 					tmpVariables2.addAll(convertToStringSet(ternary.getCondition().getVariables()));
 					tmpVariables2.addAll(convertToStringSet(thenVariables));

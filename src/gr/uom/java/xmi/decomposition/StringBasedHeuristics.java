@@ -2392,6 +2392,18 @@ public class StringBasedHeuristics {
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
 								refactorings.add(split);
+								if(statement1 instanceof CompositeStatementObject) {
+									for(AbstractCodeFragment conditional : splitConditionals) {
+										if(conditional instanceof CompositeStatementObject && !conditional.equals(statement2)) {
+											List<String> bodyStringRepresentation1 = ((CompositeStatementObject)statement1).bodyStringRepresentation();
+											List<String> bodyStringRepresentation2 = ((CompositeStatementObject)conditional).bodyStringRepresentation();
+											if(bodyStringRepresentation1.equals(bodyStringRepresentation2) && bodyStringRepresentation1.size() > 2) {
+												CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping((CompositeStatementObject)statement1, (CompositeStatementObject)conditional, container1, container2, 1);
+												mappings.add(mapping);
+											}
+										}
+									}
+								}
 							}
 						}
 					}
@@ -2692,6 +2704,9 @@ public class StringBasedHeuristics {
 				}
 			}
 		}
+		if(conditionalsUnderTheSameParent(mergedConditionals)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -2799,6 +2814,9 @@ public class StringBasedHeuristics {
 				}
 			}
 		}
+		if(conditionalsUnderTheSameParent(splitConditionals)) {
+			return true;
+		}
 		return false;
 	}
 
@@ -2840,6 +2858,21 @@ public class StringBasedHeuristics {
 			return true;
 		}
 		return false;
+	}
+
+	private static boolean conditionalsUnderTheSameParent(Set<AbstractCodeFragment> conditionals) {
+		CompositeStatementObject parent = null;
+		int commonParentCount = 0;
+		for(AbstractCodeFragment fragment : conditionals) {
+			if(parent == null) {
+				parent = fragment.getParent();
+				commonParentCount++;
+			}
+			else if(parent != null && parent.equals(fragment.getParent())) {
+				commonParentCount++;
+			}
+		}
+		return conditionals.size() > 1 && commonParentCount == conditionals.size();
 	}
 
 	private static boolean subsumedByOther(Set<AbstractCodeFragment> conditionals, AbstractCodeFragment conditional) {

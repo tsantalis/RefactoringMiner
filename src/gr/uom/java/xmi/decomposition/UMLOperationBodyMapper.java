@@ -9973,12 +9973,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else if(direction.equals(Direction.INVOCATION_TO_VARIABLE))
 							methodInvocationList = methodInvocationMap.get(element1);
 						if(substringBeforeIndex1.equals(substringBeforeIndex2) && !substringAfterIndex1.isEmpty() && !substringAfterIndex2.isEmpty() && methodInvocationList != null) {
-							Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, methodInvocationList.get(0), direction);
-							replacements.put(r, substringAfterIndex1.equals(substringAfterIndex2));
+							boolean skip = false;
+							if(substringAfterIndex1.length() > substringAfterIndex2.length()) {
+								skip = s2.contains(substringAfterIndex1);
+							}
+							else if(substringAfterIndex1.length() < substringAfterIndex2.length()) {
+								skip = s1.contains(substringAfterIndex2);
+							}
+							if(!skip) {
+								Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, methodInvocationList.get(0), direction);
+								replacements.put(r, substringAfterIndex1.equals(substringAfterIndex2));
+							}
 						}
 						else if(substringAfterIndex1.equals(substringAfterIndex2) && !substringBeforeIndex1.isEmpty() && !substringBeforeIndex2.isEmpty() && methodInvocationList != null) {
-							Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, methodInvocationList.get(0), direction);
-							replacements.put(r, substringBeforeIndex1.equals(substringBeforeIndex2));
+							boolean skip = false;
+							if(substringBeforeIndex1.length() > substringBeforeIndex2.length()) {
+								skip = s2.contains(substringBeforeIndex1);
+							}
+							else if(substringBeforeIndex1.length() < substringBeforeIndex2.length()) {
+								skip = s1.contains(substringBeforeIndex2);
+							}
+							if(!skip) {
+								Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, methodInvocationList.get(0), direction);
+								replacements.put(r, substringBeforeIndex1.equals(substringBeforeIndex2));
+							}
 						}
 					}
 				}

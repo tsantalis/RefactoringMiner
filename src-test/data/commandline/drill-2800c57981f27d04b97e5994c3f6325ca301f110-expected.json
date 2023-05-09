@@ -3402,6 +3402,24 @@
 	"description": "Extract Variable onlineDrillNodeUUIDs : Map<DrillNode,String> in method public adjustMemory(planningSet PlanningSet, roots Set<Wrapper>, onlineEndpointUUIDs Map<DrillbitEndpoint,String>) : void from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 94,
+		"endLine": 96,
+		"startColumn": 5,
+		"endColumn": 93,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 99,
+		"endLine": 101,
+		"startColumn": 5,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the initializer of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 133,
 		"endLine": 133,
 		"startColumn": 5,
@@ -3428,6 +3446,24 @@
 		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
 		"description": "extracted variable declaration",
 		"codeElement": "onlineDrillNodeUUIDs : Map<DrillNode,String>"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 104,
+		"endLine": 106,
+		"startColumn": 5,
+		"endColumn": 93,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 109,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 88,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement with the name of the extracted variable",
+		"codeElement": null
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 143,

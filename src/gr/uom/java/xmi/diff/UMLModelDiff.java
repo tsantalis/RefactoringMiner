@@ -1715,8 +1715,8 @@ public class UMLModelDiff {
 		return parent.equals(addedClassName);
 	}
 
-	private List<ReplaceAnonymousWithClassRefactoring> identifyConvertAnonymousClassToTypeRefactorings() throws RefactoringMinerTimedOutException {
-		List<ReplaceAnonymousWithClassRefactoring> refactorings = new ArrayList<ReplaceAnonymousWithClassRefactoring>();
+	private List<Refactoring> identifyConvertAnonymousClassToTypeRefactorings() throws RefactoringMinerTimedOutException {
+		List<Refactoring> refactorings = new ArrayList<Refactoring>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			for(UMLAnonymousClass anonymousClass : classDiff.getRemovedAnonymousClasses()) {
 				List<UMLAnonymousToClassDiff> matchingDiffs = new ArrayList<>();
@@ -1734,14 +1734,18 @@ public class UMLModelDiff {
 				if(matchingDiffs.size() == 1) {
 					UMLAnonymousToClassDiff diff = matchingDiffs.get(0);
 					if(diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) {
+						List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
 						ReplaceAnonymousWithClassRefactoring refactoring = new ReplaceAnonymousWithClassRefactoring(anonymousClass, diff.getNextClass(), diff);
+						refactorings.addAll(anonymousClassDiffRefactorings);
 						refactorings.add(refactoring);
 					}
 				}
 				else if(matchingDiffs.size() > 1) {
 					for(UMLAnonymousToClassDiff diff : matchingDiffs) {
 						if(nameCompatibility(diff) && diff.containsStatementMappings() && constructorCallFound(classDiff, diff)) {
+							List<Refactoring> anonymousClassDiffRefactorings = diff.getRefactorings();
 							ReplaceAnonymousWithClassRefactoring refactoring = new ReplaceAnonymousWithClassRefactoring(anonymousClass, diff.getNextClass(), diff);
+							refactorings.addAll(anonymousClassDiffRefactorings);
 							refactorings.add(refactoring);
 						}
 					}

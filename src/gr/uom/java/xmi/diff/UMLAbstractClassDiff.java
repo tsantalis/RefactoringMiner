@@ -626,8 +626,11 @@ public abstract class UMLAbstractClassDiff {
 	public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
 		if(!originalClass.getTypeDeclarationKind().equals(nextClass.getTypeDeclarationKind())) {
-			ChangeTypeDeclarationKindRefactoring ref = new ChangeTypeDeclarationKindRefactoring(originalClass.getTypeDeclarationKind(), nextClass.getTypeDeclarationKind(), originalClass, nextClass);
-			refactorings.add(ref);
+			boolean anonymousToClass = originalClass.getTypeDeclarationKind().endsWith("class") && nextClass.getTypeDeclarationKind().endsWith("class");
+			if(!anonymousToClass) {
+				ChangeTypeDeclarationKindRefactoring ref = new ChangeTypeDeclarationKindRefactoring(originalClass.getTypeDeclarationKind(), nextClass.getTypeDeclarationKind(), originalClass, nextClass);
+				refactorings.add(ref);
+			}
 		}
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			processMapperRefactorings(mapper, refactorings);

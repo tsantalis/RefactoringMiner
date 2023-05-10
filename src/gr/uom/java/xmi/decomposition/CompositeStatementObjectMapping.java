@@ -32,6 +32,12 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 				o.compositeChildMatchingScore >= 2.0*this.compositeChildMatchingScore) {
 			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
+		if(this.compositeChildMatchingScore == 1.0 && o.getReplacementTypes().contains(ReplacementType.COMPOSITE) && o.compositeChildMatchingScore == 0.99) {
+			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
+		}
+		else if(o.compositeChildMatchingScore == 1.0 && this.getReplacementTypes().contains(ReplacementType.COMPOSITE) && this.compositeChildMatchingScore == 0.99) {
+			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
+		}
 		double distance1 = this.editDistance();
 		double distance2 = o.editDistance();
 		boolean depthVSDistanceConflict = distance1 < distance2 && Math.abs(distance1 - distance2) < 0.02 &&

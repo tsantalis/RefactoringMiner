@@ -1185,6 +1185,35 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
+			else if(s1.contains(",") && s1.contains("(") && s1.contains(")") && !s2.contains(",") && !s2.contains("(") && !s2.contains(")")) {
+				List<LeafExpression> variables1 = statement1.getVariables();
+				List<LeafExpression> variables2 = statement2.getVariables();
+				List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
+				List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
+				if((variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
+						variableDeclarations1.toString().equals(variableDeclarations2.toString())) ||
+						(variables1.size() > 0 && variables2.size() > 0 &&
+						statement1.getString().startsWith(variables1.get(0).getString() + "=") &&
+						statement2.getString().startsWith(variables2.get(0).getString() + "=") &&
+						variables1.get(0).getString().equals(variables2.get(0).getString()))) {
+					List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1.substring(s1.indexOf("(") + 1, s1.lastIndexOf(")"))));
+					int count = 0;
+					for(String token1 : tokens1) {
+						if(token1.startsWith("-")) {
+							//add space between - and the string that follows
+							token1 = "- " + token1.substring(1);
+						}
+						if(ReplacementUtil.contains(s2, token1)) {
+							count++;
+						}
+					}
+					if(count > 1 && count == tokens1.size()) {
+						IntersectionReplacement r = new IntersectionReplacement(s1, s2, new LinkedHashSet<>(tokens1), ReplacementType.CONCATENATION);
+						info.getReplacements().add(r);
+						return true;
+					}
+				}
+			}
 			List<String> arguments1 = null;
 			AbstractCall invocation1 = null;
 			if(creationCoveringTheEntireStatement1 != null) {

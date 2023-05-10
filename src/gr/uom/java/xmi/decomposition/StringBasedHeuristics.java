@@ -2392,18 +2392,6 @@ public class StringBasedHeuristics {
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
 								refactorings.add(split);
-								if(statement1 instanceof CompositeStatementObject) {
-									for(AbstractCodeFragment conditional : splitConditionals) {
-										if(conditional instanceof CompositeStatementObject && !conditional.equals(statement2)) {
-											List<String> bodyStringRepresentation1 = ((CompositeStatementObject)statement1).bodyStringRepresentation();
-											List<String> bodyStringRepresentation2 = ((CompositeStatementObject)conditional).bodyStringRepresentation();
-											if(bodyStringRepresentation1.equals(bodyStringRepresentation2) && bodyStringRepresentation1.size() > 2) {
-												CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping((CompositeStatementObject)statement1, (CompositeStatementObject)conditional, container1, container2, 1);
-												mappings.add(mapping);
-											}
-										}
-									}
-								}
 							}
 						}
 					}

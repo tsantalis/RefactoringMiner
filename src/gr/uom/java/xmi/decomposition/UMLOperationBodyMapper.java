@@ -9031,22 +9031,43 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			boolean variableDeclarationInitializer1 =  invocationCoveringTheEntireStatement1.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
 			boolean variableDeclarationInitializer2 =  invocationCoveringTheEntireStatement2.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL);
-			if(variableDeclarationInitializer1 && variableDeclarationInitializer2 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
-					variableDeclarations1.size() > 0) {
-				boolean callToAddedOperation = false;
-				boolean callToDeletedOperation = false;
-				boolean statementIsExtracted = false;
-				if(classDiff != null) {
-					UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2);
-					statementIsExtracted = checkIfStatementIsExtracted(statement1, statement2, addedOperation);
-					callToAddedOperation = addedOperation != null;
-					callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
+			if(variableDeclarationInitializer1 && variableDeclarationInitializer2) {
+				if(variableDeclarations1.toString().equals(variableDeclarations2.toString()) && variableDeclarations1.size() > 0) {
+					boolean callToAddedOperation = false;
+					boolean callToDeletedOperation = false;
+					boolean statementIsExtracted = false;
+					if(classDiff != null) {
+						UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2);
+						statementIsExtracted = checkIfStatementIsExtracted(statement1, statement2, addedOperation);
+						callToAddedOperation = addedOperation != null;
+						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
+					}
+					if(callToAddedOperation != callToDeletedOperation && !statementIsExtracted) {
+						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
 				}
-				if(callToAddedOperation != callToDeletedOperation && !statementIsExtracted) {
-					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
-							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
-					replacementInfo.addReplacement(replacement);
-					return replacementInfo.getReplacements();
+				else if(variableDeclarations1.get(0).getVariableName().equals(variableDeclarations2.get(0).getVariableName()) && replacementInfo.getReplacements(ReplacementType.TYPE).size() > 0) {
+					boolean callToAddedOperation = false;
+					boolean callToDeletedOperation = false;
+					if(classDiff != null) {
+						boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
+						if(!superCall2) {
+							callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2) != null;
+						}
+						boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
+						if(!superCall1) {
+							callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1) != null;
+						}
+					}
+					if(callToAddedOperation != callToDeletedOperation) {
+						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+								invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}

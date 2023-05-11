@@ -9127,12 +9127,38 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
 					if(!superCall2) {
 						callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2) != null;
+						if(callToAddedOperation == false) {
+							if(invocationCoveringTheEntireStatement2.getExpression() != null) {
+								List<AbstractCall> methodInvocations = methodInvocationMap2.get(invocationCoveringTheEntireStatement2.getExpression());
+								if(methodInvocations != null) {
+									for(AbstractCall invocation : methodInvocations) {
+										if(classDiff.matchesOperation(invocation, classDiff.getNextClass().getOperations(), container2) != null) {
+											callToAddedOperation = true;
+											break;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				if(invocationCoveringTheEntireStatement1 != null) {
 					boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
 					if(!superCall1) {
 						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1) != null;
+						if(callToDeletedOperation == false) {
+							if(invocationCoveringTheEntireStatement1.getExpression() != null) {
+								List<AbstractCall> methodInvocations = methodInvocationMap1.get(invocationCoveringTheEntireStatement1.getExpression());
+								if(methodInvocations != null) {
+									for(AbstractCall invocation : methodInvocations) {
+										if(classDiff.matchesOperation(invocation, classDiff.getOriginalClass().getOperations(), container1) != null) {
+											callToDeletedOperation = true;
+											break;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

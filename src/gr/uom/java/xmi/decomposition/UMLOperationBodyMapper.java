@@ -9094,6 +9094,68 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n");
+		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n");
+		if(parentMapper == null && !variableReturn1 && !variableReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && statement1.isLastStatement() && statement2.isLastStatement() &&
+				container1 instanceof UMLOperation && container2 instanceof UMLOperation && getOperation1().equalSignature(getOperation2()) && statement1.getLambdas().size() == statement2.getLambdas().size()) {
+			boolean callToAddedOperation = false;
+			boolean callToDeletedOperation = false;
+			boolean isMovedMethod = !container1.getClassName().equals(container2.getClassName());
+			if(classDiff != null) {
+				if(!container1.getClassName().equals(container2.getClassName()) && modelDiff != null) {
+					boolean pushDown = false;
+					UMLClassBaseDiff container2Diff = modelDiff.getUMLClassDiff(container2.getClassName());
+					if(container2Diff != null && container2Diff.getSuperclass() != null) {
+						UMLType superclass = container2Diff.getSuperclass();
+						if(container1.getClassName().endsWith("." + superclass.getClassType())) {
+							pushDown = true;
+						}
+					}
+					boolean pullUp = false;
+					UMLClassBaseDiff container1Diff = modelDiff.getUMLClassDiff(container1.getClassName());
+					if(container1Diff != null && container1Diff.getSuperclass() != null) {
+						UMLType superclass = container1Diff.getSuperclass();
+						if(container2.getClassName().endsWith("." + superclass.getClassType())) {
+							pullUp = true;
+						}
+					}
+					if(pullUp || pushDown) {
+						isMovedMethod = false;
+					}
+				}
+				if(invocationCoveringTheEntireStatement2 != null) {
+					boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
+					if(!superCall2) {
+						callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2) != null;
+					}
+				}
+				if(invocationCoveringTheEntireStatement1 != null) {
+					boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
+					if(!superCall1) {
+						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1) != null;
+					}
+				}
+			}
+			if(callToAddedOperation == callToDeletedOperation && !isMovedMethod) {
+				if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+					ReplacementType replacementType = !invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ? ReplacementType.METHOD_INVOCATION_NAME : ReplacementType.METHOD_INVOCATION;
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementType);
+					replacementInfo.addReplacement(replacement);
+				}
+				else if(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
+					Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							creationCoveringTheEntireStatement2.actualString(), ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION, invocationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2);
+					replacementInfo.addReplacement(replacement);
+				}
+				else if(creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
+					Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, creationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
+					replacementInfo.addReplacement(replacement);
+				}
+				return replacementInfo.getReplacements();
+			}
+		}
 		return null;
 	}
 

@@ -11,12 +11,14 @@ public class ConsistentReplacementDetector {
 	private static <T extends Replacement> Set<T> inconsistentRenames(
 			Set<T> currentRenames, T newRename) {
 		Set<T> inconsistentRenames = new LinkedHashSet<T>();
-		for(T rename : currentRenames) {
-			if(rename.getBefore().equals(newRename.getBefore()) && !rename.getAfter().equals(newRename.getAfter())) {
-				inconsistentRenames.add(rename);
-			}
-			else if(!rename.getBefore().equals(newRename.getBefore()) && rename.getAfter().equals(newRename.getAfter())) {
-				inconsistentRenames.add(rename);
+		if(!newRename.getBefore().toUpperCase().equals(newRename.getAfter().toUpperCase())) {
+			for(T rename : currentRenames) {
+				if(rename.getBefore().equals(newRename.getBefore()) && !rename.getAfter().equals(newRename.getAfter())) {
+					inconsistentRenames.add(rename);
+				}
+				else if(!rename.getBefore().equals(newRename.getBefore()) && rename.getAfter().equals(newRename.getAfter())) {
+					inconsistentRenames.add(rename);
+				}
 			}
 		}
 		return inconsistentRenames;

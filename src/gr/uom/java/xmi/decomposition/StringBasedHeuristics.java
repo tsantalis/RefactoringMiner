@@ -2184,18 +2184,31 @@ public class StringBasedHeuristics {
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
+				Map<String, LeafExpression> subConditionMap1 = new LinkedHashMap<>();
+				Map<String, LeafExpression> subConditionMap2 = new LinkedHashMap<>();
+				Map<String, LeafExpression> subConditionMap = null;
 				if(ternaryConditions && (!containLogicalOperator || statement1 instanceof AbstractExpression)) {
 					if(ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) {
 						String conditional1 = prepareConditional(s1);
 						String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 						for(String s : subConditions1) {
-							subConditionsAsList1.add(s.trim());
+							String trimmed = s.trim();
+							subConditionsAsList1.add(trimmed);
+							List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
+							if(leafExpressions.size() > 0) {
+								subConditionMap1.put(trimmed, leafExpressions.get(0));
+							}
 						}
 						for(String ternaryConditional : ternaryConditionals2) {
 							String conditional2 = prepareConditional(ternaryConditional);
 							String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 							for(String s : subConditions2) {
-								subConditionsAsList2.add(s.trim());
+								String trimmed = s.trim();
+								subConditionsAsList2.add(trimmed);
+								List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
+								if(leafExpressions.size() > 0) {
+									subConditionMap2.put(trimmed, leafExpressions.get(0));
+								}
 							}
 						}
 					}
@@ -2204,13 +2217,23 @@ public class StringBasedHeuristics {
 							String conditional1 = prepareConditional(ternaryConditional);
 							String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 							for(String s : subConditions1) {
-								subConditionsAsList1.add(s.trim());
+								String trimmed = s.trim();
+								subConditionsAsList1.add(trimmed);
+								List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
+								if(leafExpressions.size() > 0) {
+									subConditionMap1.put(trimmed, leafExpressions.get(0));
+								}
 							}
 						}
 						String conditional2 = prepareConditional(s2);
 						String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 						for(String s : subConditions2) {
-							subConditionsAsList2.add(s.trim());
+							String trimmed = s.trim();
+							subConditionsAsList2.add(trimmed);
+							List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
+							if(leafExpressions.size() > 0) {
+								subConditionMap2.put(trimmed, leafExpressions.get(0));
+							}
 						}
 					}
 				}
@@ -2220,13 +2243,24 @@ public class StringBasedHeuristics {
 					String[] subConditions1 = SPLIT_CONDITIONAL_PATTERN.split(conditional1);
 					String[] subConditions2 = SPLIT_CONDITIONAL_PATTERN.split(conditional2);
 					for(String s : subConditions1) {
-						subConditionsAsList1.add(s.trim());
+						String trimmed = s.trim();
+						subConditionsAsList1.add(trimmed);
+						List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
+						if(leafExpressions.size() > 0) {
+							subConditionMap1.put(trimmed, leafExpressions.get(0));
+						}
 					}
 					for(String s : subConditions2) {
-						subConditionsAsList2.add(s.trim());
+						String trimmed = s.trim();
+						subConditionsAsList2.add(trimmed);
+						List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
+						if(leafExpressions.size() > 0) {
+							subConditionMap2.put(trimmed, leafExpressions.get(0));
+						}
 					}
 				}
 				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
+				Set<String> intersection2 = null;
 				int matches = matchCount(intersection, info);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
@@ -2287,10 +2321,16 @@ public class StringBasedHeuristics {
 								String conditional = ifExpression2.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
 								List<String> subConditionsAsList = new ArrayList<String>();
+								subConditionMap = new LinkedHashMap<>();
 								for(String s : subConditions) {
-									subConditionsAsList.add(s.trim());
+									String trimmed = s.trim();
+									subConditionsAsList.add(trimmed);
+									List<LeafExpression> leafExpressions = ifNode2.findExpression(trimmed);
+									if(leafExpressions.size() > 0) {
+										subConditionMap.put(trimmed, leafExpressions.get(0));
+									}
 								}
-								Set<String> intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
+								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
 								int matches2 = matchCount(intersection2, info);
 								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2);
 								if(pass2 && !intersection.containsAll(intersection2)) {
@@ -2421,6 +2461,30 @@ public class StringBasedHeuristics {
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
 								refactorings.add(split);
+								for(String key : intersection) {
+									LeafExpression leaf1 = subConditionMap1.get(key);
+									if(leaf1 == null)
+										leaf1 = subConditionMap1.get("!" + key);
+									LeafExpression leaf2 = subConditionMap2.get(key);
+									if(leaf2 == null)
+										leaf2 = subConditionMap2.get("!" + key);
+									if(leaf1 != null && leaf2 != null) {
+										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+										split.addSubExpressionMapping(leafMapping);
+									}
+								}
+								for(String key : intersection2) {
+									LeafExpression leaf1 = subConditionMap1.get(key);
+									if(leaf1 == null)
+										leaf1 = subConditionMap1.get("!" + key);
+									LeafExpression leaf2 = subConditionMap.get(key);
+									if(leaf2 == null)
+										leaf2 = subConditionMap.get("!" + key);
+									if(leaf1 != null && leaf2 != null) {
+										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+										split.addSubExpressionMapping(leafMapping);
+									}
+								}
 							}
 						}
 					}
@@ -2433,16 +2497,22 @@ public class StringBasedHeuristics {
 								String conditional = ifExpression1.getString();
 								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
 								List<String> subConditionsAsList = new ArrayList<String>();
+								subConditionMap = new LinkedHashMap<>();
 								for(String s : subConditions) {
-									String temp1 = new String(s.trim());
+									String trimmed = s.trim();
+									String temp1 = new String(trimmed);
+									List<LeafExpression> leafExpressions = ifNode1.findExpression(trimmed);
 									for(Replacement replacement : info.getReplacements()) {
 										if(!(replacement instanceof IntersectionReplacement)) {
 											temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
 										}
 									}
 									subConditionsAsList.add(temp1);
+									if(leafExpressions.size() > 0) {
+										subConditionMap.put(temp1, leafExpressions.get(0));
+									}
 								}
-								Set<String> intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
+								intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
 								int matches2 = matchCount(intersection2, info);
 								boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
 								if(pass2 && !intersection.containsAll(intersection2)) {
@@ -2471,6 +2541,30 @@ public class StringBasedHeuristics {
 							if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
 								MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
 								refactorings.add(merge);
+								for(String key : intersection) {
+									LeafExpression leaf1 = subConditionMap1.get(key);
+									if(leaf1 == null)
+										leaf1 = subConditionMap1.get("!" + key);
+									LeafExpression leaf2 = subConditionMap2.get(key);
+									if(leaf2 == null)
+										leaf2 = subConditionMap2.get("!" + key);
+									if(leaf1 != null && leaf2 != null) {
+										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+										merge.addSubExpressionMapping(leafMapping);
+									}
+								}
+								for(String key : intersection2) {
+									LeafExpression leaf1 = subConditionMap.get(key);
+									if(leaf1 == null)
+										leaf1 = subConditionMap.get("!" + key);
+									LeafExpression leaf2 = subConditionMap2.get(key);
+									if(leaf2 == null)
+										leaf2 = subConditionMap2.get("!" + key);
+									if(leaf1 != null && leaf2 != null) {
+										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+										merge.addSubExpressionMapping(leafMapping);
+									}
+								}
 								mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
 							}
 						}

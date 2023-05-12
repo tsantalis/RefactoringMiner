@@ -12,12 +12,14 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
 public class SplitConditionalRefactoring implements Refactoring {
 	private AbstractCodeFragment originalConditional;
 	private Set<AbstractCodeFragment> splitConditionals;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private List<LeafMapping> subExpressionMappings;
 
 	public SplitConditionalRefactoring(AbstractCodeFragment originalConditional,
 			Set<AbstractCodeFragment> splitConditionals, VariableDeclarationContainer operationBefore,
@@ -26,6 +28,21 @@ public class SplitConditionalRefactoring implements Refactoring {
 		this.splitConditionals = splitConditionals;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
 	}
 
 	public AbstractCodeFragment getOriginalConditional() {
@@ -42,6 +59,10 @@ public class SplitConditionalRefactoring implements Refactoring {
 
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	@Override

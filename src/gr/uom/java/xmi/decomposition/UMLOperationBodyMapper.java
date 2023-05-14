@@ -2651,6 +2651,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return exactMatches;
 	}
 
+	public List<AbstractCodeMapping> getExactMatchesWithoutLoggingStatements() {
+		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
+					!mapping.getFragment1().getString().equals("try")) {
+				boolean logCallFound = false;
+				for(AbstractCall call : mapping.getFragment1().getMethodInvocations()) {
+					if(call.isLog() || call.isLogGuard()) {
+						logCallFound = true;
+					}
+				}
+				if(!logCallFound) {
+					exactMatches.add(mapping);
+				}
+			}
+		}
+		return exactMatches;
+	}
+
 	public List<AbstractCodeMapping> getExactMatchesWithoutMatchesInNestedContainers() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -10775,7 +10794,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			for(AbstractExpression expression : comp.getExpressions()) {
 				for(AbstractCall call : expression.getMethodInvocations()) {
-					if(call.loggerExpression()) {
+					if(call.isLogGuard()) {
 						return true;
 					}
 				}

@@ -30,7 +30,8 @@ public abstract class AbstractCall extends LeafExpression {
 	protected String expression;
 	protected List<String> arguments;
 	protected StatementCoverageType coverage = StatementCoverageType.NONE;
-	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal");
+	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal", "log");
+	private static final List<String> logGuardNames = List.of("isDebugEnabled", "isEnabled", "isErrorEnabled", "isFatalEnabled", "isInfoEnabled", "isTraceEnabled", "isWarnEnabled");
 
 	public AbstractCall(CompilationUnit cu, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
 		super(cu, filePath, expression, codeElementType, container);
@@ -132,6 +133,10 @@ public abstract class AbstractCall extends LeafExpression {
 		}
 		sb.append(")");
 		return sb.toString();
+	}
+
+	public boolean isLogGuard() {
+		return loggerExpression() && logGuardNames.contains(this.getName());
 	}
 
 	public boolean isLog() {

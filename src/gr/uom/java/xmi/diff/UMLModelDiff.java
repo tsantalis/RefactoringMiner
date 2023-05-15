@@ -3059,7 +3059,7 @@ public class UMLModelDiff {
 		if(operationBodyMapper.getContainer2().isGetter() && mappingList.size() == 1) {
 			List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());
 			for(AbstractCodeMapping mapping : parentMappingList) {
-				if(mapping.getFragment1().equals(mappingList.get(0).getFragment1())) {
+				if(mapping.getFragment1().equals(mappingList.get(0).getFragment1()) && mapping.isExact()) {
 					return false;
 				}
 				if(mapping instanceof CompositeStatementObjectMapping) {

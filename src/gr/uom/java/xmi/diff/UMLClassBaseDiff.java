@@ -181,15 +181,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(constructorMapper.nonMappedElementsT2() > 0 || constructorMapper.nonMappedElementsT1() > 0) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(!mapper.equals(constructorMapper)) {
-						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, constructorMapper, this);
-						if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
-							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
-							refactorings.add(ref);
+						if(mapper.nonMappedElementsT1() > 0) {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, constructorMapper, this);
+							if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								refactorings.add(ref);
+							}
 						}
-						moveCodeMapper = new UMLOperationBodyMapper(constructorMapper, mapper, this);
-						if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
-							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
-							refactorings.add(ref);
+						if(mapper.nonMappedElementsT2() > 0) {
+							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(constructorMapper, mapper, this);
+							if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
+								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								refactorings.add(ref);
+							}
 						}
 					}
 				}

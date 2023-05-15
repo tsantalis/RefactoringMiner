@@ -144,21 +144,22 @@ Currently, it supports the detection of the following refactorings:
 95. Split Method
 96. Move Code (between methods)
 97. Replace Anonymous with Class
+98. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 
 # Current precision and recall
-As of **April 19, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **May 15, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11650  | 23  | 269  | 0.998  | 0.977|
+|**Total**|11679  | 23  | 267  | 0.998  | 0.978|
 |Extract Method|996  |  1  | 27  | 0.999  | 0.974|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|22  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|365  |  4  | 26  | 0.989  | 0.934|
+|Replace Attribute|23  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|368  |  4  | 25  | 0.989  | 0.936|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
-|Move Method|351  |  3  |  9  | 0.992  | 0.975|
+|Move Method|349  |  3  |  9  | 0.991  | 0.975|
 |Move And Rename Method|124  |  0  |  5  | 1.000  | 0.961|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
@@ -166,21 +167,21 @@ As of **April 19, 2023** the precision and recall of the tool on an oracle consi
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|128  |  0  |  1  | 1.000  | 0.992|
 |Push Down Attribute|33  |  0  |  0  | 1.000  | 1.000|
-|Push Down Method|43  |  0  |  1  | 1.000  | 0.977|
+|Push Down Method|45  |  0  |  1  | 1.000  | 0.978|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|73  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|96  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|98  |  0  | 69  | 1.000  | 0.587|
+|Extract And Move Method|100  |  0  | 69  | 1.000  | 0.592|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|229  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|231  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|91  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|92  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|312  |  3  | 12  | 0.990  | 0.963|
-|Rename Parameter|477  |  2  | 27  | 0.996  | 0.946|
+|Rename Parameter|480  |  2  | 26  | 0.996  | 0.949|
 |Rename Attribute|133  |  0  | 16  | 1.000  | 0.893|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -192,11 +193,11 @@ As of **April 19, 2023** the precision and recall of the tool on an oracle consi
 |Parameterize Variable|77  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|420  |  0  | 12  | 1.000  | 0.972|
+|Change Return Type|421  |  0  | 12  | 1.000  | 0.972|
 |Change Variable Type|774  |  2  | 10  | 0.997  | 0.987|
-|Change Parameter Type|636  |  1  | 12  | 0.998  | 0.981|
+|Change Parameter Type|638  |  1  | 12  | 0.998  | 0.982|
 |Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
-|Add Method Annotation|327  |  0  |  4  | 1.000  | 0.988|
+|Add Method Annotation|329  |  0  |  4  | 1.000  | 0.988|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
@@ -216,12 +217,12 @@ As of **April 19, 2023** the precision and recall of the tool on an oracle consi
 |Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|327  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|330  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|223  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|105  |  0  |  0  | 1.000  | 1.000|
-|Add Attribute Modifier|134  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Modifier|135  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|58  |  0  |  0  | 1.000  | 1.000|
@@ -237,13 +238,13 @@ As of **April 19, 2023** the precision and recall of the tool on an oracle consi
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional|16  |  0  |  0  | 1.000  | 1.000|
-|Invert Condition| 5  |  0  |  0  | 1.000  | 1.000|
-|Merge Conditional| 8  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|17  |  0  |  0  | 1.000  | 1.000|
+|Invert Condition| 6  |  0  |  0  | 1.000  | 1.000|
+|Merge Conditional|13  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|16  |  0  |  0  | 1.000  | 1.000|
+|Move Code|17  |  0  |  0  | 1.000  | 1.000|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner

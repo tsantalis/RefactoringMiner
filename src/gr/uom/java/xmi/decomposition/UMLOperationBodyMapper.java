@@ -9145,7 +9145,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(invocationCoveringTheEntireStatement2 != null) {
 					boolean superCall2 = invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals("super");
 					if(!superCall2) {
-						callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2) != null;
+						UMLOperation addedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getNextClass().getOperations(), container2);
+						callToAddedOperation = addedOperation != null && !addedOperation.equals(container2);
 						if(callToAddedOperation == false) {
 							if(invocationCoveringTheEntireStatement2.getExpression() != null) {
 								List<AbstractCall> methodInvocations = methodInvocationMap2.get(invocationCoveringTheEntireStatement2.getExpression());
@@ -9164,7 +9165,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(invocationCoveringTheEntireStatement1 != null) {
 					boolean superCall1 = invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement1.getExpression().equals("super");
 					if(!superCall1) {
-						callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1) != null;
+						UMLOperation removedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getOriginalClass().getOperations(), container1);
+						callToDeletedOperation = removedOperation != null && !removedOperation.equals(container1);
 						if(callToDeletedOperation == false) {
 							if(invocationCoveringTheEntireStatement1.getExpression() != null) {
 								List<AbstractCall> methodInvocations = methodInvocationMap1.get(invocationCoveringTheEntireStatement1.getExpression());
@@ -9197,6 +9199,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.actualString(),
 							invocationCoveringTheEntireStatement2.actualString(), ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION, creationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2);
 					replacementInfo.addReplacement(replacement);
+				}
+				else if(methodInvocationMap1.size() > 0 && invocationCoveringTheEntireStatement2 != null) {
+					AbstractCall invocation1 = null;
+					for(String key : methodInvocationMap1.keySet()) {
+						List<AbstractCall> calls = methodInvocationMap1.get(key);
+						for(AbstractCall call : calls) {
+							if(statement1.getString().endsWith(call.actualString() + ";\n")) {
+								invocation1 = call;
+								break;
+							}
+						}
+						if(invocation1 != null) {
+							break;
+						}
+					}
+					if(invocation1 != null) {
+						ReplacementType replacementType = !invocation1.identicalName(invocationCoveringTheEntireStatement2) ? ReplacementType.METHOD_INVOCATION_NAME : ReplacementType.METHOD_INVOCATION;
+						Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+								invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, replacementType);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
+				else if(methodInvocationMap2.size() > 0 && invocationCoveringTheEntireStatement1 != null) {
+					AbstractCall invocation2 = null;
+					for(String key : methodInvocationMap2.keySet()) {
+						List<AbstractCall> calls = methodInvocationMap2.get(key);
+						for(AbstractCall call : calls) {
+							if(statement2.getString().endsWith(call.actualString() + ";\n")) {
+								invocation2 = call;
+								break;
+							}
+						}
+						if(invocation2 != null) {
+							break;
+						}
+					}
+					if(invocation2 != null) {
+						ReplacementType replacementType = !invocationCoveringTheEntireStatement1.identicalName(invocation2) ? ReplacementType.METHOD_INVOCATION_NAME : ReplacementType.METHOD_INVOCATION;
+						Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+								invocation2.actualString(), invocationCoveringTheEntireStatement1, invocation2, replacementType);
+						replacementInfo.addReplacement(replacement);
+					}
 				}
 				return replacementInfo.getReplacements();
 			}

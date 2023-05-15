@@ -2450,12 +2450,16 @@ public class UMLModelDiff {
 		}
 	}
 
-	private void inferMethodSignatureRelatedRefactorings(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+	private void inferMethodSignatureRelatedRefactorings(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) throws RefactoringMinerTimedOutException {
 		for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
 				if(allowInference(classDiff, removedOperation, addedOperation)) {
 					List<UMLOperationBodyMapper> mappers = findMappersWithMatchingSignatures(removedOperation, addedOperation);
 					if(!mappers.isEmpty()) {
+						UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+						bodyMapper.computeRefactoringsWithinBody();
+						refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
+						classDiff.addOperationBodyMapper(bodyMapper);
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, classDiff);
 						if(operationSignatureDiff.isOperationRenamed()) {
 							RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);

@@ -14,6 +14,7 @@ import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethod
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
@@ -748,6 +749,7 @@ public abstract class AbstractCodeMapping {
 		return replacement instanceof MethodInvocationReplacement ||
 				replacement instanceof VariableReplacementWithMethodInvocation ||
 				replacement instanceof ClassInstanceCreationWithMethodInvocationReplacement ||
+				replacement instanceof MethodInvocationWithClassInstanceCreationReplacement ||
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION) ||
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) ||
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION) ||

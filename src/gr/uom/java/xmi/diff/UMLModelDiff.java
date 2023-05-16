@@ -2459,7 +2459,9 @@ public class UMLModelDiff {
 						UMLOperationBodyMapper bodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
 						bodyMapper.computeRefactoringsWithinBody();
 						refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
-						classDiff.addOperationBodyMapper(bodyMapper);
+						if(!classDiff.getOperationBodyMapperList().contains(bodyMapper)) {
+							classDiff.addOperationBodyMapper(bodyMapper);
+						}
 						UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, classDiff);
 						if(operationSignatureDiff.isOperationRenamed()) {
 							RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);

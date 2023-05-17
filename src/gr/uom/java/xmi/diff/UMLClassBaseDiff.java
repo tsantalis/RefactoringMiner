@@ -2505,16 +2505,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(List<AbstractCodeMapping> mappings, List<UMLOperationBodyMapper> mappers) {
-		AbstractCall operationInvocation = null;
+		Set<AbstractCall> operationInvocations = new LinkedHashSet<>();
 		for(UMLOperationBodyMapper mapper : mappers) {
 			if(mapper.getOperationInvocation() != null) {
-				operationInvocation = mapper.getOperationInvocation();
+				operationInvocations.add(mapper.getOperationInvocation());
 			}
 		}
+		int matches = 0;
 		for(AbstractCodeMapping mapping : mappings) {
-			if(callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(mapping, operationInvocation)) {
-				return true;
+			for(AbstractCall operationInvocation : operationInvocations) {
+				if(callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(mapping, operationInvocation)) {
+					matches++;
+				}
 			}
+		}
+		if(matches == operationInvocations.size()) {
+			return true;
 		}
 		return false;
 	}

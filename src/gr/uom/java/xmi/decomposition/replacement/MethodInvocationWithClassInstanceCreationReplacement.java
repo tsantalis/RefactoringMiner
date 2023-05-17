@@ -7,8 +7,8 @@ public class MethodInvocationWithClassInstanceCreationReplacement extends Replac
 	private AbstractCall invokedOperationBefore;
 	private ObjectCreation objectCreationAfter;
 	
-	public MethodInvocationWithClassInstanceCreationReplacement(String before, String after, ReplacementType type,
-			AbstractCall invokedOperationBefore, ObjectCreation objectCreationAfter) {
+	public MethodInvocationWithClassInstanceCreationReplacement(String before, String after, AbstractCall invokedOperationBefore,
+			ObjectCreation objectCreationAfter, ReplacementType type) {
 		super(before, after, type);
 		this.invokedOperationBefore = invokedOperationBefore;
 		this.objectCreationAfter = objectCreationAfter;

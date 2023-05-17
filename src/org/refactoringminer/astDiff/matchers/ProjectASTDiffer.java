@@ -131,12 +131,13 @@ public class ProjectASTDiffer
 			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 			processClassDeclarationMapping(srcTree,dstTree, baseClassDiff,mappingStore);
 		}
-
+		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
 		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processLastStepMappings(srcTree,dstTree,mappingStore);
+
 		//if (CHECK_COMMENTS) addAndProcessComments(treeContextPair.first, treeContextPair.second,mappingStore);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
@@ -1139,7 +1140,6 @@ public class ProjectASTDiffer
 		}
 		processSuperClass(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
 		processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
-		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processJavaDocs(srcTypeDeclaration,dstTypeDeclaration,classDiff.getOriginalClass().getJavadoc(),classDiff.getNextClass().getJavadoc(),mappingStore);
 		processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
 

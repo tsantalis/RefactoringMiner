@@ -1008,4 +1008,23 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		signature.addAll(getParameterNameList());
 		return signature;
 	}
+
+    public boolean hasTestParameterizedAnnotation() {
+		return annotations.stream().anyMatch(UMLOperation::isParameterizedTestAnnotation);
+	}
+
+	public static boolean isParameterizedTestAnnotation(UMLAnnotation a) {
+		return isJUnit5ParameterizedTest(a) || isTestNGParameterizedAnnotation(a);
+	}
+
+	private static boolean isJUnit5ParameterizedTest(UMLAnnotation a) {
+		return a.getTypeName().equals("ParameterizedTest");
+	}
+
+	public static boolean isTestNGParameterizedAnnotation(UMLAnnotation a) {
+		return a.getTypeName().equals("Test") &&
+				a.isNormalAnnotation() &&
+				a.getMemberValuePairs().containsKey("dataProvider");
+	}
+
 }

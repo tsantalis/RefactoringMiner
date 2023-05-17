@@ -6,6 +6,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.METHOD_SIGNATURE_PATTERN;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -15,7 +16,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -54,6 +58,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
+	private static final Set<String> sourceAnnotationTypes = Set.of("CsvSource",
+			"CsvFileSource",
+			"MethodSource",
+			"ValueSource",
+			"NullSource",
+			"EmptySource",
+			"NullAndEmptySource",
+			"EnumSource",
+			"ArgumentsSource");
 	private boolean visibilityChanged;
 	private Visibility oldVisibility;
 	private Visibility newVisibility;
@@ -72,9 +85,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private UMLTypeParameterListDiff typeParameterDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
+	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
 	Set<String> newValue;
 	AbstractExpression addedParameter;
-	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -119,21 +132,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	 */
 	void checkForTestParameterizations() {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if (mapper.getOperation2().hasTestAnnotation()) {
+			if (mapper.getOperation2().hasTestAnnotation() || mapper.getOperation2().hasTestParameterizedAnnotation()) {
 				List<UMLAnnotation> sourcesAnnotations = new ArrayList<>();
 				boolean hasParameterizedTestAnnotation = false;
-				Set<String> sourceAnnotationTypes = Set.of("CsvSource",
-						"CsvFileSource",
-						"MethodSource",
-						"ValueSource",
-						"NullSource",
-						"EmptySource",
-						"NullAndEmptySource",
-						"EnumSource",
-						"ArgumentsSource");
 				for (UMLAnnotation annotation : mapper.getOperation2().getAnnotations()) {
-					hasParameterizedTestAnnotation = hasParameterizedTestAnnotation || (annotation.isMarkerAnnotation() && annotation.getTypeName().equals("ParameterizedTest"));
-					if (sourceAnnotationTypes.contains(annotation.getTypeName())) {
+					hasParameterizedTestAnnotation = hasParameterizedTestAnnotation ||
+							(annotation.isMarkerAnnotation() && annotation.getTypeName().equals("ParameterizedTest"));
+					if (UMLOperation.isTestNGParameterizedAnnotation(annotation)) {
+						hasParameterizedTestAnnotation = true;
+						sourcesAnnotations.add(annotation);
+					} else if (sourceAnnotationTypes.contains(annotation.getTypeName())) {
 						sourcesAnnotations.add(annotation);
 					}
 				}
@@ -142,16 +150,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				boolean parameterizationAdded = false;
 				if (mapper.getOperationSignatureDiff().isPresent()) {
-					newValue = extractAddedParameters(mapper, sourcesAnnotations, sourceAnnotationTypes, parameterizationAdded);
+					newValue = extractAddedParameters(mapper, sourcesAnnotations);
 				}
 			}
 		}
 	}
 
-	private Set<String> extractAddedParameters(UMLOperationBodyMapper mapper, List<UMLAnnotation> sourcesAnnotations, Set<String> sourceAnnotationTypes, boolean parameterizationAdded) {
-		for (UMLAnnotation addedAnnotation : mapper.getOperationSignatureDiff().get().getAnnotationListDiff().getAddedAnnotations()) {
+	private Set<String> extractAddedParameters(UMLOperationBodyMapper mapper, List<UMLAnnotation> sourcesAnnotations) {
+		boolean parameterizationAdded = false;
+		UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
+		List<UMLAnnotation> newAnnotations = Stream.concat(annotationListDiff.getAddedAnnotations().stream(), annotationListDiff.getAnnotationDiffs().stream().map(ann -> ann.getAddedAnnotation())).collect(Collectors.toList());
+		for (UMLAnnotation addedAnnotation : newAnnotations) {
 			if (addedAnnotation.getTypeName().equals("ParameterizedTest")) {
 				parameterizationAdded = true;
+			}
+			else if(UMLOperation.isTestNGParameterizedAnnotation(addedAnnotation)) {
+				parameterizationAdded = true;
+				addedParameter = addedAnnotation.getMemberValuePairs().get("dataProvider");
+				return new HashSet<>(Arrays.asList(addedParameter.getExpression()));
 			}
 			else if (sourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 				parameterizationAdded = true;
@@ -193,15 +209,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						default:
 							throw new IllegalStateException("Unexpectedly added invalid annotation value: " + addedAnnotation.getTypeName());
 					}
-					return Collections.emptySet();
+					return new HashSet<>();
 				}
-				String expression = addedParameter.getExpression();
-				// trim surrounding curly brackets
-				return expression.substring(1, expression.length()-1).lines().flatMap(line -> Arrays.asList(line.split(",")).stream()).map(item -> item.substring(1, item.length()-1)).collect(Collectors.toSet());
+				return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
 			}
 		}
 		if (!parameterizationAdded) {
-			for (Pair<UMLAnnotation, UMLAnnotation> commonAnnotation : mapper.getOperationSignatureDiff().get().getAnnotationListDiff().getCommonAnnotations()) {
+			for (Pair<UMLAnnotation, UMLAnnotation> commonAnnotation : annotationListDiff.getCommonAnnotations()) {
 				if (sourcesAnnotations.contains(commonAnnotation.getRight().getTypeName())) {
 					Set<String> oldValue = Collections.emptySet();
 					Set<String> newValue = Collections.emptySet();
@@ -221,6 +235,35 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return Collections.emptySet();
+	}
+
+	private static Set<String> extractValuesFromCollectionStringRepresentation(String expression) {
+		// Match string representation of a Java collection
+		Pattern regex = Pattern.compile("[\\[({]*((?:\"?[\\w]+\"?[, ]*)+)[])}]*");
+		Matcher matcher = regex.matcher(expression);
+		if (matcher.matches()) {
+			// Trim surrounding brackets
+			String remaining = matcher.group(1);
+			regex = Pattern.compile("(?:\"?([\\w]+)[\", ]*)+");
+			Set<String> values = new HashSet<>(matcher.groupCount());
+			do {
+				// Find last matching slice
+				matcher = regex.matcher(remaining);
+				if(matcher.matches() && matcher.groupCount() > 0) {
+					// Add match to values
+					values.add(matcher.group(1));
+				}
+				else {
+					break;
+				}
+				// Remove last matching slice
+				remaining = remaining.substring(matcher.start(), matcher.start(1));
+			} while (remaining.length() > 0);
+			return values;
+		}
+		else {
+			return new HashSet<>(Arrays.asList(expression.split(" ?, ?")));
+		}
 	}
 
 	private static boolean isHomonymous(UMLAnnotation a, String expectedName) {

@@ -1,0 +1,15 @@
+public main(args String[]) : void -> private createEntryRule(series TimeSeries, barCount int) : Rule
+line range:23-23==line range:38-38
+line range:20-20==line range:37-37
+line range:24-24==line range:39-39
+public main(args String[]) : void -> private createExitRule(series TimeSeries, barCount int) : Rule
+line range:23-23==line range:44-44
+line range:20-20==line range:43-43
+line range:25-25==line range:45-45
+public main(args String[]) : void -> public main(args String[]) : void
+line range:16-16==line range:16-16
+line range:17-17==line range:17-17
+line range:18-18==line range:19-19
+line range:26-26==line range:32-32
+line range:29-29==line range:33-33
+line range:22-22==line range:21-21

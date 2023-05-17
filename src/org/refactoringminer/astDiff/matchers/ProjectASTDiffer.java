@@ -656,6 +656,10 @@ public class ProjectASTDiffer
 				}
 			} else if (refactoring instanceof SplitConditionalRefactoring) {
 				SplitConditionalRefactoring splitConditionalRefactoring = (SplitConditionalRefactoring) refactoring;
+				for(LeafMapping leafMapping : splitConditionalRefactoring.getSubExpressionMappings()) {
+					lastStepMappings.add(leafMapping);
+				}
+				/*
 				Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,splitConditionalRefactoring.getOriginalConditional().getLocationInfo());
 				Set<AbstractCodeFragment> splitConditionals = splitConditionalRefactoring.getSplitConditionals();
 				for (AbstractCodeFragment splitConditional : splitConditionals) {
@@ -663,8 +667,13 @@ public class ProjectASTDiffer
 					new GeneralMatcher(splitConditionalRefactoring.getOriginalConditional(), splitConditional).
 							match(srcSubTree,dstSubTree,mappingStore);
 				}
+				*/
 			} else if (refactoring instanceof MergeConditionalRefactoring) {
 				MergeConditionalRefactoring mergeConditionalRefactoring = (MergeConditionalRefactoring) refactoring;
+				for(LeafMapping leafMapping : mergeConditionalRefactoring.getSubExpressionMappings()) {
+					lastStepMappings.add(leafMapping);
+				}
+				/*
 				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeConditionalRefactoring.getNewConditional().getLocationInfo());
 				Set<AbstractCodeFragment> mergedConditionals = mergeConditionalRefactoring.getMergedConditionals();
 				for (AbstractCodeFragment eachMerged : mergedConditionals) {
@@ -672,6 +681,7 @@ public class ProjectASTDiffer
 					new GeneralMatcher(eachMerged, mergeConditionalRefactoring.getNewConditional())
 							.match(srcSubTree,dstSubTree,mappingStore);
 				}
+				*/
 			} else if (refactoring instanceof MergeCatchRefactoring) {
 				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
 				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());

@@ -2512,14 +2512,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		int matches = 0;
+		boolean identicalMapping = false;
 		for(AbstractCodeMapping mapping : mappings) {
+			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				identicalMapping = true;
+			}
 			for(AbstractCall operationInvocation : operationInvocations) {
 				if(callsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(mapping, operationInvocation)) {
 					matches++;
 				}
 			}
 		}
-		if(matches == operationInvocations.size()) {
+		if(matches == operationInvocations.size() && !identicalMapping) {
 			return true;
 		}
 		return false;

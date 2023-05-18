@@ -3,6 +3,9 @@ package gr.uom.java.xmi.diff;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static gr.uom.java.xmi.decomposition.Visitor.METHOD_SIGNATURE_PATTERN;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,15 +61,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
-	private static final Set<String> sourceAnnotationTypes = Set.of("CsvSource",
+	private static final Set<String> normalSourceAnnotationTypes = Set.of(
+			"CsvSource",
+			"CsvFileSource",
+			"ValueSource");
+	private static final Set<String> singleMemberSourceAnnotationTypes = Set.of(
+			"CsvSource",
 			"CsvFileSource",
 			"MethodSource",
-			"ValueSource",
+			"EnumSource",
+			"ArgumentsSource");
+	private static final Set<String> markerSourceAnnotationTypes = Set.of(
+			"MethodSource",
 			"NullSource",
 			"EmptySource",
 			"NullAndEmptySource",
-			"EnumSource",
-			"ArgumentsSource");
+			"EnumSource");
 	private boolean visibilityChanged;
 	private Visibility oldVisibility;
 	private Visibility newVisibility;
@@ -141,7 +151,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if (UMLOperation.isTestNGParameterizedAnnotation(annotation)) {
 						hasParameterizedTestAnnotation = true;
 						sourcesAnnotations.add(annotation);
-					} else if (sourceAnnotationTypes.contains(annotation.getTypeName())) {
+					} else if (normalSourceAnnotationTypes.contains(annotation.getTypeName()) ||
+							   singleMemberSourceAnnotationTypes.contains(annotation.getTypeName()) ||
+							   markerSourceAnnotationTypes.contains(annotation.getTypeName())) {
 						sourcesAnnotations.add(annotation);
 					}
 				}
@@ -169,12 +181,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				addedParameter = addedAnnotation.getMemberValuePairs().get("dataProvider");
 				return new HashSet<>(Arrays.asList(addedParameter.getExpression()));
 			}
-			else if (sourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
-				parameterizationAdded = true;
-				if (addedAnnotation.isSingleMemberAnnotation()) {
+			else {
+				if (singleMemberSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 					addedParameter = addedAnnotation.getValue();
+					parameterizationAdded = true;
+					return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
 				}
-				else if (addedAnnotation.isNormalAnnotation()) {
+				else if (normalSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 					List<String> keys = List.of(
 							"value",
 							"strings",
@@ -195,8 +208,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							break;
 						}
 					}
+					parameterizationAdded = true;
+					return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
 				}
-				else if (addedAnnotation.isMarkerAnnotation()) {
+				else if (markerSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 					switch (addedAnnotation.getTypeName()) {
 						//TODO: provide AbstractExpression for all marker annotation cases (i.e. @NullSource, @EmptySource, @NullAndEmptySource)
 						case "NullSource":
@@ -209,9 +224,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						default:
 							throw new IllegalStateException("Unexpectedly added invalid annotation value: " + addedAnnotation.getTypeName());
 					}
+					parameterizationAdded = true;
 					return new HashSet<>();
 				}
-				return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
 			}
 		}
 		if (!parameterizationAdded) {
@@ -1134,15 +1149,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(addedOperation.hasParameterizedTestAnnotation()) {
 							List<List<String>> testParameters = new ArrayList<>();
 							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
-								if(sourceAnnotationTypes.contains(annotation.getTypeName())) {
+								if(singleMemberSourceAnnotationTypes.contains(annotation.getTypeName())) {
 									if(annotation.getTypeName().equals("CsvSource")) {
 										List<LeafExpression> stringLiterals = null;
-										if(annotation.getValue() != null) {
+										if (annotation.getValue() != null) {
 											stringLiterals = annotation.getValue().getStringLiterals();
-										} else if (annotation.getMemberValuePairs().size() > 0) {
-											stringLiterals = annotation.getMemberValuePairs().get("value").getStringLiterals();
+											for (LeafExpression stringLiteral : stringLiterals) {
+												List<String> parameters = extractParametersFromCsv(stringLiteral.getString());
+												testParameters.add(parameters);
+											}
 										}
-										if(stringLiterals != null) {
+									} else if (annotation.getTypeName().equals("CsvFileSource")) {
+										List<LeafExpression> stringLiterals = null;
+										if (annotation.getValue() != null) {
+											stringLiterals = annotation.getValue().getStringLiterals();
+											assert stringLiterals.size() == 1;
+											String csvFile = stringLiterals.get(0).getString();
+											extractParametersFromCsvFile(testParameters, csvFile);
+										}
+									}
+								}
+								else if(normalSourceAnnotationTypes.contains(annotation.getTypeName())) {
+									if(annotation.getTypeName().equals("CsvSource")) {
+										List<LeafExpression> stringLiterals = null;
+										if (annotation.getMemberValuePairs().size() > 0) {
+											stringLiterals = annotation.getMemberValuePairs().get("value").getStringLiterals();
 											for(LeafExpression stringLiteral : stringLiterals) {
 												List<String> parameters = extractParametersFromCsv(stringLiteral.getString());
 												testParameters.add(parameters);
@@ -1277,6 +1308,30 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private void extractParametersFromCsvFile(List<List<String>> testParameters, String csvFile) {
+		try {
+			List<String> tests = readCsvFile(csvFile);
+			for (String test : tests) {
+				List<String> parameters = extractParametersFromCsv(test);
+				testParameters.add(parameters);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private List<String> readCsvFile(String csvFile) throws IOException {
+		List<String> parameters = new ArrayList<>();
+		BufferedReader br = new BufferedReader(new FileReader(csvFile));
+		String line = br.readLine();
+		while(line != null) {
+			parameters.add(line);
+			line = br.readLine();
+		}
+		br.close();
+		return parameters;
 	}
 
 	private static List<String> extractParametersFromCsv(String s) {

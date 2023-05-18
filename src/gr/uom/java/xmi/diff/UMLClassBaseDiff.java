@@ -132,7 +132,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	 */
 	void checkForTestParameterizations() {
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if (mapper.getOperation2().hasTestAnnotation() || mapper.getOperation2().hasTestParameterizedAnnotation()) {
+			if (mapper.getOperation2().hasTestAnnotation() || mapper.getOperation2().hasParameterizedTestAnnotation()) {
 				List<UMLAnnotation> sourcesAnnotations = new ArrayList<>();
 				boolean hasParameterizedTestAnnotation = false;
 				for (UMLAnnotation annotation : mapper.getOperation2().getAnnotations()) {

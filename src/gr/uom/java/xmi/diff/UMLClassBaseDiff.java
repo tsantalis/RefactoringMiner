@@ -1134,24 +1134,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(addedOperation.hasParameterizedTestAnnotation()) {
 							List<List<String>> testParameters = new ArrayList<>();
 							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
-								if(annotation.getTypeName().equals("CsvSource")) {
-									if(annotation.getValue() != null) {
-										List<LeafExpression> stringLiterals = annotation.getValue().getStringLiterals();
-										for(LeafExpression stringLiteral : stringLiterals) {
-											List<String> parameters = new ArrayList<>();
-											String s = stringLiteral.getString();
-											String[] tokens = s.split(",");
-											for(String token : tokens) {
-												String trimmed = token.trim();
-												if(trimmed.startsWith("\"")) {
-													trimmed = trimmed.substring(1, trimmed.length());
-												}
-												if(trimmed.endsWith("\"")) {
-													trimmed = trimmed.substring(0, trimmed.length()-1);
-												}
-												parameters.add(trimmed);
+								if(sourceAnnotationTypes.contains(annotation.getTypeName())) {
+									if(annotation.getTypeName().equals("CsvSource")) {
+										List<LeafExpression> stringLiterals = null;
+										if(annotation.getValue() != null) {
+											stringLiterals = annotation.getValue().getStringLiterals();
+										} else if (annotation.getMemberValuePairs().size() > 0) {
+											stringLiterals = annotation.getMemberValuePairs().get("value").getStringLiterals();
+										}
+										if(stringLiterals != null) {
+											for(LeafExpression stringLiteral : stringLiterals) {
+												List<String> parameters = extractParametersFromCsv(stringLiteral.getString());
+												testParameters.add(parameters);
 											}
-											testParameters.add(parameters);
 										}
 									}
 								}
@@ -1282,6 +1277,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private static List<String> extractParametersFromCsv(String s) {
+		List<String> parameters = new ArrayList<>();
+		String[] tokens = s.split(",");
+		for(String token : tokens) {
+			String trimmed = token.trim();
+			if(trimmed.startsWith("\"")) {
+				trimmed = trimmed.substring(1, trimmed.length());
+			}
+			if(trimmed.endsWith("\"")) {
+				trimmed = trimmed.substring(0, trimmed.length()-1);
+			}
+			parameters.add(trimmed);
+		}
+		return parameters;
 	}
 
 	private boolean isCommentedOut(UMLOperation removedOperation) {

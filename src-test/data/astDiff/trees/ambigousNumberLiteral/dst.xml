@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<root>
+  <context></context>
+  <tree type="VariableDeclarationStatement" pos="17794" length="246">
+    <tree type="SimpleType" pos="17794" length="19">
+      <tree type="SimpleName" label="RectangleConstraint" pos="17794" length="19"></tree>
+    </tree>
+    <tree type="VariableDeclarationFragment" pos="17814" length="225">
+      <tree type="SimpleName" label="c4" pos="17814" length="2"></tree>
+      <tree type="ClassInstanceCreation" pos="17819" length="220">
+        <tree type="SimpleType" pos="17823" length="19">
+          <tree type="SimpleName" label="RectangleConstraint" pos="17823" length="19"></tree>
+        </tree>
+        <tree type="NumberLiteral" label="0.0" pos="17843" length="3"></tree>
+        <tree type="ClassInstanceCreation" pos="17869" length="59">
+          <tree type="SimpleType" pos="17873" length="5">
+            <tree type="SimpleName" label="Range" pos="17873" length="5"></tree>
+          </tree>
+          <tree type="NumberLiteral" label="0.0" pos="17879" length="3"></tree>
+          <tree type="MethodInvocation" pos="17884" length="43">
+            <tree type="METHOD_INVOCATION_RECEIVER" pos="17884" length="4">
+              <tree type="SimpleName" label="Math" pos="17884" length="4"></tree>
+            </tree>
+            <tree type="SimpleName" label="max" pos="17889" length="3"></tree>
+            <tree type="METHOD_INVOCATION_ARGUMENTS" pos="17893" length="33">
+              <tree type="InfixExpression" pos="17893" length="28">
+                <tree type="MethodInvocation" pos="17893" length="21">
+                  <tree type="METHOD_INVOCATION_RECEIVER" pos="17893" length="10">
+                    <tree type="SimpleName" label="constraint" pos="17893" length="10"></tree>
+                  </tree>
+                  <tree type="SimpleName" label="getWidth" pos="17904" length="8"></tree>
+                </tree>
+                <tree type="INFIX_EXPRESSION_OPERATOR" label="-" pos="17915" length="1"></tree>
+                <tree type="ArrayAccess" pos="17917" length="4">
+                  <tree type="SimpleName" label="w" pos="17917" length="1"></tree>
+                  <tree type="NumberLiteral" label="2" pos="17919" length="1"></tree>
+                </tree>
+              </tree>
+              <tree type="NumberLiteral" label="0.0" pos="17923" length="3"></tree>
+            </tree>
+          </tree>
+        </tree>
+        <tree type="QualifiedName" label="LengthConstraintType.RANGE" pos="17951" length="26"></tree>
+        <tree type="ArrayAccess" pos="17979" length="4">
+          <tree type="SimpleName" label="h" pos="17979" length="1"></tree>
+          <tree type="NumberLiteral" label="2" pos="17981" length="1"></tree>
+        </tree>
+        <tree type="NullLiteral" pos="17985" length="4"></tree>
+        <tree type="QualifiedName" label="LengthConstraintType.FIXED" pos="18012" length="26"></tree>
+      </tree>
+    </tree>
+  </tree>
+</root>

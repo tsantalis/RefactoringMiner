@@ -2961,6 +2961,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 								else if(isSubclassOf(className, addedOperation.getClassName())) {
@@ -2968,6 +2969,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 								else if(isSubclassOf(addedOperation.getClassName(), className)) {
@@ -2975,6 +2977,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 								else if(addedOperation.getClassName().startsWith(className + ".")) {
@@ -2982,6 +2985,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 								else if(className.startsWith(addedOperation.getClassName() + ".")) {
@@ -2989,6 +2993,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 								else if(sourceClassImportsTargetClass(className, addedOperation.getClassName()) ||
@@ -2998,6 +3003,7 @@ public class UMLModelDiff {
 									ExtractOperationRefactoring extractOperationRefactoring =
 											new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
 									refactorings.add(extractOperationRefactoring);
+									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
 								}
 							}

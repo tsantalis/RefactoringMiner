@@ -736,6 +736,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return null;
 	}
 
+	public List<UMLOperation> removedOperationWithTheSameName(UMLOperation operation) {
+		List<UMLOperation> matchingOperations = new ArrayList<>();
+		for(UMLOperation removedOperation : removedOperations) {
+			if(removedOperation.getName().equals(operation.getName()))
+				matchingOperations.add(removedOperation);
+		}
+		return matchingOperations;
+	}
+
 	public UMLAttribute containsAddedAttributeWithTheSameSignature(UMLAttribute attribute) {
 		for(UMLAttribute addedAttribute : addedAttributes) {
 			if(addedAttribute.equalsIgnoringChangedVisibility(attribute))

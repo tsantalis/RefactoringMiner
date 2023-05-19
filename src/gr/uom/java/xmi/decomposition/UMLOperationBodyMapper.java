@@ -4175,7 +4175,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
-							if(movedInIfElseBranch.size() > 1) {
+							if(movedInIfElseBranch.size() > 1 && multiMappingCondition(matchingLeaves1, matchingLeaves2)) {
 								for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 									addToMappings((LeafMapping) mapping, mappingSet);
 									leaves2.remove(mapping.getFragment2());
@@ -4452,7 +4452,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
 							}
 							Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
-							if(movedOutOfIfElseBranch.size() > 1) {
+							if(movedOutOfIfElseBranch.size() > 1 && multiMappingCondition(matchingLeaves1, matchingLeaves2)) {
 								for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
 									addMapping(mapping);
 									processAnonymousClassDeclarationsInIdenticalStatements((LeafMapping) mapping);
@@ -4499,7 +4499,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								else {
 									Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
-									if(movedOutOfIfElseBranch.size() > 1) {
+									if(movedOutOfIfElseBranch.size() > 1 && multiMappingCondition(matchingLeaves1, matchingLeaves2)) {
 										for(AbstractCodeMapping mapping : movedOutOfIfElseBranch) {
 											addMapping(mapping);
 											processAnonymousClassDeclarationsInIdenticalStatements((LeafMapping) mapping);
@@ -4730,6 +4730,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean multiMappingCondition(List<AbstractCodeFragment> matchingLeaves1, List<AbstractCodeFragment> matchingLeaves2) {
+		if(matchingLeaves1.size() != matchingLeaves2.size()) {
+			return true;
+		}
+		else {
+			int sameDepth = 0;
+			for(int i=0; i<matchingLeaves1.size(); i++) {
+				AbstractCodeFragment fragment1 = matchingLeaves1.get(i);
+				AbstractCodeFragment fragment2 = matchingLeaves2.get(i);
+				if(fragment1.getDepth() == fragment2.getDepth()) {
+					sameDepth++;
+				}
+			}
+			if(sameDepth != matchingLeaves1.size()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void extractInlineVariableAnalysis(List<? extends AbstractCodeFragment> leaves1,

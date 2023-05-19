@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
@@ -34,7 +35,9 @@ import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassDiff;
+import gr.uom.java.xmi.diff.UMLEnumConstantDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestStatementMappings {
@@ -855,6 +858,89 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "undertow-d5b2bb8cd1393f1c5a5bb623e3d8906cd57e53c4.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testBreakStatementMappings() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "PosixParser-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "PosixParser-v2.txt"));
+		fileContentsBefore.put("src/main/java/org/apache/commons/cli/PosixParser.java", contentsV1);
+		fileContentsCurrent.put("src/main/java/org/apache/commons/cli/PosixParser.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("burstToken") && mapper.getContainer2().getName().equals("burstToken")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-cli-PosixParser.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testBreakStatementMappings2() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "TypeFactory-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "TypeFactory-v2.txt"));
+		fileContentsBefore.put("src/main/java/com/fasterxml/jackson/databind/type/TypeFactory.java", contentsV1);
+		fileContentsCurrent.put("src/main/java/com/fasterxml/jackson/databind/type/TypeFactory.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("constructSpecializedType") && mapper.getContainer2().getName().equals("constructSpecializedType")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jackson-databind-TypeFactory.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testBreakStatementMappings3() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "HtmlTreeBuilderState-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "HtmlTreeBuilderState-v2.txt"));
+		fileContentsBefore.put("src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java", contentsV1);
+		fileContentsCurrent.put("src/main/java/org/jsoup/parser/HtmlTreeBuilderState.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLEnumConstantDiff enumConstantDiff : classDiff.getEnumConstantDiffList()) {
+				Optional<UMLAnonymousClassDiff> optional = enumConstantDiff.getAnonymousClassDiff();
+				if(optional.isPresent()) {
+					for(UMLOperationBodyMapper mapper : optional.get().getOperationBodyMapperList()) {
+						if(mapper.getContainer1().getName().equals("process") && mapper.getContainer2().getName().equals("process")) {
+							mapperInfo(mapper, actual);
+							break;
+						}
+					}
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jsoup-HtmlTreeBuilderState.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

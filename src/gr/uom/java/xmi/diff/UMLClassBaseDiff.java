@@ -1966,6 +1966,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(addedOperation.getParameterTypeList().equals(removedOperation.getParameterTypeList()) || addedOperation.normalizedNameDistance(removedOperation) <= MAX_OPERATION_NAME_DISTANCE) {
 					return true;
 				}
+				else if(addedOperation.isSetter() && removedOperation.isSetter() && sameAttributeIndex(removedOperation, addedOperation)) {
+					return true;
+				}
 				else if(addedOperation.hasTestAnnotation() && removedOperation.hasTestAnnotation()) {
 					return true;
 				}
@@ -1978,11 +1981,40 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(removedOperation.isGetter() && addedOperation.isGetter()) {
 			UMLType type1 = removedOperation.getReturnParameter().getType();
 			UMLType type2 = addedOperation.getReturnParameter().getType();
-			if(!removedOperation.equalReturnParameter(addedOperation) && !type1.compatibleTypes(type2)) {
+			if(!removedOperation.equalReturnParameter(addedOperation) && !type1.compatibleTypes(type2) && !sameAttributeIndex(removedOperation, addedOperation)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private boolean sameAttributeIndex(UMLOperation removedOperation, UMLOperation addedOperation) {
+		List<String> variables1 = removedOperation.getAllVariables();
+		int index1 = -1;
+		if(variables1.size() > 0) {
+			int count = 0;
+			for(UMLAttribute attribute : originalClass.getAttributes()) {
+				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals("this." + attribute.getName())) {
+					index1 = count;
+					break;
+				}
+				count++;
+			}
+		}
+		List<String> variables2 = addedOperation.getAllVariables();
+		int index2 = -1;
+		if(variables2.size() > 0) {
+			int count = 0;
+			for(UMLAttribute attribute : nextClass.getAttributes()) {
+				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals("this." + attribute.getName())) {
+					index2 = count;
+					break;
+				}
+				count++;
+			}
+		}
+		boolean sameAttributeIndex = index1 == index2 && index1 != -1;
+		return sameAttributeIndex;
 	}
 
 	private boolean operationsBeforeAndAfterMatch(UMLOperation removedOperation, UMLOperation addedOperation) {

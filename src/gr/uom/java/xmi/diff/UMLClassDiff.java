@@ -12,6 +12,8 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 
@@ -132,7 +134,18 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 		return false;
 	}
 
+	private boolean containCallToOperation(VariableDeclarationContainer calledOperation, VariableDeclarationContainer callerOperation) {
+		for(AbstractCall invocation : callerOperation.getAllOperationInvocations()) {
+			if(invocation.matchesOperation(calledOperation, callerOperation, this, modelDiff)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			for(UMLOperation nextOperation : nextClass.getOperations()) {
 				if(originalOperation.equalsQualified(nextOperation) && !differentParameterNames(originalOperation, nextOperation)) {
@@ -149,8 +162,32 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 							}
 						}
 					}
-	    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
-	    			this.addOperationBodyMapper(operationBodyMapper);
+					//check if a removed operation has identical body
+					boolean matchFound = false;
+					List<String> nextOperationStringRepresentation = nextOperation.stringRepresentation();
+					if(!nextOperationStringRepresentation.equals(originalOperation.stringRepresentation()) && nextOperationStringRepresentation.size() > 2) {
+						for(UMLOperation removedOperation : removedOperations) {
+							if(removedOperation.stringRepresentation().equals(nextOperationStringRepresentation) && !containCallToOperation(removedOperation, originalOperation)) {
+								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, nextOperation, this);
+				    			this.addOperationBodyMapper(operationBodyMapper);
+				    			if(!removedOperation.getName().equals(nextOperation.getName()) &&
+										!(removedOperation.isConstructor() && nextOperation.isConstructor())) {
+									RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+									refactorings.add(rename);
+								}
+				    			removedOperationsToBeRemoved.add(removedOperation);
+				    			if(!removedOperations.contains(originalOperation)) {
+									removedOperations.add(originalOperation);
+								}
+				    			matchFound = true;
+				    			break;
+							}
+						}
+					}
+					if(!matchFound) {
+		    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
+		    			this.addOperationBodyMapper(operationBodyMapper);
+					}
 				}
 			}
 		}
@@ -175,8 +212,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
     			this.addOperationBodyMapper(operationBodyMapper);
     		}
     	}
-		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
-		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		for(UMLOperation removedOperation : removedOperations) {
 			for(UMLOperation addedOperation : addedOperations) {
 				if(removedOperation.equalsIgnoringVisibility(addedOperation) && !differentParameterNames(removedOperation, addedOperation)) {

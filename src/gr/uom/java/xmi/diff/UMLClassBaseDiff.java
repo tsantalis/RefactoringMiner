@@ -1120,9 +1120,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(bestMapper != null) {
 								UMLOperation removedOperation = bestMapper.getOperation1();
 								addedOperation = bestMapper.getOperation2();
-								addedOperationsToBeRemoved.add(addedOperation);
+								if(mapperSet.size() > mapperSetSize) {
+									addedOperationsToBeRemoved.add(addedOperation);
+								}
+								else {
+									addedOperationIterator.remove();
+								}
 								removedOperations.remove(removedOperation);
-								addedOperationIterator.remove();
 								if(!removedOperation.getName().equals(addedOperation.getName()) &&
 										!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
 									Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);

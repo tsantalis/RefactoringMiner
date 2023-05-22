@@ -777,7 +777,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
 			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
 			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-			populateWithGitHubAPI(gitURL, currentCommitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+			List<String> commitFileNames = new ArrayList<>();
+			populateWithGitHubAPI(gitURL, currentCommitId, commitFileNames, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+			Map<String, String> filesBefore = new LinkedHashMap<String, String>();
+			Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
+			for(String fileName : commitFileNames) {
+				if(fileContentsBefore.containsKey(fileName)) {
+					filesBefore.put(fileName, fileContentsBefore.get(fileName));
+				}
+				if(fileContentsCurrent.containsKey(fileName)) {
+					filesCurrent.put(fileName, fileContentsCurrent.get(fileName));
+				}
+			}
+			fileContentsBefore = filesBefore;
+			fileContentsCurrent = filesCurrent;
 			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
 			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
@@ -799,7 +812,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		return refactoringsAtRevision;
 	}
 
-	private void populateWithGitHubAPI(String cloneURL, String currentCommitId,
+	private void populateWithGitHubAPI(String cloneURL, String currentCommitId, List<String> commitFileNames,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent) throws IOException, InterruptedException {
 		GHRepository repository = getGitHubRepository(cloneURL);
@@ -813,6 +826,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		for (GHCommit.File commitFile : commitFiles) {
 			String fileName = commitFile.getFileName();
 			if (commitFile.getFileName().endsWith(".java")) {
+				commitFileNames.add(fileName);
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
 						try {
@@ -863,6 +877,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					pool.submit(r);
 				}
 				else if (commitFile.getStatus().equals("renamed")) {
+					commitFileNames.add(commitFile.getPreviousFilename());
 					Runnable r = () -> {
 						try {
 							String previousFilename = commitFile.getPreviousFilename();
@@ -1132,7 +1147,20 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
 					Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
 					Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-					populateWithGitHubAPI(gitURL, commitId, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+					List<String> commitFileNames = new ArrayList<>();
+					populateWithGitHubAPI(gitURL, commitId, commitFileNames, fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent);
+					Map<String, String> filesBefore = new LinkedHashMap<String, String>();
+					Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
+					for(String fileName : commitFileNames) {
+						if(fileContentsBefore.containsKey(fileName)) {
+							filesBefore.put(fileName, fileContentsBefore.get(fileName));
+						}
+						if(fileContentsCurrent.containsKey(fileName)) {
+							filesCurrent.put(fileName, fileContentsCurrent.get(fileName));
+						}
+					}
+					fileContentsBefore = filesBefore;
+					fileContentsCurrent = filesCurrent;
 					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint);
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);

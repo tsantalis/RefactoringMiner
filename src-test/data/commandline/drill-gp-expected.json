@@ -12843,17 +12843,8 @@
 },
 {
 	"type": "Extract Superclass",
-	"description": "Extract Superclass org.apache.drill.exec.util.memory.MemoryAllocationUtilities from classes [org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities, org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities]",
+	"description": "Extract Superclass org.apache.drill.exec.util.memory.MemoryAllocationUtilities from classes [org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities, org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities]",
 	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 40,
-		"endLine": 256,
-		"startColumn": 0,
-		"endColumn": 2,
-		"codeElementType": "TYPE_DECLARATION",
-		"description": "original sub-type declaration",
-		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
-}, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
 		"startLine": 34,
 		"endLine": 169,
@@ -12862,17 +12853,17 @@
 		"codeElementType": "TYPE_DECLARATION",
 		"description": "original sub-type declaration",
 		"codeElement": "org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities"
-}],
-	"rightSideLocations": [{
+}, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 27,
-		"endLine": 128,
+		"startLine": 40,
+		"endLine": 256,
 		"startColumn": 0,
 		"endColumn": 2,
 		"codeElementType": "TYPE_DECLARATION",
-		"description": "sub-type declaration after extraction",
+		"description": "original sub-type declaration",
 		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
-}, {
+}],
+	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/DefaultMemoryAllocationUtilities.java",
 		"startLine": 27,
 		"endLine": 87,
@@ -12881,6 +12872,15 @@
 		"codeElementType": "TYPE_DECLARATION",
 		"description": "sub-type declaration after extraction",
 		"codeElement": "org.apache.drill.exec.util.memory.DefaultMemoryAllocationUtilities"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 27,
+		"endLine": 128,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "sub-type declaration after extraction",
+		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/MemoryAllocationUtilities.java",
 		"startLine": 31,

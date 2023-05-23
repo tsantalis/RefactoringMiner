@@ -2597,6 +2597,28 @@ public class StringBasedHeuristics {
 					}
 					return true;
 				}
+				if(!pass && statement1 instanceof AbstractExpression && !(statement2 instanceof AbstractExpression)) {
+					AbstractCall invocation1 = statement1.invocationCoveringEntireFragment();
+					if(invocation1 != null) {
+						for(AbstractCall invocation2 : statement2.getMethodInvocations()) {
+							if(invocation1.compatibleName(invocation2) && invocation1.arguments().size() == invocation2.arguments().size()) {
+								if(subConditionsAsList2.size() > 1) {
+									IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+									info.addReplacement(r);
+								}
+								if(statement1.getString().contains("!" + invocation1.actualString()) && !statement2.getString().contains("!" + invocation2.actualString())) {
+									Replacement r2 = new Replacement("!" + invocation1.actualString(), invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
+									info.addReplacement(r2);
+								}
+								else if(!statement1.getString().contains("!" + invocation1.actualString()) && statement2.getString().contains("!" + invocation2.actualString())) {
+									Replacement r2 = new Replacement(invocation1.actualString(), "!" + invocation2.actualString(), ReplacementType.INVERT_CONDITIONAL);
+									info.addReplacement(r2);
+								}
+								return true;
+							}
+						}
+					}
+				}
 			}
 			if(s1.contains(" >= ") && s2.contains(" <= ")) {
 				Replacement r = invertConditionalDirection(s1, s2, " >= ", " <= ");

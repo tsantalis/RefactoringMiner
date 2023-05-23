@@ -6859,6 +6859,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> stringLiterals2 = convertToStringSet(statement2.getStringLiterals());
 		removeCommonElements(stringLiterals1, stringLiterals2);
 		
+		Set<String> typeLiterals1 = convertToStringSet(statement1.getTypeLiterals());
+		Set<String> typeLiterals2 = convertToStringSet(statement2.getTypeLiterals());
+		removeCommonElements(typeLiterals1, typeLiterals2);
+		
 		Set<String> numberLiterals1 = convertToStringSet(statement1.getNumberLiterals());
 		Set<String> numberLiterals2 = convertToStringSet(statement2.getNumberLiterals());
 		removeCommonElements(numberLiterals1, numberLiterals2);
@@ -7155,6 +7159,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(!stringLiterals1.isEmpty()) {
 				findReplacements(stringLiterals1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_STRING_LITERAL);
 			}
+			if(!typeLiterals1.isEmpty()) {
+				findReplacements(typeLiterals1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_TYPE_LITERAL);
+			}
 		}
 		if((!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
@@ -7184,6 +7191,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(!stringLiterals2.isEmpty()) {
 				findReplacements(nullLiterals1, stringLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_STRING_LITERAL);
+			}
+			if(!typeLiterals2.isEmpty()) {
+				findReplacements(nullLiterals1, typeLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_TYPE_LITERAL);
 			}
 			if(parentMapper == null && variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
 					variableDeclarations1.get(0).getType() != null && variableDeclarations2.get(0).getType() != null &&

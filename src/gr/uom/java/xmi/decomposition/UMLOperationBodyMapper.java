@@ -7152,6 +7152,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(!creations1.isEmpty()) {
 				findReplacements(creations1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CREATION);
 			}
+			if(!stringLiterals1.isEmpty()) {
+				findReplacements(stringLiterals1, nullLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_STRING_LITERAL);
+			}
 		}
 		if((!statement1.getNullLiterals().isEmpty() && statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
@@ -7178,6 +7181,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(!creations2.isEmpty()) {
 				findReplacements(nullLiterals1, creations2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_CREATION);
+			}
+			if(!stringLiterals2.isEmpty()) {
+				findReplacements(nullLiterals1, stringLiterals2, replacementInfo, ReplacementType.NULL_LITERAL_REPLACED_WITH_STRING_LITERAL);
 			}
 			if(parentMapper == null && variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
 					variableDeclarations1.get(0).getType() != null && variableDeclarations2.get(0).getType() != null &&

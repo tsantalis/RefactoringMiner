@@ -34,6 +34,7 @@ public abstract class AbstractCodeMapping {
 	private boolean identicalWithExtractedVariable;
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+	private int matchingArgumentsWithOperationInvocation;
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -80,6 +81,14 @@ public abstract class AbstractCodeMapping {
 
 	public Set<Refactoring> getRefactorings() {
 		return refactorings;
+	}
+
+	public int getMatchingArgumentsWithOperationInvocation() {
+		return matchingArgumentsWithOperationInvocation;
+	}
+
+	public void setMatchingArgumentsWithOperationInvocation(int matchingArgumentsWithOperationInvocation) {
+		this.matchingArgumentsWithOperationInvocation = matchingArgumentsWithOperationInvocation;
 	}
 
 	public boolean isExact() {

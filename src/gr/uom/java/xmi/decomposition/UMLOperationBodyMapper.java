@@ -5658,6 +5658,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(container1.equals(container2) || (parentMapper != null && !nested)) {
 			Map<CompositeStatementObject, AbstractCodeMapping> parentMap = new LinkedHashMap<>();
 			Map<CompositeStatementObject, AbstractCodeMapping> grandParentMap = new LinkedHashMap<>();
+			Map<AbstractCodeFragment, CompositeStatementObject> ifStatementConditionalExpressions = new LinkedHashMap<>();
 			boolean ifFound = false, elseIfFound = false, elseFound = false;
 			for(AbstractCodeMapping mapping : mappingSet) {
 				AbstractCodeFragment fragment = mapping.getFragment1();
@@ -5731,6 +5732,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				if(fragment instanceof AbstractExpression) {
+					CompositeStatementObject owner = ((AbstractExpression) fragment).getOwner();
+					if(owner != null && owner.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						ifStatementConditionalExpressions.put(fragment, owner);
+					}
+				}
 			}
 			boolean parentIfElseIfChain = ifElseIfChain(parentMap.keySet());
 			boolean grandParentIfElseIfChain = parentMapper == null && Math.abs(parentMap.size()-grandParentMap.size()) <= 1 && ifElseIfChain(grandParentMap.keySet()) && !parentIfElseIfChain;
@@ -5795,6 +5802,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			if(initializersMergedToVariableDeclaration(mappingSet)) {
+				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
+			}
+			if(ifStatementConditionalExpressions.size() == mappingSet.size()) {
 				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
 			}
 		}

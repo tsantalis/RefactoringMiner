@@ -241,6 +241,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 					}
 				}
+				if(this.getMatchingArgumentsWithOperationInvocation() != o.getMatchingArgumentsWithOperationInvocation()) {
+					return -Integer.valueOf(this.getMatchingArgumentsWithOperationInvocation()).compareTo(Integer.valueOf(o.getMatchingArgumentsWithOperationInvocation()));
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {

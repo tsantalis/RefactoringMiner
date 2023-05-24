@@ -94,7 +94,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<UMLOperationBodyMapper> childMappers = new LinkedHashSet<UMLOperationBodyMapper>();
 	private UMLOperationBodyMapper parentMapper;
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
-	private static final int MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS = 1000;
+	private static final int MAXIMUM_NUMBER_OF_COMPARED_STATEMENTS = 1500;
 	private UMLOperationDiff operationSignatureDiff;
 	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;

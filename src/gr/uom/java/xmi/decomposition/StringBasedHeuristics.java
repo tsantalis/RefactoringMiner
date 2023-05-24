@@ -36,6 +36,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
+import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -116,7 +117,9 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
-			List<LeafExpression> infixExpressions1, List<LeafExpression> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info) {
+			List<LeafExpression> infixExpressions1, List<LeafExpression> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info, UMLOperationBodyMapper mapper) {
+		VariableDeclarationContainer container1 = mapper.getContainer1();
+		VariableDeclarationContainer container2 = mapper.getContainer2();
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -266,9 +269,20 @@ public class StringBasedHeuristics {
 							return false;
 						}
 					}
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, Set.of(infix), ReplacementType.CONCATENATION);
-					info.getReplacements().add(r);
-					return true;
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+					LeafExpression infixExpression1 = null;
+					for(LeafExpression expression : infixExpressions1) {
+						if(expression.getString().equals(infix)) {
+							infixExpression1 = expression;
+							break;
+						}
+					}
+					if(infixExpression1 != null) {
+						LeafMapping leafMapping = new LeafMapping(infixExpression1, infixExpression2, container1, container2);
+						r.addSubExpressionMapping(leafMapping);
+						info.getReplacements().add(r);
+						return true;
+					}
 				}
 			}
 		}
@@ -1095,7 +1109,9 @@ public class StringBasedHeuristics {
 		return true;
 	}
 
-	protected static boolean commonConcat(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+	protected static boolean commonConcat(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
+		VariableDeclarationContainer container1 = mapper.getContainer1();
+		VariableDeclarationContainer container2 = mapper.getContainer2();
 		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
 		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
@@ -1152,7 +1168,17 @@ public class StringBasedHeuristics {
 					if(allTokensMatchInTheSameOrder && tokens1.size() == size+1 && tokens2.size() == size+1) {
 						return false;
 					}
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONCATENATION);
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+					for(String key : filteredIntersection) {
+						List<LeafExpression> expressions1 = statement1.findExpression(key);
+						List<LeafExpression> expressions2 = statement2.findExpression(key);
+						if(expressions1.size() == expressions2.size()) {
+							for(int i=0; i<expressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+								r.addSubExpressionMapping(leafMapping);
+							}
+						}
+					}
 					info.getReplacements().add(r);
 					return true;
 				}
@@ -1180,7 +1206,17 @@ public class StringBasedHeuristics {
 					}
 				}
 				if(filteredIntersection.size() > 0) {
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, filteredIntersection, ReplacementType.CONCATENATION);
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+					for(String key : filteredIntersection) {
+						List<LeafExpression> expressions1 = statement1.findExpression(key);
+						List<LeafExpression> expressions2 = statement2.findExpression(key);
+						if(expressions1.size() == expressions2.size()) {
+							for(int i=0; i<expressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+								r.addSubExpressionMapping(leafMapping);
+							}
+						}
+					}
 					info.getReplacements().add(r);
 					return true;
 				}
@@ -1208,7 +1244,17 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(count > 1 && count == tokens1.size()) {
-						IntersectionReplacement r = new IntersectionReplacement(s1, s2, new LinkedHashSet<>(tokens1), ReplacementType.CONCATENATION);
+						IntersectionReplacement r = new IntersectionReplacement(s1, s2/*, new LinkedHashSet<>(tokens1)*/, ReplacementType.CONCATENATION);
+						for(String key : tokens1) {
+							List<LeafExpression> expressions1 = statement1.findExpression(key);
+							List<LeafExpression> expressions2 = statement2.findExpression(key);
+							if(expressions1.size() == expressions2.size()) {
+								for(int i=0; i<expressions1.size(); i++) {
+									LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+									r.addSubExpressionMapping(leafMapping);
+								}
+							}
+						}
 						info.getReplacements().add(r);
 						return true;
 					}
@@ -2265,7 +2311,8 @@ public class StringBasedHeuristics {
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
 				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && info.getReplacements(ReplacementType.METHOD_INVOCATION).isEmpty()) {
-					IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
+					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
 					info.addReplacement(r);
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
@@ -2350,8 +2397,8 @@ public class StringBasedHeuristics {
 										for(String s : originalSubConditions1) {
 											originalSubConditionsAsList1.add(s.trim());
 										}
-										for(String commonElement : r.getCommonElements()) {
-											originalSubConditionsAsList1.remove(commonElement);
+										for(LeafMapping commonElement : r.getSubExpressionMappings()) {
+											originalSubConditionsAsList1.remove(commonElement.getFragment1().getString());
 										}
 										for(String subCondition1 : originalSubConditionsAsList1) {
 											for(String subCondition2 : subConditionsAsList) {
@@ -2461,30 +2508,8 @@ public class StringBasedHeuristics {
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
 								refactorings.add(split);
-								for(String key : intersection) {
-									LeafExpression leaf1 = subConditionMap1.get(key);
-									if(leaf1 == null)
-										leaf1 = subConditionMap1.get("!" + key);
-									LeafExpression leaf2 = subConditionMap2.get(key);
-									if(leaf2 == null)
-										leaf2 = subConditionMap2.get("!" + key);
-									if(leaf1 != null && leaf2 != null) {
-										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
-										split.addSubExpressionMapping(leafMapping);
-									}
-								}
-								for(String key : intersection2) {
-									LeafExpression leaf1 = subConditionMap1.get(key);
-									if(leaf1 == null)
-										leaf1 = subConditionMap1.get("!" + key);
-									LeafExpression leaf2 = subConditionMap.get(key);
-									if(leaf2 == null)
-										leaf2 = subConditionMap.get("!" + key);
-									if(leaf1 != null && leaf2 != null) {
-										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
-										split.addSubExpressionMapping(leafMapping);
-									}
-								}
+								createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split);
+								createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
 							}
 						}
 					}
@@ -2541,30 +2566,8 @@ public class StringBasedHeuristics {
 							if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
 								MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
 								refactorings.add(merge);
-								for(String key : intersection) {
-									LeafExpression leaf1 = subConditionMap1.get(key);
-									if(leaf1 == null)
-										leaf1 = subConditionMap1.get("!" + key);
-									LeafExpression leaf2 = subConditionMap2.get(key);
-									if(leaf2 == null)
-										leaf2 = subConditionMap2.get("!" + key);
-									if(leaf1 != null && leaf2 != null) {
-										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
-										merge.addSubExpressionMapping(leafMapping);
-									}
-								}
-								for(String key : intersection2) {
-									LeafExpression leaf1 = subConditionMap.get(key);
-									if(leaf1 == null)
-										leaf1 = subConditionMap.get("!" + key);
-									LeafExpression leaf2 = subConditionMap2.get(key);
-									if(leaf2 == null)
-										leaf2 = subConditionMap2.get("!" + key);
-									if(leaf1 != null && leaf2 != null) {
-										LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
-										merge.addSubExpressionMapping(leafMapping);
-									}
-								}
+								createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
+								createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
 								mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
 							}
 						}
@@ -2603,7 +2606,9 @@ public class StringBasedHeuristics {
 						for(AbstractCall invocation2 : statement2.getMethodInvocations()) {
 							if(invocation1.compatibleName(invocation2) && invocation1.arguments().size() == invocation2.arguments().size()) {
 								if(subConditionsAsList2.size() > 1) {
-									IntersectionReplacement r = new IntersectionReplacement(s1, s2, intersection, ReplacementType.CONDITIONAL);
+									IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
+									LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, container1, container2);
+									r.addSubExpressionMapping(leafMapping);
 									info.addReplacement(r);
 								}
 								if(statement1.getString().contains("!" + invocation1.actualString()) && !statement2.getString().contains("!" + invocation2.actualString())) {
@@ -2650,6 +2655,39 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static void createLeafMappings(VariableDeclarationContainer container1,
+			VariableDeclarationContainer container2, Map<String, LeafExpression> subConditionMap1,
+			Map<String, LeafExpression> subConditionMap2, Set<String> intersection, LeafMappingProvider provider) {
+		for(String key : intersection) {
+			LeafExpression leaf1 = subConditionMap1.get(key);
+			if(leaf1 == null)
+				leaf1 = subConditionMap1.get("!" + key);
+			if(leaf1 == null)
+				leaf1 = subConditionMap1.get("!(" + key + ")");
+			
+			LeafExpression leaf2 = subConditionMap2.get(key);
+			if(leaf2 == null)
+				leaf2 = subConditionMap2.get("!" + key);
+			if(leaf2 == null)
+				leaf2 = subConditionMap2.get("!(" + key + ")");
+			//only for leaf2
+			if(leaf2 == null && key.contains("==")) {
+				String prefix = key.substring(0, key.indexOf("=="));
+				String suffix = key.substring(key.indexOf("==")+2);
+				leaf2 = subConditionMap2.get(prefix + "!=" + suffix);
+			}
+			if(leaf2 == null && key.contains("!=")) {
+				String prefix = key.substring(0, key.indexOf("!="));
+				String suffix = key.substring(key.indexOf("!=")+2);
+				leaf2 = subConditionMap2.get(prefix + "==" + suffix);
+			}
+			if(leaf1 != null && leaf2 != null) {
+				LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+				provider.addSubExpressionMapping(leafMapping);
+			}
+		}
 	}
 
 	private static int matchCount(Set<String> intersection, ReplacementInfo info) {

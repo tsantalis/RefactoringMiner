@@ -15,16 +15,35 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 public class RemoveCase {
 
     public static void main(String[] args) {
-        if (args.length == 2) {
-            String repo = args[0];
-            String commit = args[1];
+        if (args.length == 3) {
+            String destin = "";
+            if (args[0].equals("defects4j")) {
+                destin = getDefects4jMappingPath();
+            }
+            else if (args[0].equals("defects4j-problems")) {
+                destin = getDefects4jProblemsMappingPath();
+            }
+            else throw new RuntimeException("not valid");
+            String projectDir = args[1];
+            String bugID = args[2];
             try {
-                removeTestCase(repo, commit);
+
+                removeTestCase(projectDir, bugID,
+                        destin);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        if (args.length == 1) {
+        else if (args.length == 2) {
+            String repo = args[0];
+            String commit = args[1];
+            try {
+                removeTestCase(repo, commit, getCommitsMappingsPath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (args.length == 1) {
             String url = args[0];
             try {
                 removeTestCase(url);
@@ -32,19 +51,19 @@ public class RemoveCase {
                 throw new RuntimeException(e);
             }
         }
-        if (args.length == 0)
+        else if (args.length == 0)
             System.err.println("No input were given");
     }
 
     private static void removeTestCase(String url) throws IOException {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
-        removeTestCase(repo,commit);
+        removeTestCase(repo,commit, getCommitsMappingsPath());
     }
 
-    private static void removeTestCase(String repo, String commit) throws IOException {
+    private static void removeTestCase(String repo, String commit, String mappingsPath) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = getCommitsMappingsPath() + getTestInfoFile();
+        String jsonFile = mappingsPath + getTestInfoFile();
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         CaseInfo caseInfo = new CaseInfo(repo,commit);
         boolean confirm = false;
@@ -64,7 +83,7 @@ public class RemoveCase {
                 System.out.println("Testcase removed successfully");
                 System.out.println("Repo=" + repo);
                 System.out.println("Commit=" + commit);
-                String finalFolderPath = getFinalFolderPath(getCommitsMappingsPath(), repo, commit);
+                String finalFolderPath = getFinalFolderPath(mappingsPath, repo, commit);
                 FileUtils.deleteDirectory(new File(finalFolderPath));
             } catch (IOException e) {
                 throw new RuntimeException(e);

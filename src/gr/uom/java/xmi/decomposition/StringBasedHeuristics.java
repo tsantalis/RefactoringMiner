@@ -113,7 +113,7 @@ public class StringBasedHeuristics {
 		updatedS1 = updatedS1.replace(")", "");
 		String updatedS2 = s2.replace("(", "");
 		updatedS2 = updatedS2.replace(")", "");
-		return updatedS1.equals(updatedS2);
+		return updatedS1.equals(updatedS2) || updatedS1.equals("return " + updatedS2) || updatedS2.equals("return " + updatedS1);
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
@@ -1244,7 +1244,7 @@ public class StringBasedHeuristics {
 						}
 					}
 					if(count > 1 && count == tokens1.size()) {
-						IntersectionReplacement r = new IntersectionReplacement(s1, s2/*, new LinkedHashSet<>(tokens1)*/, ReplacementType.CONCATENATION);
+						IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
 						for(String key : tokens1) {
 							List<LeafExpression> expressions1 = statement1.findExpression(key);
 							List<LeafExpression> expressions2 = statement2.findExpression(key);

@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Set;
 
 public class UtilMethods {
-    private static final String DIFF_DATA_PATH = "src-test/data/astDiff/";
+    public static final String DIFF_DATA_PATH = "src-test/data/astDiff/";
     private static final String COMMITS_MAPPINGS_PATH = DIFF_DATA_PATH + "commits/";
     private static final String TREES_PATH = DIFF_DATA_PATH + "trees";
     private static final String infoFile = "cases.json";
     private static final String JSON_SUFFIX = ".json";
     private static final String JAVA_SUFFIX = ".java";
-    private static final String REPOS = "tmp1";
+    public static final String REPOS = "tmp1";
     private static final GitService gitService = new GitServiceImpl();
 
     public static String getFinalFilePath(ASTDiff astDiff, String dir, String repo, String commit) {
@@ -57,9 +57,9 @@ public class UtilMethods {
         return infoFile;
     }
 
-    public static void makeAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs) throws IOException {
+    public static void makeAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs, String mappingsPath) throws IOException {
         for (ASTDiff astDiff : astDiffs) {
-            String finalFilePath = getFinalFilePath(astDiff, getCommitsMappingsPath(), info.getRepo(), info.getCommit());
+            String finalFilePath = getFinalFilePath(astDiff, mappingsPath, info.getRepo(), info.getCommit());
             String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
             String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
             allCases.add(Arguments.of(info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated));
@@ -85,5 +85,4 @@ public class UtilMethods {
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {
         return getProjectDiffLocally(info.makeURL());
     }
-
 }

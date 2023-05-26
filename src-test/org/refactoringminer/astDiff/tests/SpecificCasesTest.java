@@ -82,7 +82,7 @@ public class SpecificCasesTest {
         for (CaseInfo info : infos) {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
             Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
-            makeAllCases(allCases, info, expectedFilesList, astDiffs);
+            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
         }
         return allCases.stream();
     }

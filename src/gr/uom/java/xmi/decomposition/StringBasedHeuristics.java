@@ -1221,6 +1221,59 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
+			else if((s1.contains(" + ") ^ s2.contains(" + ")) && s1.contains(",") && s2.contains(",")) {
+				List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1));
+				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
+				List<String> commonTokens = new ArrayList<>();
+				for(String token1 : tokens1) {
+					String token1WithoutDoubleQuotes = token1.replaceAll("\"", "");
+					if(tokens2.contains(token1)) {
+						commonTokens.add(token1);
+					}
+					else {
+						for(String token2 : tokens2) {
+							String token2WithoutDoubleQuotes = token2.replaceAll("\"", "");
+							if(token2WithoutDoubleQuotes.contains(token1WithoutDoubleQuotes)) {
+								commonTokens.add(token1);
+								break;
+							}
+							else if(token1WithoutDoubleQuotes.contains(token2WithoutDoubleQuotes)) {
+								commonTokens.add(token2);
+								break;
+							}
+						}
+					}
+				}
+				Set<String> filteredIntersection = new LinkedHashSet<>();
+				for(String common : commonTokens) {
+					boolean foundInReplacements = false;
+					for(Replacement r : info.getReplacements()) {
+						if(r.getBefore().contains(common) || r.getAfter().contains(common) ||
+								common.contains(r.getBefore()) || common.contains(r.getAfter())) {
+							foundInReplacements = true;
+							break;
+						}
+					}
+					if(!foundInReplacements) {
+						filteredIntersection.add(common);
+					}
+				}
+				if(filteredIntersection.size() == Math.min(tokens1.size(), tokens2.size())) {
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+					for(String key : filteredIntersection) {
+						List<LeafExpression> expressions1 = statement1.findExpression(key);
+						List<LeafExpression> expressions2 = statement2.findExpression(key);
+						if(expressions1.size() == expressions2.size()) {
+							for(int i=0; i<expressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+								r.addSubExpressionMapping(leafMapping);
+							}
+						}
+					}
+					info.getReplacements().add(r);
+					return true;
+				}
+			}
 			else if(s1.contains(",") && s1.contains("(") && s1.contains(")") && !s2.contains(",") && !s2.contains("(") && !s2.contains(")")) {
 				List<LeafExpression> variables1 = statement1.getVariables();
 				List<LeafExpression> variables2 = statement2.getVariables();

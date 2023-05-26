@@ -37,7 +37,7 @@ public class AllCasesWithLocallyClonedReposTest {
         for (CaseInfo info : infos) {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
             Set<ASTDiff> astDiffs = getProjectDiffLocally(info);
-            makeAllCases(allCases, info, expectedFilesList, astDiffs);
+            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
         }
         return allCases.stream();
     }
@@ -52,7 +52,7 @@ public class AllCasesWithLocallyClonedReposTest {
 
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
 
-            makeAllCases(allCases, info, expectedFilesList, astDiffs);
+            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
         }
         return allCases.stream();
     }

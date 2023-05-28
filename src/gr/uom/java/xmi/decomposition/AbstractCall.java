@@ -952,17 +952,17 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForReturnedArgument(String statement) {
 		int index = -1;
-		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			String arg = statement.substring(7, statement.length()-2);
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			String arg = statement.substring(0, statement.length()-2);
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			return new Replacement(arguments().get(index), statement,
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -971,17 +971,17 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForWrappedCall(String statement) {
 		int index = -1;
-		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			String arg = statement.substring(7, statement.length()-2);
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			String arg = statement.substring(0, statement.length()-2);
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && index == 0) || (statement.contains("?") && statement.contains(":")))) {
+		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			return new Replacement(statement, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -989,7 +989,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public Replacement makeReplacementForWrappedLambda(String statement) {
-		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			return new Replacement(statement.substring(0, statement.length()-2), arguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -1024,7 +1024,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
-		if(index >= 0 && (arguments().size() == 1 || (statement.contains("?") && statement.contains(":")))) {
+		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-2),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}
@@ -1049,6 +1049,18 @@ public abstract class AbstractCall extends LeafExpression {
 			String s2WithoutGenerics = s2.substring(0, s2.indexOf(".<") + 1) + s2.substring(s2.indexOf(">") + 1, s2.length());
 			if(s2WithoutGenerics.equals(s1))
 				return true;
+		}
+		if(s1.contains("::") && !s2.contains("::")) {
+			String methodReferenceName = s1.substring(s1.indexOf("::") + 2, s1.length());
+			if(s2.endsWith(methodReferenceName + "()")) {
+				return true;
+			}
+		}
+		if(s2.contains("::") && !s1.contains("::")) {
+			String methodReferenceName = s2.substring(s2.indexOf("::") + 2, s2.length());
+			if(s1.endsWith(methodReferenceName + "()")) {
+				return true;
+			}
 		}
 		return false;
 	}

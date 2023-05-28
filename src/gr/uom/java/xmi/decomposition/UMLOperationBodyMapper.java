@@ -330,6 +330,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas1.size() == 0 && lambdas2.size() == 1) {
+				AbstractCodeFragment lambdaFragment = null;
+				for(AbstractCodeFragment leaf2 : leaves2) {
+					if(leaf2.getLambdas().size() > 0) {
+						lambdaFragment = leaf2;
+						break;
+					}
+				}
+				if(lambdaFragment != null) {
+					expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+				}
+			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
 			if(streamAPIStatements1.size() == 0 && streamAPIStatements2.size() > 0) {

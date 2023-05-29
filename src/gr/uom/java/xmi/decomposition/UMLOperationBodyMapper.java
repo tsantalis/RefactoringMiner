@@ -330,12 +330,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas1.size() == 0 && lambdas2.size() == 1) {
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas2.size() == lambdas1.size() + 1) {
 				AbstractCodeFragment lambdaFragment = null;
-				for(AbstractCodeFragment leaf2 : leaves2) {
-					if(leaf2.getLambdas().size() > 0) {
-						lambdaFragment = leaf2;
-						break;
+				if(lambdas2.size() == 1) {
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(leaf2.getLambdas().size() > 0) {
+							lambdaFragment = leaf2;
+							break;
+						}
+					}
+				}
+				else {
+					for(AbstractCodeFragment leaf2 : leaves2) {
+						if(leaf2.getLambdas().size() > 0) {
+							boolean identicalLeaf1Found = false;
+							for(AbstractCodeFragment leaf1 : leaves1) {
+								if(leaf1.getString().equals(leaf2.getString())) {
+									identicalLeaf1Found = true;
+								}
+							}
+							if(identicalLeaf1Found) {
+								continue;
+							}
+							lambdaFragment = leaf2;
+							break;
+						}
 					}
 				}
 				if(lambdaFragment != null) {

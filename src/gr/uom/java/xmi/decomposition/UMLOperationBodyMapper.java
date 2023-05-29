@@ -347,6 +347,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(AbstractCodeFragment leaf1 : leaves1) {
 								if(leaf1.getString().equals(leaf2.getString())) {
 									identicalLeaf1Found = true;
+									break;
 								}
 							}
 							if(identicalLeaf1Found) {

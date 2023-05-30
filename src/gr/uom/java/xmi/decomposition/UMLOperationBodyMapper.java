@@ -6193,6 +6193,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(matchedOperationMappers.size() > 0) {
 					this.refactorings.addAll(anonymousClassDiff.getRefactorings());
 					this.anonymousClassDiffs.add(anonymousClassDiff);
+					if(parentMapper != null && minStatementMapping.getFragment1() instanceof AbstractExpression && minStatementMapping.getFragment2() instanceof AbstractExpression) {
+						parentMapper.anonymousClassDiffs.add(anonymousClassDiff);
+					}
 					if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
 						classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
 					}
@@ -9813,6 +9816,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.refactorings.addAll(anonymousClassDiffRefactorings);
 				this.anonymousClassDiffs.add(anonymousClassDiff);
+				if(parentMapper != null && statement1 instanceof AbstractExpression && statement2 instanceof AbstractExpression) {
+					parentMapper.anonymousClassDiffs.add(anonymousClassDiff);
+				}
 				if(classDiff != null && classDiff.getRemovedAnonymousClasses().contains(anonymousClass1)) {
 					classDiff.getRemovedAnonymousClasses().remove(anonymousClass1);
 				}

@@ -266,7 +266,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
+			List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
+			for(LambdaExpressionObject lambda1 : lambdas1) {
+				collectNestedLambdaExpressions(lambda1, nestedLambdas1);
+			}
 			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
+			List<LambdaExpressionObject> nestedLambdas2 = new ArrayList<>();
+			for(LambdaExpressionObject lambda2 : lambdas2) {
+				collectNestedLambdaExpressions(lambda2, nestedLambdas2);
+			}
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
 			CompositeStatementObject composite2 = body2.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = composite1.getLeaves();
@@ -330,7 +338,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas2.size() == lambdas1.size() + 1) {
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + 1) {
 				AbstractCodeFragment lambdaFragment = null;
 				if(lambdas2.size() == 1) {
 					for(AbstractCodeFragment leaf2 : leaves2) {
@@ -1014,6 +1022,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private void collectNestedLambdaExpressions(LambdaExpressionObject parentLambda, List<LambdaExpressionObject> nestedLambdas) {
+		if(parentLambda.getExpression() != null) {
+			nestedLambdas.addAll(parentLambda.getExpression().getLambdas());
+			for(LambdaExpressionObject nestedLambda : parentLambda.getExpression().getLambdas()) {
+				collectNestedLambdaExpressions(nestedLambda, nestedLambdas);
+			}
+		}
 	}
 
 	private boolean nestedLambdaExpressionMatch(List<LambdaExpressionObject> lambdas, AbstractCodeFragment lambdaExpression) {

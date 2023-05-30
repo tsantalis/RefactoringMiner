@@ -18,6 +18,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
@@ -192,6 +193,16 @@ public abstract class AbstractCall extends LeafExpression {
 						return true;
 					}
 					expression1AfterReplacements = ReplacementUtil.performReplacement(expression1AfterReplacements, expression2, replacement.getBefore(), replacement.getAfter());
+				}
+				else if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement methodInvocationReplacement = (MethodInvocationReplacement)replacement;
+					AbstractCall before = methodInvocationReplacement.getInvokedOperationBefore();
+					AbstractCall after = methodInvocationReplacement.getInvokedOperationAfter();
+					if(before.identicalExpression(after) && before.equalArguments(after) && before.arguments.size() > 0) {
+						if(expression1.equals(replacement.getBefore()) && expression2.equals(replacement.getAfter())) {
+							return true;
+						}
+					}
 				}
 			}
 			if(expression1AfterReplacements.equals(expression2)) {

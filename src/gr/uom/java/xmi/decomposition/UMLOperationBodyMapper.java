@@ -285,6 +285,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			innerNodes2.remove(composite2);
 			int totalNodes1 = leaves1.size() + innerNodes1.size();
 			int totalNodes2 = leaves2.size() + innerNodes2.size();
+			boolean assertThrows1 = false;
+			for(AbstractCall call : container1.getAllOperationInvocations()) {
+				if(call.getName().equals("assertThrows")) {
+					assertThrows1 = true;
+					break;
+				}
+			}
+			boolean assertThrows2 = false;
+			for(AbstractCall call : container2.getAllOperationInvocations()) {
+				if(call.getName().equals("assertThrows")) {
+					assertThrows2 = true;
+					break;
+				}
+			}
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
 			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
 				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||
@@ -337,39 +351,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
 				}
+				else if (!assertThrows1 && assertThrows2) {
+					handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
+				}
 			}
 			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && (lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + 1 ||
-					lambdas2.size() == lambdas1.size() + 1)) {
-				AbstractCodeFragment lambdaFragment = null;
-				if(lambdas2.size() == 1) {
-					for(AbstractCodeFragment leaf2 : leaves2) {
-						if(leaf2.getLambdas().size() > 0) {
-							lambdaFragment = leaf2;
-							break;
-						}
-					}
-				}
-				else {
-					for(AbstractCodeFragment leaf2 : leaves2) {
-						if(leaf2.getLambdas().size() > 0) {
-							boolean identicalLeaf1Found = false;
-							for(AbstractCodeFragment leaf1 : leaves1) {
-								if(leaf1.getString().equals(leaf2.getString())) {
-									identicalLeaf1Found = true;
-									break;
-								}
-							}
-							if(identicalLeaf1Found) {
-								continue;
-							}
-							lambdaFragment = leaf2;
-							break;
-						}
-					}
-				}
-				if(lambdaFragment != null) {
-					expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
-				}
+					lambdas2.size() == lambdas1.size() + 1 || (!assertThrows1 && assertThrows2))) {
+				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
@@ -783,6 +771,40 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			nonMappedLeavesT1.removeAll(leavesToBeRemovedT1);
+		}
+	}
+
+	private void handleAssertThrowsLambda(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
+			List<CompositeStatementObject> innerNodes2, List<LambdaExpressionObject> lambdas2, UMLOperation operation2) {
+		AbstractCodeFragment lambdaFragment = null;
+		if(lambdas2.size() == 1) {
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				if(leaf2.getLambdas().size() > 0) {
+					lambdaFragment = leaf2;
+					break;
+				}
+			}
+		}
+		else {
+			for(AbstractCodeFragment leaf2 : leaves2) {
+				if(leaf2.getLambdas().size() > 0) {
+					boolean identicalLeaf1Found = false;
+					for(AbstractCodeFragment leaf1 : leaves1) {
+						if(leaf1.getString().equals(leaf2.getString())) {
+							identicalLeaf1Found = true;
+							break;
+						}
+					}
+					if(identicalLeaf1Found) {
+						continue;
+					}
+					lambdaFragment = leaf2;
+					break;
+				}
+			}
+		}
+		if(lambdaFragment != null) {
+			expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 		}
 	}
 

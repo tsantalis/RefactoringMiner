@@ -338,7 +338,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + 1) {
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && (lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + 1 ||
+					lambdas2.size() == lambdas1.size() + 1)) {
 				AbstractCodeFragment lambdaFragment = null;
 				if(lambdas2.size() == 1) {
 					for(AbstractCodeFragment leaf2 : leaves2) {

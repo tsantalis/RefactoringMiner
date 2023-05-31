@@ -1069,7 +1069,7 @@ public class StringBasedHeuristics {
 		if(reservedTokens1.equals(reservedTokens2)) {
 			return true;
 		}
-		else if(reservedTokens1.contains("(") && reservedTokens1.contains("(")) {
+		else if(reservedTokens1.contains("(") && reservedTokens2.contains("(")) {
 			String s1 = reservedTokens1.substring(reservedTokens1.indexOf("("));
 			String s2 = reservedTokens2.substring(reservedTokens2.indexOf("("));
 			return s1.equals(s2);

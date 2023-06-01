@@ -88,7 +88,7 @@ class UMLClassBaseDiffTest {
     }
 
     private static Stream<Arguments> multipleParamsDataProvider() {
-        return Stream.of(//Arguments.of("CsvSource", "({\"value,value2\"})", "String a, String b", Set.of("value","value2"), "{\"value,value2\"}", "@ParameterizedTest"),
+        return Stream.of(Arguments.of("CsvSource", "({\"value,value2\"})", "String a, String b", Set.of("value","value2"), "{\"value,value2\"}", "@ParameterizedTest"),
                 Arguments.of("Test", "(dataProvider=getParameters)", "String a, String b", Set.of("getParameters"), "getParameters", ""));
     }
 

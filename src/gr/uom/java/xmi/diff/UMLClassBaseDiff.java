@@ -182,12 +182,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				return new HashSet<>(Arrays.asList(addedParameter.getExpression()));
 			}
 			else {
-				if (singleMemberSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
-					addedParameter = addedAnnotation.getValue();
-					parameterizationAdded = true;
-					return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
-				}
-				else if (normalSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
+				try {
+					if (singleMemberSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
+						addedParameter = addedAnnotation.getValue();
+						if (addedParameter == null) {
+							throw new NullPointerException("Parameter is null");
+						}
+						parameterizationAdded = true;
+						return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
+					}
+				} catch (NullPointerException ignored) { /* do nothing */ }
+				if (normalSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 					List<String> keys = List.of(
 							"value",
 							"strings",
@@ -211,7 +216,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					parameterizationAdded = true;
 					return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
 				}
-				else if (markerSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
+				if (markerSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
 					switch (addedAnnotation.getTypeName()) {
 						//TODO: provide AbstractExpression for all marker annotation cases (i.e. @NullSource, @EmptySource, @NullAndEmptySource)
 						case "NullSource":

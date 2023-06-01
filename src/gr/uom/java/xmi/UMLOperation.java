@@ -193,7 +193,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	}
 
 	public boolean hasParameterizedTestAnnotation() {
-		return annotations.parallelStream().anyMatch(UMLOperation::isParameterizedTestAnnotation);
+		for(UMLAnnotation annotation : annotations) {
+			if(UMLOperation.isParameterizedTestAnnotation(annotation)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean hasSetUpAnnotation() {

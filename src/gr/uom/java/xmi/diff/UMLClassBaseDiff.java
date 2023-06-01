@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Arrays;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -56,6 +57,179 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
+class CsvUtils {
+	public static List<String> extractParametersFromCsv(String s) {
+		List<String> parameters = new ArrayList<>();
+		String[] tokens = s.split(",");
+		for(String token : tokens) {
+			String trimmed = token.trim();
+			if(trimmed.startsWith("\"")) {
+				trimmed = trimmed.substring(1, trimmed.length());
+			}
+			if(trimmed.endsWith("\"")) {
+				trimmed = trimmed.substring(0, trimmed.length()-1);
+			}
+			parameters.add(trimmed);
+		}
+		return parameters;
+	}
+	public static List<List<String>> extractParametersFromCsvFile(List<String> tests) {
+		List<List<String>> testParameters = new ArrayList<>();
+		for (String test : tests) {
+			List<String> parameters = extractParametersFromCsv(test);
+			testParameters.add(parameters);
+		}
+		return testParameters;
+	}
+	public static List<String> readLinesOfCsvFile(String csvFile) throws IOException {
+		List<String> parameters = new ArrayList<>();
+		BufferedReader br = new BufferedReader(new FileReader(csvFile));
+		String line = br.readLine();
+		while(line != null) {
+			parameters.add(line);
+			line = br.readLine();
+		}
+		br.close();
+		return parameters;
+	}
+}
+interface NormalAnnotation {}
+interface SingleMemberAnnotation {
+	List<String> getValue();
+}
+interface MarkerAnnotation {}
+abstract class SourceAnnotation {
+	protected static Map<String, Function<UMLAnnotation, SourceAnnotation>> implementations = new HashMap<>();
+	protected List<List<String>> testParameters;
+	protected UMLAnnotation annotation;
+	protected SourceAnnotation(UMLAnnotation annotation, String typeName) {
+		assert annotation.getTypeName().equals(typeName) : "Annotation is not a " + typeName + " annotation";
+		this.annotation = annotation;
+	}
+	public static SourceAnnotation create(UMLAnnotation annotation) {
+		return implementations.get(annotation.getTypeName()).apply(annotation);
+	}
+	public abstract List<List<String>> getTestParameters();
+}
+class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
+	private static final String ANNOTATION_TYPENAME = "CsvSource";
+	static {
+		implementations.put(ANNOTATION_TYPENAME, CsvSourceAnnotation::new);
+	}
+	public CsvSourceAnnotation(UMLAnnotation annotation) {
+		super(annotation, ANNOTATION_TYPENAME);
+		for (String csvParams : getValue()) {
+			List<String> parameters = CsvUtils.extractParametersFromCsv(csvParams);
+			testParameters.add(parameters);
+		}
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return testParameters;
+	}
+
+	@Override
+	public List<String> getValue() {
+		List<String> result = new ArrayList<>();
+		if (annotation.isSingleMemberAnnotation()) {
+			for (LeafExpression literal : annotation.getValue().getStringLiterals()) {
+				result.add(literal.getString());
+			}
+			return result;
+		} else if (annotation.isNormalAnnotation()) {
+			Map<String, AbstractExpression> parameters = annotation.getMemberValuePairs();
+			if (parameters.containsKey("value")) {
+				// Value is a list of string literals as expected
+				for (LeafExpression literal : parameters.get("value").getStringLiterals()) {
+					result.add(literal.getString());
+				}
+			} else if (parameters.containsKey("textBlock")) {
+				List<LeafExpression> textBlock = parameters.get("textBlock").getStringLiterals();
+				if (textBlock.size() == 1) {
+					// Text block is a single multi-line string literal as expected
+					for (String line : textBlock.get(0).getString().split("[\\r\\n]+")) {
+						result.add(line);
+					}
+				} else if (textBlock.size() > 1) {
+					// Text block contains multiple string literals concatenated
+					for (LeafExpression literal : textBlock) {
+						result.add(literal.getString());
+					}
+				}
+				else {
+					throw new IllegalArgumentException("@CsvSource text block should not be empty");
+				}
+			}
+			else {
+				throw new IllegalArgumentException("@CsvSource normal annotation should have a value or textBlock parameter");
+			}
+		}
+		return null;
+	}
+}
+class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
+	private static final String ANNOTATION_TYPENAME = "CsvFileSource";
+	static {
+		implementations.put(ANNOTATION_TYPENAME, CsvSourceAnnotation::new);
+	}
+	public CsvFileSourceAnnotation(UMLAnnotation annotation) {
+		super(annotation, ANNOTATION_TYPENAME);
+		List<LeafExpression> stringLiterals = null;
+		testParameters = CsvUtils.extractParametersFromCsvFile(getValue());
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return testParameters;
+	}
+
+	@Override
+	public List<String> getValue() {
+		Stream st = Stream.empty();
+		Stream nextFileContent;
+		if (annotation.isSingleMemberAnnotation()) {
+			try {
+				for (LeafExpression expression : annotation.getValue().getStringLiterals()) {
+					nextFileContent = CsvUtils.readLinesOfCsvFile(expression.getString()).stream();
+					st = Stream.concat(st, nextFileContent);
+				}
+				return (List<String>) st.collect(Collectors.toList());
+			} catch (IOException e) {
+				return Collections.emptyList();
+			}
+		} else if (annotation.isNormalAnnotation()) {
+			Map<String, AbstractExpression> parameters = annotation.getMemberValuePairs();
+			if (parameters.containsKey("files")) {
+				try {
+					for (LeafExpression expression : parameters.get("files").getStringLiterals()) {
+						nextFileContent = CsvUtils.readLinesOfCsvFile(expression.getString()).stream();
+						st = Stream.concat(st, nextFileContent);
+					}
+					return (List<String>) st.collect(Collectors.toList());
+				} catch (IOException e) {
+					return Collections.emptyList();
+				}
+			} else if (parameters.containsKey("resources")) {
+				try {
+					for (LeafExpression expression : parameters.get("resources").getStringLiterals()) {
+						String filePath = expression.getString();
+						final String resPath = "/src/test/resources";
+						filePath = filePath.startsWith("/") ? resPath + filePath : resPath + "/" + filePath;
+						nextFileContent = CsvUtils.readLinesOfCsvFile(filePath).stream();
+						st = Stream.concat(st, nextFileContent);
+					}
+					return (List<String>) st.collect(Collectors.toList());
+				} catch (IOException e) {
+					return Collections.emptyList();
+				}
+			} else {
+				throw new IllegalArgumentException("@CsvFileSource normal annotation should have a value or resources parameter");
+			}
+		}
+		throw new IllegalArgumentException("@CsvFileSource should be a normal or single member annotation");
+	}
+}
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
 
@@ -1154,38 +1328,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(addedOperation.hasParameterizedTestAnnotation()) {
 							List<List<String>> testParameters = new ArrayList<>();
 							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
-								if(singleMemberSourceAnnotationTypes.contains(annotation.getTypeName())) {
-									if(annotation.getTypeName().equals("CsvSource")) {
-										List<LeafExpression> stringLiterals = null;
-										if (annotation.getValue() != null) {
-											stringLiterals = annotation.getValue().getStringLiterals();
-											for (LeafExpression stringLiteral : stringLiterals) {
-												List<String> parameters = extractParametersFromCsv(stringLiteral.getString());
-												testParameters.add(parameters);
-											}
-										}
-									} else if (annotation.getTypeName().equals("CsvFileSource")) {
-										List<LeafExpression> stringLiterals = null;
-										if (annotation.getValue() != null) {
-											stringLiterals = annotation.getValue().getStringLiterals();
-											assert stringLiterals.size() == 1;
-											String csvFile = stringLiterals.get(0).getString();
-											extractParametersFromCsvFile(testParameters, csvFile);
-										}
-									}
-								}
-								else if(normalSourceAnnotationTypes.contains(annotation.getTypeName())) {
-									if(annotation.getTypeName().equals("CsvSource")) {
-										List<LeafExpression> stringLiterals = null;
-										if (annotation.getMemberValuePairs().size() > 0) {
-											stringLiterals = annotation.getMemberValuePairs().get("value").getStringLiterals();
-											for(LeafExpression stringLiteral : stringLiterals) {
-												List<String> parameters = extractParametersFromCsv(stringLiteral.getString());
-												testParameters.add(parameters);
-											}
-										}
-									}
-								}
+								testParameters.addAll(SourceAnnotation.create(annotation).getTestParameters());
 							}
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;

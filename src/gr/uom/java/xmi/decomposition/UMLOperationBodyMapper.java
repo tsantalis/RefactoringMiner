@@ -5918,6 +5918,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			boolean parentIfElseIfChain = ifElseIfChain(parentMap.keySet());
 			boolean grandParentIfElseIfChain = parentMapper == null && Math.abs(parentMap.size()-grandParentMap.size()) <= 1 && ifElseIfChain(grandParentMap.keySet()) && !parentIfElseIfChain;
+			if(grandParentIfElseIfChain) {
+				//check if any of the mappings has an identical parent
+				for(AbstractCodeMapping mapping : mappingSet) {
+					AbstractCodeFragment fragment1 = mapping.getFragment1();
+					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					CompositeStatementObject parent1 = fragment1.getParent();
+					CompositeStatementObject parent2 = fragment2.getParent();
+					while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+						parent1 = parent1.getParent(); 
+					}
+					while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+						parent2 = parent2.getParent(); 
+					}
+					if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
+						grandParentIfElseIfChain = false;
+						break;
+					}
+					if(parent1 != null && parent2 != null) {
+						String s1 = parent1.getString();
+						String s2 = parent2.getString();
+						if(s1.endsWith(")") && s2.endsWith(")") && (s2.startsWith(s1.substring(0, s1.length()-1)) || s1.startsWith(s2.substring(0, s2.length()-1)))) {
+							grandParentIfElseIfChain = false;
+							break;
+						}
+					}
+				}
+			}
 			if(ifFound && (elseIfFound || (elseFound && parentMap.size() == grandParentMap.size()) || grandParentIfElseIfChain) && (parentIfElseIfChain || grandParentIfElseIfChain)) {
 				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();
 				Set<String> variableDeclarationNames2 = new LinkedHashSet<>();

@@ -99,7 +99,10 @@ interface SingleMemberAnnotation {
 }
 interface MarkerAnnotation {}
 abstract class SourceAnnotation {
-	protected static Map<String, Function<UMLAnnotation, SourceAnnotation>> implementations = new HashMap<>();
+	protected static final Map<String, Function<UMLAnnotation, SourceAnnotation>> implementations = Map.of(
+			CsvSourceAnnotation.ANNOTATION_TYPENAME, CsvSourceAnnotation::new,
+			CsvFileSourceAnnotation.ANNOTATION_TYPENAME, CsvFileSourceAnnotation::new
+	);
 	protected List<List<String>> testParameters;
 	protected UMLAnnotation annotation;
 	protected SourceAnnotation(UMLAnnotation annotation, String typeName) {
@@ -107,15 +110,15 @@ abstract class SourceAnnotation {
 		this.annotation = annotation;
 	}
 	public static SourceAnnotation create(UMLAnnotation annotation) {
-		return implementations.get(annotation.getTypeName()).apply(annotation);
+		if (implementations.containsKey(annotation.getTypeName())) {
+			return implementations.get(annotation.getTypeName()).apply(annotation);
+		}
+		throw new IllegalArgumentException("Annotation type " + annotation.getTypeName() + " is not supported");
 	}
 	public abstract List<List<String>> getTestParameters();
 }
 class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
-	private static final String ANNOTATION_TYPENAME = "CsvSource";
-	static {
-		implementations.put(ANNOTATION_TYPENAME, CsvSourceAnnotation::new);
-	}
+	public static final String ANNOTATION_TYPENAME = "CsvSource";
 	public CsvSourceAnnotation(UMLAnnotation annotation) {
 		super(annotation, ANNOTATION_TYPENAME);
 		for (String csvParams : getValue()) {
@@ -169,13 +172,9 @@ class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, 
 	}
 }
 class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
-	private static final String ANNOTATION_TYPENAME = "CsvFileSource";
-	static {
-		implementations.put(ANNOTATION_TYPENAME, CsvSourceAnnotation::new);
-	}
+	public static final String ANNOTATION_TYPENAME = "CsvFileSource";
 	public CsvFileSourceAnnotation(UMLAnnotation annotation) {
 		super(annotation, ANNOTATION_TYPENAME);
-		List<LeafExpression> stringLiterals = null;
 		testParameters = CsvUtils.extractParametersFromCsvFile(getValue());
 	}
 
@@ -232,6 +231,7 @@ class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotati
 }
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
+	public static boolean ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION = System.getenv("ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION") != null ? Boolean.parseBoolean(System.getenv("ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION")) : false;
 
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
@@ -308,6 +308,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForMovedCodeBetweenOperations();
+		if (ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION) {
+			checkForTestParameterizations();
+		}
 	}
 
 	/**
@@ -1328,7 +1331,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(addedOperation.hasParameterizedTestAnnotation()) {
 							List<List<String>> testParameters = new ArrayList<>();
 							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
-								testParameters.addAll(SourceAnnotation.create(annotation).getTestParameters());
+								try {
+									testParameters.addAll(SourceAnnotation.create(annotation).getTestParameters());
+								} catch (IllegalArgumentException ignored) {/* Do nothing */}
 							}
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;

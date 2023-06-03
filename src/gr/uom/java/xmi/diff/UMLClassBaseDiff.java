@@ -202,11 +202,15 @@ class CsvFileSourceAnnotation extends SourceAnnotation implements NormalAnnotati
 			if (parameters.containsKey("files")) {
 				try {
 					for (LeafExpression expression : parameters.get("files").getStringLiterals()) {
-						nextFileContent = CsvUtils.readLinesOfCsvFile(expression.getString()).stream();
+						String literal = expression.getString();
+						literal = literal.startsWith("\"") ? literal.substring(1) : literal;
+						literal = literal.endsWith("\"") ? literal.substring(0, literal.length() - 1) : literal;
+						nextFileContent = CsvUtils.readLinesOfCsvFile(literal.strip()).stream();
 						st = Stream.concat(st, nextFileContent);
 					}
 					return (List<String>) st.collect(Collectors.toList());
 				} catch (IOException e) {
+					e.printStackTrace();
 					return Collections.emptyList();
 				}
 			} else if (parameters.containsKey("resources")) {

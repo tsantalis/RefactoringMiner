@@ -5920,6 +5920,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean grandParentIfElseIfChain = parentMapper == null && Math.abs(parentMap.size()-grandParentMap.size()) <= 1 && ifElseIfChain(grandParentMap.keySet()) && !parentIfElseIfChain;
 			if(grandParentIfElseIfChain) {
 				//check if any of the mappings has an identical parent
+				Map<AbstractCodeMapping, Set<ReplacementType>> replacementTypes = new LinkedHashMap<>();
 				for(AbstractCodeMapping mapping : mappingSet) {
 					AbstractCodeFragment fragment1 = mapping.getFragment1();
 					AbstractCodeFragment fragment2 = mapping.getFragment2();
@@ -5939,6 +5940,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						String s1 = parent1.getString();
 						String s2 = parent2.getString();
 						if(s1.endsWith(")") && s2.endsWith(")") && (s2.startsWith(s1.substring(0, s1.length()-1)) || s1.startsWith(s2.substring(0, s2.length()-1)))) {
+							grandParentIfElseIfChain = false;
+							break;
+						}
+					}
+					if(!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						replacementTypes.put(mapping, mapping.getReplacementTypes());
+					}
+				}
+				if(replacementTypes.size() == mappingSet.size()) {
+					Set<ReplacementType> first = null;
+					for(AbstractCodeMapping key : replacementTypes.keySet()) {
+						Set<ReplacementType> keyReplacementTypes = replacementTypes.get(key);
+						if(first == null) {
+							first = keyReplacementTypes;
+						}
+						else if(!first.equals(keyReplacementTypes) && !first.containsAll(keyReplacementTypes) && !keyReplacementTypes.containsAll(first)) {
 							grandParentIfElseIfChain = false;
 							break;
 						}

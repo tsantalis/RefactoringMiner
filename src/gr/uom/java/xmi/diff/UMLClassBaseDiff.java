@@ -1342,30 +1342,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
-								Set<Replacement> replacements = mapper.getReplacements();
 								Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
-								for(Replacement r : replacements) {
+								for(Replacement r : mapper.getReplacements()) {
 									if(parameterNames.contains(r.getAfter())) {
-										int parameterRow = 0;
-										for(List<String> testParams : testParameters) {
-											if(r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) {
-												String removedDoubleQuotes = r.getBefore().substring(1, r.getBefore().length()-1);
-												if(testParams.contains(removedDoubleQuotes)) {
-													if(matchingTestParameters.containsKey(parameterRow)) {
-														matchingTestParameters.put(parameterRow, matchingTestParameters.get(parameterRow) + 1);
-													}
-													else {
-														matchingTestParameters.put(parameterRow, 1);
-													}
-												}
-											}
-											else if(testParams.contains(r.getBefore())) {
-												if(matchingTestParameters.containsKey(parameterRow)) {
-													matchingTestParameters.put(parameterRow, matchingTestParameters.get(parameterRow) + 1);
-												}
-												else {
-													matchingTestParameters.put(parameterRow, 1);
-												}
+										String paramsWithoutDoubleQuotes = r.getBefore();
+										if (r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) {
+											paramsWithoutDoubleQuotes = r.getBefore().substring(1, r.getBefore().length() - 1);
+										}
+										for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
+											if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes)) {
+												Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
+												matchingTestParameters.put(parameterRow, previousValue + 1);
 											}
 											parameterRow++;
 										}

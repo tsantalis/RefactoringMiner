@@ -6757,6 +6757,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return replacements;
 		}
+		public boolean containsReplacement(ReplacementType type) {
+			for(Replacement replacement : replacements) {
+				if(replacement.getType().equals(type)) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	private boolean nonMatchedStatementUsesVariableInArgument(List<? extends AbstractCodeFragment> statements, String variable, String otherArgument) {
@@ -8306,13 +8314,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					(!invocationCoveringTheEntireStatement1.getName().equals("set") && invocationCoveringTheEntireStatement2.getName().equals("set"));
 			boolean getMatch = (invocationCoveringTheEntireStatement1.getName().equals("get") && !invocationCoveringTheEntireStatement2.getName().equals("get")) ||
 					(!invocationCoveringTheEntireStatement1.getName().equals("get") && invocationCoveringTheEntireStatement2.getName().equals("get"));
+			boolean addMatch = (replacementInfo.containsReplacement(ReplacementType.VARIABLE_REPLACED_WITH_METHOD_INVOCATION) || replacementInfo.containsReplacement(ReplacementType.METHOD_INVOCATION)) &&
+					((invocationCoveringTheEntireStatement1.getName().equals("add") && !invocationCoveringTheEntireStatement2.getName().equals("add")) ||
+					(!invocationCoveringTheEntireStatement1.getName().equals("add") && invocationCoveringTheEntireStatement2.getName().equals("add")));
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;
 			if(classDiff != null) {
 				callToAddedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement2, classDiff.getAddedOperations(), container2) != null;
 				callToDeletedOperation = classDiff.matchesOperation(invocationCoveringTheEntireStatement1, classDiff.getRemovedOperations(), container1) != null;
 			}
-			if(variableDeclarationInitializer1 == variableDeclarationInitializer2 && logStatement1 == logStatement2 && !setMatch && !getMatch && callToAddedOperation == callToDeletedOperation) {
+			if(variableDeclarationInitializer1 == variableDeclarationInitializer2 && logStatement1 == logStatement2 && !setMatch && !getMatch && !addMatch && callToAddedOperation == callToDeletedOperation) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 						invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME_AND_EXPRESSION);
 				replacementInfo.addReplacement(replacement);

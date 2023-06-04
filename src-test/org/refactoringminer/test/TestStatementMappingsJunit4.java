@@ -30,6 +30,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
+import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
@@ -3184,6 +3185,32 @@ public class TestStatementMappingsJunit4 {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jscomp-CheckSideEffects.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testMergeMethod() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/jgit",
+		    "https://github.com/eclipse/jgit.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "2fbcba41e365752681f635c706d577e605d3336a", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof MergeOperationRefactoring) {
+						MergeOperationRefactoring ex = (MergeOperationRefactoring)ref;
+						for(UMLOperationBodyMapper bodyMapper : ex.getMappers()) {
+							mapperInfo(bodyMapper, actual);
+						}
+					}
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-2fbcba41e365752681f635c706d577e605d3336a.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

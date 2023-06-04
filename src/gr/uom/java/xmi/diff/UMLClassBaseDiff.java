@@ -91,7 +91,12 @@ interface MarkerAnnotation {}
 abstract class SourceAnnotation {
 	protected static final Map<String, TriFunction<UMLAnnotation, UMLOperation, UMLModel, SourceAnnotation>> implementations = Map.of(
 			CsvSourceAnnotation.ANNOTATION_TYPENAME, CsvSourceAnnotation::new,
-			CsvFileSourceAnnotation.ANNOTATION_TYPENAME, CsvFileSourceAnnotation::new
+			CsvFileSourceAnnotation.ANNOTATION_TYPENAME, CsvFileSourceAnnotation::new,
+			ValueSourceAnnotation.ANNOTATION_TYPENAME, ValueSourceAnnotation::new,
+			EnumSourceAnnotation.ANNOTATION_TYPENAME, EnumSourceAnnotation::new,
+			NullAndEmptySourceAnnotation.ANNOTATION_TYPENAME, NullAndEmptySourceAnnotation::new,
+			EmptySourceAnnotation.ANNOTATION_TYPENAME, EmptySourceAnnotation::new,
+			NullSourceAnnotation.ANNOTATION_TYPENAME, NullSourceAnnotation::new
 	);
 	protected List<List<String>> testParameters;
 	protected UMLAnnotation annotation;
@@ -314,6 +319,75 @@ class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnot
 		return testParameters;
 	}
 }
+class NullAndEmptySourceAnnotation extends EmptySourceAnnotation{
+	public static final String ANNOTATION_TYPENAME = "NullAndEmptySource";
+
+	public NullAndEmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+		super(annotation, operation, model, ANNOTATION_TYPENAME);
+		testParameters.add(Collections.singletonList("null"));
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return testParameters;
+	}
+}
+class NullSourceAnnotation extends SourceAnnotation implements MarkerAnnotation{
+	public static final String ANNOTATION_TYPENAME = "NullSource";
+
+	public NullSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+		super(annotation, ANNOTATION_TYPENAME);
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return Collections.singletonList(Collections.singletonList("null"));
+	}
+}
+class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation{
+	public static final String ANNOTATION_TYPENAME = "EmptySource";
+	public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+		this(annotation, operation, model, ANNOTATION_TYPENAME);
+	}
+
+	public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model, String typeName) {
+		super(annotation, typeName);
+		switch (operation.getParameterTypeList().get(0).getClassType()) {
+			case "java.util.List":
+			case "java.util.Collection":
+			case "java.util.Set":
+			case "java.util.Map":
+				testParameters.add(Collections.singletonList("{}"));
+				break;
+			case "java.lang.Boolean":
+			case "boolean":
+				testParameters.add(Collections.singletonList("false"));
+				break;
+			case "java.lang.String":
+				testParameters.add(Collections.singletonList(""));
+				break;
+			case "java.lang.Long":
+			case "long":
+			case "java.lang.Short":
+			case "short":
+			case "java.lang.Integer":
+			case "int":
+			case "java.lang.Byte":
+			case "byte":
+			case "java.lang.Double":
+			case "double":
+			case "java.lang.Float":
+			case "float":
+				testParameters.add(Collections.singletonList("0"));
+				break;
+		}
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return testParameters;
+	}
+}
 /*
 class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation{
 	public MethodSourceAnnotation(UMLAnnotation annotation) {
@@ -323,31 +397,6 @@ class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnn
 class ArgumentsSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation{
 	public ArgumentsSourceAnnotation(UMLAnnotation annotation) {
 		super(annotation, "ArgumentsSource");
-	}
-}
-class NullAndEmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation{
-	public NullAndEmptySourceAnnotation(UMLAnnotation annotation) {
-		super(annotation, "NullAndEmptySource");
-	}
-}
-class NullSourceAnnotation extends SourceAnnotation implements MarkerAnnotation{
-	public NullSourceAnnotation(UMLAnnotation annotation) {
-		super(annotation, "NullSource");
-	}
-
-	@Override
-	public List<List<String>> getTestParameters() {
-		return null;
-	}
-}
-class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation{
-	public EmptySourceAnnotation(UMLAnnotation annotation) {
-		super(annotation, "EmptySource");
-	}
-
-	@Override
-	public List<List<String>> getTestParameters() {
-		return null;
 	}
 }
 */

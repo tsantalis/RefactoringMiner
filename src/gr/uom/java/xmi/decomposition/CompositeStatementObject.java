@@ -552,10 +552,14 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public VariableDeclaration getVariableDeclaration(String variableName) {
 		List<VariableDeclaration> variableDeclarations = getAllVariableDeclarations();
+		List<VariableDeclaration> matchingDeclarations = new ArrayList<>();
 		for(VariableDeclaration declaration : variableDeclarations) {
 			if(declaration.getVariableName().equals(variableName)) {
-				return declaration;
+				matchingDeclarations.add(declaration);
 			}
+		}
+		if(matchingDeclarations.size() > 0) {
+			return matchingDeclarations.get(matchingDeclarations.size()-1);
 		}
 		return null;
 	}

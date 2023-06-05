@@ -61,21 +61,21 @@ public class BasicTreeMatcher implements TreeMatcher {
 		for (Pair<Tree, Tree> treeTreePair : removeList) {
 			match.removeMapping(treeTreePair.first, treeTreePair.second);
 		}
-		removeList = new ArrayList<>();
-		for (Mapping mapping : match) {
-			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME))
-			{
-				if (mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
-				{
-					if (!match.isSrcMapped(mapping.first.getParent()))
-					{
-						removeList.add(new Pair<>(mapping.first,mapping.second));
-					}
-				}
-			}
-		}
-		for (Pair<Tree, Tree> treeTreePair : removeList) {
-			match.removeMapping(treeTreePair.first, treeTreePair.second);
-		}
+//		removeList = new ArrayList<>();
+//		for (Mapping mapping : match) {
+//			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME))
+//			{
+//				if (mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+//				{
+//					if (!match.isSrcMapped(mapping.first.getParent()))
+//					{
+//						removeList.add(new Pair<>(mapping.first,mapping.second));
+//					}
+//				}
+//			}
+//		}
+//		for (Pair<Tree, Tree> treeTreePair : removeList) {
+//			match.removeMapping(treeTreePair.first, treeTreePair.second);
+//		}
 	}
 }

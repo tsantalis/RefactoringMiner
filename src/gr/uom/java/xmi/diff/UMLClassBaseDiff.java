@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -2518,6 +2519,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 			else if(parentMappingFound.contains(true)) {
 				boolean anonymousClassDeclarationMatch = false;
+				boolean splitConditional = false;
 				for(int i=0; i<parentMappingFound.size(); i++) {
 					if(parentMappingFound.get(i) == false) {
 						//check if composite mapping in index i has more identical statements
@@ -2526,6 +2528,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int indexOfTrueParentMapping = parentMappingFound.indexOf(true);
 							if(identicalStatementsForCompositeMappings.get(i) > identicalStatementsForCompositeMappings.get(indexOfTrueParentMapping)) {
 								skip = true;
+							}
+							if(mappings.get(i).getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+									mappings.get(i).getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+								String condition = mappings.get(i).getFragment2().getString().substring(3, mappings.get(i).getFragment2().getString().length()-1);
+								String conditionOfTrueParentMapping = mappings.get(indexOfTrueParentMapping).getFragment2().getString().substring(3, mappings.get(indexOfTrueParentMapping).getFragment2().getString().length()-1);
+								if(mappings.get(i).getFragment1().getString().contains(condition) && mappings.get(indexOfTrueParentMapping).getFragment1().getString().contains(conditionOfTrueParentMapping)) {
+									splitConditional = true;
+								}
 							}
 						}
 						if(parentIsContainerBody.get(i) == true && editDistances.get(i).equals(editDistances.get(parentMappingFound.indexOf(true))) &&
@@ -2541,16 +2551,36 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				if(!anonymousClassDeclarationMatch)
+				if(!anonymousClassDeclarationMatch && !splitConditional)
 					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {
+				boolean splitConditional = false;
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
 					if(parentIsContainerBody.get(i) == false && !nestedMapper.get(parentIsContainerBody.indexOf(true))) {
-						indicesToBeRemoved.add(i);
+						//check if composite mapping in index i has more identical statements
+						boolean skip = false;
+						if(!identicalStatementsForCompositeMappings.isEmpty()) {
+							int indexOfTrueParentIsContainerBody = parentIsContainerBody.indexOf(true);
+							if(identicalStatementsForCompositeMappings.get(i) > identicalStatementsForCompositeMappings.get(indexOfTrueParentIsContainerBody)) {
+								skip = true;
+							}
+							if(mappings.get(i).getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+									mappings.get(i).getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+								String condition = mappings.get(i).getFragment2().getString().substring(3, mappings.get(i).getFragment2().getString().length()-1);
+								String conditionOfTrueParentIsContainerBody = mappings.get(indexOfTrueParentIsContainerBody).getFragment2().getString().substring(3, mappings.get(indexOfTrueParentIsContainerBody).getFragment2().getString().length()-1);
+								if(mappings.get(i).getFragment1().getString().contains(condition) && mappings.get(indexOfTrueParentIsContainerBody).getFragment1().getString().contains(conditionOfTrueParentIsContainerBody)) {
+									splitConditional = true;
+								}
+							}
+						}
+						if(!skip) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
-				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+				if(!splitConditional)
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);

@@ -27,6 +27,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.AddParameterRefactoring;
+import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -2471,6 +2472,30 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables = analysis.getAddedVariables();
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
+		boolean assertThrows1 = false;
+		for(AbstractCall call : container1.getAllOperationInvocations()) {
+			if(call.getName().equals("assertThrows")) {
+				assertThrows1 = true;
+				break;
+			}
+		}
+		Set<AbstractCodeMapping> assertThrowsMappings = new LinkedHashSet<>();
+		AbstractCall assertThrowsCall = null;
+		for(AbstractCall call : container2.getAllOperationInvocations()) {
+			if(call.getName().equals("assertThrows")) {
+				assertThrowsCall = call;
+				for(AbstractCodeMapping mapping : this.mappings) {
+					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
+						assertThrowsMappings.add(mapping);
+					}
+				}
+				break;
+			}
+		}
+		if(!assertThrows1 && assertThrowsCall != null && parentMapper == null && assertThrowsMappings.size() > 0) {
+			AssertThrowsRefactoring ref = new AssertThrowsRefactoring(assertThrowsMappings, assertThrowsCall, container1, container2);
+			refactorings.add(ref);
+		}
 	}
 
 	public Set<Refactoring> getRefactoringsAfterPostProcessing() {

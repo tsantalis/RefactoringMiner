@@ -108,7 +108,8 @@ public enum RefactoringType {
 	MERGE_OPERATION("Merge Method", "Merge Method \\[(.+)\\] to (.+) in class (.+)"),
 	SPLIT_OPERATION("Split Method", "Split Method (.+) to \\[(.+)\\] in class (.+)"),
 	MOVE_CODE("Move Code", "Move Code from (.+) to (.+) in class (.+)"),
-	PARAMETERIZE_TEST("Parameterize Test", "Parameterize Test (.+) to (.+) in class (.+)");
+	PARAMETERIZE_TEST("Parameterize Test", "Parameterize Test (.+) to (.+) in class (.+)"),
+	ASSERT_THROWS("Assert Throws", "Assert Throws (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -212,7 +213,8 @@ public enum RefactoringType {
 		SPLIT_OPERATION,
 		MOVE_CODE,
 		REPLACE_ANONYMOUS_WITH_CLASS,
-		PARAMETERIZE_TEST
+		PARAMETERIZE_TEST,
+		ASSERT_THROWS
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

@@ -266,6 +266,7 @@ public abstract class AbstractCodeMapping {
 				}
 				if(variableName.equals(after) && initializer != null) {
 					if(initializer.toString().equals(before) ||
+							initializer.toString().equals("this." + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, before) ||
@@ -417,6 +418,7 @@ public abstract class AbstractCodeMapping {
 				}
 				if(variableName.equals(before) && initializer != null) {
 					if(initializer.toString().equals(after) ||
+							initializer.toString().equals("this." + after) ||
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, after) ||

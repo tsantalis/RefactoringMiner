@@ -247,6 +247,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				return Double.compare(distance1, distance2);
 			}
 			else {
+				if(this.isIdenticalWithExtractedVariable() && !o.isIdenticalWithExtractedVariable()) {
+					return -1;
+				}
+				else if(!this.isIdenticalWithExtractedVariable() && o.isIdenticalWithExtractedVariable()) {
+					return 1;
+				}
+				if(this.isIdenticalWithInlinedVariable() && !o.isIdenticalWithInlinedVariable()) {
+					return -1;
+				}
+				else if(!this.isIdenticalWithInlinedVariable() && o.isIdenticalWithInlinedVariable()) {
+					return 1;
+				}
 				List<Double> levelParentEditDistance1 = this.levelParentEditDistance();
 				List<Double> levelParentEditDistance2 = o.levelParentEditDistance();
 				double nLevelParentEditDistance1 = 0, nLevelParentEditDistance2 = 0;

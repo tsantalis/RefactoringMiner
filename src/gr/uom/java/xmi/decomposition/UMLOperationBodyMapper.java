@@ -10672,7 +10672,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractExpression initializer = v2.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v1.getVariableName())) {
+						if(variable.getString().equals(v1.getVariableName()) || variable.getString().equals("this." + v1.getVariableName())) {
 							return true;
 						}
 					}
@@ -10706,7 +10706,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractExpression initializer = v1.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v2.getVariableName())) {
+						if(variable.getString().equals(v2.getVariableName()) || variable.getString().equals("this." + v2.getVariableName())) {
 							return true;
 						}
 					}

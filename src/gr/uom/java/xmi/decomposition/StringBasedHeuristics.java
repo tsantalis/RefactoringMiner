@@ -376,6 +376,18 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("this.")) {
 				return true;
 			}
+			else if(diff1.isEmpty() && diff2.equals("!= null")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("!= null")) {
+				return true;
+			}
+			else if(diff1.isEmpty() && diff2.equals("== null")) {
+				return true;
+			}
+			else if(diff2.isEmpty() && diff1.equals("== null")) {
+				return true;
+			}
 		}
 		return false;
 	}

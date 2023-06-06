@@ -2104,6 +2104,7 @@ public class UMLModelDiff {
 			refactorings.addAll(classDiff.getRefactorings());
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
+			checkForExtractedAndMovedOperationsToInnerClasses(classDiff);
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			refactorings.addAll(classDiff.getRefactorings());
@@ -2887,6 +2888,24 @@ public class UMLModelDiff {
 			}
 		}
 		return false;
+	}
+
+	private void checkForExtractedAndMovedOperationsToInnerClasses(UMLClassBaseDiff classDiff) throws RefactoringMinerTimedOutException {
+		List<UMLOperation> addedOperations = new ArrayList<>();
+		for(UMLClass addedClass : addedClasses) {
+			//addedClass is inner class of classDiff
+			if(addedClass.getName().startsWith(classDiff.getNextClassName() + ".")) {
+				addedOperations.addAll(addedClass.getOperations());
+			}
+			//addedClass in inner sibling class to classDiff
+			else if(!addedClass.isTopLevel() && !classDiff.getNextClass().isTopLevel() && addedClass.getName().contains(".") && classDiff.getNextClassName().contains(".") &&
+					addedClass.getName().substring(0, addedClass.getName().lastIndexOf(".")).equals(classDiff.getNextClassName().substring(0, classDiff.getNextClassName().lastIndexOf(".")))) {
+				addedOperations.addAll(addedClass.getOperations());
+			}
+		}
+		if(addedOperations.size() > 0) {
+			checkForExtractedAndMovedOperations(classDiff.getOperationBodyMapperList(), addedOperations);
+		}
 	}
 
 	private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {

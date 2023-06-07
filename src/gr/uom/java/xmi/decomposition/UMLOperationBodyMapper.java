@@ -8554,6 +8554,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Replacement r;
 		if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 			replacementInfo.addReplacement(r);
+			List<LeafExpression> leafExpressions1 = statement1.findExpression(r.getBefore());
+			List<LeafExpression> leafExpressions2 = statement2.findExpression(r.getAfter());
+			if(leafExpressions1.size() == leafExpressions2.size()) {
+				for(int i=0; i<leafExpressions1.size(); i++) {
+					LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+					mappings.add(leafMapping);
+				}
+			}
 			return replacementInfo.getReplacements();
 		}
 		for(String methodInvocation1 : methodInvocations1) {
@@ -8561,6 +8569,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement1.getString().endsWith(methodInvocation1 + ";\n") && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 					if(operationInvocation1.makeReplacementForReturnedArgument(statement2.getString()) != null) {
 						replacementInfo.addReplacement(r);
+						List<LeafExpression> leafExpressions1 = statement1.findExpression(r.getBefore());
+						List<LeafExpression> leafExpressions2 = statement2.findExpression(r.getAfter());
+						if(leafExpressions1.size() == leafExpressions2.size()) {
+							for(int i=0; i<leafExpressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+								mappings.add(leafMapping);
+							}
+						}
 						return replacementInfo.getReplacements();
 					}
 				}
@@ -8569,6 +8585,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//check if the argument of the method call in the second statement is returned in the first statement
 		if(invocationCoveringTheEntireStatement2 != null && (r = invocationCoveringTheEntireStatement2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
 			replacementInfo.addReplacement(r);
+			List<LeafExpression> leafExpressions1 = statement1.findExpression(r.getBefore());
+			List<LeafExpression> leafExpressions2 = statement2.findExpression(r.getAfter());
+			if(leafExpressions1.size() == leafExpressions2.size()) {
+				for(int i=0; i<leafExpressions1.size(); i++) {
+					LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+					mappings.add(leafMapping);
+				}
+			}
 			return replacementInfo.getReplacements();
 		}
 		if(invocationCoveringTheEntireStatement2 != null && (r = invocationCoveringTheEntireStatement2.makeReplacementForWrappedLambda(replacementInfo.getArgumentizedString1())) != null) {
@@ -8580,6 +8604,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement2.getString().endsWith(methodInvocation2 + ";\n") && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
 					if(operationInvocation2.makeReplacementForWrappedCall(statement1.getString()) != null) {
 						replacementInfo.addReplacement(r);
+						List<LeafExpression> leafExpressions1 = statement1.findExpression(r.getBefore());
+						List<LeafExpression> leafExpressions2 = statement2.findExpression(r.getAfter());
+						if(leafExpressions1.size() == leafExpressions2.size()) {
+							for(int i=0; i<leafExpressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+								mappings.add(leafMapping);
+							}
+						}
 						return replacementInfo.getReplacements();
 					}
 				}

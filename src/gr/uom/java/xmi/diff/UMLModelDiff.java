@@ -3459,7 +3459,12 @@ public class UMLModelDiff {
 											potentiallyMovedOperations.addAll(removedClass.getOperations());
 										}
 									}
+									//extracted in the class where the method is moved after refactoring
 									checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, addedClass, firstMapper.getClassDiff());
+									//extracted in the class from which the method is moved before refactoring
+									if(removedClassDiff != null) {
+										checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
+									}
 								}
 							}
 						}
@@ -3614,7 +3619,12 @@ public class UMLModelDiff {
 											potentiallyMovedOperations.addAll(removedClass.getOperations());
 										}
 									}
+									//extracted in the class where the method is moved after refactoring
 									checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, addedClass, firstMapper.getClassDiff());
+									//extracted in the class from which the method is moved before refactoring
+									if(removedClassDiff != null) {
+										checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
+									}
 								}
 							}
 						}

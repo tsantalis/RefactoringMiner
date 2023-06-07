@@ -494,6 +494,18 @@ public class ExtractOperationDetection {
 		}
 		exactMatchList.addAll(additionalExactMatches);
 		int exactMatches = exactMatchList.size();
+		if(exactMatches == 0 && operationBodyMapper.getMappings().size() == 1) {
+			int beforeAfterContains = 0;
+			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
+			for(Replacement r : mapping.getReplacements()) {
+				if(r.getAfter().contains(r.getBefore()) || r.getBefore().contains(r.getAfter())) {
+					beforeAfterContains++;
+				}
+			}
+			if(beforeAfterContains == mapping.getReplacements().size()) {
+				exactMatches++;
+			}
+		}
 		return mappings > 0 && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches <= 10) ||

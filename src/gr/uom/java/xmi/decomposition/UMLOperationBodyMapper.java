@@ -7660,6 +7660,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return replacementInfo.getReplacements();
 						}
 					}
+					if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
+						if(statement1.getString().equals("return;\n") && statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n")) {
+							VariableDeclaration variableDeclaration2 = container2.getVariableDeclaration(statement2.getVariables().get(0).getString());
+							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
+								return replacementInfo.getReplacements();
+							}
+						}
+					}
+					else if(!returnType1.getClassType().equals("void") && returnType2.getClassType().equals("void")) {
+						if(statement2.getString().equals("return;\n") && statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n")) {
+							VariableDeclaration variableDeclaration1 = container1.getVariableDeclaration(statement1.getVariables().get(0).getString());
+							if(variableDeclaration1 != null && variableDeclaration1.getType().equals(returnType1)) {
+								return replacementInfo.getReplacements();
+							}
+						}
+					}
 					//match break with already matched return
 					if(statement1.getString().equals("break;\n")) {
 						Set<AbstractCodeMapping> mappingsToBeAdded = new LinkedHashSet<>();

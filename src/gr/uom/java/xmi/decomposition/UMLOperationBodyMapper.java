@@ -2551,8 +2551,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public int mappingsWithoutBlocks() {
 		int count = 0;
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : getMappings()) {
-			if(mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement())
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
+			if(mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() && !subExpressionMappings.contains(mapping))
 				count++;
 		}
 		return count;
@@ -2730,9 +2732,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public int exactMatches() {
 		int count = 0;
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try"))
+					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping))
 				count++;
 		}
 		return count;
@@ -2740,9 +2744,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public List<AbstractCodeMapping> getExactMatches() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try"))
+					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping))
 				exactMatches.add(mapping);
 		}
 		return exactMatches;
@@ -2750,9 +2756,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public List<AbstractCodeMapping> getExactMatchesWithoutLoggingStatements() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try")) {
+					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping)) {
 				boolean logCallFound = false;
 				for(AbstractCall call : mapping.getFragment1().getMethodInvocations()) {
 					if(call.isLog() || call.isLogGuard()) {
@@ -2769,9 +2777,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public List<AbstractCodeMapping> getExactMatchesWithoutMatchesInNestedContainers() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
 		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try") && mapping.getOperation1().equals(this.container1) && mapping.getOperation2().equals(this.container2))
+					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping) && mapping.getOperation1().equals(this.container1) && mapping.getOperation2().equals(this.container2))
 				exactMatches.add(mapping);
 		}
 		return exactMatches;

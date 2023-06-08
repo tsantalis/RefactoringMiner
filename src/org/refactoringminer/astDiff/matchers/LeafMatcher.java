@@ -1,6 +1,8 @@
 package org.refactoringminer.astDiff.matchers;
 
+import com.github.gumtreediff.matchers.CompositeMatchers;
 import com.github.gumtreediff.matchers.MappingStore;
+import com.github.gumtreediff.matchers.optimizations.*;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -30,8 +32,14 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		try {
 			if (prunedPair.first.isIsoStructuralTo(prunedPair.second))
 			{
-				match = new MappingStore(src, dst);
-				match.addMappingRecursively(prunedPair.first, prunedPair.second);
+				if (!prunedPair.first.isIsomorphicTo(prunedPair.second))
+				{
+					match = new MoveOptimizedIsomorphic().match(prunedPair.first, prunedPair.second);
+				}
+				else{
+					match = new MappingStore(src, dst);
+					match.addMappingRecursively(prunedPair.first, prunedPair.second);
+				}
 			}
 			else {
 				match = process(prunedPair.first, prunedPair.second);
@@ -127,4 +135,21 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 			mappingStore.addMapping(TreeUtilFunctions.getFakeTreeInstance(),assignment_operator);
 		}
 	}
+	static class MoveOptimizedIsomorphic extends CompositeMatchers.CompositeMatcher {
+		public MoveOptimizedIsomorphic() {
+			super(
+					(src, dst, mappings) -> {
+						if (src.isIsomorphicTo(dst))
+							mappings.addMappingRecursively(src,dst);
+						return mappings;
+					}
+					, new LcsOptMatcherThetaB()
+					, new UnmappedLeavesMatcherThetaC()
+					, new InnerNodesMatcherThetaD()
+					, new LeafMoveMatcherThetaE()
+					, new CrossMoveMatcherThetaF()
+			);
+		}
+	}
 }
+

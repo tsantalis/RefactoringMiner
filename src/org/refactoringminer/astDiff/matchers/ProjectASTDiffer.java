@@ -367,7 +367,9 @@ public class ProjectASTDiffer
 		if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
 			mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
-		if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression) {
+		boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
+		boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
+		if (_abstractExp || _leafExp) {
 			lastStepMappings.add(abstractCodeMapping);
 		} else {
 			new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);

@@ -494,7 +494,7 @@ public class ExtractOperationDetection {
 		}
 		exactMatchList.addAll(additionalExactMatches);
 		int exactMatches = exactMatchList.size();
-		if(exactMatches == 0 && operationBodyMapper.getMappings().size() == 1) {
+		if(exactMatches == 0 && operationBodyMapper.getMappings().size() >= 1 && operationBodyMapper.getMappings().size() <= 2) {
 			int beforeAfterContains = 0;
 			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
 			for(Replacement r : mapping.getReplacements()) {

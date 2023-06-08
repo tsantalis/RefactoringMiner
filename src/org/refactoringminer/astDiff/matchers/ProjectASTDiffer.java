@@ -761,7 +761,39 @@ public class ProjectASTDiffer
 						dstInput,
 						mappingStore);
 			}
+			else if (refactoring instanceof ModifyClassAnnotationRefactoring)
+			{
+				ModifyClassAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyClassAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyMethodAnnotationRefactoring)
+			{
+				ModifyMethodAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyMethodAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyAttributeAnnotationRefactoring)
+			{
+				ModifyAttributeAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyAttributeAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyVariableAnnotationRefactoring)
+			{
+				ModifyVariableAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyVariableAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
 		}
+	}
+
+	private static void processModifiedAnnotation(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {
+		Tree srcAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree, annotationBefore.getLocationInfo());
+		Tree dstAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, annotationAfter.getLocationInfo());
+		if (srcAnnotationTree != null & dstAnnotationTree != null)
+			new BasicTreeMatcher().match(srcAnnotationTree,dstAnnotationTree, mappingStore);
+		mappingStore.addMapping(srcAnnotationTree,dstAnnotationTree);
 	}
 
 	private void findVariablesAndMatch(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, String originalVariableName, String renamedVariableName, ExtendedMultiMappingStore mappingStore) {

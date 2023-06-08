@@ -31,6 +31,7 @@ public abstract class AbstractCodeMapping {
 	private VariableDeclarationContainer operation1;
 	private VariableDeclarationContainer operation2;
 	private Set<Replacement> replacements;
+	private Set<LeafMapping> subExpressionMappings;
 	private boolean identicalWithExtractedVariable;
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
@@ -43,6 +44,7 @@ public abstract class AbstractCodeMapping {
 		this.operation1 = operation1;
 		this.operation2 = operation2;
 		this.replacements = new LinkedHashSet<Replacement>();
+		this.subExpressionMappings = new LinkedHashSet<LeafMapping>();
 	}
 
 	public abstract double editDistance();
@@ -124,6 +126,18 @@ public abstract class AbstractCodeMapping {
 			return creation1.actualString().equals(creation2.actualString());
 		}
 		return false;
+	}
+
+	public void addSubExpressionMapping(LeafMapping leafMapping) {
+		subExpressionMappings.add(leafMapping);
+	}
+
+	public void addSubExpressionMappings(Set<LeafMapping> leafMappings) {
+		subExpressionMappings.addAll(leafMappings);
+	}
+
+	public Set<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	private boolean containsIdenticalOrCompositeReplacement() {

@@ -30,6 +30,7 @@ import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
@@ -44,6 +45,7 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -1674,6 +1676,33 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1() - additionallyMatchedStatements1;
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2() - additionallyMatchedStatements2;
 		int exactMappings = operationBodyMapper.exactMatches();
+		if(operationBodyMapper.getContainer1() instanceof UMLOperation && operationBodyMapper.getContainer2() instanceof UMLOperation) {
+			UMLParameter returnParameter1 = ((UMLOperation)operationBodyMapper.getContainer1()).getReturnParameter();
+			UMLParameter returnParameter2 = ((UMLOperation)operationBodyMapper.getContainer2()).getReturnParameter();
+			if(returnParameter1 != null && returnParameter2 != null) {
+				UMLType returnType1 = returnParameter1.getType();
+				UMLType returnType2 = returnParameter2.getType();
+				boolean returnFound = false;
+				if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
+					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+						if(fragment1.getString().equals("return;\n")) {
+							returnFound = true;
+							break;
+						}
+					}
+				}
+				if(!returnFound) {
+					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						if(statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n")) {
+							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
+							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
+								nonMappedElementsT2--;
+							}
+						}
+					}
+				}
+			}
+		}
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 				(nonMappedElementsT1 == 0 && mappings > Math.floor(nonMappedElementsT2/2.0) && !operationBodyMapper.involvesTestMethods()) ||
 				(nonMappedElementsT2 == 0 && mappings > Math.floor(nonMappedElementsT1/2.0) && !operationBodyMapper.involvesTestMethods() && !(this instanceof UMLClassMoveDiff)) ||
@@ -2606,6 +2635,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(indicesToBeRemoved.contains(index)) {
 					if(!atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow) {
 						mapper.removeMapping(mapping);
+						for(LeafMapping leafMapping : mapping.getSubExpressionMappings()) {
+							mapper.removeMapping(leafMapping);
+						}
 						if(mapping instanceof LeafMapping) {
 							if(!mapper.getNonMappedLeavesT1().contains(mapping.getFragment1())) {
 								mapper.getNonMappedLeavesT1().add(mapping.getFragment1());

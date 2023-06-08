@@ -16867,11 +16867,11 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "ReturnStatement",
   "firstPos" : 10795,
-  "secondPos" : 11188,
+  "secondPos" : 3215,
   "firstEndPos" : 10825,
-  "secondEndPos" : 11221
+  "secondEndPos" : 3245
 }, {
   "firstType" : "METHOD_INVOCATION_RECEIVER",
   "secondType" : "METHOD_INVOCATION_RECEIVER",
@@ -16880,20 +16880,31 @@
   "firstParentType" : "MethodInvocation",
   "secondParentType" : "MethodInvocation",
   "firstPos" : 10795,
-  "secondPos" : 11188,
+  "secondPos" : 3215,
   "firstEndPos" : 10803,
-  "secondEndPos" : 11192
+  "secondEndPos" : 3223
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "activity",
+  "secondLabel" : "activity",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 10795,
+  "secondPos" : 3215,
+  "firstEndPos" : 10803,
+  "secondEndPos" : 3223
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "getPrimaryTextColor",
-  "secondLabel" : "getMessageTextColor",
+  "secondLabel" : "getPrimaryTextColor",
   "firstParentType" : "MethodInvocation",
   "secondParentType" : "MethodInvocation",
   "firstPos" : 10804,
-  "secondPos" : 11193,
+  "secondPos" : 3224,
   "firstEndPos" : 10823,
-  "secondEndPos" : 11212
+  "secondEndPos" : 3243
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -513,6 +513,15 @@ public class ProjectASTDiffer
 		}
 	}
 
+	private static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {
+		int count = 0;
+		for (Refactoring r : refactoringList) {
+			if(r.toString().equals(refactoring.toString()))
+				count++;
+		}
+		return count > 1;
+	}
+
 	private void processRefactorings(Tree srcTree, Tree dstTree, List<Refactoring> refactoringList, ExtendedMultiMappingStore mappingStore){
 		for (Refactoring refactoring : refactoringList) {
 			if (refactoring instanceof ReplaceLoopWithPipelineRefactoring) {
@@ -585,15 +594,21 @@ public class ProjectASTDiffer
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, true);
-				for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
-					lastStepMappings.add(expressionMapping);
+				//skip argument mappings, if the same method is extracted more than once from the original method.
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
+					for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
+						lastStepMappings.add(expressionMapping);
+					}
 				}
 			} else if (refactoring instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
-				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
-					lastStepMappings.add(expressionMapping);
+				//skip argument mappings, if the same method is inlined more than once to the target method.
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
+					for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
+						lastStepMappings.add(expressionMapping);
+					}
 				}
 			} else if (refactoring instanceof MoveCodeRefactoring) {
 				MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;

@@ -246,34 +246,29 @@ class ValueSourceAnnotation extends SourceAnnotation implements NormalAnnotation
 			"strings",
 			"chars"
 	);
+	private List<LeafExpression> extractLiterals(AbstractExpression annotationParameterValue, String memberKey) {
+		if (numberKeys.contains(memberKey)) {
+			return annotationParameterValue.getNumberLiterals();
+		} else if (stringKeys.contains(memberKey)) {
+			return annotationParameterValue.getStringLiterals();
+		} else if (memberKey.equals("booleans")) {
+			return annotationParameterValue.getBooleanLiterals();
+		} else if (memberKey.equals("classes")) {
+			return annotationParameterValue.getTypeLiterals();
+		}
+		return Collections.emptyList();
+	}
+
 	public ValueSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
 		super(annotation, ANNOTATION_TYPENAME);
 		memberValuePairs = annotation.getMemberValuePairs();
 		Set<String> providedKeys = memberValuePairs.keySet();
 		testParameters = new ArrayList<>();
 		for (String key : providedKeys) {
-			ArrayList<String> parameters = new ArrayList<>();
-			if (numberKeys.contains(key)) {
-				for (LeafExpression number : memberValuePairs.get(key).getNumberLiterals()) {
-					parameters.add(number.getString());
-				}
-			} else if (stringKeys.contains(key)) {
-				for (LeafExpression str : memberValuePairs.get(key).getStringLiterals()) {
-					parameters.add(str.getString());
-				}
-			} else if (key.equals("booleans")) {
-				for (LeafExpression bool : memberValuePairs.get(key).getBooleanLiterals()) {
-					parameters.add(bool.getString());
-				}
-			} else if (key.equals("classes")) {
-				for (LeafExpression type : memberValuePairs.get(key).getTypeLiterals()) {
-					parameters.add(type.getString());
-				}
-				for (LeafExpression str : memberValuePairs.get(key).getStringLiterals()) {
-					parameters.add(str.getString());
-				}
+			AbstractExpression annotationParameterValue = memberValuePairs.get(key);
+			for (LeafExpression literal : extractLiterals(annotationParameterValue, key)) {
+				testParameters.add(Collections.singletonList(literal.getString()));
 			}
-			testParameters.add(parameters);
 		}
 
 	}
@@ -1500,18 +1495,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						if(addedOperation.hasParameterizedTestAnnotation()) {
-							List<List<String>> parameterValues = new ArrayList<>();
-							for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
-								try {
-									parameterValues.addAll(SourceAnnotation.create(annotation, addedOperation, modelDiff.getChildModel()).getTestParameters());
-								} catch (IllegalArgumentException ignored) {/* Do nothing */}
-							}
+							List<List<String>> parameterValues = getParameterValues(addedOperation);
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements());
 								int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
-								if(max > 1 && (overallMaxMatchingTestParameters == -1 || max == overallMaxMatchingTestParameters)) {
+								if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max == overallMaxMatchingTestParameters)) {
 									if(max > overallMaxMatchingTestParameters) {
 										overallMaxMatchingTestParameters = max;
 									}
@@ -1604,6 +1594,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private List<List<String>> getParameterValues(UMLOperation addedOperation) {
+		List<List<String>> parameterValues = new ArrayList<>();
+		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
+			try {
+				List<List<String>> testParameters = SourceAnnotation.create(annotation, addedOperation, modelDiff.getChildModel()).getTestParameters();
+				parameterValues.addAll(testParameters);
+			} catch (IllegalArgumentException ignored) {/* Do nothing */}
+		}
+		return parameterValues;
 	}
 
 	private static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements) {

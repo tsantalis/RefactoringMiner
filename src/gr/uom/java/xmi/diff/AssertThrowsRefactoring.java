@@ -14,12 +14,14 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class AssertThrowsRefactoring implements Refactoring {
+public class AssertThrowsRefactoring implements Refactoring, LeafMappingProvider {
 	private Set<AbstractCodeMapping> assertThrowsMappings;
 	private AbstractCall assertThrowsCall;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private List<LeafMapping> subExpressionMappings;
 
 	public AssertThrowsRefactoring(Set<AbstractCodeMapping> assertThrowsMappings, AbstractCall assertThrowsCall,
 			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
@@ -27,6 +29,25 @@ public class AssertThrowsRefactoring implements Refactoring {
 		this.assertThrowsCall = assertThrowsCall;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
+	}
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	public Set<AbstractCodeMapping> getAssertThrowsMappings() {

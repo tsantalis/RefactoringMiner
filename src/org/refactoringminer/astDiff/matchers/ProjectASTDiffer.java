@@ -628,6 +628,11 @@ public class ProjectASTDiffer
 				for(LeafMapping mapping : inlineVariableRefactoring.getSubExpressionMappings()) {
 					lastStepMappings.add(mapping);
 				}
+			} else if (refactoring instanceof AssertThrowsRefactoring) {
+				AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) refactoring;
+				for(LeafMapping mapping : assertThrowsRefactoring.getSubExpressionMappings()) {
+					lastStepMappings.add(mapping);
+				}
 			} else if (refactoring instanceof ReplaceAttributeRefactoring) {
 				//TODO:
 				ReplaceAttributeRefactoring replaceAttributeRefactoring = (ReplaceAttributeRefactoring) refactoring;

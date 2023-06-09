@@ -23,7 +23,8 @@ import java.util.HashSet;
 /**
  * @author  Victor Guerra Veloso victorgvbh@gmail.com
  */
-public class ParameterizedRefactoringTest {
+public class TestAllRefactoringsByCommit {
+    private static final String REPOS = "tmp1";
 
     @Disabled("This test is disabled because it is redundant with the testAllRefactorings")
     @ParameterizedTest
@@ -31,7 +32,7 @@ public class ParameterizedRefactoringTest {
     public void testAllRefactoringsParameterized(@ConvertWith(RefactoringJsonConverter.class) RefactoringPopulator.Root testCase) throws Exception {
         GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
         GitService gitService = new GitServiceImpl();
-        String folder = "tmp1/" + testCase.repository.substring(testCase.repository.lastIndexOf('/') + 1, testCase.repository.lastIndexOf('.'));
+        String folder = REPOS + "/" + testCase.repository.substring(testCase.repository.lastIndexOf('/') + 1, testCase.repository.lastIndexOf('.'));
         try (Repository rep = gitService.cloneIfNotExists(folder, testCase.repository)) {
             detector.detectAtCommit(rep, testCase.sha1, new RefactoringHandler() {
                 Set<String> foundRefactorings = null;

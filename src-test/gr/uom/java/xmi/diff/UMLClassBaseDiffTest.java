@@ -165,7 +165,7 @@ class UMLClassBaseDiffTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {""/*, "(TestEnum.class)"*/})
+    @ValueSource(strings = {"", "(TestEnum.class)"})
     void testEnumSource(String sourceParameter) throws RefactoringMinerTimedOutException {
         Set<String> dirs = Set.of("src/", "src/main/", "src/main/java", "src/main/java/test");
         Map<String, String> files = Map.of(
@@ -456,7 +456,6 @@ class UMLClassBaseDiffTest {
                 fail("Could not write to file");
             }
 //            originalModel = createUmlModel(originalSourceCode,testPath.toString());
-//            throw new RuntimeException(testPath.toString());
             originalModel = createUmlModel(originalSourceCode);
         }
 

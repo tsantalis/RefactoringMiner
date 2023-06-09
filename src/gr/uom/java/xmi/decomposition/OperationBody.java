@@ -77,7 +77,7 @@ public class OperationBody {
 			processStatement(cu, filePath, compositeStatement, statement);
 		}
 		for(AbstractCall invocation : getAllOperationInvocations()) {
-			if(invocation.getName().startsWith("assert")) {
+			if(invocation.getName().startsWith("assert") || invocation.getName().equals("fail")) {
 				containsAssertion = true;
 				break;
 			}

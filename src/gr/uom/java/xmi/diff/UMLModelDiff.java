@@ -3845,7 +3845,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			else if(addedClass != null && s1.getString().contains("=")) {
+			else if(addedClass != null && s1.getString().contains("=") && !s1.getString().contains("==") && !s1.getString().contains("!=")) {
 				for(UMLAttribute attribute : addedClass.getAttributes()) {
 					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
 					if(attributeDeclaration.getInitializer() != null) {

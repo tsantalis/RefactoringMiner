@@ -1,8 +1,9 @@
-package gr.uom.java.xmi.diff;
+package org.refactoringminer.test;
 
 import gr.uom.java.xmi.*;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.diff.*;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;

@@ -2365,6 +2365,43 @@ public class UMLModelDiff {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
 		}
+		for(Refactoring r : refactorings) {
+			UMLOperationBodyMapper bodyMapper = null;
+			if(r.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION) || r.getRefactoringType().equals(RefactoringType.MOVE_OPERATION)) {
+				MoveOperationRefactoring move = (MoveOperationRefactoring)r;
+				bodyMapper = move.getBodyMapper();
+			}
+			else if(r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
+				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+				bodyMapper = extract.getBodyMapper();
+			}
+			if(bodyMapper != null && bodyMapper.getNonMappedLeavesT1().size() > 0 && bodyMapper.getNonMappedLeavesT2().size() > 0) {
+				for(AbstractCodeFragment fragment1 : bodyMapper.getNonMappedLeavesT1()) {
+					AbstractCall invocation1 = fragment1.invocationCoveringEntireFragment();
+					if(invocation1 != null) {
+						for(AbstractCodeFragment fragment2 : bodyMapper.getNonMappedLeavesT2()) {
+							AbstractCall invocation2 = fragment2.invocationCoveringEntireFragment();
+							if(invocation2 != null) {
+								for(Refactoring r2 : refactorings) {
+									if(r2.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
+										MoveOperationRefactoring move2 = (MoveOperationRefactoring)r2;
+										boolean matchesOperation1 = invocation1.matchesOperation(move2.getOriginalOperation(), bodyMapper.getContainer1(), bodyMapper.getClassDiff(), this);
+										boolean matchesOperation2 = invocation2.matchesOperation(move2.getMovedOperation(), bodyMapper.getContainer2(), bodyMapper.getClassDiff(), this);
+										if(matchesOperation1 && matchesOperation2) {
+											LeafMapping mapping = new LeafMapping(fragment1, fragment2, bodyMapper.getContainer1(), bodyMapper.getContainer2());
+											if(bodyMapper.containsParentMapping(mapping) || bodyMapper.parentIsContainerBody(mapping)) {
+												bodyMapper.addMapping(mapping);
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 

@@ -16,7 +16,9 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
@@ -421,6 +423,21 @@ public class ExtractOperationDetection {
 	}
 
 	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper, List<AbstractCodeMapping> additionalExactMatches) {
+		if(operationBodyMapper.getMappings().size() == 1) {
+			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
+			if(mapping.getFragment1() instanceof AbstractExpression) {
+				for(AbstractCodeMapping parentMapping : operationBodyMapper.getParentMapper().getMappings()) {
+					if(parentMapping instanceof CompositeStatementObjectMapping) {
+						CompositeStatementObject parentComp1 = (CompositeStatementObject) parentMapping.getFragment1();
+						CompositeStatementObject parentComp2 = (CompositeStatementObject) parentMapping.getFragment2();
+						if(parentComp1.getExpressions().contains(mapping.getFragment1()) &&
+								!parentComp2.getMethodInvocations().contains(operationBodyMapper.getOperationInvocation())) {
+							return false;
+						}
+					}
+				}
+			}
+		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
@@ -477,6 +494,18 @@ public class ExtractOperationDetection {
 		}
 		exactMatchList.addAll(additionalExactMatches);
 		int exactMatches = exactMatchList.size();
+		if(exactMatches == 0 && operationBodyMapper.getMappings().size() >= 1 && operationBodyMapper.getMappings().size() <= 2) {
+			int beforeAfterContains = 0;
+			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
+			for(Replacement r : mapping.getReplacements()) {
+				if(r.getAfter().contains(r.getBefore()) || r.getBefore().contains(r.getAfter())) {
+					beforeAfterContains++;
+				}
+			}
+			if(beforeAfterContains == mapping.getReplacements().size()) {
+				exactMatches++;
+			}
+		}
 		return mappings > 0 && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches <= 10) ||

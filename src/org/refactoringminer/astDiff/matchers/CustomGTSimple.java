@@ -177,7 +177,11 @@ class CustomGreedy extends GreedySubtreeMatcher {
 		for (Mapping mapping : ambiguousList) {
 			Tree asrc = mapping.first;
 			Tree adst = mapping.second;
-			if (asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL)) {
+			if (
+					(asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL))
+					 || (asrc.getType().name.equals(Constants.NUMBER_LITERAL) && adst.getType().name.equals(Constants.NUMBER_LITERAL))
+
+				) {
 				if (asrc.getParent() != null && adst.getParent() != null) {
 					int i = asrc.positionInParent();
 					int j = adst.positionInParent();

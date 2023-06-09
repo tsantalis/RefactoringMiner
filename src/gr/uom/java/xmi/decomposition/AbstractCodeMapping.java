@@ -31,9 +31,11 @@ public abstract class AbstractCodeMapping {
 	private VariableDeclarationContainer operation1;
 	private VariableDeclarationContainer operation2;
 	private Set<Replacement> replacements;
+	private Set<LeafMapping> subExpressionMappings;
 	private boolean identicalWithExtractedVariable;
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
+	private int matchingArgumentsWithOperationInvocation;
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -42,6 +44,7 @@ public abstract class AbstractCodeMapping {
 		this.operation1 = operation1;
 		this.operation2 = operation2;
 		this.replacements = new LinkedHashSet<Replacement>();
+		this.subExpressionMappings = new LinkedHashSet<LeafMapping>();
 	}
 
 	public abstract double editDistance();
@@ -82,6 +85,14 @@ public abstract class AbstractCodeMapping {
 		return refactorings;
 	}
 
+	public int getMatchingArgumentsWithOperationInvocation() {
+		return matchingArgumentsWithOperationInvocation;
+	}
+
+	public void setMatchingArgumentsWithOperationInvocation(int matchingArgumentsWithOperationInvocation) {
+		this.matchingArgumentsWithOperationInvocation = matchingArgumentsWithOperationInvocation;
+	}
+
 	public boolean isExact() {
 		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) || argumentizedStringExactAfterTypeReplacement() ||
 				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement()) && !fragment1.isKeyword();
@@ -115,6 +126,18 @@ public abstract class AbstractCodeMapping {
 			return creation1.actualString().equals(creation2.actualString());
 		}
 		return false;
+	}
+
+	public void addSubExpressionMapping(LeafMapping leafMapping) {
+		subExpressionMappings.add(leafMapping);
+	}
+
+	public void addSubExpressionMappings(Set<LeafMapping> leafMappings) {
+		subExpressionMappings.addAll(leafMappings);
+	}
+
+	public Set<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	private boolean containsIdenticalOrCompositeReplacement() {
@@ -257,6 +280,7 @@ public abstract class AbstractCodeMapping {
 				}
 				if(variableName.equals(after) && initializer != null) {
 					if(initializer.toString().equals(before) ||
+							initializer.toString().equals("this." + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, before) ||
@@ -408,6 +432,7 @@ public abstract class AbstractCodeMapping {
 				}
 				if(variableName.equals(before) && initializer != null) {
 					if(initializer.toString().equals(after) ||
+							initializer.toString().equals("this." + after) ||
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, after) ||

@@ -21,6 +21,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -53,6 +54,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 			createArgumentMappings(mapping);
+			checkForMatchingCallChain(mapping);
 		}
 	}
 
@@ -73,6 +75,29 @@ public class ExtractOperationRefactoring implements Refactoring {
 			this.extractedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
 			this.extractedCodeFragmentsToExtractedOperation.add(mapping.getFragment2());
 			createArgumentMappings(mapping);
+			checkForMatchingCallChain(mapping);
+		}
+	}
+
+	private void checkForMatchingCallChain(AbstractCodeMapping mapping) {
+		AbstractCall invocation1 = mapping.getFragment1().invocationCoveringEntireFragment();
+		if(invocation1 == null) {
+			invocation1 = mapping.getFragment1().assignmentInvocationCoveringEntireStatement();
+		}
+		if(invocation1 instanceof OperationInvocation && ((OperationInvocation)invocation1).numberOfSubExpressions() > 0) {
+			for(AbstractCodeMapping m : this.bodyMapper.getParentMapper().getMappings()) {
+				if(m.getFragment2().getLocationInfo().subsumes(this.bodyMapper.getOperationInvocation().getLocationInfo())) {
+					AbstractCall invocation2 = m.getFragment2().invocationCoveringEntireFragment();
+					if(invocation2 == null) {
+						invocation2 = m.getFragment2().assignmentInvocationCoveringEntireStatement();
+					}
+					if(invocation2 != null && invocation1.equals(invocation2)) {
+						LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, this.sourceOperationBeforeExtraction, this.sourceOperationAfterExtraction);
+						this.bodyMapper.getParentMapper().getMappings().add(leafMapping);
+						break;
+					}
+				}
+			}
 		}
 	}
 

@@ -41,17 +41,55 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	}
 
 	protected void processInitializers() throws RefactoringMinerTimedOutException {
-		for(UMLInitializer initializer1 : originalClass.getInitializers()) {
-			for(UMLInitializer initializer2 : nextClass.getInitializers()) {
-				if(initializer1.isStatic() == initializer2.isStatic()) {
-					UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
-					int mappings = mapper.mappingsWithoutBlocks();
-					if(mappings > 0) {
-						int nonMappedElementsT1 = mapper.nonMappedElementsT1();
-						int nonMappedElementsT2 = mapper.nonMappedElementsT2();
-						if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
-								isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
-							operationBodyMapperList.add(mapper);
+		List<UMLInitializer> initializers1 = originalClass.getInitializers();
+		List<UMLInitializer> initializers2 = nextClass.getInitializers();
+		if(initializers1.size() == initializers2.size()) {
+			for(int i=0; i<initializers1.size(); i++) {
+				UMLInitializer initializer1 = initializers1.get(i);
+				UMLInitializer initializer2 = initializers2.get(i);
+				UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
+				int mappings = mapper.mappingsWithoutBlocks();
+				if(mappings > 0) {
+					int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+					int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+							isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
+						operationBodyMapperList.add(mapper);
+					}
+				}
+			}
+		}
+		else if(initializers1.size() < initializers2.size()) {
+			for(UMLInitializer initializer1 : initializers1) {
+				for(UMLInitializer initializer2 : initializers2) {
+					if(initializer1.isStatic() == initializer2.isStatic()) {
+						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
+						int mappings = mapper.mappingsWithoutBlocks();
+						if(mappings > 0) {
+							int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
+								operationBodyMapperList.add(mapper);
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(initializers1.size() > initializers2.size()) {
+			for(UMLInitializer initializer2 : initializers2) {
+				for(UMLInitializer initializer1 : initializers1) {
+					if(initializer1.isStatic() == initializer2.isStatic()) {
+						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(initializer1, initializer2, classDiff);
+						int mappings = mapper.mappingsWithoutBlocks();
+						if(mappings > 0) {
+							int nonMappedElementsT1 = mapper.nonMappedElementsT1();
+							int nonMappedElementsT2 = mapper.nonMappedElementsT2();
+							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
+									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
+								operationBodyMapperList.add(mapper);
+							}
 						}
 					}
 				}

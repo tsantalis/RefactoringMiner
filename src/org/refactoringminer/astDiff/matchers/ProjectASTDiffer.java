@@ -131,12 +131,13 @@ public class ProjectASTDiffer
 			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 			processClassDeclarationMapping(srcTree,dstTree, baseClassDiff,mappingStore);
 		}
-
+		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processEnumConstants(srcTree,dstTree,classDiff.getCommonEnumConstants(),mappingStore);
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
 		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processLastStepMappings(srcTree,dstTree,mappingStore);
+
 		//if (CHECK_COMMENTS) addAndProcessComments(treeContextPair.first, treeContextPair.second,mappingStore);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
@@ -366,7 +367,9 @@ public class ProjectASTDiffer
 		if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
 			mappingStore.addMapping(srcStatementNode, dstStatementNode);
 
-		if (abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression) {
+		boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
+		boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
+		if (_abstractExp || _leafExp) {
 			lastStepMappings.add(abstractCodeMapping);
 		} else {
 			new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);
@@ -415,13 +418,6 @@ public class ProjectASTDiffer
 				}
 			}
 		}
-	}
-
-	public void processLeafMatcherForExtractedOrInlinedVariables(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
-		LeafMapping leafMapping = (LeafMapping) abstractCodeMapping;
-		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,leafMapping.getFragment1().getLocationInfo());
-		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,leafMapping.getFragment2().getLocationInfo());
-		new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);
 	}
 
 	private void processClassAnnotations(Tree srcTree, Tree dstTree, UMLAnnotationListDiff annotationListDiff, ExtendedMultiMappingStore mappingStore) {
@@ -517,6 +513,15 @@ public class ProjectASTDiffer
 		}
 	}
 
+	private static boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, Refactoring refactoring) {
+		int count = 0;
+		for (Refactoring r : refactoringList) {
+			if(r.toString().equals(refactoring.toString()))
+				count++;
+		}
+		return count > 1;
+	}
+
 	private void processRefactorings(Tree srcTree, Tree dstTree, List<Refactoring> refactoringList, ExtendedMultiMappingStore mappingStore){
 		for (Refactoring refactoring : refactoringList) {
 			if (refactoring instanceof ReplaceLoopWithPipelineRefactoring) {
@@ -589,15 +594,21 @@ public class ProjectASTDiffer
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, true);
-				for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
-					lastStepMappings.add(expressionMapping);
+				//skip argument mappings, if the same method is extracted more than once from the original method.
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
+					for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
+						lastStepMappings.add(expressionMapping);
+					}
 				}
 			} else if (refactoring instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
-				for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
-					lastStepMappings.add(expressionMapping);
+				//skip argument mappings, if the same method is inlined more than once to the target method.
+				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
+					for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
+						lastStepMappings.add(expressionMapping);
+					}
 				}
 			} else if (refactoring instanceof MoveCodeRefactoring) {
 				MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
@@ -610,12 +621,17 @@ public class ProjectASTDiffer
 			} else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
 				for(LeafMapping mapping : extractVariableRefactoring.getSubExpressionMappings()) {
-					processLeafMatcherForExtractedOrInlinedVariables(srcTree,dstTree,mapping,mappingStore);
+					lastStepMappings.add(mapping);
 				}
 			} else if (refactoring instanceof InlineVariableRefactoring) {
 				InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring) refactoring;
 				for(LeafMapping mapping : inlineVariableRefactoring.getSubExpressionMappings()) {
-					processLeafMatcherForExtractedOrInlinedVariables(srcTree,dstTree,mapping,mappingStore);
+					lastStepMappings.add(mapping);
+				}
+			} else if (refactoring instanceof AssertThrowsRefactoring) {
+				AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) refactoring;
+				for(LeafMapping mapping : assertThrowsRefactoring.getSubExpressionMappings()) {
+					lastStepMappings.add(mapping);
 				}
 			} else if (refactoring instanceof ReplaceAttributeRefactoring) {
 				//TODO:
@@ -765,7 +781,39 @@ public class ProjectASTDiffer
 						dstInput,
 						mappingStore);
 			}
+			else if (refactoring instanceof ModifyClassAnnotationRefactoring)
+			{
+				ModifyClassAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyClassAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyMethodAnnotationRefactoring)
+			{
+				ModifyMethodAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyMethodAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyAttributeAnnotationRefactoring)
+			{
+				ModifyAttributeAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyAttributeAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
+			else if (refactoring instanceof ModifyVariableAnnotationRefactoring)
+			{
+				ModifyVariableAnnotationRefactoring modifiedAnnotationRefactoring = (ModifyVariableAnnotationRefactoring) refactoring;
+				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
+					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
+			}
 		}
+	}
+
+	private static void processModifiedAnnotation(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {
+		Tree srcAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree, annotationBefore.getLocationInfo());
+		Tree dstAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, annotationAfter.getLocationInfo());
+		if (srcAnnotationTree != null & dstAnnotationTree != null)
+			new BasicTreeMatcher().match(srcAnnotationTree,dstAnnotationTree, mappingStore);
+		mappingStore.addMapping(srcAnnotationTree,dstAnnotationTree);
 	}
 
 	private void findVariablesAndMatch(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, String originalVariableName, String renamedVariableName, ExtendedMultiMappingStore mappingStore) {
@@ -1139,7 +1187,6 @@ public class ProjectASTDiffer
 		}
 		processSuperClass(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
 		processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
-		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
 		processJavaDocs(srcTypeDeclaration,dstTypeDeclaration,classDiff.getOriginalClass().getJavadoc(),classDiff.getNextClass().getJavadoc(),mappingStore);
 		processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
 

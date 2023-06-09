@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,19 +42,12 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UMLClassBaseDiffTest {
+class TestParameterizeTestRefactoring {
     private static CompilationUnit parse(char[] sourceCode) {
         ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
         parser.setSource(sourceCode);
         return  (CompilationUnit) parser.createAST(null);
     }
-    static boolean isVictorParameterizedTestEnabled() {
-        return UMLClassBaseDiff.ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION;
-    }
-    static boolean isVictorParameterizedTestDisabled() {
-        return !UMLClassBaseDiff.ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION;
-    }
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @ParameterizedTest
     @ValueSource(strings = {"""
                 public class TestClass {
@@ -226,7 +218,6 @@ class UMLClassBaseDiffTest {
         assertEquals(5, refactorings.size());
     }
 
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Test
     void testNullSrc() throws RefactoringMinerTimedOutException {
         String originalSourceCode = """
@@ -284,7 +275,6 @@ class UMLClassBaseDiffTest {
     }
 
     @Disabled("TODO: Add support for Modify Method Annotation with additional parameter")
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Test
     void testEnumParameterMerged() throws RefactoringMinerTimedOutException {
         String originalSourceCode = """
@@ -337,7 +327,6 @@ class UMLClassBaseDiffTest {
         assertTrue(refactorings.stream().anyMatch(r -> r.getRefactoringType().equals(RefactoringType.PARAMETERIZE_TEST)));
     }
 
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Test
     void testNullAndEmptySource() throws RefactoringMinerTimedOutException {
         String originalSourceCode = """
@@ -379,7 +368,6 @@ class UMLClassBaseDiffTest {
         assertEquals(RefactoringType.PARAMETERIZE_TEST.getDisplayName(), refactorings.get(1).getName());
     }
 
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Test
     void testValueSource() throws RefactoringMinerTimedOutException {
         String originalSourceCode = """
@@ -418,15 +406,10 @@ class UMLClassBaseDiffTest {
         assertEquals(RefactoringType.PARAMETERIZE_TEST.getDisplayName(), refactorings.get(1).getName());
     }
     @Disabled("TODO: Replicate testEnumSource use of UMLModelASTReader with fileMap and add support for CSV files")
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Nested
     class TestCsvFileSource_OtherPathFormats {
         @TempDir static Path dir;
         private static UMLModel originalModel;
-
-        static boolean isVictorParameterizedTestDisabled() {
-            return UMLClassBaseDiffTest.isVictorParameterizedTestDisabled();
-        }
 
         @BeforeAll
         static void setUp() throws RefactoringMinerTimedOutException {
@@ -546,14 +529,10 @@ class UMLClassBaseDiffTest {
         }
 
     }
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @Nested
     class TestCsvFileSource_AbsolutePath {
         @TempDir static Path dir;
         private static UMLModelDiff diff;
-        static boolean isVictorParameterizedTestDisabled() {
-            return UMLClassBaseDiffTest.isVictorParameterizedTestDisabled();
-        }
 
         @BeforeAll
         static void setUp() throws RefactoringMinerTimedOutException {
@@ -646,7 +625,6 @@ class UMLClassBaseDiffTest {
 
     }
 
-    @EnabledIf("isVictorParameterizedTestDisabled")
     @ParameterizedTest
     @ValueSource(strings = {"""
             public class TestClass {
@@ -715,97 +693,6 @@ class UMLClassBaseDiffTest {
         } else {
             fail("Annotation is not normal or single member");
         }
-    }
-    @EnabledIf("isVictorParameterizedTestEnabled")
-    @ParameterizedTest
-    @ValueSource(strings = {"""
-            public class TestClass {
-                @ParameterizedTest
-                @ValueSource(strings = {"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource({"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource({"value",
-                "value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource(value={"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource(value = {"value",
-                "value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            """})
-    void testCheckForTestParameterizations_OneStringParam(String newSourceCode) throws RefactoringMinerTimedOutException {
-        String originalSourceCode = """
-                    public class TestClass {
-                        @Test
-                        public void testMethod() {
-                            assertEquals(null, null);
-                        }
-                    }
-                """;
-        UMLModel originalModel = createUmlModel(originalSourceCode);
-        UMLModel newModel = createUmlModel(newSourceCode);
-        UMLModelDiff diff = originalModel.diff(newModel);
-        UMLClassBaseDiff umlClassBaseDiff = diff.getUMLClassDiff("TestClass");
-        assertEquals("{\"value\",\"value2\"}", umlClassBaseDiff.addedParameter.getExpression());
-        assertEquals(Set.of("value","value2"), umlClassBaseDiff.newValue);
-    }
-
-    private static Stream<Arguments> multipleParamsDataProvider() {
-        return Stream.of(Arguments.of("CsvSource", "({\"value,value2\"})", "String a, String b", Set.of("value","value2"), "{\"value,value2\"}", "@ParameterizedTest"),
-                Arguments.of("Test", "(dataProvider=getParameters)", "String a, String b", Set.of("getParameters"), "getParameters", ""));
-    }
-
-    @EnabledIf("isVictorParameterizedTestEnabled")
-    @ParameterizedTest
-    @MethodSource("multipleParamsDataProvider")
-    void testCheckForTestParameterizations_MultipleParams(String annotation, String sourceParameters, String parameters, Set newValues, String addedParameterExpression, String parameterizedAnnotation) throws RefactoringMinerTimedOutException {
-        String baseSourceCode = """
-                    public class TestClass {
-                        %s
-                        @%s%s
-                        public void testMethod(%s) {
-                            assertEquals(null, null);
-                        }
-                    }
-                """;
-        String originalSourceCode = String.format(baseSourceCode, "", "Test", "", "");
-        String newSourceCode = String.format(baseSourceCode, parameterizedAnnotation, annotation, sourceParameters, parameters);
-        UMLModel originalModel = createUmlModel(originalSourceCode);
-        UMLModel newModel = createUmlModel(newSourceCode);
-        UMLModelDiff diff = originalModel.diff(newModel);
-        UMLClassBaseDiff umlClassBaseDiff = diff.getUMLClassDiff("TestClass");
-        assertEquals(addedParameterExpression, umlClassBaseDiff.addedParameter.getExpression());
-        assertEquals(newValues.size(), umlClassBaseDiff.newValue.size());
-        umlClassBaseDiff.newValue.removeAll(newValues);
-        assertIterableEquals(Collections.emptySet(), umlClassBaseDiff.newValue);
     }
 
     private static UMLModel createUmlModel(String sourceCode) {

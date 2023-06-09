@@ -15,11 +15,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -41,6 +41,8 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -430,12 +432,68 @@ class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation
 		return testParameters;
 	}
 }
-/*
 class MethodSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation{
-	public MethodSourceAnnotation(UMLAnnotation annotation) {
-		super(annotation, "MethodSource");
+	private static final String ANNOTATION_TYPENAME = "MethodSource";
+	private final UMLOperation annotatedOperation;
+
+	public MethodSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
+		super(annotation, ANNOTATION_TYPENAME);
+		annotatedOperation = operation;
+		List<String> values = getValue();
+		assert values.size() == 1;
+		String methodSourceName = values.get(0);
+		String pkg = operation.getClassName().substring(0, operation.getClassName().lastIndexOf("."));
+		String name = operation.getNonQualifiedClassName();
+		LocationInfo locationInfo = operation.getLocationInfo();
+		UMLClass declaringClass = model.getClass(new UMLClass(pkg, name, locationInfo, true, Collections.emptyList()));
+		List<UMLOperation> sameNameMethods = declaringClass.getOperations().stream().filter(op -> op.getName().equals(methodSourceName)).collect(Collectors.toList());
+		for (int maxIterations = sameNameMethods.size(); sameNameMethods.size() > 1 && maxIterations-- > 0;) {
+			for (Iterator<UMLOperation> iterator = sameNameMethods.iterator(); iterator.hasNext(); ) {
+				UMLOperation method = iterator.next();
+				if (method.getAnnotations().containsAll(operation.getAnnotations())) {
+					iterator.remove();
+					break;
+				}
+				if (method.equalSignature(operation)) {
+					iterator.remove();
+					break;
+				}
+			}
+		}
+		UMLOperation sourceMethod = sameNameMethods.get(0);
+		Optional<VariableDeclaration> returnedVarCandidates = sourceMethod.getBody().getAllVariableDeclarations().stream().filter(v -> sourceMethod.getReturnParameter().getType().equals(v.getType())).findAny();
+		String strLiterals;
+		if (returnedVarCandidates.isPresent()) {
+			Set<AbstractCodeFragment> stmtsUsingVar = returnedVarCandidates.get().getStatementsInScopeUsingVariable();
+			strLiterals = stmtsUsingVar.stream()
+					.flatMap(stmt -> stmt.getStringLiterals().stream())
+					.map(str -> str.getString())
+					.collect(Collectors.joining(System.getProperty("line.separator")));
+		} else {
+			Optional<StatementObject> stmtCandidate = sourceMethod.getBody().getCompositeStatement().getStatements().stream()
+					.filter(s -> s instanceof StatementObject)
+					.map(s -> (StatementObject) s)
+					.filter(s -> s.isLastStatement())
+					.findAny();
+			if (stmtCandidate.isPresent()) {
+				strLiterals = stmtCandidate.get().getStringLiterals().stream()
+						.map(str -> str.getString())
+						.collect(Collectors.joining(System.getProperty("line.separator")));
+			}
+		}
+	}
+
+	@Override
+	public List<String> getValue() {
+		return Collections.singletonList(annotation.isMarkerAnnotation() ? annotatedOperation.getName() : annotation.getValue().getTypeLiterals().get(0).getString());
+	}
+
+	@Override
+	public List<List<String>> getTestParameters() {
+		return null;
 	}
 }
+/*
 class ArgumentsSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation{
 	public ArgumentsSourceAnnotation(UMLAnnotation annotation) {
 		super(annotation, "ArgumentsSource");
@@ -444,26 +502,8 @@ class ArgumentsSourceAnnotation extends SourceAnnotation implements SingleMember
 */
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
-	public static boolean ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION = System.getenv("ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION") != null ? Boolean.parseBoolean(System.getenv("ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION")) : false;
-
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
-	private static final Set<String> normalSourceAnnotationTypes = Set.of(
-			"CsvSource",
-			"CsvFileSource",
-			"ValueSource");
-	private static final Set<String> singleMemberSourceAnnotationTypes = Set.of(
-			"CsvSource",
-			"CsvFileSource",
-			"MethodSource",
-			"EnumSource",
-			"ArgumentsSource");
-	private static final Set<String> markerSourceAnnotationTypes = Set.of(
-			"MethodSource",
-			"NullSource",
-			"EmptySource",
-			"NullAndEmptySource",
-			"EnumSource");
 	private boolean visibilityChanged;
 	private Visibility oldVisibility;
 	private Visibility newVisibility;
@@ -483,8 +523,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
 	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
-	Set<String> newValue;
-	AbstractExpression addedParameter;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -521,167 +559,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForMovedCodeBetweenOperations();
-		if (ENABLE_VICTOR_PARAMETERIZED_TEST_DETECTION) {
-			checkForTestParameterizations();
-		}
-	}
-
-	/**
-	 * This method checks whether test methods have been parameterized.
-	 * If so, it creates a {@link TestParameterizationRefactoring} object.
-	 */
-	void checkForTestParameterizations() {
-		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if (mapper.getOperation2().hasTestAnnotation() || mapper.getOperation2().hasParameterizedTestAnnotation()) {
-				List<UMLAnnotation> sourcesAnnotations = new ArrayList<>();
-				boolean hasParameterizedTestAnnotation = false;
-				for (UMLAnnotation annotation : mapper.getOperation2().getAnnotations()) {
-					hasParameterizedTestAnnotation = hasParameterizedTestAnnotation ||
-							(annotation.isMarkerAnnotation() && annotation.getTypeName().equals("ParameterizedTest"));
-					if (UMLOperation.isTestNGParameterizedAnnotation(annotation)) {
-						hasParameterizedTestAnnotation = true;
-						sourcesAnnotations.add(annotation);
-					} else if (normalSourceAnnotationTypes.contains(annotation.getTypeName()) ||
-							   singleMemberSourceAnnotationTypes.contains(annotation.getTypeName()) ||
-							   markerSourceAnnotationTypes.contains(annotation.getTypeName())) {
-						sourcesAnnotations.add(annotation);
-					}
-				}
-				if (!hasParameterizedTestAnnotation || sourcesAnnotations.isEmpty()) {
-					continue;
-				}
-				boolean parameterizationAdded = false;
-				if (mapper.getOperationSignatureDiff().isPresent()) {
-					newValue = extractAddedParameters(mapper, sourcesAnnotations);
-				}
-			}
-		}
-	}
-
-	private Set<String> extractAddedParameters(UMLOperationBodyMapper mapper, List<UMLAnnotation> sourcesAnnotations) {
-		boolean parameterizationAdded = false;
-		UMLAnnotationListDiff annotationListDiff = mapper.getOperationSignatureDiff().get().getAnnotationListDiff();
-		List<UMLAnnotation> newAnnotations = Stream.concat(annotationListDiff.getAddedAnnotations().stream(), annotationListDiff.getAnnotationDiffs().stream().map(ann -> ann.getAddedAnnotation())).collect(Collectors.toList());
-		for (UMLAnnotation addedAnnotation : newAnnotations) {
-			if (addedAnnotation.getTypeName().equals("ParameterizedTest")) {
-				parameterizationAdded = true;
-			}
-			else if(UMLOperation.isTestNGParameterizedAnnotation(addedAnnotation)) {
-				parameterizationAdded = true;
-				addedParameter = addedAnnotation.getMemberValuePairs().get("dataProvider");
-				return new HashSet<>(Arrays.asList(addedParameter.getExpression()));
-			}
-			else {
-				try {
-					if (singleMemberSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
-						addedParameter = addedAnnotation.getValue();
-						if (addedParameter == null) {
-							throw new NullPointerException("Parameter is null");
-						}
-						parameterizationAdded = true;
-						return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
-					}
-				} catch (NullPointerException ignored) { /* do nothing */ }
-				if (normalSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
-					List<String> keys = List.of(
-							"value",
-							"strings",
-							"booleans",
-							"bytes",
-							"chars",
-							"doubles",
-							"floats",
-							"ints",
-							"longs",
-							"shorts",
-							"classes",
-							"textBlocks"
-					);
-					for (String key : keys) {
-						addedParameter = addedAnnotation.getMemberValuePairs().get(key);
-						if (addedParameter != null) {
-							break;
-						}
-					}
-					parameterizationAdded = true;
-					return extractValuesFromCollectionStringRepresentation(addedParameter.getExpression());
-				}
-				if (markerSourceAnnotationTypes.contains(addedAnnotation.getTypeName())) {
-					switch (addedAnnotation.getTypeName()) {
-						//TODO: provide AbstractExpression for all marker annotation cases (i.e. @NullSource, @EmptySource, @NullAndEmptySource)
-						case "NullSource":
-							break;
-						case "EmptySource":
-							break;
-						case "NullAndEmptySource":
-							addedParameter = new AbstractExpression(null, getNextClass().getSourceFile(), null, null, null);
-							break;
-						default:
-							throw new IllegalStateException("Unexpectedly added invalid annotation value: " + addedAnnotation.getTypeName());
-					}
-					parameterizationAdded = true;
-					return new HashSet<>();
-				}
-			}
-		}
-		if (!parameterizationAdded) {
-			for (Pair<UMLAnnotation, UMLAnnotation> commonAnnotation : annotationListDiff.getCommonAnnotations()) {
-				if (sourcesAnnotations.contains(commonAnnotation.getRight().getTypeName())) {
-					Set<String> oldValue = Collections.emptySet();
-					Set<String> newValue = Collections.emptySet();
-					if (commonAnnotation.getRight().isSingleMemberAnnotation()) {
-						oldValue = commonAnnotation.getLeft().getValue().getExpression().lines().collect(Collectors.toSet());
-						addedParameter = commonAnnotation.getRight().getValue();
-						newValue = addedParameter.getExpression().lines().collect(Collectors.toSet());
-					}
-					else if (commonAnnotation.getRight().isNormalAnnotation()) {
-						oldValue = commonAnnotation.getLeft().getMemberValuePairs().getOrDefault("value", commonAnnotation.getLeft().getMemberValuePairs().get("textBlock")).getExpression().lines().collect(Collectors.toSet());
-						addedParameter = commonAnnotation.getRight().getMemberValuePairs().getOrDefault("value", commonAnnotation.getRight().getMemberValuePairs().get("textBlock"));
-						newValue = addedParameter.getExpression().lines().collect(Collectors.toSet());
-					}
-					newValue.removeAll(oldValue);
-					return newValue;
-				}
-			}
-		}
-		return Collections.emptySet();
-	}
-
-	private static Set<String> extractValuesFromCollectionStringRepresentation(String expression) {
-		// Match string representation of a Java collection
-		Pattern regex = Pattern.compile("[\\[({]*((?:\"?[\\w]+\"?[, ]*)+)[])}]*");
-		Matcher matcher = regex.matcher(expression);
-		if (matcher.matches()) {
-			// Trim surrounding brackets
-			String remaining = matcher.group(1);
-			regex = Pattern.compile("(?:\"?([\\w]+)[\", ]*)+");
-			Set<String> values = new HashSet<>(matcher.groupCount());
-			do {
-				// Find last matching slice
-				matcher = regex.matcher(remaining);
-				if(matcher.matches() && matcher.groupCount() > 0) {
-					// Add match to values
-					values.add(matcher.group(1));
-				}
-				else {
-					break;
-				}
-				// Remove last matching slice
-				remaining = remaining.substring(matcher.start(), matcher.start(1));
-			} while (remaining.length() > 0);
-			return values;
-		}
-		else {
-			return new HashSet<>(Arrays.asList(expression.split(" ?, ?")));
-		}
-	}
-
-	private static boolean isHomonymous(UMLAnnotation a, String expectedName) {
-		return a.getTypeName().equals(expectedName);
-	}
-
-	private static boolean hasIncreased(Pair<UMLAnnotation, UMLAnnotation> a) {
-		return a.getLeft().toString().length() < a.getRight().toString().length();
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {

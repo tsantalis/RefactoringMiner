@@ -103,6 +103,7 @@ abstract class SourceAnnotation {
 	protected SourceAnnotation(UMLAnnotation annotation, String typeName) {
 		assert annotation.getTypeName().equals(typeName) : "Annotation is not a " + typeName + " annotation";
 		this.annotation = annotation;
+		this.testParameters = new ArrayList<>();
 	}
 	public static SourceAnnotation create(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
 		if (implementations.containsKey(annotation.getTypeName())) {
@@ -110,6 +111,14 @@ abstract class SourceAnnotation {
 		}
 		throw new IllegalArgumentException("Annotation type " + annotation.getTypeName() + " is not supported");
 	}
+
+	protected static String sanitizeLiteral(String literal) {
+		literal = literal.startsWith("\"") ? literal.substring(1) : literal;
+		literal = literal.endsWith("\"") ? literal.substring(0, literal.length() - 1) : literal;
+		literal = literal.endsWith(".class") ? literal.substring(0, literal.length() - 6) : literal;
+		return literal;
+	}
+
 	public abstract List<List<String>> getTestParameters();
 }
 class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnotation, SingleMemberAnnotation {
@@ -267,7 +276,7 @@ class ValueSourceAnnotation extends SourceAnnotation implements NormalAnnotation
 		for (String key : providedKeys) {
 			AbstractExpression annotationParameterValue = memberValuePairs.get(key);
 			for (LeafExpression literal : extractLiterals(annotationParameterValue, key)) {
-				testParameters.add(Collections.singletonList(literal.getString()));
+				testParameters.add(Collections.singletonList(sanitizeLiteral(literal.getString())));
 			}
 		}
 
@@ -278,33 +287,71 @@ class ValueSourceAnnotation extends SourceAnnotation implements NormalAnnotation
 		return testParameters;
 	}
 }
-class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation{
+class EnumSourceAnnotation extends SourceAnnotation implements SingleMemberAnnotation, MarkerAnnotation, NormalAnnotation {
 	public static final String ANNOTATION_TYPENAME = "EnumSource";
 	private List<List<String>> testParameters = new ArrayList<>();
 	public EnumSourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model) {
 		super(annotation, ANNOTATION_TYPENAME);
-		String enumClassLiteral = "";
-		try {
-			enumClassLiteral = getValue().get(1);
-		} catch (AssertionError e) {
-			enumClassLiteral = operation.getParameterTypeList().get(0).getClassType();
+		String enumClassLiteral;
+		if (annotation.isMarkerAnnotation()) {
+			enumClassLiteral = sanitizeLiteral(getFirstParameterType(operation));
+		} else {
+			enumClassLiteral = sanitizeLiteral(getValue().get(0));
 		}
-		enumClassLiteral = enumClassLiteral.startsWith("\"") ? enumClassLiteral.substring(1) : enumClassLiteral;
-		enumClassLiteral = enumClassLiteral.endsWith("\"") ? enumClassLiteral.substring(0, enumClassLiteral.length() - 1) : enumClassLiteral;
-		enumClassLiteral = enumClassLiteral.endsWith(".class") ? enumClassLiteral.substring(0, enumClassLiteral.length() - 6) : enumClassLiteral;
-		for (UMLClass aClass : model.getClassList()) {
-			if(aClass.getName().contains(enumClassLiteral)) {
-				for (UMLEnumConstant constant : aClass.getEnumConstants()) {
-					testParameters.add(Collections.singletonList(constant.getName()));
+		UMLClass enumClassDeclaration = findEnumDeclaration(model, enumClassLiteral);
+		if (annotation.isNormalAnnotation() && annotation.getMemberValuePairs().containsKey("names")) {
+			if (annotation.getMemberValuePairs().containsKey("mode")) {
+				String mode = annotation.getMemberValuePairs().get("mode").getString();
+				if (mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) {
+					for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
+						if (!isExcluded(annotation, constant)) {
+							testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
+						}
+					}
+				} else {
+					testParameters.addAll(extractIncludedNames(annotation));
 				}
+			} else {
+				testParameters.addAll(extractIncludedNames(annotation));
+			}
+		} else {
+			for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
+				testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
 			}
 		}
 	}
 
+	private static boolean isExcluded(UMLAnnotation annotation, UMLEnumConstant constant) {
+		return annotation.getMemberValuePairs().get("names").getStringLiterals().contains(constant.getName());
+	}
+
+	private static List<List<String>> extractIncludedNames(UMLAnnotation annotation) {
+		List<List<String>> includedValues = new ArrayList<>();
+		for (LeafExpression expression : annotation.getMemberValuePairs().get("names").getStringLiterals()) {
+			includedValues.add(Collections.singletonList(sanitizeLiteral(expression.getString())));
+		}
+		return includedValues;
+	}
+
+	private static UMLClass findEnumDeclaration(UMLModel model, String enumClassLiteral) {
+		UMLClass enumClassDeclaration = null;
+		for (UMLClass aClass : model.getClassList()) {
+			if(aClass.getName().contains(enumClassLiteral)) {
+				enumClassDeclaration = aClass;
+			}
+		}
+		return enumClassDeclaration;
+	}
+
+	private static String getFirstParameterType(UMLOperation operation) {
+		return operation.getParametersWithoutReturnType().get(0).getType().getClassType();
+	}
+
 	@Override
 	public List<String> getValue() {
-		assert annotation.isSingleMemberAnnotation() : "getValue() is only supported by single member EnumSource annotation";
-		List<LeafExpression> typeLiterals = annotation.getValue().getTypeLiterals();
+		assert !annotation.isMarkerAnnotation() : "getValue() is not supported by marker EnumSource annotation";
+		AbstractExpression value = annotation.isSingleMemberAnnotation() ? annotation.getValue() : annotation.getMemberValuePairs().get("value");
+		List<LeafExpression> typeLiterals = value.getTypeLiterals();
 		assert typeLiterals.size() == 1;
 		return Collections.singletonList(typeLiterals.get(0).getString());
 	}
@@ -347,31 +394,31 @@ class EmptySourceAnnotation extends SourceAnnotation implements MarkerAnnotation
 
 	public EmptySourceAnnotation(UMLAnnotation annotation, UMLOperation operation, UMLModel model, String typeName) {
 		super(annotation, typeName);
-		switch (operation.getParameterTypeList().get(0).getClassType()) {
-			case "java.util.List":
-			case "java.util.Collection":
-			case "java.util.Set":
-			case "java.util.Map":
+		switch (operation.getParametersWithoutReturnType().get(0).getType().toQualifiedString()) {
+			case "List":
+			case "Collection":
+			case "Set":
+			case "Map":
 				testParameters.add(Collections.singletonList("{}"));
 				break;
-			case "java.lang.Boolean":
+			case "Boolean":
 			case "boolean":
 				testParameters.add(Collections.singletonList("false"));
 				break;
-			case "java.lang.String":
+			case "String":
 				testParameters.add(Collections.singletonList(""));
 				break;
-			case "java.lang.Long":
+			case "Long":
 			case "long":
-			case "java.lang.Short":
+			case "Short":
 			case "short":
-			case "java.lang.Integer":
+			case "Integer":
 			case "int":
-			case "java.lang.Byte":
+			case "Byte":
 			case "byte":
-			case "java.lang.Double":
+			case "Double":
 			case "double":
-			case "java.lang.Float":
+			case "Float":
 			case "float":
 				testParameters.add(Collections.singletonList("0"));
 				break;
@@ -1500,6 +1547,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int overallMaxMatchingTestParameters = -1;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements());
+								if (matchingTestParameters.isEmpty()) {
+									matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
+								}
 								int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
 								if(max >= 1 && (overallMaxMatchingTestParameters == -1 || max == overallMaxMatchingTestParameters)) {
 									if(max > overallMaxMatchingTestParameters) {
@@ -1607,14 +1657,32 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return parameterValues;
 	}
 
+	private Map<Integer, Integer> matchParamsWithRemovedStatements(List<List<String>> parameterValues, List<String> parameterNames, List<AbstractCodeFragment> nonMappedLeavesT1) {
+		Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
+		for(AbstractCodeFragment fragment : nonMappedLeavesT1) {
+			if(fragment instanceof StatementObject && fragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
+				StatementObject statement = (StatementObject)fragment;
+				List<VariableDeclaration> declarations = statement.getVariableDeclarations();
+				assert declarations.size() == 1;
+				String variableInitialValue = declarations.get(0).getInitializer().getString();
+				for(int parameterIndex=0; parameterIndex<parameterValues.size(); parameterIndex++) {
+					for(String value : parameterValues.get(parameterIndex)) {
+						if(variableInitialValue.contains(sanitizeStringLiteral(value))) {
+							int previousValue = matchingTestParameters.getOrDefault(parameterIndex, 0);
+							matchingTestParameters.put(parameterIndex, previousValue + 1);
+						}
+					}
+				}
+			}
+		}
+		return matchingTestParameters;
+	}
+
 	private static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements) {
 		Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {
-				String paramsWithoutDoubleQuotes = r.getBefore();
-				if (r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) {
-					paramsWithoutDoubleQuotes = r.getBefore().substring(1, r.getBefore().length() - 1);
-				}
+				String paramsWithoutDoubleQuotes = sanitizeStringLiteral(r.getBefore());
 				for (int parameterRow = 0; parameterRow < testParameters.size(); parameterRow++) {
 					if (testParameters.get(parameterRow).contains(paramsWithoutDoubleQuotes)) {
 						Integer previousValue = matchingTestParameters.getOrDefault(parameterRow, 0);
@@ -1624,6 +1692,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return matchingTestParameters;
+	}
+
+	private static String sanitizeStringLiteral(String expression) {
+		if (expression.startsWith("\"") && expression.endsWith("\"")) {
+			return expression.substring(1, expression.length() - 1);
+		} else if (expression.endsWith(".class")) {
+			return expression.substring(0, expression.lastIndexOf(".class"));
+		} else if (expression.contains(".")) {
+			return expression.substring(expression.lastIndexOf('.') + 1);
+		}
+		return expression;
 	}
 
 	private void extractParametersFromCsvFile(List<List<String>> testParameters, String csvFile) {

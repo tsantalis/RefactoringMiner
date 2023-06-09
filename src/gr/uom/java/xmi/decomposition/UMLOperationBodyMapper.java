@@ -536,7 +536,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
 				if(!isSplitConditionalExpression(mappings.get(i))) {
-					mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
+					mappings.get(i).temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
 				}
 				else {
 					this.mappings.remove(mappings.get(i));
@@ -1975,7 +1975,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2, false);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
+				mappings.get(i).temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
 			}
 			// TODO remove non-mapped inner nodes from T1 corresponding to mapped expressions
 						
@@ -2361,7 +2361,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, expressionsT2, parameterToArgumentMap1, false);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				mappings.get(i).temporaryVariableAssignment(refactorings, parentMapper != null);
+				mappings.get(i).temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
 			}
 			
 			//remove the leaves that were mapped with replacement, if they are not mapped again for a second time

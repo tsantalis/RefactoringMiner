@@ -1086,6 +1086,10 @@ public abstract class AbstractCall extends LeafExpression {
 		return Collections.emptySet();
 	}
 
+	boolean isAssertion() {
+		return getName().startsWith("assert") || getName().equals("fail");
+	}
+
 	public enum StatementCoverageType {
 		NONE, ONLY_CALL, RETURN_CALL, THROW_CALL, CAST_CALL, VARIABLE_DECLARATION_INITIALIZER_CALL;
 	}

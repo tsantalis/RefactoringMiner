@@ -12,6 +12,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
@@ -2495,6 +2496,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!assertThrows1 && assertThrowsCall != null && parentMapper == null && assertThrowsMappings.size() > 0) {
 			AssertThrowsRefactoring ref = new AssertThrowsRefactoring(assertThrowsMappings, assertThrowsCall, container1, container2);
 			refactorings.add(ref);
+			UMLOperation operation1 = getOperation1();
+			UMLOperation operation2 = getOperation2();
+			if(operation1 != null && operation2 != null) {
+				for(UMLAnnotation annotation : operation1.getAnnotations()) {
+					Map<String, AbstractExpression> memberValuePairs = annotation.getMemberValuePairs();
+					if(memberValuePairs.containsKey("expected")) {
+						AbstractExpression expectedException = memberValuePairs.get("expected");
+						for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+							List<LeafExpression> leafExpressions = fragment2.findExpression(expectedException.getString());
+							if(leafExpressions.size() == 1) {
+								LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+								ref.addSubExpressionMapping(leafMapping);
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

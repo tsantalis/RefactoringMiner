@@ -224,24 +224,27 @@ public abstract class AbstractCodeMapping {
 				LeafMapping leafMapping = new LeafMapping(getFragment1(), variableDeclaration.getInitializer(), operation1, operation2);
 				ref.addSubExpressionMapping(leafMapping);
 				processExtractVariableRefactoring(ref, refactorings);
-				checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+				checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 				identicalWithExtractedVariable = true;
 			}
 		}
 	}
 
-	private void checkForNestedExtractVariable(Set<Refactoring> refactorings, List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlinedMethod) {
+	private void checkForNestedExtractVariable(ExtractVariableRefactoring parentRefactoring, Set<Refactoring> refactorings, List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlinedMethod) {
 		for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
-			List<VariableDeclaration> variableDeclarations2 = leaf2.getVariableDeclarations();
-			if(variableDeclarations2.size() == 1 && variableDeclarations2.get(0).getInitializer() != null) {
-				List<LeafExpression> leafExpressions1 = getFragment1().findExpression(variableDeclarations2.get(0).getInitializer().getString());
-				if(leafExpressions1.size() > 0) {
-					ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclarations2.get(0), operation1, operation2, insideExtractedOrInlinedMethod);
-					for(LeafExpression subExpression : leafExpressions1) {
-						LeafMapping leafMapping2 = new LeafMapping(subExpression, variableDeclarations2.get(0).getInitializer(), operation1, operation2);
-						ref2.addSubExpressionMapping(leafMapping2);
+			List<VariableDeclaration> variableDeclarations = leaf2.getVariableDeclarations();
+			if(variableDeclarations.size() == 1) {
+				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
+				if(variableDeclaration.getInitializer() != null) {
+					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(variableDeclaration.getInitializer().getString());
+					if(leafExpressions1.size() > 0 && parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+						ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						for(LeafExpression subExpression : leafExpressions1) {
+							LeafMapping leafMapping2 = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
+							ref2.addSubExpressionMapping(leafMapping2);
+						}
+						processExtractVariableRefactoring(ref2, refactorings);
 					}
-					processExtractVariableRefactoring(ref2, refactorings);
 				}
 			}
 		}
@@ -288,7 +291,7 @@ public abstract class AbstractCodeMapping {
 									ref.addSubExpressionMapping(leafMapping);
 								}
 								processExtractVariableRefactoring(ref, refactorings);
-								checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 								if(identical()) {
 									identicalWithExtractedVariable = true;
 								}
@@ -313,7 +316,7 @@ public abstract class AbstractCodeMapping {
 							ref.addSubExpressionMapping(leafMapping);
 						}
 						processExtractVariableRefactoring(ref, refactorings);
-						checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						if(identical()) {
 							identicalWithExtractedVariable = true;
 						}
@@ -337,7 +340,7 @@ public abstract class AbstractCodeMapping {
 										ref.addSubExpressionMapping(leafMapping);
 									}
 									processExtractVariableRefactoring(ref, refactorings);
-									checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+									checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 									return;
 								}
 							}
@@ -368,7 +371,7 @@ public abstract class AbstractCodeMapping {
 							ref.addSubExpressionMapping(leafMapping);
 						}
 						processExtractVariableRefactoring(ref, refactorings);
-						checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						return;
 					}
 				}
@@ -402,7 +405,7 @@ public abstract class AbstractCodeMapping {
 								}
 							}
 							processExtractVariableRefactoring(ref, refactorings);
-							checkForNestedExtractVariable(refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+							checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 							if(identical()) {
 								identicalWithExtractedVariable = true;
 							}

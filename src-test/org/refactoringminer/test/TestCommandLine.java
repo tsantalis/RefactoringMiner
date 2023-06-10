@@ -138,12 +138,11 @@ public class TestCommandLine {
                 "-gc",
                 "https://github.com/apache/drill.git",
                 commit,
-                "100", // timeout at 100 seconds
+                "100",
                 "-json",
                 jsonPath
         };
         RefactoringMiner.detectAtGitHubCommit(args);
-        Thread.sleep(100_000L); // wait 100 seconds
         List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-" + commit + "-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assertions.assertEquals(expected, actual);
@@ -156,12 +155,11 @@ public class TestCommandLine {
                 "-gp",
                 "https://github.com/apache/drill.git",
                 "1762",
-                "100", // timeout at 100 seconds
+                "100",
                 "-json",
                 jsonPath
         };
         RefactoringMiner.detectAtGitHubPullRequest(args);
-        Thread.sleep(100_000L); // wait 100 seconds
         List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "drill-gp-expected.json"));
         List<String> actual = IOUtils.readLines(new FileReader(jsonPath));
         Assertions.assertEquals(expected, actual);
@@ -169,7 +167,6 @@ public class TestCommandLine {
 
     private void waitUntilFileExists(String path) throws InterruptedException {
         while (!Path.of(path).toFile().exists()) {
-            // wait 10 seconds to reduce system calls overhead
             Thread.sleep(100);
         }
     }

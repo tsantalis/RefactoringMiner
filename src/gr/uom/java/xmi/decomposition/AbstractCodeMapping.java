@@ -773,6 +773,24 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 		}
+		for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
+			List<VariableDeclaration> variableDeclarations = leaf2.getVariableDeclarations();
+			if(variableDeclarations.size() == 1) {
+				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
+				if(variableDeclaration.getInitializer() != null && initializer.findExpression(variableDeclaration.getVariableName()).size() > 0) {
+					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(input);
+					if(leafExpressions1.size() > 0 && variableDeclaration.getInitializer().findExpression(input).size() > 0) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						for(LeafExpression subExpression : leafExpressions1) {
+							LeafMapping leafMapping = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
+						processExtractVariableRefactoring(ref, refactorings);
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 

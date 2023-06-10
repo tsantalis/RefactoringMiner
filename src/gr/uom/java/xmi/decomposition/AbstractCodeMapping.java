@@ -237,17 +237,31 @@ public abstract class AbstractCodeMapping {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
 				if(variableDeclaration.getInitializer() != null) {
 					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(variableDeclaration.getInitializer().getString());
-					if(leafExpressions1.size() > 0 && parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration)) {
 						ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
-						for(LeafExpression subExpression : leafExpressions1) {
-							LeafMapping leafMapping2 = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
-							ref2.addSubExpressionMapping(leafMapping2);
+						if(!ref2.equals(parentRefactoring)) {
+							for(LeafExpression subExpression : leafExpressions1) {
+								LeafMapping leafMapping2 = new LeafMapping(subExpression, variableDeclaration.getInitializer(), operation1, operation2);
+								ref2.addSubExpressionMapping(leafMapping2);
+							}
+							processExtractVariableRefactoring(ref2, refactorings);
 						}
-						processExtractVariableRefactoring(ref2, refactorings);
 					}
 				}
 			}
 		}
+	}
+
+	private boolean isVariableReferenced(ExtractVariableRefactoring parentRefactoring, VariableDeclaration variableDeclaration) {
+		if(parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : parentRefactoring.getReferences()) {
+			if(mapping.getFragment2().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,

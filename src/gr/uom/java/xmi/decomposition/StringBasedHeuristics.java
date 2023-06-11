@@ -409,13 +409,15 @@ public class StringBasedHeuristics {
 				if(variableDeclaration1.getInitializer() == null && variableDeclaration2.getInitializer() != null &&
 						(variableDeclaration2.getInitializer().getExpression().equals("null") ||
 						variableDeclaration2.getInitializer().getExpression().equals("0") ||
-						variableDeclaration2.getInitializer().getExpression().equals("false"))) {
+						variableDeclaration2.getInitializer().getExpression().equals("false") ||
+						numberLiteralInitializer(variableDeclaration2))) {
 					defaultInitializers++;
 				}
 				else if(variableDeclaration2.getInitializer() == null && variableDeclaration1.getInitializer() != null &&
 						(variableDeclaration1.getInitializer().getExpression().equals("null") ||
 						variableDeclaration1.getInitializer().getExpression().equals("0") ||
-						variableDeclaration1.getInitializer().getExpression().equals("false"))) {
+						variableDeclaration1.getInitializer().getExpression().equals("false") ||
+						numberLiteralInitializer(variableDeclaration1))) {
 					defaultInitializers++;
 				}
 			}
@@ -426,6 +428,10 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static boolean numberLiteralInitializer(VariableDeclaration variableDeclaration) {
+		return variableDeclaration.getInitializer().getNumberLiterals().size() > 0 && variableDeclaration.getInitializer().getExpression().equals(variableDeclaration.getInitializer().getNumberLiterals().get(0).getString());
 	}
 
 	private static String variableDeclarationAsString(VariableDeclaration variableDeclaration) {

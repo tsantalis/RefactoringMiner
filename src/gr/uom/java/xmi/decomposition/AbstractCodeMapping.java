@@ -9,6 +9,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -237,6 +239,13 @@ public abstract class AbstractCodeMapping {
 				VariableDeclaration variableDeclaration = variableDeclarations.get(0);
 				if(variableDeclaration.getInitializer() != null) {
 					List<LeafExpression> leafExpressions1 = getFragment1().findExpression(variableDeclaration.getInitializer().getString());
+					if(leafExpressions1.isEmpty() && !leaf2.equals(getFragment2())) {
+						for(AbstractCall invocation : getFragment1().getMethodInvocations()) {
+							if(variableDeclaration.getInitializer().getString().startsWith(invocation.actualString()) || variableDeclaration.getInitializer().getString().endsWith(invocation.actualString())) {
+								leafExpressions1 = getFragment1().findExpression(invocation.actualString());
+							}
+						}
+					}
 					if(leafExpressions1.size() > 0 && isVariableReferenced(parentRefactoring, variableDeclaration)) {
 						ExtractVariableRefactoring ref2 = new ExtractVariableRefactoring(variableDeclaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						if(!ref2.equals(parentRefactoring)) {
@@ -256,12 +265,70 @@ public abstract class AbstractCodeMapping {
 		if(parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
 			return true;
 		}
+		if(parentRefactoring.getVariableDeclaration().isAttribute()) {
+			for(LeafMapping mapping : parentRefactoring.getSubExpressionMappings()) {
+				if(ReplacementUtil.contains(mapping.getFragment2().getString(), variableDeclaration.getVariableName())) {
+					return true;
+				}
+			}
+		}
 		for(AbstractCodeMapping mapping : parentRefactoring.getReferences()) {
 			if(mapping.getFragment2().findExpression(variableDeclaration.getVariableName()).size() > 0) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private void checkForAliasedVariable(AbstractExpression initializer, Replacement replacement,
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
+		VariableDeclaration aliasedDeclaration = operation2.getVariableDeclaration(initializer.getString());
+		if(aliasedDeclaration != null && aliasedDeclaration.getInitializer() != null) {
+			//initializer = aliasedDeclaration.getInitializer();
+		}
+		else if(classDiff != null) {
+			UMLAttribute aliasedWithAttribute = null;
+			if(classDiff.getNextClass().containsAttributeWithName(initializer.getString())) {
+				for(UMLAttribute attribute : classDiff.getNextClass().getAttributes()) {
+					if(attribute.getName().equals(initializer.getString())) {
+						aliasedWithAttribute = attribute;
+						break;
+					}
+				}
+			}
+			UMLClass addedClass = classDiff.getModelDiff().getAddedClass(operation2.getClassName());
+			if(addedClass != null && addedClass.containsAttributeWithName(initializer.getString())) {
+				for(UMLAttribute attribute : addedClass.getAttributes()) {
+					if(attribute.getName().equals(initializer.getString())) {
+						aliasedWithAttribute = attribute;
+						break;
+					}
+				}
+			}
+			if(aliasedWithAttribute != null) {
+				for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
+					if(leaf2.getString().startsWith(initializer.getString() + "=")) {
+						if(replacement instanceof VariableReplacementWithMethodInvocation) {
+							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+							for(AbstractCall call : leaf2.getMethodInvocations()) {
+								if(call.equals(r.getInvokedOperation())) {
+									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(aliasedWithAttribute.getVariableDeclaration(), operation1, operation2, insideExtractedOrInlinedMethod);
+									LeafMapping leafMapping = new LeafMapping(r.getInvokedOperation(), call, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+									processExtractVariableRefactoring(ref, refactorings);
+									checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+									if(identical()) {
+										identicalWithExtractedVariable = true;
+									}
+									break;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
@@ -315,6 +382,7 @@ public abstract class AbstractCodeMapping {
 					}
 				}
 				if(variableName.equals(after) && initializer != null) {
+					checkForAliasedVariable(initializer, replacement, nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 					if(initializer.toString().equals(before) ||
 							initializer.toString().equals("this." + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||

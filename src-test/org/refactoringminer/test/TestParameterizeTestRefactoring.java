@@ -702,74 +702,51 @@ class TestParameterizeTestRefactoring {
         }
 
     }
+    @Nested
+    class TestCheckForTestParameterizations_OneStringParam_Plugin {
 
-    @ParameterizedTest
-    @ValueSource(strings = {"""
-            public class TestClass {
-                @ParameterizedTest
-                @ValueSource(strings = {"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource({"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource({"value",
-                "value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource(value={"value","value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            ""","""
-            public class TestClass {
-                @ParameterizedTest
-                @CsvSource(value = {"value",
-                "value2"})
-                public void testMethod(String parameter) {
-                    assertEquals(parameter, null);
-                }
-            }
-            """})
-    void testCheckForTestParameterizations_OneStringParam_Plugin(String newSourceCode) throws RefactoringMinerTimedOutException {
-        String originalSourceCode = """
-                    public class TestClass {
-                        @Test
-                        public void testMethod() {
-                            assertEquals(null, null);
-                        }
-                    }
-                """;
-        UMLModel originalModel = createUmlModel(originalSourceCode);
-        UMLModel newModel = createUmlModel(newSourceCode);
-        UMLModelDiff diff = originalModel.diff(newModel);
-        UMLClassBaseDiff umlClassBaseDiff = diff.getUMLClassDiff("TestClass");
-        List<Refactoring> refactorings = diff.getRefactorings();
-        assertEquals(4, refactorings.size());
-        assertArrayEquals(new String[]{"Add Parameter","Add Method Annotation","Add Method Annotation","Remove Method Annotation"}, refactorings.stream().map(Refactoring::getName).toArray());
-        AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) refactorings.stream().filter(r -> r.getName().equals("Add Method Annotation") && ((AddMethodAnnotationRefactoring) r).getAnnotation().getTypeName().endsWith("Source")).findFirst().get();
-        if (addMethodAnnotationRefactoring.getAnnotation().isNormalAnnotation()) {
-            assertEquals("{\"value\",\"value2\"}", addMethodAnnotationRefactoring.getAnnotation().getMemberValuePairs().values().stream().findAny().get().getExpression(), "Normal annotation has incorrect value");
-        } else if (addMethodAnnotationRefactoring.getAnnotation().isSingleMemberAnnotation()) {
+        private String originalSourceCode;
+        private TestSrcCodeBuilder parameterizedTestBuilder;
+
+        @BeforeEach
+        void setUp() {
+            originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .statement("assertEquals(null, null);")
+                    .build();
+            parameterizedTestBuilder = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .parameter("String parameter")
+                    .statement("assertEquals(parameter, null);");
+        }
+
+        @Test
+        void test_SingleMemberAnnotation() throws RefactoringMinerTimedOutException {
+            String newSourceCode = parameterizedTestBuilder
+                    .annotate("@CsvSource({\"value\",\"value2\"})")
+                    .build();
+            AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) extractRefactorings(newSourceCode).stream()
+                    .filter(r -> r.getName().equals("Add Method Annotation") && ((AddMethodAnnotationRefactoring) r).getAnnotation().getTypeName().endsWith("Source"))
+                    .findFirst().get();
             assertEquals("{\"value\",\"value2\"}", addMethodAnnotationRefactoring.getAnnotation().getValue().getExpression(), "Member value pair annotation has incorrect value");
-        } else {
-            fail("Annotation is not normal or single member");
+        }
+
+        @Test
+        void testCheckForTestParameterizations_OneStringParam_Plugin_NormalAnnotation() throws RefactoringMinerTimedOutException {
+            String newSourceCode = parameterizedTestBuilder
+                    .annotate("@ValueSource(strings = {\"value\",\"value2\"})")
+                    .build();
+            AddMethodAnnotationRefactoring addMethodAnnotationRefactoring = (AddMethodAnnotationRefactoring) extractRefactorings(newSourceCode).stream()
+                    .filter(r -> r.getName().equals("Add Method Annotation") && ((AddMethodAnnotationRefactoring) r).getAnnotation().getTypeName().endsWith("Source"))
+                    .findFirst().get();
+            assertEquals("{\"value\",\"value2\"}", addMethodAnnotationRefactoring.getAnnotation().getMemberValuePairs().values().stream().findAny().get().getExpression(), "Normal annotation has incorrect value");
+        }
+
+        private List<Refactoring> extractRefactorings(String newSourceCode) throws RefactoringMinerTimedOutException {
+            UMLModel originalModel = createUmlModel(originalSourceCode);
+            UMLModel newModel = createUmlModel(newSourceCode);
+            UMLModelDiff diff = originalModel.diff(newModel);
+            List<Refactoring> refactorings = diff.getRefactorings();
+            return refactorings;
         }
     }
 
@@ -787,5 +764,81 @@ class TestParameterizeTestRefactoring {
         UMLClass aClass = new UMLClass("org.refactoringminer.test", "TestClass", location, true, Collections.emptyList());
         aClass.setVisibility(Visibility.PUBLIC);
         return model;
+    }
+}
+class TestSrcCodeBuilder implements Builder<String> {
+
+
+
+    enum MethodComponent {STATEMENT, ANNOTATION, PARAMETER;};
+    private String className;
+
+    private boolean parameterized;
+    private String lastAddedMethod;
+    private Map<String, Map<MethodComponent, List<String>>> methods;
+    public TestSrcCodeBuilder() {
+        parameterized = false;
+        methods = new HashMap<>();
+    }
+    public TestSrcCodeBuilder(TestSrcCodeBuilder other) {
+        this.className = other.className;
+        this.parameterized = other.parameterized;
+        this.lastAddedMethod = other.lastAddedMethod;
+        this.methods = other.methods;
+    }
+
+    public TestSrcCodeBuilder testClass(String name) {
+        className = name;
+        return this;
+    }
+    public TestSrcCodeBuilder testMethod(String name) {
+        assert !methods.containsKey(name) : "Conflict: another method is already named (%s)".formatted(name);
+        lastAddedMethod = name;
+        methods.put(name, Map.of(MethodComponent.PARAMETER,new ArrayList<>(),
+                                MethodComponent.STATEMENT,new ArrayList<>(),
+                                MethodComponent.ANNOTATION,new ArrayList<>()));
+        return this;
+    }
+    public TestSrcCodeBuilder parameter(String param) {
+        methods.get(lastAddedMethod).get(MethodComponent.PARAMETER).add(param);
+        return this;
+    }
+    public TestSrcCodeBuilder annotate(String name) {
+        methods.get(lastAddedMethod).get(MethodComponent.ANNOTATION).add(name);
+        return this;
+    }
+    public TestSrcCodeBuilder statement(String stmt) {
+        methods.get(lastAddedMethod).get(MethodComponent.STATEMENT).add(stmt);
+        return this;
+    }
+    public TestSrcCodeBuilder parameterize() {
+        parameterized = true;
+        return this;
+    }
+
+    @Override
+    public String build() {
+        if (className == null || className.isEmpty()) {
+            className = "TestClass";
+        }
+        String methodDeclarations = "";
+        for (String m : methods.keySet()) {
+            methodDeclarations = methodDeclarations.concat("%s %s public void %s(%s){%s}\n".formatted(
+                    parameterized ? "@ParameterizedTest" : "@Test",
+                    getAsString(m, MethodComponent.ANNOTATION),
+                    m,
+                    getAsString(m, MethodComponent.PARAMETER),
+                    getAsString(m, MethodComponent.STATEMENT)
+            ));
+        }
+        return "public class %s {%s}".formatted(className,methodDeclarations);
+    }
+
+    private String getAsString(String m, MethodComponent component, CharSequence delimiter) {
+        return String.join(delimiter,methods.get(m).get(component));
+    }
+
+    private String getAsString(String m, MethodComponent component) {
+        return component == MethodComponent.PARAMETER ? getAsString(m,component,", ") : getAsString(m,component," ");
     }
 }

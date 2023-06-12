@@ -614,32 +614,22 @@ class TestParameterizeTestRefactoring {
 
         @BeforeAll
         static void setUp() throws RefactoringMinerTimedOutException {
-            String originalSourceCode = """
-                    public class TestClass {
-                        @Test
-                        public void testMethod_A() {
-                            assertNotEquals("A", null);
-                            assertNotEquals("B", null);
-                        }
-                        @Test
-                        public void testMethod_B() {
-                            assertNotEquals("C", null);
-                            assertNotEquals("D", null);
-                        }
-                    }
-                """;
+            String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
+                    .statement("assertNotEquals(\"A\", null);")
+                    .statement("assertNotEquals(\"B\", null);")
+                    .testMethod("testMethod_B")
+                    .statement("assertNotEquals(\"C\", null);")
+                    .statement("assertNotEquals(\"D\", null);")
+                    .build();
             Path csvPath = dir.resolve("file.csv");
-            String newSourceCode = """
-                public class TestClass {
-                    @ParameterizedTest
-                    @CsvFileSource(files = \"""" + csvPath.toString() + """
-                    \")
-                    public void testMethod(String param1, String param2) {
-                        assertNotEquals(param1, null);
-                        assertNotEquals(param2, null);
-                    }
-                }
-                """;
+            String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .parameter("String param1")
+                    .parameter("String param2")
+                    .statement("assertNotEquals(param1, null);")
+                    .statement("assertNotEquals(param2, null);")
+                    .build();
             try {
                 FileWriter fileWriter = new FileWriter(csvPath.toFile());
                 fileWriter.write("A,B\nC,D");

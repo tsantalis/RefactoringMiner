@@ -1705,6 +1705,7 @@ public class UMLModelDiff {
 					for(ExtractOperationRefactoring extractRefactoring : refs) {
 						if(!refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(extractRefactoring.getExtractedOperation())) {
 							this.refactorings.add(extractRefactoring);
+							refactorings.addAll(extractRefactoring.getBodyMapper().getRefactorings());
 						}
 					}
 				}

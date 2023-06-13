@@ -251,9 +251,11 @@ public class StringBasedHeuristics {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
 					if(invocation1.actualString().equals(diff1) && invocation1.arguments().contains(diff2) &&
 							(invocation1.arguments().size() == 1 || (diff2.contains(" ? ") && diff2.contains(" : ")))) {
-						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation1, Direction.INVOCATION_TO_VARIABLE);
-						info.addReplacement(r);
-						return true;
+						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation1, Direction.INVOCATION_TO_VARIABLE);
+							info.addReplacement(r);
+							return true;
+						}
 					}
 				}
 			}
@@ -261,9 +263,11 @@ public class StringBasedHeuristics {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
 					if(invocation2.actualString().equals(diff2) && invocation2.arguments().contains(diff1) &&
 							(invocation2.arguments().size() == 1 || (diff1.contains(" ? ") && diff1.contains(" : ")))) {
-						Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation2, Direction.VARIABLE_TO_INVOCATION);
-						info.addReplacement(r);
-						return true;
+						if(!variableDeclarationNameReplaced(variableDeclarations1, variableDeclarations2, info.getReplacements()) && !returnExpressionReplaced(s1, s2, info.getReplacements())) {
+							Replacement r = new VariableReplacementWithMethodInvocation(diff1, diff2, invocation2, Direction.VARIABLE_TO_INVOCATION);
+							info.addReplacement(r);
+							return true;
+						}
 					}
 				}
 			}

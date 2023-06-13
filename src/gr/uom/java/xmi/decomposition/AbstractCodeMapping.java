@@ -403,6 +403,20 @@ public abstract class AbstractCodeMapping {
 						before = before.substring(1, before.length()-1);
 					}
 				}
+				if(replacement.getType().equals(ReplacementType.CAST_EXPRESSION)) {
+					String cast1 = null;
+					String cast2 = null;
+					if(after.startsWith("(") && after.contains(")")) {
+						cast1 = after.substring(0, after.indexOf(")")+1);
+					}
+					if(before.startsWith("(") && before.contains(")")) {
+						cast2 = before.substring(0, before.indexOf(")")+1);
+					}
+					if(cast1 != null && cast2 != null && cast1.equals(cast2)) {
+						after = after.substring(after.indexOf(")")+1, after.length());
+						before = before.substring(before.indexOf(")")+1, before.length());
+					}
+				}
 				if(replacement instanceof MethodInvocationReplacement) {
 					MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
 					AbstractCall callBefore = r.getInvokedOperationBefore();
@@ -572,6 +586,20 @@ public abstract class AbstractCodeMapping {
 					}
 					if(before.startsWith("(") && before.endsWith(")")) {
 						before = before.substring(1, before.length()-1);
+					}
+				}
+				if(replacement.getType().equals(ReplacementType.CAST_EXPRESSION)) {
+					String cast1 = null;
+					String cast2 = null;
+					if(after.startsWith("(") && after.contains(")")) {
+						cast1 = after.substring(0, after.indexOf(")")+1);
+					}
+					if(before.startsWith("(") && before.contains(")")) {
+						cast2 = before.substring(0, before.indexOf(")")+1);
+					}
+					if(cast1 != null && cast2 != null && cast1.equals(cast2)) {
+						after = after.substring(after.indexOf(")")+1, after.length());
+						before = before.substring(before.indexOf(")")+1, before.length());
 					}
 				}
 				if(before.startsWith(variableName + ".")) {

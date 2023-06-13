@@ -7207,6 +7207,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> parenthesizedExpressions2 = convertToStringSet(statement2.getParenthesizedExpressions());
 		removeCommonElements(parenthesizedExpressions1, parenthesizedExpressions2);
 		
+		Set<String> castExpressions1 = convertToStringSet(statement1.getCastExpressions());
+		Set<String> castExpressions2 = convertToStringSet(statement2.getCastExpressions());
+		removeCommonElements(castExpressions1, castExpressions2);
+		
 		//perform type replacements
 		findReplacements(types1, types2, replacementInfo, ReplacementType.TYPE);
 		
@@ -7664,6 +7668,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+		}
+		if(variableDeclarations1.toString().equals(variableDeclarations2.toString()) && castExpressions1.size() == castExpressions2.size() && castExpressions1.size() > 0) {
+			findReplacements(castExpressions1, castExpressions2, replacementInfo, ReplacementType.CAST_EXPRESSION);
 		}
 		if(!argumentsWithIdenticalMethodCalls(arguments1, arguments2, methodInvocations1, methodInvocations2)) {
 			findReplacements(arguments1, methodInvocations2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION);

@@ -7,10 +7,14 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.utils.CaseInfo;
+import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.utils.UtilMethods;
+import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +53,6 @@ public class SpecificCasesTest {
             executed = true;
         }
         assertTrue(executed, "RenameParameter test case not executed properly");
-
     }
     @Test
     public void testExtractMethodReturnStatement() throws Exception {
@@ -86,6 +89,21 @@ public class SpecificCasesTest {
         }
         return allCases.stream();
     }
+    @Test
+    public void testMethodReference() throws Exception {
+        String url = "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        boolean executed = false;
+        Set<Mapping> mappings = null;
+        for (ASTDiff astDiff : astDiffs) {
+            mappings = astDiff.getAllMappings().getMappings();
+        }
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/562c4447a566170ac28872a88b323669a82db5c9/Builder.MethodRef.ByteBufferLogInputStreamTest.json";
+        String expected = new String(Files.readAllBytes(Path.of(filePath)));
+        assertEquals(
+                expected,
+                        MappingExportModel.exportString(mappings),"Different mappings for mock migration commit");
+    }
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initData")
     public void toyExampleTest(String repo, String commit, String srcFileName, String expected, String actual) {
@@ -93,5 +111,4 @@ public class SpecificCasesTest {
         assertEquals(expected.length(),actual.length(), msg);
         assertEquals(expected, actual, msg);
     }
-
 }

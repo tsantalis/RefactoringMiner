@@ -67,4 +67,5 @@ public class Constants {
 	public static final String COMPILATION_UNIT = "CompilationUnit";
 	public static final String JAVA_DOC = "Javadoc";
 	public static final String SIMPLE_TYPE = "SimpleType";
+    public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
 }

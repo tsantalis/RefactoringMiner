@@ -24,16 +24,11 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.InvalidParameterException;
-import java.time.Clock;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,8 +39,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -65,331 +61,170 @@ class TestParameterizeTestRefactoring {
     private static Collection<Arguments> testParameterizeTest() {
         List<Arguments> arguments = new ArrayList<>();
         {
-            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", """
-                    public class TestClass {
-                        @Test
-                        void testTestFileRelativePath() {
-                            assertNotNull("");
-                            assertTrue("".length() >= 0);
-                            assertTrue("".length() < 2);
-                        }
-                        @Test
-                        void testTestFileRelativePath_1() {
-                            assertNotNull("1");
-                            assertTrue("1".length() >= 0);
-                            assertTrue("1".length() < 2);
-                        }
-                        @Test
-                        void testTestFileRelativePath_2() {
-                            assertNotNull("2");
-                            assertTrue("2".length() >= 0);
-                            assertTrue("2".length() < 2);
-                        }
-                        @Test
-                        void testTestFileRelativePath_3() {
-                            assertNotNull("3");
-                            assertTrue("3".length() >= 0);
-                            assertTrue("3".length() < 2);
-                        }
-                        @Test
-                        void testTestFileRelativePath_4() {
-                            assertNotNull("4");
-                            assertTrue("4".length() >= 0);
-                            assertTrue("4".length() < 2);
-                        }
-                        @Test
-                        void testTestFileRelativePath_5() {
-                            assertNotNull("5");
-                            assertTrue("5".length() >= 0);
-                            assertTrue("5".length() < 2);
-                        }
-                    }
-                    """), Map.of("src/test/java/com/test/TestClass.java", """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @EmptySource
-                        @ValueSource(strings={"1","2","3","4","5"})
-                        void testTestFileRelativePath(String s) {
-                            assertNotNull(s);
-                            assertTrue(s.length() >= 0);
-                            assertTrue(s.length() < 2);
-                        }
-                    }
-                    """), Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
-            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", """
-                        public class TestClass {
-                            @Test
-                            void testTestFileRelativePath() {
-                                String s = "";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                            @Test
-                            void testTestFileRelativePath_1() {
-                                String s = "1";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                            @Test
-                            void testTestFileRelativePath_2() {
-                                String s = "2";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                            @Test
-                            void testTestFileRelativePath_3() {
-                                String s = "3";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                            @Test
-                            void testTestFileRelativePath_4() {
-                                String s = "4";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                            @Test
-                            void testTestFileRelativePath_5() {
-                                String s = "5";
-                                assertNotNull(s);
-                                assertTrue(s.length() >= 0);
-                                assertTrue(s.length() < 2);
-                            }
-                        }
-                    """), Map.of("src/test/java/com/test/TestClass.java", """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @EmptySource
-                        @ValueSource(strings={"1","2","3","4","5"})
-                        void testTestFileRelativePath(String s) {
-                            assertNotNull(s);
-                            assertTrue(s.length() >= 0);
-                            assertTrue(s.length() < 2);
-                        }
-                    }
-                    """), Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
+            TestSrcCodeBuilder originalCodeBuilder = new TestSrcCodeBuilder();
+            originalCodeBuilder.testMethod("testTestFileRelativePath")
+                    .statement("assertNotNull(\"\");")
+                    .statement("assertTrue(\"\".length() >= 0);")
+                    .statement("assertTrue(\"\".length() < 2);");
+            for (int i = 1; i <= 5; i++) {
+                originalCodeBuilder.testMethod("testTestFileRelativePath_%d".formatted(i))
+                        .statement("assertNotNull(\"%d\");".formatted(i))
+                        .statement("assertTrue(\"%d\".length() >= 0);".formatted(i))
+                        .statement("assertTrue(\"%d\".length() < 2);".formatted(i));
+            }
+            TestSrcCodeBuilder newCodeBuilder = new TestSrcCodeBuilder();
+            newCodeBuilder.parameterize()
+                    .testMethod("testTestFileRelativePath")
+                    .annotate("@EmptySource")
+                    .annotate("@ValueSource(strings={\"1\",\"2\",\"3\",\"4\",\"5\"})")
+                    .parameter("String s")
+                    .statement("assertNotNull(s);")
+                    .statement("assertTrue(s.length() >= 0);")
+                    .statement("assertTrue(s.length() < 2);");
+            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", originalCodeBuilder.build()),
+                                    Map.of("src/test/java/com/test/TestClass.java", newCodeBuilder.build()),
+                    Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
+            originalCodeBuilder = new TestSrcCodeBuilder();
+            originalCodeBuilder.testMethod("testTestFileRelativePath")
+                    .statement("String s = \"\";")
+                    .statement("assertNotNull(\"\");")
+                    .statement("assertTrue(\"\".length() >= 0);")
+                    .statement("assertTrue(\"\".length() < 2);");
+            for (int i = 1; i <= 5; i++) {
+                originalCodeBuilder.testMethod("testTestFileRelativePath_%d".formatted(i))
+                        .statement("String s = \"%d\";".formatted(i))
+                        .statement("assertNotNull(\"%d\");".formatted(i))
+                        .statement("assertTrue(\"%d\".length() >= 0);".formatted(i))
+                        .statement("assertTrue(\"%d\".length() < 2);".formatted(i));
+            }
+            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", originalCodeBuilder.build()),
+                    Map.of("src/test/java/com/test/TestClass.java", newCodeBuilder.build()),
+                    Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
         }
+        Function<String, String> enumDeclaration = (String methoDeclaration) -> "package com.test;\npublic enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}".formatted(methoDeclaration);
         {
-            Map<String, String> files = Map.of(
-                    "src/main/java/com/test/TestEnum.java", """
-                            package com.test;
-                            public enum TestEnum {
-                                TEST1, TEST2, TEST3, TEST4, TEST5;
-                                int number() {
-                                    return Integer.parseInt(name().substring(name().length() - 1));
-                                }
-                            }
-                            """,
-                    "src/test/java/com/test/TestClass.java", """
-                                    package com.test;
-                                    import org.junit.jupiter.params.ParameterizedTest;
-                                    import org.junit.jupiter.params.provider.EnumSource;
-                                    import static org.junit.jupiter.api.Assertions.assertTrue;
-                                    public class TestClass {
-                                        @ParameterizedTest
-                                        @EnumSource%s
-                                        void testEnum(TestEnum te) {
-                                            assertTrue(te.number() >= 1 && te.number() <= 5);
-                                        }
-                                    }
-                            """.formatted("", "(TestEnum.class)"));
+            Set<String> dirSet = Set.of("src/", "src/main/", "src/main/java", "src/main/java/test");
+            TestSrcCodeBuilder newCodeBuilder = new TestSrcCodeBuilder().testPackage("com.test")
+                    .importStatement("org.junit.jupiter.params.ParameterizedTest")
+                    .importStatement("org.junit.jupiter.params.provider.EnumSource")
+                    .importStatement("static org.junit.jupiter.api.Assertions.assertTrue")
+                    .testMethod("testEnum")
+                    .parameterize()
+                    .annotate("@EnumSource")
+                    .parameter("TestEnum te")
+                    .statement("assertTrue(te.number() >= 1 && te.number() <= 5);");
+            Map<String, String> files = new HashMap<>(Map.of(
+                    "src/main/java/com/test/TestEnum.java",
+                    enumDeclaration.apply("int number() {return Integer.parseInt(name().substring(name().length() - 1));}"),
+                    "src/test/java/com/test/TestClass.java", newCodeBuilder.build()));
             HashMap<String, String> oldFiles = new HashMap<>(files);
-            oldFiles.replace("src/test/java/com/test/TestClass.java", """
-                            package com.test;
-                            import org.junit.jupiter.api.Test;
-                            import static org.junit.jupiter.api.Assertions.assertTrue;
-                            public class TestClass {
-                                @Test
-                                void testEnum_1() {
-                                    assertTrue(TestEnum.TEST1.number() >= 1 && TestEnum.TEST1.number() <= 5);
-                                }
-                                @Test
-                                void testEnum_2() {
-                                    assertTrue(TestEnum.TEST2.number() >= 1 && TestEnum.TEST2.number() <= 5);
-                                }
-                                @Test
-                                void testEnum_3() {
-                                    assertTrue(TestEnum.TEST3.number() >= 1 && TestEnum.TEST3.number() <= 5);
-                                }
-                                @Test
-                                void testEnum_4() {
-                                    assertTrue(TestEnum.TEST4.number() >= 3 && TestEnum.TEST4.number() <= 5);
-                                }
-                                @Test
-                                void testEnum_5() {
-                                    assertTrue(TestEnum.TEST5.number() >= 3 && TestEnum.TEST5.number() <= 5);
-                                }
-                            }
-                    """);
-            arguments.add(Arguments.of(oldFiles, files, Set.of("src/", "src/main/", "src/main/java", "src/main/java/test"), repeat(RefactoringType.PARAMETERIZE_TEST, 5)));
+            TestSrcCodeBuilder oldCodeBuilder = new TestSrcCodeBuilder().testPackage("com.test")
+                    .importStatement("org.junit.jupiter.api.Test")
+                    .importStatement("static org.junit.jupiter.api.Assertions.assertTrue");
+            for (int i = 1; i <= 5; i++) {
+                oldCodeBuilder.testMethod("testEnum_%d".formatted(i))
+                        .statement("assertTrue(TestEnum.TEST%d.number() >= 1 && TestEnum.TEST%d.number() <= 5);".formatted(i,i));
+            }
+            oldFiles.replace("src/test/java/com/test/TestClass.java", oldCodeBuilder.build());
+            arguments.add(Arguments.of(oldFiles, files, dirSet, repeat(RefactoringType.PARAMETERIZE_TEST, 5)));
+            files.replace("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder().testPackage("com.test")
+                    .importStatement("org.junit.jupiter.params.ParameterizedTest")
+                    .importStatement("org.junit.jupiter.params.provider.EnumSource")
+                    .importStatement("static org.junit.jupiter.api.Assertions.assertTrue")
+                    .testMethod("testEnum")
+                    .parameterize()
+                    .annotate("@EnumSource(TestEnum.class)")
+                    .parameter("TestEnum te")
+                    .statement("assertTrue(te.number() >= 1 && te.number() <= 5);").build());
+            arguments.add(Arguments.of(oldFiles, files, dirSet, repeat(RefactoringType.PARAMETERIZE_TEST, 5)));
         }
         {
-            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java","""
-                public class TestClass {
-                    enum TestEnum {
-                         TEST1, TEST2, TEST3, TEST4, TEST5;
-                         int number() {
-                            if (name() == "TEST1") {
-                                throw new NullPointerException();
-                            }
-                            return Integer.parseInt(name().substring(name().length() - 1));
-                         }
-                    }
-                    @Test
-                    void testNullEnum_TEST1() {
-                        assertThrows(NullPointerException.class, () -> TestEnum.TEST1.number());
-                    }
-                    @Test
-                    void testNullEnum_null() {
-                        TestEnum te = null;
-                        assertThrows(NullPointerException.class, () -> te.number());
-                    }
-                    @Test
-                    void testNullEnum_nullLiteral() {
-                        assertThrows(NullPointerException.class, () -> null.number());
-                    }
-                }
-                """),Map.of("src/test/java/com/test/TestClass.java","""
-                    import org.junit.jupiter.params.ParameterizedTest;
-                    public class TestClass {
-                        enum TestEnum {
-                             TEST1, TEST2, TEST3, TEST4, TEST5;
-                             int number() {
-                                if (name() == "TEST1") {
-                                    throw new NullPointerException();
-                                }
-                                return Integer.parseInt(name().substring(name().length() - 1));
-                             }
-                        }
-                        @ParameterizedTest
-                        @NullSource
-                        @EnumSource(value = TestEnum.class, names = {"TEST1"})
-                        void testNullEnum(TestEnum te) {
-                            assertThrows(NullPointerException.class, () -> te.number());
-                        }
-                    }"""),Set.of("."),repeat(RefactoringType.PARAMETERIZE_TEST, 3)));
+            String prefix = enumDeclaration.apply("int number() {\n" +
+                    "                            if (name() == \"TEST1\") {\n" +
+                    "                                throw new NullPointerException();\n" +
+                    "                            }\n" +
+                    "                            return Integer.parseInt(name().substring(name().length() - 1));\n" +
+                    "                         }");
+            arguments.add(Arguments.of(
+                    Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                        .prefix(()->prefix)
+                        .testMethod("testNullEnum_TEST1")
+                            .statement("assertThrows(NullPointerException.class,()->TestEnum.TEST1.number());")
+                        .testMethod("testNullEnum_null")
+                            .statement("TestEnum te = null;")
+                            .statement("assertThrows(NullPointerException.class,()->te.number());")
+                        .testMethod("testNullEnum_nullLiteral")
+                            .statement("assertThrows(NullPointerException.class,()->null.number());")
+                        .build()),
+                    Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                        .importStatement("org.junit.jupiter.params.ParameterizedTest")
+                        .prefix(()->prefix)
+                        .testMethod("testNullEnum")
+                                .parameterize()
+                                .annotate("@NullSource")
+                                .annotate("@EnumSource(value=TestEnum.class,names={\"TEST1\"})")
+                                .parameter("TestEnum te")
+                            .statement("assertThrows(NullPointerException.class,()->te.number());")
+                        .build()),
+                    Set.of("."),
+                    repeat(RefactoringType.PARAMETERIZE_TEST, 3)));
         }
         {
-            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java","""
-                public class TestClass {
-                    @Test
-                    void testTestFileRelativePath() {
-                         try {
-                             new MyClass(null);
-                             fail();
-                         } catch (IllegalArgumentException e) {}
-                    }
-                    @Test
-                    void testTestFileRelativePath_empty() {
-                         try {
-                             new MyClass("");
-                             fail();
-                         } catch (IllegalArgumentException e) {}
-                    }
-                }
-                """),Map.of("src/test/java/com/test/TestClass.java","""
-                public class TestClass {
-                    @ParameterizedTest
-                    @NullAndEmptySource
-                    void testTestFileRelativePath(String s) {
-                         try {
-                             new MyClass(s);
-                             fail();
-                         } catch (IllegalArgumentException e) {}
-                    }
-                }
-                """),Set.of("."),repeat(RefactoringType.PARAMETERIZE_TEST, 2)));
+
+            arguments.add(Arguments.of(
+                            Map.of("src/test/java/com/test/TestClass.java", new TestSrcCodeBuilder()
+                                .testMethod("testSrcFileRelativePath")
+                                    .statement("try{new MyClass(null);fail();}catch(IllegalArgumentException e){}")
+                                .testMethod("testSrcFileRelativePath_empty")
+                                    .statement("try{new MyClass(\"\");fail();}catch(IllegalArgumentException e){}")
+                                .build()),
+                            Map.of("src/test/java/com/test/TestClass.java", new TestSrcCodeBuilder()
+                                .testMethod("testSrcFileRelativePath")
+                                    .parameterize()
+                                    .annotate("@NullAndEmptySource")
+                                    .parameter("String s")
+                                    .statement("try{new MyClass(s);fail();}catch(IllegalArgumentException e){}").build()),
+                            Set.of("."),repeat(RefactoringType.PARAMETERIZE_TEST, 2)));
         }
         {
-            arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java","""
-                public class TestClass {
-                    @Test
-                    void testTestFileRelativePath_null() {
-                        assertThrows(InvalidParameterException.class, () -> {
-                            throw new InvalidParameterException();
-                        });
-                    }
-                    @Test
-                    void testTestFileRelativePath_empty() {
-                        assertThrows(IllegalArgumentException.class, () -> {
-                            throw new InvalidParameterException();
-                        });
-                    }
-                }
-                """),Map.of("src/test/java/com/test/TestClass.java","""
-                public class TestClass {
-                    @ParameterizedTest
-                    @ValueSource(classes = {InvalidParameterException.class, IllegalArgumentException.class})
-                    void testTestFileRelativePath(Class<? extends Exception> aClass) {
-                        assertThrows(aClass, () -> {
-                            throw new InvalidParameterException();
-                        });
-                    }
-                }
-                """),Set.of("."),repeat(RefactoringType.PARAMETERIZE_TEST, 2)));
+            arguments.add(Arguments.of(
+                    Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                            .testMethod("testTestFileRelativePath_null")
+                                .statement("assertThrows(InvalidParameterException.class,()->{\nthrow new InvalidParameterException();\n});\n")
+                            .testMethod("testTestFileRelativePath_empty")
+                                .statement("assertThrows(IllegalArgumentException.class,()->{\nthrow new InvalidParameterException();\n});\n")
+                            .build()),
+                    Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                            .testMethod("testTestFileRelativePath")
+                                .parameterize()
+                                .annotate("@ValueSource(classes = {InvalidParameterException.class, IllegalArgumentException.class})")
+                                .parameter("Class<? extends Exception> aClass")
+                                .statement("assertThrows(aClass,()->{throw new InvalidParameterException();});")
+                            .build()),
+                    Set.of("."),
+                    repeat(RefactoringType.PARAMETERIZE_TEST, 2)));
         }
         {
-            List<String> sourceCodeAfter = List.of("""
-                    public class TestClass {
-                        @ParameterizedTest
-                        @ValueSource(strings = {"value","value2"})
-                        public void testMethod(String parameter) {
-                            assertEquals(parameter, null);
-                        }
-                    }
-                    """, """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @CsvSource({"value","value2"})
-                        public void testMethod(String parameter) {
-                            assertEquals(parameter, null);
-                        }
-                    }
-                    """, """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @CsvSource({"value",
-                        "value2"})
-                        public void testMethod(String parameter) {
-                            assertEquals(parameter, null);
-                        }
-                    }
-                    """, """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @CsvSource(value={"value","value2"})
-                        public void testMethod(String parameter) {
-                            assertEquals(parameter, null);
-                        }
-                    }
-                    """, """
-                    public class TestClass {
-                        @ParameterizedTest
-                        @CsvSource(value = {"value",
-                        "value2"})
-                        public void testMethod(String parameter) {
-                            assertEquals(parameter, null);
-                        }
-                    }
-                    """);
+            TestSrcCodeBuilder commonCode = new TestSrcCodeBuilder().testMethod("testMethod").parameterize().parameter("String parameter").statement("assertEquals(parameter, null);");
+
+            List<String> sourceCodeAfter = List.of(
+                    new TestSrcCodeBuilder(commonCode).annotate("@ValueSource(strings = {\"value\",\"value2\"})").build(),
+                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource({\"value\",\"value2\"})").build(),
+                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource({\"value\",\n\"value2\"})").build(),
+                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource(value={\"value\",\"value2\"})").build(),
+                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource(value = {\"value\",\n\"value2\"})").build());
+
             for (String refactoredCode : sourceCodeAfter) {
-                arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java","""
-                    public class TestClass {
-                        @Test
-                        public void testMethod() {
-                            assertEquals(null, null);
-                        }
-                    }
-                """),Map.of("src/test/java/com/test/TestClass.java",refactoredCode),Set.of("."),new ArrayList<>(Arrays.asList(
-                        RefactoringType.ADD_PARAMETER,
-                        RefactoringType.ADD_METHOD_ANNOTATION,
-                        RefactoringType.ADD_METHOD_ANNOTATION,
-                        RefactoringType.REMOVE_METHOD_ANNOTATION))));
+                arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java",
+                        new TestSrcCodeBuilder()
+                                .testMethod("testMethod")
+                                .statement("assertEquals(null, null);").build()),
+                        Map.of("src/test/java/com/test/TestClass.java",refactoredCode),
+                        Set.of("."),new ArrayList<>(Arrays.asList(
+                            RefactoringType.ADD_PARAMETER,
+                            RefactoringType.ADD_METHOD_ANNOTATION,
+                            RefactoringType.ADD_METHOD_ANNOTATION,
+                            RefactoringType.REMOVE_METHOD_ANNOTATION))));
             }
         }
         return arguments;
@@ -488,24 +323,18 @@ class TestParameterizeTestRefactoring {
     class TestCsvFileSource_OtherPathFormats {
         @TempDir static Path dir;
         private static UMLModel originalModel;
+        private static Path csvPath;
 
         @BeforeAll
         static void setUp() throws RefactoringMinerTimedOutException {
-            String originalSourceCode = """
-                    public class TestClass {
-                        @Test
-                        public void testMethod_A() {
-                            assertNotEquals("A", null);
-                            assertNotEquals("B", null);
-                        }
-                        @Test
-                        public void testMethod_B() {
-                            assertNotEquals("C", null);
-                            assertNotEquals("D", null);
-                        }
-                    }
-                """;
-            Path csvPath = dir.resolve("src/test/resources/file.csv");
+            String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
+                    .statement("assertNotEquals(\"A\", null);")
+                    .statement("assertNotEquals(\"B\", null);")
+                    .testMethod("testMethod_B")
+                    .statement("assertNotEquals(\"C\", null);")
+                    .statement("assertNotEquals(\"D\", null);")
+                    .build();
+            csvPath = dir.resolve("src/test/resources/file.csv");
             Path testPath = Paths.get("").toAbsolutePath().relativize(dir.resolve("src/test/java/TestClass.java"));
             try {
                 Files.createDirectories(testPath.getParent());
@@ -516,25 +345,21 @@ class TestParameterizeTestRefactoring {
             } catch (IOException e) {
                 fail("Could not write to file");
             }
-//            originalModel = createUmlModel(originalSourceCode,testPath.toString());
             originalModel = createUmlModel(originalSourceCode);
         }
 
         @Test
         void testTestFileRelativePath() throws RefactoringMinerTimedOutException {
-            Path csvPath = dir.resolve("src/test/java/TestClass.java").toAbsolutePath().relativize(dir.resolve("src/test/resources/file.csv"));
+            csvPath = dir.resolve("src/test/java/TestClass.java").toAbsolutePath().relativize(dir.resolve("src/test/resources/file.csv"));
             assertFalse(csvPath.isAbsolute());
-            String newSourceCode = """
-                public class TestClass {
-                    @ParameterizedTest
-                    @CsvFileSource(files = \"""" + csvPath.toString() + """
-                    \")
-                    public void testMethod(String param1, String param2) {
-                        assertNotEquals(param1, null);
-                        assertNotEquals(param2, null);
-                    }
-                }
-                """;
+            String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .parameter("String param1")
+                    .parameter("String param2")
+                    .statement("assertNotEquals(param1, null);")
+                    .statement("assertNotEquals(param2, null);")
+                    .build();
             UMLModel newModel = createUmlModel(newSourceCode);
             UMLModelDiff diff = originalModel.diff(newModel);
             List<Refactoring> refactorings = diff.getRefactorings();
@@ -545,19 +370,15 @@ class TestParameterizeTestRefactoring {
 
         @Test
         void testRelativePath() throws RefactoringMinerTimedOutException {
-            Path csvPath = Paths.get("").toAbsolutePath().relativize(dir.resolve("src/test/resources/file.csv"));
             assertFalse(csvPath.isAbsolute());
-            String newSourceCode = """
-                public class TestClass {
-                    @ParameterizedTest
-                    @CsvFileSource(files = \"""" + csvPath.toString() + """
-                    \")
-                    public void testMethod(String param1, String param2) {
-                        assertNotEquals(param1, null);
-                        assertNotEquals(param2, null);
-                    }
-                }
-                """;
+            String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .parameter("String param1")
+                    .parameter("String param2")
+                    .statement("assertNotEquals(param1, null);")
+                    .statement("assertNotEquals(param2, null);")
+                    .build();
             UMLModel newModel = createUmlModel(newSourceCode);
             UMLModelDiff diff = originalModel.diff(newModel);
             List<Refactoring> refactorings = diff.getRefactorings();
@@ -568,16 +389,14 @@ class TestParameterizeTestRefactoring {
 
         @Test
         void testProjectRelativePath() throws RefactoringMinerTimedOutException {
-            String newSourceCode = """
-                public class TestClass {
-                    @ParameterizedTest
-                    @CsvFileSource(files = \"src/test/resources/file.csv\")
-                    public void testMethod(String param1, String param2) {
-                        assertNotEquals(param1, null);
-                        assertNotEquals(param2, null);
-                    }
-                }
-                """;
+            String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .annotate("@CsvFileSource(files = \"src/test/resources/file.csv\")")
+                    .parameter("String param1")
+                    .parameter("String param2")
+                    .statement("assertNotEquals(param1, null);")
+                    .statement("assertNotEquals(param2, null);")
+                    .build();
             UMLModel newModel = createUmlModel(newSourceCode);
             UMLModelDiff diff = originalModel.diff(newModel);
             List<Refactoring> refactorings = diff.getRefactorings();
@@ -588,16 +407,14 @@ class TestParameterizeTestRefactoring {
 
         @Test
         void testProjectRelativeResource() throws RefactoringMinerTimedOutException {
-            String newSourceCode = """
-                public class TestClass {
-                    @ParameterizedTest
-                    @CsvFileSource(resources = \"file.csv\")
-                    public void testMethod(String param1, String param2) {
-                        assertNotEquals(param1, null);
-                        assertNotEquals(param2, null);
-                    }
-                }
-                """;
+            String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
+                    .parameterize()
+                    .annotate("@CsvFileSource(files = \"file.csv\")")
+                    .parameter("String param1")
+                    .parameter("String param2")
+                    .statement("assertNotEquals(param1, null);")
+                    .statement("assertNotEquals(param2, null);")
+                    .build();
             UMLModel newModel = createUmlModel(newSourceCode);
             UMLModelDiff diff = originalModel.diff(newModel);
             List<Refactoring> refactorings = diff.getRefactorings();
@@ -741,42 +558,67 @@ class TestParameterizeTestRefactoring {
     }
 
     private static UMLModel createUmlModel(String sourceCode) {
-        return createUmlModel(sourceCode, "TestClass.java");
-    }
-
-    private static UMLModel createUmlModel(String sourceCode, String filePath) {
         CompilationUnit cu = parse(sourceCode.toCharArray());
-        Map<String, String> javaFileContents = Map.of(filePath, sourceCode);
+        Map<String, String> javaFileContents = Map.of("TestClass.java", sourceCode);
         UMLModel model = new UMLModelASTReader(javaFileContents, Set.of("."), false).getUmlModel();
         ASTNode node = (ASTNode) cu;
         assertNotNull(node);
-        LocationInfo location = new LocationInfo(cu, filePath, node, LocationInfo.CodeElementType.TYPE_DECLARATION);
+        LocationInfo location = new LocationInfo(cu, "TestClass.java", node, LocationInfo.CodeElementType.TYPE_DECLARATION);
         UMLClass aClass = new UMLClass("org.refactoringminer.test", "TestClass", location, true, Collections.emptyList());
         aClass.setVisibility(Visibility.PUBLIC);
         return model;
     }
 }
 class TestSrcCodeBuilder implements Builder<String> {
-
-
-
     enum MethodComponent {STATEMENT, ANNOTATION, PARAMETER;};
     private String className;
-
     private boolean parameterized;
     private String lastAddedMethod;
+    private String pkg;
+    private List<String> imports;
+
+    private Supplier<String> prefix;
+
+    private Supplier<String> suffix;
     private Map<String, Map<MethodComponent, List<String>>> methods;
+    public TestSrcCodeBuilder prefix(Supplier<String> prefix) {
+        this.prefix = prefix;
+        return this;
+    }
+
+    public TestSrcCodeBuilder suffix(Supplier<String> suffix) {
+        this.suffix = suffix;
+        return this;
+    }
     public TestSrcCodeBuilder() {
+        this.imports = new ArrayList<>();
         parameterized = false;
         methods = new HashMap<>();
     }
     public TestSrcCodeBuilder(TestSrcCodeBuilder other) {
-        this.className = other.className;
+        this.pkg = other.pkg != null ? new String(other.pkg) : null;
+        this.imports = new ArrayList<>(other.imports);
+        this.className = other.className != null ? new String(other.className) : null;
         this.parameterized = other.parameterized;
-        this.lastAddedMethod = other.lastAddedMethod;
-        this.methods = other.methods;
+        this.lastAddedMethod = other.lastAddedMethod != null ? new String(other.lastAddedMethod) : null;
+        this.methods = new HashMap<>(other.methods);
+        for (String methodName : other.methods.keySet()) {
+            this.methods.put(methodName, new HashMap<>(other.methods.get(methodName)));
+            for (MethodComponent componentType : this.methods.get(methodName).keySet()) {
+                this.methods.get(methodName).put(componentType, new ArrayList<>(this.methods.get(methodName).get(componentType)));
+            }
+        }
+        this.prefix = other.prefix;
+        this.suffix = other.suffix;
     }
-
+    public TestSrcCodeBuilder testPackage(String pkg) {
+        this.pkg = "package %s;".formatted(pkg);
+        return this;
+    }
+    public TestSrcCodeBuilder importStatement(String importStmt) {
+        this.imports.add("import %s;".formatted(importStmt));
+        return this;
+    }
     public TestSrcCodeBuilder testClass(String name) {
         className = name;
         return this;
@@ -805,11 +647,14 @@ class TestSrcCodeBuilder implements Builder<String> {
         parameterized = true;
         return this;
     }
-
     @Override
     public String build() {
         if (className == null || className.isEmpty()) {
             className = "TestClass";
+        }
+        String headerStatements = pkg != null ? "%s\n".formatted(pkg) : "";
+        for (String importStmt : imports) {
+            headerStatements = headerStatements.concat("%s\n".formatted(importStmt));
         }
         String methodDeclarations = "";
         for (String m : methods.keySet()) {
@@ -821,13 +666,15 @@ class TestSrcCodeBuilder implements Builder<String> {
                     getAsString(m, MethodComponent.STATEMENT)
             ));
         }
-        return "public class %s {%s}".formatted(className,methodDeclarations);
+        return "%spublic class %s {%s%s%s}".formatted(headerStatements,
+                className,
+                this.prefix != null ? this.prefix.get() : "",
+                methodDeclarations,
+                this.suffix != null ? this.suffix.get() : "");
     }
-
     private String getAsString(String m, MethodComponent component, CharSequence delimiter) {
         return String.join(delimiter,methods.get(m).get(component));
     }
-
     private String getAsString(String m, MethodComponent component) {
         return component == MethodComponent.PARAMETER ? getAsString(m,component,", ") : getAsString(m,component," ");
     }

@@ -7555,6 +7555,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			findReplacements(tmpVariables1, ternaryExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
+					variableDeclarations2.get(0).getInitializer() != null && variableDeclarations2.get(0).getInitializer().getString().equals(statement2.getTernaryOperatorExpressions().get(0).getString()) &&
+					variableDeclarations1.get(0).getInitializer() != null && variables1.contains(variableDeclarations1.get(0).getInitializer().getString())) {
+				findReplacements(variables1, ternaryExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+			}
 		}
 		else if(!statement1.getTernaryOperatorExpressions().isEmpty() && statement2.getTernaryOperatorExpressions().isEmpty()) {
 			if(!statement2.getNullLiterals().isEmpty()) {
@@ -7587,6 +7592,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			findReplacements(ternaryExpressions1, tmpVariables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 && variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
+					variableDeclarations1.get(0).getInitializer() != null && variableDeclarations1.get(0).getInitializer().getString().equals(statement1.getTernaryOperatorExpressions().get(0).getString()) &&
+					variableDeclarations2.get(0).getInitializer() != null && variables2.contains(variableDeclarations2.get(0).getInitializer().getString())) {
+				findReplacements(ternaryExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CONDITIONAL_EXPRESSION);
+			}
 		}
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, arguments2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);

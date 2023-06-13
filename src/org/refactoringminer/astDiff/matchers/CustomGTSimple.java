@@ -55,9 +55,9 @@ class CustomGreedy extends GreedySubtreeMatcher {
 	private static boolean isOnlyOneMethodInvocation(Tree input1, Tree input2) {
 		if (input1 == null || input2 == null) return false;
 		if (input1.getParent() == null || input2.getParent() == null) return false;
-		if (input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && !input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+		if (input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && !(input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION) || input2.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE)))
 			return true;
-		else if (!input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) && input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
+		else if (!(input1.getParent().getType().name.equals(Constants.METHOD_INVOCATION) || input1.getParent().getType().name.equals(Constants.EXPRESSION_METHOD_REFERENCE)) && input2.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
 			return true;
 		return false;
 

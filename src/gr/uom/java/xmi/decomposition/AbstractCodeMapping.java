@@ -282,9 +282,41 @@ public abstract class AbstractCodeMapping {
 
 	private void checkForAliasedVariable(AbstractExpression initializer, Replacement replacement,
 			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
-		VariableDeclaration aliasedDeclaration = operation2.getVariableDeclaration(initializer.getString());
-		if(aliasedDeclaration != null && aliasedDeclaration.getInitializer() != null) {
-			//initializer = aliasedDeclaration.getInitializer();
+		VariableDeclaration aliasedWithVariable = operation2.getVariableDeclaration(initializer.getString());
+		if(aliasedWithVariable != null && aliasedWithVariable.getInitializer() != null) {
+			String rightHandSide = aliasedWithVariable.getInitializer().getString();
+			if(replacement instanceof VariableReplacementWithMethodInvocation) {
+				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
+				for(AbstractCall call : aliasedWithVariable.getInitializer().getMethodInvocations()) {
+					if(call.equals(r.getInvokedOperation())) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(aliasedWithVariable, operation1, operation2, insideExtractedOrInlinedMethod);
+						LeafMapping leafMapping = new LeafMapping(r.getInvokedOperation(), call, operation1, operation2);
+						ref.addSubExpressionMapping(leafMapping);
+						processExtractVariableRefactoring(ref, refactorings);
+						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+						if(identical()) {
+							identicalWithExtractedVariable = true;
+						}
+						break;
+					}
+				}
+			}
+			else if(replacement.getBefore().equals(rightHandSide)) {
+				ExtractVariableRefactoring ref = new ExtractVariableRefactoring(aliasedWithVariable.getVariableDeclaration(), operation1, operation2, insideExtractedOrInlinedMethod);
+				List<LeafExpression> leafExpressions1 = getFragment1().findExpression(rightHandSide);
+				List<LeafExpression> leafExpressions2 = aliasedWithVariable.getInitializer().findExpression(rightHandSide);
+				if(leafExpressions1.size() == leafExpressions2.size()) {
+					for(int i=0; i<leafExpressions1.size(); i++) {
+						LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), operation1, operation2);
+						ref.addSubExpressionMapping(leafMapping);
+					}
+				}
+				processExtractVariableRefactoring(ref, refactorings);
+				checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+				if(identical()) {
+					identicalWithExtractedVariable = true;
+				}
+			}
 		}
 		else if(classDiff != null) {
 			UMLAttribute aliasedWithAttribute = null;
@@ -308,6 +340,13 @@ public abstract class AbstractCodeMapping {
 			if(aliasedWithAttribute != null) {
 				for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
 					if(leaf2.getString().startsWith(initializer.getString() + "=")) {
+						String rightHandSide = null;
+						if(leaf2.getString().endsWith(";\n")) {
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length()-2);
+						}
+						else {
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length());
+						}
 						if(replacement instanceof VariableReplacementWithMethodInvocation) {
 							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
 							for(AbstractCall call : leaf2.getMethodInvocations()) {
@@ -322,6 +361,22 @@ public abstract class AbstractCodeMapping {
 									}
 									break;
 								}
+							}
+						}
+						else if(replacement.getBefore().equals(rightHandSide)) {
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(aliasedWithAttribute.getVariableDeclaration(), operation1, operation2, insideExtractedOrInlinedMethod);
+							List<LeafExpression> leafExpressions1 = getFragment1().findExpression(rightHandSide);
+							List<LeafExpression> leafExpressions2 = leaf2.findExpression(rightHandSide);
+							if(leafExpressions1.size() == leafExpressions2.size()) {
+								for(int i=0; i<leafExpressions1.size(); i++) {
+									LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+							}
+							processExtractVariableRefactoring(ref, refactorings);
+							checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+							if(identical()) {
+								identicalWithExtractedVariable = true;
 							}
 						}
 						break;
@@ -458,6 +513,9 @@ public abstract class AbstractCodeMapping {
 					}
 				}
 			}
+		}
+		if(getFragment2().getVariableDeclarations().size() > 0 && getFragment2().getVariableDeclarations().get(0).getInitializer() != null && replacements.size() == 1) {
+			checkForAliasedVariable(getFragment2().getVariableDeclarations().get(0).getInitializer(), replacements.iterator().next(), nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 		}
 		String argumentizedString = statement.getArgumentizedString();
 		if(argumentizedString.contains("=")) {

@@ -21,6 +21,10 @@ public class TernaryOperatorExpression extends LeafExpression {
 		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
 	}
 
+	public LeafExpression asLeafExpression() {
+		return new LeafExpression(getString(), getLocationInfo());
+	}
+
 	public AbstractExpression getCondition() {
 		return condition;
 	}

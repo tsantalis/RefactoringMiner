@@ -67,10 +67,10 @@ class TestParameterizeTestRefactoring {
                     .statement("assertTrue(\"\".length() >= 0);")
                     .statement("assertTrue(\"\".length() < 2);");
             for (int i = 1; i <= 5; i++) {
-                originalCodeBuilder.testMethod("testTestFileRelativePath_%d".formatted(i))
-                        .statement("assertNotNull(\"%d\");".formatted(i))
-                        .statement("assertTrue(\"%d\".length() >= 0);".formatted(i))
-                        .statement("assertTrue(\"%d\".length() < 2);".formatted(i));
+                originalCodeBuilder.testMethod(String.format("testTestFileRelativePath_%d",i))
+                        .statement(String.format("assertNotNull(\"%d\");",i))
+                        .statement(String.format("assertTrue(\"%d\".length() >= 0);",i))
+                        .statement(String.format("assertTrue(\"%d\".length() < 2);",i));
             }
             TestSrcCodeBuilder newCodeBuilder = new TestSrcCodeBuilder();
             newCodeBuilder.parameterize()
@@ -91,17 +91,17 @@ class TestParameterizeTestRefactoring {
                     .statement("assertTrue(\"\".length() >= 0);")
                     .statement("assertTrue(\"\".length() < 2);");
             for (int i = 1; i <= 5; i++) {
-                originalCodeBuilder.testMethod("testTestFileRelativePath_%d".formatted(i))
-                        .statement("String s = \"%d\";".formatted(i))
-                        .statement("assertNotNull(\"%d\");".formatted(i))
-                        .statement("assertTrue(\"%d\".length() >= 0);".formatted(i))
-                        .statement("assertTrue(\"%d\".length() < 2);".formatted(i));
+                originalCodeBuilder.testMethod(String.format("testTestFileRelativePath_%d",i))
+                        .statement(String.format("String s = \"%d\";",i))
+                        .statement(String.format("assertNotNull(\"%d\");",i))
+                        .statement(String.format("assertTrue(\"%d\".length() >= 0);",i))
+                        .statement(String.format("assertTrue(\"%d\".length() < 2);",i));
             }
             arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java", originalCodeBuilder.build()),
                     Map.of("src/test/java/com/test/TestClass.java", newCodeBuilder.build()),
                     Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
         }
-        Function<String, String> enumDeclaration = (String methoDeclaration) -> "package com.test;\npublic enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}".formatted(methoDeclaration);
+        Function<String, String> enumDeclaration = (String methoDeclaration) -> String.format("package com.test;\npublic enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}",methoDeclaration);
         {
             Set<String> dirSet = Set.of("src/", "src/main/", "src/main/java", "src/main/java/test");
             TestSrcCodeBuilder newCodeBuilder = new TestSrcCodeBuilder().testPackage("com.test")
@@ -122,8 +122,8 @@ class TestParameterizeTestRefactoring {
                     .importStatement("org.junit.jupiter.api.Test")
                     .importStatement("static org.junit.jupiter.api.Assertions.assertTrue");
             for (int i = 1; i <= 5; i++) {
-                oldCodeBuilder.testMethod("testEnum_%d".formatted(i))
-                        .statement("assertTrue(TestEnum.TEST%d.number() >= 1 && TestEnum.TEST%d.number() <= 5);".formatted(i,i));
+                oldCodeBuilder.testMethod(String.format("testEnum_%d",i))
+                        .statement(String.format("assertTrue(TestEnum.TEST%d.number() >= 1 && TestEnum.TEST%d.number() <= 5);",i,i));
             }
             oldFiles.replace("src/test/java/com/test/TestClass.java", oldCodeBuilder.build());
             arguments.add(Arguments.of(oldFiles, files, dirSet, repeat(RefactoringType.PARAMETERIZE_TEST, 5)));
@@ -341,7 +341,7 @@ class TestParameterizeTestRefactoring {
             assertFalse(csvPath.isAbsolute());
             String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
                     .parameterize()
-                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .annotate(String.format("@CsvFileSource(files = \"%s\")",csvPath.toString()))
                     .parameter("String param1")
                     .parameter("String param2")
                     .statement("assertNotEquals(param1, null);")
@@ -360,7 +360,7 @@ class TestParameterizeTestRefactoring {
             assertFalse(csvPath.isAbsolute());
             String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
                     .parameterize()
-                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .annotate(String.format("@CsvFileSource(files = \"%s\")",csvPath.toString()))
                     .parameter("String param1")
                     .parameter("String param2")
                     .statement("assertNotEquals(param1, null);")
@@ -428,7 +428,7 @@ class TestParameterizeTestRefactoring {
             Path csvPath = dir.resolve("file.csv");
             String newSourceCode = new TestSrcCodeBuilder().testMethod("testMethod")
                     .parameterize()
-                    .annotate("@CsvFileSource(files = \"%s\")".formatted(csvPath.toString()))
+                    .annotate(String.format("@CsvFileSource(files = \"%s\")",csvPath.toString()))
                     .parameter("String param1")
                     .parameter("String param2")
                     .statement("assertNotEquals(param1, null);")
@@ -601,11 +601,11 @@ class TestSrcCodeBuilder implements Builder<String> {
         return self;
     }
     public TestSrcCodeBuilder testPackage(String pkg) {
-        this.pkg = "package %s;".formatted(pkg);
+        this.pkg = String.format("package %s;",pkg);
         return this;
     }
     public TestSrcCodeBuilder importStatement(String importStmt) {
-        this.imports.add("import %s;".formatted(importStmt));
+        this.imports.add(String.format("import %s;",importStmt));
         return this;
     }
     public TestSrcCodeBuilder testClass(String name) {
@@ -613,7 +613,7 @@ class TestSrcCodeBuilder implements Builder<String> {
         return this;
     }
     public TestSrcCodeBuilder testMethod(String name) {
-        assert !methods.containsKey(name) : "Conflict: another method is already named (%s)".formatted(name);
+        assert !methods.containsKey(name) : String.format("Conflict: another method is already named (%s)",name);
         lastAddedMethod = name;
         methods.put(name, Map.of(MethodComponent.PARAMETER,new ArrayList<>(),
                                 MethodComponent.STATEMENT,new ArrayList<>(),
@@ -641,13 +641,13 @@ class TestSrcCodeBuilder implements Builder<String> {
         if (className == null || className.isEmpty()) {
             className = "TestClass";
         }
-        String headerStatements = pkg != null ? "%s\n".formatted(pkg) : "";
+        String headerStatements = pkg != null ? String.format("%s\n",pkg) : "";
         for (String importStmt : imports) {
-            headerStatements = headerStatements.concat("%s\n".formatted(importStmt));
+            headerStatements = headerStatements.concat(String.format("%s\n",importStmt));
         }
         String methodDeclarations = "";
         for (String m : methods.keySet()) {
-            methodDeclarations = methodDeclarations.concat("%s %s public void %s(%s){%s}\n".formatted(
+            methodDeclarations = methodDeclarations.concat(String.format("%s %s public void %s(%s){%s}\n",
                     parameterized ? "@ParameterizedTest" : "@Test",
                     getAsString(m, MethodComponent.ANNOTATION),
                     m,
@@ -655,7 +655,7 @@ class TestSrcCodeBuilder implements Builder<String> {
                     getAsString(m, MethodComponent.STATEMENT)
             ));
         }
-        return "%spublic class %s {%s%s%s}".formatted(headerStatements,
+        return String.format("%spublic class %s {%s%s%s}",headerStatements,
                 className,
                 this.prefix != null ? this.prefix.get() : "",
                 methodDeclarations,

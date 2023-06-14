@@ -268,47 +268,34 @@ class TestParameterizeTestRefactoring {
     @Disabled("TODO: Add support for Modify Method Annotation with additional parameter")
     @Test
     void testEnumParameterMerged() throws RefactoringMinerTimedOutException {
-        String originalSourceCode = """
-                public class TestClass {
-                    enum TestEnum {
-                         TEST1, TEST2, TEST3, TEST4, TEST5;
-                         int number() {
-                            if (name() == "TEST1") {
-                                throw new NullPointerException();
-                            }
-                            return Integer.parseInt(name().substring(name().length() - 1));
-                         }
-                    }
-                    @ParameterizedTest
-                    @EnumSource(value = TestEnum.class, names = {"TEST3", "TEST4", "TEST5"})
-                    void testEnum(TestEnum te) {
-                        assertDoesNotThrow(() -> te.number());
-                    }
-                    @Test
-                    void testNullEnum_TEST2() {
-                        assertDoesNotThrow(() -> TestEnum.TEST2.number());
-                    }
-                }
-                """;
+        Supplier<String> prefix = () -> "enum TestEnum {\n" +
+                "                         TEST1, TEST2, TEST3, TEST4, TEST5;\n" +
+                "                         int number() {\n" +
+                "                            if (name() == \"TEST1\") {\n" +
+                "                                throw new NullPointerException();\n" +
+                "                            }\n" +
+                "                            return Integer.parseInt(name().substring(name().length() - 1));\n" +
+                "                         }\n" +
+                "                    }";
+        String originalSourceCode = new TestSrcCodeBuilder()
+                .prefix(prefix)
+                .testMethod("testEnum")
+                    .parameterize()
+                    .parameter("TestEnum te")
+                    .annotate("@EnumSource(value = TestEnum.class, names = {\"TEST3\", \"TEST4\", \"TEST5\"})")
+                    .statement("assertDoesNotThrow(() -> te.number());")
+                .testMethod("testNullEnum_TEST2")
+                    .statement("assertDoesNotThrow(() -> TestEnum.TEST2.number());")
+                .build();
         assertDoesNotThrow(() -> createUmlModel(originalSourceCode));
-        String parameterizedTestCode = """
-                    import org.junit.jupiter.params.ParameterizedTest;
-                    public class TestClass {
-                        enum TestEnum {
-                             TEST1, TEST2, TEST3, TEST4, TEST5;
-                             int number() {
-                                if (name() == "TEST1") {
-                                    throw new NullPointerException();
-                                }
-                                return Integer.parseInt(name().substring(name().length() - 1));
-                             }
-                        }
-                        @ParameterizedTest
-                        @EnumSource(value = TestEnum.class, names = {"TEST2", "TEST3", "TEST4", "TEST5"})
-                        void testEnum(TestEnum te) {
-                            assertDoesNotThrow(() -> te.number());
-                        }
-                    }""";
+        String parameterizedTestCode = new TestSrcCodeBuilder()
+                .prefix(prefix)
+                .testMethod("testEnum")
+                    .parameterize()
+                    .parameter("TestEnum te")
+                    .annotate("@EnumSource(value = TestEnum.class, names = {\"TEST2\", \"TEST3\", \"TEST4\", \"TEST5\"})")
+                    .statement("assertDoesNotThrow(() -> te.number());")
+                .build();
         UMLModel originalModel = createUmlModel(originalSourceCode);
         UMLModel newModel = createUmlModel(parameterizedTestCode);
         UMLModelDiff diff = originalModel.diff(newModel);

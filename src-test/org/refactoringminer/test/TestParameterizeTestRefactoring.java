@@ -208,11 +208,11 @@ class TestParameterizeTestRefactoring {
             TestSrcCodeBuilder commonCode = new TestSrcCodeBuilder().testMethod("testMethod").parameterize().parameter("String parameter").statement("assertEquals(parameter, null);");
 
             List<String> sourceCodeAfter = List.of(
-                    new TestSrcCodeBuilder(commonCode).annotate("@ValueSource(strings = {\"value\",\"value2\"})").build(),
-                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource({\"value\",\"value2\"})").build(),
-                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource({\"value\",\n\"value2\"})").build(),
-                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource(value={\"value\",\"value2\"})").build(),
-                    new TestSrcCodeBuilder(commonCode).annotate("@CsvSource(value = {\"value\",\n\"value2\"})").build());
+                    TestSrcCodeBuilder.copy(commonCode).annotate("@ValueSource(strings = {\"value\",\"value2\"})").build(),
+                    TestSrcCodeBuilder.copy(commonCode).annotate("@CsvSource({\"value\",\"value2\"})").build(),
+                    TestSrcCodeBuilder.copy(commonCode).annotate("@CsvSource({\"value\",\n\"value2\"})").build(),
+                    TestSrcCodeBuilder.copy(commonCode).annotate("@CsvSource(value={\"value\",\"value2\"})").build(),
+                    TestSrcCodeBuilder.copy(commonCode).annotate("@CsvSource(value = {\"value\",\n\"value2\"})").build());
 
             for (String refactoredCode : sourceCodeAfter) {
                 arguments.add(Arguments.of(Map.of("src/test/java/com/test/TestClass.java",
@@ -582,21 +582,23 @@ class TestSrcCodeBuilder implements Builder<String> {
         parameterized = false;
         methods = new HashMap<>();
     }
-    public TestSrcCodeBuilder(TestSrcCodeBuilder other) {
-        this.pkg = other.pkg != null ? new String(other.pkg) : null;
-        this.imports = new ArrayList<>(other.imports);
-        this.className = other.className != null ? new String(other.className) : null;
-        this.parameterized = other.parameterized;
-        this.lastAddedMethod = other.lastAddedMethod != null ? new String(other.lastAddedMethod) : null;
-        this.methods = new HashMap<>(other.methods);
+    public static TestSrcCodeBuilder copy(TestSrcCodeBuilder other) {
+        TestSrcCodeBuilder self = new TestSrcCodeBuilder();
+        self.pkg = other.pkg != null ? new String(other.pkg) : null;
+        self.imports = new ArrayList<>(other.imports);
+        self.className = other.className != null ? new String(other.className) : null;
+        self.parameterized = other.parameterized;
+        self.lastAddedMethod = other.lastAddedMethod != null ? new String(other.lastAddedMethod) : null;
+        self.methods = new HashMap<>(other.methods);
         for (String methodName : other.methods.keySet()) {
-            this.methods.put(methodName, new HashMap<>(other.methods.get(methodName)));
-            for (MethodComponent componentType : this.methods.get(methodName).keySet()) {
-                this.methods.get(methodName).put(componentType, new ArrayList<>(this.methods.get(methodName).get(componentType)));
+            self.methods.put(methodName, new HashMap<>(other.methods.get(methodName)));
+            for (MethodComponent componentType : self.methods.get(methodName).keySet()) {
+                self.methods.get(methodName).put(componentType, new ArrayList<>(self.methods.get(methodName).get(componentType)));
             }
         }
-        this.prefix = other.prefix;
-        this.suffix = other.suffix;
+        self.prefix = other.prefix;
+        self.suffix = other.suffix;
+        return self;
     }
     public TestSrcCodeBuilder testPackage(String pkg) {
         this.pkg = "package %s;".formatted(pkg);

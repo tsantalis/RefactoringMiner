@@ -59,7 +59,12 @@ public class ProjectASTDiffer
 		makeASTDiff(getExtraDiffs(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
-
+		for (ASTDiff diff : diffSet) {
+			new MissingIdenticalSubtree().match(
+					diff.src.getRoot(),
+					diff.dst.getRoot(),
+					diff.getAllMappings());
+		}
 		computeAllEditScripts();
 	}
 

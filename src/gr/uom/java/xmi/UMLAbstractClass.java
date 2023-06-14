@@ -716,6 +716,9 @@ public abstract class UMLAbstractClass {
 				commonAttributes.add(attribute);
 			}
 		}
+		if(totalOperations == 0 && totalAttributes == 0 && this.getEnumConstants().size() == 0 && umlClass.getEnumConstants().size() == 0 && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
+		}
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes) {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
 		}

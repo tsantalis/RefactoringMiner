@@ -9558,7 +9558,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n");
 		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n");
-		if(parentMapper == null && !variableReturn1 && !variableReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && statement1.isLastStatement() && statement2.isLastStatement() &&
+		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals("return " + statement1.getNumberLiterals().get(0).getString() + ";\n") && statement1.isLastStatementInParentBlock();
+		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals("return " + statement2.getNumberLiterals().get(0).getString() + ";\n") && statement2.isLastStatementInParentBlock();
+		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || (statement1.isLastStatementInParentBlock() && statement2.isLastStatementInParentBlock());
+		if(parentMapper == null && !variableReturn1 && !variableReturn2 && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && lastStatement &&
 				container1 instanceof UMLOperation && container2 instanceof UMLOperation && getOperation1().equalSignature(getOperation2()) && statement1.getLambdas().size() == statement2.getLambdas().size()) {
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;

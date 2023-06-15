@@ -563,6 +563,14 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return false;
 	}
 
+	public boolean isLastStatementInParentBlock() {
+		CompositeStatementObject parent = getParent();
+		if(parent != null && parent.getParent() != null) {
+			return index == parent.getStatements().size() - 1;
+		}
+		return false;
+	}
+
 	public boolean countableStatement() {
 		String statement = getString();
 		//covers the cases of lambda expressions having an expression as their body

@@ -308,12 +308,12 @@ class TestParameterizeTestRefactoring {
     @Disabled("TODO: Replicate testEnumSource use of UMLModelASTReader with fileMap and add support for CSV files")
     @Nested
     class TestCsvFileSource_OtherPathFormats {
-        @TempDir static Path dir;
-        private static UMLModel originalModel;
-        private static Path csvPath;
+        @TempDir Path dir;
+        private UMLModel originalModel;
+        private Path csvPath;
 
-        @BeforeAll
-        static void setUp() throws RefactoringMinerTimedOutException {
+        @BeforeEach
+        void setUp() throws RefactoringMinerTimedOutException {
             String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
                     .statement("assertNotEquals(\"A\", null);")
                     .statement("assertNotEquals(\"B\", null);")
@@ -413,11 +413,11 @@ class TestParameterizeTestRefactoring {
     }
     @Nested
     class TestCsvFileSource_AbsolutePath {
-        @TempDir static Path dir;
-        private static UMLModelDiff diff;
+        @TempDir Path dir;
+        private UMLModelDiff diff;
 
-        @BeforeAll
-        static void setUp() throws RefactoringMinerTimedOutException {
+        @BeforeEach
+        void setUp() throws RefactoringMinerTimedOutException {
             String originalSourceCode = new TestSrcCodeBuilder().testMethod("testMethod_A")
                     .statement("assertNotEquals(\"A\", null);")
                     .statement("assertNotEquals(\"B\", null);")

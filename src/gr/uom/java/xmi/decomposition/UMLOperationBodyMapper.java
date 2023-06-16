@@ -5086,7 +5086,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 					parent2 = parent2.getParent();
 				}
-				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
+				boolean possibleExtractVariable = false;
+				if(leaf2.getVariableDeclarations().size() > 0 && leaf.getString().equals("return " + leaf2.getVariableDeclarations().get(0).getVariableName() + ";\n")) {
+					possibleExtractVariable = true;
+				}
+				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) || possibleExtractVariable)) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo);
 					if (replacements != null) {
@@ -5700,6 +5704,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			else if(mappingSet.size() == 1) {
 				AbstractCodeMapping mapping = mappingSet.first();
+				if(mapping instanceof CompositeStatementObjectMapping && ((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 1.0) {
+					return false;
+				}
 				AbstractCodeFragment fragment2 = null;
 				for(AbstractCodeMapping parentMapping : parentMapper.getMappings()) {
 					if(mapping.getFragment1().equals(parentMapping.getFragment1())) {
@@ -9557,12 +9564,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n");
+		boolean variableReturnQualified1 = false;
+		if(variableReturn1 && statement1.getVariables().get(0).getString().contains(".")) {
+			variableReturnQualified1 = true;
+		}
+		boolean variableReturnAsLastStatement1 = variableReturn1 && statement1.isLastStatement();
 		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n");
+		boolean variableReturnQualified2 = false;
+		if(variableReturn2 && statement2.getVariables().get(0).getString().contains(".")) {
+			variableReturnQualified2 = true;
+		}
+		boolean variableReturnAsLastStatement2 = variableReturn2 && statement2.isLastStatement();
 		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals("return " + statement1.getNumberLiterals().get(0).getString() + ";\n") && statement1.isLastStatementInParentBlock();
 		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals("return " + statement2.getNumberLiterals().get(0).getString() + ";\n") && statement2.isLastStatementInParentBlock();
 		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || (statement1.isLastStatementInParentBlock() && statement2.isLastStatementInParentBlock());
-		if(parentMapper == null && !variableReturn1 && !variableReturn2 && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && lastStatement &&
-				container1 instanceof UMLOperation && container2 instanceof UMLOperation && getOperation1().equalSignature(getOperation2()) && statement1.getLambdas().size() == statement2.getLambdas().size()) {
+		if(parentMapper == null && !variableReturnAsLastStatement1 && !variableReturnAsLastStatement2 && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && lastStatement &&
+				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation && getOperation1().equalSignature(getOperation2()) && statement1.getLambdas().size() == statement2.getLambdas().size()) {
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;
 			boolean isMovedMethod = !container1.getClassName().equals(container2.getClassName());
@@ -9687,6 +9704,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								invocation2.actualString(), invocationCoveringTheEntireStatement1, invocation2, replacementType);
 						replacementInfo.addReplacement(replacement);
 					}
+				}
+				else if(invocationCoveringTheEntireStatement1 != null && variableReturn2) {
+					VariableReplacementWithMethodInvocation replacement = new VariableReplacementWithMethodInvocation(invocationCoveringTheEntireStatement1.actualString(), statement2.getVariables().get(0).getString(), invocationCoveringTheEntireStatement1, Direction.INVOCATION_TO_VARIABLE);
+					replacementInfo.addReplacement(replacement);
+				}
+				else if(invocationCoveringTheEntireStatement2 != null && variableReturn1) {
+					VariableReplacementWithMethodInvocation replacement = new VariableReplacementWithMethodInvocation(statement1.getVariables().get(0).getString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement2, Direction.VARIABLE_TO_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+				}
+				else if(creationCoveringTheEntireStatement1 != null && variableReturn2) {
+					VariableReplacementWithMethodInvocation replacement = new VariableReplacementWithMethodInvocation(creationCoveringTheEntireStatement1.actualString(), statement2.getVariables().get(0).getString(), creationCoveringTheEntireStatement1, Direction.INVOCATION_TO_VARIABLE);
+					replacementInfo.addReplacement(replacement);
+				}
+				else if(creationCoveringTheEntireStatement2 != null && variableReturn1) {
+					VariableReplacementWithMethodInvocation replacement = new VariableReplacementWithMethodInvocation(statement1.getVariables().get(0).getString(), creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement2, Direction.VARIABLE_TO_INVOCATION);
+					replacementInfo.addReplacement(replacement);
 				}
 				return replacementInfo.getReplacements();
 			}

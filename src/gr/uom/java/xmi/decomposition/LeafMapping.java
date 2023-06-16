@@ -96,6 +96,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!this.isIdenticalWithInlinedVariable() && o.isIdenticalWithInlinedVariable()) {
 					return 1;
 				}
+				computeIdenticalPreviousAndNextStatements(o);
+				if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {
+					return -1;
+				}
+				else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement) {
+					return 1;
+				}
 				if(this.identicalDepthIndexAndParentType() && !o.identicalDepthIndexAndParentType()) {
 					return -1;
 				}
@@ -490,6 +497,26 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			}
 			boolean oEqualPreviousAndNext = oPrevious1.getString().equals(oPrevious2.getString()) && oNext1.getString().equals(oNext2.getString());
 			if(oEqualPreviousAndNext) {
+				o.identicalPreviousAndNextStatement = true;
+			}
+		}
+		// last statement in block
+		else if(thisComp1 != null && this.getFragment1().getIndex() > 0 && this.getFragment1().getIndex() == thisComp1.getStatements().size()-1 &&
+				thisComp2 != null && this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() == thisComp2.getStatements().size()-1 &&
+				oComp1 != null && o.getFragment1().getIndex() > 0 && o.getFragment1().getIndex() == oComp1.getStatements().size()-1 &&
+				oComp2 != null && o.getFragment2().getIndex() > 0 && o.getFragment2().getIndex() == oComp2.getStatements().size()-1) {
+			AbstractCodeFragment thisPrevious1 = thisComp1.getStatements().get(this.getFragment1().getIndex()-1);
+			AbstractCodeFragment thisPrevious2 = thisComp2.getStatements().get(this.getFragment2().getIndex()-1);
+			
+			AbstractCodeFragment oPrevious1 = oComp1.getStatements().get(o.getFragment1().getIndex()-1);
+			AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
+			
+			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
+			if(thisEqualPrevious) {
+				this.identicalPreviousAndNextStatement = true;
+			}
+			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
+			if(oEqualPrevious) {
 				o.identicalPreviousAndNextStatement = true;
 			}
 		}

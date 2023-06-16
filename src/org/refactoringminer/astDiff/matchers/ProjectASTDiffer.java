@@ -1085,6 +1085,12 @@ public class ProjectASTDiffer
 				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 			}
 		}
+		//Changed Imports
+		for(org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : importDiffList.getChangedImports()) {
+			Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,pair.getLeft());
+			Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,pair.getRight());
+			mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+		}
 	}
 
 	private Tree findImportByTypeAndLabel(List<Tree> inputTree, String searchingType, UMLImport label) {

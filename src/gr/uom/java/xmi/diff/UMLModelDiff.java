@@ -2102,23 +2102,31 @@ public class UMLModelDiff {
 		Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 		Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
-			refactorings.addAll(classDiff.getRefactorings());
+			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
+			refactorings.addAll(classDiffRefactorings);
+			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, filterTypeChangeRefactorings(classDiffRefactorings));
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 			checkForExtractedAndMovedOperationsToInnerClasses(classDiff);
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
-			refactorings.addAll(classDiff.getRefactorings());
+			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
+			refactorings.addAll(classDiffRefactorings);
+			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, filterTypeChangeRefactorings(classDiffRefactorings));
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
 		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
-			refactorings.addAll(classDiff.getRefactorings());
+			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
+			refactorings.addAll(classDiffRefactorings);
+			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, filterTypeChangeRefactorings(classDiffRefactorings));
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
-			refactorings.addAll(classDiff.getRefactorings());
+			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
+			refactorings.addAll(classDiffRefactorings);
+			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, filterTypeChangeRefactorings(classDiffRefactorings));
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
@@ -2469,6 +2477,21 @@ public class UMLModelDiff {
 		return typeRenamePatternMap;
 	}
 
+	private Set<Refactoring> filterTypeChangeRefactorings(List<Refactoring> classDiffRefactorings) {
+		Set<RefactoringType> refactoringTypesToConsider = new HashSet<>();
+		refactoringTypesToConsider.add(RefactoringType.CHANGE_ATTRIBUTE_TYPE);
+		refactoringTypesToConsider.add(RefactoringType.CHANGE_PARAMETER_TYPE);
+		refactoringTypesToConsider.add(RefactoringType.CHANGE_RETURN_TYPE);
+		refactoringTypesToConsider.add(RefactoringType.CHANGE_VARIABLE_TYPE);
+		Set<Refactoring> filtered = new LinkedHashSet<Refactoring>();
+		for (Refactoring ref : classDiffRefactorings) {
+			if (refactoringTypesToConsider.contains(ref.getRefactoringType())) {
+				filtered.add(ref);
+			}
+		}
+		return filtered;
+	}
+
 	private Set<Refactoring> filterPackageRefactorings(Set<Refactoring> refactoringsAtRevision) {
 		Set<RefactoringType> refactoringTypesToConsider = new HashSet<>();
 		refactoringTypesToConsider.add(RefactoringType.MOVE_CLASS);
@@ -2501,6 +2524,25 @@ public class UMLModelDiff {
 				else if(ref instanceof MoveAndRenameClassRefactoring) {
 					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
 					classDiff.findImportChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+			}
+		}
+	}
+
+	private void detectImportDeclarationChangesBasedOnTypeChanges(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+		if(classDiff.hasBothAddedAndRemovedImports()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof ChangeReturnTypeRefactoring) {
+					ChangeReturnTypeRefactoring changeReturnType = (ChangeReturnTypeRefactoring)ref;
+					classDiff.findImportChanges(changeReturnType.getOriginalType(), changeReturnType.getChangedType());
+				}
+				else if(ref instanceof ChangeAttributeTypeRefactoring) {
+					ChangeAttributeTypeRefactoring changeAttributeType = (ChangeAttributeTypeRefactoring)ref;
+					classDiff.findImportChanges(changeAttributeType.getOriginalAttribute().getType(), changeAttributeType.getChangedTypeAttribute().getType());
+				}
+				else if(ref instanceof ChangeVariableTypeRefactoring) {
+					ChangeVariableTypeRefactoring changeVariableType = (ChangeVariableTypeRefactoring)ref;
+					classDiff.findImportChanges(changeVariableType.getOriginalVariable().getType(), changeVariableType.getChangedTypeVariable().getType());
 				}
 			}
 		}

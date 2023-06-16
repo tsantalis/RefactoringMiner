@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLType;
 
 public class UMLImportListDiff {
 	private Set<UMLImport> removedImports;
@@ -59,6 +60,15 @@ public class UMLImportListDiff {
 	private UMLImport findMatchingImport(Set<UMLImport> imports, String name) {
 		for(UMLImport imported : imports) {
 			if(imported.getName().equals(name)) {
+				return imported;
+			}
+		}
+		return null;
+	}
+
+	private UMLImport findMatchingImport(Set<UMLImport> imports, UMLType type) {
+		for(UMLImport imported : imports) {
+			if(imported.getName().endsWith(type.getClassType())) {
 				return imported;
 			}
 		}
@@ -117,6 +127,17 @@ public class UMLImportListDiff {
 					break;
 				}
 			}
+		}
+	}
+
+	public void findImportChanges(UMLType typeBefore, UMLType typeAfter) {
+		UMLImport removedImport = findMatchingImport(removedImports, typeBefore);
+		UMLImport addedImport = findMatchingImport(addedImports, typeAfter);
+		if(removedImport != null && addedImport != null) {
+			Pair<UMLImport, UMLImport> pair = Pair.of(removedImport, addedImport);
+			changedImports.add(pair);
+			removedImports.remove(removedImport);
+			addedImports.remove(addedImport);
 		}
 	}
 

@@ -297,6 +297,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 	}
 
+	public void findImportChanges(UMLType typeBefore, UMLType typeAfter) {
+		if(importDiffList != null) {
+			importDiffList.findImportChanges(typeBefore, typeAfter);
+		}
+	}
+
 	public UMLImportListDiff getImportDiffList() {
 		return importDiffList;
 	}

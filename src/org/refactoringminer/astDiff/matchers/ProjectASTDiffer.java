@@ -290,6 +290,13 @@ public class ProjectASTDiffer
 			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo());
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo());
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
+			if (srcOperationNode != null && dstOperationNode != null) {
+				Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.MODIFIER);
+				Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.MODIFIER);
+				if (srcModifier != null && dstModifier != null)
+					mappingStore.addMapping(srcModifier, dstModifier);
+			}
+
 			if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer &&  umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)
 				if (((UMLInitializer)umlOperationBodyMapper.getContainer1()).isStatic() && ((UMLInitializer)umlOperationBodyMapper.getContainer2()).isStatic())
 					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));

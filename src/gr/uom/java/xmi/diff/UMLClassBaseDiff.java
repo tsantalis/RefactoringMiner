@@ -52,9 +52,9 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
-import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
@@ -442,6 +442,54 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			}
 		}
 		return null;
+	}
+
+	public Set<MethodInvocationReplacement> findMethodInvocationReplacementWithMatchingSignatures(UMLOperation operation1, UMLOperation operation2) {
+		Set<MethodInvocationReplacement> replacements = new LinkedHashSet<MethodInvocationReplacement>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				if(!mapping.isExact()) {
+					List<AbstractCall> methodInvocations1 = new ArrayList<>(mapping.getFragment1().getMethodInvocations());
+					List<AbstractCall> methodInvocations2 = new ArrayList<>(mapping.getFragment2().getMethodInvocations());
+					Set<AbstractCall> intersection = new LinkedHashSet<>(methodInvocations1);
+					intersection.retainAll(methodInvocations2);
+					methodInvocations1.removeAll(intersection);
+					methodInvocations2.removeAll(intersection);
+					if(methodInvocations1.size() == methodInvocations2.size()) {
+						AbstractCall matchedCallToOperation1 = null;
+						for(AbstractCall call : methodInvocations1) {
+							if(call.matchesOperation(operation1, mapper.getContainer1(), this, modelDiff)) {
+								matchedCallToOperation1 = call;
+								break;
+							}
+						}
+						AbstractCall matchedCallToOperation2 = null;
+						if(matchedCallToOperation1 != null) {
+							for(AbstractCall call : methodInvocations2) {
+								if(call.matchesOperation(operation2, mapper.getContainer2(), this, modelDiff)) {
+									matchedCallToOperation2 = call;
+									break;
+								}
+							}
+						}
+						if(matchedCallToOperation1 != null && matchedCallToOperation2 != null) {
+							replacements.add(new MethodInvocationReplacement(matchedCallToOperation1.actualString(), matchedCallToOperation2.actualString(), matchedCallToOperation1, matchedCallToOperation2, ReplacementType.METHOD_INVOCATION));
+						}
+						else if(matchedCallToOperation1 != null || matchedCallToOperation2 != null) {
+							int index = 0;
+							if(matchedCallToOperation1 != null) {
+								index = methodInvocations1.indexOf(matchedCallToOperation1);
+							}
+							else if(matchedCallToOperation2 != null) {
+								index = methodInvocations2.indexOf(matchedCallToOperation2);
+							}
+							replacements.add(new MethodInvocationReplacement(methodInvocations1.get(index).actualString(), methodInvocations2.get(index).actualString(), methodInvocations1.get(index), methodInvocations2.get(index), ReplacementType.METHOD_INVOCATION));
+						}
+					}
+				}
+			}
+		}
+		return replacements;
 	}
 
 	public UMLOperationBodyMapper findMapperWithMatchingSignature2(UMLOperation operation2) {

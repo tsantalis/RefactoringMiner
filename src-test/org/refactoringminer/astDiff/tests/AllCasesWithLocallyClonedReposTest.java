@@ -14,6 +14,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /**
@@ -23,10 +24,10 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 public class AllCasesWithLocallyClonedReposTest {
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initDataWithClonedRepos")
-    public void testSubTreeMappings(String repo, String commit, String srcFileName, String expected, String actual) {
+    public void testSubTreeMappings(String repo, String commit, String srcFileName, boolean sameLen,  boolean status) {
         String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
-        assertEquals(expected.length(), actual.length(), msg);
-        assertEquals(expected, actual, msg);
+        assertTrue(sameLen, msg);
+        assertTrue(status, msg);
     }
 
     public static Stream<Arguments> initDataWithClonedRepos() throws Exception {
@@ -37,7 +38,7 @@ public class AllCasesWithLocallyClonedReposTest {
         for (CaseInfo info : infos) {
             List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
             Set<ASTDiff> astDiffs = getProjectDiffLocally(info);
-            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
+            makeAndCheckAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
         }
         return allCases.stream();
     }
@@ -52,7 +53,7 @@ public class AllCasesWithLocallyClonedReposTest {
 
             Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
 
-            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
+            makeAndCheckAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
         }
         return allCases.stream();
     }

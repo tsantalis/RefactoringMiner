@@ -145,6 +145,7 @@ Currently, it supports the detection of the following refactorings:
 96. Move Code (between methods)
 97. Replace Anonymous with Class
 98. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
+99. Assert Throws
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
@@ -162,19 +163,19 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **May 15, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **June 18, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11679  | 23  | 267  | 0.998  | 0.978|
-|Extract Method|996  |  1  | 27  | 0.999  | 0.974|
+|**Total**|11791  | 23  | 259  | 0.998  | 0.979|
+|Extract Method|1006  |  1  | 25  | 0.999  | 0.976|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|368  |  4  | 25  | 0.989  | 0.936|
+|Replace Attribute|24  |  0  |  0  | 1.000  | 1.000|
+|Rename Method|378  |  4  | 22  | 0.990  | 0.945|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
-|Move Method|349  |  3  |  9  | 0.991  | 0.975|
+|Move Method|350  |  3  |  9  | 0.992  | 0.975|
 |Move And Rename Method|124  |  0  |  5  | 1.000  | 0.961|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1094  |  0  |  4  | 1.000  | 0.996|
@@ -187,16 +188,16 @@ As of **May 15, 2023** the precision and recall of the tool on an oracle consist
 |Extract Superclass|73  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|96  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|100  |  0  | 69  | 1.000  | 0.592|
+|Extract And Move Method|103  |  0  | 69  | 1.000  | 0.599|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|231  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|248  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|92  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|95  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|312  |  3  | 12  | 0.990  | 0.963|
-|Rename Parameter|480  |  2  | 26  | 0.996  | 0.949|
+|Rename Variable|321  |  3  | 12  | 0.991  | 0.964|
+|Rename Parameter|485  |  2  | 26  | 0.996  | 0.949|
 |Rename Attribute|133  |  0  | 16  | 1.000  | 0.893|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -205,14 +206,14 @@ As of **May 15, 2023** the precision and recall of the tool on an oracle consist
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
-|Parameterize Variable|77  |  0  |  0  | 1.000  | 1.000|
+|Parameterize Variable|92  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|421  |  0  | 12  | 1.000  | 0.972|
-|Change Variable Type|774  |  2  | 10  | 0.997  | 0.987|
-|Change Parameter Type|638  |  1  | 12  | 0.998  | 0.982|
+|Change Return Type|426  |  0  | 12  | 1.000  | 0.973|
+|Change Variable Type|783  |  2  |  8  | 0.997  | 0.990|
+|Change Parameter Type|642  |  1  | 12  | 0.998  | 0.982|
 |Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
-|Add Method Annotation|329  |  0  |  4  | 1.000  | 0.988|
+|Add Method Annotation|330  |  0  |  3  | 1.000  | 0.991|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Annotation|62  |  0  |  1  | 1.000  | 0.984|
@@ -221,15 +222,15 @@ As of **May 15, 2023** the precision and recall of the tool on an oracle consist
 |Add Class Annotation|52  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Annotation|20  |  0  |  0  | 1.000  | 1.000|
 |Modify Class Annotation|32  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Annotation|33  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|961  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|332  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|974  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|333  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Annotation| 3  |  0  |  0  | 1.000  | 1.000|
-|Add Thrown Exception Type|40  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
+|Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|330  |  0  |  0  | 1.000  | 1.000|
@@ -239,8 +240,8 @@ As of **May 15, 2023** the precision and recall of the tool on an oracle consist
 |Remove Method Modifier|105  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|135  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
-|Add Variable Modifier|128  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|58  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Modifier|129  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|59  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|

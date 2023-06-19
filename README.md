@@ -398,9 +398,15 @@ The project is led and maintained by [Zarina Kurbatova](https://github.com/onewh
 * [Py-RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
 
 # Contributors
-The code in package **gr.uom.java.xmi.*** is developed by [Nikolaos Tsantalis](https://github.com/tsantalis).
-
-The code in package **org.refactoringminer.*** was initially developed by [Danilo Ferreira e Silva](https://github.com/danilofes) and later extended by [Nikolaos Tsantalis](https://github.com/tsantalis).
+* [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
+* [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
+* [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)
+* [Victor Veloso](https://github.com/victorgveloso/): [Test-specific refactoring detection](https://github.com/victorgveloso/RefactoringMiner)
+* [Pedram Nouri](https://github.com/pedramnoori): [Refactoring purity checker](https://github.com/pedramnoori/RefactoringMiner)
+* [Ameya Ketkar](https://github.com/ameyaKetkar): [Refactoring oracle 2.0 validation](https://github.com/ameyaKetkar/RMinerEvaluationTools)
+* [Davood Mazinanian](https://github.com/dmazinanian): [Refactoring oracle web application](http://refactoring.encs.concordia.ca/oracle/) + Refactoring oracle 1.0 validation
+* Matin Mansouri: Rename Variable detection + Refactoring oracle 1.0 validation
+* Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # API usage guidelines
 ## With a locally cloned git repository

@@ -2,6 +2,7 @@ Table of Contents
 =================
 
    * [General info](#general-info)
+   * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
@@ -13,7 +14,6 @@ Table of Contents
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
       * [Python](#python)
-   * [Contributors](#contributors)
    * [API usage guidelines](#api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
@@ -145,6 +145,21 @@ Currently, it supports the detection of the following refactorings:
 96. Move Code (between methods)
 97. Replace Anonymous with Class
 98. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
+
+# Contributors
+* [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
+* [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
+* [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)
+* [Victor Veloso](https://github.com/victorgveloso/): [Test-specific refactoring detection](https://github.com/victorgveloso/RefactoringMiner)
+* [Pedram Nouri](https://github.com/pedramnoori): [Refactoring purity checker](https://github.com/pedramnoori/RefactoringMiner)
+* [Tayeeb Hasan](https://github.com/flozender): [CodeTracker - block tracking](https://github.com/jodavimehran/code-tracker) + [CodeTracker Chrome extension](https://github.com/flozender/CodeTracker-Extension)
+* [Mehran Jodavi](https://github.com/jodavimehran): [CodeTracker - method & variable tracking](https://github.com/jodavimehran/code-tracker)
+* [Sadegh Aalizadeh](https://github.com/mosaliza): [Refactoring motivation detection](https://github.com/mosaliza/RefactoringMiner)
+* [Hassan Mansour](https://github.com/hassanmansour90): [Refactoring Aware Commit Review Chrome extension](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
+* [Ameya Ketkar](https://github.com/ameyaKetkar): [Refactoring oracle 2.0 validation](https://github.com/ameyaKetkar/RMinerEvaluationTools)
+* [Davood Mazinanian](https://github.com/dmazinanian): [Refactoring oracle web application](http://refactoring.encs.concordia.ca/oracle/) + Refactoring oracle 1.0 validation
+* Matin Mansouri: Rename Variable detection + Refactoring oracle 1.0 validation
+* Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
 As of **May 15, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
@@ -396,17 +411,6 @@ The project is led and maintained by [Zarina Kurbatova](https://github.com/onewh
 ## Python
 * [PyRef](https://github.com/PyRef/PyRef) has been developed by Hassan Atwi and [Bin Lin](https://binlin.info/) from the Software Institute at USI - Università della Svizzera Italiana, Switzerland.
 * [Py-RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
-
-# Contributors
-* [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
-* [Danilo Ferreira e Silva](https://github.com/danilofes): Git repository mining infrastructure + APIs
-* [Pouria Alikhani Fard](https://github.com/pouryafard75): [AST diff](https://github.com/pouryafard75/RM-ASTDiff) + [AST diff benchmark](https://github.com/pouryafard75/DiffBenchmark)
-* [Victor Veloso](https://github.com/victorgveloso/): [Test-specific refactoring detection](https://github.com/victorgveloso/RefactoringMiner)
-* [Pedram Nouri](https://github.com/pedramnoori): [Refactoring purity checker](https://github.com/pedramnoori/RefactoringMiner)
-* [Ameya Ketkar](https://github.com/ameyaKetkar): [Refactoring oracle 2.0 validation](https://github.com/ameyaKetkar/RMinerEvaluationTools)
-* [Davood Mazinanian](https://github.com/dmazinanian): [Refactoring oracle web application](http://refactoring.encs.concordia.ca/oracle/) + Refactoring oracle 1.0 validation
-* Matin Mansouri: Rename Variable detection + Refactoring oracle 1.0 validation
-* Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # API usage guidelines
 ## With a locally cloned git repository

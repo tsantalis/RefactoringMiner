@@ -100,9 +100,11 @@ public class SpecificCasesTest {
         }
         String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/562c4447a566170ac28872a88b323669a82db5c9/Builder.MethodRef.ByteBufferLogInputStreamTest.json";
         String expected = new String(Files.readAllBytes(Path.of(filePath)));
+        String exportedMappings = MappingExportModel.exportString(mappings);
+        assertEquals(expected.length(), exportedMappings.length(), "Different mappings for mock migration commit");
         assertEquals(
                 expected,
-                        MappingExportModel.exportString(mappings),"Different mappings for mock migration commit");
+                exportedMappings,"Different mappings for mock migration commit");
     }
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initData")

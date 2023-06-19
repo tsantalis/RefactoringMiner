@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.lib.Repository;
 import org.junit.jupiter.params.provider.Arguments;
@@ -78,11 +79,16 @@ public class UtilMethods {
             );
         }
     }
-    public static void makeAndCheckAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs, String mappingsPath) throws IOException {
+    public static void makeAndCheckAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs, String mappingsPath) throws JsonProcessingException {
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, mappingsPath, info.getRepo(), info.getCommit());
             String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
-            String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
+            String expected = null;
+            try {
+                expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
+            } catch (IOException e) {
+                expected = "{NOT FOUND}";
+            }
             boolean sameLen = (calculated.length() == expected.length());
             boolean status = false;
             if (sameLen)

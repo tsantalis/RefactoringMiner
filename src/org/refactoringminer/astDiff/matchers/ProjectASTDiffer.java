@@ -1064,18 +1064,17 @@ public class ProjectASTDiffer
 
 	private void processImports(Tree srcTree, Tree dstTree, UMLImportListDiff importDiffList, ExtendedMultiMappingStore mappingStore) {
 		if (importDiffList == null) return;
-		Set<UMLImport> commonImports = importDiffList.getCommonImports();
-		if (commonImports.isEmpty())
-			return;
-		String searchingType = Constants.IMPORT_DECLARATION;
 		List<Tree> srcChildren = srcTree.getChildren();
 		List<Tree> dstChildren = dstTree.getChildren();
-
-		for(UMLImport label : commonImports){
-			Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,label);
-			Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,label);
-			if (srcImportStatement != null && dstImportStatement != null)
-				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
+		Set<UMLImport> commonImports = importDiffList.getCommonImports();
+		String searchingType = Constants.IMPORT_DECLARATION;
+		if (!commonImports.isEmpty()) {
+			for (UMLImport label : commonImports) {
+				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren, searchingType, label);
+				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren, searchingType, label);
+				if (srcImportStatement != null && dstImportStatement != null)
+					mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
+			}
 		}
 		//Grouped Imports
 		for (Map.Entry<Set<UMLImport>, UMLImport> setUMLImportEntry : importDiffList.getGroupedImports().entrySet()) {

@@ -174,4 +174,37 @@
   "secondPos" : 71,
   "firstEndPos" : 78,
   "secondEndPos" : 78
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 132,
+  "secondPos" : 142,
+  "firstEndPos" : 142,
+  "secondEndPos" : 152
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 132,
+  "secondPos" : 142,
+  "firstEndPos" : 141,
+  "secondEndPos" : 151
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "publish",
+  "secondLabel" : "publish",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 132,
+  "secondPos" : 142,
+  "firstEndPos" : 139,
+  "secondEndPos" : 149
 } ]

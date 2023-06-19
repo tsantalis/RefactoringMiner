@@ -32,6 +32,28 @@
   "firstEndPos" : 636,
   "secondEndPos" : 636
 }, {
+  "firstType" : "ImportDeclaration",
+  "secondType" : "ImportDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 639,
+  "secondPos" : 1114,
+  "firstEndPos" : 709,
+  "secondEndPos" : 1198
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "com.zaxxer.hikari.util.IConcurrentBagEntry.STATE_IN_USE",
+  "secondLabel" : "com.zaxxer.hikari.util.ConcurrentBag.IConcurrentBagEntry.STATE_IN_USE",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 653,
+  "secondPos" : 1128,
+  "firstEndPos" : 708,
+  "secondEndPos" : 1197
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -54,6 +76,17 @@
   "firstEndPos" : 896,
   "secondEndPos" : 3073
 }, {
+  "firstType" : "ImportDeclaration",
+  "secondType" : "ImportDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 710,
+  "secondPos" : 1025,
+  "firstEndPos" : 784,
+  "secondEndPos" : 1113
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -64,6 +97,17 @@
   "secondPos" : 2876,
   "firstEndPos" : 726,
   "secondEndPos" : 2882
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "com.zaxxer.hikari.util.IConcurrentBagEntry.STATE_NOT_IN_USE",
+  "secondLabel" : "com.zaxxer.hikari.util.ConcurrentBag.IConcurrentBagEntry.STATE_NOT_IN_USE",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 724,
+  "secondPos" : 1039,
+  "firstEndPos" : 783,
+  "secondEndPos" : 1112
 }, {
   "firstType" : "TYPE_DECLARATION_KIND",
   "secondType" : "TYPE_DECLARATION_KIND",
@@ -131,6 +175,17 @@
   "firstEndPos" : 782,
   "secondEndPos" : 2944
 }, {
+  "firstType" : "ImportDeclaration",
+  "secondType" : "ImportDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 785,
+  "secondPos" : 1199,
+  "firstEndPos" : 856,
+  "secondEndPos" : 1284
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "NumberLiteral",
   "firstLabel" : "0",
@@ -185,6 +240,17 @@
   "secondPos" : 2960,
   "firstEndPos" : 807,
   "secondEndPos" : 2972
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "com.zaxxer.hikari.util.IConcurrentBagEntry.STATE_REMOVED",
+  "secondLabel" : "com.zaxxer.hikari.util.ConcurrentBag.IConcurrentBagEntry.STATE_REMOVED",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 799,
+  "secondPos" : 1213,
+  "firstEndPos" : 855,
+  "secondEndPos" : 1283
 }, {
   "firstType" : "NumberLiteral",
   "secondType" : "NumberLiteral",
@@ -318,6 +384,17 @@
   "firstEndPos" : 861,
   "secondEndPos" : 3032
 }, {
+  "firstType" : "ImportDeclaration",
+  "secondType" : "ImportDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 857,
+  "secondPos" : 1285,
+  "firstEndPos" : 929,
+  "secondEndPos" : 1371
+}, {
   "firstType" : "PrefixExpression",
   "secondType" : "PrefixExpression",
   "firstLabel" : "",
@@ -350,6 +427,17 @@
   "secondPos" : 3036,
   "firstEndPos" : 866,
   "secondEndPos" : 3037
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "com.zaxxer.hikari.util.IConcurrentBagEntry.STATE_RESERVED",
+  "secondLabel" : "com.zaxxer.hikari.util.ConcurrentBag.IConcurrentBagEntry.STATE_RESERVED",
+  "firstParentType" : "ImportDeclaration",
+  "secondParentType" : "ImportDeclaration",
+  "firstPos" : 871,
+  "secondPos" : 1299,
+  "firstEndPos" : 928,
+  "secondEndPos" : 1370
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

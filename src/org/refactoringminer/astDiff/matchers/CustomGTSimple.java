@@ -115,10 +115,11 @@ class CustomGreedy extends GreedySubtreeMatcher {
 					else {
 						if (currentSrc.getLabel().equals(currentDst.getLabel()))
 						{
-							if (currentSrc.getType().name.contains("_EXPRESSION_OPERATOR")
-									&&
-									currentDst.getType().name.contains("_EXPRESSION_OPERATOR"))
-								multiMappings.addMapping(currentSrc, currentDst);
+//							//TODO: Its definitely better to avoid this
+//							if (currentSrc.getType().name.contains("_EXPRESSION_OPERATOR")
+//									&&
+//									currentDst.getType().name.contains("_EXPRESSION_OPERATOR"))
+//								multiMappings.addMapping(currentSrc, currentDst);
 						}
 					}
 

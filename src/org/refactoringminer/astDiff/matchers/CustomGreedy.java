@@ -7,17 +7,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 
-/**
- * @author  Pourya Alikhani Fard pouryafard75@gmail.com
- * @since   2022-12-26 8:13 p.m.
- */
-public class CustomGTSimple extends CompositeMatchers.CompositeMatcher {
-	public CustomGTSimple() {
-		super(new CustomGreedy(0), new SimpleBottomUpMatcher());
-	}
-}
-
-class CustomGreedy extends GreedySubtreeMatcher {
+public class CustomGreedy extends GreedySubtreeMatcher {
 	public CustomGreedy(int minP) {
 		super();
 		setMinPriority(minP);

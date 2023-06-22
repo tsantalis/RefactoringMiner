@@ -18,15 +18,18 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
 	private String classNameAfter;
+	private UMLAttributeDiff attributeDiff;
 	private Set<AbstractCodeMapping> attributeReferences;
 	private Set<Refactoring> relatedRefactorings;
 	
 	public ChangeAttributeTypeRefactoring(UMLAttribute originalAttribute,
-										  UMLAttribute changedTypeAttribute, Set<AbstractCodeMapping> attributeReferences) {
+										  UMLAttribute changedTypeAttribute, Set<AbstractCodeMapping> attributeReferences,
+										  UMLAttributeDiff attributeDiff) {
 		this.originalAttribute = originalAttribute;
 		this.changedTypeAttribute = changedTypeAttribute;
 		this.classNameBefore = originalAttribute.getClassName();
 		this.classNameAfter = changedTypeAttribute.getClassName();
+		this.attributeDiff = attributeDiff;
 		this.attributeReferences = attributeReferences;
 		this.relatedRefactorings = new LinkedHashSet<Refactoring>();
 	}
@@ -45,6 +48,10 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 
 	public UMLAttribute getChangedTypeAttribute() {
 		return changedTypeAttribute;
+	}
+
+	public UMLAttributeDiff getAttributeDiff() {
+		return attributeDiff;
 	}
 
 	public String getClassNameBefore() {

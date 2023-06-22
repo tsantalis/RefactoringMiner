@@ -2540,6 +2540,14 @@ public class UMLModelDiff {
 				else if(ref instanceof ChangeAttributeTypeRefactoring) {
 					ChangeAttributeTypeRefactoring changeAttributeType = (ChangeAttributeTypeRefactoring)ref;
 					classDiff.findImportChanges(changeAttributeType.getOriginalAttribute().getType(), changeAttributeType.getChangedTypeAttribute().getType());
+					if(changeAttributeType.getAttributeDiff().getInitializerMapper().isPresent()) {
+						UMLOperationBodyMapper initializerMapper = changeAttributeType.getAttributeDiff().getInitializerMapper().get();
+						for(Replacement r : initializerMapper.getReplacements()) {
+							if(r.getType().equals(ReplacementType.TYPE)) {
+								classDiff.findImportChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+							}
+						}
+					}
 				}
 				else if(ref instanceof ChangeVariableTypeRefactoring) {
 					ChangeVariableTypeRefactoring changeVariableType = (ChangeVariableTypeRefactoring)ref;

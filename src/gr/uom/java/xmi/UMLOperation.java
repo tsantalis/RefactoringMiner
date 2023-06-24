@@ -637,6 +637,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return matchCount > 0;
 	}
 
+	public boolean equalsIgnoringAbstraction(UMLOperation operation) {
+		return this.className.equals(operation.className) &&
+				this.name.equals(operation.name) &&
+				equalReturnParameter(operation) &&
+				this.getParameterTypeList().equals(operation.getParameterTypeList()) &&
+				equalTypeParameters(operation);
+	}
+
 	public boolean equalsIgnoringVisibility(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();

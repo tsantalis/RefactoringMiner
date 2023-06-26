@@ -27,6 +27,24 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2023-02-28 4:48 p.m. */
 public class SpecificCasesTest {
+
+    @Test
+    public void testAmbiguousWithinComposite() throws Exception {
+        String url = "https://github.com/pouryafard75/TestCases/commit/083ec23bc39ad46ebec7c68cb3931ee41891522e";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+
+        Set<Mapping> mappings = null;
+        for (ASTDiff astDiff : astDiffs) {
+            mappings = astDiff.getAllMappings().getMappings();
+        }
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/083ec23bc39ad46ebec7c68cb3931ee41891522e/Builder.v1.json";
+        String expected = new String(Files.readAllBytes(Path.of(filePath)));
+        String exportedMappings = MappingExportModel.exportString(mappings);
+        assertEquals(expected.length(), exportedMappings.length(), "Different mappings for ambiguous composite");
+        assertEquals(
+                expected,
+                exportedMappings,"Different mappings for ambiguous composite");
+    }
     @Test
     public void testRenameParameter() throws Exception {
 
@@ -93,7 +111,6 @@ public class SpecificCasesTest {
     public void testMethodReference() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9";
         Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        boolean executed = false;
         Set<Mapping> mappings = null;
         for (ASTDiff astDiff : astDiffs) {
             mappings = astDiff.getAllMappings().getMappings();
@@ -109,8 +126,8 @@ public class SpecificCasesTest {
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initData")
     public void toyExampleTest(String repo, String commit, String srcFileName, String expected, String actual) {
-        String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",repo.replace(".git",""),commit,srcFileName);
-        assertEquals(expected.length(),actual.length(), msg);
+        String msg = String.format("Failed for %s/commit/%s , srcFileName: %s", repo.replace(".git", ""), commit, srcFileName);
+        assertEquals(expected.length(), actual.length(), msg);
         assertEquals(expected, actual, msg);
     }
 }

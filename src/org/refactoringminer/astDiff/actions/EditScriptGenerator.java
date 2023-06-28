@@ -12,6 +12,10 @@ import java.util.Map;
 public interface EditScriptGenerator {
 	/**
 	 * Compute and return the edit script for the provided mappings.
+	 * @param mappings the mappings to compute the edit script for (see {@link ExtendedMultiMappingStore})
+	 * @param parentContextMap the parent context map
+	 * @param childContextMap the child context map
+	 * @return The generated Edit script
 	 */
 	EditScript computeActions(ExtendedMultiMappingStore mappings, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap);
 }

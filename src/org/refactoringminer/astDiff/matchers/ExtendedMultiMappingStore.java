@@ -164,34 +164,6 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	public boolean isDstMapped(Tree dst) {
 		return hasDst(dst);
 	}
-
-	public boolean areSrcsUnmapped(Collection<Tree> srcs, Tree dst) {
-		for (Tree src : srcs)
-			if (isSrcMapped(src)) {
-				Set<Tree> dstForSrc = this.getDsts(src);
-				for (Tree dstMapped : dstForSrc) {
-					if (TreeUtils.preOrder(dst).contains(dstMapped))
-						return false;
-				}
-			}
-		return true;
-	}
-
-	/**
-	 * Return whether or not all the given destination nodes are unmapped.
-	 */
-	public boolean areDstsUnmapped(Collection<Tree> dsts, Tree src) {
-		for (Tree dst : dsts)
-			if (isDstMapped(dst)) {
-				Set<Tree> srcForDst = this.getSrcs(dst);
-				for (Tree srcMapped : srcForDst) {
-					if (TreeUtils.preOrder(src).contains(srcMapped))
-						return false;
-				}
-			}
-		return true;
-	}
-
 	public void addMappingRecursively(Tree src, Tree dst) {
 		addMapping(src, dst);
 		if (src.getChildren() != null)

@@ -71,6 +71,17 @@ public class TreeUtilFunctions {
 		}
 		return null;
 	}
+	public static Tree getTreeBetweenPositionsSecure(Tree tree, int position, int endPosition,String type, String parentType) {
+		for (Tree t: tree.preOrder()) {
+			if (t.getPos() >= position && t.getEndPos() <= endPosition)
+				if (t.getType().name.equals(type)) {
+					String t_parentType = (t.getParent() != null) ? t.getParent().getType().name : "";
+					if (t_parentType.equals(parentType))
+						return t;
+				}
+		}
+		return null;
+	}
 
 	public static Tree findChildByType(Tree tree, String type) {
 		if (!tree.getChildren().isEmpty())

@@ -21,12 +21,13 @@ public class AddCase {
     public static void main(String[] args) {
         if (args.length == 3)
         {
-            String destin = "";
+            String destin = getDefects4jMappingPath();
+            String infoFile;
             if (args[0].equals("defects4j")) {
-                destin = getDefects4jMappingPath();
+                infoFile = getPerfectInfoFile();
             }
-            else if (args[0].equals("defects4j-problems")) {
-                destin = getDefects4jMappingPath();
+            else if (args[0].equals("defects4j-problematic")) {
+                infoFile = getProblematicInfoFile();
             }
             else {
                 throw new RuntimeException("not valid");
@@ -38,7 +39,7 @@ public class AddCase {
                         new GitHistoryRefactoringMinerImpl().diffAtDirectories(
                                 Path.of(getDefect4jBeforeDir(projectDir, bugID)),
                                 Path.of(getDefect4jAfterDir(projectDir, bugID)))
-                        , destin, getProblematicInfoFile());
+                        , destin, infoFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

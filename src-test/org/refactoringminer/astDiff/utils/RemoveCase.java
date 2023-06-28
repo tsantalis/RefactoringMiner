@@ -21,15 +21,14 @@ public class RemoveCase {
                 destin = getDefects4jMappingPath();
             }
             else if (args[0].equals("defects4j-problems")) {
-                destin = getDefects4jProblemsMappingPath();
+                destin = getDefects4jMappingPath();
             }
             else throw new RuntimeException("not valid");
             String projectDir = args[1];
             String bugID = args[2];
             try {
-
                 removeTestCase(projectDir, bugID,
-                        destin);
+                        destin, getProblematicInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -38,7 +37,7 @@ public class RemoveCase {
             String repo = args[0];
             String commit = args[1];
             try {
-                removeTestCase(repo, commit, getCommitsMappingsPath());
+                removeTestCase(repo, commit, getCommitsMappingsPath(), getPerfectInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -58,12 +57,12 @@ public class RemoveCase {
     private static void removeTestCase(String url) throws IOException {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
-        removeTestCase(repo,commit, getCommitsMappingsPath());
+        removeTestCase(repo,commit, getCommitsMappingsPath(), getPerfectInfoFile());
     }
 
-    private static void removeTestCase(String repo, String commit, String mappingsPath) throws IOException {
+    private static void removeTestCase(String repo, String commit, String mappingsPath, String testInfoFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = mappingsPath + getTestInfoFile();
+        String jsonFile = mappingsPath + testInfoFile;
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         CaseInfo caseInfo = new CaseInfo(repo,commit);
         boolean confirm = false;

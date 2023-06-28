@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,6 +14,7 @@ import org.refactoringminer.astDiff.utils.UtilMethods;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -32,7 +34,6 @@ public class SpecificCasesTest {
     public void testAmbiguousWithinComposite() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/083ec23bc39ad46ebec7c68cb3931ee41891522e";
         Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-
         Set<Mapping> mappings = null;
         for (ASTDiff astDiff : astDiffs) {
             mappings = astDiff.getAllMappings().getMappings();
@@ -92,21 +93,6 @@ public class SpecificCasesTest {
         }
         assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
-
-    public static Stream<Arguments> initData() throws Exception {
-        String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
-        List<Arguments> allCases = new ArrayList<>();
-        String repo = URLHelper.getRepo(url);
-        String commit = URLHelper.getCommit(url);
-        List<CaseInfo> infos = new ArrayList<>();
-        infos.add(new CaseInfo(repo,commit));
-        for (CaseInfo info : infos) {
-            List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
-            Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
-            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
-        }
-        return allCases.stream();
-    }
     @Test
     public void testMethodReference() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9";
@@ -123,11 +109,42 @@ public class SpecificCasesTest {
                 expected,
                 exportedMappings,"Different mappings for mock migration commit");
     }
+    public static Stream<Arguments> initData() throws Exception {
+        String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
+        List<Arguments> allCases = new ArrayList<>();
+        String repo = URLHelper.getRepo(url);
+        String commit = URLHelper.getCommit(url);
+        List<CaseInfo> infos = new ArrayList<>();
+        infos.add(new CaseInfo(repo,commit));
+        for (CaseInfo info : infos) {
+            List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(new File(getFinalFolderPath(getCommitsMappingsPath(), info.getRepo(), info.getCommit())).list())));
+            Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
+            makeAllCases(allCases, info, expectedFilesList, astDiffs, getCommitsMappingsPath());
+        }
+        return allCases.stream();
+    }
     @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
     @MethodSource("initData")
     public void toyExampleTest(String repo, String commit, String srcFileName, String expected, String actual) {
         String msg = String.format("Failed for %s/commit/%s , srcFileName: %s", repo.replace(".git", ""), commit, srcFileName);
         assertEquals(expected.length(), actual.length(), msg);
         assertEquals(expected, actual, msg);
+    }
+    private static void makeAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs, String mappingsPath) throws IOException {
+        for (ASTDiff astDiff : astDiffs) {
+            String finalFilePath = getFinalFilePath(astDiff, mappingsPath, info.getRepo(), info.getCommit());
+            String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+            String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
+            allCases.add(Arguments.of(info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated));
+            expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));
+        }
+        for (String expectedButNotGeneratedFile : expectedFilesList) {
+            String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
+            allCases.add(Arguments.of
+                    (
+                            info.getRepo(),info.getCommit(),expectedDiffName,"{JSON}","NOT GENERATED"
+                    )
+            );
+        }
     }
 }

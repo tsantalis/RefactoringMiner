@@ -26,7 +26,7 @@ public class AddCase {
                 destin = getDefects4jMappingPath();
             }
             else if (args[0].equals("defects4j-problems")) {
-                destin = getDefects4jProblemsMappingPath();
+                destin = getDefects4jMappingPath();
             }
             else {
                 throw new RuntimeException("not valid");
@@ -38,7 +38,7 @@ public class AddCase {
                         new GitHistoryRefactoringMinerImpl().diffAtDirectories(
                                 Path.of(getDefect4jBeforeDir(projectDir, bugID)),
                                 Path.of(getDefect4jAfterDir(projectDir, bugID)))
-                        , destin);
+                        , destin, getProblematicInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -47,7 +47,7 @@ public class AddCase {
             String repo = args[0];
             String commit = args[1];
             try {
-                addTestCase(repo, commit, new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath());
+                addTestCase(repo, commit, new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), getPerfectInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -68,12 +68,12 @@ public class AddCase {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
         addTestCase(repo,commit,
-                new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath());
+                new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), getPerfectInfoFile());
     }
 
-    private static void addTestCase(String repo, String commit, Set<ASTDiff> astDiffs, String mappingsPath) throws IOException {
+    private static void addTestCase(String repo, String commit, Set<ASTDiff> astDiffs, String mappingsPath, String testInfoFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonFile = mappingsPath + getTestInfoFile();
+        String jsonFile = mappingsPath + testInfoFile;
 
         for (ASTDiff astDiff : astDiffs) {
             String finalPath = getFinalFilePath(astDiff, mappingsPath,  repo, commit);

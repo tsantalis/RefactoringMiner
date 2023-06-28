@@ -19,6 +19,8 @@ public class MappingExportModel implements Serializable {
     @JsonIgnore
     int firstHash, secondHash;
 
+    MappingExportModel(){};
+
     public MappingExportModel(String firstType, String firstLabel, int firstPos, int firstEndPos, int firstHash, String firstParentType,
                               String secondType, String secondLabel, int secondPos, int secondEndPos, int secondHash, String secondParentType) {
         this.firstType = firstType;

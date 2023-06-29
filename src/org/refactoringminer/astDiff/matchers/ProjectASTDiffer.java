@@ -295,6 +295,10 @@ public class ProjectASTDiffer
 				Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.MODIFIER);
 				if (srcModifier != null && dstModifier != null)
 					mappingStore.addMapping(srcModifier, dstModifier);
+				Tree srcJavadoc = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.JAVA_DOC);
+				Tree dstJavadoc = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.JAVA_DOC);
+				if (srcJavadoc != null && dstJavadoc != null)
+					new BasicTreeMatcher().match(srcJavadoc,dstJavadoc,mappingStore);
 			}
 
 			if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer &&  umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)

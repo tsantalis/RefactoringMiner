@@ -122,6 +122,18 @@ public class SpecificCasesTest {
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
         JSONAssert.assertEquals("Failed the InfixExpression case",expected, calculated, false);
     }
+    @Test
+    public void testMethodInvocation() throws IOException, JSONException {
+        //Closure-9
+        //Todo: Fix https://github.com/fabric8io/fabric8/commit/8127b21a220ca677c4e59961d019e7753da7ea6e
+        String url = "https://github.com/pouryafard75/TestCases/commit/6f98dd5ea9f1524b616f4fb9ef8a26b11667addd";
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/6f98dd5ea9f1524b616f4fb9ef8a26b11667addd/Builder.MethodInvocation.json";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        ASTDiff astDiff = astDiffs.iterator().next();
+        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
+        JSONAssert.assertEquals("Failed the InfixExpression case", expected, calculated, false);
+    }
     public static Stream<Arguments> initData() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";
         List<Arguments> allCases = new ArrayList<>();

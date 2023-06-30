@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,6 +13,7 @@ import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.utils.UtilMethods;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,6 +110,17 @@ public class SpecificCasesTest {
         assertEquals(
                 expected,
                 exportedMappings,"Different mappings for mock migration commit");
+    }
+    @Test
+    public void testInfixExpression() throws IOException, JSONException {
+        //Cli-31, Cli-11
+        String url = "https://github.com/pouryafard75/TestCases/commit/76ab18eeb36f3bc0a8e6a5655d970657187df276";
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/76ab18eeb36f3bc0a8e6a5655d970657187df276/Builder.IfCondition.json";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        ASTDiff astDiff = astDiffs.iterator().next();
+        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
+        JSONAssert.assertEquals("Failed the InfixExpression case",expected, calculated, false);
     }
     public static Stream<Arguments> initData() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";

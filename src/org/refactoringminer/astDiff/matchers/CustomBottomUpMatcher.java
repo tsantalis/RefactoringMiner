@@ -7,6 +7,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeUtils;
 import com.github.gumtreediff.tree.Type;
 import com.github.gumtreediff.utils.SequenceAlgorithms;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 
@@ -47,6 +48,17 @@ public class CustomBottomUpMatcher implements Matcher {
 
 				if (best != null) {
 					lastChanceMatch(mappings, t, best);
+//					boolean checkOperatorOfInfixExpression = true;
+//					String INFIX_EXPRESSION = "InfixExpression";
+//					if (t.getType().name.equals(INFIX_EXPRESSION))
+//					{
+//						checkOperatorOfInfixExpression = false;
+//						String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
+//						Tree a = TreeUtilFunctions.findChildByType(t, INFIX_EXPRESSION_OPERATOR);
+//						Tree b = TreeUtilFunctions.findChildByType(best, INFIX_EXPRESSION_OPERATOR);
+//						if (mappings.getDstForSrc(a) == b) checkOperatorOfInfixExpression = true;
+//					}
+//					if (checkOperatorOfInfixExpression)
 					mappings.addMapping(t, best);
 				}
 			}

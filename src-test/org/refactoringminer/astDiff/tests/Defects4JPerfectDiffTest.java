@@ -28,7 +28,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  */
 public class Defects4JPerfectDiffTest {
     private static final String dir = getDefects4jMappingPath();
-    @ParameterizedTest(name= "{index}: File: {2}, Repo: {0}, Commit: {1}")
+    @ParameterizedTest(name= "{index}: {0}")
 //    @JsonFileSource(resources = "/astDiff/defects4j/cases-problematic.json")
     @JsonFileSource(resources = "/astDiff/defects4j/cases.json")
     public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws JsonProcessingException, JSONException {

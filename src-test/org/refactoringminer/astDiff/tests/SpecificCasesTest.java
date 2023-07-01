@@ -2,16 +2,15 @@ package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jgit.util.IO;
 import org.json.JSONException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.refactoringminer.astDiff.actions.ASTDiff;
-import org.refactoringminer.astDiff.utils.CaseInfo;
-import org.refactoringminer.astDiff.utils.MappingExportModel;
-import org.refactoringminer.astDiff.utils.URLHelper;
-import org.refactoringminer.astDiff.utils.UtilMethods;
+import org.refactoringminer.astDiff.utils.*;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -133,6 +132,26 @@ public class SpecificCasesTest {
         String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
         JSONAssert.assertEquals("Failed the InfixExpression case", expected, calculated, false);
+    }
+    @Test
+    public void testBuilderPattern() throws IOException, JSONException {
+        String url = "https://github.com/pouryafard75/TestCases/commit/f73e580d89fa63627601699a683d08f87d074c6a";
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/f73e580d89fa63627601699a683d08f87d074c6a/Builder.builderPattern.json";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        ASTDiff astDiff = astDiffs.iterator().next();
+        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
+        JSONAssert.assertEquals("Failed the builder pattern case", expected, calculated, false);
+    }
+    @Test
+    public void testBuilderPattern2() throws IOException, JSONException {
+        String url = "https://github.com/pouryafard75/TestCases/commit/ce4a8fa7101318f7dc3f92f4713b769fe3fd5158";
+        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/ce4a8fa7101318f7dc3f92f4713b769fe3fd5158/Builder.abcd.json";
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        ASTDiff astDiff = astDiffs.iterator().next();
+        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
+        JSONAssert.assertEquals("Failed the builder pattern case", expected, calculated, false);
     }
     public static Stream<Arguments> initData() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";

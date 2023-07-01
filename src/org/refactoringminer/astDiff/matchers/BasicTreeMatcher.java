@@ -79,7 +79,13 @@ public class BasicTreeMatcher implements TreeMatcher {
 		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.removeMapping(treeTreePair.first, match.getSrcForDst(treeTreePair.first));
 			match.removeMapping(match.getSrcForDst(treeTreePair.second), treeTreePair.second);
+		}
+		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.addMapping(treeTreePair.first, treeTreePair.second);
+			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, Constants.METHOD_INVOCATION_RECEIVER);
+			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, Constants.METHOD_INVOCATION_RECEIVER);
+			if (srcMIR != null && dstMIR != null)
+				match.addMapping(srcMIR, dstMIR);
 		}
 
 //		removeList = new ArrayList<>();

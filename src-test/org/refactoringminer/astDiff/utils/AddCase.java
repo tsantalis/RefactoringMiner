@@ -45,6 +45,15 @@ public class AddCase {
             }
         }
         else if (args.length == 2) {
+            if (args[0].equals("problematic")){
+                String url = args[1];
+                try {
+                    addTestCase(url, getProblematicInfoFile());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
             String repo = args[0];
             String commit = args[1];
             try {
@@ -56,7 +65,7 @@ public class AddCase {
         else if (args.length == 1) {
             String url = args[0];
             try {
-                addTestCase(url);
+                addTestCase(url, getPerfectInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -65,11 +74,11 @@ public class AddCase {
             System.err.println("No input were given");
     }
 
-    private static void addTestCase(String url) throws IOException {
+    private static void addTestCase(String url, String infoFile) throws IOException {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
         addTestCase(repo,commit,
-                new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), getPerfectInfoFile());
+                new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), infoFile);
     }
 
     private static void addTestCase(String repo, String commit, Set<ASTDiff> astDiffs, String mappingsPath, String testInfoFile) throws IOException {

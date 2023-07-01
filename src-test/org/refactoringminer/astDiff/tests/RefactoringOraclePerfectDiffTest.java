@@ -26,6 +26,7 @@ public class RefactoringOraclePerfectDiffTest {
     private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")
     @JsonFileSource(resources = "/astDiff/commits/cases.json")
+//    @JsonFileSource(resources = "/astDiff/commits/cases-problematic.json")
     public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws JsonProcessingException {
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();

@@ -361,7 +361,10 @@ public class ProjectASTDiffer
 		//}
 		//else
 		{
-			mappingStore.addMapping(srcStatementNode,dstStatementNode);
+			if (srcStatementNode == null || dstStatementNode == null)
+				return;
+			if (srcStatementNode.getType().name.equals(dstStatementNode.getType().name))
+				mappingStore.addMapping(srcStatementNode,dstStatementNode);
 			if ((srcStatementNode.getType().name.equals(Constants.TRY_STATEMENT) && dstStatementNode.getType().name.equals(Constants.TRY_STATEMENT)) ||
 					(srcStatementNode.getType().name.equals(Constants.CATCH_CLAUSE) && dstStatementNode.getType().name.equals(Constants.CATCH_CLAUSE))) {
 				matchBlocks(srcStatementNode, dstStatementNode, mappingStore);

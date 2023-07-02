@@ -2,9 +2,9 @@ package org.refactoringminer.astDiff.matchers;
 
 import com.github.gumtreediff.matchers.*;
 import com.github.gumtreediff.matchers.heuristic.gt.DefaultPriorityTreeQueue;
-import com.github.gumtreediff.matchers.heuristic.gt.MappingComparators;
 import com.github.gumtreediff.matchers.heuristic.gt.PriorityTreeQueue;
 import com.github.gumtreediff.tree.Tree;
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 import java.util.function.Function;
@@ -44,7 +44,7 @@ public class MissingIdenticalSubtree implements TreeMatcher {
             for (var currentSrc : currentPrioritySrcTrees)
                 for (var currentDst : currentPriorityDstTrees)
                     if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash)
-                        if (currentSrc.isIsomorphicTo(currentDst)) {
+                        if (TreeUtilFunctions.isIsomorphicTo(currentSrc,currentDst)) {
                             if (!mappingStore.isSrcMapped(currentSrc) && !mappingStore.isDstMapped(currentDst))
                                 multiMappings.addMapping(currentSrc, currentDst);
                         }

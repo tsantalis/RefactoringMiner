@@ -340,7 +340,7 @@ public class ProjectASTDiffer
 			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
 			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
 			if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
-				if (rightTree.isIsomorphicTo(leftTree))
+				if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
 					mappingStore.addMappingRecursively(leftTree, rightTree);
 				else {
 					new LeafMatcher().match(leftTree,rightTree,mappingStore);

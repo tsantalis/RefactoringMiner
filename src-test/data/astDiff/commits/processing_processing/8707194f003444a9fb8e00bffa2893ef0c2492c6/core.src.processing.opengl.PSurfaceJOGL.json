@@ -3629,6 +3629,83 @@
   "firstEndPos" : 2880,
   "secondEndPos" : 2946
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2888,
+  "secondPos" : 15922,
+  "firstEndPos" : 2912,
+  "secondEndPos" : 15946
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 2888,
+  "secondPos" : 15922,
+  "firstEndPos" : 2911,
+  "secondEndPos" : 15945
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2888,
+  "secondPos" : 15922,
+  "firstEndPos" : 2894,
+  "secondEndPos" : 15928
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "window",
+  "secondLabel" : "window",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 2888,
+  "secondPos" : 15922,
+  "firstEndPos" : 2894,
+  "secondEndPos" : 15928
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "setVisible",
+  "secondLabel" : "setVisible",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2895,
+  "secondPos" : 15929,
+  "firstEndPos" : 2905,
+  "secondEndPos" : 15939
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "true",
+  "secondLabel" : "true",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 2906,
+  "secondPos" : 15940,
+  "firstEndPos" : 2910,
+  "secondEndPos" : 15944
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2906,
+  "secondPos" : 15940,
+  "firstEndPos" : 2910,
+  "secondEndPos" : 15944
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",

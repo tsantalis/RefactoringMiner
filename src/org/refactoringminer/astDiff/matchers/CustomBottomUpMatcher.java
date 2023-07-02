@@ -48,17 +48,8 @@ public class CustomBottomUpMatcher implements Matcher {
 
 				if (best != null) {
 					lastChanceMatch(mappings, t, best);
-//					boolean checkOperatorOfInfixExpression = true;
-//					String INFIX_EXPRESSION = "InfixExpression";
-//					if (t.getType().name.equals(INFIX_EXPRESSION))
-//					{
-//						checkOperatorOfInfixExpression = false;
-//						String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
-//						Tree a = TreeUtilFunctions.findChildByType(t, INFIX_EXPRESSION_OPERATOR);
-//						Tree b = TreeUtilFunctions.findChildByType(best, INFIX_EXPRESSION_OPERATOR);
-//						if (mappings.getDstForSrc(a) == b) checkOperatorOfInfixExpression = true;
-//					}
-//					if (checkOperatorOfInfixExpression)
+					boolean checkOperatorOfInfixExpression = checkInfixExpression(mappings, t, best);
+					if (checkOperatorOfInfixExpression)
 					mappings.addMapping(t, best);
 				}
 			}
@@ -67,6 +58,18 @@ public class CustomBottomUpMatcher implements Matcher {
 				lastChanceMatch(mappings, t, mappings.getDstForSrc(t));
 		}
 		return mappings;
+	}
+
+	private static boolean checkInfixExpression(MappingStore mappings, Tree t, Tree best) {
+		boolean checkOperatorOfInfixExpression = true;
+		if (t.getType().name.equals(Constants.INFIX_EXPRESSION))
+		{
+			checkOperatorOfInfixExpression = false;
+			Tree a = TreeUtilFunctions.findChildByType(t, Constants.INFIX_EXPRESSION_OPERATOR);
+			Tree b = TreeUtilFunctions.findChildByType(best, Constants.INFIX_EXPRESSION_OPERATOR);
+			if (mappings.getDstForSrc(a) == b) checkOperatorOfInfixExpression = true;
+		}
+		return checkOperatorOfInfixExpression;
 	}
 
 	protected List<Tree> getDstCandidates(MappingStore mappings, Tree src) {

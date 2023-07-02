@@ -61,6 +61,9 @@ public class Constants {
 	public static final String WHILE_STATEMENT = "WhileStatement";
 	public static final String CONDITIONAL_EXPRESSION = "ConditionalExpression";
 
+	public static final String INFIX_EXPRESSION = "InfixExpression";
+	public static final String INFIX_EXPRESSION_OPERATOR = "INFIX_EXPRESSION_OPERATOR";
+
 	public static final String STRING_LITERAL = "StringLiteral";
 	public static final String NUMBER_LITERAL = "NumberLiteral";
 

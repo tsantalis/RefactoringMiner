@@ -27,11 +27,12 @@ public class RefactoringOraclePerfectDiffTest {
     @ParameterizedTest(name= "{index}: {0}")
     @JsonFileSource(resources = "/astDiff/commits/cases.json")
 //    @JsonFileSource(resources = "/astDiff/commits/cases-problematic.json")
-    public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws JsonProcessingException {
+    public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws Exception {
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
+//        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(info.getRepo(), info.getCommit(), 1000);
+        Set<ASTDiff> astDiffs = getProjectDiffLocally(info.makeURL());
 
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());

@@ -2,15 +2,17 @@ package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jgit.util.IO;
-import org.json.JSONException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.refactoringminer.astDiff.actions.ASTDiff;
-import org.refactoringminer.astDiff.utils.*;
+import org.refactoringminer.astDiff.utils.CaseInfo;
+import org.refactoringminer.astDiff.utils.MappingExportModel;
+import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.astDiff.utils.UtilMethods;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -30,28 +32,10 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2023-02-28 4:48 p.m. */
 public class SpecificCasesTest {
-
-    @Test
-    public void testAmbiguousWithinComposite() throws Exception {
-        String url = "https://github.com/pouryafard75/TestCases/commit/083ec23bc39ad46ebec7c68cb3931ee41891522e";
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        Set<Mapping> mappings = null;
-        for (ASTDiff astDiff : astDiffs) {
-            mappings = astDiff.getAllMappings().getMappings();
-        }
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/083ec23bc39ad46ebec7c68cb3931ee41891522e/Builder.v1.json";
-        String expected = new String(Files.readAllBytes(Path.of(filePath)));
-        String exportedMappings = MappingExportModel.exportString(mappings);
-        assertEquals(expected.length(), exportedMappings.length(), "Different mappings for ambiguous composite");
-        assertEquals(
-                expected,
-                exportedMappings,"Different mappings for ambiguous composite");
-    }
     @Test
     public void testRenameParameter() throws Exception {
-
         String m1 = "SingleVariableDeclaration [3886,3897] -> SingleVariableDeclaration [2778,2797]";
-        String m2 = "PrimitiveType: long [3886,3890] -> PrimitiveType: long [2778,2782]";
+        String m2 = "PrimitiveTfype: long [3886,3890] -> PrimitiveType: long [2778,2782]";
         String m3 = "SimpleName: millis [3891,3897] -> SimpleName: durationMillis [2783,2797]";
         String url = "https://github.com/apache/commons-lang/commit/5111ae7db08a70323a51a21df0bbaf46f21e072e";
         Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
@@ -74,6 +58,7 @@ public class SpecificCasesTest {
         }
         assertTrue(executed, "RenameParameter test case not executed properly");
     }
+
     @Test
     public void testExtractMethodReturnStatement() throws Exception {
         String returnTreeSrc = "ReturnStatement [17511,17714]";
@@ -94,64 +79,26 @@ public class SpecificCasesTest {
         }
         assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
-    @Test
-    public void testMethodReference() throws Exception {
-        String url = "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9";
+    private static void singleFileChecker(String url, String filePath) throws Exception {
         Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        Set<Mapping> mappings = null;
-        for (ASTDiff astDiff : astDiffs) {
-            mappings = astDiff.getAllMappings().getMappings();
-        }
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/562c4447a566170ac28872a88b323669a82db5c9/Builder.MethodRef.ByteBufferLogInputStreamTest.json";
-        String expected = new String(Files.readAllBytes(Path.of(filePath)));
-        String exportedMappings = MappingExportModel.exportString(mappings);
-        assertEquals(expected.length(), exportedMappings.length(), "Different mappings for mock migration commit");
-        assertEquals(
-                expected,
-                exportedMappings,"Different mappings for mock migration commit");
-    }
-    @Test
-    public void testInfixExpression() throws IOException, JSONException {
-        //Cli-31, Cli-11
-        String url = "https://github.com/pouryafard75/TestCases/commit/76ab18eeb36f3bc0a8e6a5655d970657187df276";
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/76ab18eeb36f3bc0a8e6a5655d970657187df276/Builder.IfCondition.json";
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+//        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         ASTDiff astDiff = astDiffs.iterator().next();
         String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
-        JSONAssert.assertEquals("Failed the InfixExpression case",expected, calculated, false);
+        JSONAssert.assertEquals(expected, calculated, false);
     }
-    @Test
-    public void testMethodInvocation() throws IOException, JSONException {
-        //Closure-9
-        //Todo: Fix https://github.com/fabric8io/fabric8/commit/8127b21a220ca677c4e59961d019e7753da7ea6e
-        String url = "https://github.com/pouryafard75/TestCases/commit/6f98dd5ea9f1524b616f4fb9ef8a26b11667addd";
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/6f98dd5ea9f1524b616f4fb9ef8a26b11667addd/Builder.MethodInvocation.json";
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        ASTDiff astDiff = astDiffs.iterator().next();
-        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
-        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
-        JSONAssert.assertEquals("Failed the InfixExpression case", expected, calculated, false);
-    }
-    @Test
-    public void testBuilderPattern() throws IOException, JSONException {
-        String url = "https://github.com/pouryafard75/TestCases/commit/f73e580d89fa63627601699a683d08f87d074c6a";
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/f73e580d89fa63627601699a683d08f87d074c6a/Builder.builderPattern.json";
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        ASTDiff astDiff = astDiffs.iterator().next();
-        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
-        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
-        JSONAssert.assertEquals("Failed the builder pattern case", expected, calculated, false);
-    }
-    @Test
-    public void testBuilderPattern2() throws IOException, JSONException {
-        String url = "https://github.com/pouryafard75/TestCases/commit/ce4a8fa7101318f7dc3f92f4713b769fe3fd5158";
-        String filePath = "src-test/data/astDiff/commits/pouryafard75_TestCases/ce4a8fa7101318f7dc3f92f4713b769fe3fd5158/Builder.abcd.json";
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
-        ASTDiff astDiff = astDiffs.iterator().next();
-        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
-        String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
-        JSONAssert.assertEquals("Failed the builder pattern case", expected, calculated, false);
+
+    @ParameterizedTest(name = "{0}")
+    @CsvSource({
+            "MethodInvocation/" + "," + "https://github.com/pouryafard75/TestCases/commit/f5a6302a6c16b5f52c219ba47566cb424170aec2" + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/f5a6302a6c16b5f52c219ba47566cb424170aec2/Builder.MI.MethodInvocation.json",
+            "Builder_KUBERNETES" + "," + "https://github.com/pouryafard75/TestCases/commit/f73e580d89fa63627601699a683d08f87d074c6a"  + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/f73e580d89fa63627601699a683d08f87d074c6a/Builder.builderPattern.json",
+            "Builder_ABCD" + "," + "https://github.com/pouryafard75/TestCases/commit/6fbf6c71e18addbca9d2a6fb56c45bfde4934525"  + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/6fbf6c71e18addbca9d2a6fb56c45bfde4934525/Builder.kubernetes.chain.json",
+            "MethodReference" + "," + "https://github.com/pouryafard75/TestCases/commit/562c4447a566170ac28872a88b323669a82db5c9"  + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/562c4447a566170ac28872a88b323669a82db5c9/Builder.MethodRef.ByteBufferLogInputStreamTest.json",
+            "InfixExpression" + "," + "https://github.com/pouryafard75/TestCases/commit/76ab18eeb36f3bc0a8e6a5655d970657187df276" + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/76ab18eeb36f3bc0a8e6a5655d970657187df276/Builder.IfCondition.json",
+            "AmbiguousWithinComposite" + "," + "https://github.com/pouryafard75/TestCases/commit/083ec23bc39ad46ebec7c68cb3931ee41891522e" + "," + "src-test/data/astDiff/commits/pouryafard75_TestCases/083ec23bc39ad46ebec7c68cb3931ee41891522e/Builder.v1.json",
+    })
+    public void testRecreatedCases(String name, String url, String filePath) throws Exception {
+        singleFileChecker(url,filePath);
     }
     public static Stream<Arguments> initData() throws Exception {
         String url = "https://github.com/pouryafard75/TestCases/commit/0ae8f723a59722694e394300656128f9136ef466";

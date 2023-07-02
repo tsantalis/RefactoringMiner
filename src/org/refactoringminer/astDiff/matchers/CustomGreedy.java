@@ -171,12 +171,18 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 			if (
 					(asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL))
 					 || (asrc.getType().name.equals(Constants.NUMBER_LITERAL) && adst.getType().name.equals(Constants.NUMBER_LITERAL))
-
+					 || (asrc.getType().name.equals(Constants.PREFIX_EXPRESSION) && adst.getType().name.equals(Constants.PREFIX_EXPRESSION))
 				) {
 				if (asrc.getParent() != null && adst.getParent() != null) {
 					int i = asrc.positionInParent();
 					int j = adst.positionInParent();
-					if (i > 0 && j > 0) {
+					if (i == j && asrc.getParent().getType().name.equals(adst.getParent().getType().name))
+					{
+						ret.add(mapping);
+						srcIgnored.add(asrc);
+						dstIgnored.add(adst);
+					}
+					else if (i > 0 && j > 0) {
 						Tree srcYoungerSibling = asrc.getParent().getChild(i - 1);
 						Tree dstYoungerSibling = adst.getParent().getChild(j - 1);
 						if (mappings.getSrcForDst(dstYoungerSibling) != null)

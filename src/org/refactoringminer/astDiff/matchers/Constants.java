@@ -71,4 +71,5 @@ public class Constants {
 	public static final String JAVA_DOC = "Javadoc";
 	public static final String SIMPLE_TYPE = "SimpleType";
     public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
+    public static final String PREFIX_EXPRESSION = "PrefixExpression";
 }

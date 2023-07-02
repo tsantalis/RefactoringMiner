@@ -59,7 +59,9 @@ public class ProjectASTDiffer
 		makeASTDiff(getExtraDiffs(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
-//		for (ASTDiff diff : diffSet) { new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());}
+		for (ASTDiff diff : diffSet) {
+			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+		}
 //		String filename = "src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java";
 //		String info1 = "Block/IfStatement/5851/6333";
 //		String info2 = "Block/IfStatement/6121/6235";

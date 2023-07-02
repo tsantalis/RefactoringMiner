@@ -220,6 +220,13 @@ public class TreeUtilFunctions {
 		}   //Update the jdt version (website)
 	}
 
+	public static boolean isPartOfJavadoc(Tree srcSubTree) {
+		if (srcSubTree.getType().name.equals(Constants.JAVA_DOC))
+			return true;
+		if (srcSubTree.getParent() == null) return false;
+		return isPartOfJavadoc(srcSubTree.getParent());
+	}
+
 	public static Tree findVariable(Tree inputTree, String variableName) {
 		//FIXME: This method only works when there is only one instance of variable in the Tree
 		//In case of having more occurrences, the logic must be improved.

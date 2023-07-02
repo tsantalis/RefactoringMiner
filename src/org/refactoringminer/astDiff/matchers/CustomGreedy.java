@@ -97,7 +97,7 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 			for (var currentSrc : currentPrioritySrcTrees)
 				for (var currentDst : currentPriorityDstTrees)
 					if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash) {
-						if (currentSrc.isIsomorphicTo(currentDst)) {
+						if (TreeUtilFunctions.isIsomorphicTo(currentSrc,currentDst)) {
 							if (!isOnlyOneMethodInvocation(currentSrc, currentDst))
 								multiMappings.addMapping(currentSrc, currentDst);
 						}

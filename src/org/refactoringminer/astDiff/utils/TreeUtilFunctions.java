@@ -240,4 +240,25 @@ public class TreeUtilFunctions {
 		}
 		return found;
 	}
+	public static boolean hasSameTypeAndLabel(Tree t1, Tree t2) {
+		return hasSameType(t1,t2) && t1.getLabel().equals(t2.getLabel());
+	}
+	public static boolean hasSameType(Tree t1, Tree t2){
+		return t1.getType().name.equals(t2.getType().name);
+	}
+	public static boolean isIsomorphicTo(Tree t1, Tree t2) {
+		if (!hasSameTypeAndLabel(t1,t2))
+			return false;
+
+		if (t1.getChildren().size() != t2.getChildren().size())
+			return false;
+
+		for (int i = 0; i < t1.getChildren().size(); i++)  {
+			boolean isChildrenIsomophic = isIsomorphicTo(t1.getChild(i),(t2.getChild(i)));
+			if (!isChildrenIsomophic)
+				return false;
+		}
+
+		return true;
+	}
 }

@@ -32,7 +32,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		try {
 			if (prunedPair.first.isIsoStructuralTo(prunedPair.second))
 			{
-				if (!prunedPair.first.isIsomorphicTo(prunedPair.second))
+				if (!TreeUtilFunctions.isIsomorphicTo(prunedPair.first,prunedPair.second))
 				{
 					match = new MoveOptimizedIsomorphic().match(prunedPair.first, prunedPair.second);
 				}
@@ -139,7 +139,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 		public MoveOptimizedIsomorphic() {
 			super(
 					(src, dst, mappings) -> {
-						if (src.isIsomorphicTo(dst))
+						if (TreeUtilFunctions.isIsomorphicTo(src,dst))
 							mappings.addMappingRecursively(src,dst);
 						return mappings;
 					}

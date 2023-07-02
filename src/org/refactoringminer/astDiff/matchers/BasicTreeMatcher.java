@@ -79,6 +79,14 @@ public class BasicTreeMatcher implements TreeMatcher {
 		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.removeMapping(treeTreePair.first, match.getSrcForDst(treeTreePair.first));
 			match.removeMapping(match.getSrcForDst(treeTreePair.second), treeTreePair.second);
+			Tree srcMIR = TreeUtilFunctions.findChildByType(treeTreePair.first, Constants.METHOD_INVOCATION_RECEIVER);
+			Tree dstMIR = TreeUtilFunctions.findChildByType(treeTreePair.second, Constants.METHOD_INVOCATION_RECEIVER);
+			if (match.isSrcMapped(srcMIR)) {
+				match.removeMapping(srcMIR, match.getDstForSrc(srcMIR));
+			}
+			if (match.isDstMapped(dstMIR)) {
+				match.removeMapping(match.getSrcForDst(dstMIR), dstMIR);
+			}
 		}
 		for (Pair<Tree, Tree> treeTreePair : addList) {
 			match.addMapping(treeTreePair.first, treeTreePair.second);
@@ -88,21 +96,5 @@ public class BasicTreeMatcher implements TreeMatcher {
 				match.addMapping(srcMIR, dstMIR);
 		}
 
-//		removeList = new ArrayList<>();
-//		for (Mapping mapping : match) {
-//			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME))
-//			{
-//				if (mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION))
-//				{
-//					if (!match.isSrcMapped(mapping.first.getParent()))
-//					{
-//						removeList.add(new Pair<>(mapping.first,mapping.second));
-//					}
-//				}
-//			}
-//		}
-//		for (Pair<Tree, Tree> treeTreePair : removeList) {
-//			match.removeMapping(treeTreePair.first, treeTreePair.second);
-//		}
 	}
 }

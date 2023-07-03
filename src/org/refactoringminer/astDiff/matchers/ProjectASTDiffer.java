@@ -824,19 +824,12 @@ public class ProjectASTDiffer
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						if (!eligible)
 							break;
-						srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
-						dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
-						new LeafMatcher().match(srcType,dstType,mappingStore);
-						if (srcInput.getChildren().size() > 0) {
-							srcName = srcInput.getChild(0);
-							if (srcName.getType().name.equals(Constants.SIMPLE_NAME)) {
-								for (Tree dstChild : dstInput.getChildren()) {
-									if (dstChild.getType().name.equals(Constants.SIMPLE_NAME)) {
-										mappingStore.addMapping(srcName,dstChild);
-										break;
-									}
-								}
-							}
+						while (!TreeUtilFunctions.isStatement(srcInput.getType().name)) {
+							if (srcInput.getType() == null) break;
+							srcInput = srcInput.getParent();
+						}
+						if (TreeUtilFunctions.isStatement(srcInput.getType().name)){
+							new LeafMatcher().match(srcInput,dstInput,mappingStore);
 						}
 						eligible = false;
 						break;
@@ -844,19 +837,12 @@ public class ProjectASTDiffer
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						if (!eligible)
 							break;
-						srcType = TreeUtilFunctions.findByLocationInfo(srcTree, originalVariable.getType().getLocationInfo());
-						dstType = TreeUtilFunctions.findByLocationInfo(dstTree, renamedVariable.getType().getLocationInfo());
-						new LeafMatcher().match(srcType,dstType,mappingStore);
-						if (dstInput.getChildren().size() > 0) {
-							dstName = dstInput.getChild(0);
-							if (dstName.getType().name.equals(Constants.SIMPLE_NAME)) {
-								for (Tree srcChild : srcInput.getChildren()) {
-									if (srcChild.getType().name.equals(Constants.SIMPLE_NAME)) {
-										mappingStore.addMapping(srcChild,dstName);
-										break;
-									}
-								}
-							}
+						while (!TreeUtilFunctions.isStatement(dstInput.getType().name)) {
+							if (dstInput.getType() == null) break;
+							dstInput = dstInput.getParent();
+						}
+						if (TreeUtilFunctions.isStatement(dstInput.getType().name)){
+							new LeafMatcher().match(srcInput,dstInput,mappingStore);
 						}
 						eligible = false;
 						break;

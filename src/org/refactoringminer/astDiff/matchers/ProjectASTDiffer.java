@@ -312,21 +312,24 @@ public class ProjectASTDiffer
 			//Static Initializers
 			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getContainer1().getLocationInfo());
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getContainer2().getLocationInfo());
-			mappingStore.addMapping(srcOperationNode, dstOperationNode);
-			if (srcOperationNode != null && dstOperationNode != null) {
-				Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.MODIFIER);
-				Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.MODIFIER);
-				if (srcModifier != null && dstModifier != null)
-					mappingStore.addMapping(srcModifier, dstModifier);
-				Tree srcJavadoc = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.JAVA_DOC);
-				Tree dstJavadoc = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.JAVA_DOC);
-				if (srcJavadoc != null && dstJavadoc != null)
-					new BasicTreeMatcher().match(srcJavadoc,dstJavadoc,mappingStore);
+			if (srcOperationNode != null & dstOperationNode != null) {
+				if (srcOperationNode.getType().name.equals(Constants.INITIALIZER) && dstOperationNode.getType().name.equals(Constants.INITIALIZER)) {
+					mappingStore.addMapping(srcOperationNode, dstOperationNode);
+					//static keyword
+					if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer && umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)
+						if (((UMLInitializer) umlOperationBodyMapper.getContainer1()).isStatic() && ((UMLInitializer) umlOperationBodyMapper.getContainer2()).isStatic()) {
+							Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.MODIFIER);
+							Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.MODIFIER);
+							if (srcModifier != null && dstModifier != null)
+								mappingStore.addMapping(srcModifier, dstModifier);
+						}
+					//Javadoc
+					Tree srcJavadoc = TreeUtilFunctions.findChildByType(srcOperationNode, Constants.JAVA_DOC);
+					Tree dstJavadoc = TreeUtilFunctions.findChildByType(dstOperationNode, Constants.JAVA_DOC);
+					if (srcJavadoc != null && dstJavadoc != null)
+						new BasicTreeMatcher().match(srcJavadoc, dstJavadoc, mappingStore);
+				}
 			}
-
-			if (umlOperationBodyMapper.getContainer1() instanceof UMLInitializer &&  umlOperationBodyMapper.getContainer2() instanceof UMLInitializer)
-				if (((UMLInitializer)umlOperationBodyMapper.getContainer1()).isStatic() && ((UMLInitializer)umlOperationBodyMapper.getContainer2()).isStatic())
-					mappingStore.addMapping(srcOperationNode.getChild(0),dstOperationNode.getChild(0));
 		}
 		processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
 		processBodyMapper(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);

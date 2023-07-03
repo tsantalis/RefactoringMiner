@@ -69,8 +69,13 @@ public class MissingIdenticalSubtree implements TreeMatcher {
                 if (multiMappings.isDstUnique(dst)) {
                     if (TreeUtilFunctions.isStatement(src.getType().name))
                         mappings.addMappingRecursively(src, dst);
-                    if (TreeUtilFunctions.isPartOfJavadoc(src))
+                    else if (TreeUtilFunctions.isPartOfJavadoc(src))
                         mappings.addMappingRecursively(src, dst);
+                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION))
+                    {
+                        mappings.addMappingRecursively(src, dst);
+                    }
+
                 }
             }
         }

@@ -809,6 +809,11 @@ public class ProjectASTDiffer
 						dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.FIELD_DECLARATION);
 						//TODO: need more cases to generalize the logic
 						break;
+					case REPLACE_ATTRIBUTE_WITH_VARIABLE:
+						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.FIELD_DECLARATION);
+						dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.VARIABLE_DECLARATION_STATEMENT);
+						//TODO: need more cases to generalize the logic
+						break;
 					case RENAME_PARAMETER:
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
 						break;

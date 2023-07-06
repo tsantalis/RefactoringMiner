@@ -73,4 +73,5 @@ public class Constants {
     public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
     public static final String PREFIX_EXPRESSION = "PrefixExpression";
     public static final String INITIALIZER = "Initializer";
+	public static final String QUALIFIED_NAME = "QualifiedName";
 }

@@ -466,6 +466,36 @@ public class ProjectASTDiffer
 		if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(Constants.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(Constants.RETURN_STATEMENT)) {
 			finalOptimization.addMapping(srcStatementNode,dstStatementNode);
 		}
+		if (abstractCodeMapping.getRefactorings().size() > 0) {
+			leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
+		}
+
+	}
+
+	private static void leafMappingRefactoringAwareness(Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {
+		for (Refactoring refactoring : abstractCodeMapping.getRefactorings()) {
+			if (refactoring instanceof ExtractVariableRefactoring)
+			{
+				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
+				for (AbstractCodeMapping reference : extractVariableRefactoring.getReferences()) {
+					for (LeafExpression variable : reference.getFragment2().getVariables()) {
+						if (variable.getString().equals(extractVariableRefactoring.getVariableDeclaration().getVariableName())) {
+							Tree referenceNode = TreeUtilFunctions.findByLocationInfo(dstTree, variable.getLocationInfo());
+							if (referenceNode != null)
+							{
+								if (referenceNode.getChildren().size() > 0){
+									referenceNode = referenceNode.getChild(0);
+								}
+								if (mappingStore.isDstMapped(referenceNode) && !mappingStore.isDstMultiMapped(referenceNode)) {
+									Tree tempSrc = mappingStore.getSrcs(referenceNode).iterator().next();
+									mappingStore.removeMapping(tempSrc, referenceNode);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private void optimizeVariableDeclarations(AbstractCodeMapping abstractCodeMapping) {

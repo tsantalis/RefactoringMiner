@@ -78418,6 +78418,39 @@
   "firstEndPos" : 52559,
   "secondEndPos" : 52549
 }, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "boolean",
+  "secondLabel" : "boolean",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 52582,
+  "secondPos" : 53602,
+  "firstEndPos" : 52589,
+  "secondEndPos" : 53609
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "myScopeExpanded",
+  "secondLabel" : "scopeExpanded",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 52590,
+  "secondPos" : 53610,
+  "firstEndPos" : 52605,
+  "secondEndPos" : 53623
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 52590,
+  "secondPos" : 53610,
+  "firstEndPos" : 52605,
+  "secondEndPos" : 53669
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",

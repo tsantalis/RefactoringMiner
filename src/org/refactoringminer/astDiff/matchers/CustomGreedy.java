@@ -17,8 +17,7 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> verifiedList = new ArrayList<>();
 		for (Mapping mapping : mappingList) {
-			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME)
-			&& mapping.second.getType().name.equals(Constants.SIMPLE_NAME)) {
+			if (areBothFromThisType(mapping, Constants.SIMPLE_NAME) || areBothFromThisType(mapping, Constants.QUALIFIED_NAME)) {
 				if (isAcceptableMatch(mapping))
 					verifiedList.add(mapping);
 			}
@@ -27,13 +26,21 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 		super.retainBestMapping(verifiedList, srcIgnored, dstIgnored);
 	}
 
+	private static boolean areBothFromThisType(Mapping mapping, String simpleName) {
+		return mapping.first.getType().name.equals(simpleName)
+				&& mapping.second.getType().name.equals(simpleName);
+	}
+
 	private static boolean isAcceptableMatch(Mapping mapping) {
 		Tree first = mapping.first;
 		Tree second = mapping.second;
 		if (isPartOfConditional(first) && isPartOfConditional(second))
 			if (!isSamePositionInConditional(first,second))
 				return false;
-
+		if (isPartOfConditional(first) && getIndexInConditional(first) == 0 && !isPartOfConditional(second))
+			return false;
+		if (isPartOfConditional(second) && getIndexInConditional(second) == 0 && !isPartOfConditional(first))
+			return false;
 		return (!mapping.first.getParent().getType().name.equals(Constants.METHOD_INVOCATION)
 				||
 				mapping.second.getParent().getType().name.equals(Constants.METHOD_INVOCATION)) &&
@@ -65,15 +72,18 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 	}
 
 	private static boolean isSamePositionInConditional(Tree input1, Tree input2) {
+		int input1Index = getIndexInConditional(input1);
+		int input2Index = getIndexInConditional(input2);
+		return input1Index == input2Index;
+	}
+
+	private static int getIndexInConditional(Tree input1) {
 		int input1Index = 0;
-		int input2Index = 0;
 		while (!input1.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
 			input1 = input1.getParent();
-		while (!input2.getParent().getType().name.equals(Constants.CONDITIONAL_EXPRESSION))
-			input2 = input2.getParent();
+		int input2Index = 0;
 		input1Index = input1.positionInParent();
-		input2Index = input2.positionInParent();
-		return input1Index == input2Index;
+		return input1Index;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package org.refactoringminer.astDiff.utils;
 
 import com.github.gumtreediff.io.TreeIoUtils;
+import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.DefaultTree;
 import com.github.gumtreediff.tree.FakeTree;
 import com.github.gumtreediff.tree.Tree;
@@ -267,5 +268,13 @@ public class TreeUtilFunctions {
 		}
 
 		return true;
+	}
+
+    public static boolean areBothFromThisType(Mapping mapping, String simpleName) {
+        return areBothFromThisType(mapping.first,mapping.second, simpleName);
+    }
+	public static boolean areBothFromThisType(Tree t1, Tree t2, String simpleName) {
+		return t1.getType().name.equals(simpleName)
+				&& t2.getType().name.equals(simpleName);
 	}
 }

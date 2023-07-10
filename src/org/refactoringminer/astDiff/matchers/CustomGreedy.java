@@ -17,18 +17,13 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> verifiedList = new ArrayList<>();
 		for (Mapping mapping : mappingList) {
-			if (areBothFromThisType(mapping, Constants.SIMPLE_NAME) || areBothFromThisType(mapping, Constants.QUALIFIED_NAME)) {
+			if (TreeUtilFunctions.areBothFromThisType(mapping, Constants.SIMPLE_NAME) || TreeUtilFunctions.areBothFromThisType(mapping, Constants.QUALIFIED_NAME)) {
 				if (isAcceptableMatch(mapping))
 					verifiedList.add(mapping);
 			}
 			else verifiedList.add(mapping);
 		}
 		super.retainBestMapping(verifiedList, srcIgnored, dstIgnored);
-	}
-
-	private static boolean areBothFromThisType(Mapping mapping, String simpleName) {
-		return mapping.first.getType().name.equals(simpleName)
-				&& mapping.second.getType().name.equals(simpleName);
 	}
 
 	private static boolean isAcceptableMatch(Mapping mapping) {

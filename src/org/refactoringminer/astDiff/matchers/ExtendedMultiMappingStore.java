@@ -126,6 +126,8 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 				multis.put(_src,getDsts(_src));
 			else
 			{
+				if (getDsts(_src).size() == 0)
+					continue;
 				Tree mappedSrc = getDsts(_src).iterator().next();
 				if (getSrcs(mappedSrc).size() > 1)
 					multis.put(_src,getDsts(_src));

@@ -182,6 +182,7 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 					(asrc.getType().name.equals(Constants.STRING_LITERAL) && adst.getType().name.equals(Constants.STRING_LITERAL))
 					 || (asrc.getType().name.equals(Constants.NUMBER_LITERAL) && adst.getType().name.equals(Constants.NUMBER_LITERAL))
 					 || (asrc.getType().name.equals(Constants.PREFIX_EXPRESSION) && adst.getType().name.equals(Constants.PREFIX_EXPRESSION))
+					 || (asrc.getType().name.equals(Constants.BOOLEAN_LITERAL) && adst.getType().name.equals(Constants.BOOLEAN_LITERAL))
 				) {
 				if (asrc.getParent() != null && adst.getParent() != null) {
 					int i = asrc.positionInParent();

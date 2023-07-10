@@ -66,6 +66,7 @@ public class Constants {
 
 	public static final String STRING_LITERAL = "StringLiteral";
 	public static final String NUMBER_LITERAL = "NumberLiteral";
+	public static final String BOOLEAN_LITERAL = "BooleanLiteral";
 
 	public static final String COMPILATION_UNIT = "CompilationUnit";
 	public static final String JAVA_DOC = "Javadoc";

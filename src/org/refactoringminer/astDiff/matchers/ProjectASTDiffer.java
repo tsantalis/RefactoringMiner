@@ -191,12 +191,8 @@ public class ProjectASTDiffer
 				String refactoringClassNameAfter = refactoringClassAfter.getRight();
 				// Relied on || in order to ascertain at least one class involves (handling move to anonymous and vice versa)
 				boolean isNameMatching = refactoringClassNameBefore.equals(umlClassBefore.getName()) || refactoringClassNameAfter.equals(umlClassAfter.getName());
-//				boolean isReplaceWithAnonymousWithClassWhileContainsSameName = false;
-//				if (modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS) ||
-//						modelDiffRefactoring.getRefactoringType().equals(RefactoringType.REPLACE_ANONYMOUS_WITH_LAMBDA))
-//					if (refactoringClassNameBefore.contains(umlClassBefore.getName()) &&  refactoringClassNameAfter.contains(umlClassAfter.getName()))
-//						isReplaceWithAnonymousWithClassWhileContainsSameName = true;
-				if (isNameMatching)
+				boolean bothInAnonymous = refactoringClassNameBefore.contains(umlClassBefore.getName()) && refactoringClassNameAfter.contains(umlClassAfter.getName());
+				if (isNameMatching || bothInAnonymous)
 					classDiffRefactorings.add(modelDiffRefactoring);
 			}
 

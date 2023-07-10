@@ -156,7 +156,6 @@ public class ProjectASTDiffer
 		if (isBaseDiff) {
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
 			processImports(srcTree, dstTree, (baseClassDiff).getImportDiffList(), mappingStore);
-			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 			processClassDeclarationMapping(srcTree,dstTree, baseClassDiff,mappingStore);
 		}
 		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
@@ -164,6 +163,10 @@ public class ProjectASTDiffer
 		processAllMethods(srcTree,dstTree,classDiff.getOperationBodyMapperList(),mappingStore);
 		processModelDiffRefactorings(srcTree,dstTree,classDiff,mappingStore);
 		processMovedAttributes(srcTree,dstTree,classDiff,mappingStore);
+		if (isBaseDiff){
+			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
+			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
+		}
 		processLastStepMappings(srcTree,dstTree,mappingStore);
 
 		//if (CHECK_COMMENTS) addAndProcessComments(treeContextPair.first, treeContextPair.second,mappingStore);
@@ -837,12 +840,14 @@ public class ProjectASTDiffer
 					case REPLACE_VARIABLE_WITH_ATTRIBUTE:
 						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.VARIABLE_DECLARATION_STATEMENT);
 						dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.FIELD_DECLARATION);
-						//TODO: need more cases to generalize the logic
+						if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
+							continue;
 						break;
 					case REPLACE_ATTRIBUTE_WITH_VARIABLE:
 						srcInput = TreeUtilFunctions.getParentUntilType(srcInput,Constants.FIELD_DECLARATION);
 						dstInput = TreeUtilFunctions.getParentUntilType(dstInput,Constants.VARIABLE_DECLARATION_STATEMENT);
-						//TODO: need more cases to generalize the logic
+						if (mappingStore.isSrcMapped(srcInput) || mappingStore.isDstMapped(dstInput))
+							continue;
 						break;
 					case RENAME_PARAMETER:
 						eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();

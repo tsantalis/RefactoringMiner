@@ -77,9 +77,12 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                     else if (TreeUtilFunctions.isPartOfJavadoc(src))
                         mappings.addMappingRecursively(src, dst);
                     else if (src.getType().name.equals(Constants.METHOD_INVOCATION))
-                    {
                         mappings.addMappingRecursively(src, dst);
-                    }
+                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+                        mappings.addMappingRecursively(src, dst);
+                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
+                        mappings.addMappingRecursively(src, dst);
+
 
                 }
                 isMappingUnique = true;

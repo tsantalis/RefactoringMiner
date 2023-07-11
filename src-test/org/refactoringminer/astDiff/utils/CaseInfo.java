@@ -6,6 +6,7 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 
 import javax.json.JsonObject;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class CaseInfo implements Serializable {
     String repo;
@@ -14,6 +15,11 @@ public class CaseInfo implements Serializable {
     public CaseInfo(String repo, String commit) {
         this.repo = repo;
         this.commit = commit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(repo, commit);
     }
 
     public CaseInfo() {

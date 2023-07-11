@@ -35,7 +35,7 @@ public class SpecificCasesTest {
     @Test
     public void testRenameParameter() throws Exception {
         String m1 = "SingleVariableDeclaration [3886,3897] -> SingleVariableDeclaration [2778,2797]";
-        String m2 = "PrimitiveTfype: long [3886,3890] -> PrimitiveType: long [2778,2782]";
+        String m2 = "PrimitiveType: long [3886,3890] -> PrimitiveType: long [2778,2782]";
         String m3 = "SimpleName: millis [3891,3897] -> SimpleName: durationMillis [2783,2797]";
         String url = "https://github.com/apache/commons-lang/commit/5111ae7db08a70323a51a21df0bbaf46f21e072e";
         Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);

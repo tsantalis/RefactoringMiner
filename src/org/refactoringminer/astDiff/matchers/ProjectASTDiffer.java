@@ -62,36 +62,10 @@ public class ProjectASTDiffer
 		for (ASTDiff diff : diffSet) {
 			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
-//		String filename = "src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java";
-//		String info1 = "Block/IfStatement/5851/6333";
-//		String info2 = "Block/IfStatement/6121/6235";
-//		lastAdditions(filename, info1, info2,false);
-
-
-//		info1 = "";
-//		info2 = "";
-//		lastAdditions(filename, info1, info2,false);
-
-
-
 		computeAllEditScripts();
 	}
 
-	private void lastAdditions(String filename, String info1, String info2, boolean containInnerSubtrees) {
-		for (ASTDiff astDiff : diffSet) {
-			if (astDiff.getSrcPath().equals(filename) && astDiff.getDstPath().equals(filename)) {
-				Tree t1 = TreeUtilFunctions.getTreeBetweenPositionsSecure(astDiff.src.getRoot(), Integer.parseInt(info1.split("/")[2]), Integer.parseInt(info1.split("/")[3]), info1.split("/")[1], info1.split("/")[0]);
-				Tree t2 = TreeUtilFunctions.getTreeBetweenPositionsSecure(astDiff.dst.getRoot(), Integer.parseInt(info2.split("/")[2]), Integer.parseInt(info2.split("/")[3]), info2.split("/")[1], info2.split("/")[0]);
-				if (containInnerSubtrees)
-					new LeafMatcher().match(t1,t2,astDiff.getAllMappings());
-				else{
-					astDiff.getAllMappings().addMapping(t1,t2);
-				}
-			}
-		}
-	}
-
-	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
+		private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
 		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
 			if ((modelDiffRefactoring.getRefactoringType() == RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS))
@@ -364,56 +338,15 @@ public class ProjectASTDiffer
 			}
 		}
 		Set<AbstractCodeMapping> mappingSet = bodyMapper.getMappings();
-
-		String tuning_file_name = "src/main/java/com/puppycrawl/tools/checkstyle/checks/coding/RequireThisCheck.java";
-
-//		tunerRemove(1060, 1036, tuning_file_name,tuning_file_name, bodyMapper);
-//		tunerRemove(583, 587, tuning_file_name,tuning_file_name, bodyMapper);
-//		tunerRemove(154, 167, tuning_file_name,tuning_file_name, bodyMapper);
-//		tunerRemove(114, 117, tuning_file_name,tuning_file_name, bodyMapper);
-//		tunerRemove(586, 566, tuning_file_name,tuning_file_name, bodyMapper);
 		ArrayList<AbstractCodeMapping> mappings = new ArrayList<>(mappingSet);
-//		tunerAdd(mappings, 172, 178, tuning_file_name,tuning_file_name, bodyMapper.getNonMappedLeavesT1(), bodyMapper.getNonMappedLeavesT2());
-//		tunerAdd(mappings, 167, 173, tuning_file_name,tuning_file_name, bodyMapper.getNonMappedLeavesT1(), bodyMapper.getNonMappedLeavesT2());
-//		tunerAdd(mappings, 161, 167, tuning_file_name,tuning_file_name, bodyMapper.getNonMappedLeavesT1(), bodyMapper.getNonMappedLeavesT2());
-//		tunerAdd(mappings, 183, 182, tuning_file_name,tuning_file_name, bodyMapper.getNonMappedInnerNodesT1(), bodyMapper.getNonMappedInnerNodesT2());
-
-
-//				mappings.add(new LeafMapping(
+//		mappings.add(new LeafMapping(
 //				bodyMapper.getNonMappedLeavesT1().get(0)
 //				,bodyMapper.getNonMappedLeavesT2().get(0),null,null));
-
 		for (AbstractCodeMapping abstractCodeMapping : mappings) {
 			if (abstractCodeMapping instanceof LeafMapping)
 				processLeafMapping(srcTree,dstTree,abstractCodeMapping,mappingStore, isPartOfExtractedMethod);
 			else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
 				processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
-		}
-	}
-
-	private static void tunerAdd(ArrayList<AbstractCodeMapping> mappings, int parentLine, int childLine, String parentFilePath, String childFilePath, List<? extends AbstractCodeFragment> nonMappedLeavesT1, List<? extends AbstractCodeFragment> nonMappedLeavesT2) {
-		List<AbstractCodeFragment> custom1 = nonMappedLeavesT1.stream().filter(leaf -> leaf.getLocationInfo().getStartLine() == parentLine && leaf.getLocationInfo().getFilePath().equals(parentFilePath)).collect(Collectors.toList());
-		List<AbstractCodeFragment> custom2 = nonMappedLeavesT2.stream().filter(leaf -> leaf.getLocationInfo().getStartLine() == childLine && leaf.getLocationInfo().getFilePath().equals(childFilePath)).collect(Collectors.toList());
-		if (custom1.size() == 1 && custom2.size() == 1)
-				mappings.add(new LeafMapping(custom1.get(0),custom2.get(0),null,null));
-	}
-	private static void tunerRemove(int parentLine, int childLine, String parentFilePath, String childFilePath, UMLOperationBodyMapper bodyMapper) {
-		List<AbstractCodeMapping> removeList = bodyMapper.getMappings().stream().filter(
-				leaf -> leaf.getFragment1().getLocationInfo().getStartLine() == parentLine
-						&& leaf.getFragment1().getLocationInfo().getFilePath().equals(parentFilePath)
-						&& leaf.getFragment2().getLocationInfo().getStartLine() == childLine
-						&& leaf.getFragment2().getLocationInfo().getFilePath().equals(childFilePath))
-				.collect(Collectors.toList());
-		for (AbstractCodeMapping abstractCodeMapping : removeList) {
-			bodyMapper.removeMapping(abstractCodeMapping);
-			if (abstractCodeMapping instanceof CompositeStatementObjectMapping){
-				bodyMapper.getNonMappedInnerNodesT1().add((CompositeStatementObject) abstractCodeMapping.getFragment1());
-				bodyMapper.getNonMappedInnerNodesT2().add((CompositeStatementObject) abstractCodeMapping.getFragment2());
-			}
-			else{
-				bodyMapper.getNonMappedLeavesT1().add(abstractCodeMapping.getFragment1());
-				bodyMapper.getNonMappedLeavesT2().add(abstractCodeMapping.getFragment2());
-			}
 		}
 	}
 

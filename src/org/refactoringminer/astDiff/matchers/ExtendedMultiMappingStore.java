@@ -160,11 +160,11 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 	}
 
 	public boolean isSrcMapped(Tree src) {
-		return hasSrc(src);
+		return hasSrc(src) && getDsts(src) != null && getDsts(src).size() > 0;
 	}
 
 	public boolean isDstMapped(Tree dst) {
-		return hasDst(dst);
+		return hasDst(dst) && getSrcs(dst) != null && getSrcs(dst).size() > 0;
 	}
 	public void addMappingRecursively(Tree src, Tree dst) {
 		addMapping(src, dst);

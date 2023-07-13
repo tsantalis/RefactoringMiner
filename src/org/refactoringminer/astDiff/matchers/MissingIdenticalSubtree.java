@@ -72,24 +72,14 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             if (multiMappings.isSrcUnique(src)) {
                 var dst = multiMappings.getDsts(src).stream().findAny().get();
                 if (multiMappings.isDstUnique(dst)) {
-                    if (TreeUtilFunctions.isStatement(src.getType().name))
-                        mappings.addMappingRecursively(src, dst);
-                    else if (TreeUtilFunctions.isPartOfJavadoc(src))
-                        mappings.addMappingRecursively(src, dst);
-                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION))
-                        mappings.addMappingRecursively(src, dst);
-                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
-                        mappings.addMappingRecursively(src, dst);
-                    else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
-                        mappings.addMappingRecursively(src, dst);
-
-
+                    if (isAcceptable(src,dst))
+                        mappings.addMappingRecursively(src,dst);
+                    isMappingUnique = true;
                 }
-                isMappingUnique = true;
+
             }
             if (!tinyTrees(src,multiMappings,minPriority) && !(ignored.contains(src) || isMappingUnique))
             {
-
                 var adsts = multiMappings.getDsts(src);
                 var asrcs = multiMappings.getSrcs(multiMappings.getDsts(src).iterator().next());
                 for (Tree asrc : asrcs)
@@ -103,6 +93,24 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             Collections.sort(ambiguousList, new MappingComparators.FullMappingComparator(mappings.getMonoMappingStore()));
             // Select the best ambiguous mappings
             retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
+        }
+    }
+
+    private boolean isAcceptable(Tree src, Tree dst) {
+        if (TreeUtilFunctions.isStatement(src.getType().name))
+            return true;
+        else if (TreeUtilFunctions.isPartOfJavadoc(src))
+            return true;
+        else if (src.getType().name.equals(Constants.METHOD_INVOCATION))
+            return true;
+        else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+            return true;
+        else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
+            return true;
+        else if (src.getType().name.equals(Constants.INFIX_EXPRESSION))
+            return true;
+        else{
+            return false;
         }
     }
 
@@ -122,14 +130,13 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
         List<Mapping> verifiedList = new ArrayList<>();
         for (Mapping mapping : mappingList) {
-            if (TreeUtilFunctions.areBothFromThisType(mapping, Constants.SIMPLE_NAME) || TreeUtilFunctions.areBothFromThisType(mapping, Constants.QUALIFIED_NAME)) {
-                    verifiedList.add(mapping);
-            }
-            else verifiedList.add(mapping);
+            if (isAcceptable(mapping.first, mapping.second))
+                verifiedList.add(mapping);
         }
         while (verifiedList.size() > 0) {
             var mapping = verifiedList.remove(0);
-            if (!(srcIgnored.contains(mapping.first) || dstIgnored.contains(mapping.second))) {
+            if (!(srcIgnored.contains(mapping.first) || dstIgnored.contains(mapping.second)))
+            {
                 mappings.addMappingRecursively(mapping.first, mapping.second);
                 srcIgnored.add(mapping.first);
                 srcIgnored.addAll(mapping.first.getDescendants());

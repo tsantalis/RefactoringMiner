@@ -56,6 +56,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 			Tree expCopy =  TreeUtilFunctions.deepCopyWithMap(expTree,cpyMap);
 			cpy.addChild(expCopy);
 		}
+		if (tree.getType().name.equals(Constants.FOR_STATEMENT)) return cpy;
 		for (VariableDeclaration variableDeclaration : fragment.getVariableDeclarations()) {
 			Tree varTree = TreeUtilFunctions.findByLocationInfo(tree, variableDeclaration.getLocationInfo());
 			Tree varCopy = TreeUtilFunctions.deepCopyWithMap(varTree, cpyMap);

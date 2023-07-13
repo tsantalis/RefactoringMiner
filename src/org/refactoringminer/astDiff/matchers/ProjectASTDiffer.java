@@ -67,7 +67,7 @@ public class ProjectASTDiffer
 		computeAllEditScripts();
 	}
 
-		private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
+	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
 		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
 			if ((modelDiffRefactoring.getRefactoringType() == RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS))

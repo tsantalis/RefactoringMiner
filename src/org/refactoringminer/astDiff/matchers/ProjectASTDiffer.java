@@ -62,9 +62,17 @@ public class ProjectASTDiffer
 			processOptimization(diff, optimizationDataMap.get(diff.getSrcPath()));
 		}
 		for (ASTDiff diff : diffSet) {
-			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			if (!isTestRelated(diff.getSrcPath(),diff.getDstPath()))
+					new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
 		computeAllEditScripts();
+	}
+
+	private boolean isTestRelated(String srcPath, String dstPath) {
+		int beginIndex = srcPath.lastIndexOf("/");
+		if (beginIndex < 0) return false;
+		String substring = srcPath.substring(beginIndex);
+		return substring.contains("test") || substring.contains("Test");
 	}
 
 	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {

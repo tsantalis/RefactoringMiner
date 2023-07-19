@@ -7985,6 +7985,61 @@
   "firstEndPos" : 7579,
   "secondEndPos" : 7515
 }, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7404,
+  "secondPos" : 7409,
+  "firstEndPos" : 7576,
+  "secondEndPos" : 7512
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 7404,
+  "secondPos" : 7409,
+  "firstEndPos" : 7575,
+  "secondEndPos" : 7511
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "registerAnnotatedMethodsAsExtensions",
+  "secondLabel" : "registerMethodsAsExtensions",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7404,
+  "secondPos" : 7409,
+  "firstEndPos" : 7440,
+  "secondEndPos" : 7436
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7441,
+  "secondPos" : 7437,
+  "firstEndPos" : 7574,
+  "secondEndPos" : 7510
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "extensionRegistry",
+  "secondLabel" : "registry",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 7441,
+  "secondPos" : 7461,
+  "firstEndPos" : 7458,
+  "secondEndPos" : 7469
+}, {
   "firstType" : "ExpressionMethodReference",
   "secondType" : "ExpressionMethodReference",
   "firstLabel" : "",
@@ -8116,6 +8171,61 @@
   "secondPos" : 7591,
   "firstEndPos" : 7840,
   "secondEndPos" : 7699
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7668,
+  "secondPos" : 7595,
+  "firstEndPos" : 7837,
+  "secondEndPos" : 7696
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 7668,
+  "secondPos" : 7595,
+  "firstEndPos" : 7836,
+  "secondEndPos" : 7695
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "registerAnnotatedMethodsAsExtensions",
+  "secondLabel" : "registerMethodsAsExtensions",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7668,
+  "secondPos" : 7595,
+  "firstEndPos" : 7704,
+  "secondEndPos" : 7622
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7705,
+  "secondPos" : 7623,
+  "firstEndPos" : 7835,
+  "secondEndPos" : 7694
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "extensionRegistry",
+  "secondLabel" : "registry",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 7705,
+  "secondPos" : 7646,
+  "firstEndPos" : 7722,
+  "secondEndPos" : 7654
 }, {
   "firstType" : "ExpressionMethodReference",
   "secondType" : "ExpressionMethodReference",

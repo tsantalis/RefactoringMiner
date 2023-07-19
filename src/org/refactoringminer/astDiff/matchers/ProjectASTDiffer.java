@@ -607,7 +607,8 @@ public class ProjectASTDiffer
 				}
 				Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,enhancedFor.getLocationInfo());
 				Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,next.getLocationInfo());
-				mappingStore.addMapping(srcSt,dstSt);
+				if (srcSt.getType().name.equals(dstSt.getType().name))
+					mappingStore.addMapping(srcSt,dstSt);
 			} else if (refactoring instanceof ReplacePipelineWithLoopRefactoring) {
 				//TODO : ongoing problem
 				ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
@@ -635,7 +636,8 @@ public class ProjectASTDiffer
 				}
 				Tree srcSt = TreeUtilFunctions.findByLocationInfo(srcTree,next.getLocationInfo());
 				Tree dstSt = TreeUtilFunctions.findByLocationInfo(dstTree,enhancedFor.getLocationInfo());
-				mappingStore.addMapping(srcSt,dstSt);
+				if (srcSt.getType().name.equals(dstSt.getType().name))
+					mappingStore.addMapping(srcSt,dstSt);
 			} else if (refactoring instanceof MergeOperationRefactoring) {
 				MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {

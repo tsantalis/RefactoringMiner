@@ -1,6 +1,5 @@
 package org.refactoringminer.astDiff.matchers;
 
-import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
@@ -14,9 +13,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.refactoringminer.astDiff.actions.ASTDiff;
-
+import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

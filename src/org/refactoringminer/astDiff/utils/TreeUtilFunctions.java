@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -228,25 +229,20 @@ public class TreeUtilFunctions {
 		return isPartOfJavadoc(srcSubTree.getParent());
 	}
 
-	public static Tree findVariable(Tree inputTree, String variableName) {
+	public static List<Tree> findVariable(Tree inputTree, String variableName) {
 		//FIXME: This method only works when there is only one instance of variable in the Tree
 		//In case of having more occurrences, the logic must be improved.
 		if (inputTree == null) return null;
 		boolean _seen = false;
-		Tree found = null;
+		List<Tree> refs = new ArrayList<>();
 		for (Tree tree : inputTree.preOrder()) {
 			if (tree.getType().name.equals(Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
 			{
-				if (_seen)
-				{
-					found = null;
-					break;
-				}
+				refs.add(tree);
 				_seen = true;
-				found = tree;
 			}
 		}
-		return found;
+		return refs;
 	}
 	public static boolean hasSameTypeAndLabel(Tree t1, Tree t2) {
 		return hasSameType(t1,t2) && t1.getLabel().equals(t2.getLabel());

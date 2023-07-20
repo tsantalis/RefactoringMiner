@@ -793,6 +793,9 @@ public class ProjectASTDiffer
 						for (AbstractCodeMapping abstractCodeMapping : references) {
 							if (abstractCodeMapping instanceof LeafMapping)
 								findVariablesAndMatch(srcTree,dstTree,abstractCodeMapping,renameVariableRefactoring.getOriginalVariable().getVariableName(),renameVariableRefactoring.getRenamedVariable().getVariableName(),mappingStore);
+							else {
+								//TODO: How to find within composite mappings?
+							}
 						}
 						eligible = false;
 						break;
@@ -868,10 +871,21 @@ public class ProjectASTDiffer
 	private void findVariablesAndMatch(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, String originalVariableName, String renamedVariableName, ExtendedMultiMappingStore mappingStore) {
 		Tree srcStatement = TreeUtilFunctions.findByLocationInfo(srcTree, abstractCodeMapping.getFragment1().getLocationInfo());
 		Tree dstStatement = TreeUtilFunctions.findByLocationInfo(dstTree, abstractCodeMapping.getFragment2().getLocationInfo());
-		Tree srcName = TreeUtilFunctions.findVariable(srcStatement ,originalVariableName);
-		Tree dstName = TreeUtilFunctions.findVariable(dstStatement ,renamedVariableName);
-		if (srcName != null & dstName != null) {
-			optimizationMappingStore.addMapping(srcName,dstName);
+		List<Tree> srcRefs = TreeUtilFunctions.findVariable(srcStatement ,originalVariableName);
+		List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement ,renamedVariableName);
+		if (srcRefs == null || dstRefs == null) return;
+		if (srcRefs.size() == 1 && dstRefs.size() == 1)
+			optimizationMappingStore.addMapping(srcRefs.get(0),dstRefs.get(0));
+		else{
+			if (srcRefs.size() == dstRefs.size())
+			{
+				for (int i = 0; i < srcRefs.size(); i++) {
+					optimizationMappingStore.addMapping(srcRefs.get(i),dstRefs.get(i));
+				}
+			}
+			else {
+				//TODO: How to handle this case?
+			}
 		}
 
 	}

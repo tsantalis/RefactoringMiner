@@ -4,6 +4,8 @@ apply plugin: 'eclipse'
 
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
+apply plugin: 'idea'
+
 
 group = "com.github.tsantalis"
 version = "2.4.0"
@@ -28,6 +30,13 @@ sourceSets {
             srcDir 'src-test/data/'
         }
 
+    }
+}
+
+idea {
+    module {
+        excludeDirs.add(file("src-test/data/astDiff/"))
+        excludeDirs.add(file("tmp1"))
     }
 }
 

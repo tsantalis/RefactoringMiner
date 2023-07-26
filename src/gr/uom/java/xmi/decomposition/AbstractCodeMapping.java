@@ -328,12 +328,14 @@ public abstract class AbstractCodeMapping {
 					}
 				}
 			}
-			UMLClass addedClass = classDiff.getModelDiff().getAddedClass(operation2.getClassName());
-			if(addedClass != null && addedClass.containsAttributeWithName(initializer.getString())) {
-				for(UMLAttribute attribute : addedClass.getAttributes()) {
-					if(attribute.getName().equals(initializer.getString())) {
-						aliasedWithAttribute = attribute;
-						break;
+			if (classDiff.getModelDiff() != null) {
+				UMLClass addedClass = classDiff.getModelDiff().getAddedClass(operation2.getClassName());
+				if(addedClass != null && addedClass.containsAttributeWithName(initializer.getString())) {
+					for(UMLAttribute attribute : addedClass.getAttributes()) {
+						if(attribute.getName().equals(initializer.getString())) {
+							aliasedWithAttribute = attribute;
+							break;
+						}
 					}
 				}
 			}

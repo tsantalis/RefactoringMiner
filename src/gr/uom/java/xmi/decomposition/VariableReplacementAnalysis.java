@@ -325,6 +325,14 @@ public class VariableReplacementAnalysis {
 						break;
 					}
 				}
+				for(VariableDeclaration addedVariable : childMapper.getContainer2().getParameterDeclarationList()) {
+					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+						removedVariablesToBeRemoved.add(removedVariable);
+						movedVariables.add(pair);
+						break;
+					}
+				}
 			}
 		}
 		removedVariables.removeAll(removedVariablesToBeRemoved);
@@ -336,6 +344,14 @@ public class VariableReplacementAnalysis {
 				for(Pair<VariableDeclaration, VariableDeclaration> pair : pairs) {
 					if(addedVariable.equals(pair.getValue())) {
 						addedVariablesToBeRemoved.add(addedVariable);
+						movedVariables.add(pair);
+						break;
+					}
+				}
+				for(VariableDeclaration removedVariable : childMapper.getContainer1().getParameterDeclarationList()) {
+					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+						removedVariablesToBeRemoved.add(removedVariable);
 						movedVariables.add(pair);
 						break;
 					}

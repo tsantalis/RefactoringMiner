@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -461,6 +462,7 @@ public abstract class AbstractCodeMapping {
 							ternaryMatch(initializer, before) ||
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
+							stringConcatMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
@@ -503,7 +505,7 @@ public abstract class AbstractCodeMapping {
 			}
 			if(classDiff != null && getFragment1().getVariableDeclarations().size() > 0 && initializer != null && getFragment1().getVariableDeclarations().toString().equals(getFragment2().getVariableDeclarations().toString())) {
 				VariableDeclaration variableDeclaration1 = getFragment1().getVariableDeclarations().get(0);
-				if(variableDeclaration1.getInitializer() != null && variableDeclaration1.getInitializer().toString().contains(initializer.toString())) {
+				if(variableDeclaration1.getInitializer() != null && variableDeclaration1.getInitializer().toString().contains(initializer.toString()) && !isDefaultValue(variableDeclaration1.getInitializer().toString())) {
 					boolean callToAddedOperation = false;
 					boolean callToDeletedOperation = false;
 					AbstractCall invocationCoveringTheEntireStatement1 = getFragment1().invocationCoveringEntireFragment();
@@ -573,6 +575,10 @@ public abstract class AbstractCodeMapping {
 		}
 	}
 
+	private boolean isDefaultValue(String argument) {
+		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
+	}
+
 	public void inlinedVariableAssignment(AbstractCodeFragment statement,
 			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
@@ -634,6 +640,7 @@ public abstract class AbstractCodeMapping {
 							ternaryMatch(initializer, after) ||
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
+							stringConcatMatch(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
@@ -786,6 +793,19 @@ public abstract class AbstractCodeMapping {
 			if(ternary.getThenExpression().toString().equals(replacedExpression) || ternary.getElseExpression().toString().equals(replacedExpression)) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean stringConcatMatch(AbstractExpression initializer, String replacedExpression) {
+		String s1 = initializer.getString();
+		String s2 = replacedExpression;
+		if(s1.contains(" + ") && s2.contains(" + ")) {
+			Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s1)));
+			Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2)));
+			Set<String> intersection = new LinkedHashSet<String>(tokens1);
+			intersection.retainAll(tokens2);
+			return intersection.size() == Math.min(tokens1.size(), tokens2.size());
 		}
 		return false;
 	}

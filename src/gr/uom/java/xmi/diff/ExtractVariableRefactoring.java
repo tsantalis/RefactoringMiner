@@ -110,6 +110,7 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((operationBefore == null) ? 0 : operationBefore.hashCode());
 		result = prime * result + ((operationAfter == null) ? 0 : operationAfter.hashCode());
 		result = prime * result + ((variableDeclaration == null) ? 0 : variableDeclaration.hashCode());
 		return result;
@@ -124,6 +125,11 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 		if (getClass() != obj.getClass())
 			return false;
 		ExtractVariableRefactoring other = (ExtractVariableRefactoring) obj;
+		if (operationBefore == null) {
+			if (other.operationBefore != null)
+				return false;
+		} else if (!operationBefore.equals(other.operationBefore))
+			return false;
 		if (operationAfter == null) {
 			if (other.operationAfter != null)
 				return false;

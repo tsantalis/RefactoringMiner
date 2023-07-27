@@ -1647,8 +1647,35 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) {
 		this.childMappers.add(mapper);
-		//TODO add logic to remove the mappings from "this" mapper,
-		//which are less similar than the mappings of the mapper passed as parameter
+		//check for variable extracted in parentMapper, but referenced in childMapper
+		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
+		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				int refactoringCount = mapping.getRefactorings().size();
+				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
+				if(refactoringCount < mapping.getRefactorings().size()) {
+					for(Refactoring newRefactoring : mapping.getRefactorings()) {
+						if(!this.refactorings.contains(newRefactoring)) {
+							this.refactorings.add(newRefactoring);
+						}
+						else {
+							for(Refactoring refactoring : this.refactorings) {
+								if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
+									ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+									Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+									ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+									oldExtractVariableRefactoring.addReferences(newReferences);
+									for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+										oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public UMLAbstractClassDiff getClassDiff() {
@@ -2678,22 +2705,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private void temporaryVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
+			int refactoringCount = mapping.getRefactorings().size();
 			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
-			for(Refactoring newRefactoring : mapping.getRefactorings()) {
-				if(!this.refactorings.contains(newRefactoring)) {
-					this.refactorings.add(newRefactoring);
-				}
-				else {
-					for(Refactoring refactoring : this.refactorings) {
-						if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
-							ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
-							Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
-							ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
-							oldExtractVariableRefactoring.addReferences(newReferences);
-							for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
-								oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+			if(refactoringCount < mapping.getRefactorings().size()) {
+				for(Refactoring newRefactoring : mapping.getRefactorings()) {
+					if(!this.refactorings.contains(newRefactoring)) {
+						this.refactorings.add(newRefactoring);
+					}
+					else {
+						for(Refactoring refactoring : this.refactorings) {
+							if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
+								ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+								Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+								ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+								oldExtractVariableRefactoring.addReferences(newReferences);
+								for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+									oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+								}
+								break;
 							}
-							break;
 						}
 					}
 				}

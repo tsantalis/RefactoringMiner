@@ -328,8 +328,26 @@ public class VariableReplacementAnalysis {
 				for(VariableDeclaration addedVariable : childMapper.getContainer2().getParameterDeclarationList()) {
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
-						removedVariablesToBeRemoved.add(removedVariable);
-						movedVariables.add(pair);
+						//check if there is a mapping for removedVariable declaration in the parentMapper
+						boolean removedVariableMapped = false;
+						for(AbstractCodeMapping mapping : mappings) {
+							if(mapping.getFragment1().getVariableDeclarations().contains(removedVariable)) {
+								removedVariableMapped = true;
+								break;
+							}
+						}
+						if(!removedVariableMapped && mapper.getParentMapper() != null) {
+							for(AbstractCodeMapping mapping : mapper.getParentMapper().getMappings()) {
+								if(mapping.getFragment1().getVariableDeclarations().contains(removedVariable)) {
+									removedVariableMapped = true;
+									break;
+								}
+							}
+						}
+						if(!removedVariableMapped) {
+							removedVariablesToBeRemoved.add(removedVariable);
+							movedVariables.add(pair);
+						}
 						break;
 					}
 				}
@@ -351,8 +369,26 @@ public class VariableReplacementAnalysis {
 				for(VariableDeclaration removedVariable : childMapper.getContainer1().getParameterDeclarationList()) {
 					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
 					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
-						removedVariablesToBeRemoved.add(removedVariable);
-						movedVariables.add(pair);
+						//check if there is a mapping for addedVariable declaration in the parentMapper
+						boolean addedVariableMapped = false;
+						for(AbstractCodeMapping mapping : mappings) {
+							if(mapping.getFragment2().getVariableDeclarations().contains(addedVariable)) {
+								addedVariableMapped = true;
+								break;
+							}
+						}
+						if(!addedVariableMapped && mapper.getParentMapper() != null) {
+							for(AbstractCodeMapping mapping : mapper.getParentMapper().getMappings()) {
+								if(mapping.getFragment2().getVariableDeclarations().contains(addedVariable)) {
+									addedVariableMapped = true;
+									break;
+								}
+							}
+						}
+						if(!addedVariableMapped) {
+							addedVariablesToBeRemoved.add(addedVariable);
+							movedVariables.add(pair);
+						}
 						break;
 					}
 				}

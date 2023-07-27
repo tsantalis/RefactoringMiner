@@ -353,35 +353,6 @@ public class ProjectASTDiffer
 			else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
 				processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
 		}
-		//process moved variables, probably should move this to another method.
-		if (isPartOfExtractedMethod) processMovedVariables(srcTree, dstTree, bodyMapper, mappingStore);
-	}
-
-	private static void processMovedVariables(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
-			for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> movedPair : bodyMapper.getMovedVariables()) {
-				VariableDeclaration leftVarDecl = movedPair.getLeft();
-				VariableDeclaration rightVarDecl = movedPair.getRight();
-				if (leftVarDecl.isParameter() != rightVarDecl.isParameter()) {
-					Tree leftTree = TreeUtilFunctions.findByLocationInfo(srcTree, leftVarDecl.getLocationInfo());
-					Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree, rightVarDecl.getLocationInfo());
-					if (leftTree == null || rightTree == null) continue;
-					if (rightVarDecl.isParameter()) {
-						while (!TreeUtilFunctions.isStatement(leftTree.getType().name)) {
-							if (leftTree.getType() == null) break;
-							leftTree = leftTree.getParent();
-						}
-					}
-					if (leftVarDecl.isParameter()) {
-						while (!TreeUtilFunctions.isStatement(rightTree.getType().name)) {
-							if (rightTree.getType() == null) break;
-							rightTree = rightTree.getParent();
-						}
-					}
-					if (TreeUtilFunctions.isStatement(leftTree.getType().name)){
-						new LeafMatcher().match(leftTree,rightTree, mappingStore);
-					}
-				}
-			}
 	}
 
 	private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {

@@ -325,30 +325,48 @@ public class VariableReplacementAnalysis {
 						break;
 					}
 				}
-				for(VariableDeclaration addedVariable : childMapper.getContainer2().getParameterDeclarationList()) {
-					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
-						//check if there is a mapping for removedVariable declaration in the parentMapper
-						boolean removedVariableMapped = false;
-						for(AbstractCodeMapping mapping : mappings) {
-							if(mapping.getFragment1().getVariableDeclarations().contains(removedVariable)) {
-								removedVariableMapped = true;
-								break;
-							}
-						}
-						if(!removedVariableMapped && mapper.getParentMapper() != null) {
-							for(AbstractCodeMapping mapping : mapper.getParentMapper().getMappings()) {
-								if(mapping.getFragment1().getVariableDeclarations().contains(removedVariable)) {
-									removedVariableMapped = true;
+				if(removedVariable.getInitializer() != null && childMapper.getOperationInvocation() != null) {
+					for(VariableDeclaration addedVariable : childMapper.getContainer2().getParameterDeclarationList()) {
+						Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+							boolean argumentMatch = false;
+							for(String argument : childMapper.getOperationInvocation().arguments()) {
+								if(argument.equals(removedVariable.getInitializer().getString())) {
+									argumentMatch = true;
+									if(childMapper.getParentMapper() != null) {
+										AbstractCodeFragment statementContainingOperationInvocation = null;
+										for(AbstractCodeFragment leaf : childMapper.getParentMapper().getNonMappedLeavesT2()) {
+											if(leaf.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+												statementContainingOperationInvocation = leaf;
+												break;
+											}
+										}
+										for(AbstractCodeMapping mapping : childMapper.getParentMapper().getMappings()) {
+											if(mapping instanceof LeafMapping) {
+												if(mapping.getFragment2().getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+													statementContainingOperationInvocation = mapping.getFragment2();
+													break;
+												}
+											}
+										}
+										if(statementContainingOperationInvocation != null) {
+											List<LeafExpression> expressions2 = statementContainingOperationInvocation.findExpression(argument);
+											if(expressions2.size() == 1) {
+												LeafMapping expressionMapping = new LeafMapping(removedVariable.getInitializer(), expressions2.get(0), childMapper.getContainer1(), childMapper.getContainer2());
+												mapper.addMapping(expressionMapping);
+											}
+										}
+									}
 									break;
 								}
 							}
+							if(argumentMatch) {
+								removedVariablesToBeRemoved.add(removedVariable);
+								movedVariables.add(pair);
+								getVariableRefactorings(removedVariable, addedVariable, childMapper.getContainer1(), childMapper.getContainer2(), Collections.emptySet(), null);
+							}
+							break;
 						}
-						if(!removedVariableMapped) {
-							removedVariablesToBeRemoved.add(removedVariable);
-							movedVariables.add(pair);
-						}
-						break;
 					}
 				}
 			}
@@ -366,30 +384,48 @@ public class VariableReplacementAnalysis {
 						break;
 					}
 				}
-				for(VariableDeclaration removedVariable : childMapper.getContainer1().getParameterDeclarationList()) {
-					Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
-					if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
-						//check if there is a mapping for addedVariable declaration in the parentMapper
-						boolean addedVariableMapped = false;
-						for(AbstractCodeMapping mapping : mappings) {
-							if(mapping.getFragment2().getVariableDeclarations().contains(addedVariable)) {
-								addedVariableMapped = true;
-								break;
-							}
-						}
-						if(!addedVariableMapped && mapper.getParentMapper() != null) {
-							for(AbstractCodeMapping mapping : mapper.getParentMapper().getMappings()) {
-								if(mapping.getFragment2().getVariableDeclarations().contains(addedVariable)) {
-									addedVariableMapped = true;
+				if(addedVariable.getInitializer() != null && childMapper.getOperationInvocation() != null) {
+					for(VariableDeclaration removedVariable : childMapper.getContainer1().getParameterDeclarationList()) {
+						Pair<VariableDeclaration, VariableDeclaration> pair = Pair.of(removedVariable, addedVariable);
+						if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
+							boolean argumentMatch = false;
+							for(String argument : childMapper.getOperationInvocation().arguments()) {
+								if(argument.equals(addedVariable.getInitializer().getString())) {
+									argumentMatch = true;
+									if(childMapper.getParentMapper() != null) {
+										AbstractCodeFragment statementContainingOperationInvocation = null;
+										for(AbstractCodeFragment leaf : childMapper.getParentMapper().getNonMappedLeavesT1()) {
+											if(leaf.getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+												statementContainingOperationInvocation = leaf;
+												break;
+											}
+										}
+										for(AbstractCodeMapping mapping : childMapper.getParentMapper().getMappings()) {
+											if(mapping instanceof LeafMapping) {
+												if(mapping.getFragment1().getLocationInfo().subsumes(childMapper.getOperationInvocation().getLocationInfo())) {
+													statementContainingOperationInvocation = mapping.getFragment1();
+													break;
+												}
+											}
+										}
+										if(statementContainingOperationInvocation != null) {
+											List<LeafExpression> expressions1 = statementContainingOperationInvocation.findExpression(argument);
+											if(expressions1.size() == 1) {
+												LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), addedVariable.getInitializer(), childMapper.getContainer1(), childMapper.getContainer2());
+												mapper.addMapping(expressionMapping);
+											}
+										}
+									}
 									break;
 								}
 							}
+							if(argumentMatch) {
+								addedVariablesToBeRemoved.add(addedVariable);
+								movedVariables.add(pair);
+								getVariableRefactorings(removedVariable, addedVariable, childMapper.getContainer1(), childMapper.getContainer2(), Collections.emptySet(), null);
+							}
+							break;
 						}
-						if(!addedVariableMapped) {
-							addedVariablesToBeRemoved.add(addedVariable);
-							movedVariables.add(pair);
-						}
-						break;
 					}
 				}
 			}

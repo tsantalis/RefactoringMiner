@@ -72,97 +72,113 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		List<LeafExpression> matchingExpressions = new ArrayList<>();
 		for(LeafExpression expression : getVariables()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(AbstractCall expression : getMethodInvocations()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression.asLeafExpression());
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getStringLiterals()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getNumberLiterals()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getNullLiterals()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getBooleanLiterals()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getTypeLiterals()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(AbstractCall expression : getCreations()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression.asLeafExpression());
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getInfixExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getArrayAccesses()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getPrefixExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getPostfixExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getThisExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getCastExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(LeafExpression expression : getParenthesizedExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression);
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
 				locations.add(expression.getLocationInfo());
 			}
 		}
 		for(TernaryOperatorExpression expression : getTernaryOperatorExpressions()) {
 			if(expression.getString().equals(s)) {
-				matchingExpressions.add(expression.asLeafExpression());
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
 		}

@@ -41161,6 +41161,28 @@
   "firstEndPos" : 43821,
   "secondEndPos" : 44053
 }, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "byte",
+  "secondLabel" : "byte",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 43840,
+  "secondPos" : 43978,
+  "firstEndPos" : 43844,
+  "secondEndPos" : 43982
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "size",
+  "secondLabel" : "size",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 43845,
+  "secondPos" : 43983,
+  "firstEndPos" : 43849,
+  "secondEndPos" : 43987
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",

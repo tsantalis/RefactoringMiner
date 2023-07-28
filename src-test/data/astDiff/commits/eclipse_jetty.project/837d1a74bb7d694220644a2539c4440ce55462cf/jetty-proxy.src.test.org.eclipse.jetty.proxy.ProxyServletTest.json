@@ -32416,6 +32416,61 @@
   "firstEndPos" : 25034,
   "secondEndPos" : 23576
 }, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "final",
+  "secondLabel" : "final",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 23512,
+  "secondPos" : 24159,
+  "firstEndPos" : 23517,
+  "secondEndPos" : 24164
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 23518,
+  "secondPos" : 24165,
+  "firstEndPos" : 23524,
+  "secondEndPos" : 24171
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 23518,
+  "secondPos" : 24165,
+  "firstEndPos" : 23524,
+  "secondEndPos" : 24171
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "target",
+  "secondLabel" : "target",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 23525,
+  "secondPos" : 24172,
+  "firstEndPos" : 23531,
+  "secondEndPos" : 24178
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"/test\"",
+  "secondLabel" : "\"/test\"",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 23534,
+  "secondPos" : 23561,
+  "firstEndPos" : 23541,
+  "secondEndPos" : 23568
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -33024,13 +33079,13 @@
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "target",
-  "secondLabel" : "expectedURI",
+  "secondLabel" : "target",
   "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "InfixExpression",
   "firstPos" : 23918,
-  "secondPos" : 24722,
+  "secondPos" : 24612,
   "firstEndPos" : 23924,
-  "secondEndPos" : 24733
+  "secondEndPos" : 24618
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -33526,6 +33581,50 @@
   "secondPos" : 25106,
   "firstEndPos" : 24309,
   "secondEndPos" : 25118
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 24321,
+  "secondPos" : 24144,
+  "firstEndPos" : 24327,
+  "secondEndPos" : 24150
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 24321,
+  "secondPos" : 24144,
+  "firstEndPos" : 24327,
+  "secondEndPos" : 24150
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "prefix",
+  "secondLabel" : "prefix",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 24328,
+  "secondPos" : 24151,
+  "firstEndPos" : 24334,
+  "secondEndPos" : 24157
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"/proxy\"",
+  "secondLabel" : "\"/proxy\"",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 24337,
+  "secondPos" : 23551,
+  "firstEndPos" : 24345,
+  "secondEndPos" : 23559
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -284,6 +284,8 @@ public class ProjectASTDiffer
 		if (umlOperationBodyMapper.getOperation1() != null & umlOperationBodyMapper.getOperation2() != null) {
 			srcOperationNode = TreeUtilFunctions.findByLocationInfo(srcTree, umlOperationBodyMapper.getOperation1().getLocationInfo());
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
+			if (srcOperationNode == null || !srcOperationNode.getType().name.equals(Constants.METHOD_DECLARATION)) return;
+			if (dstOperationNode == null || !dstOperationNode.getType().name.equals(Constants.METHOD_DECLARATION)) return;
 			processJavaDocs(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
 		} else {
@@ -309,10 +311,12 @@ public class ProjectASTDiffer
 				}
 			}
 		}
-		processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-		processBodyMapper(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);
-		processOperationDiff(srcOperationNode,dstOperationNode,umlOperationBodyMapper,mappingStore);
-		processMethodParameters(srcOperationNode,dstOperationNode,umlOperationBodyMapper.getMatchedVariables(),mappingStore);
+		if (srcOperationNode != null && dstOperationNode != null) {
+			processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
+			processBodyMapper(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore, false);
+			processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
+			processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
+		}
 	}
 
 	private void processMethodParameters(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration>> matchedVariables, ExtendedMultiMappingStore mappingStore) {
@@ -322,6 +326,7 @@ public class ProjectASTDiffer
 			//TODO: get parent until method declaration
 			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
 			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
+			if (leftTree == null || rightTree == null) return;
 			if (leftVarDecl.isParameter() && rightVarDecl.isParameter()) {
 				if (TreeUtilFunctions.isIsomorphicTo(rightTree, leftTree))
 					mappingStore.addMappingRecursively(leftTree, rightTree);
@@ -563,6 +568,7 @@ public class ProjectASTDiffer
 			LocationInfo dstLocationInfo = umlOperationDiff.getAddedOperation().getReturnParameter().getType().getLocationInfo();
 			Tree srcNode =TreeUtilFunctions.findByLocationInfo(srcTree, srcLocationInfo);
 			Tree dstNode =TreeUtilFunctions.findByLocationInfo(dstTree, dstLocationInfo);
+			if (srcNode == null || dstNode == null) return;
 			if (srcNode.isIsoStructuralTo(dstNode))
 				mappingStore.addMappingRecursively(srcNode,dstNode);
 		}
@@ -1176,6 +1182,7 @@ public class ProjectASTDiffer
 	}
 
 	private void processMethodSignature(Tree srcOperationNode, Tree dstOperationNode, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
+		if (srcOperationNode == null || dstOperationNode == null) return;
 		List<String> searchingTypes = new ArrayList<>();
 		//searchingTypes.add(Constants.ACCESS_MODIFIER);
 		searchingTypes.add(Constants.SIMPLE_NAME);
@@ -1207,6 +1214,7 @@ public class ProjectASTDiffer
 	}
 
 	private Pair<Tree, Tree> matchBasedOnType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {
+		if (srcOperationNode == null || dstOperationNode == null) return null;
 		Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType);
 		Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode,searchingType);
 		if (srcModifier != null && dstModifier != null)

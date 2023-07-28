@@ -531,6 +531,7 @@ public class ProjectASTDiffer
 				mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
 			} else {
 				new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
+				mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode);
 			}
 		}
 	}

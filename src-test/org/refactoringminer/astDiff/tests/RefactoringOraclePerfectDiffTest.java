@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.tests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import net.joshka.junit.json.params.JsonFileSource;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.parallel.Isolated;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.refactoringminer.astDiff.actions.ASTDiff;
@@ -22,9 +23,11 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 
+@Isolated
 public class RefactoringOraclePerfectDiffTest {
     private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")
+
     @JsonFileSource(resources = "/astDiff/commits/cases.json")
 //    @JsonFileSource(resources = "/astDiff/commits/cases-problematic.json")
     public void testSubTreeMappings(@ConvertWith(CaseInfo.CaseInfoConverter.class) CaseInfo info) throws Exception {

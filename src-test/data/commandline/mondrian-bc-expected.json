@@ -471,6 +471,90 @@
 		"description": "extracted method invocation",
 		"codeElement": "runTimeRangeOnAxis(\"select {[TimeStamp].[DateLevel].[1995-01-01 00:00:00.0] : [TimeStamp].[DateLevel].[1997-01-01 00:00:00.0]} on 0\\n\" + \"from [date_cube]\")"
 }]
+},
+{
+	"type": "Parameterize Variable",
+	"description": "Parameterize Variable mdx : String to mdx : String in method public runDateRangeOnAxis(mdx String) : void from class mondrian.rolap.NativeDateKeyRangeTest",
+	"leftSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 38,
+		"endLine": 40,
+		"startColumn": 22,
+		"endColumn": 33,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "mdx : String"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 36,
+		"endLine": 139,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public testDateRangeOnAxis() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 36,
+		"endColumn": 46,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "renamed variable declaration",
+		"codeElement": "mdx : String"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 47,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with renamed variable",
+		"codeElement": "public runDateRangeOnAxis(mdx String) : void"
+}]
+},
+{
+	"type": "Remove Variable Modifier",
+	"description": "Remove Variable Modifier final in variable mdx : String in method public testDateRangeOnAxis() : void from class mondrian.rolap.NativeDateKeyRangeTest",
+	"leftSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 38,
+		"endLine": 40,
+		"startColumn": 22,
+		"endColumn": 33,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "original variable declaration",
+		"codeElement": "mdx : String"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 36,
+		"endLine": 139,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public testDateRangeOnAxis() : void"
+}],
+	"rightSideLocations": [{
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 47,
+		"endLine": 47,
+		"startColumn": 36,
+		"endColumn": 46,
+		"codeElementType": "SINGLE_VARIABLE_DECLARATION",
+		"description": "variable declaration with removed modifier",
+		"codeElement": "mdx : String"
+}, {
+		"filePath": "testsrc/main/mondrian/rolap/NativeDateKeyRangeTest.java",
+		"startLine": 47,
+		"endLine": 147,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "method declaration with removed variable modifier",
+		"codeElement": "public runDateRangeOnAxis(mdx String) : void"
+}]
 }
 ]
 },

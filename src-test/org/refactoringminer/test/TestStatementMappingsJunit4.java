@@ -1354,6 +1354,40 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testExtractMethodStatementMappings18() throws Exception {
+		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+		Repository repo = gitService.cloneIfNotExists(
+		    REPOS + "/jOOQ",
+		    "https://github.com/jOOQ/jOOQ.git");
+
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommit(repo, "58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357", new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jOOQ-58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSlidedStatementMappings() throws Exception {
 		Repository repository = gitService.cloneIfNotExists(
 		    ".",

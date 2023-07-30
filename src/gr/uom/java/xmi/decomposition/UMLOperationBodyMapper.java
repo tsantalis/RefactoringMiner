@@ -8672,6 +8672,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			addLeafMappings(statement1, statement2, r, replacementInfo);
 			return replacementInfo.getReplacements();
 		}
+		else if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(statement2.getString())) != null) {
+			replacementInfo.addReplacement(r);
+			addLeafMappings(statement1, statement2, r, replacementInfo);
+			return replacementInfo.getReplacements();
+		}
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 				if(statement1.getString().endsWith(methodInvocation1 + ";\n") && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
@@ -9619,7 +9624,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean variableReturnAsLastStatement2 = variableReturn2 && statement2.isLastStatement();
 		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals("return " + statement1.getNumberLiterals().get(0).getString() + ";\n") && statement1.isLastStatementInParentBlock();
 		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals("return " + statement2.getNumberLiterals().get(0).getString() + ";\n") && statement2.isLastStatementInParentBlock();
-		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || (statement1.isLastStatementInParentBlock() && statement2.isLastStatementInParentBlock());
+		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || 
+				lastStatementInParentBlockWithSameParentType(statement1, statement2);
 		if(parentMapper == null && !variableReturnAsLastStatement1 && !variableReturnAsLastStatement2 && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && lastStatement &&
 				variableReturnQualified1 == variableReturnQualified2 && container1 instanceof UMLOperation && container2 instanceof UMLOperation && getOperation1().equalSignature(getOperation2()) && statement1.getLambdas().size() == statement2.getLambdas().size()) {
 			boolean callToAddedOperation = false;
@@ -9767,6 +9773,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean lastStatementInParentBlockWithSameParentType(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		if(statement1.isLastStatementInParentBlock() && statement2.isLastStatementInParentBlock()) {
+			CompositeStatementObject parent1 = statement1.getParent();
+			CompositeStatementObject parent2 = statement2.getParent();
+			while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+				parent1 = parent1.getParent(); 
+			}
+			while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+				parent2 = parent2.getParent(); 
+			}
+			if(parent1 != null && parent2 != null && parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType())) {
+				// check if one is simple if and the other if-else-if
+				boolean isBlock1 = statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+				boolean isWithinIfBranch1 = isBlock1 ? isIfBranch(statement1, statement1.getParent()) : isIfBranch(statement1.getParent(), statement1.getParent().getParent());
+				boolean isWithinElseBranch1 = isBlock1 ? isElseBranch(statement1, statement1.getParent()) : isElseBranch(statement1.getParent(), statement1.getParent().getParent());
+				boolean isWithinElseIfBranch1 = false;
+				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent().getParent();
+				if(grandGrandParent1 != null) {
+					isWithinElseIfBranch1 = isBlock1 ? isElseIfBranch(statement1.getParent(), statement1.getParent().getParent()) : isElseIfBranch(statement1.getParent().getParent(), grandGrandParent1);
+				}
+				boolean hasElseIfBranch1 = hasElseIfBranch(parent1);
+				//boolean hasElseBranch1 = hasElseBranch(parent1);
+				
+				boolean isBlock2 = statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+				boolean isWithinIfBranch2 = isBlock2 ? isIfBranch(statement2, statement2.getParent()) : isIfBranch(statement2.getParent(), statement2.getParent().getParent());
+				boolean isWithinElseBranch2 = isBlock2 ? isElseBranch(statement2, statement2.getParent()) : isElseBranch(statement2.getParent(), statement2.getParent().getParent());
+				boolean isWithinElseIfBranch2 = false;
+				CompositeStatementObject grandGrandParent2 = statement2.getParent().getParent().getParent();
+				if(grandGrandParent2 != null) {
+					isWithinElseIfBranch2 = isBlock2 ? isElseIfBranch(statement2.getParent(), statement2.getParent().getParent()) : isElseIfBranch(statement2.getParent().getParent(), grandGrandParent2);
+				}
+				boolean hasElseIfBranch2 = hasElseIfBranch(parent2);
+				//boolean hasElseBranch2 = hasElseBranch(parent2);
+				if(isWithinIfBranch1 == isWithinIfBranch2 && isWithinElseBranch1 == isWithinElseBranch2 && isWithinElseIfBranch1 == isWithinElseIfBranch2 &&
+						hasElseIfBranch1 == hasElseIfBranch2 /*&& hasElseBranch1 == hasElseBranch2*/) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void addLeafMappings(AbstractCodeFragment statement1, AbstractCodeFragment statement2, Replacement r, ReplacementInfo replacementInfo) {

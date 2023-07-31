@@ -147,6 +147,30 @@ public class StringBasedHeuristics {
 			else if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.equals("*") && diff2.equals("/")) {
 				return true;
 			}
+			if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.length() > 2 && diff2.length() > 2 && diff1.endsWith("++") && diff2.startsWith("++")) {
+				String var1 = diff1.substring(0, diff1.length() - 2);
+				String var2 = diff2.substring(2, diff2.length());
+				if(var1.equals(var2)) {
+					return true;
+				}
+				for(Replacement r : info.getReplacements()) {
+					if(r.getBefore().equals(var1) && r.getAfter().equals(var2)) {
+						return true;
+					}
+				}
+			}
+			else if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.length() > 2 && diff2.length() > 2 && diff2.endsWith("++") && diff1.startsWith("++")) {
+				String var2 = diff2.substring(0, diff2.length() - 2);
+				String var1 = diff1.substring(2, diff1.length());
+				if(var1.equals(var2)) {
+					return true;
+				}
+				for(Replacement r : info.getReplacements()) {
+					if(r.getBefore().equals(var1) && r.getAfter().equals(var2)) {
+						return true;
+					}
+				}
+			}
 			if(cast(diff1, diff2)) {
 				for(Replacement r : info.getReplacements()) {
 					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {

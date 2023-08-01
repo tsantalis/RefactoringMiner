@@ -7509,7 +7509,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals("return this;\n")) {
 			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION);
 		}
-		findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
+		if(!container1.isGetter() && !container2.isGetter()) {
+			findReplacements(stringLiterals1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
+			findReplacements(variables1, stringLiterals2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_STRING_LITERAL);
+		}
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL);

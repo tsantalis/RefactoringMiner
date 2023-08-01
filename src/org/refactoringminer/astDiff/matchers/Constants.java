@@ -71,8 +71,9 @@ public class Constants {
 	public static final String COMPILATION_UNIT = "CompilationUnit";
 	public static final String JAVA_DOC = "Javadoc";
 	public static final String SIMPLE_TYPE = "SimpleType";
-    public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
-    public static final String PREFIX_EXPRESSION = "PrefixExpression";
-    public static final String INITIALIZER = "Initializer";
+	public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
+	public static final String PREFIX_EXPRESSION = "PrefixExpression";
+	public static final String INITIALIZER = "Initializer";
 	public static final String QUALIFIED_NAME = "QualifiedName";
+	public static final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
 }

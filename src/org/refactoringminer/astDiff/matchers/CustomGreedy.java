@@ -161,7 +161,7 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 		// Rank the mappings by score.
 		Set<Tree> srcIgnored = new HashSet<>();
 		Set<Tree> dstIgnored = new HashSet<>();
-		Collections.sort(ambiguousList, new MappingComparators.FullMappingComparator(mappings));
+		Collections.sort(ambiguousList, new ExtendedFullMappingComparator(mappings));
 		if (ambiguousList.size() > 1)
 			ambiguousStringLiteralModification(ambiguousList,srcIgnored,dstIgnored);
 		// Select the best ambiguous mappings
@@ -203,7 +203,29 @@ public class CustomGreedy extends GreedySubtreeMatcher {
 				break;
 			}
 		}
-		if (ret.size() > 0)
-			retainBestMapping(ret,new HashSet<>(),new HashSet<>());
+	}
+	public static class ExtendedFullMappingComparator implements Comparator<Mapping> {
+		private final MappingComparators.FullMappingComparator fullMappingComparator;
+
+		public ExtendedFullMappingComparator(MappingStore ms) {
+			fullMappingComparator = new MappingComparators.FullMappingComparator(ms);
+		}
+
+		@Override
+		public int compare(Mapping m1, Mapping m2) {
+			int result = fullMappingComparator.compare(m1,m2);
+			if (result != 0)
+				return result;
+			return new AbsoluteOffsetComparator().compare(m1,m2);
+		}
+	}
+	public static class AbsoluteOffsetComparator implements Comparator<Mapping> {
+		@Override
+		public int compare(Mapping m1, Mapping m2) {
+			int result =  Integer.compare(m1.first.getPos(), m2.first.getPos());
+			if (result != 0) return result;
+			result =  Integer.compare(m1.second.getPos(), m2.second.getPos());
+			return result;
+		}
 	}
 }

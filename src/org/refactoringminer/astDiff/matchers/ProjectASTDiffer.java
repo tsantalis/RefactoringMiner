@@ -797,11 +797,18 @@ public class ProjectASTDiffer
 						break;
 					case RENAME_VARIABLE:
 						Set<AbstractCodeMapping> references = renameVariableRefactoring.getReferences();
+						eligible = true;
 						for (AbstractCodeMapping abstractCodeMapping : references) {
-							if (abstractCodeMapping instanceof LeafMapping)
-								findVariablesAndMatch(srcTree,dstTree,abstractCodeMapping,renameVariableRefactoring.getOriginalVariable().getVariableName(),renameVariableRefactoring.getRenamedVariable().getVariableName(),mappingStore);
-							else {
-								//TODO: How to find within composite mappings?
+							if (((RenameVariableRefactoring) refactoring).isInsideExtractedOrInlinedMethod() &&
+									multipleInstancesWithSameDescription(refactoringList,((RenameVariableRefactoring) refactoring).getOperationBefore(),((RenameVariableRefactoring) refactoring).getOperationAfter())) {
+								eligible = false;
+							}
+							if (eligible) {
+								if (abstractCodeMapping instanceof LeafMapping) {
+									findVariablesAndMatch(srcTree, dstTree, abstractCodeMapping, renameVariableRefactoring.getOriginalVariable().getVariableName(), renameVariableRefactoring.getRenamedVariable().getVariableName(), mappingStore);
+								} else {
+									//TODO: How to find within composite mappings?
+								}
 							}
 						}
 						eligible = false;
@@ -865,6 +872,25 @@ public class ProjectASTDiffer
 					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
 			}
 		}
+
+	}
+
+	private boolean multipleInstancesWithSameDescription(List<Refactoring> refactoringList, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+		int counter1 = 0;
+		int counter2 = 0;
+		for (Refactoring r : refactoringList) {
+			if (r.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION))
+			{
+				if (((ExtractOperationRefactoring)r).getExtractedOperation().equals(operationAfter))
+					counter1++;
+			}
+			else if (r.getRefactoringType().equals(RefactoringType.INLINE_OPERATION))
+			{
+				if (((InlineOperationRefactoring)r).getInlinedOperation().equals(operationBefore))
+					counter2++;
+			}
+		}
+		return (counter1 > 1 || counter2 > 1);
 	}
 
 	private static void processModifiedAnnotation(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore, UMLAnnotation annotationBefore, UMLAnnotation annotationAfter) {

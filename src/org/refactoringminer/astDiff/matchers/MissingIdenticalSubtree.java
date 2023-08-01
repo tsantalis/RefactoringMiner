@@ -109,6 +109,8 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             return true;
         else if (src.getType().name.equals(Constants.INFIX_EXPRESSION))
             return true;
+        else if (src.getType().name.equals(Constants.CLASS_INSTANCE_CREATION))
+            return true;
         else{
             return false;
         }
@@ -122,6 +124,9 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                 return true;
             if (src.getType().name.equals(Constants.SIMPLE_TYPE ))
                 return true;
+        }
+        if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) {
+            return true;
         }
         return false;
     }

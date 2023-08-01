@@ -5132,7 +5132,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(leaf2.getVariableDeclarations().size() > 0 && leaf.getString().equals("return " + leaf2.getVariableDeclarations().get(0).getVariableName() + ";\n")) {
 					possibleExtractVariable = true;
 				}
-				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) || possibleExtractVariable)) {
+				boolean possibleInlineVariable = false;
+				for(AbstractCodeFragment l1 : leaves1) {
+					if(l1.getVariableDeclarations().size() > 0 && leaf1.getString().equals("return " + l1.getVariableDeclarations().get(0).getVariableName() + ";\n") &&
+							l1.getVariableDeclarations().get(0).getInitializer() != null &&
+							leaf.getString().equals("return " + l1.getVariableDeclarations().get(0).getInitializer().getString() + ";\n")) {
+						possibleInlineVariable = true;
+						break;
+					}
+				}
+				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) || possibleExtractVariable || possibleInlineVariable)) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo);
 					if (replacements != null) {

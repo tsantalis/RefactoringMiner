@@ -2285,6 +2285,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean commonConditional(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2, UMLOperationBodyMapper mapper) {
+		Set<Replacement> initialReplacements = info.getReplacements();
 		Set<Refactoring> refactorings = mapper.getRefactoringsAfterPostProcessing();
 		VariableDeclarationContainer container1 = mapper.getContainer1();
 		VariableDeclarationContainer container2 = mapper.getContainer2();
@@ -2679,7 +2680,40 @@ public class StringBasedHeuristics {
 					}
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
-				if((invertedConditionals > 0 || matches > 0) && info.getReplacements(ReplacementType.TYPE).isEmpty() && info.getReplacements(ReplacementType.METHOD_INVOCATION).isEmpty() && !includesLocalVariable(statement1, statement2, intersection, container1, container2)) {
+				boolean onlyInfixOperatorReplacementsFound = false;
+				if(matches == 0 && invertedConditionals == 0 && intersection.size() > 0) {
+					int count = 0;
+					boolean invalidReplacement = false;
+					for(Replacement r : initialReplacements) {
+						if(!r.getType().equals(ReplacementType.CONDITIONAL) && !r.getType().equals(ReplacementType.INVERT_CONDITIONAL) &&
+								!r.getType().equals(ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_EMPTY_CHECK) &&
+								!r.getType().equals(ReplacementType.NULL_LITERAL_CHECK_REPLACED_WITH_OPTIONAL_IS_PRESENT_CHECK) &&
+								!r.getType().equals(ReplacementType.NULL_LITERAL_REPLACED_WITH_OPTIONAL_EMPTY)) {
+							count++;
+							if((r.getBefore().equals("<") && r.getAfter().equals("!=")) ||
+									(r.getBefore().equals(">") && r.getAfter().equals("!=")) ||
+									(r.getBefore().equals("<=") && r.getAfter().equals("!=")) ||
+									(r.getBefore().equals(">=") && r.getAfter().equals("!=")) ||
+									(r.getBefore().equals("<") && r.getAfter().equals("==")) ||
+									(r.getBefore().equals(">") && r.getAfter().equals("==")) ||
+									(r.getBefore().equals("<=") && r.getAfter().equals("==")) ||
+									(r.getBefore().equals(">=") && r.getAfter().equals("=="))) {
+								invalidReplacement = true;
+							}
+						}
+					}
+					boolean singleNullCheck = false;
+					if(intersection.size() == 1) {
+						String element = intersection.iterator().next();
+						if(element.contains("== null") || element.contains("!= null")) {
+							singleNullCheck = true;
+						}
+					}
+					if(count > 0 && !singleNullCheck && !invalidReplacement && info.getReplacements(ReplacementType.INFIX_OPERATOR).size() == count) {
+						onlyInfixOperatorReplacementsFound = true;
+					}
+				}
+				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && info.getReplacements(ReplacementType.METHOD_INVOCATION).isEmpty() && !includesLocalVariable(statement1, statement2, intersection, container1, container2)) {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
 					for(Replacement r : operatorReplacements) {
@@ -2687,6 +2721,12 @@ public class StringBasedHeuristics {
 							booleanOperatorReversed = true;
 						}
 						else if(r.getBefore().equals("||") && r.getAfter().equals("&&")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {
+							booleanOperatorReversed = true;
+						}
+						else if(r.getBefore().equals("!=") && r.getAfter().equals("==")) {
 							booleanOperatorReversed = true;
 						}
 					}

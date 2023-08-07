@@ -1904,7 +1904,7 @@ public class UMLModelDiff {
 			}
 		}
 		for(RenamePackageRefactoring renamePackageRefactoring : renamePackageRefactorings) {
-			List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+			List<MoveBasedRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 			if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 				refactorings.add(renamePackageRefactoring);
 			}
@@ -1961,7 +1961,7 @@ public class UMLModelDiff {
 			}
 		}
 		for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
-			List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+			List<MoveBasedRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 			if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 				refactorings.add(renamePackageRefactoring);
 				previousRenamePackageRefactorings.add(renamePackageRefactoring);
@@ -2003,7 +2003,7 @@ public class UMLModelDiff {
 			refactorings.add(refactoring);
 		}
 		for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
-			List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+			List<MoveBasedRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 			if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 				refactorings.add(renamePackageRefactoring);
 				previousRenamePackageRefactorings.add(renamePackageRefactoring);
@@ -2045,7 +2045,7 @@ public class UMLModelDiff {
 			refactorings.add(refactoring);
 		}
 		for(RenamePackageRefactoring renamePackageRefactoring : newRenamePackageRefactorings) {
-			List<PackageLevelRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
+			List<MoveBasedRefactoring> moveClassRefactorings = renamePackageRefactoring.getMoveClassRefactorings();
 			if(moveClassRefactorings.size() >= 1 && isSourcePackageDeleted(renamePackageRefactoring)) {
 				refactorings.add(renamePackageRefactoring);
 				previousRenamePackageRefactorings.add(renamePackageRefactoring);

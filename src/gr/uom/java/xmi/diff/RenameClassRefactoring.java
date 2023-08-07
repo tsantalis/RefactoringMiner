@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class RenameClassRefactoring implements Refactoring {
+public class RenameClassRefactoring implements Refactoring, PackageLevelRefactoring {
 
 	private UMLClass originalClass;
 	private UMLClass renamedClass;
@@ -44,6 +45,16 @@ public class RenameClassRefactoring implements Refactoring {
 
 	public String getRenamedClassName() {
 		return renamedClass.getName();
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return getOriginalClass();
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return getRenamedClass();
 	}
 
 	public UMLClass getOriginalClass() {

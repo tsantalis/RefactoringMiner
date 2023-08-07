@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -12,15 +13,25 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 
-public class ReplaceAnonymousWithClassRefactoring implements Refactoring {
+public class ReplaceAnonymousWithClassRefactoring implements Refactoring, PackageLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
 	private UMLClass addedClass;
 	private UMLAnonymousToClassDiff diff;
-	
+
 	public ReplaceAnonymousWithClassRefactoring(UMLAnonymousClass anonymousClass, UMLClass addedClass, UMLAnonymousToClassDiff diff) {
 		this.anonymousClass = anonymousClass;
 		this.addedClass = addedClass;
 		this.diff = diff;
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return getAnonymousClass();
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return getAddedClass();
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {

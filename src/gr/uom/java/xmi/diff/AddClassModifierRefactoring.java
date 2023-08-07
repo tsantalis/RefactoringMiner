@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLModifier;
 
-public class AddClassModifierRefactoring implements Refactoring {
+public class AddClassModifierRefactoring implements Refactoring, PackageLevelRefactoring {
 	private String modifier;
 	private UMLAbstractClass classBefore;
 	private UMLAbstractClass classAfter;
@@ -36,10 +36,12 @@ public class AddClassModifierRefactoring implements Refactoring {
 		return modifier;
 	}
 
+	@Override
 	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
+	@Override
 	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}

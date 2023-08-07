@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class ExtractSuperclassRefactoring implements Refactoring {
+public class ExtractSuperclassRefactoring implements Refactoring, PackageLevelRefactoring {
 	private UMLClass extractedClass;
 	private Set<UMLClass> subclassSetBefore;
 	private Set<UMLClass> subclassSetAfter;
@@ -40,6 +41,16 @@ public class ExtractSuperclassRefactoring implements Refactoring {
 			return RefactoringType.EXTRACT_INTERFACE;
 		else
 			return RefactoringType.EXTRACT_SUPERCLASS;
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		throw new UnsupportedOperationException("Extract Superclass refactoring provides no access to the class before the refactoring");
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return extractedClass;
 	}
 
 	public UMLClass getExtractedClass() {

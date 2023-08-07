@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.diff;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLClass;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveClassRefactoring implements PackageLevelRefactoring {
+public class MoveClassRefactoring implements MoveBasedRefactoring {
 	private UMLClass originalClass;
 	private UMLClass movedClass;
 	

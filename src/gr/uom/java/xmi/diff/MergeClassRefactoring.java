@@ -5,13 +5,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class MergeClassRefactoring implements PackageLevelRefactoring {
+public class MergeClassRefactoring implements MoveBasedRefactoring, PackageLevelRefactoring {
 	private Set<UMLClass> mergedClasses;
 	private UMLClass newClass;
 	
@@ -131,6 +132,21 @@ public class MergeClassRefactoring implements PackageLevelRefactoring {
 		String originalPath = originalClass.getName().substring(0, originalClass.getName().length() - separatorPos);
 		String movedPath = renamedClass.getName().substring(0, renamedClass.getName().length() - separatorPos);
 		return new RenamePattern(originalPath, movedPath);
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return getOriginalClass();
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return getMovedClass();
+	}
+
+	@Override
+	public List<UMLAbstractClass> getClassesBefore() {
+		return new ArrayList<>(mergedClasses);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -17,14 +18,15 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, PackageLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
+
 	private UMLAbstractClass originalClass;
+
 	private UMLAbstractClass nextClass;
 	private Set<AbstractCodeMapping> references;
 	private boolean insideExtractedOrInlinedMethod;
 	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
-
 	public ExtractAttributeRefactoring(UMLAttribute variableDeclaration, UMLAbstractClass originalClass, UMLAbstractClass nextClass,
 			boolean insideExtractedOrInlinedMethod) {
 		this.attributeDeclaration = variableDeclaration;
@@ -84,6 +86,16 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 
 	public UMLAttribute getVariableDeclaration() {
 		return attributeDeclaration;
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return originalClass;
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return nextClass;
 	}
 
 	public Set<AbstractCodeMapping> getReferences() {

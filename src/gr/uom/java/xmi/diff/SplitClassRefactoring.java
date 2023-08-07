@@ -5,13 +5,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class SplitClassRefactoring implements PackageLevelRefactoring {
+public class SplitClassRefactoring implements MoveBasedRefactoring, PackageLevelRefactoring {
 	private Set<UMLClass> splitClasses;
 	private UMLClass originalClass;
 	
@@ -86,6 +87,21 @@ public class SplitClassRefactoring implements PackageLevelRefactoring {
 		String originalPath = originalClass.getName().substring(0, originalClass.getName().length() - separatorPos);
 		String movedPath = renamedClass.getName().substring(0, renamedClass.getName().length() - separatorPos);
 		return new RenamePattern(originalPath, movedPath);
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return getOriginalClass();
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return getMovedClass();
+	}
+
+	@Override
+	public List<UMLAbstractClass> getClassesAfter() {
+		return new ArrayList<>(splitClasses);
 	}
 
 	@Override

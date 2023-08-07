@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -14,7 +15,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 
-public class ExtractClassRefactoring implements Refactoring {
+public class ExtractClassRefactoring implements Refactoring, PackageLevelRefactoring {
 	private UMLClass extractedClass;
 	private UMLClassBaseDiff classDiff;
 	private Map<UMLOperation, UMLOperation> extractedOperations;
@@ -47,6 +48,16 @@ public class ExtractClassRefactoring implements Refactoring {
 
 	public String getName() {
 		return this.getRefactoringType().getDisplayName();
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return getOriginalClass();
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return getExtractedClass();
 	}
 
 	public UMLClass getExtractedClass() {

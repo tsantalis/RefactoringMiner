@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, PackageLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;
@@ -35,6 +36,16 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.INLINE_ATTRIBUTE;
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return originalClass;
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
+		return nextClass;
 	}
 
 	public String getName() {

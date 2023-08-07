@@ -5,13 +5,14 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class CollapseHierarchyRefactoring implements Refactoring {
+public class CollapseHierarchyRefactoring implements Refactoring, PackageLevelRefactoring {
 	private UMLClass collapsedClass;
 	private UMLClass superclassAfterCollapse;
 
@@ -25,6 +26,16 @@ public class CollapseHierarchyRefactoring implements Refactoring {
 	}
 
 	private UMLClass getSuperclassAfterCollapse() {
+		return superclassAfterCollapse;
+	}
+
+	@Override
+	public UMLAbstractClass getClassBefore() {
+		return collapsedClass;
+	}
+
+	@Override
+	public UMLAbstractClass getClassAfter() {
 		return superclassAfterCollapse;
 	}
 

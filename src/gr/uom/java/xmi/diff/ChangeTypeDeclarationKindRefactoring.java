@@ -11,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAbstractClass;
 
-public class ChangeTypeDeclarationKindRefactoring implements Refactoring {
+public class ChangeTypeDeclarationKindRefactoring implements Refactoring, PackageLevelRefactoring {
 	private String originalTypeDeclarationKind;
 	private String changedTypeDeclarationKind;
 	private UMLAbstractClass classBefore;
@@ -33,10 +33,12 @@ public class ChangeTypeDeclarationKindRefactoring implements Refactoring {
 		return changedTypeDeclarationKind;
 	}
 
+	@Override
 	public UMLAbstractClass getClassBefore() {
 		return classBefore;
 	}
 
+	@Override
 	public UMLAbstractClass getClassAfter() {
 		return classAfter;
 	}

@@ -5,35 +5,64 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class RenamePackageRefactoring implements Refactoring {
+public class RenamePackageRefactoring implements Refactoring, ModelLevelRefactoring {
+	private List<MoveBasedRefactoring> moveClassRefactorings;
 
-	private List<PackageLevelRefactoring> moveClassRefactorings;
 	private RenamePattern pattern;
-	
+
 	public RenamePackageRefactoring(RenamePattern pattern) {
-		this.moveClassRefactorings = new ArrayList<PackageLevelRefactoring>();
+		this.moveClassRefactorings = new ArrayList<MoveBasedRefactoring>();
 		this.pattern = pattern;
 	}
 
-	public RenamePackageRefactoring(PackageLevelRefactoring moveClassRefactoring) {
-		this.moveClassRefactorings = new ArrayList<PackageLevelRefactoring>();
+	public RenamePackageRefactoring(MoveBasedRefactoring moveClassRefactoring) {
+		this.moveClassRefactorings = new ArrayList<MoveBasedRefactoring>();
 		this.moveClassRefactorings.add(moveClassRefactoring);
 		this.pattern = moveClassRefactoring.getRenamePattern();
 	}
 
-	public void addMoveClassRefactoring(PackageLevelRefactoring moveClassRefactoring) {
+	public void addMoveClassRefactoring(MoveBasedRefactoring moveClassRefactoring) {
 		moveClassRefactorings.add(moveClassRefactoring);
+	}
+
+	@Override
+	public String getPackageBefore() {
+		return moveClassRefactorings.iterator().next().getOriginalClass().getPackageName();
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesBefore() {
+		Set<UMLAbstractClass> classes = new LinkedHashSet<UMLAbstractClass>();
+		for (MoveBasedRefactoring refactoring : moveClassRefactorings) {
+			classes.add(refactoring.getOriginalClass());
+		}
+		return classes;
+	}
+
+	@Override
+	public String getPackageAfter() {
+		return moveClassRefactorings.iterator().next().getMovedClass().getPackageName();
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesAfter() {
+		Set<UMLAbstractClass> classes = new LinkedHashSet<UMLAbstractClass>();
+		for (MoveBasedRefactoring refactoring : moveClassRefactorings) {
+			classes.add(refactoring.getMovedClass());
+		}
+		return classes;
 	}
 
 	public RenamePattern getPattern() {
 		return pattern;
 	}
 
-	public List<PackageLevelRefactoring> getMoveClassRefactorings() {
+	public List<MoveBasedRefactoring> getMoveClassRefactorings() {
 		return moveClassRefactorings;
 	}
 
@@ -70,7 +99,7 @@ public class RenamePackageRefactoring implements Refactoring {
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		for(PackageLevelRefactoring ref : moveClassRefactorings) {
+		for(MoveBasedRefactoring ref : moveClassRefactorings) {
 			pairs.add(new ImmutablePair<String, String>(ref.getOriginalClass().getLocationInfo().getFilePath(), ref.getOriginalClassName()));
 		}
 		return pairs;
@@ -78,7 +107,7 @@ public class RenamePackageRefactoring implements Refactoring {
 
 	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
-		for(PackageLevelRefactoring ref : moveClassRefactorings) {
+		for(MoveBasedRefactoring ref : moveClassRefactorings) {
 			pairs.add(new ImmutablePair<String, String>(ref.getMovedClass().getLocationInfo().getFilePath(), ref.getMovedClassName()));
 		}
 		return pairs;
@@ -87,7 +116,7 @@ public class RenamePackageRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(PackageLevelRefactoring ref : moveClassRefactorings) {
+		for(MoveBasedRefactoring ref : moveClassRefactorings) {
 			ranges.add(ref.getOriginalClass().codeRange()
 					.setDescription("original type declaration")
 					.setCodeElement(ref.getOriginalClass().getName()));
@@ -98,7 +127,7 @@ public class RenamePackageRefactoring implements Refactoring {
 	@Override
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
-		for(PackageLevelRefactoring ref : moveClassRefactorings) {
+		for(MoveBasedRefactoring ref : moveClassRefactorings) {
 			ranges.add(ref.getMovedClass().codeRange()
 					.setDescription("moved type declaration")
 					.setCodeElement(ref.getMovedClass().getName()));

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveAndRenameClassRefactoring implements MoveBasedRefactoring {
+public class MoveAndRenameClassRefactoring implements MoveBasedRefactoring, ModelLevelRefactoring {
 
 	private UMLClass originalClass;
 	private UMLClass renamedClass;
@@ -56,6 +56,26 @@ public class MoveAndRenameClassRefactoring implements MoveBasedRefactoring {
 
 	public String getMovedClassName() {
 		return getRenamedClassName();
+	}
+
+	@Override
+	public String getPackageBefore() {
+		return originalClass.getPackageName();
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesBefore() {
+		return new LinkedHashSet<>(Set.of(originalClass));
+	}
+
+	@Override
+	public String getPackageAfter() {
+		return renamedClass.getPackageName();
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesAfter() {
+		return new LinkedHashSet<>(Set.of(renamedClass));
 	}
 
 	public UMLClass getOriginalClass() {

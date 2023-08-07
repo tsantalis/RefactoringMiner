@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import gr.uom.java.xmi.UMLAbstractClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class SplitPackageRefactoring implements Refactoring {
+public class SplitPackageRefactoring implements Refactoring, ModelLevelRefactoring {
 	private String originalPackage;
 	private Set<String> splitPackages;
 	private Set<RenamePackageRefactoring> renamePackageRefactorings;
-	
+
 	public SplitPackageRefactoring(Set<RenamePackageRefactoring> renamePackageRefactorings) {
 		this.renamePackageRefactorings = renamePackageRefactorings;
 		this.splitPackages = new TreeSet<String>();
@@ -25,6 +26,38 @@ public class SplitPackageRefactoring implements Refactoring {
 			}
 			splitPackages.add(pattern.getAfter());
 		}
+	}
+
+	@Override
+	public String getPackageBefore() {
+		return originalPackage;
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesBefore() {
+		Set<UMLAbstractClass> classes = new LinkedHashSet<UMLAbstractClass>();
+		for (RenamePackageRefactoring refactoring : renamePackageRefactorings) {
+			for (UMLAbstractClass involvedClass : refactoring.getInvolvedClassesBefore()) {
+				classes.add(involvedClass);
+			}
+		}
+		return classes;
+	}
+
+	@Override
+	public String getPackageAfter() {
+		return splitPackages.iterator().next();
+	}
+
+	@Override
+	public Set<UMLAbstractClass> getInvolvedClassesAfter() {
+		Set<UMLAbstractClass> classes = new LinkedHashSet<UMLAbstractClass>();
+		for (RenamePackageRefactoring refactoring : renamePackageRefactorings) {
+			for (UMLAbstractClass involvedClass : refactoring.getInvolvedClassesAfter()) {
+				classes.add(involvedClass);
+			}
+		}
+		return classes;
 	}
 
 	public String getOriginalPackage() {
@@ -43,7 +76,7 @@ public class SplitPackageRefactoring implements Refactoring {
 	public List<CodeRange> leftSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		for(RenamePackageRefactoring renamePackage : renamePackageRefactorings) {
-			for(PackageLevelRefactoring ref : renamePackage.getMoveClassRefactorings()) {
+			for(MoveBasedRefactoring ref : renamePackage.getMoveClassRefactorings()) {
 				ranges.add(ref.getOriginalClass().codeRange()
 						.setDescription("original type declaration")
 						.setCodeElement(ref.getOriginalClass().getName()));
@@ -56,7 +89,7 @@ public class SplitPackageRefactoring implements Refactoring {
 	public List<CodeRange> rightSide() {
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		for(RenamePackageRefactoring renamePackage : renamePackageRefactorings) {
-			for(PackageLevelRefactoring ref : renamePackage.getMoveClassRefactorings()) {
+			for(MoveBasedRefactoring ref : renamePackage.getMoveClassRefactorings()) {
 				ranges.add(ref.getMovedClass().codeRange()
 						.setDescription("moved type declaration")
 						.setCodeElement(ref.getMovedClass().getName()));
@@ -79,7 +112,7 @@ public class SplitPackageRefactoring implements Refactoring {
 	public Set<ImmutablePair<String, String>> getInvolvedClassesBeforeRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		for(RenamePackageRefactoring renamePackage : renamePackageRefactorings) {
-			for(PackageLevelRefactoring ref : renamePackage.getMoveClassRefactorings()) {
+			for(MoveBasedRefactoring ref : renamePackage.getMoveClassRefactorings()) {
 				pairs.add(new ImmutablePair<String, String>(ref.getOriginalClass().getLocationInfo().getFilePath(), ref.getOriginalClassName()));
 			}
 		}
@@ -90,7 +123,7 @@ public class SplitPackageRefactoring implements Refactoring {
 	public Set<ImmutablePair<String, String>> getInvolvedClassesAfterRefactoring() {
 		Set<ImmutablePair<String, String>> pairs = new LinkedHashSet<ImmutablePair<String, String>>();
 		for(RenamePackageRefactoring renamePackage : renamePackageRefactorings) {
-			for(PackageLevelRefactoring ref : renamePackage.getMoveClassRefactorings()) {
+			for(MoveBasedRefactoring ref : renamePackage.getMoveClassRefactorings()) {
 				pairs.add(new ImmutablePair<String, String>(ref.getMovedClass().getLocationInfo().getFilePath(), ref.getMovedClassName()));
 			}
 		}

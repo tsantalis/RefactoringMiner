@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring.Generic, PackageLevelRefactoring {
+public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring.Generic, ClassLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;

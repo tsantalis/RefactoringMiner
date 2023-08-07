@@ -13,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLClass;
 
-public class ReplaceAnonymousWithClassRefactoring implements Refactoring, PackageLevelRefactoring {
+public class ReplaceAnonymousWithClassRefactoring implements Refactoring, ClassLevelRefactoring {
 	private UMLAnonymousClass anonymousClass;
 	private UMLClass addedClass;
 	private UMLAnonymousToClassDiff diff;

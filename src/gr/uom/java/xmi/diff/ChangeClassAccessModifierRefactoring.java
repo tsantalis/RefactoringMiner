@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.Visibility;
 
-public class ChangeClassAccessModifierRefactoring implements Refactoring, PackageLevelRefactoring {
+public class ChangeClassAccessModifierRefactoring implements Refactoring, ClassLevelRefactoring {
 	private Visibility originalAccessModifier;
 	private Visibility changedAccessModifier;
 	private UMLAbstractClass classBefore;

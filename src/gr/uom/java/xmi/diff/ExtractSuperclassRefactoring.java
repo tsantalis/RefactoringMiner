@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class ExtractSuperclassRefactoring implements Refactoring, PackageLevelRefactoring {
+public class ExtractSuperclassRefactoring implements Refactoring, ClassLevelRefactoring {
 	private UMLClass extractedClass;
 	private Set<UMLClass> subclassSetBefore;
 	private Set<UMLClass> subclassSetAfter;

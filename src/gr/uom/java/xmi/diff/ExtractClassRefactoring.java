@@ -15,7 +15,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 
-public class ExtractClassRefactoring implements Refactoring, PackageLevelRefactoring {
+public class ExtractClassRefactoring implements Refactoring, ClassLevelRefactoring {
 	private UMLClass extractedClass;
 	private UMLClassBaseDiff classDiff;
 	private Map<UMLOperation, UMLOperation> extractedOperations;

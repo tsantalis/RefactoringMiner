@@ -12,7 +12,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class SplitClassRefactoring implements MoveBasedRefactoring, PackageLevelRefactoring {
+public class SplitClassRefactoring implements MoveBasedRefactoring, ClassLevelRefactoring {
 	private Set<UMLClass> splitClasses;
 	private UMLClass originalClass;
 	

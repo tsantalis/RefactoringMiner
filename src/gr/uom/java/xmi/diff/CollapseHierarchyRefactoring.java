@@ -12,7 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class CollapseHierarchyRefactoring implements Refactoring, PackageLevelRefactoring {
+public class CollapseHierarchyRefactoring implements Refactoring, ClassLevelRefactoring {
 	private UMLClass collapsedClass;
 	private UMLClass superclassAfterCollapse;
 

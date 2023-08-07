@@ -2,6 +2,7 @@ package gr.uom.java.xmi.diff;
 
 import java.util.*;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -9,7 +10,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 
-public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
+public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
 	private UMLOperation addedGetter;
@@ -34,12 +35,12 @@ public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevel
 	}
 
 	@Override
-	public List<? super UMLAttribute> getMembersBefore() {
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
 		return Collections.singletonList(attributeBefore);
 	}
 
 	@Override
-	public List<? super UMLAttribute> getMembersAfter() {
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
 		return List.of(attributeAfter, addedGetter, addedSetter);
 	}
 

@@ -13,7 +13,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring.Default<UMLAttribute> {
+public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;

@@ -15,7 +15,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class RenameOperationRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLOperation> {
+public class RenameOperationRefactoring implements Refactoring, MemberLevelRefactoring {
 	private UMLOperation originalOperation;
 	private UMLOperation renamedOperation;
 	private Set<Replacement> replacements;

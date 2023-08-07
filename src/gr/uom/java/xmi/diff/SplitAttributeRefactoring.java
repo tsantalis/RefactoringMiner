@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -10,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
+public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;
@@ -37,7 +38,7 @@ public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public List<? super UMLAttribute> getMembersAfter() {
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
 		return new ArrayList<>(splitAttributes);
 	}
 

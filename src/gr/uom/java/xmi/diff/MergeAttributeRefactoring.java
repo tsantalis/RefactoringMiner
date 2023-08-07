@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -10,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
+public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
@@ -36,7 +37,7 @@ public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public List<? super UMLAttribute> getMembersBefore() {
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
 		return new ArrayList<>(mergedAttributes);
 	}
 

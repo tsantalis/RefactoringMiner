@@ -13,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MergeOperationRefactoring implements Refactoring, MemberLevelRefactoring.Generic {
+public class MergeOperationRefactoring implements Refactoring, MemberLevelRefactoring {
 	private Set<VariableDeclarationContainer> mergedMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer newMethodAfterMerge;

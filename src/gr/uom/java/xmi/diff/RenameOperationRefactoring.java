@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -16,7 +15,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class RenameOperationRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLOperation> {
+public class RenameOperationRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLOperation> {
 	private UMLOperation originalOperation;
 	private UMLOperation renamedOperation;
 	private Set<Replacement> replacements;

@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.Visibility;
 
-public class ChangeAttributeAccessModifierRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class ChangeAttributeAccessModifierRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private Visibility originalAccessModifier;
 	private Visibility changedAccessModifier;
 	private UMLAttribute attributeBefore;

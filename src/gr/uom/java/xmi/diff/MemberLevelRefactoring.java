@@ -5,9 +5,9 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import java.util.Collections;
 import java.util.List;
 
-public interface ClassLevelRefactoring<B extends VariableDeclarationContainer, A extends VariableDeclarationContainer> {
-    public interface Default<T extends VariableDeclarationContainer> extends ClassLevelRefactoring<T, T> {}
-    public interface Generic extends ClassLevelRefactoring.Default<VariableDeclarationContainer> {}
+public interface MemberLevelRefactoring<B extends VariableDeclarationContainer, A extends VariableDeclarationContainer> {
+    public interface Default<T extends VariableDeclarationContainer> extends MemberLevelRefactoring<T, T> {}
+    public interface Generic extends MemberLevelRefactoring.Default<VariableDeclarationContainer> {}
     B getMemberBefore();
     A getMemberAfter();
     default List<? super B> getMembersBefore() {

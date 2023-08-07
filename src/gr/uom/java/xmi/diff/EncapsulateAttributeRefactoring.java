@@ -9,7 +9,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 
-public class EncapsulateAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
 	private UMLOperation addedGetter;

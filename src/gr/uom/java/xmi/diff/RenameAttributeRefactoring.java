@@ -11,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
 
-public class RenameAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class RenameAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;

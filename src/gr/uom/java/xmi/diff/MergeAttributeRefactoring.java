@@ -10,7 +10,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;

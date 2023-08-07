@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 
-public class RemoveAttributeAnnotationRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class RemoveAttributeAnnotationRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private UMLAnnotation annotation;
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;

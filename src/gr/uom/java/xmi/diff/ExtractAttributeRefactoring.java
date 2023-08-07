@@ -18,7 +18,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, ClassLevelRefactoring.Generic, PackageLevelRefactoring {
+public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring.Generic, PackageLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
 
 	private UMLAbstractClass originalClass;

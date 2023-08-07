@@ -13,7 +13,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLModifier;
 
-public class AddAttributeModifierRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class AddAttributeModifierRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private String modifier;
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;

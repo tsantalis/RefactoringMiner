@@ -11,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MoveAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class MoveAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	protected UMLAttribute originalAttribute;
 	protected UMLAttribute movedAttribute;
 	private volatile int hashCode = 0;

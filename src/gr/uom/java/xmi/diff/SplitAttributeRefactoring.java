@@ -10,7 +10,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
+public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefactoring.Default<UMLAttribute> {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;

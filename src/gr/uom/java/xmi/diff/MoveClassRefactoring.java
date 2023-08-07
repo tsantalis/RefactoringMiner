@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveClassRefactoring implements MoveBasedRefactoring, ModelLevelRefactoring {
+public class MoveClassRefactoring implements MoveBasedRefactoring, PackageLevelRefactoring {
 	private UMLClass originalClass;
 	private UMLClass movedClass;
 	

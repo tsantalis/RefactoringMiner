@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class RenamePackageRefactoring implements Refactoring, ModelLevelRefactoring {
+public class RenamePackageRefactoring implements Refactoring, PackageLevelRefactoring {
 	private List<MoveBasedRefactoring> moveClassRefactorings;
 
 	private RenamePattern pattern;

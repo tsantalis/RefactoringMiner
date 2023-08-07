@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class MoveAndRenameClassRefactoring implements MoveBasedRefactoring, ModelLevelRefactoring {
+public class MoveAndRenameClassRefactoring implements MoveBasedRefactoring, PackageLevelRefactoring {
 
 	private UMLClass originalClass;
 	private UMLClass renamedClass;

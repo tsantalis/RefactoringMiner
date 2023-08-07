@@ -4,7 +4,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 
 import java.util.Set;
 
-public interface ModelLevelRefactoring {
+public interface PackageLevelRefactoring {
     String getPackageBefore();
     Set<UMLAbstractClass> getInvolvedClassesBefore();
     String getPackageAfter();

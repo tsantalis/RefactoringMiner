@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class MergePackageRefactoring implements Refactoring, ModelLevelRefactoring {
+public class MergePackageRefactoring implements Refactoring, PackageLevelRefactoring {
 	private Set<String> mergedPackages;
 	private String newPackage;
 	private Set<RenamePackageRefactoring> renamePackageRefactorings;

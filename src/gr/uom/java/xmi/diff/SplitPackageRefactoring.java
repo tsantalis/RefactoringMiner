@@ -11,7 +11,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class SplitPackageRefactoring implements Refactoring, ModelLevelRefactoring {
+public class SplitPackageRefactoring implements Refactoring, PackageLevelRefactoring {
 	private String originalPackage;
 	private Set<String> splitPackages;
 	private Set<RenamePackageRefactoring> renamePackageRefactorings;

@@ -26,7 +26,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class ExtractOperationRefactoring implements Refactoring {
+public class ExtractOperationRefactoring implements Refactoring, ClassLevelRefactoring<VariableDeclarationContainer, UMLOperation> {
 	private UMLOperation extractedOperation;
 	private VariableDeclarationContainer sourceOperationBeforeExtraction;
 	private VariableDeclarationContainer sourceOperationAfterExtraction;
@@ -295,6 +295,16 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	public UMLOperation getExtractedOperation() {
+		return extractedOperation;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return sourceOperationBeforeExtraction;
+	}
+
+	@Override
+	public UMLOperation getMemberAfter() {
 		return extractedOperation;
 	}
 

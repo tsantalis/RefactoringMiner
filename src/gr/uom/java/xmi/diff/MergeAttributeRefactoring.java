@@ -10,13 +10,12 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring {
+public class MergeAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
 	private String classNameBefore;
 	private String classNameAfter;
-
 	public MergeAttributeRefactoring(Set<UMLAttribute> mergedAttributes, UMLAttribute newAttribute,
 			String classNameBefore, String classNameAfter, Set<CandidateMergeVariableRefactoring> attributeMerges) {
 		this.mergedAttributes = mergedAttributes;
@@ -24,6 +23,21 @@ public class MergeAttributeRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeMerges = attributeMerges;
+	}
+
+	@Override
+	public UMLAttribute getMemberBefore() {
+		return mergedAttributes.iterator().next();
+	}
+
+	@Override
+	public UMLAttribute getMemberAfter() {
+		return newAttribute;
+	}
+
+	@Override
+	public List<? super UMLAttribute> getMembersBefore() {
+		return new ArrayList<>(mergedAttributes);
 	}
 
 	public Set<UMLAttribute> getMergedAttributes() {

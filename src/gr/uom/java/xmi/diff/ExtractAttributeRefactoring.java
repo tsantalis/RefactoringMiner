@@ -18,7 +18,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, PackageLevelRefactoring {
+public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, ClassLevelRefactoring.Generic, PackageLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
 
 	private UMLAbstractClass originalClass;
@@ -96,6 +96,21 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 	@Override
 	public UMLAbstractClass getClassAfter() {
 		return nextClass;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return references.iterator().next().getOperation1();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return references.iterator().next().getOperation2();
+	}
+
+	@Override
+	public List<VariableDeclarationContainer> getMembersAfter() {
+		return List.of(getMemberAfter(), attributeDeclaration);
 	}
 
 	public Set<AbstractCodeMapping> getReferences() {

@@ -25,7 +25,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class InlineOperationRefactoring implements Refactoring {
+public class InlineOperationRefactoring implements Refactoring, ClassLevelRefactoring<UMLOperation, VariableDeclarationContainer> {
 	private UMLOperation inlinedOperation;
 	private VariableDeclarationContainer targetOperationAfterInline;
 	private VariableDeclarationContainer targetOperationBeforeInline;
@@ -255,6 +255,16 @@ public class InlineOperationRefactoring implements Refactoring {
 		if (!getTargetOperationBeforeInline().getClassName().equals(getInlinedOperation().getClassName()))
 			return RefactoringType.MOVE_AND_INLINE_OPERATION;
 		return RefactoringType.INLINE_OPERATION;
+	}
+
+	@Override
+	public UMLOperation getMemberBefore() {
+		return getInlinedOperation();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return getTargetOperationAfterInline();
 	}
 
 	public UMLOperationBodyMapper getBodyMapper() {

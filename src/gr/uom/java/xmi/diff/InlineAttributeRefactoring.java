@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, PackageLevelRefactoring {
+public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, ClassLevelRefactoring.Generic, PackageLevelRefactoring {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;
@@ -46,6 +46,21 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 	@Override
 	public UMLAbstractClass getClassAfter() {
 		return nextClass;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return references.iterator().next().getOperation1();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return references.iterator().next().getOperation2();
+	}
+
+	@Override
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		return List.of(getMemberAfter(), attributeDeclaration);
 	}
 
 	public String getName() {

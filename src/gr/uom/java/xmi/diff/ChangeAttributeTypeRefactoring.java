@@ -13,7 +13,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBasedRefactoring, ClassLevelRefactoring.Default<UMLAttribute> {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute changedTypeAttribute;
 	private String classNameBefore;
@@ -40,6 +40,16 @@ public class ChangeAttributeTypeRefactoring implements Refactoring, ReferenceBas
 
 	public Set<Refactoring> getRelatedRefactorings() {
 		return relatedRefactorings;
+	}
+
+	@Override
+	public UMLAttribute getMemberBefore() {
+		return originalAttribute;
+	}
+
+	@Override
+	public UMLAttribute getMemberAfter() {
+		return changedTypeAttribute;
 	}
 
 	public UMLAttribute getOriginalAttribute() {

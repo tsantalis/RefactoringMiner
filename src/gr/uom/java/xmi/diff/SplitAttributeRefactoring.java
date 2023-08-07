@@ -10,7 +10,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring {
+public class SplitAttributeRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;
@@ -24,6 +24,21 @@ public class SplitAttributeRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.attributeSplits = attributeSplits;
+	}
+
+	@Override
+	public UMLAttribute getMemberBefore() {
+		return oldAttribute;
+	}
+
+	@Override
+	public UMLAttribute getMemberAfter() {
+		return splitAttributes.iterator().next();
+	}
+
+	@Override
+	public List<? super UMLAttribute> getMembersAfter() {
+		return new ArrayList<>(splitAttributes);
 	}
 
 	public UMLAttribute getOldAttribute() {

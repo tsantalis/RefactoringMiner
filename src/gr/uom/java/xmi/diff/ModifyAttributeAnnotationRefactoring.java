@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 
-public class ModifyAttributeAnnotationRefactoring implements Refactoring {
+public class ModifyAttributeAnnotationRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLAttribute> {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private UMLAttribute attributeBefore;
@@ -25,6 +26,14 @@ public class ModifyAttributeAnnotationRefactoring implements Refactoring {
 		this.annotationAfter = annotationAfter;
 		this.attributeBefore = attributeBefore;
 		this.attributeAfter = attributeAfter;
+	}
+	@Override
+	public UMLAttribute getMemberAfter() {
+		return attributeAfter;
+	}
+	@Override
+	public UMLAttribute getMemberBefore() {
+		return attributeBefore;
 	}
 
 	public UMLAnnotation getAnnotationBefore() {

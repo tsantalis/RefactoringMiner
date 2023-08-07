@@ -13,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MergeOperationRefactoring implements Refactoring {
+public class MergeOperationRefactoring implements Refactoring, ClassLevelRefactoring.Generic {
 	private Set<VariableDeclarationContainer> mergedMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer newMethodAfterMerge;
@@ -28,6 +28,16 @@ public class MergeOperationRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.mappers = mappers;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return mergedMethods.iterator().next();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return newMethodAfterMerge;
 	}
 
 	public Set<VariableDeclarationContainer> getMergedMethods() {

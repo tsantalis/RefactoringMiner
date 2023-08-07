@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class MoveOperationRefactoring implements Refactoring {
+public class MoveOperationRefactoring implements Refactoring, ClassLevelRefactoring.Default<UMLOperation> {
 	protected UMLOperation originalOperation;
 	protected UMLOperation movedOperation;
 	private Set<Replacement> replacements;
@@ -52,6 +53,16 @@ public class MoveOperationRefactoring implements Refactoring {
 
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
+	}
+
+	@Override
+	public UMLOperation getMemberBefore() {
+		return originalOperation;
+	}
+
+	@Override
+	public UMLOperation getMemberAfter() {
+		return movedOperation;
 	}
 
 	public UMLOperation getOriginalOperation() {

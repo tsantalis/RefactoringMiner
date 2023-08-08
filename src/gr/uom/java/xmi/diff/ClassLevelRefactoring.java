@@ -5,15 +5,14 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import java.util.Collections;
 import java.util.List;
 
-public interface ClassLevelRefactoring {
-    UMLAbstractClass getClassBefore();
+public interface ClassLevelRefactoring extends SingleClassRefactoring, MultiClassRefactoring {
 
-    UMLAbstractClass getClassAfter();
-
+    @Override
     default List<UMLAbstractClass> getClassesBefore() {
         return Collections.singletonList(getClassBefore());
     }
 
+    @Override
     default List<UMLAbstractClass> getClassesAfter() {
         return Collections.singletonList(getClassAfter());
     }

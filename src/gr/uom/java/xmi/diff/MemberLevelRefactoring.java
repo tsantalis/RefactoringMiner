@@ -5,15 +5,14 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import java.util.Collections;
 import java.util.List;
 
-public interface MemberLevelRefactoring {
-    VariableDeclarationContainer getMemberBefore();
+public interface MemberLevelRefactoring extends SingleMemberRefactoring, MultiMemberRefactoring {
 
-    VariableDeclarationContainer getMemberAfter();
-
+    @Override
     default List<? super VariableDeclarationContainer> getMembersBefore() {
         return Collections.singletonList(getMemberBefore());
     }
 
+    @Override
     default List<? super VariableDeclarationContainer> getMembersAfter() {
         return Collections.singletonList(getMemberAfter());
     }

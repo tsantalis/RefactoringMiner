@@ -20,10 +20,15 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
-public interface VariableDeclarationContainer extends LocationInfoProvider, Annotatable {
+public interface VariableDeclarationContainer extends LocationInfoProvider, Annotatable, Modifiable {
 
 	@Override
 	default List<UMLAnnotation> getAnnotations() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	default List<UMLModifier> getModifiers() {
 		return Collections.emptyList();
 	}
 

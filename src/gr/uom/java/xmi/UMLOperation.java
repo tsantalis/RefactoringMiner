@@ -75,6 +75,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		annotations.add(annotation);
 	}
 
+	@Override
     public List<UMLModifier> getModifiers() {
 		return modifiers;
 	}

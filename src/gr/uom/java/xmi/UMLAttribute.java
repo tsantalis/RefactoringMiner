@@ -345,6 +345,11 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return variableDeclaration.getAnnotations();
 	}
 
+	@Override
+	public List<UMLModifier> getModifiers() {
+		return variableDeclaration.getModifiers();
+	}
+
 	public boolean identicalIncludingAnnotation(UMLAttribute attribute) {
 		AbstractExpression thisInitializer = this.getVariableDeclaration().getInitializer();
 		AbstractExpression otherInitializer = attribute.getVariableDeclaration().getInitializer();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.Modifiable;
 import gr.uom.java.xmi.Annotatable;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
@@ -30,7 +31,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, Annotatable {
+public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, Annotatable, Modifiable {
 	private String variableName;
 	private AbstractExpression initializer;
 	private UMLType type;
@@ -226,6 +227,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return annotations;
 	}
 
+	@Override
 	public List<UMLModifier> getModifiers() {
 		return modifiers;
 	}

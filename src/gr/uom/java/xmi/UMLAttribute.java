@@ -340,6 +340,7 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return comments;
 	}
 
+	@Override
 	public List<UMLAnnotation> getAnnotations() {
 		return variableDeclaration.getAnnotations();
 	}

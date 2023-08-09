@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -55,12 +56,12 @@ public class MoveOperationRefactoring implements Refactoring, MemberLevelRefacto
 	}
 
 	@Override
-	public UMLOperation getMemberBefore() {
+	public VariableDeclarationContainer getMemberBefore() {
 		return originalOperation;
 	}
 
 	@Override
-	public UMLOperation getMemberAfter() {
+	public VariableDeclarationContainer getMemberAfter() {
 		return movedOperation;
 	}
 

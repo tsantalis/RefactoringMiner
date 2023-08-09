@@ -28,12 +28,12 @@ public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public UMLAttribute getMemberBefore() {
+	public VariableDeclarationContainer getMemberBefore() {
 		return oldAttribute;
 	}
 
 	@Override
-	public UMLAttribute getMemberAfter() {
+	public VariableDeclarationContainer getMemberAfter() {
 		return splitAttributes.iterator().next();
 	}
 

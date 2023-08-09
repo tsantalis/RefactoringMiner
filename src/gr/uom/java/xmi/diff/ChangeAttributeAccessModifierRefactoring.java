@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLModifier;
 import gr.uom.java.xmi.Visibility;
@@ -28,12 +29,12 @@ public class ChangeAttributeAccessModifierRefactoring implements Refactoring, Me
 	}
 
 	@Override
-	public UMLAttribute getMemberBefore() {
+	public VariableDeclarationContainer getMemberBefore() {
 		return attributeBefore;
 	}
 
 	@Override
-	public UMLAttribute getMemberAfter() {
+	public VariableDeclarationContainer getMemberAfter() {
 		return attributeAfter;
 	}
 

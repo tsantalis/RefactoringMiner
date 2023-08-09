@@ -25,12 +25,12 @@ public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevel
 	}
 
 	@Override
-	public UMLAttribute getMemberBefore() {
+	public VariableDeclarationContainer getMemberBefore() {
 		return attributeBefore;
 	}
 
 	@Override
-	public UMLAttribute getMemberAfter() {
+	public VariableDeclarationContainer getMemberAfter() {
 		return attributeAfter;
 	}
 

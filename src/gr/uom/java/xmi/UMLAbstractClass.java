@@ -18,7 +18,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
 import gr.uom.java.xmi.diff.StringDistance;
 
-public abstract class UMLAbstractClass {
+public abstract class UMLAbstractClass implements Annotatable {
 	protected LocationInfo locationInfo;
 	protected String packageName;
 	protected String name;
@@ -137,6 +137,7 @@ public abstract class UMLAbstractClass {
 		return importedTypes;
 	}
 
+	@Override
     public List<UMLAnnotation> getAnnotations() {
 		return annotations;
 	}

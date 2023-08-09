@@ -66,6 +66,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		typeParameters.add(typeParameter);
 	}
 
+	@Override
 	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
 	}

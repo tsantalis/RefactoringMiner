@@ -11,6 +11,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
@@ -109,7 +110,7 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 	}
 
 	@Override
-	public List<VariableDeclarationContainer> getMembersAfter() {
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
 		return List.of(getMemberAfter(), attributeDeclaration);
 	}
 

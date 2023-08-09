@@ -5,7 +5,7 @@ import java.util.List;
 
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class UMLParameter implements Serializable, VariableDeclarationProvider {
+public class UMLParameter implements Serializable, VariableDeclarationProvider, Annotatable {
 	private String name;
 	private UMLType type;
 	private String kind;
@@ -50,6 +50,7 @@ public class UMLParameter implements Serializable, VariableDeclarationProvider {
 		return false;
 	}
 
+	@Override
 	public List<UMLAnnotation> getAnnotations() {
 		return variableDeclaration.getAnnotations();
 	}

@@ -27,12 +27,12 @@ public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public UMLAttribute getMemberBefore() {
+	public VariableDeclarationContainer getMemberBefore() {
 		return mergedAttributes.iterator().next();
 	}
 
 	@Override
-	public UMLAttribute getMemberAfter() {
+	public VariableDeclarationContainer getMemberAfter() {
 		return newAttribute;
 	}
 

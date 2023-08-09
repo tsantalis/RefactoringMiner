@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.Annotatable;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -29,7 +30,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.VariableDeclarationProvider;
 import gr.uom.java.xmi.diff.CodeRange;
 
-public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider {
+public class VariableDeclaration implements LocationInfoProvider, VariableDeclarationProvider, Annotatable {
 	private String variableName;
 	private AbstractExpression initializer;
 	private UMLType type;
@@ -220,6 +221,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return isFinal;
 	}
 
+	@Override
 	public List<UMLAnnotation> getAnnotations() {
 		return annotations;
 	}

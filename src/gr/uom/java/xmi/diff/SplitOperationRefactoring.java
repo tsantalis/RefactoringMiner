@@ -1,10 +1,6 @@
 package gr.uom.java.xmi.diff;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
@@ -13,7 +9,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class SplitOperationRefactoring implements Refactoring {
+public class SplitOperationRefactoring implements Refactoring, MultiMemberRefactoring {
 	private Set<VariableDeclarationContainer> splitMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer originalMethodBeforeSplit;
@@ -27,6 +23,16 @@ public class SplitOperationRefactoring implements Refactoring {
 		this.classNameBefore = classNameBefore;
 		this.classNameAfter = classNameAfter;
 		this.mappers = mappers;
+	}
+
+	@Override
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		return Collections.singletonList(originalMethodBeforeSplit);
+	}
+
+	@Override
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
+		return new ArrayList<VariableDeclarationContainer>(splitMethods);
 	}
 
 	public Set<VariableDeclarationContainer> getSplitMethods() {

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class ExtractSuperclassRefactoring implements Refactoring, ClassLevelRefactoring {
+public class ExtractSuperclassRefactoring implements Refactoring, MultiClassRefactoring {
 	private UMLClass extractedClass;
 	private Set<UMLClass> subclassSetBefore;
 	private Set<UMLClass> subclassSetAfter;
@@ -44,13 +44,15 @@ public class ExtractSuperclassRefactoring implements Refactoring, ClassLevelRefa
 	}
 
 	@Override
-	public UMLAbstractClass getClassBefore() {
-		throw new UnsupportedOperationException("Extract Superclass refactoring provides no access to the class before the refactoring");
+	public List<? extends UMLAbstractClass> getClassesBefore() {
+		return new ArrayList<>(subclassSetBefore);
 	}
 
 	@Override
-	public UMLAbstractClass getClassAfter() {
-		return extractedClass;
+	public List<? extends UMLAbstractClass> getClassesAfter() {
+		ArrayList<UMLClass> classes = new ArrayList<>(subclassSetAfter);
+		classes.add(0, extractedClass);
+		return classes;
 	}
 
 	public UMLClass getExtractedClass() {

@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLClass;
 
-public class MergeClassRefactoring implements MoveBasedRefactoring, ClassLevelRefactoring {
+public class MergeClassRefactoring implements MoveBasedRefactoring, MultiClassRefactoring {
 	private Set<UMLClass> mergedClasses;
 	private UMLClass newClass;
 	
@@ -135,13 +136,8 @@ public class MergeClassRefactoring implements MoveBasedRefactoring, ClassLevelRe
 	}
 
 	@Override
-	public UMLAbstractClass getClassBefore() {
-		return getOriginalClass();
-	}
-
-	@Override
-	public UMLAbstractClass getClassAfter() {
-		return getMovedClass();
+	public List<? extends UMLAbstractClass> getClassesAfter() {
+		return Collections.singletonList(getMovedClass());
 	}
 
 	@Override

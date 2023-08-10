@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLOperation;
 
-public class ExtractClassRefactoring implements Refactoring, ClassLevelRefactoring {
+public class ExtractClassRefactoring implements Refactoring, MultiClassRefactoring {
 	private UMLClass extractedClass;
 	private UMLClassBaseDiff classDiff;
 	private Map<UMLOperation, UMLOperation> extractedOperations;
@@ -51,13 +52,13 @@ public class ExtractClassRefactoring implements Refactoring, ClassLevelRefactori
 	}
 
 	@Override
-	public UMLAbstractClass getClassBefore() {
-		return getOriginalClass();
+	public List<? extends UMLAbstractClass> getClassesBefore() {
+		return Collections.singletonList(getOriginalClass());
 	}
 
 	@Override
-	public UMLAbstractClass getClassAfter() {
-		return getExtractedClass();
+	public List<? extends UMLAbstractClass> getClassesAfter() {
+		return List.of(classDiff.getNextClass(), getExtractedClass());
 	}
 
 	public UMLClass getExtractedClass() {

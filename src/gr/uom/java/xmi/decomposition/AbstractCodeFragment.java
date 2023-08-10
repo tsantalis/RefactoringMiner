@@ -572,6 +572,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public boolean isLastStatement() {
+		if(this instanceof AbstractExpression) {
+			return false;
+		}
 		CompositeStatementObject parent = getParent();
 		if(parent != null && parent.getParent() == null) {
 			return index == parent.getStatements().size() - 1;
@@ -580,6 +583,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public boolean isLastStatementInParentBlock() {
+		if(this instanceof AbstractExpression) {
+			return false;
+		}
 		CompositeStatementObject parent = getParent();
 		if(parent != null && parent.getParent() != null) {
 			return index == parent.getStatements().size() - 1;

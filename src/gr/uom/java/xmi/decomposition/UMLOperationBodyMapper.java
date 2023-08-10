@@ -7963,6 +7963,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(thisConstructorCallWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
 				return null;
 			}
+			if(statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && statement1.getParent() != null && statement2.getParent() != null &&
+					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
+				if(!(statement1.isLastStatementInParentBlock() && statement1.getParent() instanceof TryStatementObject && statement2.isLastStatement()) &&
+						!(statement2.isLastStatementInParentBlock() && statement2.getParent() instanceof TryStatementObject && statement1.isLastStatement())) {
+					return null;
+				}
+			}
 			if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty()) {
 				Set<Replacement> replacementsInsideAnonymous = new LinkedHashSet<Replacement>();
 				for(Replacement replacement : replacementInfo.getReplacements()) {
@@ -9801,6 +9808,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				// check if one is simple if and the other if-else-if
 				boolean isBlock1 = statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
 				boolean isWithinIfBranch1 = isBlock1 ? isIfBranch(statement1, statement1.getParent()) : isIfBranch(statement1.getParent(), statement1.getParent().getParent());
+				if(!isWithinIfBranch1 && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent1.getStatements().size() == 1 && parent1.getStatements().contains(statement1)) {
+					isWithinIfBranch1 = true;
+				}
 				boolean isWithinElseBranch1 = isBlock1 ? isElseBranch(statement1, statement1.getParent()) : isElseBranch(statement1.getParent(), statement1.getParent().getParent());
 				boolean isWithinElseIfBranch1 = false;
 				CompositeStatementObject grandGrandParent1 = statement1.getParent().getParent().getParent();
@@ -9812,6 +9822,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				
 				boolean isBlock2 = statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
 				boolean isWithinIfBranch2 = isBlock2 ? isIfBranch(statement2, statement2.getParent()) : isIfBranch(statement2.getParent(), statement2.getParent().getParent());
+				if(!isWithinIfBranch2 && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent2.getStatements().size() == 1 && parent2.getStatements().contains(statement2)) {
+					isWithinIfBranch2 = true;
+				}
 				boolean isWithinElseBranch2 = isBlock2 ? isElseBranch(statement2, statement2.getParent()) : isElseBranch(statement2.getParent(), statement2.getParent().getParent());
 				boolean isWithinElseIfBranch2 = false;
 				CompositeStatementObject grandGrandParent2 = statement2.getParent().getParent().getParent();

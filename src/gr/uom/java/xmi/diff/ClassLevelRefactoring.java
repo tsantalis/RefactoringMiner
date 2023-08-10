@@ -8,12 +8,12 @@ import java.util.List;
 public interface ClassLevelRefactoring extends SingleClassRefactoring, MultiClassRefactoring {
 
     @Override
-    default List<UMLAbstractClass> getClassesBefore() {
+    default List<? extends UMLAbstractClass> getClassesBefore() {
         return Collections.singletonList(getClassBefore());
     }
 
     @Override
-    default List<UMLAbstractClass> getClassesAfter() {
+    default List<? extends UMLAbstractClass> getClassesAfter() {
         return Collections.singletonList(getClassAfter());
     }
 }

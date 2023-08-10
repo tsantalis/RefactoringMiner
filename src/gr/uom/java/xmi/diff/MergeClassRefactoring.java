@@ -145,7 +145,7 @@ public class MergeClassRefactoring implements MoveBasedRefactoring, ClassLevelRe
 	}
 
 	@Override
-	public List<UMLAbstractClass> getClassesBefore() {
+	public List<? extends UMLAbstractClass> getClassesBefore() {
 		return new ArrayList<>(mergedClasses);
 	}
 

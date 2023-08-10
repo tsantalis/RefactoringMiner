@@ -100,7 +100,7 @@ public class SplitClassRefactoring implements MoveBasedRefactoring, ClassLevelRe
 	}
 
 	@Override
-	public List<UMLAbstractClass> getClassesAfter() {
+	public List<? extends UMLAbstractClass> getClassesAfter() {
 		return new ArrayList<>(splitClasses);
 	}
 

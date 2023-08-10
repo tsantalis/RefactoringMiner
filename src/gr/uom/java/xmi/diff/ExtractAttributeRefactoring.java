@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -91,13 +90,13 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersBefore() {
+	public List<? extends VariableDeclarationContainer> getMembersBefore() {
 		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation1).collect(Collectors.toList());
 		return refs;
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersAfter() {
+	public List<? extends VariableDeclarationContainer> getMembersAfter() {
 		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation2).collect(Collectors.toList());
 		refs.add(0, attributeDeclaration);
 		return refs;

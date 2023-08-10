@@ -5,7 +5,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import java.util.List;
 
 public interface MultiMemberRefactoring {
-    List<? super VariableDeclarationContainer> getMembersBefore();
+    List<? extends VariableDeclarationContainer> getMembersBefore();
 
-    List<? super VariableDeclarationContainer> getMembersAfter();
+    List<? extends VariableDeclarationContainer> getMembersAfter();
 }

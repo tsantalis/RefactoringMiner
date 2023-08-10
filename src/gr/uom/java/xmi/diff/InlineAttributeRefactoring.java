@@ -40,14 +40,14 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersBefore() {
+	public List<? extends VariableDeclarationContainer> getMembersBefore() {
 		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation1).collect(Collectors.toList());
 		refs.add(0, attributeDeclaration);
 		return refs;
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersAfter() {
+	public List<? extends VariableDeclarationContainer> getMembersAfter() {
 		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation2).collect(Collectors.toList());
 		return refs;
 	}

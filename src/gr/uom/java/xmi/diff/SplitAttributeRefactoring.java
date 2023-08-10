@@ -28,12 +28,12 @@ public class SplitAttributeRefactoring implements Refactoring, MultiMemberRefact
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersBefore() {
+	public List<? extends VariableDeclarationContainer> getMembersBefore() {
 		return Collections.singletonList(oldAttribute);
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersAfter() {
+	public List<? extends VariableDeclarationContainer> getMembersAfter() {
 		return new ArrayList<>(splitAttributes);
 	}
 

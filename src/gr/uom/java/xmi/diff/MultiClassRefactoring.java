@@ -5,7 +5,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import java.util.List;
 
 public interface MultiClassRefactoring {
-    List<UMLAbstractClass> getClassesBefore();
+    List<? extends UMLAbstractClass> getClassesBefore();
 
-    List<UMLAbstractClass> getClassesAfter();
+    List<? extends UMLAbstractClass> getClassesAfter();
 }

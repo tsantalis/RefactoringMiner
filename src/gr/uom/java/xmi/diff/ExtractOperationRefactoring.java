@@ -299,12 +299,12 @@ public class ExtractOperationRefactoring implements Refactoring, MultiMemberRefa
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersBefore() {
+	public List<? extends VariableDeclarationContainer> getMembersBefore() {
 		return Collections.singletonList(sourceOperationBeforeExtraction);
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersAfter() {
+	public List<? extends VariableDeclarationContainer> getMembersAfter() {
 		return List.of(sourceOperationAfterExtraction, extractedOperation);
 	}
 

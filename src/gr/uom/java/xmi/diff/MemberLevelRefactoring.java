@@ -8,12 +8,12 @@ import java.util.List;
 public interface MemberLevelRefactoring extends SingleMemberRefactoring, MultiMemberRefactoring {
 
     @Override
-    default List<? super VariableDeclarationContainer> getMembersBefore() {
+    default List<? extends VariableDeclarationContainer> getMembersBefore() {
         return Collections.singletonList(getMemberBefore());
     }
 
     @Override
-    default List<? super VariableDeclarationContainer> getMembersAfter() {
+    default List<? extends VariableDeclarationContainer> getMembersAfter() {
         return Collections.singletonList(getMemberAfter());
     }
 }

@@ -32,12 +32,12 @@ public class MergeOperationRefactoring implements Refactoring, MultiMemberRefact
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersBefore() {
+	public List<? extends VariableDeclarationContainer> getMembersBefore() {
 		return new ArrayList<>(mergedMethods);
 	}
 
 	@Override
-	public List<? super VariableDeclarationContainer> getMembersAfter() {
+	public List<? extends VariableDeclarationContainer> getMembersAfter() {
 		return Collections.singletonList(newMethodAfterMerge);
 	}
 

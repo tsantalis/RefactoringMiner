@@ -11,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
+public class SplitAttributeRefactoring implements Refactoring, MultiMemberRefactoring {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;
@@ -28,13 +28,8 @@ public class SplitAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return oldAttribute;
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return splitAttributes.iterator().next();
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		return Collections.singletonList(oldAttribute);
 	}
 
 	@Override

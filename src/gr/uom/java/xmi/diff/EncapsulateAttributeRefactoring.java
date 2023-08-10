@@ -10,7 +10,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 
-public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
+public class EncapsulateAttributeRefactoring implements Refactoring, MultiMemberRefactoring {
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;
 	private UMLOperation addedGetter;
@@ -22,16 +22,6 @@ public class EncapsulateAttributeRefactoring implements Refactoring, MemberLevel
 		this.attributeAfter = attributeAfter;
 		this.addedGetter = addedGetter;
 		this.addedSetter = addedSetter;
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return attributeBefore;
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return attributeAfter;
 	}
 
 	@Override

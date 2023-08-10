@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -19,7 +20,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, MemberLevelRefactoring, ClassLevelRefactoring {
+public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, MultiMemberRefactoring {
 	private UMLAttribute attributeDeclaration;
 
 	private UMLAbstractClass originalClass;
@@ -90,28 +91,16 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 	}
 
 	@Override
-	public UMLAbstractClass getClassBefore() {
-		return originalClass;
-	}
-
-	@Override
-	public UMLAbstractClass getClassAfter() {
-		return nextClass;
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return references.iterator().next().getOperation1();
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return references.iterator().next().getOperation2();
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation1).collect(Collectors.toList());
+		return refs;
 	}
 
 	@Override
 	public List<? super VariableDeclarationContainer> getMembersAfter() {
-		return List.of(getMemberAfter(), attributeDeclaration);
+		List<VariableDeclarationContainer> refs = references.stream().map(AbstractCodeMapping::getOperation2).collect(Collectors.toList());
+		refs.add(0, attributeDeclaration);
+		return refs;
 	}
 
 	public Set<AbstractCodeMapping> getReferences() {

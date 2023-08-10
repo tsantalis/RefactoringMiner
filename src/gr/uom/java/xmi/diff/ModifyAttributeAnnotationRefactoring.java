@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 
-public class ModifyAttributeAnnotationRefactoring implements Refactoring, MemberLevelRefactoring {
+public class ModifyAttributeAnnotationRefactoring implements Refactoring, SingleMemberRefactoring {
 	private UMLAnnotation annotationBefore;
 	private UMLAnnotation annotationAfter;
 	private UMLAttribute attributeBefore;

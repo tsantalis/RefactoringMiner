@@ -11,7 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefactoring {
+public class MergeAttributeRefactoring implements Refactoring, MultiMemberRefactoring {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
@@ -27,13 +27,8 @@ public class MergeAttributeRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return mergedAttributes.iterator().next();
-	}
-
-	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return newAttribute;
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
+		return Collections.singletonList(newAttribute);
 	}
 
 	@Override

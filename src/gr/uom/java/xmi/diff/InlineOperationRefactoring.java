@@ -25,7 +25,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
-public class InlineOperationRefactoring implements Refactoring, MemberLevelRefactoring {
+public class InlineOperationRefactoring implements Refactoring, MultiMemberRefactoring {
 	private UMLOperation inlinedOperation;
 	private VariableDeclarationContainer targetOperationAfterInline;
 	private VariableDeclarationContainer targetOperationBeforeInline;
@@ -258,13 +258,13 @@ public class InlineOperationRefactoring implements Refactoring, MemberLevelRefac
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return getInlinedOperation();
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		return List.of(getInlinedOperation(), getTargetOperationBeforeInline());
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return getTargetOperationAfterInline();
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
+		return Collections.singletonList(getTargetOperationAfterInline());
 	}
 
 	public UMLOperationBodyMapper getBodyMapper() {

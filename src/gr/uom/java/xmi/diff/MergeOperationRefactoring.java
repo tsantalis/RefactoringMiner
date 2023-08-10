@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Collections;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
@@ -13,7 +14,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class MergeOperationRefactoring implements Refactoring, MemberLevelRefactoring {
+public class MergeOperationRefactoring implements Refactoring, MultiMemberRefactoring {
 	private Set<VariableDeclarationContainer> mergedMethods;
 	private Set<UMLOperationBodyMapper> mappers;
 	private VariableDeclarationContainer newMethodAfterMerge;
@@ -31,13 +32,13 @@ public class MergeOperationRefactoring implements Refactoring, MemberLevelRefact
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberBefore() {
-		return mergedMethods.iterator().next();
+	public List<? super VariableDeclarationContainer> getMembersBefore() {
+		return new ArrayList<>(mergedMethods);
 	}
 
 	@Override
-	public VariableDeclarationContainer getMemberAfter() {
-		return newMethodAfterMerge;
+	public List<? super VariableDeclarationContainer> getMembersAfter() {
+		return Collections.singletonList(newMethodAfterMerge);
 	}
 
 	public Set<VariableDeclarationContainer> getMergedMethods() {

@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLModifier;
 
-public class RemoveAttributeModifierRefactoring implements Refactoring, MemberLevelRefactoring {
+public class RemoveAttributeModifierRefactoring implements Refactoring, SingleMemberRefactoring {
 	private String modifier;
 	private UMLAttribute attributeBefore;
 	private UMLAttribute attributeAfter;

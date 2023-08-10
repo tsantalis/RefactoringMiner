@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLClass;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class MoveSourceFolderRefactoring implements Refactoring {
+public class MoveSourceFolderRefactoring implements Refactoring, MultiClassRefactoring {
 	private List<MovedClassToAnotherSourceFolder> movedClassesToAnotherSourceFolder = new ArrayList<MovedClassToAnotherSourceFolder>();
 	private Map<String, String> identicalFilePaths = new HashMap<String, String>();
 	private RenamePattern pattern;
@@ -31,6 +33,24 @@ public class MoveSourceFolderRefactoring implements Refactoring {
 
 	public void addMovedClassToAnotherSourceFolder(MovedClassToAnotherSourceFolder movedClassToAnotherSourceFolder) {
 		movedClassesToAnotherSourceFolder.add(movedClassToAnotherSourceFolder);
+	}
+
+	@Override
+	public List<? extends UMLAbstractClass> getClassesBefore() {
+		List<UMLClass> classes = new ArrayList();
+		for (MovedClassToAnotherSourceFolder move : movedClassesToAnotherSourceFolder) {
+			classes.add(move.getOriginalClass());
+		}
+		return classes;
+	}
+
+	@Override
+	public List<? extends UMLAbstractClass> getClassesAfter() {
+		List<UMLClass> classes = new ArrayList();
+		for (MovedClassToAnotherSourceFolder move : movedClassesToAnotherSourceFolder) {
+			classes.add(move.getMovedClass());
+		}
+		return classes;
 	}
 
 	public List<MovedClassToAnotherSourceFolder> getMovedClassesToAnotherSourceFolder() {

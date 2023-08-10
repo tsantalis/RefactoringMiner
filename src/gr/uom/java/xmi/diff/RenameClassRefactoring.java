@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
-public class RenameClassRefactoring implements Refactoring, ClassLevelRefactoring {
+public class RenameClassRefactoring implements Refactoring, SingleClassRefactoring {
 
 	private UMLClass originalClass;
 	private UMLClass renamedClass;

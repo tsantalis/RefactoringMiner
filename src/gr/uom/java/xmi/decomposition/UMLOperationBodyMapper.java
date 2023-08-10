@@ -11175,6 +11175,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int leaveSize1 = leaves1.size();
 			int leaveSize2 = leaves2.size();
 			int mappedLeavesSize = 0;
+			if(leaveSize1 == 0 && leaveSize2 == 0) {
+				List<String> commentsWithinComp1 = extractCommentsWithinStatement(comp1, container1);
+				List<String> commentsWithinComp2 = extractCommentsWithinStatement(comp2, container2);
+				if(commentsWithinComp1.size() > 0 && commentsWithinComp1.equals(commentsWithinComp2)) {
+					return 1.0;
+				}
+			}
 			boolean blocksWithMappedTryContainer =
 					(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) || comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) &&
 					(comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) || comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) &&

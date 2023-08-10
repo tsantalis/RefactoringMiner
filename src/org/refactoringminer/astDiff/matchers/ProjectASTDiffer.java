@@ -245,6 +245,7 @@ public class ProjectASTDiffer
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
 						beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
 					MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) refactoring;
+					if (isExtractedMethodRef(moveOperationRefactoring.getBodyMapper().getOperation2())) return;
 					String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
 					String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
 					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
@@ -272,6 +273,16 @@ public class ProjectASTDiffer
 			}
 
 		}
+	}
+
+	private boolean isExtractedMethodRef(UMLOperation operation2) {
+		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
+			if (modelDiffRefactoring.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION))
+			{
+				if (((ExtractOperationRefactoring) modelDiffRefactoring).getExtractedOperation().equals(operation2)) return true;
+			}
+		}
+		return false;
 	}
 
     /*

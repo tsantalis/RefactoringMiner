@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ParameterizeTestRefactoring implements Refactoring {
+public class ParameterizeTestRefactoring implements Refactoring, SingleMemberRefactoring {
 	private UMLOperation removedOperation;
 	private UMLOperation parameterizedTestOperation;
 	private UMLOperationBodyMapper bodyMapper;
@@ -26,6 +27,16 @@ public class ParameterizeTestRefactoring implements Refactoring {
 
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return getRemovedOperation();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return getParameterizedTestOperation();
 	}
 
 	public UMLOperation getRemovedOperation() {

@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -12,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 
-public class AddThrownExceptionTypeRefactoring implements Refactoring {
+public class AddThrownExceptionTypeRefactoring implements Refactoring, SingleMemberRefactoring {
 	private UMLType exceptionType;
 	private UMLOperation operationBefore;
 	private UMLOperation operationAfter;
@@ -25,6 +26,16 @@ public class AddThrownExceptionTypeRefactoring implements Refactoring {
 
 	public UMLType getExceptionType() {
 		return exceptionType;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return getOperationBefore();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return getOperationAfter();
 	}
 
 	public UMLOperation getOperationBefore() {

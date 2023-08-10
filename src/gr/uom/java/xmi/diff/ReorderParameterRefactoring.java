@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ReorderParameterRefactoring implements Refactoring {
+public class ReorderParameterRefactoring implements Refactoring, SingleMemberRefactoring {
 	private List<VariableDeclaration> parametersBefore;
 	private List<VariableDeclaration> parametersAfter;
 	private UMLOperation operationBefore;
@@ -38,6 +39,16 @@ public class ReorderParameterRefactoring implements Refactoring {
 
 	public List<VariableDeclaration> getParametersAfter() {
 		return parametersAfter;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return getOperationBefore();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return getOperationAfter();
 	}
 
 	public UMLOperation getOperationBefore() {

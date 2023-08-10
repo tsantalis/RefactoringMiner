@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -13,7 +14,7 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class ChangeReturnTypeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ChangeReturnTypeRefactoring implements Refactoring, ReferenceBasedRefactoring, SingleMemberRefactoring {
 	private UMLType originalType;
 	private UMLType changedType;
 	private UMLOperation operationBefore;
@@ -43,6 +44,16 @@ public class ChangeReturnTypeRefactoring implements Refactoring, ReferenceBasedR
 
 	public UMLType getChangedType() {
 		return changedType;
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberBefore() {
+		return getOperationBefore();
+	}
+
+	@Override
+	public VariableDeclarationContainer getMemberAfter() {
+		return getOperationAfter();
 	}
 
 	public UMLOperation getOperationBefore() {

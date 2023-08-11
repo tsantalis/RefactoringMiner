@@ -97,9 +97,13 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     }
 
     private boolean isAcceptable(Tree src, Tree dst) {
-        if (TreeUtilFunctions.isStatement(src.getType().name))
-            return true;
-        else if (TreeUtilFunctions.isPartOfJavadoc(src))
+        //FIXME: Inside the condition (if-for-while) ignore it
+        if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
+            if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)
+                return false;
+            else
+                return true;
+        else if (src.getType().name.equals(Constants.JAVA_DOC))
             return true;
         else if (src.getType().name.equals(Constants.METHOD_INVOCATION))
             return true;

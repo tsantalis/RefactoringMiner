@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class MergeConditionalRefactoring implements Refactoring, LeafMappingProvider {
+public class MergeConditionalRefactoring implements Refactoring, LeafMappingProvider, MultiStatementRefactoring {
 	private Set<AbstractCodeFragment> mergedConditionals;
 	private AbstractCodeFragment newConditional;
 	private VariableDeclarationContainer operationBefore;
@@ -43,6 +44,16 @@ public class MergeConditionalRefactoring implements Refactoring, LeafMappingProv
 		if(!alreadyPresent) { 
 			subExpressionMappings.add(newLeafMapping); 
 		}
+	}
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+		return mergedConditionals;
+	}
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+		return Collections.singleton(newConditional);
 	}
 
 	public Set<AbstractCodeFragment> getMergedConditionals() {

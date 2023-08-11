@@ -13,7 +13,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
-public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
+public class ReplaceLoopWithPipelineRefactoring implements Refactoring, MultiStatementRefactoring {
 	private Set<AbstractCodeFragment> codeFragmentsBefore;
 	private Set<AbstractCodeFragment> codeFragmentsAfter;
 	private VariableDeclarationContainer operationBefore;
@@ -26,7 +26,17 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 	}
-	
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+		return getCodeFragmentsBefore();
+	}
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+		return getCodeFragmentsAfter();
+	}
+
 	public Set<AbstractCodeFragment> getCodeFragmentsBefore() {
 		return codeFragmentsBefore;
 	}

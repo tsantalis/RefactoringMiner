@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class MergeCatchRefactoring implements Refactoring {
+public class MergeCatchRefactoring implements Refactoring, MultiStatementRefactoring {
 	private Set<AbstractCodeFragment> mergedCatchBlocks;
 	private AbstractCodeFragment newCatchBlock;
 	private VariableDeclarationContainer operationBefore;
@@ -26,6 +27,16 @@ public class MergeCatchRefactoring implements Refactoring {
 		this.newCatchBlock = newCatchBlock;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+		return mergedCatchBlocks;
+	}
+
+	@Override
+	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+		return Collections.singleton(newCatchBlock);
 	}
 
 	public Set<AbstractCodeFragment> getMergedCatchBlocks() {

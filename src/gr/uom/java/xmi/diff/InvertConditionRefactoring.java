@@ -13,7 +13,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
-public class InvertConditionRefactoring implements Refactoring {
+public class InvertConditionRefactoring implements Refactoring, SingleStatementRefactoring {
 	private AbstractCodeFragment originalConditional;
 	private AbstractCodeFragment invertedConditional;
 	private VariableDeclarationContainer operationBefore;
@@ -25,6 +25,16 @@ public class InvertConditionRefactoring implements Refactoring {
 		this.invertedConditional = invertedConditional;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+	}
+
+	@Override
+	public AbstractCodeFragment getStatementBefore() {
+		return originalConditional;
+	}
+
+	@Override
+	public AbstractCodeFragment getStatementAfter() {
+		return invertedConditional;
 	}
 
 	public AbstractCodeFragment getOriginalConditional() {

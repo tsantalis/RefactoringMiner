@@ -2661,6 +2661,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			else if(parentMappingFound.contains(true)) {
 				boolean anonymousClassDeclarationMatch = false;
 				boolean splitConditional = false;
+				boolean splitDeclaration = false;
 				for(int i=0; i<parentMappingFound.size(); i++) {
 					if(parentMappingFound.get(i) == false) {
 						//check if composite mapping in index i has more identical statements
@@ -2687,12 +2688,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							skip = true;
 							anonymousClassDeclarationMatch = true;
 						}
+						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(i).getFragment2().getVariableDeclarations();
+						if(parentIsContainerBody.get(i) == true && fragment2VariableDeclarations.size() > 0 &&
+								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + "=")) {
+							skip = true;
+							splitDeclaration = true;
+						}
 						if(!skip) {
 							indicesToBeRemoved.add(i);
 						}
 					}
 				}
-				if(!anonymousClassDeclarationMatch && !splitConditional)
+				if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
 					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {

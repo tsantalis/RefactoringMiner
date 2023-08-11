@@ -2904,8 +2904,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
+				double editDistanceFalseNestedMapper = editDistances.get(nestedMapper.indexOf(false));
 				for(int i=0; i<nestedMapper.size(); i++) {
-					if(nestedMapper.get(i) == true && identical.get(i) == false) {
+					if(nestedMapper.get(i) == true && identical.get(i) == false && editDistances.get(i) > editDistanceFalseNestedMapper) {
 						indicesToBeRemoved.add(i);
 					}
 				}

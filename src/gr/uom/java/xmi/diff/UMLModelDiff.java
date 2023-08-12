@@ -2899,6 +2899,9 @@ public class UMLModelDiff {
 									InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
 									refactorings.add(inlineOperationRefactoring);
 									deleteRemovedOperation(removedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
 								}
 								else {
 									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
@@ -3166,6 +3169,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 								else if(isSubclassOf(className, addedOperation.getClassName())) {
 									//extract and pull up method
@@ -3174,6 +3180,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 								else if(isSubclassOf(addedOperation.getClassName(), className)) {
 									//extract and push down method
@@ -3182,6 +3191,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 								else if(addedOperation.getClassName().startsWith(className + ".")) {
 									//extract and move to inner class
@@ -3190,6 +3202,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 								else if(className.startsWith(addedOperation.getClassName() + ".")) {
 									//extract and move to outer class
@@ -3198,6 +3213,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 								else if(sourceClassImportsTargetClass(className, addedOperation.getClassName()) ||
 										sourceClassImportsSuperclassOfTargetClass(className, addedOperation.getClassName()) ||
@@ -3208,6 +3226,9 @@ public class UMLModelDiff {
 									refactorings.add(extractOperationRefactoring);
 									refactorings.addAll(operationBodyMapper.getRefactorings());
 									deleteAddedOperation(addedOperation);
+									mapper.addChildMapper(operationBodyMapper);
+									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+									optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 								}
 							}
 							else {

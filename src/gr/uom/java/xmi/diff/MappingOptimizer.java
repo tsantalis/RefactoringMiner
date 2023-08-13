@@ -176,6 +176,7 @@ public class MappingOptimizer {
 			List<Integer> nonMappedNodes = new ArrayList<>();
 			List<Integer> replacementTypeCount = new ArrayList<>();
 			List<Boolean> replacementCoversEntireStatement = new ArrayList<>();
+			List<Boolean> extractInlineOverlappingRefactoring = new ArrayList<>();
 			List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 			List<Double> editDistances = new ArrayList<>();
 			//check if mappings are the same references
@@ -237,6 +238,19 @@ public class MappingOptimizer {
 					}
 				}
 				replacementCoversEntireStatement.add(replacementFound);
+				boolean containsExtractInlineVariableRefactoring = false;
+				for(Refactoring r : mapping.getRefactorings()) {
+					if(r instanceof ExtractVariableRefactoring || r instanceof InlineVariableRefactoring) {
+						containsExtractInlineVariableRefactoring = true;
+						break;
+					}
+				}
+				if(mapping.isIdenticalWithExtractedVariable() || mapping.isIdenticalWithInlinedVariable() || containsExtractInlineVariableRefactoring) {
+					extractInlineOverlappingRefactoring.add(true);
+				}
+				else {
+					extractInlineOverlappingRefactoring.add(false);
+				}
 				parentMappers.add(mapper.getParentMapper());
 				editDistances.add(mapping.editDistance());
 			}
@@ -254,7 +268,7 @@ public class MappingOptimizer {
 								indicesToBeRemoved.add(i);
 							}
 						}
-						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+						determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 					}
 				}
 			}
@@ -300,7 +314,7 @@ public class MappingOptimizer {
 					}
 				}
 				if(!anonymousClassDeclarationMatch && !splitConditional && !splitDeclaration)
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				boolean splitConditional = false;
@@ -328,10 +342,10 @@ public class MappingOptimizer {
 					}
 				}
 				if(!splitConditional)
-					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}
 			else {
-				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, indicesToBeRemoved, editDistances);
+				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}
 			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
@@ -511,7 +525,7 @@ public class MappingOptimizer {
 	private void determineIndicesToBeRemoved(List<Boolean> nestedMapper, List<Boolean> identical,
 			List<Integer> exactMappingsNestedUnderCompositeExcludingBlocks,
 			List<Integer> replacementTypeCount, List<Boolean> replacementCoversEntireStatement,
-			Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
+			List<Boolean> extractInlineOverlappingRefactoring, Set<Integer> indicesToBeRemoved, List<Double> editDistances) {
 		if(indicesToBeRemoved.isEmpty()) {
 			if(nestedMapper.contains(false)) {
 				double editDistanceFalseNestedMapper = editDistances.get(nestedMapper.indexOf(false));
@@ -563,7 +577,7 @@ public class MappingOptimizer {
 						}
 					}
 					for(int i=0; i<replacementTypeCount.size(); i++) {
-						if(replacementTypeCount.get(i) > minimum) {
+						if(replacementTypeCount.get(i) > minimum && !extractInlineOverlappingRefactoring.get(i) == true) {
 							indicesToBeRemoved.add(i);
 						}
 					}

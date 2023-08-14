@@ -80,7 +80,7 @@ public class SpecificCasesTest {
         assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
     private static void singleFileChecker(String url, String filePath) throws Exception {
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000);
+        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000).getDiffSet();
 //        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         ASTDiff astDiff = astDiffs.iterator().next();
         String calculated = MappingExportModel.exportString(astDiff.getAllMappings());

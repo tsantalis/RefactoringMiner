@@ -39,7 +39,7 @@ public class Defects4JPerfectDiffTest {
         String bugID = info.getCommit();
         Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtDirectories(
                 Path.of(getDefect4jBeforeDir(projectDir, bugID)),
-                Path.of(getDefect4jAfterDir(projectDir, bugID)));
+                Path.of(getDefect4jAfterDir(projectDir, bugID))).getDiffSet();
 
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());

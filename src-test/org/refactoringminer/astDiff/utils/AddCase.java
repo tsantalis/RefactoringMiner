@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;
@@ -81,11 +82,11 @@ public class AddCase {
                 new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), infoFile);
     }
 
-    private static void addTestCase(String repo, String commit, Set<ASTDiff> astDiffs, String mappingsPath, String testInfoFile) throws IOException {
+    private static void addTestCase(String repo, String commit, ProjectASTDiff projectASTDiff, String mappingsPath, String testInfoFile) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonFile = mappingsPath + testInfoFile;
 
-        for (ASTDiff astDiff : astDiffs) {
+        for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
             String finalPath = getFinalFilePath(astDiff, mappingsPath,  repo, commit);
             Files.createDirectories(Paths.get(getFinalFolderPath(mappingsPath,repo,commit)));
             MappingExportModel.exportToFile(new File(finalPath), astDiff.getAllMappings());

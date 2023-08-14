@@ -3,10 +3,9 @@ package org.refactoringminer.api;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jgit.lib.Repository;
-import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 
 /**
  * Detect refactorings in the git history.
@@ -145,7 +144,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param commitId The SHA key that identifies the commit.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtCommit(Repository repository, String commitId);
+	ProjectASTDiff diffAtCommit(Repository repository, String commitId);
 
 	/**
 	 * Generate the AST diff for the specified commit. All required information is extracted using the GitHub API.
@@ -155,7 +154,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no AST diffs.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout);
+	ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout);
 
 	/**
 	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
@@ -164,7 +163,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param nextPath The directory (or file) corresponding to the next version.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtDirectories(Path previousPath, Path nextPath);
+	ProjectASTDiff diffAtDirectories(Path previousPath, Path nextPath);
 
 	/**
 	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
@@ -173,5 +172,5 @@ public interface GitHistoryRefactoringMiner {
 	 * @param nextFile The directory (or file) corresponding to the next version.
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
 	 */
-	Set<ASTDiff> diffAtDirectories(File previousFile, File nextFile);
+	ProjectASTDiff diffAtDirectories(File previousFile, File nextFile);
 }

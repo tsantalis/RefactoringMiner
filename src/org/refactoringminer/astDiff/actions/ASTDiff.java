@@ -19,8 +19,6 @@ import com.github.gumtreediff.tree.TreeContext;
 public class ASTDiff extends Diff {
 	private String srcPath;
 	private String dstPath;
-	private String srcContents;
-	private String dstContents;
 	private ExtendedMultiMappingStore multiMappings;
 	private ExtendedOnlyRootsClassifier classifier;
 
@@ -44,22 +42,6 @@ public class ASTDiff extends Diff {
 
 	public ExtendedMultiMappingStore getAllMappings() {
 		return multiMappings;
-	}
-
-	public String getSrcContents() {
-		return srcContents;
-	}
-
-	public void setSrcContents(String srcContents) {
-		this.srcContents = srcContents;
-	}
-
-	public String getDstContents() {
-		return dstContents;
-	}
-
-	public void setDstContents(String dstContents) {
-		this.dstContents = dstContents;
 	}
 
 	public String getSrcPath() {

@@ -14,7 +14,7 @@ import gr.uom.java.xmi.UMLType;
 public class UMLImportListDiff {
 	private Set<UMLImport> removedImports;
 	private Set<UMLImport> addedImports;
-	private Set<UMLImport> commonImports;
+	private Set<Pair<UMLImport, UMLImport>> commonImports;
 	private Set<Pair<UMLImport, UMLImport>> changedImports;
 	private Map<Set<UMLImport>, UMLImport> groupedImports;
 	private Map<UMLImport, Set<UMLImport>> unGroupedImports;
@@ -26,7 +26,13 @@ public class UMLImportListDiff {
 		Set<UMLImport> intersection = new LinkedHashSet<>();
 		intersection.addAll(oldImportSet);
 		intersection.retainAll(newImportSet);
-		this.commonImports = intersection;
+		this.commonImports = new LinkedHashSet<>();
+		for(UMLImport umlImport : intersection) {
+			UMLImport oldImport = oldImports.get(oldImports.indexOf(umlImport));
+			UMLImport newImport = newImports.get(newImports.indexOf(umlImport));
+			Pair<UMLImport, UMLImport> pair = Pair.of(oldImport, newImport);
+			commonImports.add(pair);
+		}
 		oldImportSet.removeAll(intersection);
 		this.removedImports = oldImportSet;
 		newImportSet.removeAll(intersection);
@@ -149,7 +155,7 @@ public class UMLImportListDiff {
 		return addedImports;
 	}
 
-	public Set<UMLImport> getCommonImports() {
+	public Set<Pair<UMLImport, UMLImport>> getCommonImports() {
 		return commonImports;
 	}
 

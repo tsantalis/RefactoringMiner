@@ -272,6 +272,7 @@ public class ProjectASTDiffer
 				processBodyMapper(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
 			}
 			else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
+				//FIXME:
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
@@ -1179,14 +1180,12 @@ public class ProjectASTDiffer
 
 	private void processImports(Tree srcTree, Tree dstTree, UMLImportListDiff importDiffList, ExtendedMultiMappingStore mappingStore) {
 		if (importDiffList == null) return;
-		List<Tree> srcChildren = srcTree.getChildren();
-		List<Tree> dstChildren = dstTree.getChildren();
 		Set<org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport>> commonImports = importDiffList.getCommonImports();
 		String searchingType = Constants.IMPORT_DECLARATION;
 		if (!commonImports.isEmpty()) {
 			for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
-				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren, searchingType, pair.getLeft());
-				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren, searchingType, pair.getRight());
+				Tree srcImportStatement = findImportByTypeAndLabel(srcTree, searchingType, pair.getLeft());
+				Tree dstImportStatement = findImportByTypeAndLabel(dstTree, searchingType, pair.getRight());
 				if (srcImportStatement != null && dstImportStatement != null)
 					mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
 			}
@@ -1195,9 +1194,9 @@ public class ProjectASTDiffer
 		for (Map.Entry<Set<UMLImport>, UMLImport> setUMLImportEntry : importDiffList.getGroupedImports().entrySet()) {
 			Set<UMLImport> srcImportSet = setUMLImportEntry.getKey();
 			UMLImport dstImport = setUMLImportEntry.getValue();
-			Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,dstImport);
+			Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstImport);
 			for (UMLImport srcUMLImport : srcImportSet) {
-				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,srcUMLImport);
+				Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcUMLImport);
 				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 			}
 		}
@@ -1205,30 +1204,30 @@ public class ProjectASTDiffer
 		for (Map.Entry<UMLImport, Set<UMLImport>> umlImportSetEntry : importDiffList.getUnGroupedImports().entrySet()) {
 			UMLImport srcImport = umlImportSetEntry.getKey();
 			Set<UMLImport> dstImportSet = umlImportSetEntry.getValue();
-			Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,srcImport);
+			Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcImport);
 			for (UMLImport dstUMLImport : dstImportSet) {
-				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,dstUMLImport);
+				Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstUMLImport);
 				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 			}
 		}
 		//Changed Imports
 		for(org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : importDiffList.getChangedImports()) {
-			Tree srcImportStatement = findImportByTypeAndLabel(srcChildren,searchingType,pair.getLeft());
-			Tree dstImportStatement = findImportByTypeAndLabel(dstChildren,searchingType,pair.getRight());
+			Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,pair.getLeft());
+			Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,pair.getRight());
 			mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
 		}
 	}
 
-	private Tree findImportByTypeAndLabel(List<Tree> inputTree, String searchingType, UMLImport label) {
-		for (Tree srcStatement: inputTree) {
-			if (srcStatement.getType().name.equals(searchingType)) {
-				if (srcStatement.getChild(0).getLabel().equals(label.getName())) //TODO getChild 0 will cause a lot of problem
+	private Tree findImportByTypeAndLabel(Tree inputTree, String searchingType, UMLImport label) {
+		for (Tree treeNode: inputTree.getChildren()) {
+			if (treeNode.getType().name.equals(searchingType)) {
+				if (treeNode.getChild(0).getLabel().equals(label.getName()) && treeNode.getPos() == label.getLocationInfo().getStartOffset()) //TODO getChild 0 will cause a lot of problem
 					if (label.isOnDemand()) {
-						if (srcStatement.getChild(0).getEndPos() + 3 == srcStatement.getEndPos()) {
-							return srcStatement;
+						if (treeNode.getChild(0).getEndPos() + 3 == treeNode.getEndPos()) {
+							return treeNode;
 						}
 					} else {
-						return srcStatement;
+						return treeNode;
 					}
 			}
 		}

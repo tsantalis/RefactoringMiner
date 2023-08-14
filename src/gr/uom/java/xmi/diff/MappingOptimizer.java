@@ -318,6 +318,7 @@ public class MappingOptimizer {
 			}
 			else if(parentIsContainerBody.contains(true)) {
 				boolean splitConditional = false;
+				boolean splitDeclaration = false;
 				for(int i=0; i<parentIsContainerBody.size(); i++) {
 					if(parentIsContainerBody.get(i) == false && !nestedMapper.get(parentIsContainerBody.indexOf(true))) {
 						//check if composite mapping in index i has more identical statements
@@ -336,12 +337,18 @@ public class MappingOptimizer {
 								}
 							}
 						}
+						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(parentIsContainerBody.indexOf(true)).getFragment2().getVariableDeclarations();
+						if(fragment2VariableDeclarations.size() > 0 &&
+								mappings.get(i).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + "=")) {
+							skip = true;
+							splitDeclaration = true;
+						}
 						if(!skip) {
 							indicesToBeRemoved.add(i);
 						}
 					}
 				}
-				if(!splitConditional)
+				if(!splitConditional && !splitDeclaration)
 					determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}
 			else {

@@ -596,7 +596,8 @@ miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new Refac
 RefactoringMiner is actually the only tool that generates AST diff at commit level, supports multi-mappings (one-to-many, many-to-one, many-to-many mappings), matches AST nodes of different AST types, and supports semantic diff in a fully refactoring-aware fashion.
 You can explore its advanced AST diff capabilities in our [AST Diff Gallery](https://github.com/tsantalis/RefactoringMiner/wiki/AST-Diff-Gallery).
 
-All AST Diff APIs return a `Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
+All AST Diff APIs return a `ProjectASTDiff` object. By calling `getDiffSet()` on it, you can obtain a
+`Set<ASTDiff>`, where each [ASTDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/astDiff/actions/ASTDiff.java) object corresponds to a pair of Java Compilation Units.
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
 
@@ -611,7 +612,8 @@ Repository repo = gitService.cloneIfNotExists(
     "tmp/refactoring-toy-example",
     "https://github.com/danilofes/refactoring-toy-example.git");
 
-Set<ASTDiff> diffs = miner.diffAtCommit(repo, "36287f7c3b09eff78395267a3ac0d7da067863fd");
+ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo, "36287f7c3b09eff78395267a3ac0d7da067863fd");
+Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
 To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
@@ -619,8 +621,9 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 ```java
 // With all information fetched directly from GitHub
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-Set<ASTDiff> diffs = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
+ProjectASTDiff projectASTDiff = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
     "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
+Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
 ```java
@@ -629,7 +632,8 @@ GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 // You must provide absolute paths to the directories. Relative paths will cause exceptions.
 File dir1 = new File("/home/user/tmp/v1");
 File dir2 = new File("/home/user/tmp/v2");
-Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
+ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
+Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
 ```java
@@ -638,7 +642,8 @@ GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 // You must provide absolute paths to the directories. Relative paths will cause exceptions.
 Path dir1 = Paths.get("/home/user/tmp/v1");
 Path dir1 = Paths.get("/home/user/tmp/v2");
-Set<ASTDiff> diffs = miner.diffAtDirectories(dir1, dir2);
+ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
+Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
 To **visualize** the diff, you can use our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark).

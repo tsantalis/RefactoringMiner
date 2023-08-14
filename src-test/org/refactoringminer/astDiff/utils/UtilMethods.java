@@ -68,7 +68,7 @@ public class UtilMethods {
         String commit = URLHelper.getCommit(url);
         String repoFolder = repo.substring(repo.lastIndexOf("/"), repo.indexOf(".git"));
         Repository repository = gitService.cloneIfNotExists(REPOS + repoFolder, repo);
-        return new GitHistoryRefactoringMinerImpl().diffAtCommit(repository, commit);
+        return new GitHistoryRefactoringMinerImpl().diffAtCommit(repository, commit).getDiffSet();
     }
 
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {

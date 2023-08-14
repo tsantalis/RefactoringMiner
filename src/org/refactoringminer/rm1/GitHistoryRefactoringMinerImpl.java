@@ -74,7 +74,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;
@@ -1053,8 +1053,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtCommit(Repository repository, String commitId) {
-		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	public ProjectASTDiff diffAtCommit(Repository repository, String commitId) {
 		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
 		File metadataFolder = repository.getDirectory();
 		File projectFolder = metadataFolder.getParentFile();
@@ -1083,12 +1082,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					for(ASTDiff diff : differ.getDiffSet()) {
-						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-						diffSet.add(diff);
-					}
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+					return differ.getProjectASTDiff();
 				}
 			}
 			else {
@@ -1120,12 +1115,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					for(ASTDiff diff : differ.getDiffSet()) {
-						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-						diffSet.add(diff);
-					}
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+					return differ.getProjectASTDiff();
 				}
 			} catch (Exception e) {
 				logger.warn(String.format("Ignored revision %s due to error", commitId), e);
@@ -1138,12 +1129,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			walk.close();
 			walk.dispose();
 		}
-		return diffSet;
+		return null;
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtCommit(String gitURL, String commitId, int timeout) {
-		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	public ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout) {
+		Set<ProjectASTDiff> diffs = new HashSet<>();
 		ExecutorService service = Executors.newSingleThreadExecutor();
 		Future<?> f = null;
 		try {
@@ -1172,12 +1163,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					for(ASTDiff diff : differ.getDiffSet()) {
-						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-						diffSet.add(diff);
-					}
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+					diffs.add(differ.getProjectASTDiff());
 				}
 				catch(RefactoringMinerTimedOutException e) {
 					logger.warn(String.format("Ignored revision %s due to timeout", commitId), e);
@@ -1197,19 +1184,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		} finally {
 			service.shutdown();
 		}
-		return diffSet;
+		return diffs.iterator().next();
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtDirectories(Path previousPath, Path nextPath) {
+	public ProjectASTDiff diffAtDirectories(Path previousPath, Path nextPath) {
 		File previousFile = previousPath.toFile();
 		File nextFile = nextPath.toFile();
 		return diffAtDirectories(previousFile, nextFile);
 	}
 
 	@Override
-	public Set<ASTDiff> diffAtDirectories(File previousFile, File nextFile) {
-		Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	public ProjectASTDiff diffAtDirectories(File previousFile, File nextFile) {
 		if(previousFile.exists() && nextFile.exists()) {
 			String id = previousFile.getName() + " -> " + nextFile.getName();
 			try {
@@ -1224,12 +1210,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-					for(ASTDiff diff : differ.getDiffSet()) {
-						diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-						diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-						diffSet.add(diff);
-					}
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+					return differ.getProjectASTDiff();
 				}
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
@@ -1245,12 +1227,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
 						UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
 						UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-						ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff);
-						for(ASTDiff diff : differ.getDiffSet()) {
-							diff.setSrcContents(fileContentsBefore.get(diff.getSrcPath()));
-							diff.setDstContents(fileContentsCurrent.get(diff.getDstPath()));
-							diffSet.add(diff);
-						}
+						ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+						return differ.getProjectASTDiff();
 					}
 				}
 			}
@@ -1258,6 +1236,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				logger.warn(String.format("Ignored revision %s due to error", id), e);
 			}
 		}
-		return diffSet;
+		return null;
 	}
 }

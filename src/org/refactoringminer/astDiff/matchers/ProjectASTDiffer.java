@@ -14,6 +14,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,15 +33,22 @@ public class ProjectASTDiffer
 	private List<AbstractCodeMapping> lastStepMappings;
 	private ExtendedMultiMappingStore optimizationMappingStore;
 	private List<Refactoring> modelDiffRefactorings;
-	private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	//private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	private ProjectASTDiff projectASTDiff;
 
-	public ProjectASTDiffer(UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
+		this.projectASTDiff = new ProjectASTDiff(fileContentsBefore, fileContentsAfter);
 		diff();
 	}
 
+	public ProjectASTDiff getProjectASTDiff() {
+		return projectASTDiff;
+	}
+
+	//kept for backward compatibility, but getProjectASTDiff() should be used instead
 	public Set<ASTDiff> getDiffSet() {
-		return diffSet;
+		return projectASTDiff.getDiffSet();
 	}
 
 	private void diff() throws RefactoringMinerTimedOutException {
@@ -56,10 +64,10 @@ public class ProjectASTDiffer
 		makeASTDiff(getExtraDiffs(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
-		for (ASTDiff diff : diffSet) {
+		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			processOptimization(diff, optimizationDataMap.get(diff.getSrcPath()));
 		}
-		for (ASTDiff diff : diffSet) {
+		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			if (!isTestRelated(diff.getSrcPath(),diff.getDstPath()))
 					new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
@@ -86,7 +94,7 @@ public class ProjectASTDiffer
 	}
 	private void computeAllEditScripts() {
 		long editScript_start = System.currentTimeMillis();
-		for (ASTDiff diff : diffSet) {
+		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			diff.computeEditScript(modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap());
 		}
 		long editScript_end = System.currentTimeMillis();
@@ -101,13 +109,13 @@ public class ProjectASTDiffer
 			if (append != null)
 				append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
 			else {
-				diffSet.add(classASTDiff);
+				projectASTDiff.addASTDiff(classASTDiff);
 			}
 		}
 	}
 
 	private ASTDiff findAppend(UMLAbstractClassDiff classBaseDiff) {
-		for (ASTDiff existing : diffSet) {
+		for (ASTDiff existing : projectASTDiff.getDiffSet()) {
 			if (existing.getSrcPath().equals(classBaseDiff.getOriginalClass().getSourceFile()))
 				return existing;
 			else if (existing.getDstPath().equals(classBaseDiff.getNextClass().getSourceFile()))

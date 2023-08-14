@@ -1153,12 +1153,12 @@ public class ProjectASTDiffer
 		if (importDiffList == null) return;
 		List<Tree> srcChildren = srcTree.getChildren();
 		List<Tree> dstChildren = dstTree.getChildren();
-		Set<UMLImport> commonImports = importDiffList.getCommonImports();
+		Set<org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport>> commonImports = importDiffList.getCommonImports();
 		String searchingType = Constants.IMPORT_DECLARATION;
 		if (!commonImports.isEmpty()) {
-			for (UMLImport label : commonImports) {
-				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren, searchingType, label);
-				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren, searchingType, label);
+			for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
+				Tree srcImportStatement = findImportByTypeAndLabel(srcChildren, searchingType, pair.getLeft());
+				Tree dstImportStatement = findImportByTypeAndLabel(dstChildren, searchingType, pair.getRight());
 				if (srcImportStatement != null && dstImportStatement != null)
 					mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
 			}

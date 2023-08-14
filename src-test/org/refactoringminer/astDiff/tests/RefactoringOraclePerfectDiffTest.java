@@ -23,7 +23,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 
-@Isolated
+//@Isolated
 public class RefactoringOraclePerfectDiffTest {
     private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")

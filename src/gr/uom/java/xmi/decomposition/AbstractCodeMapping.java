@@ -726,6 +726,30 @@ public abstract class AbstractCodeMapping {
 		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}
+		if(fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() && fragment2.getTernaryOperatorExpressions().size() > 0) {
+			TernaryOperatorExpression ternary = fragment2.getTernaryOperatorExpressions().get(0);
+			AbstractExpression thenExpression = ternary.getThenExpression();
+			AbstractExpression elseExpression = ternary.getElseExpression();
+			String temp = new String(fragment1.getString());
+			if(replacements.size() > 0) {
+				Replacement r = replacements.iterator().next();
+				for(Refactoring ref : refactorings) {
+					if(ref instanceof ExtractVariableRefactoring) {
+						ExtractVariableRefactoring extract = (ExtractVariableRefactoring)ref;
+						if(extract.getVariableDeclaration().getInitializer() != null &&
+								extract.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
+							temp = ReplacementUtil.performReplacement(temp, r.getBefore(), r.getAfter());
+							if(temp.endsWith(elseExpression.getString() + ";\n")) {
+								return true;
+							}
+							if(temp.endsWith(thenExpression.getString() + ";\n")) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
 		int stringLiteralReplacents = 0;
 		for(Replacement r : replacements) {
 			if((r.getBefore().startsWith("\"") && r.getBefore().endsWith("\"")) || (r.getAfter().startsWith("\"") && r.getAfter().endsWith("\""))) {

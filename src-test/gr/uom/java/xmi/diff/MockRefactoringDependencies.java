@@ -4,6 +4,7 @@ import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -17,12 +18,83 @@ import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
+class MockMultiMemberRefactoringDependencies extends MockRefactoringDependencies<MultiMemberRefactoring, VariableDeclarationContainer> {
+    @Override
+    protected Map<? super VariableDeclarationContainer, Set<? super MultiMemberRefactoring>> mapMemberToRefactoring(List<? extends MultiMemberRefactoring> refactorings) {
+        IdentityHashMap<? super VariableDeclarationContainer, Set<? super MultiMemberRefactoring>> result = new IdentityHashMap();
+        for (MultiMemberRefactoring refactoring : refactorings) {
+            this.mapMemberToRefactoring(result, refactoring);
+        }
+        return result;
+    }
 
+    @Override
+    protected void mapMemberToRefactoring(IdentityHashMap<? super VariableDeclarationContainer, Set<? super MultiMemberRefactoring>> result, MultiMemberRefactoring refactoring) {
+        mapMemberToRefactoring(result, refactoring, refactoring::getMembersBefore);
+        mapMemberToRefactoring(result, refactoring, refactoring::getMembersAfter);
+    }
+
+}
+class MockMultiClassRefactoringDependencies extends MockRefactoringDependencies<MultiClassRefactoring, UMLAbstractClass> {
+    @Override
+    protected Map<? super UMLAbstractClass, Set<? super MultiClassRefactoring>> mapMemberToRefactoring(List<? extends MultiClassRefactoring> refactorings) {
+        IdentityHashMap<? super UMLAbstractClass, Set<? super MultiClassRefactoring>> result = new IdentityHashMap();
+        for (MultiClassRefactoring refactoring : refactorings) {
+            this.mapMemberToRefactoring(result, refactoring);
+        }
+        return result;
+    }
+    @Override
+    protected void mapMemberToRefactoring(IdentityHashMap<? super UMLAbstractClass, Set<? super MultiClassRefactoring>> result, MultiClassRefactoring refactoring) {
+        mapMemberToRefactoring(result, refactoring, refactoring::getClassesBefore);
+        mapMemberToRefactoring(result, refactoring, refactoring::getClassesAfter);
+    }
+}
+class MockMultiStatementRefactoringDependencies extends MockRefactoringDependencies<MultiStatementRefactoring, AbstractCodeFragment> {
+    @Override
+    protected Map<? super AbstractCodeFragment, Set<? super MultiStatementRefactoring>> mapMemberToRefactoring(List<? extends MultiStatementRefactoring> refactorings) {
+        IdentityHashMap<? super AbstractCodeFragment, Set<? super MultiStatementRefactoring>> result = new IdentityHashMap();
+        for (MultiStatementRefactoring refactoring : refactorings) {
+            this.mapMemberToRefactoring(result, refactoring);
+        }
+        return result;
+    }
+    @Override
+    protected void mapMemberToRefactoring(IdentityHashMap<? super AbstractCodeFragment, Set<? super MultiStatementRefactoring>> result, MultiStatementRefactoring refactoring) {
+        mapMemberToRefactoring(result, refactoring, refactoring::getStatementsBefore);
+        mapMemberToRefactoring(result, refactoring, refactoring::getStatementsAfter);
+    }
+
+}
 @ExtendWith(MockitoExtension.class)
-public class MockRefactoringDependencies {
+public abstract class MockRefactoringDependencies<T, R> {
+    protected Map<? super R, Set<? super T>> mapMemberToRefactoring(List<? extends T> refactorings) {
+        IdentityHashMap<? super R, Set<? super T>> result = new IdentityHashMap();
+        for (T refactoring : refactorings) {
+            mapMemberToRefactoring(result, refactoring);
+        }
+        return result;
+    }
+    protected void mapMemberToRefactoring(IdentityHashMap<? super R, Set<? super T>> result, T refactoring) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+    protected  <T,R> void mapMemberToRefactoring(IdentityHashMap<? super R, Set<? super T>> result, T refactoring, Supplier<Collection<? extends R>> supplier) {
+        for (R member1 : supplier.get()) {
+            if (result.containsKey(member1)) {
+                result.get(member1).add(refactoring);
+            }
+            else {
+                result.put(member1, new ArraySet<>(Collections.singleton(refactoring)));
+            }
+        }
+    }
+
     protected class ArraySet<E> extends AbstractSet<E> {
         private final ArrayList<E> list = new ArrayList<>();
 

@@ -9,16 +9,14 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MultiMemberRefactoringTest extends MockRefactoringDependencies {
+public class MultiMemberRefactoringTest extends MockMultiMemberRefactoringDependencies {
 
     protected Set<UMLAttribute> attributesBefore;
     protected Set<UMLAttribute> attributesAfter;
@@ -62,7 +60,7 @@ public class MultiMemberRefactoringTest extends MockRefactoringDependencies {
 
     @Test
     void testGroupByRefactoredMember_And_Count() {
-        var map = mapMemberToRefactoring();
+        Map<? super VariableDeclarationContainer, Set<? super MultiMemberRefactoring>> map = mapMemberToRefactoring(refactorings);
         Assertions.assertEquals(5, map.size(), "Expected 5 members to be refactored");
         Assertions.assertEquals(0, map.getOrDefault(null, Collections.emptySet()).size(), "Null should never be a key");
         Assertions.assertEquals(5, map.get(operationBefore).size(), "Expected 5 refactorings to be applied to operations");
@@ -71,25 +69,4 @@ public class MultiMemberRefactoringTest extends MockRefactoringDependencies {
         Assertions.assertEquals(4, map.get(attributeBefore).size(), "Expected 4 refactorings to be applied to attributes");
         Assertions.assertEquals(4, map.get(attributeAfter).size(), "Expected 4 refactored attributes");
     }
-
-    private Map<VariableDeclarationContainer, Set<MultiMemberRefactoring>> mapMemberToRefactoring() {
-        var result = new IdentityHashMap<VariableDeclarationContainer, Set<MultiMemberRefactoring>>();
-        for (MultiMemberRefactoring refactoring : refactorings) {
-            mapMemberToRefactoring(result, refactoring, refactoring::getMembersBefore);
-            mapMemberToRefactoring(result, refactoring, refactoring::getMembersAfter);
-        }
-        return result;
-    }
-    private void mapMemberToRefactoring(IdentityHashMap<VariableDeclarationContainer, Set<MultiMemberRefactoring>> result, MultiMemberRefactoring refactoring, Supplier<List<VariableDeclarationContainer>> supplier) {
-
-        for (VariableDeclarationContainer member1 : supplier.get()) {
-            if (result.containsKey(member1)) {
-                result.get(member1).add(refactoring);
-            }
-            else {
-                result.put(member1, new ArraySet<>(Collections.singleton(refactoring)));
-            }
-        }
-    }
-
 }

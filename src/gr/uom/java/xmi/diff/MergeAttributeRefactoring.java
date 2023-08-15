@@ -31,12 +31,12 @@ public class MergeAttributeRefactoring implements Refactoring, MultiMemberRefact
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersAfter() {
+	public List<VariableDeclarationContainer> getMembersAfter() {
 		return Collections.singletonList(newAttribute);
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersBefore() {
+	public List<VariableDeclarationContainer> getMembersBefore() {
 		return new ArrayList<>(mergedAttributes);
 	}
 

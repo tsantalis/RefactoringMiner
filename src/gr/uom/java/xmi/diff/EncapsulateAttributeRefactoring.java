@@ -29,12 +29,12 @@ public class EncapsulateAttributeRefactoring implements Refactoring, MultiMember
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersBefore() {
+	public List<VariableDeclarationContainer> getMembersBefore() {
 		return Collections.singletonList(attributeBefore);
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersAfter() {
+	public List<VariableDeclarationContainer> getMembersAfter() {
 		return List.of(attributeAfter, addedGetter, addedSetter);
 	}
 

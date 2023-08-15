@@ -28,12 +28,12 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring, MultiSta
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+	public Set<AbstractCodeFragment> getStatementsBefore() {
 		return getCodeFragmentsBefore();
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+	public Set<AbstractCodeFragment> getStatementsAfter() {
 		return getCodeFragmentsAfter();
 	}
 

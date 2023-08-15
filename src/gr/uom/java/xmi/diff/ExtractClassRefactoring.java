@@ -52,12 +52,12 @@ public class ExtractClassRefactoring implements Refactoring, MultiClassRefactori
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesBefore() {
+	public List<UMLAbstractClass> getClassesBefore() {
 		return Collections.singletonList(getOriginalClass());
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesAfter() {
+	public List<UMLAbstractClass> getClassesAfter() {
 		return List.of(classDiff.getNextClass(), getExtractedClass());
 	}
 

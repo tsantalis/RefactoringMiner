@@ -136,12 +136,12 @@ public class MergeClassRefactoring implements MoveBasedRefactoring, MultiClassRe
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesAfter() {
+	public List<UMLAbstractClass> getClassesAfter() {
 		return Collections.singletonList(getMovedClass());
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesBefore() {
+	public List<UMLAbstractClass> getClassesBefore() {
 		return new ArrayList<>(mergedClasses);
 	}
 

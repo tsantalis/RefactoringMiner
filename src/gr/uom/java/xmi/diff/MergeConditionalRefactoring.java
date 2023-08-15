@@ -47,12 +47,12 @@ public class MergeConditionalRefactoring implements Refactoring, LeafMappingProv
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+	public Set<AbstractCodeFragment> getStatementsBefore() {
 		return mergedConditionals;
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+	public Set<AbstractCodeFragment> getStatementsAfter() {
 		return Collections.singleton(newConditional);
 	}
 

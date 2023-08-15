@@ -258,12 +258,12 @@ public class InlineOperationRefactoring implements Refactoring, MultiMemberRefac
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersBefore() {
+	public List<VariableDeclarationContainer> getMembersBefore() {
 		return List.of(getInlinedOperation(), getTargetOperationBeforeInline());
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersAfter() {
+	public List<VariableDeclarationContainer> getMembersAfter() {
 		return Collections.singletonList(getTargetOperationAfterInline());
 	}
 

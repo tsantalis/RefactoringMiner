@@ -91,11 +91,11 @@ public class SplitClassRefactoring implements MoveBasedRefactoring, MultiClassRe
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesBefore() {
+	public List<UMLAbstractClass> getClassesBefore() {
 		return Collections.singletonList(getOriginalClass());
 	}
 	@Override
-	public List<? extends UMLAbstractClass> getClassesAfter() {
+	public List<UMLAbstractClass> getClassesAfter() {
 		return new ArrayList<>(splitClasses);
 	}
 

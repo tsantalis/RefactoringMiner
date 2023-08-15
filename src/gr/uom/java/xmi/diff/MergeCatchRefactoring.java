@@ -30,12 +30,12 @@ public class MergeCatchRefactoring implements Refactoring, MultiStatementRefacto
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+	public Set<AbstractCodeFragment> getStatementsBefore() {
 		return mergedCatchBlocks;
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+	public Set<AbstractCodeFragment> getStatementsAfter() {
 		return Collections.singleton(newCatchBlock);
 	}
 

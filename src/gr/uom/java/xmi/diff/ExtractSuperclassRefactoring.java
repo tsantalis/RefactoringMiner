@@ -44,13 +44,13 @@ public class ExtractSuperclassRefactoring implements Refactoring, MultiClassRefa
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesBefore() {
+	public List<UMLAbstractClass> getClassesBefore() {
 		return new ArrayList<>(subclassSetBefore);
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesAfter() {
-		ArrayList<UMLClass> classes = new ArrayList<>(subclassSetAfter);
+	public List<UMLAbstractClass> getClassesAfter() {
+		List<UMLAbstractClass> classes = new ArrayList<>(subclassSetAfter);
 		classes.add(0, extractedClass);
 		return classes;
 	}

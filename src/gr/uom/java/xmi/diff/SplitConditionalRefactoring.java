@@ -47,12 +47,12 @@ public class SplitConditionalRefactoring implements Refactoring, LeafMappingProv
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsBefore() {
+	public Set<AbstractCodeFragment> getStatementsBefore() {
 		return Collections.singleton(originalConditional);
 	}
 
 	@Override
-	public Set<? extends AbstractCodeFragment> getStatementsAfter() {
+	public Set<AbstractCodeFragment> getStatementsAfter() {
 		return splitConditionals;
 	}
 

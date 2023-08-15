@@ -31,12 +31,12 @@ public class SplitOperationRefactoring implements Refactoring, MultiMemberRefact
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersBefore() {
+	public List<VariableDeclarationContainer> getMembersBefore() {
 		return Collections.singletonList(originalMethodBeforeSplit);
 	}
 
 	@Override
-	public List<? extends VariableDeclarationContainer> getMembersAfter() {
+	public List<VariableDeclarationContainer> getMembersAfter() {
 		return new ArrayList<VariableDeclarationContainer>(splitMethods);
 	}
 

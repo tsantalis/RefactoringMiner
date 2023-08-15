@@ -36,8 +36,8 @@ public class MoveSourceFolderRefactoring implements Refactoring, MultiClassRefac
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesBefore() {
-		List<UMLClass> classes = new ArrayList();
+	public List<UMLAbstractClass> getClassesBefore() {
+		List<UMLAbstractClass> classes = new ArrayList();
 		for (MovedClassToAnotherSourceFolder move : movedClassesToAnotherSourceFolder) {
 			classes.add(move.getOriginalClass());
 		}
@@ -45,8 +45,8 @@ public class MoveSourceFolderRefactoring implements Refactoring, MultiClassRefac
 	}
 
 	@Override
-	public List<? extends UMLAbstractClass> getClassesAfter() {
-		List<UMLClass> classes = new ArrayList();
+	public List<UMLAbstractClass> getClassesAfter() {
+		List<UMLAbstractClass> classes = new ArrayList();
 		for (MovedClassToAnotherSourceFolder move : movedClassesToAnotherSourceFolder) {
 			classes.add(move.getMovedClass());
 		}

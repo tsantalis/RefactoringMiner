@@ -6305,6 +6305,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
 				}
+				if(mappingToCheck instanceof CompositeStatementObjectMapping) {
+					CompositeStatementObject comp1 = (CompositeStatementObject)mappingToCheck.getFragment1();
+					CompositeStatementObject comp2 = (CompositeStatementObject)mappingToCheck.getFragment2();
+					if(!comp1.getLocationInfo().subsumes(startMapping.getFragment1().getLocationInfo()) && comp2.getLocationInfo().subsumes(startMapping.getFragment2().getLocationInfo())) {
+						return false;
+					}
+				}
 			}
 			else if(parentMapping != null) {
 				if(mappingToCheck.getFragment2().getLocationInfo().getStartLine() >= parentMapping.getFragment2().getLocationInfo().getStartLine() &&

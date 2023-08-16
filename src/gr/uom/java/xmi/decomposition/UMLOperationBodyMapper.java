@@ -3253,7 +3253,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
 			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
-		if(innerNodes1.size() <= innerNodes2.size()) {
+		boolean sameNumberOfInnerNodesInMultiCalledExtractedMethod = innerNodes1.size() == innerNodes2.size() && callsToExtractedMethod > 1;
+		if(innerNodes1.size() <= innerNodes2.size() && !sameNumberOfInnerNodesInMultiCalledExtractedMethod) {
 			//exact string matching - inner nodes - finds moves to another level
 			Set<CompositeStatementObject> innerNodes1ToBeRemoved = new LinkedHashSet<>();
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
@@ -3546,7 +3547,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && parentContainsMultipleCallsToSameMethod(parentMapping)))) {
+						if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && debatableMapping(parentMapping, mappingSet.first())))) {
 							TreeSet<CompositeStatementObjectMapping> scopedMappingSet = parentMapping != null ? new TreeSet<CompositeStatementObjectMapping>(new ScopedCompositeMappingComparatorForExtract(parentMapping)) : new TreeSet<CompositeStatementObjectMapping>();
 							for(CompositeStatementObjectMapping mapping : mappingSet) {
 								if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
@@ -3708,7 +3709,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(!mappingSet.isEmpty()) {
-						if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && parentContainsMultipleCallsToSameMethod(parentMapping)))) {
+						if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && debatableMapping(parentMapping, mappingSet.first())))) {
 							TreeSet<CompositeStatementObjectMapping> scopedMappingSet = parentMapping != null ? new TreeSet<CompositeStatementObjectMapping>(new ScopedCompositeMappingComparatorForExtract(parentMapping)) : new TreeSet<CompositeStatementObjectMapping>();
 							for(CompositeStatementObjectMapping mapping : mappingSet) {
 								if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
@@ -4882,7 +4883,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else {
-							if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && parentContainsMultipleCallsToSameMethod(parentMapping)))) {
+							if(isScopedMatch(startMapping, endMapping, parentMapping) && (mappingSet.size() > 1 || (mappingSet.size() == 1 && debatableMapping(parentMapping, mappingSet.first())))) {
 								TreeSet<LeafMapping> scopedMappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 								for(LeafMapping mapping : mappingSet) {
 									if(isWithinScope(startMapping, endMapping, parentMapping, mapping, referencedVariableDeclarations1, referencedVariableDeclarations2)) {
@@ -4997,6 +4998,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean debatableMapping(AbstractCodeMapping parentMapping, AbstractCodeMapping childMapping) {
+		return parentContainsMultipleCallsToSameMethod(parentMapping) || inconsistentParentChildRelation(parentMapping, childMapping);
+	}
+
+	private boolean inconsistentParentChildRelation(AbstractCodeMapping parentMapping, AbstractCodeMapping childMapping) {
+		if(parentMapping instanceof CompositeStatementObjectMapping && operationInvocation != null) {
+			CompositeStatementObject comp1 = (CompositeStatementObject)parentMapping.getFragment1();
+			CompositeStatementObject comp2 = (CompositeStatementObject)parentMapping.getFragment2();
+			if(!comp1.getLocationInfo().subsumes(childMapping.getFragment1().getLocationInfo()) && comp2.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean parentContainsMultipleCallsToSameMethod(AbstractCodeMapping parentMapping) {

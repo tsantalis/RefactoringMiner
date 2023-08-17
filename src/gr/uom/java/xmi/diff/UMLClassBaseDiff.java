@@ -23,7 +23,6 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.SourceAnnotation;
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.UMLAnnotation;
@@ -40,14 +39,11 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.Visibility;
 import gr.uom.java.xmi.decomposition.AbstractCall;
-import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
-import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
-import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.OperationBody;
@@ -1106,28 +1102,30 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						else {
 							UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
 							int mapperSetSize = mapperSet.size();
-							//check for consistent method renames in modelDiff
-							for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
-								UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
-								if(replacement.getInvokedOperationBefore().matchesOperation(bestMapper.getContainer1(), mapper.getContainer1(), mapper.getClassDiff(), modelDiff)) {
-									for(Iterator<UMLOperation> addedOperationIterator2 = addedOperations.iterator(); addedOperationIterator2.hasNext();) {
-										UMLOperation addedOperation2 = addedOperationIterator2.next();
-										if(replacement.getInvokedOperationAfter().matchesOperation(addedOperation2, mapper.getContainer2(), mapper.getClassDiff(), modelDiff)) {
-											int maxDifferenceInPosition;
-											if(bestMapper.getContainer1().hasTestAnnotation() && addedOperation2.hasTestAnnotation()) {
-												maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+							if(bestMapper != null) {
+								//check for consistent method renames in modelDiff
+								for(MethodInvocationReplacement replacement : consistentMethodInvocationRenamesInModel.keySet()) {
+									UMLOperationBodyMapper mapper = consistentMethodInvocationRenamesInModel.get(replacement);
+									if(replacement.getInvokedOperationBefore().matchesOperation(bestMapper.getContainer1(), mapper.getContainer1(), mapper.getClassDiff(), modelDiff)) {
+										for(Iterator<UMLOperation> addedOperationIterator2 = addedOperations.iterator(); addedOperationIterator2.hasNext();) {
+											UMLOperation addedOperation2 = addedOperationIterator2.next();
+											if(replacement.getInvokedOperationAfter().matchesOperation(addedOperation2, mapper.getContainer2(), mapper.getClassDiff(), modelDiff)) {
+												int maxDifferenceInPosition;
+												if(bestMapper.getContainer1().hasTestAnnotation() && addedOperation2.hasTestAnnotation()) {
+													maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
+												}
+												else if(bestMapper.getContainer1().hasTestAnnotation() && addedOperation2.hasParameterizedTestAnnotation()) {
+													maxDifferenceInPosition = initialNumberOfRemovedOperations + initialNumberOfAddedOperations;
+												}
+												else {
+													maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
+												}
+												updateMapperSet(mapperSet, bestMapper.getOperation1(), addedOperation2, maxDifferenceInPosition);
+												break;
 											}
-											else if(bestMapper.getContainer1().hasTestAnnotation() && addedOperation2.hasParameterizedTestAnnotation()) {
-												maxDifferenceInPosition = initialNumberOfRemovedOperations + initialNumberOfAddedOperations;
-											}
-											else {
-												maxDifferenceInPosition = Math.max(removedOperations.size(), addedOperations.size());
-											}
-											updateMapperSet(mapperSet, bestMapper.getOperation1(), addedOperation2, maxDifferenceInPosition);
-											break;
 										}
+										break;
 									}
-									break;
 								}
 							}
 							if(mapperSet.size() > mapperSetSize) {

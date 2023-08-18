@@ -117,9 +117,11 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
-			List<LeafExpression> infixExpressions1, List<LeafExpression> infixExpressions2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info, UMLOperationBodyMapper mapper) {
+			AbstractCodeFragment fragment1, AbstractCodeFragment fragment2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo info, UMLOperationBodyMapper mapper) {
 		VariableDeclarationContainer container1 = mapper.getContainer1();
 		VariableDeclarationContainer container2 = mapper.getContainer2();
+		List<LeafExpression> infixExpressions1 = fragment1.getInfixExpressions();
+		List<LeafExpression> infixExpressions2 = fragment2.getInfixExpressions();
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
@@ -146,6 +148,75 @@ public class StringBasedHeuristics {
 			}
 			else if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.equals("*") && diff2.equals("/")) {
 				return true;
+			}
+			if(commonPrefix.equals("for(") && commonSuffix.equals(")") && diff1.contains(";") && diff2.contains(";")) {
+				String[] expressions1 = diff1.split(";");
+				String[] expressions2 = diff2.split(";");
+				if(expressions1.length == expressions2.length) {
+					int matches = 0;
+					Set<AbstractCodeFragment> matchingVariableDeclarations1 = new LinkedHashSet<AbstractCodeFragment>();
+					Set<AbstractCodeFragment> matchingVariableDeclarations2 = new LinkedHashSet<AbstractCodeFragment>();
+					for(int i=0; i<expressions1.length; i++) {
+						String e1 = expressions1[i].trim();
+						String e2 = expressions2[i].trim();
+						if(e1.equals(e2)) {
+							matches++;
+						}
+						else if(e1.endsWith(e2)) {
+							matches++;
+							for(AbstractCodeFragment statement2 : info.getStatements2()) {
+								if(statement2.getVariableDeclarations().size() > 0) {
+									VariableDeclaration variableDeclaration = statement2.getVariableDeclarations().get(0);
+									if(e2.startsWith(variableDeclaration.getVariableName() + "=") && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + "=")) {
+										matchingVariableDeclarations2.add(statement2);
+									}
+								}
+							}
+						}
+						else if(e2.endsWith(e1)) {
+							matches++;
+							for(AbstractCodeFragment statement1 : info.getStatements1()) {
+								if(statement1.getVariableDeclarations().size() > 0) {
+									VariableDeclaration variableDeclaration = statement1.getVariableDeclarations().get(0);
+									if(e1.startsWith(variableDeclaration.getVariableName() + "=") && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + "=")) {
+										matchingVariableDeclarations1.add(statement1);
+									}
+								}
+							}
+						}
+						else if(e1.length() > 2 && e2.length() > 2 && e1.endsWith("++") && e2.startsWith("++")) {
+							String var1 = e1.substring(0, e1.length() - 2);
+							String var2 = e2.substring(2, e2.length());
+							if(var1.equals(var2)) {
+								matches++;
+							}
+						}
+						else if(e1.length() > 2 && e2.length() > 2 && e2.endsWith("++") && e1.startsWith("++")) {
+							String var2 = e2.substring(0, e2.length() - 2);
+							String var1 = e1.substring(2, e1.length());
+							if(var1.equals(var2)) {
+								matches++;
+							}
+						}
+					}
+					if(matches == expressions1.length) {
+						if(matchingVariableDeclarations1.size() == 1 && fragment2 instanceof CompositeStatementObject) {
+							CompositeStatementObject comp2 = (CompositeStatementObject)fragment2;
+							if(comp2.getExpressions().size() > 0) {
+								LeafMapping leafMapping = new LeafMapping(matchingVariableDeclarations1.iterator().next(), comp2.getExpressions().get(0), container1, container2);
+								info.addSubExpressionMapping(leafMapping);
+							}
+						}
+						if(matchingVariableDeclarations2.size() == 1 && fragment1 instanceof CompositeStatementObject) {
+							CompositeStatementObject comp1 = (CompositeStatementObject)fragment1;
+							if(comp1.getExpressions().size() > 0) {
+								LeafMapping leafMapping = new LeafMapping(comp1.getExpressions().get(0), matchingVariableDeclarations2.iterator().next(), container1, container2);
+								info.addSubExpressionMapping(leafMapping);
+							}
+						}
+						return true;
+					}
+				}
 			}
 			if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.length() > 2 && diff2.length() > 2 && diff1.endsWith("++") && diff2.startsWith("++")) {
 				String var1 = diff1.substring(0, diff1.length() - 2);

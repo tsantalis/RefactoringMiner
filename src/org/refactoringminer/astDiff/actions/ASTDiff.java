@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.github.gumtreediff.matchers.MappingStore;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
 import com.github.gumtreediff.actions.Diff;
@@ -23,7 +24,7 @@ public class ASTDiff extends Diff {
 	private ExtendedOnlyRootsClassifier classifier;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
-		super(src, dst, mappings.getMonoMappingStore(), new EditScript());
+		super(src, dst, new MappingStore(src.getRoot(),dst.getRoot()), new EditScript());
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
 		this.multiMappings = mappings;

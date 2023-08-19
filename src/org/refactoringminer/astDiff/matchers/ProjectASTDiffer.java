@@ -427,7 +427,18 @@ public class ProjectASTDiffer
 
 		boolean _abstractExp = abstractCodeMapping.getFragment1() instanceof AbstractExpression || abstractCodeMapping.getFragment2() instanceof AbstractExpression;
 		boolean _leafExp = abstractCodeMapping.getFragment1() instanceof LeafExpression || abstractCodeMapping.getFragment2() instanceof LeafExpression;
-		if (_abstractExp || _leafExp) {
+		boolean _abstractExpWithNonCompositeOwner = _abstractExp;
+		if (_abstractExp){
+			if (abstractCodeMapping.getFragment1() instanceof AbstractExpression)
+				if (((AbstractExpression)abstractCodeMapping.getFragment1()).getOwner() != null
+						&& ((AbstractExpression)abstractCodeMapping.getFragment1()).getOwner().getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT))
+					_abstractExpWithNonCompositeOwner = false;
+			if (abstractCodeMapping.getFragment2() instanceof AbstractExpression)
+				if (((AbstractExpression)abstractCodeMapping.getFragment2()).getOwner() != null
+						&& ((AbstractExpression)abstractCodeMapping.getFragment2()).getOwner().getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT))
+					_abstractExpWithNonCompositeOwner = false;
+		}
+		if (_abstractExpWithNonCompositeOwner || _leafExp) {
 			lastStepMappings.add(abstractCodeMapping);
 		} else {
 			new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);

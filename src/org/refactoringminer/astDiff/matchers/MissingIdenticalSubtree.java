@@ -47,7 +47,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                 for (var currentDst : currentPriorityDstTrees)
                     if (currentSrc.getMetrics().hash == currentDst.getMetrics().hash)
                         if (TreeUtilFunctions.isIsomorphicTo(currentSrc, currentDst)) {
-                            if (!mappingStore.isSrcMapped(currentSrc) && !mappingStore.isDstMapped(currentDst))
+                            if (!mappingStore.isSrcMappedConsideringSubTrees(currentSrc) && !mappingStore.isDstMappedConsideringSubTrees(currentDst))
                                 multiMappings.addMapping(currentSrc, currentDst);
                         }
 

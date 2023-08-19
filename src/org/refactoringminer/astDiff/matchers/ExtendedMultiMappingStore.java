@@ -163,6 +163,23 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		return hasSrc(src) && getDsts(src) != null && getDsts(src).size() > 0;
 	}
 
+	public boolean isSrcMappedConsideringSubTrees(Tree src)
+	{
+		for (Tree tree : src.preOrder()) {
+			if (isSrcMapped(tree))
+				return true;
+		}
+		return false;
+	}
+	public boolean isDstMappedConsideringSubTrees(Tree dst)
+	{
+		for (Tree tree : dst.preOrder()) {
+			if (isDstMapped(tree))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean isDstMapped(Tree dst) {
 		return hasDst(dst) && getSrcs(dst) != null && getSrcs(dst).size() > 0;
 	}

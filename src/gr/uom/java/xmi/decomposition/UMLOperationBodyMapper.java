@@ -11950,6 +11950,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	public boolean identicalMappings(UMLOperationBodyMapper other) {
+		if(this.mappings.size() == other.mappings.size()) {
+			Iterator<AbstractCodeMapping> thisIt = this.mappings.iterator();
+			Iterator<AbstractCodeMapping> otherIt = other.mappings.iterator();
+			int matchCount = 0;
+			while(thisIt.hasNext()) {
+				AbstractCodeMapping thisMapping = thisIt.next();
+				AbstractCodeMapping otherMapping = otherIt.next();
+				if(thisMapping.getFragment1().getLocationInfo().equals(otherMapping.getFragment1().getLocationInfo()) &&
+						thisMapping.getFragment2().getLocationInfo().equals(otherMapping.getFragment2().getLocationInfo())) {
+					matchCount++;
+				}
+			}
+			return matchCount == this.mappings.size();
+		}
+		return false;
+	}
+
 	public Set<VariableDeclaration> getRemovedVariables() {
 		return removedVariables;
 	}

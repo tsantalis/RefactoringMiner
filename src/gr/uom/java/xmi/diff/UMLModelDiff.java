@@ -2897,11 +2897,31 @@ public class UMLModelDiff {
 								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedOperationInvocation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
 									InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
-									refactorings.add(inlineOperationRefactoring);
-									deleteRemovedOperation(removedOperation);
-									mapper.addChildMapper(operationBodyMapper);
-									MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
-									optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+									Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+									boolean skip = false;
+									for(Refactoring r : refactorings) {
+										if(r instanceof InlineOperationRefactoring) {
+											InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
+											if(inline.getBodyMapper().identicalMappings(operationBodyMapper)) {
+												if(inlineOperationRefactoring.getRefactoringType().equals(RefactoringType.INLINE_OPERATION) &&
+														inline.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
+													refactoringsToBeRemoved.add(inline);
+												}
+												else if(inlineOperationRefactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION) &&
+														inline.getRefactoringType().equals(RefactoringType.INLINE_OPERATION)) {
+													skip = true;
+												}
+											}
+										}
+									}
+									refactorings.removeAll(refactoringsToBeRemoved);
+									if(!skip) {
+										refactorings.add(inlineOperationRefactoring);
+										deleteRemovedOperation(removedOperation);
+										mapper.addChildMapper(operationBodyMapper);
+										MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+										optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+									}
 								}
 								else {
 									for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {

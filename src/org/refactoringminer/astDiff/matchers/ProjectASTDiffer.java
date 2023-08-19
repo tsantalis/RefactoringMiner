@@ -68,8 +68,7 @@ public class ProjectASTDiffer
 			processOptimization(diff, optimizationDataMap.get(diff.getSrcPath()));
 		}
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
-			if (!isTestRelated(diff.getSrcPath(),diff.getDstPath()))
-					new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
+			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
 		computeAllEditScripts();
 	}

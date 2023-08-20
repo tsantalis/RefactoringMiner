@@ -18,6 +18,7 @@ import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.InitializerReplacement;
+import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstanceCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
@@ -4518,6 +4519,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
 							Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);
+							Set<AbstractCodeMapping> splitToMultipleAssignments = splitToMultipleAssignments(mappingSet);
 							if(movedInIfElseBranch.size() > 1) {
 								for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 									addToMappings((LeafMapping) mapping, mappingSet);
@@ -4531,6 +4533,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									addToMappings((LeafMapping) mapping, mappingSet);
 									leaves2.remove(mapping.getFragment2());
 									leaves1ToBeRemoved.add(mapping.getFragment1());
+								}
+								leafIterator1.remove();
+							}
+							else if(splitToMultipleAssignments.size() > 1) {
+								for(AbstractCodeMapping mapping : splitToMultipleAssignments) {
+									addToMappings((LeafMapping) mapping, mappingSet);
+									leaves2.remove(mapping.getFragment2());
 								}
 								leafIterator1.remove();
 							}
@@ -5813,6 +5822,41 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return false;
+	}
+
+	private Set<AbstractCodeMapping> splitToMultipleAssignments(TreeSet<? extends AbstractCodeMapping> mappingSet) {
+		if(mappingSet.size() == 1) {
+			return Set.of(mappingSet.first());
+		}
+		if(container1.equals(container2) || (parentMapper != null && !nested)) {
+			Set<AbstractCodeMapping> included = new LinkedHashSet<AbstractCodeMapping>();
+			VariableDeclaration declaration = null;
+			for(AbstractCodeMapping mapping : mappingSet) {
+				if(mapping.isIdenticalWithExtractedVariable()) {
+					included.add(mapping);
+					for(Refactoring r : mapping.getRefactorings()) {
+						if(r instanceof ExtractVariableRefactoring) {
+							ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+							declaration = extract.getVariableDeclaration();
+							break;
+						}
+					}
+				}
+				if(declaration != null && mapping.getFragment2().getString().startsWith(declaration.getVariableName())) {
+					for(Replacement r : mapping.getReplacements()) {
+						if(r instanceof IntersectionReplacement) {
+							IntersectionReplacement intersectionReplacement = (IntersectionReplacement)r;
+							if(intersectionReplacement.getSubExpressionMappings().size() > 0) {
+								included.add(mapping);
+								break;
+							}
+						}
+					}
+				}
+			}
+			return included;
+		}
+		return Set.of(mappingSet.first());
 	}
 
 	private Set<AbstractCodeMapping> movedInIfElseIfBranch(TreeSet<? extends AbstractCodeMapping> mappingSet) {

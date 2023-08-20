@@ -189,7 +189,8 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 			for(UMLOperation operation2 : nextClass.getOperations()) {
 				if(!containsMapperForOperation1(operation1) && !containsMapperForOperation2(operation2)) {
 					if(operation1.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation2) ||
-						(operation1.getName().equals(operation2.getName()) && operation1.compatibleSignature(operation2))) {
+						(operation1.getName().equals(operation2.getName()) && operation1.compatibleSignature(operation2)) ||
+						operation1.getBodyHashCode() == operation2.getBodyHashCode()) {
 						UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(operation1, operation2, classDiff);
 						int mappings = mapper.mappingsWithoutBlocks();
 						if(mappings > 0) {

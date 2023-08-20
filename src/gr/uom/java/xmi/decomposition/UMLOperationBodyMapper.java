@@ -10867,9 +10867,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							boolean skip = false;
 							if(substringAfterIndex1.length() > substringAfterIndex2.length()) {
 								skip = s2.contains(substringAfterIndex1);
+								if(substringAfterIndex1.startsWith(".") && !substringAfterIndex1.startsWith(".<")) {
+									skip = s2.contains(substringAfterIndex1.substring(1));
+								}
+								else if(substringAfterIndex1.startsWith(".<") && substringAfterIndex1.contains(">")) {
+									skip = s2.contains(substringAfterIndex1.substring(substringAfterIndex1.indexOf(">")+1));
+								}
 							}
 							else if(substringAfterIndex1.length() < substringAfterIndex2.length()) {
 								skip = s1.contains(substringAfterIndex2);
+								if(substringAfterIndex2.startsWith(".") && !substringAfterIndex2.startsWith(".<")) {
+									skip = s1.contains(substringAfterIndex2.substring(1));
+								}
+								else if(substringAfterIndex2.startsWith(".<") && substringAfterIndex2.contains(">")) {
+									skip = s1.contains(substringAfterIndex2.substring(substringAfterIndex2.indexOf(">")+1));
+								}
 							}
 							if(!skip) {
 								Replacement r = new VariableReplacementWithMethodInvocation(element1, element2, methodInvocationList.get(0), direction);

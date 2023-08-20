@@ -1255,6 +1255,18 @@ public class StringBasedHeuristics {
 						else if(token2.equals(token1 + ";\n")) {
 							intersection.add(token1);
 						}
+						else if(token2.endsWith("+=" + token1)) {
+							intersection.add(token1);
+						}
+						else if(token1.endsWith("+=" + token2)) {
+							intersection.add(token2);
+						}
+						else if(token1.endsWith(");\n") && token2.endsWith(";\n")) {
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(token1, token2);
+							if(commonPrefix.length() == token1.length()-3 && commonPrefix.length() == token2.length()-2) {
+								intersection.add(commonPrefix);
+							}
+						}
 					}
 				}
 				Set<String> filteredIntersection = new LinkedHashSet<String>();
@@ -1270,9 +1282,20 @@ public class StringBasedHeuristics {
 						filteredIntersection.add(common);
 					}
 				}
+				Set<LeafMapping> subExpressionMappings = new LinkedHashSet<LeafMapping>();
+				for(String key : filteredIntersection) {
+					List<LeafExpression> expressions1 = statement1.findExpression(key);
+					List<LeafExpression> expressions2 = statement2.findExpression(key);
+					if(expressions1.size() == expressions2.size()) {
+						for(int i=0; i<expressions1.size(); i++) {
+							LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
+							subExpressionMappings.add(leafMapping);
+						}
+					}
+				}
 				int size = filteredIntersection.size();
 				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
-				if((size > 0 && size > threshold) || (size > 1 && size >= threshold)) {
+				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size)) {
 					List<String> tokens1AsList = new ArrayList<>(tokens1);
 					List<String> tokens2AsList = new ArrayList<>(tokens2);
 					int counter = 0;
@@ -1292,15 +1315,8 @@ public class StringBasedHeuristics {
 						return false;
 					}
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
-					for(String key : filteredIntersection) {
-						List<LeafExpression> expressions1 = statement1.findExpression(key);
-						List<LeafExpression> expressions2 = statement2.findExpression(key);
-						if(expressions1.size() == expressions2.size()) {
-							for(int i=0; i<expressions1.size(); i++) {
-								LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), container1, container2);
-								r.addSubExpressionMapping(leafMapping);
-							}
-						}
+					for(LeafMapping m : subExpressionMappings) {
+						r.addSubExpressionMapping(m);
 					}
 					info.getReplacements().add(r);
 					return true;

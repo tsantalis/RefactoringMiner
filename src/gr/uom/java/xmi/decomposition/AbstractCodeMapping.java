@@ -536,7 +536,7 @@ public abstract class AbstractCodeMapping {
 			checkForAliasedVariable(getFragment2().getVariableDeclarations().get(0).getInitializer(), replacements.iterator().next(), nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=")) {
+		if(argumentizedString.contains("=") && (statement.getLocationInfo().before(fragment2.getLocationInfo()) || fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
@@ -685,7 +685,7 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=")) {
+		if(argumentizedString.contains("=") && (statement.getLocationInfo().before(fragment1.getLocationInfo()) || fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
 			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];

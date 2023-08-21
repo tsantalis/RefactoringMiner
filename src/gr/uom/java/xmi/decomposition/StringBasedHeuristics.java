@@ -2191,6 +2191,26 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean extractedToVariable(String s1, String s2, AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info) {
+		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+		if(!commonSuffix.isEmpty() && commonSuffix.startsWith("new ")) {
+			if(statement2.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().size() == 0) {
+				String prefix1 = s1.substring(0, s1.indexOf(commonSuffix));
+				if(!prefix1.isEmpty()) {
+					if(prefix1.startsWith("return ")) {
+						prefix1 = prefix1.substring(7);
+					}
+					for(AbstractCodeFragment fragment2 : info.getStatements2()) {
+						if(fragment2.getString().contains(prefix1) && fragment2.getString().contains(statement2.getVariableDeclarations().get(0).getVariableName())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	protected static boolean identicalAfterVariableAndTypeReplacements(String s1, String s2, Set<Replacement> replacements) {
 		String s1AfterReplacements = new String(s1);
 		for(Replacement replacement : replacements) {

@@ -3356,6 +3356,36 @@ public class UMLModelDiff {
 				return false;
 			}
 		}
+		if(mappingList.size() == 1 && mappingList.get(0).getFragment1() instanceof StatementObject) {
+			AbstractCall invocation1 = mappingList.get(0).getFragment1().invocationCoveringEntireFragment();
+			AbstractCall invocation2 = mappingList.get(0).getFragment2().invocationCoveringEntireFragment();
+			if(invocation1 != null && invocation2 != null && invocation1.getExpression() != null && invocation2.getExpression() != null) {
+				String expression1 = invocation1.getExpression();
+				String expression2 = invocation2.getExpression();
+				if(expression1.startsWith("this.")) {
+					expression1 = expression1.substring(5);
+				}
+				if(expression2.startsWith("this.")) {
+					expression2 = expression2.substring(5);
+				}
+				if(!expression1.equals(expression2) && operationBodyMapper.getClassDiff() != null) {
+					UMLAttribute attr1 = operationBodyMapper.getClassDiff().findAttributeInNextClass(expression1);
+					UMLAttribute attr2 = operationBodyMapper.getClassDiff().findAttributeInNextClass(expression2);
+					if(attr1 != null && attr2 != null) {
+						boolean matchFound = false;
+						for(UMLAttributeDiff diff : operationBodyMapper.getClassDiff().getAttributeDiffList()) {
+							if(diff.getRemovedAttribute().equals(attr1) && diff.getAddedAttribute().equals(attr2)) {
+								matchFound = true;
+								break;
+							}
+						}
+						if(!matchFound) {
+							return false;
+						}
+					}
+				}
+			}
+		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();
 		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();

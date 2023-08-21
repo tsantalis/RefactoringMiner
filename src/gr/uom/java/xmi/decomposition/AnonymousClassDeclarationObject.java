@@ -74,6 +74,15 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 		return types;
 	}
 
+	public List<AnonymousClassDeclarationObject> getAnonymousClassDeclarationsRecursively() {
+		List<AnonymousClassDeclarationObject> list = new ArrayList<AnonymousClassDeclarationObject>();
+		for(AnonymousClassDeclarationObject anonymous : anonymousClassDeclarations) {
+			list.add(anonymous);
+			list.addAll(anonymous.getAnonymousClassDeclarationsRecursively());
+		}
+		return list;
+	}
+
 	public List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
 	}

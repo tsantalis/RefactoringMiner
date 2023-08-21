@@ -267,7 +267,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		OperationBody body2 = operation2.getBody();
 		if(body1 != null && body2 != null) {
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
+			List<AnonymousClassDeclarationObject> nestedAnonymous1 = new ArrayList<AnonymousClassDeclarationObject>();
+			for(AnonymousClassDeclarationObject anonymous : anonymous1) {
+				nestedAnonymous1.addAll(anonymous.getAnonymousClassDeclarationsRecursively());
+			}
 			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
+			List<AnonymousClassDeclarationObject> nestedAnonymous2 = new ArrayList<AnonymousClassDeclarationObject>();
+			for(AnonymousClassDeclarationObject anonymous : anonymous2) {
+				nestedAnonymous2.addAll(anonymous.getAnonymousClassDeclarationsRecursively());
+			}
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
 			List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
 			for(LambdaExpressionObject lambda1 : lambdas1) {
@@ -305,7 +313,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
 			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
 				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||
-						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() == 0)) {
+						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() == 0) ||
+						(anonymous1.size() + nestedAnonymous1.size() == anonymous2.size() + nestedAnonymous2.size() + 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0)) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf1 : leaves1) {
 						if(leaf1.getAnonymousClassDeclarations().size() > 0) {
@@ -330,7 +339,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				else if((anonymous1.size() == 0 && anonymous2.size() == 1) ||
-						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() == 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
+						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() == 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0) ||
+						(anonymous1.size() + nestedAnonymous1.size() + 1 == anonymous2.size() + nestedAnonymous2.size() && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
 						if(leaf2.getAnonymousClassDeclarations().size() > 0) {
@@ -10243,6 +10253,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		String statementWithoutAnonymous2 = statementWithoutAnonymous(statement2, anonymousClassDeclaration2, container2);
 		if(replacementInfo.getRawDistance() == 0 || statementWithoutAnonymous1.equals(statementWithoutAnonymous2) ||
 				identicalAfterVariableAndTypeReplacements(statementWithoutAnonymous1, statementWithoutAnonymous2, replacementInfo.getReplacements()) ||
+				extractedToVariable(statementWithoutAnonymous1, statementWithoutAnonymous2, statement1, statement2, replacementInfo) ||
 				(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 				(onlyDifferentInvoker(statementWithoutAnonymous1, statementWithoutAnonymous2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
 				invocationCoveringTheEntireStatement1.identical(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers) ||

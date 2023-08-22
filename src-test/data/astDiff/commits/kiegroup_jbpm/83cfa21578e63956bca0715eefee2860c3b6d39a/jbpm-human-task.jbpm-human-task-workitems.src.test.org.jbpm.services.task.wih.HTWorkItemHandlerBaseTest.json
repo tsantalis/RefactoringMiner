@@ -56418,6 +56418,39 @@
   "firstEndPos" : 35309,
   "secondEndPos" : 37610
 }, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 35252,
+  "secondPos" : 35132,
+  "firstEndPos" : 35286,
+  "secondEndPos" : 35404
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Comment for task \"",
+  "secondLabel" : "\"Comment for task \"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 35252,
+  "secondPos" : 35132,
+  "firstEndPos" : 35271,
+  "secondEndPos" : 35151
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "+",
+  "secondLabel" : "+",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 35272,
+  "secondPos" : 35176,
+  "firstEndPos" : 35273,
+  "secondEndPos" : 35177
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",

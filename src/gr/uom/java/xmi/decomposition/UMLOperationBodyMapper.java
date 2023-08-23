@@ -6351,6 +6351,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(isNextStatement || isAfterNextStatement) {
 						return true;
 					}
+					if(parentMapping != null) {
+						return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= parentMapping.getFragment1().getLocationInfo().getStartLine() &&
+								mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= parentMapping.getFragment1().getLocationInfo().getEndLine();
+					}
 					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();
 				}

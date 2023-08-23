@@ -610,6 +610,9 @@ public class ProjectASTDiffer
 			if (srcNode == null || dstNode == null) return;
 			if (srcNode.isIsoStructuralTo(dstNode))
 				mappingStore.addMappingRecursively(srcNode,dstNode);
+			else {
+				new LeafMatcher().match(srcNode,dstNode,mappingStore);
+			}
 		}
 	}
 

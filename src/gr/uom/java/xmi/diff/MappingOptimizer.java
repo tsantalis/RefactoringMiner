@@ -31,6 +31,36 @@ public class MappingOptimizer {
 		this.classDiff = classDiff;
 	}
 
+	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeMappers, List<Refactoring> refactorings) {
+		if(moveCodeMappers.size() > 1) {
+			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
+			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
+			for(UMLOperationBodyMapper moveCodeMapper : moveCodeMappers) {
+				for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+					AbstractCodeFragment fragmentContainingExpression = null;
+					if(oneToManyMappings.containsKey(mapping.getFragment2())) {
+						oneToManyMappings.get(mapping.getFragment2()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment2()).add(moveCodeMapper);
+					}
+					else if(mapping.getFragment2() instanceof AbstractExpression &&
+							(fragmentContainingExpression = findFragmentContainingExpression(oneToManyMappings.keySet(), (AbstractExpression)mapping.getFragment2())) != null) {
+						oneToManyMappings.get(fragmentContainingExpression).add(mapping);
+						oneToManyMappers.get(fragmentContainingExpression).add(moveCodeMapper);
+					}
+					else {
+						List<AbstractCodeMapping> mappings = new ArrayList<>();
+						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+						mappings.add(mapping);
+						mappers.add(moveCodeMapper);
+						oneToManyMappings.put(mapping.getFragment2(), mappings);
+						oneToManyMappers.put(mapping.getFragment2(), mappers);
+					}
+				}
+			}
+			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers, refactorings);
+		}
+	}
+
 	private AbstractCodeFragment findFragmentContainingExpression(Set<AbstractCodeFragment> fragments, AbstractExpression expression) {
 		for(AbstractCodeFragment fragment : fragments) {
 			if(fragment instanceof CompositeStatementObject) {
@@ -431,6 +461,17 @@ public class MappingOptimizer {
 			}
 			else if(ref instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
+				if(updatedMappers.contains(refactoring.getBodyMapper())) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+						refactoringsToBeRemoved.add(refactoring);
+					}
+					else {
+						refactoring.updateMapperInfo();
+					}
+				}
+			}
+			else if(ref instanceof MoveCodeRefactoring) {
+				MoveCodeRefactoring refactoring = (MoveCodeRefactoring)ref;
 				if(updatedMappers.contains(refactoring.getBodyMapper())) {
 					if(refactoring.getBodyMapper().getMappings().size() == 0) {
 						refactoringsToBeRemoved.add(refactoring);

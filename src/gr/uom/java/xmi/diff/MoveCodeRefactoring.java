@@ -35,6 +35,15 @@ public class MoveCodeRefactoring implements Refactoring {
 		}
 	}
 
+	public void updateMapperInfo() {
+		this.movedCodeFragmentsFromSourceOperation.clear();
+		this.movedCodeFragmentsToTargetOperation.clear();
+		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+			this.movedCodeFragmentsFromSourceOperation.add(mapping.getFragment1());
+			this.movedCodeFragmentsToTargetOperation.add(mapping.getFragment2());
+		}
+	}
+
 	public UMLOperationBodyMapper getBodyMapper() {
 		return bodyMapper;
 	}

@@ -702,7 +702,9 @@ public class ProjectASTDiffer
 				//skip argument mappings, if the same method is extracted more than once from the original method.
 				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
 					for(AbstractCodeMapping expressionMapping : extractOperationRefactoring.getArgumentMappings()) {
-						lastStepMappings.add(expressionMapping);
+						Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
+						Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
+						new LeafMatcher().match(t1,t2,optimizationMappingStore);
 					}
 				}
 			} else if (refactoring instanceof InlineOperationRefactoring) {
@@ -712,7 +714,9 @@ public class ProjectASTDiffer
 				//skip argument mappings, if the same method is inlined more than once to the target method.
 				if(!multipleInstancesWithSameDescription(refactoringList, refactoring)) {
 					for(AbstractCodeMapping expressionMapping : inlineOperationRefactoring.getArgumentMappings()) {
-						lastStepMappings.add(expressionMapping);
+						Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
+						Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
+						new LeafMatcher().match(t1,t2,optimizationMappingStore);
 					}
 				}
 			} else if (refactoring instanceof MoveCodeRefactoring) {

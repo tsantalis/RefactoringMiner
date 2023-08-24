@@ -122,6 +122,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		Set<UMLOperationBodyMapper> setUpMappers = new LinkedHashSet<>();
 		Set<UMLOperationBodyMapper> tearDownMappers = new LinkedHashSet<>();
 		Set<UMLOperationBodyMapper> constructorMappers = new LinkedHashSet<>();
+		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
 		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 			if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
 				setUpMappers.add(mapper);
@@ -152,6 +153,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							}
 							if(moveCodeMapper.getMappings().size() > invalidMappings) {
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
 								refactorings.add(ref);
 							}
 						}
@@ -166,6 +169,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, setUpMapper, this);
 						if(moveCodeMapper.getMappings().size() > 0) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
 						}
 					}
@@ -179,6 +184,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, tearDownMapper, this);
 						if(moveCodeMapper.getMappings().size() > 0) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
 						}
 					}
@@ -193,6 +200,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, constructorMapper, this);
 							if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
 								refactorings.add(ref);
 							}
 						}
@@ -200,6 +209,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(constructorMapper, mapper, this);
 							if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
 								MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+								if(!moveCodeMappers.contains(moveCodeMapper))
+									moveCodeMappers.add(moveCodeMapper);
 								refactorings.add(ref);
 							}
 						}
@@ -215,6 +226,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
 						if(moveCodeMapper.getMappings().size() > 0) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
 						}
 					}
@@ -226,6 +239,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
 						if(moveCodeMapper.mappingsWithoutBlocks() > 2) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
 						}
 					}
@@ -240,6 +255,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);
 						if(moveCodeMapper.getMappings().size() > 0) {
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);
 						}
 					}
@@ -249,9 +266,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		for(UMLOperationBodyMapper moveCodeMapper : potentialCodeMoveBetweenSetUpTearDownMethods) {
 			if(moveCodeMapper.getMappings().size() > 0) {
 				MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+				if(!moveCodeMappers.contains(moveCodeMapper))
+					moveCodeMappers.add(moveCodeMapper);
 				refactorings.add(ref);
 			}
 		}
+		MappingOptimizer optimizer = new MappingOptimizer(this);
+		optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, refactorings);
 	}
 
 	private boolean mappingFoundInExtractedMethod(Set<AbstractCodeMapping> mappings) {

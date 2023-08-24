@@ -480,7 +480,7 @@ public class UMLModelASTReader {
     			if(matchingOperation != null || matchingAttribute != null || matchingInitializer != null || matchingEnumConstant != null) {
 	    			String anonymousBinaryName = getAnonymousBinaryName(node);
 	    			String anonymousCodePath = getAnonymousCodePath(node);
-	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, comments, umlClass.getImportedTypes());
+	    			UMLAnonymousClass anonymousClass = processAnonymousClassDeclaration(cu, anonymous, packageName + "." + className, anonymousBinaryName, anonymousCodePath, sourceFile, packageDoc, comments, umlClass.getImportedTypes());
 	    			umlClass.addAnonymousClass(anonymousClass);
 	    			if(matchingOperation != null) {
 	    				matchingOperation.addAnonymousClass(anonymousClass);
@@ -789,7 +789,7 @@ public class UMLModelASTReader {
 		return attributes;
 	}
 	
-	private UMLAnonymousClass processAnonymousClassDeclaration(CompilationUnit cu, AnonymousClassDeclaration anonymous, String packageName, String binaryName, String codePath, String sourceFile, List<UMLComment> comments, List<UMLImport> importedTypes) {
+	private UMLAnonymousClass processAnonymousClassDeclaration(CompilationUnit cu, AnonymousClassDeclaration anonymous, String packageName, String binaryName, String codePath, String sourceFile, UMLJavadoc packageDoc, List<UMLComment> comments, List<UMLImport> importedTypes) {
 		List<BodyDeclaration> bodyDeclarations = anonymous.bodyDeclarations();
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, anonymous, CodeElementType.ANONYMOUS_CLASS_DECLARATION);
 		UMLAnonymousClass anonymousClass = new UMLAnonymousClass(packageName, binaryName, codePath, locationInfo, importedTypes);
@@ -817,6 +817,14 @@ public class UMLModelASTReader {
 				umlInitializer.setClassName(anonymousClass.getCodePath());
 				umlInitializer.setAnonymousClassContainer(anonymousClass);
 				anonymousClass.addInitializer(umlInitializer);
+			}
+			else if(bodyDeclaration instanceof TypeDeclaration) {
+				TypeDeclaration typeDeclaration = (TypeDeclaration)bodyDeclaration;
+				processTypeDeclaration(cu, typeDeclaration, anonymousClass.getName(), sourceFile, importedTypes, packageDoc, comments);
+			}
+			else if(bodyDeclaration instanceof EnumDeclaration) {
+				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
+				processEnumDeclaration(cu, enumDeclaration, anonymousClass.getName(), sourceFile, importedTypes, packageDoc, comments);
 			}
 		}
 		distributeComments(comments, locationInfo, anonymousClass.getComments());

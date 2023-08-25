@@ -602,6 +602,17 @@ public class ProjectASTDiffer
 				mappingStore.addMappingRecursively(srcExceptionNode,dstExceptionNode);
 			}
 		}
+		AbstractMap.SimpleEntry<Set<UMLType>, Set<UMLType>> changedExceptionTypes = umlOperationDiff.getChangedExceptionTypes();
+		if (changedExceptionTypes != null){
+			Iterator<UMLType> keys = changedExceptionTypes.getKey().iterator();
+			Iterator<UMLType> values = changedExceptionTypes.getValue().iterator();
+			if (keys.hasNext() && values.hasNext())
+			{
+				Tree srcExceptionNode =TreeUtilFunctions.findByLocationInfo(srcTree, keys.next().getLocationInfo());
+				Tree dstExceptionNode =TreeUtilFunctions.findByLocationInfo(dstTree, values.next().getLocationInfo());
+				mappingStore.addMappingRecursively(srcExceptionNode,dstExceptionNode);
+			}
+		}
 		if (umlOperationDiff.getRemovedOperation().getReturnParameter() != null && umlOperationDiff.getAddedOperation().getReturnParameter() != null ) {
 			LocationInfo srcLocationInfo = umlOperationDiff.getRemovedOperation().getReturnParameter().getType().getLocationInfo();
 			LocationInfo dstLocationInfo = umlOperationDiff.getAddedOperation().getReturnParameter().getType().getLocationInfo();

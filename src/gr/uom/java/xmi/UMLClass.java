@@ -17,6 +17,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isAbstract;
 	private boolean isInterface;
 	private boolean isEnum;
+	private boolean isAnnotation;
 	private boolean topLevel;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
@@ -71,6 +72,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "interface";
     	else if(isEnum)
     		return "enum";
+    	else if(isAnnotation)
+    		return "annotation";
     	else
     		return "class";
     }
@@ -133,6 +136,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setEnum(boolean isEnum) {
 		this.isEnum = isEnum;
+	}
+
+	public boolean isAnnotation() {
+		return isAnnotation;
+	}
+
+	public void setAnnotation(boolean isAnnotation) {
+		this.isAnnotation = isAnnotation;
 	}
 
 	public boolean isInterface() {

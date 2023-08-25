@@ -21,6 +21,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
@@ -161,6 +162,10 @@ public class UMLModelASTReader {
         		EnumDeclaration enumDeclaration = (EnumDeclaration)abstractTypeDeclaration;
         		processEnumDeclaration(compilationUnit, enumDeclaration, packageName, sourceFilePath, importedTypes, packageDoc, comments);
         	}
+        	else if(abstractTypeDeclaration instanceof AnnotationTypeDeclaration) {
+        		AnnotationTypeDeclaration annotationDeclaration = (AnnotationTypeDeclaration)abstractTypeDeclaration;
+        		processAnnotationTypeDeclaration(compilationUnit, annotationDeclaration, packageName, sourceFilePath, importedTypes, packageDoc, comments);
+        	}
         }
 	}
 
@@ -222,6 +227,47 @@ public class UMLModelASTReader {
 			}
 		}
 		return doc;
+	}
+
+	private void processAnnotationTypeDeclaration(CompilationUnit cu, AnnotationTypeDeclaration annotationDeclaration, String packageName, String sourceFile,
+			List<UMLImport> importedTypes, UMLJavadoc packageDoc, List<UMLComment> comments) {
+		UMLJavadoc javadoc = generateJavadoc(cu, annotationDeclaration, sourceFile);
+		if(javadoc != null && javadoc.containsIgnoreCase(FREE_MARKER_GENERATED)) {
+			return;
+		}
+		String className = annotationDeclaration.getName().getFullyQualifiedName();
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, annotationDeclaration, CodeElementType.TYPE_DECLARATION);
+		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, annotationDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
+		umlClass.setJavadoc(javadoc);
+		if(annotationDeclaration.isPackageMemberTypeDeclaration()) {
+			umlClass.setPackageDeclarationJavadoc(packageDoc);
+			for(UMLComment comment : comments) {
+				if(comment.getLocationInfo().getStartLine() == 1) {
+					umlClass.getPackageDeclarationComments().add(comment);
+				}
+			}
+		}
+		umlClass.setAnnotation(true);
+		
+		processModifiers(cu, sourceFile, annotationDeclaration, umlClass);
+		
+		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, annotationDeclaration, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments);
+		
+		processAnonymousClassDeclarations(cu, annotationDeclaration, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass);
+
+		for(BodyDeclaration declaration : map.keySet()) {
+			if(declaration instanceof MethodDeclaration) {
+				UMLOperation operation = (UMLOperation) map.get(declaration);
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
+			}
+			else if(declaration instanceof Initializer) {
+				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
+			}
+		}
+		
+		this.getUmlModel().addClass(umlClass);
+		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
 
 	private void processEnumDeclaration(CompilationUnit cu, EnumDeclaration enumDeclaration, String packageName, String sourceFile,
@@ -313,6 +359,10 @@ public class UMLModelASTReader {
 				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
 				processEnumDeclaration(cu, enumDeclaration, umlClass.getName(), sourceFile, importedTypes, packageDoc, comments);
 			}
+			else if(bodyDeclaration instanceof AnnotationTypeDeclaration) {
+        		AnnotationTypeDeclaration annotationDeclaration = (AnnotationTypeDeclaration)bodyDeclaration;
+        		processAnnotationTypeDeclaration(cu, annotationDeclaration, umlClass.getName(), sourceFile, importedTypes, packageDoc, comments);
+        	}
 		}
 		return map;
 	}
@@ -414,6 +464,10 @@ public class UMLModelASTReader {
         	else if(localTypeDeclaration instanceof EnumDeclaration) {
         		EnumDeclaration enumDeclaration = (EnumDeclaration)localTypeDeclaration;
         		processEnumDeclaration(cu, enumDeclaration, fullName, sourceFile, importedTypes, packageDoc, allComments);
+        	}
+        	else if(localTypeDeclaration instanceof AnnotationTypeDeclaration) {
+        		AnnotationTypeDeclaration annotationDeclaration = (AnnotationTypeDeclaration)localTypeDeclaration;
+        		processAnnotationTypeDeclaration(cu, annotationDeclaration, fullName, sourceFile, importedTypes, packageDoc, allComments);
         	}
     	}
     	
@@ -826,6 +880,10 @@ public class UMLModelASTReader {
 				EnumDeclaration enumDeclaration = (EnumDeclaration)bodyDeclaration;
 				processEnumDeclaration(cu, enumDeclaration, anonymousClass.getName(), sourceFile, importedTypes, packageDoc, comments);
 			}
+			else if(bodyDeclaration instanceof AnnotationTypeDeclaration) {
+        		AnnotationTypeDeclaration annotationDeclaration = (AnnotationTypeDeclaration)bodyDeclaration;
+        		processAnnotationTypeDeclaration(cu, annotationDeclaration, anonymousClass.getName(), sourceFile, importedTypes, packageDoc, comments);
+        	}
 		}
 		distributeComments(comments, locationInfo, anonymousClass.getComments());
 		return anonymousClass;

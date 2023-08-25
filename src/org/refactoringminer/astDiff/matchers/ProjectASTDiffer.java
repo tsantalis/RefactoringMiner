@@ -699,12 +699,12 @@ public class ProjectASTDiffer
 			} else if (refactoring instanceof MergeOperationRefactoring) {
 				MergeOperationRefactoring mergeOperationRefactoring = (MergeOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : mergeOperationRefactoring.getMappers()) {
-					processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
+					processMethod(srcTree,dstTree,bodyMapper,mappingStore);
 				}
 			} else if (refactoring instanceof SplitOperationRefactoring) {
 				SplitOperationRefactoring splitOperationRefactoring = (SplitOperationRefactoring) refactoring;
 				for(UMLOperationBodyMapper bodyMapper : splitOperationRefactoring.getMappers()) {
-					processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
+					processMethod(srcTree,dstTree,bodyMapper,mappingStore);
 				}
 			} else if (refactoring instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;

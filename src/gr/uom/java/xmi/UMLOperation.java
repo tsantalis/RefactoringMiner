@@ -459,6 +459,32 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return true;
 	}
 
+	public boolean equalSignatureWithIdenticalNameIgnoringChangedTypesToFromObject(UMLOperation operation) {
+		if(!(this.isConstructor && operation.isConstructor || this.name.equals(operation.name)))
+			return false;
+		if(this.isAbstract != operation.isAbstract)
+			return false;
+		/*if(this.isStatic != operation.isStatic)
+			return false;
+		if(this.isFinal != operation.isFinal)
+			return false;*/
+		if(this.parameters.size() != operation.parameters.size())
+			return false;
+		if(!equalTypeParameters(operation))
+			return false;
+		int i=0;
+		for(UMLParameter thisParameter : this.parameters) {
+			UMLParameter otherParameter = operation.parameters.get(i);
+			if(!thisParameter.equals(otherParameter) && !thisParameter.equalsExcludingType(otherParameter))
+				return false;
+			if(thisParameter.getName().equals(otherParameter.getName()) && !thisParameter.getType().equals(otherParameter.getType()) &&
+					!(thisParameter.getType().getClassType().equals("Object") || otherParameter.getType().getClassType().equals("Object")))
+				return false;
+			i++;
+		}
+		return true;
+	}
+
 	private boolean equivalentName(UMLOperation operation) {
 		return this.name.equals(operation.name) || equivalentNames(this, operation) || equivalentNames(operation, this);
 	}

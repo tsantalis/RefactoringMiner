@@ -71,14 +71,6 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
     	}
 	}
 
-	private boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
-		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))
-				return true;
-		}
-		return false;
-	}
-
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
 		for(UMLAttribute attribute : originalClass.getAttributes()) {
     		UMLAttribute attributeWithTheSameName = nextClass.attributeWithTheSameNameIgnoringChangedType(attribute);

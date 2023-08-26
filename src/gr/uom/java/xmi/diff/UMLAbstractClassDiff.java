@@ -140,6 +140,14 @@ public abstract class UMLAbstractClassDiff {
 		return modelDiff;
 	}
 
+	protected boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))
+				return true;
+		}
+		return false;
+	}
+
 	protected boolean containsMapperForOperation1(UMLOperation operation) {
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			if(mapper.getContainer1().equals(operation)) {

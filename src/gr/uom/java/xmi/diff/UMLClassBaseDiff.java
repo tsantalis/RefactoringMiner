@@ -672,14 +672,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
-	private boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {
-		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
-			if(mapper.getContainer1().equals(operation1) || mapper.getContainer2().equals(operation2))
-				return true;
-		}
-		return false;
-	}
-
 	public boolean matches(String className) {
 		return this.originalClass.getName().equals(className) ||
 				this.nextClass.getName().equals(className);

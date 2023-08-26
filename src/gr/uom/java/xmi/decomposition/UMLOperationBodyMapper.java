@@ -3416,6 +3416,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(identicalCommentsInBody(statement1, statement2)) {
 									score = 0.99;
 								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
+									score = 0.99;
+								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
@@ -3685,6 +3689,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 								else if(identicalCommentsInBody(statement1, statement2)) {
+									score = 0.99;
+								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
 									score = 0.99;
 								}
 							}

@@ -109,8 +109,12 @@ public class MultiMoveActionGenerator {
 		this.fullMap.put(srcTrees,dstTrees);
 		for (Tree srcTree : srcTrees)
 		{
+			if (srcTree == null)
+				continue;
 			for (Tree dstTree : dstTrees)
 			{
+				if (dstTree == null)
+					continue;
 				boolean updated = false;
 				if (srcTree.isLeaf() && dstTree.isLeaf())
 					updated = (srcTree.getMetrics().hash != dstTree.getMetrics().hash);

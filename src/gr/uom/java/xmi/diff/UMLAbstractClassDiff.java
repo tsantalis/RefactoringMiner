@@ -174,6 +174,20 @@ public abstract class UMLAbstractClassDiff {
 		return null;
 	}
 
+	public Set<Replacement> getReplacementsOfType(ReplacementType type) {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			replacements.addAll(mapper.getReplacementsOfType(type));
+		}
+		for(UMLAttributeDiff diff : getAttributeDiffList()) {
+			if(diff.getInitializerMapper().isPresent()) {
+				UMLOperationBodyMapper initializerMapper = diff.getInitializerMapper().get();
+				replacements.addAll(initializerMapper.getReplacementsOfType(type));
+			}
+		}
+		return replacements;
+	}
+
 	public abstract void process() throws RefactoringMinerTimedOutException;
 	
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;

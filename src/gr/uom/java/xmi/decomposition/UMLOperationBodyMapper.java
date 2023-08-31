@@ -2968,6 +2968,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
+	public Set<Replacement> getReplacementsOfType(ReplacementType type) {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			for(Replacement r : mapping.getReplacements()) {
+				if(r.getType().equals(type)) {
+					replacements.add(r);
+				}
+			}
+		}
+		return replacements;
+	}
+
 	public boolean containsCompositeMappingWithoutReplacements() {
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping instanceof CompositeStatementObjectMapping && !mapping.getFragment1().equalFragment(mapping.getFragment2()) && mapping.getReplacements().isEmpty()) {

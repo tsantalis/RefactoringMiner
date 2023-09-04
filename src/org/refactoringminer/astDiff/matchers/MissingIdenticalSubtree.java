@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 /* Created by pourya on 2023-06-14 2:10 p.m. */
 public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements TreeMatcher {
+    private final static boolean ONLY_JAVA_DOCS = false;
     private static final int DEFAULT_MIN_PRIORITY = 1;
     protected int minPriority = DEFAULT_MIN_PRIORITY;
 
@@ -23,8 +24,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     protected Tree src;
     protected Tree dst;
     protected ExtendedMultiMappingStore mappings;
-
-
+    
     @Override
     public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
         this.src = src;
@@ -97,6 +97,12 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     }
 
     private boolean isAcceptable(Tree src, Tree dst) {
+        if (ONLY_JAVA_DOCS)
+        {
+            if (src.getType().name.equals(Constants.JAVA_DOC))
+                return true;
+            return false;
+        }
         //FIXME: Inside the condition (if-for-while) ignore it
         if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
             if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)

@@ -50,7 +50,9 @@ public class CaseInfo implements Serializable {
     }
 
     public String makeURL() {
-        return this.repo.replace(".git","") + "/commit/" + this.commit;
+        String infix = (this.repo.contains(".git")) ? "/commit/" : "";
+
+        return this.repo.replace(".git","") + infix + this.commit;
     }
     public static class CaseInfoConverter implements ArgumentConverter {
         @Override
@@ -72,5 +74,13 @@ public class CaseInfo implements Serializable {
             }
             throw new ArgumentConversionException("Can't convert to type: '" + type.getName() + "'");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CaseInfo{" +
+                "repo='" + repo + '\'' +
+                ", commit='" + commit + '\'' +
+                '}';
     }
 }

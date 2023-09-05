@@ -287,7 +287,7 @@ public class MappingOptimizer {
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
 				for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
-					if(callsExtractedInlinedMethod.get(i) == true) {
+					if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false)))) {
 						indicesToBeRemoved.add(i);
 					}
 				}
@@ -483,6 +483,34 @@ public class MappingOptimizer {
 			}
 		}
 		refactorings.removeAll(refactoringsToBeRemoved);
+	}
+
+	private boolean callToExtractedInlinedMethodIsArgument(AbstractCodeMapping mapping, UMLOperationBodyMapper mapper) {
+		if(mapper.getOperationInvocation() != null) {
+			AbstractCodeFragment fragment1 = mapping.getFragment1();
+			for(AbstractCall call : fragment1.getCreations()) {
+				if(call.arguments().contains(mapper.getOperationInvocation().actualString())) {
+					return true;
+				}
+			}
+			for(AbstractCall call : fragment1.getMethodInvocations()) {
+				if(call.arguments().contains(mapper.getOperationInvocation().actualString())) {
+					return true;
+				}
+			}
+			AbstractCodeFragment fragment2 = mapping.getFragment2();
+			for(AbstractCall call : fragment2.getCreations()) {
+				if(call.arguments().contains(mapper.getOperationInvocation().actualString())) {
+					return true;
+				}
+			}
+			for(AbstractCall call : fragment2.getMethodInvocations()) {
+				if(call.arguments().contains(mapper.getOperationInvocation().actualString())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean atLeastOneMappingCallsExtractedOrInlinedMethodWithVariableDeclarationOrThrow(List<AbstractCodeMapping> mappings, List<UMLOperationBodyMapper> mappers) {

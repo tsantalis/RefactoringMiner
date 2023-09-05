@@ -3664,6 +3664,7 @@ public class UMLModelDiff {
 									if(extract.getExtractedOperation().equals(addedOperation)) {
 										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
 											refactoringsToBeRemoved.add(r);
+											refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
 										}
 									}
 								}
@@ -3824,6 +3825,7 @@ public class UMLModelDiff {
 									if(extract.getExtractedOperation().equals(addedOperation)) {
 										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
 											refactoringsToBeRemoved.add(r);
+											refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
 										}
 									}
 								}

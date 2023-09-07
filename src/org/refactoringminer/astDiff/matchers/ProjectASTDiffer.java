@@ -522,6 +522,7 @@ public class ProjectASTDiffer
 		for (org.apache.commons.lang3.tuple.Pair<UMLAnnotation, UMLAnnotation> umlAnnotationUMLAnnotationPair : annotationListDiff.getCommonAnnotations()) {
 			Tree srcClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(srcTree , umlAnnotationUMLAnnotationPair.getLeft().getLocationInfo());
 			Tree dstClassAnnotationTree = TreeUtilFunctions.findByLocationInfo(dstTree, umlAnnotationUMLAnnotationPair.getRight().getLocationInfo());
+			if (srcClassAnnotationTree == null || dstClassAnnotationTree == null) return;
 			if (srcClassAnnotationTree.isIsoStructuralTo(dstClassAnnotationTree))
 				mappingStore.addMappingRecursively(srcClassAnnotationTree,dstClassAnnotationTree);
 		}
@@ -571,7 +572,8 @@ public class ProjectASTDiffer
 		if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
 			Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
 			Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
-			if (srcUMLJavaDoc.equalText(dstUMLJavaDoc)) {
+			if (srcJavaDocNode == null || dstJavaDocNode == null) return;
+			if (srcUMLJavaDoc.equalText(dstUMLJavaDoc) && srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
 				mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
 			} else {
 				new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
@@ -1308,6 +1310,7 @@ public class ProjectASTDiffer
 		if (classDiff.getOriginalClass().isEnum()) AST_type = Constants.ENUM_DECLARATION;
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
+		if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;
 		if (srcTypeDeclaration.getParent() != null && dstTypeDeclaration.getParent() != null) {
 			if (
 					srcTypeDeclaration.getParent().getType().name.equals(Constants.TYPE_DECLARATION_STATEMENT)

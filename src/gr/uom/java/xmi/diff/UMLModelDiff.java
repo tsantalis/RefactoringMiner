@@ -1795,7 +1795,6 @@ public class UMLModelDiff {
 	}
 
 	private boolean constructorCallFound(UMLClassDiff classDiff, UMLAnonymousToClassDiff anonymousToClassDiff) {
-		boolean constructorCallFound = false;
 		VariableDeclarationContainer container = anonymousToClassDiff.getOriginalClass().getParentContainers().iterator().next();
 		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
 			if(mapper.getContainer1().equals(container)) {
@@ -1807,18 +1806,24 @@ public class UMLModelDiff {
 						creationName = creationName.substring(0, creationName.indexOf("<"));
 					}
 					if(anonymousToClassDiff.getNextClass().getNonQualifiedName().equals(creationName)) {
-						constructorCallFound = true;
-						break;
+						return true;
 					}
-				}
-				if(constructorCallFound) {
-					break;
 				}
 			}
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
 				if(mapper.getContainer1().getAllVariables().contains(container.getName()) && mapper.getContainer2().getAllVariables().contains(anonymousToClassDiff.getNextClass().getNonQualifiedName())) {
-					constructorCallFound = true;
-					break;
+					return true;
+				}
+				VariableDeclarationContainer container2 = mapper.getContainer2();
+				List<AbstractCall> creations = container2.getAllCreations();
+				for(AbstractCall creation : creations) {
+					String creationName = creation.getName();
+					if(creationName.contains("<") && creationName.contains(">")) {
+						creationName = creationName.substring(0, creationName.indexOf("<"));
+					}
+					if(anonymousToClassDiff.getNextClass().getNonQualifiedName().equals(creationName)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -1832,16 +1837,12 @@ public class UMLModelDiff {
 						creationName = creationName.substring(0, creationName.indexOf("<"));
 					}
 					if(anonymousToClassDiff.getNextClass().getNonQualifiedName().equals(creationName)) {
-						constructorCallFound = true;
-						break;
+						return true;
 					}
-				}
-				if(constructorCallFound) {
-					break;
 				}
 			}
 		}
-		return constructorCallFound;
+		return false;
 	}
 
 	private List<Refactoring> getMoveClassRefactorings() {

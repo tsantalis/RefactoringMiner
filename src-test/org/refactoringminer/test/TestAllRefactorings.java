@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 
 public class TestAllRefactorings {
 
+	private static final String REPOS = System.getProperty("user.dir") + "/src-test/data/oracle/commits";
+
 	@Test
 	public void testAllRefactorings() throws Exception {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
-		TestBuilder test = new TestBuilder(detector, "tmp1", Refactorings.All.getValue());
+		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectations(11865, 22, 258);
+		test.assertExpectationsWithGitHubAPI(11865, 22, 258);
 	}
 }

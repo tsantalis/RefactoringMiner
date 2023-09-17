@@ -12041,51 +12041,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
-	public boolean textuallyIdenticalLeftOrRightSide(UMLOperationBodyMapper other) {
-		if(this.mappings.size() <= other.mappings.size()) {
-			Iterator<AbstractCodeMapping> thisIt = this.mappings.iterator();
-			int matchCount = 0;
-			int identicalMatchCount = 0;
-			while(thisIt.hasNext()) {
-				AbstractCodeMapping thisMapping = thisIt.next();
-				for(AbstractCodeMapping otherMapping : other.mappings) {
-					if(thisMapping.getFragment1().getString().equals(otherMapping.getFragment1().getString()) ||
-							thisMapping.getFragment2().getString().equals(otherMapping.getFragment2().getString())) {
-						matchCount++;
-						if(thisMapping.getFragment1().getString().equals(otherMapping.getFragment1().getString()) &&
-								thisMapping.getFragment2().getString().equals(otherMapping.getFragment2().getString()) &&
-								thisMapping.getFragment1().getString().equals(thisMapping.getFragment2().getString())) {
-							identicalMatchCount++;
-						}
-						break;
-					}
-				}
-			}
-			return matchCount == this.mappings.size() && identicalMatchCount > 0;
-		}
-		else {
-			Iterator<AbstractCodeMapping> otherIt = other.mappings.iterator();
-			int matchCount = 0;
-			int identicalMatchCount = 0;
-			while(otherIt.hasNext()) {
-				AbstractCodeMapping otherMapping = otherIt.next();
-				for(AbstractCodeMapping thisMapping : this.mappings) {
-					if(thisMapping.getFragment1().getString().equals(otherMapping.getFragment1().getString()) ||
-							thisMapping.getFragment2().getString().equals(otherMapping.getFragment2().getString())) {
-						matchCount++;
-						if(thisMapping.getFragment1().getString().equals(otherMapping.getFragment1().getString()) &&
-								thisMapping.getFragment2().getString().equals(otherMapping.getFragment2().getString()) &&
-								thisMapping.getFragment1().getString().equals(thisMapping.getFragment2().getString())) {
-							identicalMatchCount++;
-						}
-						break;
-					}
-				}
-			}
-			return matchCount == other.mappings.size() && identicalMatchCount > 0;
-		}
-	}
-
 	public boolean identicalMappings(UMLOperationBodyMapper other) {
 		if(this.mappings.size() == other.mappings.size()) {
 			Iterator<AbstractCodeMapping> thisIt = this.mappings.iterator();

@@ -964,17 +964,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							}
 						}
 					}
-					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound && initialNumberOfRemovedOperations == 1 && allMappersHaveIdenticalMappings(mapperSet)) {
-						CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							newCandidate.addSplitMethod(mapper.getContainer2());
-							newCandidate.addMapper(mapper);
-							this.addOperationBodyMapper(mapper);
-						}
-						newCandidate.setOriginalMethodBeforeSplit(removedOperation);
-						candidateMethodSplits.add(newCandidate);
-						matchingSplitCandidateFound = true;
-					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
 						if(bestMapper != null) {
@@ -1098,17 +1087,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							}
 						}
 					}
-					/*if(!matchingMergeCandidateFound && !matchingSplitCandidateFound && initialNumberOfAddedOperations == 1 && allMappersHaveIdenticalMappings(mapperSet)) {
-						CandidateMergeMethodRefactoring newCandidate = new CandidateMergeMethodRefactoring();
-						for(UMLOperationBodyMapper mapper : mapperSet) {
-							newCandidate.addMergedMethod(mapper.getContainer1());
-							newCandidate.addMapper(mapper);
-							this.addOperationBodyMapper(mapper);
-						}
-						newCandidate.setNewMethodAfterMerge(addedOperation);
-						candidateMethodMerges.add(newCandidate);
-						matchingMergeCandidateFound = true;
-					}*/
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						if(addedOperation.hasParameterizedTestAnnotation()) {
 							List<List<String>> parameterValues = getParameterValues(addedOperation);
@@ -1248,19 +1226,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-	}
-
-	private boolean allMappersHaveIdenticalMappings(TreeSet<UMLOperationBodyMapper> mapperSet) {
-		Iterator<UMLOperationBodyMapper> it = mapperSet.iterator();
-		UMLOperationBodyMapper first = it.next();
-		int matchCount = 0;
-		while(it.hasNext()) {
-			UMLOperationBodyMapper next = it.next();
-			if(first.textuallyIdenticalLeftOrRightSide(next) && next.getContainer1().hasTestAnnotation() && next.getContainer2().hasTestAnnotation()) {
-				matchCount++;
-			}
-		}
-		return mapperSet.size() > 1 && mapperSet.size() == matchCount+1;
 	}
 
 	private List<List<String>> getParameterValues(UMLOperation addedOperation) {

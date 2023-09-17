@@ -414,9 +414,12 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	public static class ChangedFileInfo {
 		private String parentCommitId;
+		private String currentCommitId;
 		private List<String> filesBefore;
 		private List<String> filesCurrent;
 		private Map<String, String> renamedFilesHint;
+		private Set<String> repositoryDirectoriesBefore;
+		private Set<String> repositoryDirectoriesCurrent;
 
 		public ChangedFileInfo() {
 			
@@ -430,8 +433,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			this.parentCommitId = parentCommitId;
 		}
 
+		public ChangedFileInfo(String parentCommitId, String currentCommitId,
+				List<String> filesBefore, List<String> filesCurrent,
+				Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent, Map<String, String> renamedFilesHint) {
+			this.filesBefore = filesBefore;
+			this.filesCurrent = filesCurrent;
+			this.renamedFilesHint = renamedFilesHint;
+			this.repositoryDirectoriesBefore = repositoryDirectoriesBefore;
+			this.repositoryDirectoriesCurrent = repositoryDirectoriesCurrent;
+			this.parentCommitId = parentCommitId;
+			this.currentCommitId = currentCommitId;
+		}
+
 		public String getParentCommitId() {
 			return parentCommitId;
+		}
+
+		public String getCurrentCommitId() {
+			return currentCommitId;
 		}
 
 		public List<String> getFilesBefore() {
@@ -440,6 +459,14 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 		public List<String> getFilesCurrent() {
 			return filesCurrent;
+		}
+
+		public Set<String> getRepositoryDirectoriesBefore() {
+			return repositoryDirectoriesBefore;
+		}
+
+		public Set<String> getRepositoryDirectoriesCurrent() {
+			return repositoryDirectoriesCurrent;
 		}
 
 		public Map<String, String> getRenamedFilesHint() {
@@ -918,6 +945,157 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		//allRepositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
 		//GHCommit parentCommit = repository.getCommit(parentCommitId);
 		//allRepositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore);
+	}
+
+	public ChangedFileInfo populateWithGitHubAPIAndSaveFiles(String cloneURL, String currentCommitId,
+			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
+			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent, File rootFolder) throws IOException, InterruptedException {
+		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
+		String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
+		String jsonFilePath = repoName + "-" + currentCommitId + ".json";
+		File jsonFile = new File(rootFolder, jsonFilePath);
+		if(jsonFile.exists()) {
+			final ObjectMapper mapper = new ObjectMapper();
+			ChangedFileInfo changedFileInfo = mapper.readValue(jsonFile, ChangedFileInfo.class);
+			String parentCommitId = changedFileInfo.getParentCommitId();
+			String commitId = changedFileInfo.getCurrentCommitId();
+			repositoryDirectoriesBefore.addAll(changedFileInfo.getRepositoryDirectoriesBefore());
+			repositoryDirectoriesCurrent.addAll(changedFileInfo.getRepositoryDirectoriesCurrent());
+			renamedFilesHint.putAll(changedFileInfo.getRenamedFilesHint());
+			for(String filePathBefore : changedFileInfo.getFilesBefore()) {
+				String fullPath = rootFolder + File.separator + repoName + "-" + parentCommitId + File.separator + filePathBefore.replaceAll("/", systemFileSeparator);
+				String contents = FileUtils.readFileToString(new File(fullPath));
+				filesBefore.put(filePathBefore, contents);
+			}
+			for(String filePathCurrent : changedFileInfo.getFilesCurrent()) {
+				String fullPath = rootFolder + File.separator + repoName + "-" + commitId + File.separator + filePathCurrent.replaceAll("/", systemFileSeparator);
+				String contents = FileUtils.readFileToString(new File(fullPath));
+				filesCurrent.put(filePathCurrent, contents);
+			}
+			return changedFileInfo;
+		}
+		GHRepository repository = getGitHubRepository(cloneURL);
+		final String commitId = repository.queryCommits().from(currentCommitId).list().iterator().next().getSHA1();
+		List<GHCommit.File> commitFiles = new ArrayList<>();
+		GHCommit currentCommit = new GHRepositoryWrapper(repository).getCommit(commitId, commitFiles);
+		final String parentCommitId = currentCommit.getParents().get(0).getSHA1();
+		Set<String> deletedAndRenamedFileParentDirectories = ConcurrentHashMap.newKeySet();
+		List<String> commitFileNames = new ArrayList<>();
+		ExecutorService pool = Executors.newFixedThreadPool(commitFiles.size());
+		for (GHCommit.File commitFile : commitFiles) {
+			String fileName = commitFile.getFileName();
+			if (commitFile.getFileName().endsWith(".java")) {
+				commitFileNames.add(fileName);
+				if (commitFile.getStatus().equals("modified")) {
+					Runnable r = () -> {
+						try {
+							URL currentRawURL = commitFile.getRawUrl();
+							InputStream currentRawFileInputStream = currentRawURL.openStream();
+							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
+							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							filesBefore.put(fileName, parentRawFile);
+							filesCurrent.put(fileName, currentRawFile);
+							File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + fileName);
+							FileUtils.writeStringToFile(parentFilePath, parentRawFile);
+							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+							FileUtils.writeStringToFile(currentFilePath, currentRawFile);
+						}
+						catch(IOException e) {
+							e.printStackTrace();
+						}
+					};
+					pool.submit(r);
+				}
+				else if (commitFile.getStatus().equals("added")) {
+					Runnable r = () -> {
+						try {
+							URL currentRawURL = commitFile.getRawUrl();
+							InputStream currentRawFileInputStream = currentRawURL.openStream();
+							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							filesCurrent.put(fileName, currentRawFile);
+							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+							FileUtils.writeStringToFile(currentFilePath, currentRawFile);
+						}
+						catch(IOException e) {
+							e.printStackTrace();
+						}
+					};
+					pool.submit(r);
+				}
+				else if (commitFile.getStatus().equals("removed")) {
+					Runnable r = () -> {
+						try {
+							URL rawURL = commitFile.getRawUrl();
+							InputStream rawFileInputStream = rawURL.openStream();
+							String parentRawFile = IOUtils.toString(rawFileInputStream);
+							filesBefore.put(fileName, parentRawFile);
+							if(fileName.contains("/")) {
+								deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
+							}
+							File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + fileName);
+							FileUtils.writeStringToFile(parentFilePath, parentRawFile);
+						}
+						catch(IOException e) {
+							e.printStackTrace();
+						}
+					};
+					pool.submit(r);
+				}
+				else if (commitFile.getStatus().equals("renamed")) {
+					commitFileNames.add(commitFile.getPreviousFilename());
+					Runnable r = () -> {
+						try {
+							String previousFilename = commitFile.getPreviousFilename();
+							URL currentRawURL = commitFile.getRawUrl();
+							InputStream currentRawFileInputStream = currentRawURL.openStream();
+							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+							String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
+							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
+							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							filesBefore.put(previousFilename, parentRawFile);
+							filesCurrent.put(fileName, currentRawFile);
+							renamedFilesHint.put(previousFilename, fileName);
+							if(previousFilename.contains("/")) {
+								deletedAndRenamedFileParentDirectories.add(previousFilename.substring(0, previousFilename.lastIndexOf("/")));
+							}
+							File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + previousFilename);
+							FileUtils.writeStringToFile(parentFilePath, parentRawFile);
+							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
+							FileUtils.writeStringToFile(currentFilePath, currentRawFile);
+						}
+						catch(IOException e) {
+							e.printStackTrace();
+						}
+					};
+					pool.submit(r);
+				}
+			}
+		}
+		pool.shutdown();
+		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
+		List<String> orderedFilesBefore = new ArrayList<>();
+		List<String> orderedFilesCurrent = new ArrayList<>();
+		for(String fileName : commitFileNames) {
+			if(filesBefore.containsKey(fileName)) {
+				orderedFilesBefore.add(fileName);
+			}
+			if(filesCurrent.containsKey(fileName)) {
+				orderedFilesCurrent.add(fileName);
+			}
+		}
+		repositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent, new LinkedHashSet<>(orderedFilesCurrent));
+		//repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
+		//allRepositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
+		GHCommit parentCommit = repository.getCommit(parentCommitId);
+		repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
+		ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, commitId, orderedFilesBefore, orderedFilesCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+		final ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue(jsonFile, changedFileInfo);
+		return changedFileInfo;
 	}
 
 	private void repositoryDirectories(GHTree tree, String pathFromRoot, Set<String> repositoryDirectories, Set<String> targetPaths) throws IOException {

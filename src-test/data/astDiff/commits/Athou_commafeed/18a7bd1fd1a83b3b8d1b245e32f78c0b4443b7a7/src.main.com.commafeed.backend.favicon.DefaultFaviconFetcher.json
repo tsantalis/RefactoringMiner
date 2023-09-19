@@ -769,28 +769,6 @@
   "firstEndPos" : 898,
   "secondEndPos" : 865
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "String",
-  "secondLabel" : "String",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 829,
-  "secondPos" : 972,
-  "firstEndPos" : 835,
-  "secondEndPos" : 978
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "SingleVariableDeclaration",
-  "firstPos" : 829,
-  "secondPos" : 972,
-  "firstEndPos" : 835,
-  "secondEndPos" : 978
-}, {
   "firstType" : "VariableDeclarationFragment",
   "secondType" : "VariableDeclarationFragment",
   "firstLabel" : "",
@@ -812,6 +790,39 @@
   "secondPos" : 836,
   "firstEndPos" : 839,
   "secondEndPos" : 840
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ConditionalExpression",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 842,
+  "secondPos" : 873,
+  "firstEndPos" : 864,
+  "secondEndPos" : 885
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "!=",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 857,
+  "secondPos" : 878,
+  "firstEndPos" : 859,
+  "secondEndPos" : 880
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "NullLiteral",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 860,
+  "secondPos" : 881,
+  "firstEndPos" : 864,
+  "secondEndPos" : 885
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",

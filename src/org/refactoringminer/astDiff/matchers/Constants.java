@@ -68,6 +68,9 @@ public class Constants {
 	public static final String NUMBER_LITERAL = "NumberLiteral";
 	public static final String BOOLEAN_LITERAL = "BooleanLiteral";
 
+	public static final String SINGLE_MEMBER_ANNOTATION = "SingleMemberAnnotation";
+	public static final String MARKER_ANNOTATION = "MarkerAnnotation";
+
 	public static final String COMPILATION_UNIT = "CompilationUnit";
 	public static final String JAVA_DOC = "Javadoc";
 	public static final String SIMPLE_TYPE = "SimpleType";

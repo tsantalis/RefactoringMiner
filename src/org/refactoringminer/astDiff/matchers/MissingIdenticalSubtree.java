@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 /* Created by pourya on 2023-06-14 2:10 p.m. */
 public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements TreeMatcher {
+
     private final static boolean ONLY_JAVA_DOCS = false;
     private static final int DEFAULT_MIN_PRIORITY = 1;
     protected int minPriority = DEFAULT_MIN_PRIORITY;
@@ -103,34 +104,61 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                 return true;
             return false;
         }
-        //FIXME: Inside the condition (if-for-while) ignore it
-        if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
-            if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)
-                return false;
-            else
-                return true;
-        else if (src.getType().name.equals(Constants.JAVA_DOC))
+        //TODO  : ignore the mapping if both subtrees belong to methods which contain @Test annotation
+        boolean ret;
+        if (src.getType().name.equals(Constants.JAVA_DOC))
             return true;
-        else if (src.getType().name.equals(Constants.METHOD_INVOCATION)) {
-            if (!src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
-                    dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) return false;
-            else if (src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
-                    !dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) return false;
-            return true;
+        else {
+            //FIXME: Inside the condition (if-for-while) ignore it
+            if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
+                if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)
+                    ret =  false;
+                else
+                    ret =  true;
+            else if (src.getType().name.equals(Constants.METHOD_INVOCATION)) {
+                if (!src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
+                        dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) ret = false;
+                else if (src.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER) &&
+                        !dst.getParent().getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER)) ret = true;
+                else{
+                    ret = true;
+                }
+            } else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+                ret = true;
+            else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
+                ret =  true;
+            else if (src.getType().name.equals(Constants.INFIX_EXPRESSION))
+                ret =  true;
+            else if (src.getType().name.equals(Constants.CLASS_INSTANCE_CREATION))
+                ret =  true;
+            else if (src.getType().name.equals(Constants.IMPORT_DECLARATION))
+                ret = true;
+            else {
+                ret = false;
+            }
         }
-        else if (src.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
-            return true;
-        else if (src.getType().name.equals(Constants.METHOD_INVOCATION_RECEIVER))
-            return true;
-        else if (src.getType().name.equals(Constants.INFIX_EXPRESSION))
-            return true;
-        else if (src.getType().name.equals(Constants.CLASS_INSTANCE_CREATION))
-            return true;
-        else if (src.getType().name.equals(Constants.IMPORT_DECLARATION))
-            return true;
-        else{
-            return false;
+        if (!ret) return false;
+        if (notBelongingToMethodWithTestAnnotation(src) && notBelongingToMethodWithTestAnnotation(dst))
+            return ret;
+        else return false;
+
+    }
+
+    private boolean notBelongingToMethodWithTestAnnotation(Tree src) {
+        Tree methodDecl = TreeUtilFunctions.getParentUntilType(src, Constants.METHOD_DECLARATION);
+        if (methodDecl == null) return true;
+        for (Tree child : methodDecl.getChildren()) {
+            if (child.getType().name.equals(Constants.MARKER_ANNOTATION))
+            {
+                if (child.getChildren().size() > 0 &&
+                        child.getChild(0).getType().name.equals(Constants.SIMPLE_NAME) &&
+                        child.getChild(0).getLabel().equals("Test"))
+                {
+                    return false;
+                }
+            }
         }
+        return true;
     }
 
     private static boolean tinyTrees(Tree src, MultiMappingStore multiMappings, int minP) {

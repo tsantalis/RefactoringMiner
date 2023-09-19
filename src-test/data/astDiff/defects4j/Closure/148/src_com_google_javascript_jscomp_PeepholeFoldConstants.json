@@ -11945,61 +11945,6 @@
   "firstEndPos" : 10197,
   "secondEndPos" : 10273
 }, {
-  "firstType" : "EnhancedForStatement",
-  "secondType" : "EnhancedForStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 10189,
-  "secondPos" : 3799,
-  "firstEndPos" : 10282,
-  "secondEndPos" : 3902
-}, {
-  "firstType" : "SingleVariableDeclaration",
-  "secondType" : "SingleVariableDeclaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 10194,
-  "secondPos" : 3804,
-  "firstEndPos" : 10209,
-  "secondEndPos" : 3813
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 10194,
-  "secondPos" : 3804,
-  "firstEndPos" : 10201,
-  "secondEndPos" : 3811
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "SingleVariableDeclaration",
-  "secondParentType" : "SingleVariableDeclaration",
-  "firstPos" : 10194,
-  "secondPos" : 3804,
-  "firstEndPos" : 10201,
-  "secondEndPos" : 3811
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "mapping",
-  "secondLabel" : "m",
-  "firstParentType" : "SingleVariableDeclaration",
-  "secondParentType" : "SingleVariableDeclaration",
-  "firstPos" : 10202,
-  "secondPos" : 3812,
-  "firstEndPos" : 10209,
-  "secondEndPos" : 3813
-}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12033,17 +11978,6 @@
   "firstEndPos" : 10214,
   "secondEndPos" : 10290
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "mappings",
-  "secondLabel" : "mappings",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 10212,
-  "secondPos" : 3816,
-  "firstEndPos" : 10220,
-  "secondEndPos" : 3824
-}, {
   "firstType" : "ASSIGNMENT_OPERATOR",
   "secondType" : "ASSIGNMENT_OPERATOR",
   "firstLabel" : "=",
@@ -12066,28 +12000,6 @@
   "firstEndPos" : 10236,
   "secondEndPos" : 10312
 }, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 10222,
-  "secondPos" : 3826,
-  "firstEndPos" : 10282,
-  "secondEndPos" : 3902
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 10230,
-  "secondPos" : 3860,
-  "firstEndPos" : 10252,
-  "secondEndPos" : 3884
-}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -12098,28 +12010,6 @@
   "secondPos" : 10322,
   "firstEndPos" : 10252,
   "secondEndPos" : 10328
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 10247,
-  "secondPos" : 3876,
-  "firstEndPos" : 10250,
-  "secondEndPos" : 3882
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "out",
-  "secondLabel" : "out",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 10247,
-  "secondPos" : 3879,
-  "firstEndPos" : 10250,
-  "secondEndPos" : 3882
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -14706,50 +14596,6 @@
   "firstEndPos" : 12442,
   "secondEndPos" : 12518
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 12441,
-  "secondPos" : 15101,
-  "firstEndPos" : 12490,
-  "secondEndPos" : 15150
-}, {
-  "firstType" : "ParameterizedType",
-  "secondType" : "ParameterizedType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 12441,
-  "secondPos" : 15101,
-  "firstEndPos" : 12455,
-  "secondEndPos" : 15115
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Deque",
-  "secondLabel" : "Deque",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12441,
-  "secondPos" : 15101,
-  "firstEndPos" : 12446,
-  "secondEndPos" : 15106
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ParameterizedType",
-  "secondParentType" : "ParameterizedType",
-  "firstPos" : 12441,
-  "secondPos" : 15101,
-  "firstEndPos" : 12446,
-  "secondEndPos" : 15106
-}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -14785,28 +14631,6 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12447,
-  "secondPos" : 15107,
-  "firstEndPos" : 12454,
-  "secondEndPos" : 15114
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ParameterizedType",
-  "secondParentType" : "ParameterizedType",
-  "firstPos" : 12447,
-  "secondPos" : 15107,
-  "firstEndPos" : 12454,
-  "secondEndPos" : 15114
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
   "firstLabel" : "getType",
   "secondLabel" : "getType",
   "firstParentType" : "MethodInvocation",
@@ -14815,72 +14639,6 @@
   "secondPos" : 12528,
   "firstEndPos" : 12459,
   "secondEndPos" : 12535
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 12456,
-  "secondPos" : 15116,
-  "firstEndPos" : 12489,
-  "secondEndPos" : 15149
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 12456,
-  "secondPos" : 15116,
-  "firstEndPos" : 12461,
-  "secondEndPos" : 15121
-}, {
-  "firstType" : "ClassInstanceCreation",
-  "secondType" : "ClassInstanceCreation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 12464,
-  "secondPos" : 15124,
-  "firstEndPos" : 12489,
-  "secondEndPos" : 15149
-}, {
-  "firstType" : "ParameterizedType",
-  "secondType" : "ParameterizedType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ClassInstanceCreation",
-  "secondParentType" : "ClassInstanceCreation",
-  "firstPos" : 12468,
-  "secondPos" : 15128,
-  "firstEndPos" : 12487,
-  "secondEndPos" : 15147
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "ArrayDeque",
-  "secondLabel" : "ArrayDeque",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12468,
-  "secondPos" : 15128,
-  "firstEndPos" : 12478,
-  "secondEndPos" : 15138
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ParameterizedType",
-  "secondParentType" : "ParameterizedType",
-  "firstPos" : 12468,
-  "secondPos" : 15128,
-  "firstEndPos" : 12478,
-  "secondEndPos" : 15138
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14981,28 +14739,6 @@
   "firstEndPos" : 12487,
   "secondEndPos" : 12563
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12479,
-  "secondPos" : 15139,
-  "firstEndPos" : 12486,
-  "secondEndPos" : 15146
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ParameterizedType",
-  "secondParentType" : "ParameterizedType",
-  "firstPos" : 12479,
-  "secondPos" : 15139,
-  "firstEndPos" : 12486,
-  "secondEndPos" : 15146
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "||",
@@ -15047,17 +14783,6 @@
   "firstEndPos" : 12496,
   "secondEndPos" : 12572
 }, {
-  "firstType" : "EnhancedForStatement",
-  "secondType" : "EnhancedForStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 12497,
-  "secondPos" : 15157,
-  "firstEndPos" : 13197,
-  "secondEndPos" : 15854
-}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "Token.WHILE",
@@ -15069,39 +14794,6 @@
   "firstEndPos" : 12508,
   "secondEndPos" : 12584
 }, {
-  "firstType" : "SingleVariableDeclaration",
-  "secondType" : "SingleVariableDeclaration",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 12502,
-  "secondPos" : 15162,
-  "firstEndPos" : 12511,
-  "secondEndPos" : 15171
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12502,
-  "secondPos" : 15162,
-  "firstEndPos" : 12509,
-  "secondEndPos" : 15169
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "SingleVariableDeclaration",
-  "secondParentType" : "SingleVariableDeclaration",
-  "firstPos" : 12502,
-  "secondPos" : 15162,
-  "firstEndPos" : 12509,
-  "secondEndPos" : 15169
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "||",
@@ -15112,17 +14804,6 @@
   "secondPos" : 12585,
   "firstEndPos" : 12511,
   "secondEndPos" : 12587
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "SingleVariableDeclaration",
-  "secondParentType" : "SingleVariableDeclaration",
-  "firstPos" : 12510,
-  "secondPos" : 15170,
-  "firstEndPos" : 12511,
-  "secondEndPos" : 15171
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
@@ -15146,17 +14827,6 @@
   "firstEndPos" : 12514,
   "secondEndPos" : 12590
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "mappings",
-  "secondLabel" : "mappings",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 12514,
-  "secondPos" : 15174,
-  "firstEndPos" : 12522,
-  "secondEndPos" : 15182
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "==",
@@ -15178,17 +14848,6 @@
   "secondPos" : 12594,
   "firstEndPos" : 12526,
   "secondEndPos" : 12602
-}, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "EnhancedForStatement",
-  "secondParentType" : "EnhancedForStatement",
-  "firstPos" : 12524,
-  "secondPos" : 15184,
-  "firstEndPos" : 13197,
-  "secondEndPos" : 15854
 }, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
@@ -15751,17 +15410,6 @@
   "firstEndPos" : 12810,
   "secondEndPos" : 12886
 }, {
-  "firstType" : "WhileStatement",
-  "secondType" : "WhileStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 12811,
-  "secondPos" : 15471,
-  "firstEndPos" : 12963,
-  "secondEndPos" : 15618
-}, {
   "firstType" : "PrefixExpression",
   "secondType" : "PrefixExpression",
   "firstLabel" : "",
@@ -15810,83 +15458,6 @@
   "secondType" : "InfixExpression",
   "firstLabel" : "",
   "secondLabel" : "",
-  "firstParentType" : "WhileStatement",
-  "secondParentType" : "WhileStatement",
-  "firstPos" : 12818,
-  "secondPos" : 15478,
-  "firstEndPos" : 12868,
-  "secondEndPos" : 15528
-}, {
-  "firstType" : "PrefixExpression",
-  "secondType" : "PrefixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 12818,
-  "secondPos" : 15478,
-  "firstEndPos" : 12834,
-  "secondEndPos" : 15494
-}, {
-  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
-  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "!",
-  "secondLabel" : "!",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 12818,
-  "secondPos" : 15478,
-  "firstEndPos" : 12819,
-  "secondEndPos" : 15479
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 12819,
-  "secondPos" : 15479,
-  "firstEndPos" : 12834,
-  "secondEndPos" : 15494
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12819,
-  "secondPos" : 15479,
-  "firstEndPos" : 12824,
-  "secondEndPos" : 15484
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 12819,
-  "secondPos" : 15479,
-  "firstEndPos" : 12824,
-  "secondEndPos" : 15484
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "isEmpty",
-  "secondLabel" : "isEmpty",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12825,
-  "secondPos" : 15485,
-  "firstEndPos" : 12832,
-  "secondEndPos" : 15492
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
   "firstPos" : 12832,
@@ -15918,17 +15489,6 @@
 }, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "&&",
-  "secondLabel" : "&&",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 12835,
-  "secondPos" : 15495,
-  "firstEndPos" : 12837,
-  "secondEndPos" : 15497
-}, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "==",
   "secondLabel" : "==",
   "firstParentType" : "InfixExpression",
@@ -15937,50 +15497,6 @@
   "secondPos" : 12913,
   "firstEndPos" : 12839,
   "secondEndPos" : 12915
-}, {
-  "firstType" : "PrefixExpression",
-  "secondType" : "PrefixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 12838,
-  "secondPos" : 15498,
-  "firstEndPos" : 12868,
-  "secondEndPos" : 15528
-}, {
-  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
-  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "!",
-  "secondLabel" : "!",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 12838,
-  "secondPos" : 15498,
-  "firstEndPos" : 12839,
-  "secondEndPos" : 15499
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 12839,
-  "secondPos" : 15499,
-  "firstEndPos" : 12868,
-  "secondEndPos" : 15528
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "isOverlapped",
-  "secondLabel" : "isOverlapped",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12839,
-  "secondPos" : 15499,
-  "firstEndPos" : 12851,
-  "secondEndPos" : 15511
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -16004,50 +15520,6 @@
   "firstEndPos" : 12852,
   "secondEndPos" : 12928
 }, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12852,
-  "secondPos" : 15512,
-  "firstEndPos" : 12867,
-  "secondEndPos" : 15527
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 12852,
-  "secondPos" : 15512,
-  "firstEndPos" : 12864,
-  "secondEndPos" : 15524
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12852,
-  "secondPos" : 15512,
-  "firstEndPos" : 12857,
-  "secondEndPos" : 15517
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 12852,
-  "secondPos" : 15512,
-  "firstEndPos" : 12857,
-  "secondEndPos" : 15517
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "rval",
@@ -16059,17 +15531,6 @@
   "firstEndPos" : 12857,
   "secondEndPos" : 12933
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "peek",
-  "secondLabel" : "peek",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12858,
-  "secondPos" : 15518,
-  "firstEndPos" : 12862,
-  "secondEndPos" : 15522
-}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -16080,28 +15541,6 @@
   "secondPos" : 12935,
   "firstEndPos" : 12895,
   "secondEndPos" : 12971
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 12866,
-  "secondPos" : 15526,
-  "firstEndPos" : 12867,
-  "secondEndPos" : 15527
-}, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "WhileStatement",
-  "secondParentType" : "WhileStatement",
-  "firstPos" : 12870,
-  "secondPos" : 15530,
-  "firstEndPos" : 12963,
-  "secondEndPos" : 15618
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16158,61 +15597,6 @@
   "firstEndPos" : 12884,
   "secondEndPos" : 12960
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 12882,
-  "secondPos" : 15542,
-  "firstEndPos" : 12913,
-  "secondEndPos" : 15573
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 12882,
-  "secondPos" : 15542,
-  "firstEndPos" : 12889,
-  "secondEndPos" : 15549
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 12882,
-  "secondPos" : 15542,
-  "firstEndPos" : 12889,
-  "secondEndPos" : 15549
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 12890,
-  "secondPos" : 15550,
-  "firstEndPos" : 12912,
-  "secondEndPos" : 15572
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "previous",
-  "secondLabel" : "previous",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 12890,
-  "secondPos" : 15550,
-  "firstEndPos" : 12898,
-  "secondEndPos" : 15558
-}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -16223,105 +15607,6 @@
   "secondPos" : 12977,
   "firstEndPos" : 13115,
   "secondEndPos" : 13191
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 12901,
-  "secondPos" : 15561,
-  "firstEndPos" : 12912,
-  "secondEndPos" : 15572
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12901,
-  "secondPos" : 15561,
-  "firstEndPos" : 12906,
-  "secondEndPos" : 15566
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 12901,
-  "secondPos" : 15561,
-  "firstEndPos" : 12906,
-  "secondEndPos" : 15566
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "pop",
-  "secondLabel" : "pop",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12907,
-  "secondPos" : 15567,
-  "firstEndPos" : 12910,
-  "secondEndPos" : 15570
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 12924,
-  "secondPos" : 15584,
-  "firstEndPos" : 12953,
-  "secondEndPos" : 15608
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 12924,
-  "secondPos" : 15584,
-  "firstEndPos" : 12952,
-  "secondEndPos" : 15607
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "writeClosedMapping",
-  "secondLabel" : "maybeVisit",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12924,
-  "secondPos" : 15584,
-  "firstEndPos" : 12942,
-  "secondEndPos" : 15594
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 12943,
-  "secondPos" : 15595,
-  "firstEndPos" : 12951,
-  "secondEndPos" : 15606
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "previous",
-  "secondLabel" : "previous",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 12943,
-  "secondPos" : 15598,
-  "firstEndPos" : 12951,
-  "secondEndPos" : 15606
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16488,248 +15773,6 @@
   "firstEndPos" : 13092,
   "secondEndPos" : 13168
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 13097,
-  "secondPos" : 15752,
-  "firstEndPos" : 13127,
-  "secondEndPos" : 15782
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 13097,
-  "secondPos" : 15752,
-  "firstEndPos" : 13104,
-  "secondEndPos" : 15759
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 13097,
-  "secondPos" : 15752,
-  "firstEndPos" : 13104,
-  "secondEndPos" : 15759
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 13105,
-  "secondPos" : 15760,
-  "firstEndPos" : 13126,
-  "secondEndPos" : 15781
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "parent",
-  "secondLabel" : "parent",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 13105,
-  "secondPos" : 15760,
-  "firstEndPos" : 13111,
-  "secondEndPos" : 15766
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 13114,
-  "secondPos" : 15769,
-  "firstEndPos" : 13126,
-  "secondEndPos" : 15781
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13114,
-  "secondPos" : 15769,
-  "firstEndPos" : 13119,
-  "secondEndPos" : 15774
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 13114,
-  "secondPos" : 15769,
-  "firstEndPos" : 13119,
-  "secondEndPos" : 15774
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "peek",
-  "secondLabel" : "peek",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13120,
-  "secondPos" : 15775,
-  "firstEndPos" : 13124,
-  "secondEndPos" : 15779
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 13136,
-  "secondPos" : 15791,
-  "firstEndPos" : 13165,
-  "secondEndPos" : 15822
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 13136,
-  "secondPos" : 15791,
-  "firstEndPos" : 13164,
-  "secondEndPos" : 15821
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "writeCharsBetween",
-  "secondLabel" : "maybeVisitParent",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13136,
-  "secondPos" : 15791,
-  "firstEndPos" : 13153,
-  "secondEndPos" : 15807
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13154,
-  "secondPos" : 15808,
-  "firstEndPos" : 13163,
-  "secondEndPos" : 15820
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "parent",
-  "secondLabel" : "parent",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 13154,
-  "secondPos" : 15811,
-  "firstEndPos" : 13160,
-  "secondEndPos" : 15817
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 13162,
-  "secondPos" : 15819,
-  "firstEndPos" : 13163,
-  "secondEndPos" : 15820
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 13175,
-  "secondPos" : 15832,
-  "firstEndPos" : 13189,
-  "secondEndPos" : 15846
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 13175,
-  "secondPos" : 15832,
-  "firstEndPos" : 13188,
-  "secondEndPos" : 15845
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13175,
-  "secondPos" : 15832,
-  "firstEndPos" : 13180,
-  "secondEndPos" : 15837
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 13175,
-  "secondPos" : 15832,
-  "firstEndPos" : 13180,
-  "secondEndPos" : 15837
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "push",
-  "secondLabel" : "push",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13181,
-  "secondPos" : 15838,
-  "firstEndPos" : 13185,
-  "secondEndPos" : 15842
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13186,
-  "secondPos" : 15843,
-  "firstEndPos" : 13187,
-  "secondEndPos" : 15844
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 13186,
-  "secondPos" : 15843,
-  "firstEndPos" : 13187,
-  "secondEndPos" : 15844
-}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16796,72 +15839,6 @@
   "firstEndPos" : 13470,
   "secondEndPos" : 13546
 }, {
-  "firstType" : "WhileStatement",
-  "secondType" : "WhileStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 13344,
-  "secondPos" : 16001,
-  "firstEndPos" : 13442,
-  "secondEndPos" : 16094
-}, {
-  "firstType" : "PrefixExpression",
-  "secondType" : "PrefixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "WhileStatement",
-  "secondParentType" : "WhileStatement",
-  "firstPos" : 13351,
-  "secondPos" : 16008,
-  "firstEndPos" : 13367,
-  "secondEndPos" : 16024
-}, {
-  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
-  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "!",
-  "secondLabel" : "!",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 13351,
-  "secondPos" : 16008,
-  "firstEndPos" : 13352,
-  "secondEndPos" : 16009
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 13352,
-  "secondPos" : 16009,
-  "firstEndPos" : 13367,
-  "secondEndPos" : 16024
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13352,
-  "secondPos" : 16009,
-  "firstEndPos" : 13357,
-  "secondEndPos" : 16014
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 13352,
-  "secondPos" : 16009,
-  "firstEndPos" : 13357,
-  "secondEndPos" : 16014
-}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16917,28 +15894,6 @@
   "firstEndPos" : 13369,
   "secondEndPos" : 13445
 }, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "isEmpty",
-  "secondLabel" : "isEmpty",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13358,
-  "secondPos" : 16015,
-  "firstEndPos" : 13365,
-  "secondEndPos" : 16022
-}, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "WhileStatement",
-  "secondParentType" : "WhileStatement",
-  "firstPos" : 13369,
-  "secondPos" : 16026,
-  "firstEndPos" : 13442,
-  "secondEndPos" : 16094
-}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstLabel" : "",
@@ -16960,39 +15915,6 @@
   "secondPos" : 13446,
   "firstEndPos" : 13376,
   "secondEndPos" : 13452
-}, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 13379,
-  "secondPos" : 16036,
-  "firstEndPos" : 13403,
-  "secondEndPos" : 16060
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "Mapping",
-  "secondLabel" : "Mapping",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 13379,
-  "secondPos" : 16036,
-  "firstEndPos" : 13386,
-  "secondEndPos" : 16043
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 13379,
-  "secondPos" : 16036,
-  "firstEndPos" : 13386,
-  "secondEndPos" : 16043
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17038,61 +15960,6 @@
   "firstEndPos" : 13391,
   "secondEndPos" : 13467
 }, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 13387,
-  "secondPos" : 16044,
-  "firstEndPos" : 13402,
-  "secondEndPos" : 16059
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 13387,
-  "secondPos" : 16044,
-  "firstEndPos" : 13388,
-  "secondEndPos" : 16045
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 13391,
-  "secondPos" : 16048,
-  "firstEndPos" : 13402,
-  "secondEndPos" : 16059
-}, {
-  "firstType" : "METHOD_INVOCATION_RECEIVER",
-  "secondType" : "METHOD_INVOCATION_RECEIVER",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13391,
-  "secondPos" : 16048,
-  "firstEndPos" : 13396,
-  "secondEndPos" : 16053
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "stack",
-  "secondLabel" : "stack",
-  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
-  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
-  "firstPos" : 13391,
-  "secondPos" : 16048,
-  "firstEndPos" : 13396,
-  "secondEndPos" : 16053
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "replaceChild",
@@ -17103,17 +15970,6 @@
   "secondPos" : 13468,
   "firstEndPos" : 13404,
   "secondEndPos" : 13480
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "pop",
-  "secondLabel" : "pop",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13397,
-  "secondPos" : 16054,
-  "firstEndPos" : 13400,
-  "secondEndPos" : 16057
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -17154,39 +16010,6 @@
   "secondLabel" : "",
   "firstParentType" : "Block",
   "secondParentType" : "Block",
-  "firstPos" : 13412,
-  "secondPos" : 16069,
-  "firstEndPos" : 13434,
-  "secondEndPos" : 16086
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 13412,
-  "secondPos" : 16069,
-  "firstEndPos" : 13433,
-  "secondEndPos" : 16085
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "writeClosedMapping",
-  "secondLabel" : "maybeVisit",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13412,
-  "secondPos" : 16069,
-  "firstEndPos" : 13430,
-  "secondEndPos" : 16079
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
   "firstPos" : 13423,
   "secondPos" : 13499,
   "firstEndPos" : 13442,
@@ -17213,28 +16036,6 @@
   "secondPos" : 13499,
   "firstEndPos" : 13439,
   "secondEndPos" : 13515
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 13431,
-  "secondPos" : 16080,
-  "firstEndPos" : 13432,
-  "secondEndPos" : 16084
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "m",
-  "secondLabel" : "m",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 13431,
-  "secondPos" : 16083,
-  "firstEndPos" : 13432,
-  "secondEndPos" : 16084
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -21504,61 +20305,6 @@
   "firstEndPos" : 16348,
   "secondEndPos" : 16424
 }, {
-  "firstType" : "VariableDeclarationStatement",
-  "secondType" : "VariableDeclarationStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16332,
-  "secondPos" : 12296,
-  "firstEndPos" : 16406,
-  "secondEndPos" : 12327
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "String",
-  "secondLabel" : "String",
-  "firstParentType" : "SimpleType",
-  "secondParentType" : "SimpleType",
-  "firstPos" : 16332,
-  "secondPos" : 12296,
-  "firstEndPos" : 16338,
-  "secondEndPos" : 12302
-}, {
-  "firstType" : "SimpleType",
-  "secondType" : "SimpleType",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 16332,
-  "secondPos" : 12296,
-  "firstEndPos" : 16338,
-  "secondEndPos" : 12302
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationStatement",
-  "secondParentType" : "VariableDeclarationStatement",
-  "firstPos" : 16339,
-  "secondPos" : 12303,
-  "firstEndPos" : 16405,
-  "secondEndPos" : 12326
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "idString",
-  "secondLabel" : "idString",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 16339,
-  "secondPos" : 12303,
-  "firstEndPos" : 16347,
-  "secondEndPos" : 12311
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "right",
@@ -21658,17 +20404,6 @@
   "firstEndPos" : 16415,
   "secondEndPos" : 16491
 }, {
-  "firstType" : "ForStatement",
-  "secondType" : "ForStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16413,
-  "secondPos" : 12335,
-  "firstEndPos" : 16654,
-  "secondEndPos" : 12577
-}, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
   "firstLabel" : "/",
@@ -21679,17 +20414,6 @@
   "secondPos" : 16492,
   "firstEndPos" : 16417,
   "secondEndPos" : 16493
-}, {
-  "firstType" : "VariableDeclarationExpression",
-  "secondType" : "VariableDeclarationExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16418,
-  "secondPos" : 12340,
-  "firstEndPos" : 16430,
-  "secondEndPos" : 12352
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -21702,72 +20426,6 @@
   "firstEndPos" : 16422,
   "secondEndPos" : 16498
 }, {
-  "firstType" : "PrimitiveType",
-  "secondType" : "PrimitiveType",
-  "firstLabel" : "int",
-  "secondLabel" : "int",
-  "firstParentType" : "VariableDeclarationExpression",
-  "secondParentType" : "VariableDeclarationExpression",
-  "firstPos" : 16418,
-  "secondPos" : 12340,
-  "firstEndPos" : 16421,
-  "secondEndPos" : 12343
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationExpression",
-  "secondParentType" : "VariableDeclarationExpression",
-  "firstPos" : 16422,
-  "secondPos" : 12344,
-  "firstEndPos" : 16430,
-  "secondEndPos" : 12352
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "i",
-  "secondLabel" : "i",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 16422,
-  "secondPos" : 12344,
-  "firstEndPos" : 16423,
-  "secondEndPos" : 12345
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "line",
-  "secondLabel" : "line",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 16426,
-  "secondPos" : 12348,
-  "firstEndPos" : 16430,
-  "secondEndPos" : 12352
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16432,
-  "secondPos" : 12354,
-  "firstEndPos" : 16445,
-  "secondEndPos" : 12367
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "i",
-  "secondLabel" : "i",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16432,
-  "secondPos" : 12354,
-  "firstEndPos" : 16433,
-  "secondEndPos" : 12355
-}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -21778,61 +20436,6 @@
   "secondPos" : 16510,
   "firstEndPos" : 16440,
   "secondEndPos" : 16516
-}, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "<=",
-  "secondLabel" : "<=",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16434,
-  "secondPos" : 12356,
-  "firstEndPos" : 16436,
-  "secondEndPos" : 12358
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "nextLine",
-  "secondLabel" : "nextLine",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16437,
-  "secondPos" : 12359,
-  "firstEndPos" : 16445,
-  "secondEndPos" : 12367
-}, {
-  "firstType" : "PostfixExpression",
-  "secondType" : "PostfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16447,
-  "secondPos" : 12369,
-  "firstEndPos" : 16450,
-  "secondEndPos" : 12372
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "i",
-  "secondLabel" : "i",
-  "firstParentType" : "PostfixExpression",
-  "secondParentType" : "PostfixExpression",
-  "firstPos" : 16447,
-  "secondPos" : 12369,
-  "firstEndPos" : 16448,
-  "secondEndPos" : 12370
-}, {
-  "firstType" : "POSTFIX_EXPRESSION_OPERATOR",
-  "secondType" : "POSTFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "++",
-  "secondLabel" : "++",
-  "firstParentType" : "PostfixExpression",
-  "secondParentType" : "PostfixExpression",
-  "firstPos" : 16448,
-  "secondPos" : 12370,
-  "firstEndPos" : 16450,
-  "secondEndPos" : 12372
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -21845,50 +20448,6 @@
   "firstEndPos" : 16457,
   "secondEndPos" : 16533
 }, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16452,
-  "secondPos" : 12374,
-  "firstEndPos" : 16654,
-  "secondEndPos" : 12577
-}, {
-  "firstType" : "IfStatement",
-  "secondType" : "IfStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16462,
-  "secondPos" : 12384,
-  "firstEndPos" : 16605,
-  "secondEndPos" : 12527
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "IfStatement",
-  "secondParentType" : "IfStatement",
-  "firstPos" : 16466,
-  "secondPos" : 12388,
-  "firstEndPos" : 16479,
-  "secondEndPos" : 12401
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "i",
-  "secondLabel" : "i",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16466,
-  "secondPos" : 12388,
-  "firstEndPos" : 16467,
-  "secondEndPos" : 12389
-}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -21899,28 +20458,6 @@
   "secondPos" : 16544,
   "firstEndPos" : 16515,
   "secondEndPos" : 16591
-}, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "==",
-  "secondLabel" : "==",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16468,
-  "secondPos" : 12390,
-  "firstEndPos" : 16470,
-  "secondEndPos" : 12392
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "nextLine",
-  "secondLabel" : "nextLine",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16471,
-  "secondPos" : 12393,
-  "firstEndPos" : 16479,
-  "secondEndPos" : 12401
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "ClassInstanceCreation",
@@ -21955,17 +20492,6 @@
   "firstEndPos" : 16483,
   "secondEndPos" : 16559
 }, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "IfStatement",
-  "secondParentType" : "IfStatement",
-  "firstPos" : 16481,
-  "secondPos" : 12403,
-  "firstEndPos" : 16605,
-  "secondEndPos" : 12527
-}, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
   "firstLabel" : "\"Unknown arithmetic operator\"",
@@ -21976,226 +20502,6 @@
   "secondPos" : 16560,
   "firstEndPos" : 16513,
   "secondEndPos" : 16589
-}, {
-  "firstType" : "ForStatement",
-  "secondType" : "ForStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16493,
-  "secondPos" : 12415,
-  "firstEndPos" : 16578,
-  "secondEndPos" : 12500
-}, {
-  "firstType" : "VariableDeclarationExpression",
-  "secondType" : "VariableDeclarationExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16498,
-  "secondPos" : 12420,
-  "firstEndPos" : 16509,
-  "secondEndPos" : 12431
-}, {
-  "firstType" : "PrimitiveType",
-  "secondType" : "PrimitiveType",
-  "firstLabel" : "int",
-  "secondLabel" : "int",
-  "firstParentType" : "VariableDeclarationExpression",
-  "secondParentType" : "VariableDeclarationExpression",
-  "firstPos" : 16498,
-  "secondPos" : 12420,
-  "firstEndPos" : 16501,
-  "secondEndPos" : 12423
-}, {
-  "firstType" : "VariableDeclarationFragment",
-  "secondType" : "VariableDeclarationFragment",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "VariableDeclarationExpression",
-  "secondParentType" : "VariableDeclarationExpression",
-  "firstPos" : 16502,
-  "secondPos" : 12424,
-  "firstEndPos" : 16509,
-  "secondEndPos" : 12431
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "j",
-  "secondLabel" : "j",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 16502,
-  "secondPos" : 12424,
-  "firstEndPos" : 16503,
-  "secondEndPos" : 12425
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "col",
-  "secondLabel" : "col",
-  "firstParentType" : "VariableDeclarationFragment",
-  "secondParentType" : "VariableDeclarationFragment",
-  "firstPos" : 16506,
-  "secondPos" : 12428,
-  "firstEndPos" : 16509,
-  "secondEndPos" : 12431
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16511,
-  "secondPos" : 12433,
-  "firstEndPos" : 16522,
-  "secondEndPos" : 12444
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "j",
-  "secondLabel" : "j",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16511,
-  "secondPos" : 12433,
-  "firstEndPos" : 16512,
-  "secondEndPos" : 12434
-}, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "<",
-  "secondLabel" : "<",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16513,
-  "secondPos" : 12435,
-  "firstEndPos" : 16514,
-  "secondEndPos" : 12436
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "nextCol",
-  "secondLabel" : "nextCol",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "InfixExpression",
-  "firstPos" : 16515,
-  "secondPos" : 12437,
-  "firstEndPos" : 16522,
-  "secondEndPos" : 12444
-}, {
-  "firstType" : "PostfixExpression",
-  "secondType" : "PostfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16524,
-  "secondPos" : 12446,
-  "firstEndPos" : 16527,
-  "secondEndPos" : 12449
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "j",
-  "secondLabel" : "j",
-  "firstParentType" : "PostfixExpression",
-  "secondParentType" : "PostfixExpression",
-  "firstPos" : 16524,
-  "secondPos" : 12446,
-  "firstEndPos" : 16525,
-  "secondEndPos" : 12447
-}, {
-  "firstType" : "POSTFIX_EXPRESSION_OPERATOR",
-  "secondType" : "POSTFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "++",
-  "secondLabel" : "++",
-  "firstParentType" : "PostfixExpression",
-  "secondParentType" : "PostfixExpression",
-  "firstPos" : 16525,
-  "secondPos" : 12447,
-  "firstEndPos" : 16527,
-  "secondEndPos" : 12449
-}, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ForStatement",
-  "secondParentType" : "ForStatement",
-  "firstPos" : 16529,
-  "secondPos" : 12451,
-  "firstEndPos" : 16578,
-  "secondEndPos" : 12500
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16543,
-  "secondPos" : 12465,
-  "firstEndPos" : 16566,
-  "secondEndPos" : 12488
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 16543,
-  "secondPos" : 12465,
-  "firstEndPos" : 16565,
-  "secondEndPos" : 12487
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "addCharEntry",
-  "secondLabel" : "addCharEntry",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 16543,
-  "secondPos" : 12465,
-  "firstEndPos" : 16555,
-  "secondEndPos" : 12477
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 16556,
-  "secondPos" : 12478,
-  "firstEndPos" : 16564,
-  "secondEndPos" : 12486
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "idString",
-  "secondLabel" : "idString",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 16556,
-  "secondPos" : 12478,
-  "firstEndPos" : 16564,
-  "secondEndPos" : 12486
-}, {
-  "firstType" : "BreakStatement",
-  "secondType" : "BreakStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16589,
-  "secondPos" : 12511,
-  "firstEndPos" : 16595,
-  "secondEndPos" : 12517
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -22285,39 +20591,6 @@
   "firstEndPos" : 16615,
   "secondEndPos" : 16691
 }, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16614,
-  "secondPos" : 12537,
-  "firstEndPos" : 16626,
-  "secondEndPos" : 12549
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 16614,
-  "secondPos" : 12537,
-  "firstEndPos" : 16625,
-  "secondEndPos" : 12548
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "closeLine",
-  "secondLabel" : "closeLine",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 16614,
-  "secondPos" : 12537,
-  "firstEndPos" : 16623,
-  "secondEndPos" : 12546
-}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "valueOf",
@@ -22361,39 +20634,6 @@
   "secondPos" : 16708,
   "firstEndPos" : 16638,
   "secondEndPos" : 16714
-}, {
-  "firstType" : "ExpressionStatement",
-  "secondType" : "ExpressionStatement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Block",
-  "secondParentType" : "Block",
-  "firstPos" : 16635,
-  "secondPos" : 12558,
-  "firstEndPos" : 16646,
-  "secondEndPos" : 12569
-}, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "ExpressionStatement",
-  "secondParentType" : "ExpressionStatement",
-  "firstPos" : 16635,
-  "secondPos" : 12558,
-  "firstEndPos" : 16645,
-  "secondEndPos" : 12568
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "openLine",
-  "secondLabel" : "openLine",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 16635,
-  "secondPos" : 12558,
-  "firstEndPos" : 16643,
-  "secondEndPos" : 12566
 }, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",

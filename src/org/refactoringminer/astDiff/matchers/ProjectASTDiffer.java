@@ -397,7 +397,6 @@ public class ProjectASTDiffer
 		CompositeStatementObjectMapping compositeStatementObjectMapping = (CompositeStatementObjectMapping) abstractCodeMapping;
 		Tree srcStatementNode = TreeUtilFunctions.findByLocationInfo(srcTree,compositeStatementObjectMapping.getFragment1().getLocationInfo());
 		Tree dstStatementNode = TreeUtilFunctions.findByLocationInfo(dstTree,compositeStatementObjectMapping.getFragment2().getLocationInfo());
-		// TODO: 8/2/2022 Need to rethink regarding the logic asap, with this logic , we might see a huge drop in performance
 		//if (srcStatementNode.getMetrics().hash == dstStatementNode.getMetrics().hash)
 		//{
 		//	mappingStore.addMappingRecursively(srcStatementNode, dstStatementNode);
@@ -646,9 +645,8 @@ public class ProjectASTDiffer
 	private void processRefactorings(Tree srcTree, Tree dstTree, List<Refactoring> refactoringList, ExtendedMultiMappingStore mappingStore){
 		for (Refactoring refactoring : refactoringList) {
 			if (refactoring instanceof ReplaceLoopWithPipelineRefactoring) {
-				//TODO: Kinda completed but assertations must be removed
 				ReplaceLoopWithPipelineRefactoring replaceLoopWithPipelineRefactoring = (ReplaceLoopWithPipelineRefactoring) refactoring;
-				assert replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter().size() == 1;
+				if (replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter().size() != 1) continue;
 				AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsAfter().iterator().next();
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
@@ -658,7 +656,7 @@ public class ProjectASTDiffer
 						break;
 					}
 				}
-				assert enhancedFor != null;
+				if (enhancedFor == null) continue;
 				for (LambdaExpressionObject lambda : lambdas) {
 					for (VariableDeclaration parameter : lambda.getParameters()) {
 						String variableName = parameter.getVariableName();
@@ -677,7 +675,7 @@ public class ProjectASTDiffer
 			} else if (refactoring instanceof ReplacePipelineWithLoopRefactoring) {
 				//TODO : ongoing problem
 				ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
-				assert replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().size() == 1;
+				if (replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().size() != 1) continue;
 				AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().iterator().next();
 				List<LambdaExpressionObject> lambdas = next.getLambdas();
 				AbstractCodeFragment enhancedFor = null;
@@ -687,7 +685,7 @@ public class ProjectASTDiffer
 						break;
 					}
 				}
-				assert enhancedFor != null;
+				if( enhancedFor == null) continue;
 				for (LambdaExpressionObject lambda : lambdas) {
 					for (VariableDeclaration parameter : lambda.getParameters()) {
 						String variableName = parameter.getVariableName();

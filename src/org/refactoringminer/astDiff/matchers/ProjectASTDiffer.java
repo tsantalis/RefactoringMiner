@@ -262,23 +262,28 @@ public class ProjectASTDiffer
 					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
 				}
 			} else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
-				ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
-				UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
-				String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
-				String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
-				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				processBodyMapper(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+						beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
+					ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
+					UMLOperationBodyMapper bodyMapper = extractOperationRefactoring.getBodyMapper();
+					String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
+					String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processBodyMapper(srcTotalTree, dstTotalTree, bodyMapper, mappingStore, true);
+				}
 			}
 			else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
-				//FIXME:
-				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
-				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
-				String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
-				String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
-				Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
-				Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-				processBodyMapper(srcTotalTree,dstTotalTree, bodyMapper,mappingStore, true);
+				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
+						beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
+					InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
+					UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
+					String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
+					String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
+					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
+					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
+					processBodyMapper(srcTotalTree, dstTotalTree, bodyMapper, mappingStore, true);
+				}
 			}
 
 		}

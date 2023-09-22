@@ -230,8 +230,6 @@ public class TreeUtilFunctions {
 	}
 
 	public static List<Tree> findVariable(Tree inputTree, String variableName) {
-		//FIXME: This method only works when there is only one instance of variable in the Tree
-		//In case of having more occurrences, the logic must be improved.
 		if (inputTree == null) return null;
 		boolean _seen = false;
 		List<Tree> refs = new ArrayList<>();

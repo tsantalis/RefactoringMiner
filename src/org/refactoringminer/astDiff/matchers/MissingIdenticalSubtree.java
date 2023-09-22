@@ -104,12 +104,10 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                 return true;
             return false;
         }
-        //TODO  : ignore the mapping if both subtrees belong to methods which contain @Test annotation
         boolean ret;
         if (src.getType().name.equals(Constants.JAVA_DOC))
             return true;
         else {
-            //FIXME: Inside the condition (if-for-while) ignore it
             if (TreeUtilFunctions.isStatement(src.getType().name) && !src.getType().name.equals(Constants.BLOCK))
                 if (src.getType().name.equals(Constants.RETURN_STATEMENT) && src.getMetrics().height <= 2)
                     ret =  false;

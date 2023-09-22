@@ -7,11 +7,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -24,13 +22,8 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
 import org.refactoringminer.test.RefactoringPopulator.Refactorings;
 import org.refactoringminer.util.GitServiceImpl;
-
-import gr.uom.java.xmi.UMLModel;
-import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
-import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestBuilder {
 
@@ -121,41 +114,7 @@ public class TestBuilder {
 		for (ProjectMatcher m : map.values()) {
 			if (m.ignoreNonSpecifiedCommits) {
 				for (String commitId : m.getCommits()) {
-					Runnable r = () -> {
-						try {
-							List<Refactoring> refactoringsAtRevision = Collections.emptyList();
-							Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
-							Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
-							Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
-							Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
-							Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
-							ChangedFileInfo info = ((GitHistoryRefactoringMinerImpl) refactoringDetector).populateWithGitHubAPIAndSaveFiles(m.cloneUrl, commitId, 
-									fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
-							Map<String, String> filesBefore = new LinkedHashMap<String, String>();
-							Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
-							for(String fileName : info.getFilesBefore()) {
-								if(fileContentsBefore.containsKey(fileName)) {
-									filesBefore.put(fileName, fileContentsBefore.get(fileName));
-								}
-							}
-							for(String fileName : info.getFilesCurrent()) {
-								if(fileContentsCurrent.containsKey(fileName)) {
-									filesCurrent.put(fileName, fileContentsCurrent.get(fileName));
-								}
-							}
-							fileContentsBefore = filesBefore;
-							fileContentsCurrent = filesCurrent;
-							List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
-							UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-							UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-							UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-							refactoringsAtRevision = modelDiff.getRefactorings();
-							refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-							m.handle(commitId, refactoringsAtRevision);	
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					};
+					Runnable r = () -> ((GitHistoryRefactoringMinerImpl)refactoringDetector).detectAtCommitWithGitHubAPI(m.cloneUrl, commitId, rootFolder, m);
 					pool.submit(r);
 				}
 			}

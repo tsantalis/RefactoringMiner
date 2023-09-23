@@ -13,25 +13,25 @@ version = "2.4.0"
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
-        resources {
-            srcDir 'res'
-        }
-    }
-    test {
-        java {
-            srcDir 'src-test'
-        }
-        resources {
-            srcDir 'src-test/data/'
-        }
-
-    }
-}
+//sourceSets {
+//    main {
+//        java {
+//            srcDir 'src'
+//        }
+//        resources {
+//            srcDir 'res'
+//        }
+//    }
+//    test {
+//        java {
+//            srcDir 'src-test'
+//        }
+//        resources {
+//            srcDir 'src-test/data/'
+//        }
+//
+//    }
+//}
 
 idea {
     module {

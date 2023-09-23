@@ -1,11 +1,9 @@
 package org.refactoringminer.astDiff.utils;
 
-import org.eclipse.jgit.lib.Repository;
-import org.refactoringminer.api.GitService;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.util.GitServiceImpl;
 
+import java.io.File;
 import java.util.Set;
 
 public class UtilMethods {
@@ -16,8 +14,7 @@ public class UtilMethods {
     private static final String problematicInfoFile = "cases-problematic.json";
     private static final String JSON_SUFFIX = ".json";
     private static final String JAVA_SUFFIX = ".java";
-    public static final String REPOS = "tmp1";
-    private static final GitService gitService = new GitServiceImpl();
+    public static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
     private static final String DEFECTS4J_MAPPING_PATH = DIFF_DATA_PATH + "defects4j/";
     public static String getDefects4jMappingPath() { return DEFECTS4J_MAPPING_PATH; }
 
@@ -60,9 +57,7 @@ public class UtilMethods {
     public static Set<ASTDiff> getProjectDiffLocally(String url) throws Exception {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
-        String repoFolder = repo.substring(repo.lastIndexOf("/"), repo.indexOf(".git"));
-        Repository repository = gitService.cloneIfNotExists(REPOS + repoFolder, repo);
-        return new GitHistoryRefactoringMinerImpl().diffAtCommit(repository, commit).getDiffSet();
+        return new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(repo, commit, new File(REPOS)).getDiffSet();
     }
 
     public static Set<ASTDiff> getProjectDiffLocally(CaseInfo info) throws Exception {

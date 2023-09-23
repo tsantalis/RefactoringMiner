@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class TestAllRefactorings {
 
-	private static final String REPOS = System.getProperty("user.dir") + "/src-test/data/oracle/commits";
+	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
 
 	@Test
 	public void testAllRefactorings() throws Exception {

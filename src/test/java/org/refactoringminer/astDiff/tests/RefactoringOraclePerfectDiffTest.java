@@ -39,7 +39,7 @@ public class RefactoringOraclePerfectDiffTest {
 
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());
-            String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+            String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",info.getRepo().replace(".git",""),info.getCommit(),astDiff.getSrcPath());
             String expected = null;
             try {

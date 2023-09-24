@@ -46,7 +46,7 @@ public class TreeMatcherTest {
     public static Stream<Arguments> initData() throws Exception {
         List<Arguments> allCases = new ArrayList<>();
         try (Stream<Path> stream = Files.walk(Paths.get(getTreesPath()))) {
-            stream.filter(path -> Files.isDirectory(path) && !path.toString().equals(getTreesPath()))
+            stream.filter(path -> Files.isDirectory(path) && !path.toString().replaceAll("\\\\", "/").equals(getTreesPath()))
                     .forEach(path ->
                     {
                         Path srcPath = path.resolve(srcFilePath);

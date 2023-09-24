@@ -36,7 +36,7 @@ public class TreeMatcherTest {
         ExtendedMultiMappingStore mappings = new ExtendedMultiMappingStore(srcTree,dstTree);
         new LeafMatcher().match(srcTree,dstTree,mappings);
         try {
-            String actual = MappingExportModel.exportString(mappings);
+            String actual = MappingExportModel.exportString(mappings).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             assertEquals(expectedMappings,actual);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

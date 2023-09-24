@@ -75,6 +75,6 @@ public class UtilMethods {
         return dir + prefix + "/" + projectDir + "/" + bugID;
     }
     public static String getDefect4jDir() {
-        return  System.getProperty("user.dir") + "/" + REPOS + "/defects4j/";
+        return  REPOS + "/defects4j/";
     }
 }

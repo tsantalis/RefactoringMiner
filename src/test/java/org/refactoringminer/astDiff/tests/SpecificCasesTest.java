@@ -2,7 +2,6 @@ package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,13 +12,10 @@ import org.refactoringminer.astDiff.utils.CaseInfo;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.utils.UtilMethods;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -80,8 +76,7 @@ public class SpecificCasesTest {
         assertTrue(executed, "ExtractMethodReturnStatement not executed properly");
     }
     private static void singleFileChecker(String url, String filePath) throws Exception {
-        Set<ASTDiff> astDiffs = new GitHistoryRefactoringMinerImpl().diffAtCommit(URLHelper.getRepo(url), URLHelper.getCommit(url), 1000).getDiffSet();
-//        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
+        Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         ASTDiff astDiff = astDiffs.iterator().next();
         String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");

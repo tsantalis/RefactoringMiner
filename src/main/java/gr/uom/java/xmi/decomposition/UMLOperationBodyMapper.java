@@ -10637,7 +10637,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void findReplacements(Set<String> strings1, Set<String> strings2, ReplacementInfo replacementInfo, ReplacementType type) throws RefactoringMinerTimedOutException {
 		if(strings1.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS || strings2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS ||
-				strings1.size()*strings2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS*10) {
+				strings1.size()*strings2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS*10 ||
+				strings2.size() > 10*strings1.size() || strings1.size() > 10*strings2.size()) {
 			return;
 		}
 		TreeMap<Double, Set<Replacement>> globalReplacementMap = new TreeMap<Double, Set<Replacement>>();

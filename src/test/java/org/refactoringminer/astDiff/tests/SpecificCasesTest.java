@@ -78,7 +78,7 @@ public class SpecificCasesTest {
     private static void singleFileChecker(String url, String filePath) throws Exception {
         Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         ASTDiff astDiff = astDiffs.iterator().next();
-        String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+        String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
         String expected = FileUtils.readFileToString(new File(filePath), "utf-8");
         JSONAssert.assertEquals(expected, calculated, false);
     }
@@ -120,7 +120,7 @@ public class SpecificCasesTest {
     private static void makeAllCases(List<Arguments> allCases, CaseInfo info, List<String> expectedFilesList, Set<ASTDiff> astDiffs, String mappingsPath) throws IOException {
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, mappingsPath, info.getRepo(), info.getCommit());
-            String calculated = MappingExportModel.exportString(astDiff.getAllMappings());
+            String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             String expected = FileUtils.readFileToString(new File(finalFilePath), "utf-8");
             allCases.add(Arguments.of(info.getRepo(),info.getCommit(),astDiff.getSrcPath(),expected,calculated));
             expectedFilesList.remove(getFileNameFromSrcDiff(astDiff.getSrcPath()));

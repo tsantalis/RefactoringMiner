@@ -58,7 +58,7 @@ public class AddCase {
             String repo = args[0];
             String commit = args[1];
             try {
-                addTestCase(repo, commit, new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), getPerfectInfoFile());
+                addTestCase(repo, commit, new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(repo, commit, new File(REPOS)), getCommitsMappingsPath(), getPerfectInfoFile());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -79,7 +79,7 @@ public class AddCase {
         String repo = URLHelper.getRepo(url);
         String commit = URLHelper.getCommit(url);
         addTestCase(repo,commit,
-                new GitHistoryRefactoringMinerImpl().diffAtCommit(repo, commit, 1000), getCommitsMappingsPath(), infoFile);
+                new GitHistoryRefactoringMinerImpl().diffAtCommitWithGitHubAPI(repo, commit, new File(REPOS)), getCommitsMappingsPath(), infoFile);
     }
 
     private static void addTestCase(String repo, String commit, ProjectASTDiff projectASTDiff, String mappingsPath, String testInfoFile) throws IOException {

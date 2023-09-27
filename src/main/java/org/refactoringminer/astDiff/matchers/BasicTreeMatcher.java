@@ -14,6 +14,16 @@ import java.util.List;
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
 public class BasicTreeMatcher implements TreeMatcher {
+
+	private int minP = 0;
+	public void setMinP(int minP) {
+		this.minP = minP;
+	}
+
+	public int getMinP() {
+		return minP;
+	}
+
 	@Override
 	public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
 		basicMatcher(src, dst, mappingStore);
@@ -23,9 +33,9 @@ public class BasicTreeMatcher implements TreeMatcher {
 		mappingStore.add(process(src, dst));
 	}
 
-	public static MappingStore process(Tree src, Tree dst) {
+	public MappingStore process(Tree src, Tree dst) {
 		MappingStore match;
-		match = new CustomGreedy(0).match(src, dst);
+		match = new CustomGreedy(minP).match(src, dst);
 		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
 		customBottomUpMatcher.match(src, dst, match);
 		optimizeMappings(match);

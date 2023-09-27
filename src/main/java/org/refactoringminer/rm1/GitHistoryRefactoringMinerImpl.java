@@ -983,6 +983,43 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	public UMLModelDiff detectAtCommitWithGitHubAPI(String cloneURL, String commitId, File rootFolder) {
+		try {
+			List<Refactoring> refactoringsAtRevision = Collections.emptyList();
+			Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
+			Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
+			Map<String, String> fileContentsBefore = new ConcurrentHashMap<String, String>();
+			Map<String, String> fileContentsCurrent = new ConcurrentHashMap<String, String>();
+			Map<String, String> renamedFilesHint = new ConcurrentHashMap<String, String>();
+			ChangedFileInfo info = populateWithGitHubAPIAndSaveFiles(cloneURL, commitId, 
+					fileContentsBefore, fileContentsCurrent, renamedFilesHint, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, rootFolder);
+			Map<String, String> filesBefore = new LinkedHashMap<String, String>();
+			Map<String, String> filesCurrent = new LinkedHashMap<String, String>();
+			for(String fileName : info.getFilesBefore()) {
+				if(fileContentsBefore.containsKey(fileName)) {
+					filesBefore.put(fileName, fileContentsBefore.get(fileName));
+				}
+			}
+			for(String fileName : info.getFilesCurrent()) {
+				if(fileContentsCurrent.containsKey(fileName)) {
+					filesCurrent.put(fileName, fileContentsCurrent.get(fileName));
+				}
+			}
+			fileContentsBefore = filesBefore;
+			fileContentsCurrent = filesCurrent;
+			List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
+			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
+			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
+			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			refactoringsAtRevision = modelDiff.getRefactorings();
+			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+			return modelDiff;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public ChangedFileInfo populateWithGitHubAPIAndSaveFiles(String cloneURL, String currentCommitId,
 			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
 			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent, File rootFolder) throws IOException, InterruptedException {

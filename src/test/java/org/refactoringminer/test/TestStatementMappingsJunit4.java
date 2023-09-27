@@ -40,19 +40,15 @@ import gr.uom.java.xmi.diff.UMLEnumConstantDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestStatementMappingsJunit4 {
-	private static final String REPOS = "tmp1";
-	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/mappings/";
+	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
+	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/mappings/";
 	private GitService gitService = new GitServiceImpl();
 
 	@Test
 	public void testNestedExtractMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/infinispan",
-		    "https://github.com/infinispan/infinispan.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "043030723632627b0908dca6b24dae91d3dfd938", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/infinispan/infinispan.git", "043030723632627b0908dca6b24dae91d3dfd938", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -80,13 +76,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedInlineMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-			    REPOS + "/TestCases",
-			    "https://github.com/pouryafard75/TestCases.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "e47272d6e1390b6366f577b84c58eae50f8f0a69", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/pouryafard75/TestCases.git", "e47272d6e1390b6366f577b84c58eae50f8f0a69", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -118,13 +110,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedInlineMethodStatementMappings2() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-			    REPOS + "/vert.x",
-			    "https://github.com/eclipse-vertx/vert.x.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "32a8c9086040fd6d6fa11a214570ee4f75a4301f", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse-vertx/vert.x.git", "32a8c9086040fd6d6fa11a214570ee4f75a4301f", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -152,13 +140,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappingsWithLambdaParameters() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-			    REPOS + "/TestCases",
-			    "https://github.com/pouryafard75/TestCases.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "d01dfd14c0f8cae6ad4f78171011cd839b980e00", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/pouryafard75/TestCases.git", "d01dfd14c0f8cae6ad4f78171011cd839b980e00", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				for (Refactoring ref : refactorings) {
@@ -181,46 +165,15 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testCopiedStatementMappings() throws Exception {
-		Repository repository = gitService.cloneIfNotExists(
-		    ".",
-		    "https://github.com/tsantalis/RefactoringMiner.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		String commitId = "fbd80e76c68558ba58b62311aa1c34fb38baf53a";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-				
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-					
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("processLeaves") && mapper.getContainer2().getName().equals("processLeaves")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/tsantalis/RefactoringMiner.git", "fbd80e76c68558ba58b62311aa1c34fb38baf53a", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("processLeaves") && mapper.getContainer2().getName().equals("processLeaves")) {
+					mapperInfo(mapper, actual);
+					break;
 				}
 			}
 		}
@@ -230,46 +183,15 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testCopiedStatementMappings2() throws Exception {
-		Repository repository = gitService.cloneIfNotExists(
-			REPOS + "/javaparser",
-		    "https://github.com/javaparser/javaparser.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		String commitId = "f4ce6ce924ffbd03518c64cea9b830d04f75b849";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-				
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-					
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("apply") && mapper.getContainer2().getName().equals("apply")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/javaparser/javaparser.git", "f4ce6ce924ffbd03518c64cea9b830d04f75b849", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("apply") && mapper.getContainer2().getName().equals("apply")) {
+					mapperInfo(mapper, actual);
+					break;
 				}
 			}
 		}
@@ -279,46 +201,15 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testCopiedStatementMappings3() throws Exception {
-		Repository repository = gitService.cloneIfNotExists(
-			REPOS + "/commons-lang",
-		    "https://github.com/apache/commons-lang.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		String commitId = "50c1fdecb4ed33ec1bb0d449f294c299d5369701";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-				
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-					
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("createNumber") && mapper.getContainer2().getName().equals("createNumber")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/commons-lang.git", "50c1fdecb4ed33ec1bb0d449f294c299d5369701", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("createNumber") && mapper.getContainer2().getName().equals("createNumber")) {
+					mapperInfo(mapper, actual);
+					break;
 				}
 			}
 		}
@@ -328,46 +219,15 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNonIsomorphicControlStructureStatementMappings() throws Exception {
-		Repository repository = gitService.cloneIfNotExists(
-		    REPOS + "/flink",
-		    "https://github.com/apache/flink.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		String commitId = "e0a4ee07084bc6ab56a20fbc4a18863462da93eb";
-		List<Refactoring> refactoringsAtRevision;
-		try (RevWalk walk = new RevWalk(repository)) {
-			RevCommit commit = walk.parseCommit(repository.resolve(commitId));
-			if (commit.getParentCount() > 0) {
-				walk.parseCommit(commit.getParent(0));
-				Set<String> filePathsBefore = new LinkedHashSet<String>();
-				Set<String> filePathsCurrent = new LinkedHashSet<String>();
-				Map<String, String> renamedFilesHint = new HashMap<String, String>();
-				gitService.fileTreeDiff(repository, commit, filePathsBefore, filePathsCurrent, renamedFilesHint);
-				
-				Set<String> repositoryDirectoriesBefore = new LinkedHashSet<String>();
-				Set<String> repositoryDirectoriesCurrent = new LinkedHashSet<String>();
-				Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
-				Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
-				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && commit.getParentCount() > 0) {
-					RevCommit parentCommit = commit.getParent(0);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
-					GitHistoryRefactoringMinerImpl.populateFileContents(repository, commit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
-					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false);
-					UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, repositoryDirectoriesBefore);
-					UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-					
-					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-					refactoringsAtRevision = modelDiff.getRefactorings();
-					refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-					List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
-					for(UMLClassDiff classDiff : commonClassDiff) {
-						for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-							if(mapper.getContainer1().getName().equals("getNextInputSplit") && mapper.getContainer2().getName().equals("getNextInputSplit")) {
-								mapperInfo(mapper, actual);
-								break;
-							}
-						}
-					}
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/flink.git", "e0a4ee07084bc6ab56a20fbc4a18863462da93eb", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("getNextInputSplit") && mapper.getContainer2().getName().equals("getNextInputSplit")) {
+					mapperInfo(mapper, actual);
+					break;
 				}
 			}
 		}
@@ -377,13 +237,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testExtractMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/k-9",
-		    "https://github.com/k9mail/k-9.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "23c49d834d3859fc76a604da32d1789d2e863303", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/k9mail/k-9.git", "23c49d834d3859fc76a604da32d1789d2e863303", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -411,13 +267,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedExtractMethodStatementMappings2() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/j2objc",
-		    "https://github.com/google/j2objc.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "d05d92de40542e85f9f26712d976e710be82914e", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/google/j2objc.git", "d05d92de40542e85f9f26712d976e710be82914e", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -445,13 +297,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedExtractMethodStatementMappings3() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/jadx",
-		    "https://github.com/skylot/jadx.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "2d8d4164830631d3125575f055b417c5addaa22f", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/skylot/jadx.git", "2d8d4164830631d3125575f055b417c5addaa22f", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -481,13 +329,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedExtractMethodStatementMappings4() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/buck",
-		    "https://github.com/facebook/buck.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "7e104c3ed4b80ec8e9b72356396f879d1067cc40", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/facebook/buck.git", "7e104c3ed4b80ec8e9b72356396f879d1067cc40", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -515,13 +359,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testNestedExtractMethodStatementMappingsWithIntermediateDelegate() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-			".",
-		    "https://github.com/tsantalis/RefactoringMiner.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "447005f5c62ad6236aad9116e932f13c4d449546", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/tsantalis/RefactoringMiner.git", "447005f5c62ad6236aad9116e932f13c4d449546", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -549,13 +389,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/java-algorithms-implementation",
-		    "https://github.com/phishman3579/java-algorithms-implementation.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/phishman3579/java-algorithms-implementation.git", "ab98bcacf6e5bf1c3a06f6bcca68f178f880ffc9", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -603,13 +439,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappingsWithZeroIdenticalStatements() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/deeplearning4j",
-		    "https://github.com/deeplearning4j/deeplearning4j.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "91cdfa1ffd937a4cb01cdc0052874ef7831955e2", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/deeplearning4j/deeplearning4j.git", "91cdfa1ffd937a4cb01cdc0052874ef7831955e2", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -639,13 +471,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappings2() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-				".",
-			    "https://github.com/tsantalis/RefactoringMiner.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "68319df7c453a52778d7853b59d5a2bfe5ec5065", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/tsantalis/RefactoringMiner.git", "68319df7c453a52778d7853b59d5a2bfe5ec5065", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -673,13 +501,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappingsWithTwoLevelOptimization() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/alluxio",
-		    "https://github.com/Alluxio/alluxio.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "9aeefcd8120bb3b89cdb437d8c32d2ed84b8a825", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/Alluxio/alluxio.git", "9aeefcd8120bb3b89cdb437d8c32d2ed84b8a825", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -707,13 +531,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedTryFinallyBlockBetweenOriginalAndExtractedMethod() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/android-iconify",
-		    "https://github.com/JoanZapata/android-iconify.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "eb500cca282e39d01a9882e1d0a83186da6d1a26", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/JoanZapata/android-iconify.git", "eb500cca282e39d01a9882e1d0a83186da6d1a26", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -741,13 +561,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedAndNestedExtractMethodStatementMappings() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/spring-boot",
-		    "https://github.com/spring-projects/spring-boot.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "becced5f0b7bac8200df7a5706b568687b517b90", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/spring-projects/spring-boot.git", "becced5f0b7bac8200df7a5706b568687b517b90", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -775,13 +591,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testDuplicatedExtractMethodStatementMappingsWithSingleCallSite() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/thymeleaf",
-		    "https://github.com/thymeleaf/thymeleaf.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "378ba37750a9cb1b19a6db434dfa59308f721ea6", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/thymeleaf/thymeleaf.git", "378ba37750a9cb1b19a6db434dfa59308f721ea6", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -809,13 +621,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testExtractMethodStatementMappings2() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/javaparser",
-		    "https://github.com/javaparser/javaparser.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "2d3f5e219af9d1ba916f1dc21a6169a41a254632", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/javaparser/javaparser.git", "2d3f5e219af9d1ba916f1dc21a6169a41a254632", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -843,13 +651,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testExtractMethodStatementMappings3() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/checkstyle",
-		    "https://github.com/checkstyle/checkstyle.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "ab2f93f9bf61816d84154e636d32c81c05854e24", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/checkstyle/checkstyle.git", "ab2f93f9bf61816d84154e636d32c81c05854e24", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -877,13 +681,9 @@ public class TestStatementMappingsJunit4 {
 
 	@Test
 	public void testExtractMethodStatementMappings4() throws Exception {
-		GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-		Repository repo = gitService.cloneIfNotExists(
-		    REPOS + "/hive",
-		    "https://github.com/apache/hive.git");
-
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommit(repo, "102b23b16bf26cbf439009b4b95542490a082710", new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI("https://github.com/apache/hive.git", "102b23b16bf26cbf439009b4b95542490a082710", new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();

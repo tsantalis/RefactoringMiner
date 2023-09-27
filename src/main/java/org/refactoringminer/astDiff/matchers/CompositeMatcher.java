@@ -41,6 +41,17 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Tree srcFakeTree = makeFakeTree(src,fragment1, cpyToSrc);
 		Tree dstFakeTree = makeFakeTree(dst,fragment2, cpyToDst);
 		ExtendedMultiMappingStore tempMapping = new ExtendedMultiMappingStore(null,null);
+
+//		if (src.getType().name.equals(Constants.IF_STATEMENT) && dst.getType().name.equals(Constants.IF_STATEMENT)) {
+//			int h1 = srcFakeTree.getChild(0).getMetrics().height;
+//			int h2 = dstFakeTree.getChild(0).getMetrics().height;
+//			if (h1 > 2 && h2 > 2)
+//				setMinP(1);
+//			else
+//				setMinP(0);
+//		}
+
+
 		super.match(srcFakeTree,dstFakeTree,tempMapping);
 		for(Mapping mapping : tempMapping) {
 			if (mapping.first == srcFakeTree) continue;
@@ -48,7 +59,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		}
 	}
 
-	private static Tree makeFakeTree(Tree tree, CompositeStatementObject fragment, Map<Tree, Tree> cpyMap) {
+	private Tree makeFakeTree(Tree tree, CompositeStatementObject fragment, Map<Tree, Tree> cpyMap) {
 		Tree cpy = TreeUtilFunctions.makeDefaultTree(tree);
 		cpyMap.put(cpy,tree);
 		for (AbstractExpression abstractExpression : fragment.getExpressions()) {

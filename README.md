@@ -5,6 +5,7 @@ Table of Contents
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
+   * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
    * [Chrome extension](#chrome-extension)
    * [Research](#research)
@@ -269,6 +270,18 @@ In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows
 Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.
 
 You can also work with the project with Eclipse IDE. First, run `./gradlew eclipse` to generate Eclipse project metadata files. Then, import it into Eclipse using the *Import Existing Project* feature.
+
+# How to test RefactoringMiner
+As of release 3.0, all RefactoringMiner tests have been migrated to JUnit 5 and do not require any more to clone repositories.
+Moreover, all unit tests can be executed in parallel. The more CPU cores, the faster the test suites will execute.
+The available test suites are:
+* [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the precision and recall of RefactoringMiner on the Refactoring Oracle (546 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (81 commits)
+* [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
+* [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection
+* [src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest.java): Tests the AST node mapping accuracy of RefactoringMiner on the Defects4J dataset
+* [src/test/java/org/refactoringminer/astDiff/tests/RefactoringOraclePerfectDiffTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/RefactoringOraclePerfectDiffTest.java): Tests the AST node mapping accuracy of RefactoringMiner on the Refactoring Oracle dataset
+* [src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/SpecificCasesTest.java): Tests the AST node mapping accuracy of RefactoringMiner on some specific cases
 
 # How to use RefactoringMiner as a maven dependency
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)

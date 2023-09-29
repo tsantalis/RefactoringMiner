@@ -39,6 +39,7 @@ import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
 import gr.uom.java.xmi.diff.MergeCatchRefactoring;
+import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
 import gr.uom.java.xmi.diff.ReferenceBasedRefactoring;
 import gr.uom.java.xmi.diff.RemoveParameterRefactoring;
@@ -3289,6 +3290,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private boolean isInMergeConditionalRefactoring(CompositeStatementObject innerNode1) {
+		for(Refactoring r : refactorings) {
+			if(r instanceof MergeConditionalRefactoring) {
+				MergeConditionalRefactoring merge = (MergeConditionalRefactoring)r;
+				if(merge.getMergedConditionals().contains(innerNode1)) {
+					for(LeafMapping leafMapping : merge.getSubExpressionMappings()) {
+						if(innerNode1.getExpressions().size() > 0 && innerNode1.getExpressions().get(0).getString().equals(leafMapping.getFragment1().getString()) &&
+								leafMapping.getFragment1().getString().equals(leafMapping.getFragment2().getString())) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2, List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap, List<UMLOperation> removedOperations, List<UMLOperation> addedOperations, boolean tryWithResourceMigration, boolean containsCallToExtractedMethod,
 			Map<String, List<CompositeStatementObject>> map1, Map<String, List<CompositeStatementObject>> map2) throws RefactoringMinerTimedOutException {
@@ -3381,6 +3399,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 				CompositeStatementObject statement1 = innerNodeIterator1.next();
 				if(!alreadyMatched1(statement1)) {
+					if(isInMergeConditionalRefactoring(statement1)) {
+						continue;
+					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 						CompositeStatementObject statement2 = innerNodeIterator2.next();

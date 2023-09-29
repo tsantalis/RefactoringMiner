@@ -2725,65 +2725,14 @@ public class StringBasedHeuristics {
 								createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
 							}
 						}
+						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,
+								mappings, subConditionsAsList2, subConditionMap1, subConditionMap2, subConditionMap,
+								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap);
 					}
 					else if(ifNodes1.size() > ifNodes2.size()) {
-						boolean mergeConditional = false;
-						for(CompositeStatementObject ifNode1 : ifNodes1) {
-							List<AbstractExpression> expressions1 = ifNode1.getExpressions();
-							if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !ifNode1.getExpressions().contains(statement1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement1, statement2, mappings)) {
-								AbstractExpression ifExpression1 = expressions1.get(0);
-								String conditional = ifExpression1.getString();
-								String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
-								List<String> subConditionsAsList = new ArrayList<String>();
-								subConditionMap = new LinkedHashMap<>();
-								for(String s : subConditions) {
-									String trimmed = s.trim();
-									String temp1 = new String(trimmed);
-									List<LeafExpression> leafExpressions = ifNode1.findExpression(trimmed);
-									for(Replacement replacement : info.getReplacements()) {
-										if(!(replacement instanceof IntersectionReplacement)) {
-											temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
-										}
-									}
-									subConditionsAsList.add(temp1);
-									if(leafExpressions.size() > 0) {
-										subConditionMap.put(temp1, leafExpressions.get(0));
-									}
-								}
-								intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
-								int matches2 = matchCount(intersection2, info);
-								boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
-								if(pass2 && !intersection.containsAll(intersection2)) {
-									Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
-									additionallyMatchedStatements1.add(ifNode1);
-									CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
-									info.addReplacement(composite);
-									mergeConditional = true;
-								}
-							}
-						}
-						if(mergeConditional) {
-							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
-							Set<AbstractCodeFragment> mergedConditionals = new LinkedHashSet<>();
-							if(statement1 instanceof AbstractExpression) {
-								CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
-								if(owner != null)
-									mergedConditionals.add(owner);
-							}
-							else {
-								mergedConditionals.add(statement1);
-							}
-							for(Replacement compositeReplacement : compositeReplacements) {
-								mergedConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements1());
-							}
-							if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
-								MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
-								refactorings.add(merge);
-								createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
-								createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
-								mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
-							}
-						}
+						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,
+								mappings, subConditionsAsList2, subConditionMap1, subConditionMap2, subConditionMap,
+								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap);
 					}
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
@@ -2907,6 +2856,72 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static void checkForMergeConditionals(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, VariableDeclarationContainer container1,
+			VariableDeclarationContainer container2, Set<AbstractCodeMapping> mappings,
+			List<String> subConditionsAsList2, Map<String, LeafExpression> subConditionMap1,
+			Map<String, LeafExpression> subConditionMap2, Map<String, LeafExpression> subConditionMap,
+			Set<String> intersection, Set<String> intersection2, Set<CompositeStatementObject> ifNodes1,
+			Set<CompositeStatementObject> ifNodes2, ReplacementInfo info, Map<String, String> parameterToArgumentMap) {
+		boolean mergeConditional = false;
+		for(CompositeStatementObject ifNode1 : ifNodes1) {
+			List<AbstractExpression> expressions1 = ifNode1.getExpressions();
+			if(expressions1.size() > 0 && !statement1.equals(ifNode1) && !ifNode1.getExpressions().contains(statement1) && !containsIdenticalIfNode(ifNodes2, ifNode1) && sequentiallyMergedConditional(ifNode1, statement1, statement2, mappings)) {
+				AbstractExpression ifExpression1 = expressions1.get(0);
+				String conditional = ifExpression1.getString();
+				String[] subConditions = SPLIT_CONDITIONAL_PATTERN.split(conditional);
+				List<String> subConditionsAsList = new ArrayList<String>();
+				subConditionMap = new LinkedHashMap<>();
+				for(String s : subConditions) {
+					String trimmed = s.trim();
+					String temp1 = new String(trimmed);
+					List<LeafExpression> leafExpressions = ifNode1.findExpression(trimmed);
+					for(Replacement replacement : info.getReplacements()) {
+						if(!(replacement instanceof IntersectionReplacement)) {
+							temp1 = ReplacementUtil.performReplacement(temp1, replacement.getBefore(), replacement.getAfter());
+						}
+					}
+					subConditionsAsList.add(temp1);
+					if(leafExpressions.size() > 0) {
+						subConditionMap.put(temp1, leafExpressions.get(0));
+					}
+				}
+				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
+				int matches2 = matchCount(intersection2, info);
+				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
+				if(pass2 && !intersection.containsAll(intersection2)) {
+					Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
+					additionallyMatchedStatements1.add(ifNode1);
+					CompositeReplacement composite = new CompositeReplacement(ifNode1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<>());
+					info.addReplacement(composite);
+					mergeConditional = true;
+				}
+			}
+		}
+		if(mergeConditional) {
+			List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
+			Set<AbstractCodeFragment> mergedConditionals = new LinkedHashSet<>();
+			if(statement1 instanceof AbstractExpression) {
+				CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
+				if(owner != null)
+					mergedConditionals.add(owner);
+			}
+			else {
+				mergedConditionals.add(statement1);
+			}
+			for(Replacement compositeReplacement : compositeReplacements) {
+				mergedConditionals.addAll(((CompositeReplacement)compositeReplacement).getAdditionallyMatchedStatements1());
+			}
+			if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
+				MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
+				refactorings.add(merge);
+				createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
+				createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
+				mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
+			}
+		}
 	}
 
 	private static void createLeafMappings(VariableDeclarationContainer container1,

@@ -30,6 +30,7 @@ public class StatementObject extends AbstractStatement {
 	private List<AbstractCall> methodInvocations;
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations;
 	private List<LeafExpression> stringLiterals;
+	private List<LeafExpression> charLiterals;
 	private List<LeafExpression> numberLiterals;
 	private List<LeafExpression> nullLiterals;
 	private List<LeafExpression> booleanLiterals;
@@ -58,6 +59,7 @@ public class StatementObject extends AbstractStatement {
 		this.methodInvocations = visitor.getMethodInvocations();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
 		this.stringLiterals = visitor.getStringLiterals();
+		this.charLiterals = visitor.getCharLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
 		this.nullLiterals = visitor.getNullLiterals();
 		this.booleanLiterals = visitor.getBooleanLiterals();
@@ -180,6 +182,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
+	}
+
+	@Override
+	public List<LeafExpression> getCharLiterals() {
+		return charLiterals;
 	}
 
 	@Override

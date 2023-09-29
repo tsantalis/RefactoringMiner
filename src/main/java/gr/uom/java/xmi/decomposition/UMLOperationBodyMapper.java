@@ -5168,7 +5168,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							matchingMappings++;
 						}
 					}
-					if(matchingMappings == mappingSet.size()) {
+					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
+					if(matchingMappings == mappingSet.size() || matchWithLessReplacements) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
@@ -7376,6 +7377,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		Set<String> stringLiterals2 = convertToStringSet(statement2.getStringLiterals());
 		removeCommonElements(stringLiterals1, stringLiterals2);
 		
+		Set<String> charLiterals1 = convertToStringSet(statement1.getCharLiterals());
+		Set<String> charLiterals2 = convertToStringSet(statement2.getCharLiterals());
+		removeCommonElements(charLiterals1, charLiterals2);
+		
 		Set<String> typeLiterals1 = convertToStringSet(statement1.getTypeLiterals());
 		Set<String> typeLiterals2 = convertToStringSet(statement2.getTypeLiterals());
 		removeCommonElements(typeLiterals1, typeLiterals2);
@@ -7445,6 +7450,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		variablesAndMethodInvocations1.addAll(variables1);
 		
 		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION);
+		if(charLiterals1.size() > 0 && charLiterals2.isEmpty() && stringLiterals2.size() > 0) {
+			findReplacements(charLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL_REPLACED_WITH_CHAR_LITERAL);
+		}
+		if(charLiterals2.size() > 0 && charLiterals1.isEmpty() && stringLiterals1.size() > 0) {
+			findReplacements(stringLiterals1, charLiterals2, replacementInfo, ReplacementType.STRING_LITERAL_REPLACED_WITH_CHAR_LITERAL);
+		}
 		if(variablesAndMethodInvocations1.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS || variablesAndMethodInvocations2.size() > MAXIMUM_NUMBER_OF_COMPARED_STRINGS) {
 			return null;
 		}
@@ -7623,6 +7634,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		
 		//perform literal replacements
 		findReplacements(stringLiterals1, stringLiterals2, replacementInfo, ReplacementType.STRING_LITERAL);
+		findReplacements(charLiterals1, charLiterals2, replacementInfo, ReplacementType.CHAR_LITERAL);
 		findReplacements(numberLiterals1, numberLiterals2, replacementInfo, ReplacementType.NUMBER_LITERAL);
 		if(!statement1.containsInitializerOfVariableDeclaration(numberLiterals1) && !statement2.containsInitializerOfVariableDeclaration(variables2) &&
 				(!statement1.getString().endsWith("=0;\n") || (statement1.getString().endsWith("=0;\n") && statement2.getString().endsWith(".length;\n")))) {

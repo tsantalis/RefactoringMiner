@@ -83,6 +83,11 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
+	public List<LeafExpression> getCharLiterals() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<LeafExpression> getNumberLiterals() {
 		return Collections.emptyList();
 	}

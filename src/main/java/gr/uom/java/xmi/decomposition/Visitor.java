@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
@@ -72,6 +73,7 @@ public class Visitor extends ASTVisitor {
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
 	private List<LeafExpression> stringLiterals = new ArrayList<>();
+	private List<LeafExpression> charLiterals = new ArrayList<>();
 	private List<LeafExpression> numberLiterals = new ArrayList<>();
 	private List<LeafExpression> nullLiterals = new ArrayList<>();
 	private List<LeafExpression> booleanLiterals = new ArrayList<>();
@@ -230,6 +232,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.creations, anonymous.getCreations());
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
 			removeLast(this.stringLiterals, anonymous.getStringLiterals());
+			removeLast(this.charLiterals, anonymous.getCharLiterals());
 			removeLast(this.nullLiterals, anonymous.getNullLiterals());
 			removeLast(this.booleanLiterals, anonymous.getBooleanLiterals());
 			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
@@ -331,6 +334,16 @@ public class Visitor extends ASTVisitor {
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getStringLiterals().add(expression);
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(CharacterLiteral node) {
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CHAR_LITERAL, container);
+		charLiterals.add(expression);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getCharLiterals().add(expression);
 		}
 		return super.visit(node);
 	}
@@ -830,6 +843,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<LeafExpression> getStringLiterals() {
 		return stringLiterals;
+	}
+
+	public List<LeafExpression> getCharLiterals() {
+		return charLiterals;
 	}
 
 	public List<LeafExpression> getNumberLiterals() {

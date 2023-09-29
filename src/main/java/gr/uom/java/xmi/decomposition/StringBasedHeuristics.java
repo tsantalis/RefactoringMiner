@@ -2916,10 +2916,26 @@ public class StringBasedHeuristics {
 			}
 			if(sequentiallyMergedConditionals(mergedConditionals, statement2, mappings)) {
 				MergeConditionalRefactoring merge = new MergeConditionalRefactoring(mergedConditionals, statement2, container1, container2);
-				refactorings.add(merge);
-				createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
-				createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
-				mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
+				//special handling for conflicting merge conditionals
+				boolean mergeConditionalsConflict = false;
+				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+				for(Refactoring refactoring : refactorings) {
+					if(refactoring instanceof MergeConditionalRefactoring) {
+						MergeConditionalRefactoring oldMerge = (MergeConditionalRefactoring)refactoring;
+						if(merge.getMergedConditionals().equals(oldMerge.getMergedConditionals())) {
+							mergeConditionalsConflict = true;
+							refactoringsToBeRemoved.add(refactoring);
+							break;
+						}
+					}
+				}
+				refactorings.removeAll(refactoringsToBeRemoved);
+				if(!mergeConditionalsConflict) {
+					refactorings.add(merge);
+					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, merge);
+					createLeafMappings(container1, container2, subConditionMap, subConditionMap2, intersection2, merge);
+					mapper.createMultiMappingsForDuplicatedStatements(mergedConditionals, statement2, parameterToArgumentMap);
+				}
 			}
 		}
 	}

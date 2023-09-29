@@ -2922,7 +2922,7 @@ public class StringBasedHeuristics {
 				for(Refactoring refactoring : refactorings) {
 					if(refactoring instanceof MergeConditionalRefactoring) {
 						MergeConditionalRefactoring oldMerge = (MergeConditionalRefactoring)refactoring;
-						if(merge.getMergedConditionals().equals(oldMerge.getMergedConditionals())) {
+						if(merge.getMergedConditionals().equals(oldMerge.getMergedConditionals()) && !merge.equals(oldMerge)) {
 							mergeConditionalsConflict = true;
 							refactoringsToBeRemoved.add(refactoring);
 							break;

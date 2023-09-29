@@ -3,27 +3,19 @@ package org.refactoringminer.test;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.junit.Assert;
 import org.junit.Test;
-import org.refactoringminer.api.GitHistoryRefactoringMiner;
-import org.refactoringminer.api.GitService;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-import org.refactoringminer.util.GitServiceImpl;
 
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -31,7 +23,6 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
-import gr.uom.java.xmi.diff.MoveSourceFolderRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
@@ -42,7 +33,6 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 public class TestStatementMappingsJunit4 {
 	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
 	private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/mappings/";
-	private GitService gitService = new GitServiceImpl();
 
 	@Test
 	public void testNestedExtractMethodStatementMappings() throws Exception {

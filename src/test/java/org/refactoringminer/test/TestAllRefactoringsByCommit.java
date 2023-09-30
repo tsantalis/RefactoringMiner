@@ -29,11 +29,10 @@ import java.util.HashSet;
 public class TestAllRefactoringsByCommit {
     private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
     private static final String EXPECTED = System.getProperty("user.dir") + "/src/test/resources/oracle/expected.txt";
-    private static final String DELETED_COMMITS = System.getProperty("user.dir") + "/src/test/resources/oracle/deleted_commits.txt";
     private static final Map<String, Integer> expectedTP = new HashMap<>();
     private static final Map<String, Integer> expectedFP = new HashMap<>();
     private static final Map<String, Integer> expectedFN = new HashMap<>();
-    private static final Set<String> deletedCommits = new HashSet<>();
+    private static final Set<String> deletedCommits = Set.of("5b7947034a656c463ca477e198f7728cccc9e4c1", "ebb1c2c364e888d4a0f47abe691cb2bad4eb4e75");
 
     @BeforeAll
     public static void setUp() {
@@ -54,22 +53,7 @@ public class TestAllRefactoringsByCommit {
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
-    	deletedCommits.addAll(getDeletedCommits());
     }
-
-	private static List<String> getDeletedCommits() {
-		List<String> deletedCommits = new ArrayList<String>();
-		try (BufferedReader br = new BufferedReader(new FileReader(DELETED_COMMITS))) {
-			String line;
-			while ((line = br.readLine()) != null) {
-				String sha1 = line.substring(line.lastIndexOf("/")+1, line.length());
-				deletedCommits.add(sha1);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return deletedCommits;
-	}
 
     @ParameterizedTest
     @JsonFileSource(resources = "/oracle/data.json")

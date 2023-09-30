@@ -28,6 +28,7 @@ import gr.uom.java.xmi.decomposition.replacement.AddVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MergeVariableReplacement;
+import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 import gr.uom.java.xmi.decomposition.replacement.SwapArgumentReplacement;
@@ -2523,7 +2524,7 @@ public class StringBasedHeuristics {
 				int matches = matchCount(intersection, info);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
-				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && info.getReplacements(ReplacementType.METHOD_INVOCATION).isEmpty()) {
+				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info)) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
 					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
 					info.addReplacement(r);
@@ -2572,7 +2573,23 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					if(ifNodes1.size() < ifNodes2.size()) {
+					int identicalIfNodes1 = 0;
+					int identicalIfNodes2 = 0;
+					if(ifNodes1.size() == ifNodes2.size()) {
+						List<CompositeStatementObject> innerNodes1 = container1.getBody().getCompositeStatement().getInnerNodes();
+						List<CompositeStatementObject> innerNodes2 = container2.getBody().getCompositeStatement().getInnerNodes();
+						for(CompositeStatementObject ifNode1 : ifNodes1) {
+							if(identicalCompositeInTheOtherContainer(ifNode1, innerNodes2)) {
+								identicalIfNodes1++;
+							}
+						}
+						for(CompositeStatementObject ifNode2 : ifNodes2) {
+							if(identicalCompositeInTheOtherContainer(ifNode2, innerNodes1)) {
+								identicalIfNodes2++;
+							}
+						}
+					}
+					if(ifNodes1.size() - identicalIfNodes1 < ifNodes2.size() - identicalIfNodes2) {
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
@@ -2769,7 +2786,7 @@ public class StringBasedHeuristics {
 						onlyInfixOperatorReplacementsFound = true;
 					}
 				}
-				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && info.getReplacements(ReplacementType.METHOD_INVOCATION).isEmpty() && !includesLocalVariable(statement1, statement2, intersection, container1, container2)) {
+				if((invertedConditionals > 0 || matches > 0 || onlyInfixOperatorReplacementsFound) && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info) && !includesLocalVariable(statement1, statement2, intersection, container1, container2)) {
 					List<Replacement> operatorReplacements = info.getReplacements(ReplacementType.INFIX_OPERATOR);
 					boolean booleanOperatorReversed = false;
 					for(Replacement r : operatorReplacements) {
@@ -2853,6 +2870,32 @@ public class StringBasedHeuristics {
 					info.addReplacement(r);
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean identicalCompositeInTheOtherContainer(CompositeStatementObject innedNode1,
+			List<CompositeStatementObject> innerNodes2) {
+		for(CompositeStatementObject innerNode2 : innerNodes2) {
+			if(innerNode2.getString().equals(innedNode1.getString())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean validMethodInvocationReplacement(ReplacementInfo info) {
+		List<Replacement> replacements = info.getReplacements(ReplacementType.METHOD_INVOCATION);
+		if(replacements.isEmpty()) {
+			return true;
+		}
+		else if(replacements.size() == 1) {
+			MethodInvocationReplacement r = (MethodInvocationReplacement)replacements.get(0);
+			AbstractCall before = r.getInvokedOperationBefore();
+			AbstractCall after = r.getInvokedOperationAfter();
+			if(before.identicalName(after) && before.identicalWithExpressionArgumentSwap(after)) {
+				return true;
 			}
 		}
 		return false;

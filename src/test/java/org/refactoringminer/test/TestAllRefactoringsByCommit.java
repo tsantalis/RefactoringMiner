@@ -74,42 +74,42 @@ public class TestAllRefactoringsByCommit {
     @ParameterizedTest
     @JsonFileSource(resources = "/oracle/data.json")
     public void testAllRefactoringsParameterized(@ConvertWith(RefactoringJsonConverter.class) RefactoringPopulator.Root testCase) throws Exception {
-        GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
-        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), new RefactoringHandler() {
-            Set<String> foundRefactorings = null;
-
-            @Override
-            public boolean skipCommit(String commitId) {
-                return commitId != testCase.sha1;
-            }
-
-            @Override
-            public void handle(String commitId, List<Refactoring> refactorings) {
-            	if(!deletedCommits.contains(commitId)) {
-            		foundRefactorings = new HashSet<>();
-            		for (Refactoring found : refactorings) {
-            			foundRefactorings.addAll(normalize(found.toString()));
-            		}
-            		Iterator<RefactoringPopulator.Refactoring> iter = testCase.refactorings.iterator();
-            		int actualTP = 0, actualFP = 0, actualFN = 0;
-            		while(iter.hasNext()){
-            			RefactoringPopulator.Refactoring expectedRefactoring = iter.next();
-            			String description = expectedRefactoring.description;
-            			if(foundRefactorings.contains(description)) {
-            				if(expectedRefactoring.validation.contains("TP"))
-            					actualTP++;
-            				else if(expectedRefactoring.validation.equals("FP")) {
-            					actualFP++;
-            				}
-            			}
-            			//Assertions.assertTrue(foundRefactorings.remove(description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s (%s)%n", expectedRefactoring.validation, description, testCase.sha1,foundRefactorings));
-            		}
-            		Assertions.assertEquals(actualTP, expectedTP.get(commitId), String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), actualTP));
-            		Assertions.assertEquals(actualFP, expectedFP.get(commitId), String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), actualFP));
-            		//Assertions.assertEquals(actualFN, expectedFN.get(commitId), String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), actualFN));
-            	}
-            }
-        });
+    	if(!deletedCommits.contains(testCase.sha1)) {
+	        GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
+	        detector.detectAtCommitWithGitHubAPI(testCase.repository, testCase.sha1, new File(REPOS), new RefactoringHandler() {
+	            Set<String> foundRefactorings = null;
+	
+	            @Override
+	            public boolean skipCommit(String commitId) {
+	                return commitId != testCase.sha1;
+	            }
+	
+	            @Override
+	            public void handle(String commitId, List<Refactoring> refactorings) {
+	        		foundRefactorings = new HashSet<>();
+	        		for (Refactoring found : refactorings) {
+	        			foundRefactorings.addAll(normalize(found.toString()));
+	        		}
+	        		Iterator<RefactoringPopulator.Refactoring> iter = testCase.refactorings.iterator();
+	        		int actualTP = 0, actualFP = 0, actualFN = 0;
+	        		while(iter.hasNext()){
+	        			RefactoringPopulator.Refactoring expectedRefactoring = iter.next();
+	        			String description = expectedRefactoring.description;
+	        			if(foundRefactorings.contains(description)) {
+	        				if(expectedRefactoring.validation.contains("TP"))
+	        					actualTP++;
+	        				else if(expectedRefactoring.validation.equals("FP")) {
+	        					actualFP++;
+	        				}
+	        			}
+	        			//Assertions.assertTrue(foundRefactorings.remove(description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s (%s)%n", expectedRefactoring.validation, description, testCase.sha1,foundRefactorings));
+	        		}
+	        		Assertions.assertEquals(actualTP, expectedTP.get(commitId), String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), actualTP));
+	        		Assertions.assertEquals(actualFP, expectedFP.get(commitId), String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), actualFP));
+	        		//Assertions.assertEquals(actualFN, expectedFN.get(commitId), String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), actualFN));
+	        	}
+	        });
+    	}
     }
 
 	private List<String> normalize(String refactoring) {

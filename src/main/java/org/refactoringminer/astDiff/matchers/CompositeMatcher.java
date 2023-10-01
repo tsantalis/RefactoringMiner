@@ -2,11 +2,17 @@ package org.refactoringminer.astDiff.matchers;
 
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeMetrics;
 import gr.uom.java.xmi.decomposition.*;
+import org.eclipse.jdt.core.IRegion;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.eclipse.jgit.lib.ObjectChecker.parent;
 
 /** Use this matcher when both code fragments are {@link gr.uom.java.xmi.decomposition.CompositeStatementObject}. <br>
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -41,22 +47,59 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		Tree srcFakeTree = makeFakeTree(src,fragment1, cpyToSrc);
 		Tree dstFakeTree = makeFakeTree(dst,fragment2, cpyToDst);
 		ExtendedMultiMappingStore tempMapping = new ExtendedMultiMappingStore(null,null);
-
-//		if (src.getType().name.equals(Constants.IF_STATEMENT) && dst.getType().name.equals(Constants.IF_STATEMENT)) {
-//			int h1 = srcFakeTree.getChild(0).getMetrics().height;
-//			int h2 = dstFakeTree.getChild(0).getMetrics().height;
-//			if (h1 > 2 && h2 > 2)
-//				setMinP(1);
-//			else
-//				setMinP(0);
-//		}
-
-
 		super.match(srcFakeTree,dstFakeTree,tempMapping);
+		postOptimizationForComposites(srcFakeTree,dstFakeTree,tempMapping);
 		for(Mapping mapping : tempMapping) {
 			if (mapping.first == srcFakeTree) continue;
 			mappingStore.addMapping(cpyToSrc.get(mapping.first), cpyToDst.get(mapping.second));
 		}
+	}
+
+	private void postOptimizationForComposites(Tree srcFakeTree, Tree dstFakeTree, ExtendedMultiMappingStore mappingStore) {
+		if (srcFakeTree.isIsoStructuralTo(dstFakeTree)) return;
+		if (srcFakeTree.getType().name.equals(Constants.IF_STATEMENT) && dstFakeTree.getType().name.equals(Constants.IF_STATEMENT)) {
+			findSoloMappedSimpleNameInCondition(srcFakeTree,dstFakeTree,mappingStore);
+
+		}
+	}
+
+	private void findSoloMappedSimpleNameInCondition(Tree srcFakeTree, Tree dstFakeTree, ExtendedMultiMappingStore mappingStore) {
+		List<Mapping> candidates = new ArrayList<>();
+		for (Mapping mapping : mappingStore) {
+			if (mapping.first.getType().name.equals(Constants.SIMPLE_NAME)) {
+				Tree p1 = getInfixParent(mapping.first);
+				Tree p2 = getInfixParent(mapping.first);
+				if (p1 == null || p2 == null) return;
+				if (p1.getType().name.equals(Constants.SIMPLE_NAME)) continue;
+				if (p2.getType().name.equals(Constants.SIMPLE_NAME)) continue;
+
+				int m1 = 0;
+				int m2 = 0;
+				for (Tree descendant : p1.getDescendants())
+					if (mappingStore.isSrcMapped(descendant)) m1++;
+				for (Tree descendant : p2.getDescendants())
+					if (mappingStore.isDstMapped(descendant)) m2++;
+				if (mappingStore.isSrcMapped(p1)) m1++;
+				if (mappingStore.isDstMapped(p2)) m2++;
+				if (m1 == 1 || m2 == 1) {
+					candidates.add(mapping);
+				}
+			}
+		}
+		for (Mapping candidate : candidates) {
+			mappingStore.removeMapping(candidate.first,candidate.second);
+		}
+	}
+
+	private Tree getInfixParent(Tree input) {
+		Tree curr = input;
+		while (curr.getParent() != null && !TreeUtilFunctions.isStatement(curr.getParent().getType().name)){
+			if (curr.getParent() == null) return null;
+			if (curr.getParent().getType().name.equals(Constants.INFIX_EXPRESSION))
+				return curr;
+			curr = curr.getParent();
+		}
+		return null;
 	}
 
 	private Tree makeFakeTree(Tree tree, CompositeStatementObject fragment, Map<Tree, Tree> cpyMap) {

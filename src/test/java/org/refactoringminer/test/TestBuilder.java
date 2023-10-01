@@ -334,6 +334,10 @@ public class TestBuilder {
 						count(TP, expectedRefactoring);
 						matcher.truePositive.add(expectedRefactoring);
 					}
+					else {
+						this.falseNegativeCount++;
+						count(FN, expectedRefactoring);
+					}
 				}
 
 				// count false positives
@@ -365,10 +369,10 @@ public class TestBuilder {
 				}
 
 				// count false negatives
-				for (String expectedButNotFound : matcher.expected) {
-					this.falseNegativeCount++;
-					count(FN, expectedButNotFound);
-				}
+				//for (String expectedButNotFound : matcher.expected) {
+				//	this.falseNegativeCount++;
+				//	count(FN, expectedButNotFound);
+				//}
 			}
 		}
 

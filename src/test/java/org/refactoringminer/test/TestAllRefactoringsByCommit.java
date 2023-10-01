@@ -44,7 +44,7 @@ public class TestAllRefactoringsByCommit {
     			String commitId = tokens[0];
     			int tp = Integer.parseInt(tokens[1]);
     			int fp = Integer.parseInt(tokens[2]);
-    			int fn = Integer.parseInt(tokens[2]);
+    			int fn = Integer.parseInt(tokens[3]);
     			expectedTP.put(commitId, tp);
     			expectedFP.put(commitId, fp);
     			expectedFN.put(commitId, fn);
@@ -86,11 +86,13 @@ public class TestAllRefactoringsByCommit {
 	        					actualFP++;
 	        				}
 	        			}
-	        			//Assertions.assertTrue(foundRefactorings.remove(description), String.format("Should find expected %s refactoring %s, but it is not found at commit %s (%s)%n", expectedRefactoring.validation, description, testCase.sha1,foundRefactorings));
+	        			else if(expectedRefactoring.validation.contains("TP")) {
+	        				actualFN++;
+	        			}
 	        		}
-	        		Assertions.assertEquals(actualTP, expectedTP.get(commitId), String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), actualTP));
-	        		Assertions.assertEquals(actualFP, expectedFP.get(commitId), String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), actualFP));
-	        		//Assertions.assertEquals(actualFN, expectedFN.get(commitId), String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), actualFN));
+	        		Assertions.assertEquals(expectedTP.get(commitId), actualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), actualTP));
+	        		Assertions.assertEquals(expectedFP.get(commitId), actualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), actualFP));
+	        		Assertions.assertEquals(expectedFN.get(commitId), actualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), actualFN));
 	        	}
 	        });
     	}

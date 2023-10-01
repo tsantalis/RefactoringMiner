@@ -20,14 +20,14 @@ import com.github.gumtreediff.tree.TreeContext;
 public class ASTDiff extends Diff {
 	private String srcPath;
 	private String dstPath;
-	private ExtendedMultiMappingStore multiMappings;
+	private ExtendedMultiMappingStore mappings;
 	private ExtendedOnlyRootsClassifier classifier;
 
 	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings) {
 		super(src, dst, new MappingStore(src.getRoot(),dst.getRoot()), new EditScript());
 		this.srcPath = srcPath;
 		this.dstPath = dstPath;
-		this.multiMappings = mappings;
+		this.mappings = mappings;
 	}
 
 	/**
@@ -37,12 +37,12 @@ public class ASTDiff extends Diff {
 	 * @return {@link ExtendedMultiMappingStore} for the current diff which contains all the mappings
 	 */
 	@Deprecated(forRemoval = true)
-	public ExtendedMultiMappingStore getMultiMappings() {
+	public ExtendedMultiMappingStore getMappings() {
 		return getAllMappings();
 	}
 
 	public ExtendedMultiMappingStore getAllMappings() {
-		return multiMappings;
+		return mappings;
 	}
 
 	public String getSrcPath() {
@@ -62,8 +62,8 @@ public class ASTDiff extends Diff {
 	}
 
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(multiMappings,parentContextMap,childContextMap);
-		processMultiMappings(multiMappings, newEditScript);
+		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap);
+		processMultiMappings(mappings, newEditScript);
 		for(Action action : newEditScript) {
 			editScript.add(action);
 		}

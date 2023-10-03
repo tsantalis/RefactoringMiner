@@ -7076,6 +7076,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info) {
+		for(Replacement r : info.getReplacements()) {
+			if(statement1.getString().endsWith("=" + r.getBefore() + ";\n") &&
+					statement2.getString().endsWith("=" + r.getAfter() + ";\n") &&
+					(r.getAfter().startsWith(r.getBefore()) ||
+					r.getBefore().startsWith(r.getAfter()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean isExtractedVariable(VariableDeclaration v2) {
 		for(AbstractCodeMapping mapping : mappings) {
 			for(Refactoring ref : mapping.getRefactorings()) {
@@ -7557,7 +7569,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							if((inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 || mappingsForStatementsInScope(statement1, statement2, v1, v2) == 0) &&
 									!existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && !existsVariableDeclarationForV1InitializedWithV2(v1, v2, replacementInfo) &&
-									!isExtractedVariable(v2) &&
+									!isExtractedVariable(v2) && !containsRightHandSideReplacementWithAppendChange(statement1, statement2, replacementInfo) &&
 									container2 != null && container2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 								replacement = null;
 							}

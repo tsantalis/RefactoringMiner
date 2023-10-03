@@ -2737,9 +2737,25 @@ public class StringBasedHeuristics {
 							}
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
-								refactorings.add(split);
-								createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split);
-								createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
+								//special handling for conflicting merge conditionals
+								boolean splitConditionalConflict = false;
+								Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+								for(Refactoring refactoring : refactorings) {
+									if(refactoring instanceof SplitConditionalRefactoring) {
+										SplitConditionalRefactoring oldSplit = (SplitConditionalRefactoring)refactoring;
+										if(split.getOriginalConditional().equals(oldSplit.getOriginalConditional()) && !split.equals(oldSplit)) {
+											splitConditionalConflict = true;
+											refactoringsToBeRemoved.add(refactoring);
+											break;
+										}
+									}
+								}
+								refactorings.removeAll(refactoringsToBeRemoved);
+								if(!splitConditionalConflict) {
+									refactorings.add(split);
+									createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split);
+									createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
+								}
 							}
 						}
 						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,

@@ -3412,7 +3412,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
-							int refactoringCount = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
 							
@@ -3476,14 +3475,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
-								int counter = 0;
-								for(Refactoring r : refactorings) {
-									if(counter >= refactoringCount) {
-										mapping.addRefactoring(r);
-									}
-									counter++;
-								}
-								refactorings.removeAll(mapping.getRefactorings());
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
@@ -3506,14 +3497,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							else if(replacements == null && !containsCallToExtractedMethod && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) && score > 0 && mappingSet.size() > 0 && score >= 2.0*mappingSet.first().getCompositeChildMatchingScore()) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
-								int counter = 0;
-								for(Refactoring r : refactorings) {
-									if(counter >= refactoringCount) {
-										mapping.addRefactoring(r);
-									}
-									counter++;
-								}
-								refactorings.removeAll(mapping.getRefactorings());
 								mappingSet.add(mapping);
 							}
 						}
@@ -3704,7 +3687,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
-							int refactoringCount = refactorings.size();
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
 							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
 							
@@ -3768,14 +3750,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
-								int counter = 0;
-								for(Refactoring r : refactorings) {
-									if(counter >= refactoringCount) {
-										mapping.addRefactoring(r);
-									}
-									counter++;
-								}
-								refactorings.removeAll(mapping.getRefactorings());
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
@@ -3798,14 +3772,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							else if(replacements == null && !containsCallToExtractedMethod && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) && score > 0 && mappingSet.size() > 0 && score >= 2.0*mappingSet.first().getCompositeChildMatchingScore()) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
-								int counter = 0;
-								for(Refactoring r : refactorings) {
-									if(counter >= refactoringCount) {
-										mapping.addRefactoring(r);
-									}
-									counter++;
-								}
-								refactorings.removeAll(mapping.getRefactorings());
 								mappingSet.add(mapping);
 							}
 						}

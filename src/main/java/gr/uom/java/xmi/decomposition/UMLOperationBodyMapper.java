@@ -11405,13 +11405,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(Replacement r : compositeReplacements) {
 					CompositeReplacement compositeReplacement = (CompositeReplacement)r;
 					for(AbstractCodeFragment fragment : compositeReplacement.getAdditionallyMatchedStatements1()) {
-						if(fragment instanceof CompositeStatementObject) {
+						if(fragment instanceof CompositeStatementObject && !fragment.getLocationInfo().subsumes(comp1.getLocationInfo()) &&
+								!comp1.getLocationInfo().subsumes(fragment.getLocationInfo())) {
 							CompositeStatementObject additionalComposite = (CompositeStatementObject)fragment;
 							leaves1.addAll(additionalComposite.getLeaves());
 						}
 					}
 					for(AbstractCodeFragment fragment : compositeReplacement.getAdditionallyMatchedStatements2()) {
-						if(fragment instanceof CompositeStatementObject) {
+						if(fragment instanceof CompositeStatementObject && !fragment.getLocationInfo().subsumes(comp2.getLocationInfo()) &&
+								!comp2.getLocationInfo().subsumes(fragment.getLocationInfo())) {
 							CompositeStatementObject additionalComposite = (CompositeStatementObject)fragment;
 							leaves2.addAll(additionalComposite.getLeaves());
 						}

@@ -7076,12 +7076,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info) {
+	private boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info, Replacement candidateReplacement) {
 		for(Replacement r : info.getReplacements()) {
 			if(statement1.getString().endsWith("=" + r.getBefore() + ";\n") &&
 					statement2.getString().endsWith("=" + r.getAfter() + ";\n") &&
 					(r.getAfter().startsWith(r.getBefore()) ||
 					r.getBefore().startsWith(r.getAfter()))) {
+				return true;
+			}
+		}
+		if(statement1.getString().startsWith(candidateReplacement.getBefore() + "=") &&
+				statement2.getString().startsWith(candidateReplacement.getAfter() + "=") &&
+				statement1.getString().endsWith(";\n") && statement2.getString().endsWith(";\n")) {
+			String suffix1 = statement1.getString().substring(statement1.getString().indexOf("=") + 1, statement1.getString().lastIndexOf(";\n"));
+			String suffix2 = statement2.getString().substring(statement2.getString().indexOf("=") + 1, statement2.getString().lastIndexOf(";\n"));
+			if(suffix1.startsWith(suffix2) || suffix2.startsWith(suffix1)) {
 				return true;
 			}
 		}
@@ -7211,6 +7220,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				boolean sameCoverageCreations = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
 						creationCoveringTheEntireStatement1.getCoverage().equals(creationCoveringTheEntireStatement2.getCoverage());
 				if((sameCoverageInvocations || sameCoverageCreations) && foundInInvocation1 != foundInInvocation2) {
+					variablesToBeRemovedFromTheIntersection.add(variable);
+				}
+				else if(methodInvocationMap1.isEmpty() && !methodInvocationMap2.isEmpty() && foundInInvocation1 != foundInInvocation2) {
+					variablesToBeRemovedFromTheIntersection.add(variable);
+				}
+				else if(!methodInvocationMap1.isEmpty() && methodInvocationMap2.isEmpty() && foundInInvocation1 != foundInInvocation2) {
 					variablesToBeRemovedFromTheIntersection.add(variable);
 				}
 			}
@@ -7569,7 +7584,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							if((inconsistentVariableMappingCount(statement1, statement2, v1, v2) > 1 || mappingsForStatementsInScope(statement1, statement2, v1, v2) == 0) &&
 									!existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && !existsVariableDeclarationForV1InitializedWithV2(v1, v2, replacementInfo) &&
-									!isExtractedVariable(v2) && !containsRightHandSideReplacementWithAppendChange(statement1, statement2, replacementInfo) &&
+									!isExtractedVariable(v2) && !containsRightHandSideReplacementWithAppendChange(statement1, statement2, replacementInfo, replacement) &&
 									container2 != null && container2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
 								replacement = null;
 							}

@@ -2737,7 +2737,7 @@ public class StringBasedHeuristics {
 							}
 							if(sequentiallySplitConditionals(statement1, splitConditionals, mappings)) {
 								SplitConditionalRefactoring split = new SplitConditionalRefactoring(statement1, splitConditionals, container1, container2);
-								//special handling for conflicting merge conditionals
+								//special handling for conflicting split conditionals
 								boolean splitConditionalConflict = false;
 								Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 								for(Refactoring refactoring : refactorings) {

@@ -7468,6 +7468,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			Set<String> infixExpressions1 = convertToStringSet(statement1.getInfixExpressions());
 			infixExpressions1.remove(statement1.infixExpressionCoveringTheEntireFragment());
 			Set<String> infixExpressions2 = convertToStringSet(statement2.getInfixExpressions());
+			Set<String> tmpVariables2 = new LinkedHashSet<>(variables2);
+			Set<String> variablesToBeRemoved = new LinkedHashSet<String>();
+			for(String infix : infixExpressions2) {
+				for(String variable : tmpVariables2) {
+					if(ReplacementUtil.contains(infix, variable)) {
+						variablesToBeRemoved.add(variable);
+					}
+				}
+			}
+			tmpVariables2.removeAll(variablesToBeRemoved);
 			infixExpressions2.remove(statement2.infixExpressionCoveringTheEntireFragment());
 			removeCommonElements(infixExpressions1, infixExpressions2);
 			
@@ -7475,7 +7485,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				List<String> infixExpressions1AsList = new ArrayList<>(infixExpressions1);
 				Collections.reverse(infixExpressions1AsList);
 				Set<String> reverseInfixExpressions1 = new LinkedHashSet<String>(infixExpressions1AsList);
-				findReplacements(reverseInfixExpressions1, variables2, replacementInfo, ReplacementType.INFIX_EXPRESSION);
+				findReplacements(reverseInfixExpressions1, tmpVariables2, replacementInfo, ReplacementType.INFIX_EXPRESSION);
 			}
 		}
 		//perform operator replacements

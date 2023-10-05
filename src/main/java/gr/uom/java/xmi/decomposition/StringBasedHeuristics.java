@@ -2633,11 +2633,20 @@ public class StringBasedHeuristics {
 										for(String subCondition1 : originalSubConditionsAsList1) {
 											for(String subCondition2 : subConditionsAsList) {
 												if(subCondition1.equals(subCondition2)) {
-													Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
-													additionallyMatchedStatements2.add(ifNode2);
-													CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
-													info.addReplacement(composite);
-													splitConditional = true;
+													boolean replacementFound = false;
+													for(Replacement initialReplacement : initialReplacements) {
+														if(subCondition1.contains(initialReplacement.getBefore())) {
+															replacementFound = true;
+															break;
+														}
+													}
+													if(!replacementFound) {
+														Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
+														additionallyMatchedStatements2.add(ifNode2);
+														CompositeReplacement composite = new CompositeReplacement(statement1.getString(), ifNode2.getString(), new LinkedHashSet<>(), additionallyMatchedStatements2);
+														info.addReplacement(composite);
+														splitConditional = true;
+													}
 												}
 												if((subCondition1.endsWith(" != null") && subCondition2.endsWith(" != null")) ||
 														(subCondition1.endsWith(" == null") && subCondition2.endsWith(" == null"))) {

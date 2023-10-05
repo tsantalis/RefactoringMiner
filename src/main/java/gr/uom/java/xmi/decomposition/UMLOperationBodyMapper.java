@@ -7475,7 +7475,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(ReplacementUtil.contains(infix, variable) &&
 							(infix.contains(variable + " > ") || infix.contains(variable + " < ") ||
 									infix.contains(variable + " >= ") || infix.contains(variable + " <= ") ||
-									infix.contains(variable + " == "))) {
+									infix.contains(variable + " != ") || infix.contains(variable + " == "))) {
 						variablesToBeRemoved.add(variable);
 					}
 				}

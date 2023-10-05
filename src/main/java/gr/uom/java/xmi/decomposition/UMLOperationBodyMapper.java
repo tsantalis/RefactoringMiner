@@ -4053,6 +4053,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean identicalBody(CompositeStatementObject statement1, CompositeStatementObject statement2) {
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			return false;
+		}
+		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+			return false;
+		}
 		List<String> bodyStringRepresentation1 = statement1.bodyStringRepresentation();
 		List<String> bodyStringRepresentation2 = statement2.bodyStringRepresentation();
 		int size1 = bodyStringRepresentation1.size();

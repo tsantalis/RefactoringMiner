@@ -5905,9 +5905,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(container1.equals(container2) || (parentMapper != null && !nested)) {
 			Set<AbstractCodeMapping> included = new LinkedHashSet<AbstractCodeMapping>();
 			VariableDeclaration declaration = null;
+			int count = 0;
 			for(AbstractCodeMapping mapping : mappingSet) {
 				if(mapping.isIdenticalWithExtractedVariable()) {
 					included.add(mapping);
+					count++;
 					for(Refactoring r : mapping.getRefactorings()) {
 						if(r instanceof ExtractVariableRefactoring) {
 							ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
@@ -5928,7 +5930,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			return included;
+			if(count < included.size()) {
+				return included;
+			}
 		}
 		return Set.of(mappingSet.first());
 	}

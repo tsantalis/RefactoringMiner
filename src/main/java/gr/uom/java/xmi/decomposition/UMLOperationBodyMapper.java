@@ -3349,6 +3349,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									mappingSet.add(mapping);
 								}
 							}
+							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
+								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+							}
 						}
 					}
 					if(!mappingSet.isEmpty()) {
@@ -3602,6 +3610,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
 						if(!alreadyMatched1(statement1)) {
 							if(statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString()) || differOnlyInThis(statement1.getString(), statement2.getString())) {
+								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
+									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+									mappingSet.add(mapping);
+								}
+							}
+							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
 								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
@@ -4057,6 +4073,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return false;
 		}
 		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+			return false;
+		}
+		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			return false;
+		}
+		else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT)) {
 			return false;
 		}
 		List<String> bodyStringRepresentation1 = statement1.bodyStringRepresentation();

@@ -1115,6 +1115,24 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void tryWithResourceMigration() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/apache/commons-io.git", "4dc97b64005f0083b2facaa70f661138a4fa3fc0", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("run") && mapper.getContainer2().getName().equals("run")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "commons-io-4dc97b64005f0083b2facaa70f661138a4fa3fc0.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSplitVariableDeclarationStatement() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

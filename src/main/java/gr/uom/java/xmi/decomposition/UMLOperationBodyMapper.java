@@ -11640,7 +11640,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(comp1.getString().equals(comp2.getString()) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
-						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) &&
+						(!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) ||
+								(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && blocksWithMappedTryContainer)) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&

@@ -3351,7 +3351,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
-								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
+								allUnmatchedNodes1.addAll(innerNodes1);
+								allUnmatchedNodes1.addAll(leaves1);
+								List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
+								allUnmatchedNodes2.addAll(innerNodes2);
+								allUnmatchedNodes2.addAll(leaves2);
+								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
+								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
@@ -3618,7 +3626,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
-								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
+								allUnmatchedNodes1.addAll(innerNodes1);
+								allUnmatchedNodes1.addAll(leaves1);
+								List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
+								allUnmatchedNodes2.addAll(innerNodes2);
+								allUnmatchedNodes2.addAll(leaves2);
+								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo);
+								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
@@ -8111,7 +8127,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || ("final " + s1 + ";\n").equals(s2) || ("final " + s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1, statement2, variableDeclarations1, variableDeclarations2, replacementInfo, this) ||
 				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||

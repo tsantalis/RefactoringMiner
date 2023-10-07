@@ -894,7 +894,8 @@ public class TestStatementMappings {
 		"https://github.com/jline/jline2.git, 1eb3b624b288a4b1a054420d3efb05b8f1d28517, drawBuffer, true, jline2-1eb3b624b288a4b1a054420d3efb05b8f1d28517.txt", // TODO fix block mappings
 		"https://github.com/eclipse/jgit.git, 5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd, call, true, jgit-5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd.txt",
 		"https://github.com/apache/commons-lang.git, 4f514d5eb3e80703012df9be190ae42d35d25bdc, formatPeriod, false, commons-lang-4f514d5eb3e80703012df9be190ae42d35d25bdc.txt",
-		"https://github.com/eclipse/jgit.git, 545358577376bec8fc140a76ce0f72bf81cc0a94, call, true, jgit-545358577376bec8fc140a76ce0f72bf81cc0a94.txt"
+		"https://github.com/eclipse/jgit.git, 545358577376bec8fc140a76ce0f72bf81cc0a94, call, true, jgit-545358577376bec8fc140a76ce0f72bf81cc0a94.txt",
+		"https://github.com/eclipse/jetty.project.git, 9c168866ffbb349d56501d11801f0418bdee3596, doStart, false, jetty.project-9c168866ffbb349d56501d11801f0418bdee3596.txt"
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

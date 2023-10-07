@@ -38,6 +38,12 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		else if(o.compositeChildMatchingScore == 1.0 && this.getReplacementTypes().contains(ReplacementType.COMPOSITE) && this.compositeChildMatchingScore == 0.99) {
 			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
+		if(this.compositeChildMatchingScore < 0.99 && this.compositeChildMatchingScore > 0 && o.getReplacementTypes().contains(ReplacementType.INVERT_CONDITIONAL) && o.compositeChildMatchingScore == 0.99) {
+			return -1;
+		}
+		else if(o.compositeChildMatchingScore < 0.99 && o.compositeChildMatchingScore > 0 && this.getReplacementTypes().contains(ReplacementType.INVERT_CONDITIONAL) && this.compositeChildMatchingScore == 0.99) {
+			return 1;
+		}
 		double distance1 = this.editDistance();
 		double distance2 = o.editDistance();
 		boolean depthVSDistanceConflict = distance1 < distance2 && Math.abs(distance1 - distance2) < 0.02 &&

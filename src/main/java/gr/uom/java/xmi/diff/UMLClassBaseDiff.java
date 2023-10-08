@@ -2426,6 +2426,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				for(ExtractOperationRefactoring refactoring : refs) {
 					if(!discarded.contains(refactoring)) {
+						CompositeStatementObject synchronizedBlock = refactoring.extractedFromSynchronizedBlock();
+						if(synchronizedBlock != null) {
+							refactoring.getBodyMapper().getParentMapper().getNonMappedInnerNodesT1().remove(synchronizedBlock);
+						}
 						refactorings.add(refactoring);
 						UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
 						extractedOperationMappers.add(operationBodyMapper);

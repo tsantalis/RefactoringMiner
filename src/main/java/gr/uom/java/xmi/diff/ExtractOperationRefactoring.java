@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
@@ -77,6 +78,25 @@ public class ExtractOperationRefactoring implements Refactoring {
 			createArgumentMappings(mapping);
 			checkForMatchingCallChain(mapping);
 		}
+	}
+
+	public CompositeStatementObject extractedFromSynchronizedBlock() {
+		if(bodyMapper.getParentMapper() != null && extractedOperation.isSynchronized()) {
+			for(CompositeStatementObject unmatched : bodyMapper.getParentMapper().getNonMappedInnerNodesT1()) {
+				if(unmatched.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+					int subsumed = 0;
+					for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+						if(unmatched.getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
+							subsumed++;
+						}
+					}
+					if(subsumed == bodyMapper.getMappings().size()) {
+						return unmatched;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private void checkForMatchingCallChain(AbstractCodeMapping mapping) {

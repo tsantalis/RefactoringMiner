@@ -11599,7 +11599,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							invocation = leaf2.assignmentInvocationCoveringEntireStatement();
 						}
 						UMLOperation matchingOperation = null;
-						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
+						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, addedOperations, container2)) != null && !matchingOperation.equals(container2) && !matchesRemovedOperationWithIdenticalBody(matchingOperation)) {
 							int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11607,7 +11607,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
-									if((matchingOperation = classDiff.matchesOperation(inv, addedOperations, container2)) != null && !matchingOperation.equals(container2)) {
+									if((matchingOperation = classDiff.matchesOperation(inv, addedOperations, container2)) != null && !matchingOperation.equals(container2) && !matchesRemovedOperationWithIdenticalBody(matchingOperation)) {
 										int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 										mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 										leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11617,7 +11617,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(matchingOperation == null && classDiff != null) {
 							for(AbstractCall call : leaf2.getMethodInvocations()) {
-								if((matchingOperation = classDiff.matchesOperation(call, addedOperations, container2)) != null && !matchingOperation.equals(container2) && matchingOperation.stringRepresentation().size() > 3) {
+								if((matchingOperation = classDiff.matchesOperation(call, addedOperations, container2)) != null && !matchingOperation.equals(container2) && !matchesRemovedOperationWithIdenticalBody(matchingOperation) && matchingOperation.stringRepresentation().size() > 3) {
 									int matchingLeaves = matchingLeaves(matchingOperation, leaves1);
 									mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 									leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11633,7 +11633,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							invocation = leaf1.assignmentInvocationCoveringEntireStatement();
 						}
 						UMLOperation matchingOperation = null;
-						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
+						if(invocation != null && classDiff != null && (matchingOperation = classDiff.matchesOperation(invocation, removedOperations, container1)) != null && !matchingOperation.equals(container1) && !matchesAddedOperationWithIdenticalBody(matchingOperation)) {
 							int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11641,7 +11641,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
 							for(LambdaExpressionObject lambda : leaf1.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
-									if((matchingOperation = classDiff.matchesOperation(inv, removedOperations, container1)) != null && !matchingOperation.equals(container1)) {
+									if((matchingOperation = classDiff.matchesOperation(inv, removedOperations, container1)) != null && !matchingOperation.equals(container1) && !matchesAddedOperationWithIdenticalBody(matchingOperation)) {
 										int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 										mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 										leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11651,7 +11651,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(matchingOperation == null && classDiff != null) {
 							for(AbstractCall call : leaf1.getMethodInvocations()) {
-								if((matchingOperation = classDiff.matchesOperation(call, removedOperations, container1)) != null && !matchingOperation.equals(container1) && matchingOperation.stringRepresentation().size() > 3) {
+								if((matchingOperation = classDiff.matchesOperation(call, removedOperations, container1)) != null && !matchingOperation.equals(container1) && !matchesAddedOperationWithIdenticalBody(matchingOperation) && matchingOperation.stringRepresentation().size() > 3) {
 									int matchingLeaves = matchingLeaves(matchingOperation, leaves2);
 									mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 									leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
@@ -11908,6 +11908,54 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return counter;
+	}
+
+	private boolean matchesAddedOperationWithIdenticalBody(UMLOperation removedOperation) {
+		if(classDiff != null) {
+			List<String> stringRepresentation = removedOperation.stringRepresentation();
+			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+				if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
+					return true;
+				}
+				List<String> commonStatements = new ArrayList<String>();
+				List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
+				if(stringRepresentation.size() == addedOperationStringRepresentation.size()) {
+					for(int i=0; i<stringRepresentation.size(); i++) {
+						if(stringRepresentation.get(i).equals(addedOperationStringRepresentation.get(i))) {
+							commonStatements.add(stringRepresentation.get(i));
+						}
+					}
+				}
+				if(commonStatements.size() >= stringRepresentation.size() - 1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean matchesRemovedOperationWithIdenticalBody(UMLOperation addedOperation) {
+		if(classDiff != null) {
+			List<String> stringRepresentation = addedOperation.stringRepresentation();
+			for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
+				if(removedOperation.getBodyHashCode() == addedOperation.getBodyHashCode()) {
+					return true;
+				}
+				List<String> commonStatements = new ArrayList<String>();
+				List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
+				if(stringRepresentation.size() == removedOperationStringRepresentation.size()) {
+					for(int i=0; i<stringRepresentation.size(); i++) {
+						if(stringRepresentation.get(i).equals(removedOperationStringRepresentation.get(i))) {
+							commonStatements.add(stringRepresentation.get(i));
+						}
+					}
+				}
+				if(commonStatements.size() >= stringRepresentation.size() - 1) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean matchPairOfRemovedAddedOperationsWithIdenticalBody(AbstractCall call1, AbstractCall call2) {

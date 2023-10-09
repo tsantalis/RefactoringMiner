@@ -3349,8 +3349,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									mappingSet.add(mapping);
 								}
 							}
-							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
+							else if((statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) ||
+									(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT))) {
 								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
 								allUnmatchedNodes1.addAll(innerNodes1);
 								allUnmatchedNodes1.addAll(leaves1);
@@ -3624,8 +3626,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									mappingSet.add(mapping);
 								}
 							}
-							else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
+							else if((statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) ||
+									(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
+									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT))) {
 								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
 								allUnmatchedNodes1.addAll(innerNodes1);
 								allUnmatchedNodes1.addAll(leaves1);

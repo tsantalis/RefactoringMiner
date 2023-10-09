@@ -3349,10 +3349,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									mappingSet.add(mapping);
 								}
 							}
-							else if((statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) ||
-									(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT))) {
+							else if(checkForAlternativeTryOrSynchronizedBlocks(statement1, statement2, tryWithResourceMigration)) {
 								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
 								allUnmatchedNodes1.addAll(innerNodes1);
 								allUnmatchedNodes1.addAll(leaves1);
@@ -3626,10 +3623,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									mappingSet.add(mapping);
 								}
 							}
-							else if((statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) ||
-									(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
-									statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT))) {
+							else if(checkForAlternativeTryOrSynchronizedBlocks(statement1, statement2, tryWithResourceMigration)) {
 								List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
 								allUnmatchedNodes1.addAll(innerNodes1);
 								allUnmatchedNodes1.addAll(leaves1);
@@ -3952,6 +3946,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean checkForAlternativeTryOrSynchronizedBlocks(CompositeStatementObject statement1,
+			CompositeStatementObject statement2, boolean tryWithResourceMigration) {
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) && tryWithResourceMigration) {
+			return true;
+		}
+		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
+				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+			List<AbstractExpression> expressions1 = statement1.getExpressions();
+			List<AbstractExpression> expressions2 = statement2.getExpressions();
+			if(expressions1.size() == expressions2.size() && expressions1.size() > 0) {
+				AbstractExpression expression1 = expressions1.get(0);
+				AbstractExpression expression2 = expressions2.get(0);
+				if(expression1.getString().contains(expression2.getString()) || expression2.getString().contains(expression1.getString())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean mappingExistsIdenticalInExtractedMethod(CompositeStatementObjectMapping mapping,

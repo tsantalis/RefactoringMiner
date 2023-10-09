@@ -5130,7 +5130,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				TryStatementObject try2 = tryContainer2.get();
 				int catchIndex1 = try1.getCatchClauses().indexOf(leaf1.getParent());
 				int catchIndex2 = try2.getCatchClauses().indexOf(leaf2.getParent());
-				if(catchIndex1 != catchIndex2) {
+				if(try1.getCatchClauses().size() == try2.getCatchClauses().size() && catchIndex1 != catchIndex2) {
 					return false;
 				}
 			}

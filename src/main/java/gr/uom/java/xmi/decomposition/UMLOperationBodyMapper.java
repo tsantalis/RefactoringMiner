@@ -4414,7 +4414,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								String argumentizedString2 = preprocessInput2(leaf1, leaf2);
 								if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
 									matchCount++;
-									if(leaf1.getDepth() == leaf2.getDepth()) {
+									if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
 										LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 										mappingSet.add(mapping);
 									}
@@ -4688,7 +4688,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								String argumentizedString2 = preprocessInput2(leaf1, leaf2);
 								if(leaf1.getString().equals(leaf2.getString()) || argumentizedString1.equals(argumentizedString2)) {
 									matchCount++;
-									if(leaf1.getDepth() == leaf2.getDepth()) {
+									if(leaf1.getDepth() == leaf2.getDepth() && equalCatchClauseIndex(leaf1, leaf2)) {
 										LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 										mappingSet.add(mapping);
 									}
@@ -5118,6 +5118,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean equalCatchClauseIndex(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
+		if(leaf1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+				leaf2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			Optional<TryStatementObject> tryContainer1 = leaf1.getParent().getTryContainer();
+			Optional<TryStatementObject> tryContainer2 = leaf2.getParent().getTryContainer();
+			if(tryContainer1.isPresent() && tryContainer2.isPresent()) {
+				TryStatementObject try1 = tryContainer1.get();
+				TryStatementObject try2 = tryContainer2.get();
+				int catchIndex1 = try1.getCatchClauses().indexOf(leaf1.getParent());
+				int catchIndex2 = try2.getCatchClauses().indexOf(leaf2.getParent());
+				if(catchIndex1 != catchIndex2) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private boolean debatableMapping(AbstractCodeMapping parentMapping, AbstractCodeMapping childMapping) {

@@ -46,7 +46,7 @@ import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
 
 public class StringBasedHeuristics {
-	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("(\\|\\|)|(&&)|(\\?)|(:)");
+	protected static final Pattern SPLIT_CONDITIONAL_PATTERN = Pattern.compile("( \\|\\| )|( && )|( \\? )|( : )");
 	protected static final Pattern SPLIT_CONCAT_STRING_PATTERN = Pattern.compile("(\\s)*( \\+ )(\\s)*");
 	protected static final Pattern SPLIT_COMMA_PATTERN = Pattern.compile("(\\s)*(\\,)(\\s)*");
 

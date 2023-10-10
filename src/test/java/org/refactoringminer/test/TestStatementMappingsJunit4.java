@@ -1702,6 +1702,25 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testRestructuredStatementMappings15() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse/jetty.project.git", "c285d6f8bbd839906e8c39d23db2f343be22c6ca", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("send") && mapper.getContainer2().getName().equals("send")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		// TODO L115-116 should be matched with R127-128
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jetty.project-c285d6f8bbd839906e8c39d23db2f343be22c6ca.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testInlinedMethodMovedToExtractedMethod() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

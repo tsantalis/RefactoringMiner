@@ -895,7 +895,8 @@ public class TestStatementMappings {
 		"https://github.com/eclipse/jgit.git, 5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd, call, true, jgit-5b84e25fa3afe66bbfa7eb953ea0bd332c745ecd.txt",
 		"https://github.com/apache/commons-lang.git, 4f514d5eb3e80703012df9be190ae42d35d25bdc, formatPeriod, false, commons-lang-4f514d5eb3e80703012df9be190ae42d35d25bdc.txt",
 		"https://github.com/eclipse/jgit.git, 545358577376bec8fc140a76ce0f72bf81cc0a94, call, true, jgit-545358577376bec8fc140a76ce0f72bf81cc0a94.txt",
-		"https://github.com/eclipse/jetty.project.git, 9c168866ffbb349d56501d11801f0418bdee3596, doStart, false, jetty.project-9c168866ffbb349d56501d11801f0418bdee3596.txt"
+		"https://github.com/eclipse/jetty.project.git, 9c168866ffbb349d56501d11801f0418bdee3596, doStart, true, jetty.project-9c168866ffbb349d56501d11801f0418bdee3596.txt",
+		"https://github.com/eclipse/jetty.project.git, c285d6f8bbd839906e8c39d23db2f343be22c6ca, send, true, jetty.project-c285d6f8bbd839906e8c39d23db2f343be22c6ca.txt" // TODO L115-116 should be matched with R127-128
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

@@ -7552,8 +7552,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType())) {
 			Set<String> infixExpressions1 = convertToStringSet(statement1.getInfixExpressions());
 			String infixExpressionCoveringTheEntireFragment = statement1.infixExpressionCoveringTheEntireFragment();
-			if(infixExpressionCoveringTheEntireFragment != null && !infixExpressionCoveringTheEntireFragment.contains(" || ") && !infixExpressionCoveringTheEntireFragment.contains(" && ")) {
-				infixExpressions1.remove(infixExpressionCoveringTheEntireFragment);
+			if(infixExpressionCoveringTheEntireFragment != null) {
+				boolean skip = false;
+				if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) || statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT)) {
+					if(infixExpressionCoveringTheEntireFragment.contains(" || ") || infixExpressionCoveringTheEntireFragment.contains(" && ")) {
+						skip = true;
+					}
+				}
+				if(!skip) {
+					infixExpressions1.remove(infixExpressionCoveringTheEntireFragment);
+				}
 			}
 			Set<String> infixExpressions2 = convertToStringSet(statement2.getInfixExpressions());
 			Set<String> tmpVariables2 = new LinkedHashSet<>(variables2);

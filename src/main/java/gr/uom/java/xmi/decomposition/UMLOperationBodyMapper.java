@@ -3488,6 +3488,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
 									score = 0.99;
 								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+									List<AbstractExpression> expressions2 = statement2.getExpressions();
+									AbstractExpression enhancedForExpression = expressions2.get(expressions2.size()-1);
+									for(AbstractExpression expression1 : statement1.getExpressions()) {
+										if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".descendingIterator()")) {
+											score = 0.99;
+											break;
+										}
+									}
+								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
@@ -3797,6 +3811,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
 									score = 0.99;
+								}
+								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+									List<AbstractExpression> expressions2 = statement2.getExpressions();
+									AbstractExpression enhancedForExpression = expressions2.get(expressions2.size()-1);
+									for(AbstractExpression expression1 : statement1.getExpressions()) {
+										if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()") ||
+												expression1.getString().contains(enhancedForExpression.getString() + ".descendingIterator()")) {
+											score = 0.99;
+											break;
+										}
+									}
 								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode2 : matchingInnerNodes2) {
@@ -8412,23 +8440,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(expression1.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".size()") ||
 						expression1.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
-						expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
+						expression1.getString().contains(enhancedForExpression.getString() + ".listIterator()") ||
+						expression1.getString().contains(enhancedForExpression.getString() + ".descendingIterator()")) {
 					return replacementInfo.getReplacements();
 				}
 				if(renamedVariable != null) {
 					if(expression1.getString().contains(renamedVariable + ".length") ||
 							expression1.getString().contains(renamedVariable + ".size()") ||
 							expression1.getString().contains(renamedVariable + ".iterator()") ||
-							expression1.getString().contains(renamedVariable + ".listIterator()")) {
+							expression1.getString().contains(renamedVariable + ".listIterator()") ||
+							expression1.getString().contains(renamedVariable + ".descendingIterator()")) {
 						return replacementInfo.getReplacements();
 					}
 				}
-				if(inlinedVariableDeclaration != null &&
-						(expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".length") ||
-						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".size()") ||
-						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".iterator()") ||
-						expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".listIterator()"))) {
-					return replacementInfo.getReplacements();
+				if(inlinedVariableDeclaration != null) {
+					if(expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".length") ||
+							expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".size()") ||
+							expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".iterator()") ||
+							expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".listIterator()") ||
+							expression1.getString().contains(inlinedVariableDeclaration.getVariableName() + ".descendingIterator()")) {
+						return replacementInfo.getReplacements();
+					}
 				}
 			}
 		}
@@ -8456,14 +8488,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(expression2.getString().contains(enhancedForExpression.getString() + ".length") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".size()") ||
 						expression2.getString().contains(enhancedForExpression.getString() + ".iterator()") ||
-						expression2.getString().contains(enhancedForExpression.getString() + ".listIterator()")) {
+						expression2.getString().contains(enhancedForExpression.getString() + ".listIterator()") ||
+						expression2.getString().contains(enhancedForExpression.getString() + ".descendingIterator()")) {
 					return replacementInfo.getReplacements();
 				}
 				if(renamedVariable != null) {
 					if(expression2.getString().contains(renamedVariable + ".length") ||
 							expression2.getString().contains(renamedVariable + ".size()") ||
 							expression2.getString().contains(renamedVariable + ".iterator()") ||
-							expression2.getString().contains(renamedVariable + ".listIterator()")) {
+							expression2.getString().contains(renamedVariable + ".listIterator()") ||
+							expression2.getString().contains(renamedVariable + ".descendingIterator()")) {
 						return replacementInfo.getReplacements();
 					}
 				}

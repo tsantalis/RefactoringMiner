@@ -441,7 +441,36 @@ public class StringBasedHeuristics {
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
 				differOnlyInPrefix(s1, s2, "catch(", "catch(final ") ||
-				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
+				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+	}
+
+	private static boolean enhancedForDifferInFinalModifierAndFormalParameterName(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
+		if(s1.startsWith("for(") && s2.startsWith("for(")) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+				VariableDeclaration v1 = variableDeclarations1.get(0);
+				VariableDeclaration v2 = variableDeclarations2.get(0);
+				if(v1.getType().equals(v2.getType())) {
+					if(s1.startsWith("for(final ") && s2.startsWith("for(")) {
+						String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+						String constructedS1 = "for(final " + v1.getVariableName() + commonSuffix;
+						String constructedS2 = "for(" + v2.getVariableName() + commonSuffix;
+						if(constructedS1.equals(s1) && constructedS2.equals(s2)) {
+							return true;
+						}
+					}
+					else if(s1.startsWith("for(") && s2.startsWith("for(final ")) {
+						String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+						String constructedS1 = "for(" + v1.getVariableName() + commonSuffix;
+						String constructedS2 = "for(final " + v2.getVariableName() + commonSuffix;
+						if(constructedS1.equals(s1) && constructedS2.equals(s2)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean catchDifferInFinalModifierAndExceptionName(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {

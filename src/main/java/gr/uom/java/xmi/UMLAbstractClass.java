@@ -539,12 +539,16 @@ public abstract class UMLAbstractClass {
 		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
+		int totalDefaultOperations = 0;
 		int totalAbstractOperations = 0;
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				totalOperations++;
 				if(operation.isAbstract()) {
 					totalAbstractOperations++;
+				}
+				if(operation.isDefault()) {
+					totalDefaultOperations++;
 				}
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
@@ -572,6 +576,9 @@ public abstract class UMLAbstractClass {
 				totalOperations++;
 				if(operation.isAbstract()) {
 					totalAbstractOperations++;
+				}
+				if(operation.isDefault()) {
+					totalDefaultOperations++;
 				}
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
@@ -650,6 +657,9 @@ public abstract class UMLAbstractClass {
 		}
 		if(this.isInterface() && umlClass.isInterface()) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0)) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
+			}
+			else if(commonOperations.size() >= Math.floor((totalOperations-totalDefaultOperations)/2.0)) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
 			}
 		}

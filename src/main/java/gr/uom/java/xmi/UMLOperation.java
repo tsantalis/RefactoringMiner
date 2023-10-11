@@ -35,6 +35,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isStatic;
 	private boolean isNative;
 	private boolean isSynchronized;
+	private boolean isDefault;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
 	private List<UMLAnonymousClass> anonymousClassList;
@@ -156,6 +157,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setNative(boolean isNative) {
 		this.isNative = isNative;
+	}
+
+	public boolean isDefault() {
+		return isDefault;
+	}
+
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
 	}
 
 	public boolean isDeclaredInAnonymousClass() {

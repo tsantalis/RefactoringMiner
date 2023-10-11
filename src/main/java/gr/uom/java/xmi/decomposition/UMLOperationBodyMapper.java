@@ -3417,6 +3417,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(isInMergeConditionalRefactoring(statement1)) {
 						continue;
 					}
+					List<CompositeStatementObject> matchingInnerNodes1 = map1.get(statement1.getString());
+					if(matchingInnerNodes1 == null) {
+						matchingInnerNodes1 = Collections.emptyList();
+					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 						CompositeStatementObject statement2 = innerNodeIterator2.next();
@@ -3483,6 +3487,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
 									score = 0.99;
+								}
+								if(score == 0.99) {
+									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
+										if(!matchingInnerNode1.equals(statement1)) {
+											ReplacementInfo replacementInfo2 = initializeReplacementInfo(matchingInnerNode1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(matchingInnerNode1, statement2, parameterToArgumentMap, replacementInfo2);
+											
+											double score2 = computeScore(matchingInnerNode1, statement2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
+											if(score2 > 0) {
+												CompositeStatementObjectMapping mapping = createCompositeMapping(matchingInnerNode1, statement2, parameterToArgumentMap, score2);
+												mapping.addReplacements(replacements2);
+												mapping.addSubExpressionMappings(replacementInfo2.getSubExpressionMappings());
+												mappingSet.add(mapping);
+											}
+										}
+									}
 								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&
@@ -3707,6 +3727,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(ListIterator<CompositeStatementObject> innerNodeIterator2 = innerNodes2.listIterator(); innerNodeIterator2.hasNext();) {
 				CompositeStatementObject statement2 = innerNodeIterator2.next();
 				if(!alreadyMatched2(statement2)) {
+					List<CompositeStatementObject> matchingInnerNodes2 = map2.get(statement2.getString());
+					if(matchingInnerNodes2 == null) {
+						matchingInnerNodes2 = Collections.emptyList();
+					}
 					TreeSet<CompositeStatementObjectMapping> mappingSet = parentMapping != null ? new TreeSet<CompositeStatementObjectMapping>(new ScopedCompositeMappingComparatorForExtract(parentMapping)) : new TreeSet<CompositeStatementObjectMapping>();
 					for(ListIterator<CompositeStatementObject> innerNodeIterator1 = innerNodes1.listIterator(); innerNodeIterator1.hasNext();) {
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
@@ -3773,6 +3797,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								else if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) && statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
 										statement1.getVariableDeclarations().toString().equals(statement2.getVariableDeclarations().toString())) {
 									score = 0.99;
+								}
+								if(score == 0.99) {
+									for(CompositeStatementObject matchingInnerNode2 : matchingInnerNodes2) {
+										if(!matchingInnerNode2.equals(statement2)) {
+											ReplacementInfo replacementInfo2 = initializeReplacementInfo(statement1, matchingInnerNode2, allUnmatchedNodes1, allUnmatchedNodes2);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(statement1, matchingInnerNode2, parameterToArgumentMap, replacementInfo2);
+											
+											double score2 = computeScore(statement1, matchingInnerNode2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
+											if(score2 > 0) {
+												CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, matchingInnerNode2, parameterToArgumentMap, score2);
+												mapping.addReplacements(replacements2);
+												mapping.addSubExpressionMappings(replacementInfo2.getSubExpressionMappings());
+												mappingSet.add(mapping);
+											}
+										}
+									}
 								}
 							}
 							if((replacements != null || identicalBody(statement1, statement2) || allLeavesWithinBodyMapped(statement1, statement2)) &&

@@ -2295,6 +2295,59 @@ public class StringBasedHeuristics {
 						break;
 					}
 				}
+				else if(c1.contains(".equals(") && c2.contains(".equals(")) {
+					//check for invoker-argument swap
+					String arg1 = c1.substring(c1.indexOf(".equals(") + 8, c1.lastIndexOf(")"));
+					String arg2 = c2.substring(c2.indexOf(".equals(") + 8, c2.lastIndexOf(")"));
+					String prefix1 = c1.substring(0, c1.indexOf(".equals("));
+					String prefix2 = c2.substring(0, c2.indexOf(".equals("));
+					if(arg2.equals(prefix1)) {
+						boolean pass = false;
+						if(arg1.equals(prefix2)) {
+							pass = true;
+						}
+						else {
+							if(arg1.startsWith("!")) {
+								arg1 = arg1.substring(1);
+							}
+							if(prefix2.startsWith("!")) {
+								prefix2 = prefix2.substring(1);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg1, prefix2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(arg1, prefix2);
+							if(!commonPrefix.isEmpty() && ! commonSuffix.isEmpty()) {
+								pass = true;
+							}
+						}
+						if(pass) {
+							intersection.add(arg2);
+							break;
+						}
+					}
+					if(arg1.equals(prefix2)) {
+						boolean pass = false;
+						if(arg2.equals(prefix1)) {
+							pass = true;
+						}
+						else {
+							if(arg2.startsWith("!")) {
+								arg2 = arg2.substring(1);
+							}
+							if(prefix1.startsWith("!")) {
+								prefix1 = prefix1.substring(1);
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg2, prefix1);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(arg2, prefix1);
+							if(!commonPrefix.isEmpty() && ! commonSuffix.isEmpty()) {
+								pass = true;
+							}
+						}
+						if(pass) {
+							intersection.add(arg1);
+							break;
+						}
+					}
+				}
 			}
 		}
 		return intersection;
@@ -2364,6 +2417,55 @@ public class StringBasedHeuristics {
 						info.addReplacement(r2);
 						invertedConditionals++;
 						break;
+					}
+				}
+				else if(subCondition1.contains(".equals(") && subCondition2.contains(".equals(")) {
+					//check for invoker-argument swap
+					String arg1 = subCondition1.substring(subCondition1.indexOf(".equals(") + 8, subCondition1.lastIndexOf(")"));
+					String arg2 = subCondition2.substring(subCondition2.indexOf(".equals(") + 8, subCondition2.lastIndexOf(")"));
+					String prefix1 = subCondition1.substring(0, subCondition1.indexOf(".equals("));
+					String prefix2 = subCondition2.substring(0, subCondition2.indexOf(".equals("));
+					if(arg2.equals(prefix1)) {
+						if(!arg1.equals(prefix2)) {
+							int invertCount = 0;
+							if(arg1.startsWith("!")) {
+								arg1 = arg1.substring(1);
+								invertCount++;
+							}
+							if(prefix2.startsWith("!")) {
+								prefix2 = prefix2.substring(1);
+								invertCount++;
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg1, prefix2);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(arg1, prefix2);
+							if(!commonPrefix.isEmpty() && ! commonSuffix.isEmpty() && invertCount == 1) {
+								Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+								info.addReplacement(r2);
+								invertedConditionals++;
+								break;
+							}
+						}
+					}
+					if(arg1.equals(prefix2)) {
+						if(!arg2.equals(prefix1)) {
+							int invertCount = 0;
+							if(arg2.startsWith("!")) {
+								arg2 = arg2.substring(1);
+								invertCount++;
+							}
+							if(prefix1.startsWith("!")) {
+								prefix1 = prefix1.substring(1);
+								invertCount++;
+							}
+							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(arg2, prefix1);
+							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(arg2, prefix1);
+							if(!commonPrefix.isEmpty() && ! commonSuffix.isEmpty() && invertCount == 1) {
+								Replacement r2 = new Replacement(subCondition1, subCondition2, ReplacementType.INVERT_CONDITIONAL);
+								info.addReplacement(r2);
+								invertedConditionals++;
+								break;
+							}
+						}
 					}
 				}
 			}

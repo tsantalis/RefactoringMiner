@@ -8743,11 +8743,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCall invokedOperationAfter = invokedOperationsAfter.get(0);
 					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getExpression(), invocationCoveringTheEntireStatement2.getExpression(), invokedOperationBefore, invokedOperationAfter, ReplacementType.METHOD_INVOCATION_EXPRESSION);
 					replacementInfo.addReplacement(replacement);
-					Set<AbstractCodeFragment> additionallyMatchedStatements1 = additionallyMatchedStatements(variableDeclarations2, replacementInfo.statements1);
-					Set<AbstractCodeFragment> additionallyMatchedStatements2 = additionallyMatchedStatements(variableDeclarations1, replacementInfo.statements2);
-					if(additionallyMatchedStatements1.size() > 0 || additionallyMatchedStatements2.size() > 0) {
-						Replacement r = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
-						replacementInfo.getReplacements().add(r);
+					boolean skipCompositeReplacementCheck = false;
+					if(variableDeclarations1.size() > 0 && variableDeclarations1.get(0).getType() != null && invokedOperationBefore.actualString().startsWith(variableDeclarations1.get(0).getType().getClassType()) &&
+							variableDeclarations2.size() > 0 && variableDeclarations2.get(0).getType() != null && invokedOperationAfter.actualString().startsWith(variableDeclarations2.get(0).getType().getClassType())) {
+						skipCompositeReplacementCheck = true;
+					}
+					if(!skipCompositeReplacementCheck) {
+						Set<AbstractCodeFragment> additionallyMatchedStatements1 = additionallyMatchedStatements(variableDeclarations2, replacementInfo.statements1);
+						Set<AbstractCodeFragment> additionallyMatchedStatements2 = additionallyMatchedStatements(variableDeclarations1, replacementInfo.statements2);
+						if(additionallyMatchedStatements1.size() > 0 || additionallyMatchedStatements2.size() > 0) {
+							Replacement r = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
+							replacementInfo.getReplacements().add(r);
+						}
 					}
 					return replacementInfo.getReplacements();
 				}

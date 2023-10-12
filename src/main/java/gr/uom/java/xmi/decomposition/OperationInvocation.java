@@ -750,13 +750,73 @@ public class OperationInvocation extends AbstractCall {
 		return count;
 	}
 
+	private Set<String> parametersUsedInSubExpressionArguments() {
+		List<String> parameterNames = container.getParameterNameList();
+		Set<String> matchedParameterNames = new LinkedHashSet<>();
+		for(String subExpression : subExpressions) {
+			if(subExpression.contains("(") && subExpression.contains(")")) {
+				int startIndex = subExpression.indexOf("(") + 1;
+				int endIndex = subExpression.lastIndexOf(")");
+				String argument = subExpression.substring(startIndex, endIndex);
+				if(!argument.isEmpty()) {
+					boolean found = false;
+					for(String parameterName : parameterNames) {
+						if(argument.contains(parameterName)) {
+							matchedParameterNames.add(parameterName);
+							found = true;
+							break;
+						}
+					}
+					if(!found) {
+						Map<String, Set<VariableDeclaration>> map = container.variableDeclarationMap();
+						for(String variableName : map.keySet()) {
+							if(argument.contains(variableName)) {
+								Set<VariableDeclaration> variableDeclarations = map.get(variableName);
+								for(VariableDeclaration variableDeclaration : variableDeclarations) {
+									if(variableDeclaration.getInitializer() != null) {
+										for(String parameterName : parameterNames) {
+											if(variableDeclaration.getInitializer().getString().contains(parameterName)) {
+												matchedParameterNames.add(parameterName);
+												found = true;
+												break;
+											}
+										}
+										if(found) {
+											break;
+										}
+									}
+								}
+								if(found) {
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return matchedParameterNames;
+	}
+
 	public boolean identicalWithExpressionCallChainDifference(OperationInvocation other) {
 		Set<String> subExpressionIntersection = subExpressionIntersection(other);
-		return (identicalName(other) || compatibleName(other)) &&
+		if((identicalName(other) || compatibleName(other)) &&
 				(equalArguments(other) || equalArgumentsExceptForStringLiterals(other)) &&
-				subExpressionIntersection.size() > 0 &&
-				(subExpressionIntersection.size() >= this.subExpressions.size() - this.subExpressionsWithStringLiteralArgument() ||
-				subExpressionIntersection.size() >= other.subExpressions.size() - other.subExpressionsWithStringLiteralArgument());
+				subExpressionIntersection.size() > 0) {
+			if(subExpressionIntersection.size() >= this.subExpressions.size() - this.subExpressionsWithStringLiteralArgument() ||
+					subExpressionIntersection.size() >= other.subExpressions.size() - other.subExpressionsWithStringLiteralArgument()) {
+				return true;
+			}
+			Set<String> parametersInArguments1 = this.parametersUsedInSubExpressionArguments();
+			Set<String> parametersInArguments2 = other.parametersUsedInSubExpressionArguments();
+			if(parametersInArguments1.equals(parametersInArguments2)) {
+				if(subExpressionIntersection.size() >= this.subExpressions.size() - parametersInArguments1.size() ||
+						subExpressionIntersection.size() >= other.subExpressions.size() - parametersInArguments2.size()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public String subExpressionIsCallToSameMethod() {

@@ -6073,7 +6073,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(count < included.size()) {
+			if(count == 1 && count < included.size()) {
 				return included;
 			}
 		}

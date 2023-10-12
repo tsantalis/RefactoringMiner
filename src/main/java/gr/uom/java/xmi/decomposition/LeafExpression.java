@@ -17,10 +17,12 @@ import gr.uom.java.xmi.diff.CodeRange;
 public class LeafExpression extends AbstractCodeFragment {
 	private String string;
 	protected LocationInfo locationInfo;
+	protected VariableDeclarationContainer container;
 
 	public LeafExpression(CompilationUnit cu, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
     	this.locationInfo = new LocationInfo(cu, filePath, expression, codeElementType);
     	this.string = stringify(expression);
+    	this.container = container;
 	}
 
 	protected LeafExpression(String string, LocationInfo locationInfo) {

@@ -28,10 +28,6 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 
 	@Override
 	public int compareTo(CompositeStatementObjectMapping o) {
-		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore ||
-				o.compositeChildMatchingScore >= 2.0*this.compositeChildMatchingScore) {
-			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
-		}
 		if(this.compositeChildMatchingScore == 1.0 && o.getReplacementTypes().contains(ReplacementType.COMPOSITE) && o.compositeChildMatchingScore == 0.99) {
 			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
@@ -43,6 +39,10 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		}
 		else if(o.compositeChildMatchingScore < 0.99 && o.compositeChildMatchingScore > 0 && this.getReplacementTypes().contains(ReplacementType.INVERT_CONDITIONAL) && this.compositeChildMatchingScore == 0.99) {
 			return 1;
+		}
+		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore ||
+				o.compositeChildMatchingScore >= 2.0*this.compositeChildMatchingScore) {
+			return -Double.compare(this.compositeChildMatchingScore, o.compositeChildMatchingScore);
 		}
 		double distance1 = this.editDistance();
 		double distance2 = o.editDistance();

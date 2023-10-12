@@ -8842,9 +8842,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && statement1.getClass().equals(statement2.getClass()) &&
 				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers,
-						matchPairOfRemovedAddedOperationsWithIdenticalBody(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2))) {
+						matchPairOfRemovedAddedOperationsWithIdenticalBody(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2), argumentsWithVariableDeclarationMapping(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2))) {
 			boolean variableDeclarationMatch = true;
-			if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 && !variableDeclarations1.toString().equals(variableDeclarations2.toString()) && !invocationCoveringTheEntireStatement1.arguments().equals(invocationCoveringTheEntireStatement2.arguments())) {
+			if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 && !variableDeclarations1.toString().equals(variableDeclarations2.toString()) && !invocationCoveringTheEntireStatement1.arguments().equals(invocationCoveringTheEntireStatement2.arguments()) &&
+					!argumentsWithVariableDeclarationMapping(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2)) {
 				variableDeclarationMatch = false;
 			}
 			if(variableDeclarationMatch) {
@@ -8858,7 +8859,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				methodInvocationMap1.size() == methodInvocationMap2.size() && methodInvocationMap1.size() == 1 && methodInvocations1.size() == methodInvocations2.size() && methodInvocations1.size() == 1) {
 			AbstractCall invocation1 = methodInvocationMap1.get(methodInvocations1.iterator().next()).get(0);
 			AbstractCall invocation2 = methodInvocationMap2.get(methodInvocations2.iterator().next()).get(0);
-			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers, matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocation2))) {
+			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers, matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocation2), argumentsWithVariableDeclarationMapping(invocation1, invocation2))) {
 				Replacement replacement = new MethodInvocationReplacement(invocation1.getName(),
 						invocation2.getName(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_NAME);
 				replacementInfo.addReplacement(replacement);
@@ -10181,6 +10182,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return null;
+	}
+
+	private boolean argumentsWithVariableDeclarationMapping(AbstractCall invocation1, AbstractCall invocation2) {
+		if(invocation1.arguments().size() == invocation2.arguments().size()) {
+			int differentArguments = 0;
+			int matchedArguments = 0;
+			for(int i=0; i<invocation1.arguments().size(); i++) {
+				String argument1 = invocation1.arguments().get(i);
+				String argument2 = invocation2.arguments().get(i);
+				if(!argument1.equals(argument2)) {
+					differentArguments++;
+					for(AbstractCodeMapping mapping : this.mappings) {
+						if(mapping.getFragment1().getVariableDeclaration(argument1) != null && mapping.getFragment2().getVariableDeclaration(argument2) != null) {
+							matchedArguments++;
+							break;
+						}
+					}
+				}
+			}
+			return differentArguments == matchedArguments && matchedArguments > 0;
+		}
+		return false;
 	}
 
 	private boolean lastStatementInParentBlockWithSameParentType(AbstractCodeFragment statement1, AbstractCodeFragment statement2) {

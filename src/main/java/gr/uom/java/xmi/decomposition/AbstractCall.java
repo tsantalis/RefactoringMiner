@@ -442,13 +442,13 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean renamedWithIdenticalExpressionAndArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, double distance,
-			List<UMLOperationBodyMapper> lambdaMappers, boolean matchPairOfRemovedAddedOperationsWithIdenticalBody) {
+			List<UMLOperationBodyMapper> lambdaMappers, boolean matchPairOfRemovedAddedOperationsWithIdenticalBody, boolean argumentsWithVariableDeclarationMapping) {
 		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacements, lambdaMappers);
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
 		return ((getExpression() != null && call.getExpression() != null) || matchPairOfRemovedAddedOperationsWithIdenticalBody) &&
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				!identicalName(call) &&
-				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced));
+				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced) || argumentsWithVariableDeclarationMapping);
 	}
 
 	public boolean variableDeclarationInitializersRenamedWithIdenticalArguments(AbstractCall call) {

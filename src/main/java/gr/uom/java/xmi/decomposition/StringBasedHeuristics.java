@@ -1651,11 +1651,13 @@ public class StringBasedHeuristics {
 			int replacedArguments = 0;
 			boolean expressionReplaced = false;
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
-					replacedArguments++;
-				}
-				if(expression1.equals(replacement.getBefore()) && expression2.equals(replacement.getAfter())) {
-					expressionReplaced = true;
+				if(replacement.getBefore().contains(" -> ") != replacement.getAfter().contains(" -> ")) {
+					if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
+						replacedArguments++;
+					}
+					if(expression1.equals(replacement.getBefore()) && expression2.equals(replacement.getAfter())) {
+						expressionReplaced = true;
+					}
 				}
 			}
 			if(replacedArguments == minArguments && expressionReplaced) {

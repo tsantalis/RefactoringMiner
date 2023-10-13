@@ -1660,7 +1660,7 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
-			if(replacedArguments == minArguments && expressionReplaced) {
+			if(replacedArguments == minArguments && minArguments > 0 && expressionReplaced) {
 				return true;
 			}
 		}

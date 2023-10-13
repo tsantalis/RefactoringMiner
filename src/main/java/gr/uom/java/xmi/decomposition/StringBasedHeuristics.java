@@ -1637,6 +1637,34 @@ public class StringBasedHeuristics {
 		}
 	}
 
+	protected static boolean invocationWithEverythingReplaced(AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
+			ReplacementInfo replacementInfo) {
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
+				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) &&
+				invocationCoveringTheEntireStatement1.getExpression() != null &&
+				invocationCoveringTheEntireStatement2.getExpression() != null) {
+			List<String> arguments1 = invocationCoveringTheEntireStatement1.arguments();
+			List<String> arguments2 = invocationCoveringTheEntireStatement2.arguments();
+			String expression1 = invocationCoveringTheEntireStatement1.getExpression();
+			String expression2 = invocationCoveringTheEntireStatement2.getExpression();
+			int minArguments = Math.min(arguments1.size(), arguments2.size());
+			int replacedArguments = 0;
+			boolean expressionReplaced = false;
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
+					replacedArguments++;
+				}
+				if(expression1.equals(replacement.getBefore()) && expression2.equals(replacement.getAfter())) {
+					expressionReplaced = true;
+				}
+			}
+			if(replacedArguments == minArguments && expressionReplaced) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected static boolean thisConstructorCallWithEverythingReplaced(AbstractCall invocationCoveringTheEntireStatement1, AbstractCall invocationCoveringTheEntireStatement2,
 			ReplacementInfo replacementInfo) {
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&

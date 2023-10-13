@@ -8339,6 +8339,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(thisConstructorCallWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
 				return null;
 			}
+			if(invocationWithEverythingReplaced(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, replacementInfo)) {
+				return null;
+			}
 			if(statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && statement1.getParent() != null && statement2.getParent() != null &&
 					!statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
 				if(!(statement1.isLastStatementInParentBlock() && statement1.getParent() instanceof TryStatementObject && statement2.isLastStatement()) &&

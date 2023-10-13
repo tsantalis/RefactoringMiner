@@ -1809,10 +1809,12 @@ public class StringBasedHeuristics {
 			ReplacementInfo replacementInfo, UMLOperationBodyMapper mapper) {
 		String string1 = statement1.getString();
 		String string2 = statement2.getString();
-		if(containsMethodSignatureOfAnonymousClass(string1) && string1.contains("\n")) {
+		boolean containsMethodSignatureOfAnonymousClass1 = containsMethodSignatureOfAnonymousClass(string1);
+		if(containsMethodSignatureOfAnonymousClass1 && string1.contains("\n")) {
 			string1 = string1.substring(0, string1.indexOf("\n"));
 		}
-		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
+		boolean containsMethodSignatureOfAnonymousClass2 = containsMethodSignatureOfAnonymousClass(string2);
+		if(containsMethodSignatureOfAnonymousClass2 && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
 		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
@@ -1927,6 +1929,25 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
+				return true;
+			}
+		}
+		else if(string1.contains("=") && string2.contains("=") && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
+			boolean variableRename = false, rightHandSideReplacement = false;
+			String variableName1 = string1.substring(0, string1.indexOf("="));
+			String variableName2 = string2.substring(0, string2.indexOf("="));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(";\n"));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(";\n"));
+			for(Replacement replacement : replacementInfo.getReplacements()) {
+				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
+						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
+					variableRename = true;
+				else if(assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()))
+					rightHandSideReplacement = true;
+			}
+			if(variableRename && rightHandSideReplacement) {
 				return true;
 			}
 		}

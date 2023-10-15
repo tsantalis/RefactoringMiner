@@ -1919,7 +1919,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				else if(mapping instanceof CompositeStatementObjectMapping) {
-					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 0) {
+					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() <= 0.01) {
 						AbstractCodeFragment fragment = mapping.getFragment1();
 						if(fragment instanceof CompositeStatementObject) {
 							CompositeStatementObject statement = (CompositeStatementObject)fragment;
@@ -2309,7 +2309,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				else if(mapping instanceof CompositeStatementObjectMapping) {
-					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() == 0) {
+					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() <= 0.01) {
 						AbstractCodeFragment fragment = mapping.getFragment2();
 						if(fragment instanceof CompositeStatementObject) {
 							CompositeStatementObject statement = (CompositeStatementObject)fragment;

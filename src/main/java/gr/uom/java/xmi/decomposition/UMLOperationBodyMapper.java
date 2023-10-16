@@ -3343,7 +3343,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeStatementObject statement2 = innerNodeIterator2.next();
 						if(!alreadyMatched2(statement2)) {
 							if(statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString()) || differOnlyInThis(statement1.getString(), statement2.getString())) {
-								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
+								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
@@ -3651,7 +3652,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						CompositeStatementObject statement1 = innerNodeIterator1.next();
 						if(!alreadyMatched1(statement1)) {
 							if(statement1.getString().equals(statement2.getString()) || statement1.getArgumentizedString().equals(statement2.getArgumentizedString()) || differOnlyInThis(statement1.getString(), statement2.getString())) {
-								double score = computeScore(statement1, statement2, Optional.empty(), removedOperations, addedOperations, tryWithResourceMigration);
+								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, matchingInnerNodes1, matchingInnerNodes2);
+								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 									mappingSet.add(mapping);
@@ -11805,7 +11807,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && blocksWithMappedTryContainer)) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) &&
 						!comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
-						!logGuard(comp1) && !nullCheck(comp1, comp2) &&
+						!logGuard(comp1) && !nullCheck(comp1, comp2, replacementInfo) &&
 						!parentMapperContainsExactMapping(comp1) && !equalIfElseIfChain) {
 					return 0.01;
 				}
@@ -11896,7 +11898,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return Collections.emptySet();
 	}
 
-	private boolean nullCheck(CompositeStatementObject comp1, CompositeStatementObject comp2) {
+	private boolean nullCheck(CompositeStatementObject comp1, CompositeStatementObject comp2, Optional<ReplacementInfo> replacementInfo) {
 		if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			for(AbstractExpression expression : comp1.getExpressions()) {
 				if(expression.getString().endsWith(" == null")) {
@@ -11905,7 +11907,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(commentsWithinStatement1.size() > 0 || commentsWithinStatement2.size() > 0) {
 						Set<String> intersection = new LinkedHashSet<>(commentsWithinStatement1);
 						intersection.retainAll(commentsWithinStatement2);
-						if(intersection.isEmpty()) {
+						boolean onlyStatementsInMethod = false;
+						if(replacementInfo.isPresent()) {
+							ReplacementInfo info = replacementInfo.get();
+							if(info.getStatements1().isEmpty() && info.getStatements2().isEmpty()) {
+								onlyStatementsInMethod = true;
+							}
+						}
+						if(intersection.isEmpty() && !onlyStatementsInMethod) {
 							return true;
 						}
 					}

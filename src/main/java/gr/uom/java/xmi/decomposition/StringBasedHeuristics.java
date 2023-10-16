@@ -2241,6 +2241,18 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			//check if it is a second anonymous in the argument list
+			if(statement.getAnonymousClassDeclarations().indexOf(anonymousClassDeclaration) > 0) {
+				String[] anonymousLines = anonymousClassDeclaration.toString().split("\\R");
+				if(anonymousLines.length > 1) {
+					String methodDeclaration = anonymousLines[1].trim().replaceAll("\\s*final", "final");
+					index = statement.getString().indexOf(methodDeclaration);
+					if(index != -1) {
+						//-2 for new line and curly bracket, might need -3 for CRLF
+						return statement.getString().substring(0, index-2);
+					}
+				}
+			}
 		}
 		return null;
 	}

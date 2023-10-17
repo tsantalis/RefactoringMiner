@@ -1547,7 +1547,29 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						operationBodyMapper.getContainer2().getName().contains(operationBodyMapper.getContainer1().getName());
 				if(nameMatch && operationBodyMapper.nonMappedElementsT2() == 1 && nonMappedElementsT2CallingAddedOperation == 1 &&
 						operationBodyMapper.getContainer2().stringRepresentation().size() == 3) {
-					mapperSet.add(operationBodyMapper);
+					boolean callToNewClass = false;
+					List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
+					if(nonMappedLeavesT2.size() > 0) {
+						AbstractCodeFragment nonMappedLeafT2 = nonMappedLeavesT2.get(0);
+						AbstractCall call = nonMappedLeafT2.invocationCoveringEntireFragment();
+						if(call == null) {
+							call = nonMappedLeafT2.assignmentInvocationCoveringEntireStatement();
+						}
+						if(call != null && call.getExpression() != null) {
+							String expression = call.getExpression();
+							for(UMLAttribute attribute : nextClass.getAttributes()) {
+								if(attribute.getName().equals(expression) && !originalClass.containsAttributeWithName(expression)) {
+									if(modelDiff != null && modelDiff.findClassInChildModel(attribute.getType().getClassType()) != null) {
+										callToNewClass = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if(!callToNewClass) {
+						mapperSet.add(operationBodyMapper);
+					}
 				}
 			}
 		}

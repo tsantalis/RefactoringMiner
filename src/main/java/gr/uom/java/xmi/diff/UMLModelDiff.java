@@ -3471,7 +3471,7 @@ public class UMLModelDiff {
 		}
 	}
 
-	private boolean partialModel() {
+	public boolean partialModel() {
 		return childModel.isPartial() || parentModel.isPartial();
 	}
 

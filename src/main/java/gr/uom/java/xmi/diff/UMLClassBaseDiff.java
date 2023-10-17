@@ -1559,7 +1559,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							String expression = call.getExpression();
 							for(UMLAttribute attribute : nextClass.getAttributes()) {
 								if(attribute.getName().equals(expression) && !originalClass.containsAttributeWithName(expression)) {
-									if(modelDiff != null && modelDiff.findClassInChildModel(attribute.getType().getClassType()) != null) {
+									if(modelDiff != null && (modelDiff.findClassInChildModel(attribute.getType().getClassType()) != null || modelDiff.partialModel())) {
 										callToNewClass = true;
 										break;
 									}

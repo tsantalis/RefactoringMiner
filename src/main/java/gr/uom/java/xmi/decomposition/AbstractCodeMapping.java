@@ -274,7 +274,8 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		for(AbstractCodeMapping mapping : parentRefactoring.getReferences()) {
-			if(mapping.getFragment2().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+			if(variableDeclaration.getScope().subsumes(mapping.getFragment2().getLocationInfo()) && mapping.getFragment2().findExpression(variableDeclaration.getVariableName()).size() > 0 &&
+					mapping.getFragment1().findExpression(variableDeclaration.getVariableName()).size() == 0) {
 				return true;
 			}
 		}

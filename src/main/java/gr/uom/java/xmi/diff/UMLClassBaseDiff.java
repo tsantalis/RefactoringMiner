@@ -111,76 +111,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		checkForOperationSignatureChanges();
 		processAttributes();
 		checkForAttributeChanges();
-		checkForAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
 		checkForMovedCodeBetweenOperations();
-	}
-
-	private void checkForAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations() throws RefactoringMinerTimedOutException {
-		List<UMLAttribute> addedAttributes = new ArrayList<>();
-		addedAttributes.addAll(getAddedAttributes());
-		List<UMLAttribute> removedAttributes = new ArrayList<>();
-		removedAttributes.addAll(getRemovedAttributes());
-		if(removedAttributes.size() > 0 && addedAttributes.size() > 0) {
-			if(removedAttributes.size() <= addedAttributes.size()) {
-				for(UMLAttribute removedAttribute : removedAttributes) {
-					List<UMLAttribute> previousClassAttributes = getOriginalClass().getAttributes();
-					int index2 = previousClassAttributes.indexOf(removedAttribute);
-					if(index2 > 0 && index2 < previousClassAttributes.size()-1) {
-						UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
-						UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
-						for(UMLAttribute addedAttribute : addedAttributes) {
-							List<UMLAttribute> nextClassAttributes = getNextClass().getAttributes();
-							int index1 = nextClassAttributes.indexOf(addedAttribute);
-							if(index1 > 0 && index1 < nextClassAttributes.size()-1) {
-								UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
-								UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
-								if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
-									UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
-									if(!attributeDiffList.contains(attributeDiff)) {
-										attributeDiffList.add(attributeDiff);
-									}
-									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(Collections.emptySet());
-									if(!refactorings.containsAll(attributeDiffRefactorings)) {
-										refactorings.addAll(attributeDiffRefactorings);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			else {
-				for(UMLAttribute addedAttribute : addedAttributes) {
-					List<UMLAttribute> nextClassAttributes = getNextClass().getAttributes();
-					int index1 = nextClassAttributes.indexOf(addedAttribute);
-					if(index1 > 0 && index1 < nextClassAttributes.size()-1) {
-						UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
-						UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
-						for(UMLAttribute removedAttribute : removedAttributes) {
-							List<UMLAttribute> previousClassAttributes = getOriginalClass().getAttributes();
-							int index2 = previousClassAttributes.indexOf(removedAttribute);
-							if(index2 > 0 && index2 < previousClassAttributes.size()-1) {
-								UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
-								UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
-								if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
-									UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
-									if(!attributeDiffList.contains(attributeDiff)) {
-										attributeDiffList.add(attributeDiff);
-									}
-									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(Collections.emptySet());
-									if(!refactorings.containsAll(attributeDiffRefactorings)) {
-										refactorings.addAll(attributeDiffRefactorings);
-									}
-								}
-							}
-						}
-					}
-				}
-			}	
-		}
 	}
 
 	private void checkForMovedCodeBetweenOperations() throws RefactoringMinerTimedOutException {

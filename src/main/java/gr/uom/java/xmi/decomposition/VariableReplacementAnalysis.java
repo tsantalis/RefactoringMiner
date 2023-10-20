@@ -157,6 +157,98 @@ public class VariableReplacementAnalysis {
 		findMatchingVariablesWithoutVariableDeclarationMapping();
 		findMovedVariablesToExtractedFromInlinedMethods();
 		findMatchingVariablesWithoutReferenceMapping();
+		findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations();
+	}
+
+	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations() throws RefactoringMinerTimedOutException {
+		if(classDiff != null && mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0) {
+			List<UMLAttribute> addedAttributes = new ArrayList<>();
+			addedAttributes.addAll(classDiff.getAddedAttributes());
+			List<UMLAttribute> removedAttributes = new ArrayList<>();
+			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			if(removedAttributes.size() > 0 && addedAttributes.size() > 0) {
+				if(removedAttributes.size() <= addedAttributes.size()) {
+					for(UMLAttribute removedAttribute : removedAttributes) {
+						List<UMLAttribute> previousClassAttributes = classDiff.getOriginalClass().getAttributes();
+						int index2 = previousClassAttributes.indexOf(removedAttribute);
+						if(index2 > 0 && index2 < previousClassAttributes.size()-1) {
+							UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
+							UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
+							for(UMLAttribute addedAttribute : addedAttributes) {
+								List<UMLAttribute> nextClassAttributes = classDiff.getNextClass().getAttributes();
+								int index1 = nextClassAttributes.indexOf(addedAttribute);
+								if(index1 > 0 && index1 < nextClassAttributes.size()-1) {
+									UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
+									UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
+									if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
+										Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
+										for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
+											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
+												referencingStatements1.add(f1);
+											}
+										}
+										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
+										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
+											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+												referencingStatements2.add(f2);
+											}
+										}
+										if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
+											CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+													removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+													Collections.emptySet());
+											candidate.setOriginalAttribute(removedAttribute);
+											candidate.setRenamedAttribute(addedAttribute);
+											candidateAttributeRenames.add(candidate);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				else {
+					for(UMLAttribute addedAttribute : addedAttributes) {
+						List<UMLAttribute> nextClassAttributes = classDiff.getNextClass().getAttributes();
+						int index1 = nextClassAttributes.indexOf(addedAttribute);
+						if(index1 > 0 && index1 < nextClassAttributes.size()-1) {
+							UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
+							UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
+							for(UMLAttribute removedAttribute : removedAttributes) {
+								List<UMLAttribute> previousClassAttributes = classDiff.getOriginalClass().getAttributes();
+								int index2 = previousClassAttributes.indexOf(removedAttribute);
+								if(index2 > 0 && index2 < previousClassAttributes.size()-1) {
+									UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
+									UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
+									if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
+										Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
+										for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
+											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
+												referencingStatements1.add(f1);
+											}
+										}
+										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
+										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
+											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+												referencingStatements2.add(f2);
+											}
+										}
+										if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
+											CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+													removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+													Collections.emptySet());
+											candidate.setOriginalAttribute(removedAttribute);
+											candidate.setRenamedAttribute(addedAttribute);
+											candidateAttributeRenames.add(candidate);
+										}
+									}
+								}
+							}
+						}
+					}
+				}	
+			}
+		}
 	}
 
 	private void processIdenticalAnonymousAndLambdas() {

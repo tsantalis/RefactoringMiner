@@ -1823,6 +1823,36 @@ public class StringBasedHeuristics {
 			String variableName2 = string2.substring(0, string2.indexOf("="));
 			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(";\n"));
 			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
+			boolean fieldInitializationWithParemeter1 = false;
+			boolean fieldInitializationWithParemeter2 = false;
+			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
+				for(UMLAttribute removedAttribute : mapper.getClassDiff().getOriginalClass().getAttributes()) {
+					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals("this." + removedAttribute.getName())) {
+						for(String parameterName : mapper.getContainer1().getParameterNameList()) {
+							if(assignment1.equals(parameterName) || assignment1.contains(parameterName + ".")) {
+								fieldInitializationWithParemeter1 = true;
+								break;
+							}
+						}
+						if(fieldInitializationWithParemeter1) {
+							break;
+						}
+					}
+				}
+				for(UMLAttribute addedAttribute : mapper.getClassDiff().getNextClass().getAttributes()) {
+					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals("this." + addedAttribute.getName()))) {
+						for(String parameterName : mapper.getContainer2().getParameterNameList()) {
+							if(assignment2.equals(parameterName) || assignment2.contains(parameterName + ".")) {
+								fieldInitializationWithParemeter2 = true;
+								break;
+							}
+						}
+						if(fieldInitializationWithParemeter2) {
+							break;
+						}
+					}
+				}
+			}
 			UMLType type1 = null, type2 = null;
 			AbstractCall inv1 = null, inv2 = null;
 			List<AbstractCall> creations1 = statement1.getCreations();
@@ -1929,6 +1959,9 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
+				return true;
+			}
+			if(variableRename && fieldInitializationWithParemeter1 != fieldInitializationWithParemeter2 && inv2 == null) {
 				return true;
 			}
 		}

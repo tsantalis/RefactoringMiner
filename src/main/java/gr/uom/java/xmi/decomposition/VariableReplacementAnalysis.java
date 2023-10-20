@@ -187,18 +187,8 @@ public class VariableReplacementAnalysis {
 												referencingStatements1.add(f1);
 											}
 										}
-										for(AbstractCodeFragment f1 : mapper.getNonMappedInnerNodesT1()) {
-											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
-												referencingStatements1.add(f1);
-											}
-										}
 										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
 										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
-											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
-												referencingStatements2.add(f2);
-											}
-										}
-										for(AbstractCodeFragment f2 : mapper.getNonMappedInnerNodesT2()) {
 											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
 												referencingStatements2.add(f2);
 											}
@@ -252,18 +242,8 @@ public class VariableReplacementAnalysis {
 												referencingStatements1.add(f1);
 											}
 										}
-										for(AbstractCodeFragment f1 : mapper.getNonMappedInnerNodesT1()) {
-											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
-												referencingStatements1.add(f1);
-											}
-										}
 										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
 										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
-											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
-												referencingStatements2.add(f2);
-											}
-										}
-										for(AbstractCodeFragment f2 : mapper.getNonMappedInnerNodesT2()) {
 											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
 												referencingStatements2.add(f2);
 											}

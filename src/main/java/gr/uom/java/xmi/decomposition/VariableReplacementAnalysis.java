@@ -161,7 +161,7 @@ public class VariableReplacementAnalysis {
 	}
 
 	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations() throws RefactoringMinerTimedOutException {
-		if(classDiff != null && mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0) {
+		if(classDiff != null && ((mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0) || (mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()))) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
 			List<UMLAttribute> removedAttributes = new ArrayList<>();
@@ -200,6 +200,21 @@ public class VariableReplacementAnalysis {
 											candidate.setOriginalAttribute(removedAttribute);
 											candidate.setRenamedAttribute(addedAttribute);
 											candidateAttributeRenames.add(candidate);
+										}
+										else if(mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()) {
+											for(AbstractCodeMapping mapping : mapper.getMappings()) {
+												for(Replacement r : mapping.getReplacements()) {
+													if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
+														CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+																removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+																Collections.emptySet());
+														candidate.setOriginalAttribute(removedAttribute);
+														candidate.setRenamedAttribute(addedAttribute);
+														candidateAttributeRenames.add(candidate);
+														break;
+													}
+												}
+											}
 										}
 									}
 								}
@@ -240,6 +255,21 @@ public class VariableReplacementAnalysis {
 											candidate.setOriginalAttribute(removedAttribute);
 											candidate.setRenamedAttribute(addedAttribute);
 											candidateAttributeRenames.add(candidate);
+										}
+										else if(mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()) {
+											for(AbstractCodeMapping mapping : mapper.getMappings()) {
+												for(Replacement r : mapping.getReplacements()) {
+													if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
+														CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+																removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+																Collections.emptySet());
+														candidate.setOriginalAttribute(removedAttribute);
+														candidate.setRenamedAttribute(addedAttribute);
+														candidateAttributeRenames.add(candidate);
+														break;
+													}
+												}
+											}
 										}
 									}
 								}

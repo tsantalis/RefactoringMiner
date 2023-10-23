@@ -501,19 +501,19 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
 			boolean thisEqualNext = thisNext1.getString().equals(thisNext2.getString());
 			boolean thisEqualPreviousAndNext = thisEqualPrevious && thisEqualNext;
-			if(thisEqualPreviousAndNext) {
-				this.identicalPreviousAndNextStatement = true;
-			}
-			else if(thisEqualPrevious && thisNext2 != null && thisNext2.equals(o.getFragment2())) {
-				this.identicalPreviousStatement = true;
-			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			boolean oEqualNext = oNext1.getString().equals(oNext2.getString());
 			boolean oEqualPreviousAndNext = oEqualPrevious && oEqualNext;
+			if(thisEqualPreviousAndNext) {
+				this.identicalPreviousAndNextStatement = true;
+			}
+			else if(thisEqualPrevious && thisNext2 != null && thisNext2.equals(o.getFragment2()) && !oEqualNext) {
+				this.identicalPreviousStatement = true;
+			}
 			if(oEqualPreviousAndNext) {
 				o.identicalPreviousAndNextStatement = true;
 			}
-			else if(oEqualPrevious && oNext2 != null && oNext2.equals(this.getFragment2())) {
+			else if(oEqualPrevious && oNext2 != null && oNext2.equals(this.getFragment2()) && !thisEqualNext) {
 				o.identicalPreviousStatement = true;
 			}
 		}

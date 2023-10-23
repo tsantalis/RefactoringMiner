@@ -2200,6 +2200,30 @@ public class TestStatementMappingsJunit4 {
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testConsecutiveChangedStatements() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "48dd35c9002c80eeb666f56489785d1bf47f9aa4", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("AvailableOptions") && mapper.getContainer2().getName().equals("AvailableOptions")) {
+					mapperInfo(mapper, actual);
+				}
+				if(mapper.getContainer1().getName().equals("addFiltersFromAnnotations") && mapper.getContainer2().getName().equals("addFiltersFromAnnotations")) {
+					mapperInfo(mapper, actual);
+				}
+				if(mapper.getContainer1().getName().equals("convertsTagFilterOption") && mapper.getContainer2().getName().equals("convertsTagFilterOption")) {
+					mapperInfo(mapper, actual);
+				}
+				//TODO add junit-console/src/main/java/org/junit/gen5/console/tasks/DiscoveryRequestCreator.java applyFilters()
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-48dd35c9002c80eeb666f56489785d1bf47f9aa4.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	private void mapperInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
 		actual.add(bodyMapper.toString());
 		System.out.println(bodyMapper.toString());

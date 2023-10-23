@@ -21,7 +21,6 @@ import gr.uom.java.xmi.diff.StringDistance;
 public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafMapping> {
 	private List<Double> levelParentEditDistance;
 	private boolean identicalPreviousStatement;
-	private boolean identicalNextStatement;
 	private boolean identicalPreviousAndNextStatement;
 	private boolean equalNumberOfAssertions;
 
@@ -109,12 +108,6 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return -1;
 				}
 				else if(!this.identicalPreviousStatement && o.identicalPreviousStatement) {
-					return 1;
-				}
-				if(this.identicalNextStatement && !o.identicalNextStatement) {
-					return -1;
-				}
-				else if(!this.identicalNextStatement && o.identicalNextStatement) {
 					return 1;
 				}
 				if(this.identicalDepthIndexAndParentType() && !o.identicalDepthIndexAndParentType()) {
@@ -510,28 +503,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			boolean thisEqualPreviousAndNext = thisEqualPrevious && thisEqualNext;
 			if(thisEqualPreviousAndNext) {
 				this.identicalPreviousAndNextStatement = true;
-				this.identicalPreviousStatement = true;
-				this.identicalNextStatement = true;
 			}
-			if(thisEqualPrevious) {
+			else if(thisEqualPrevious && thisNext2 != null && thisNext2.equals(o.getFragment2())) {
 				this.identicalPreviousStatement = true;
-			}
-			if(thisEqualNext) {
-				this.identicalNextStatement = true;
 			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			boolean oEqualNext = oNext1.getString().equals(oNext2.getString());
 			boolean oEqualPreviousAndNext = oEqualPrevious && oEqualNext;
 			if(oEqualPreviousAndNext) {
 				o.identicalPreviousAndNextStatement = true;
-				o.identicalPreviousStatement = true;
-				o.identicalNextStatement = true;
 			}
-			if(oEqualPrevious) {
+			else if(oEqualPrevious && oNext2 != null && oNext2.equals(this.getFragment2())) {
 				o.identicalPreviousStatement = true;
-			}
-			if(oEqualNext) {
-				o.identicalNextStatement = true;
 			}
 		}
 		// last statement in block
@@ -548,12 +531,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
 			if(thisEqualPrevious) {
 				this.identicalPreviousAndNextStatement = true;
-				this.identicalPreviousStatement = true;
 			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			if(oEqualPrevious) {
 				o.identicalPreviousAndNextStatement = true;
-				o.identicalPreviousStatement = true;
 			}
 		}
 	}

@@ -9114,8 +9114,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
 									matchingArguments++;
 								}
-								else if(arg2.contains(".") && invocationCoveringTheEntireStatement1.arguments().contains(arg2.substring(0, arg2.indexOf(".")))) {
-									matchingArguments++;
+								else if(arg2.contains(".")) {
+									String prefix = arg2.substring(0, arg2.indexOf("."));
+									if(argument1.contains(prefix) || invocationCoveringTheEntireStatement1.arguments().contains(prefix)) {
+										matchingArguments++;
+									}
 								}
 							}
 							if(tokens.length == matchingTokens && matchingArguments == invocationCoveringTheEntireStatement2.arguments().size()) {
@@ -9148,8 +9151,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
 							matchingArguments++;
 						}
-						else if(arg2.contains(".") && invocationCoveringTheEntireStatement1.arguments().contains(arg2.substring(0, arg2.indexOf(".")))) {
-							matchingArguments++;
+						else if(arg2.contains(".")) {
+							String prefix = arg2.substring(0, arg2.indexOf("."));
+							if(argument1.contains(prefix) || invocationCoveringTheEntireStatement1.arguments().contains(prefix)) {
+								matchingArguments++;
+							}
 						}
 					}
 					if(tokens.length == matchingTokens && matchingArguments == invocationCoveringTheEntireStatement2.arguments().size()) {

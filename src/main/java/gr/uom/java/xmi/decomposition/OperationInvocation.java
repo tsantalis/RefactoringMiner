@@ -300,7 +300,9 @@ public class OperationInvocation extends AbstractCall {
     		}
     		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains("->") && !arg.contains("::") && arg.indexOf(")") < arg.length()) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
-    			inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
+    			if(cast.charAt(0) != '(') {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));
+    			}
     		}
     		else if(arg.endsWith(".getClassLoader()")) {
     			inferredArgumentTypes.add(UMLType.extractTypeObject("ClassLoader"));

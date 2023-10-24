@@ -1211,11 +1211,47 @@ public abstract class UMLAbstractClassDiff {
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
 					!mapper.getContainer2().getParameterNameList().contains(pattern.getAfter())) ||
 					allVariables2.contains("this."+pattern.getAfter());
-			if(variables1contains && !variables2Contains) {	
-				counter++;
+			if(variables1contains && !variables2Contains) {
+				List<AbstractCall> calls = mapper.getContainer2().getAllOperationInvocations();
+				boolean skip = false;
+				for(AbstractCall call : calls) {
+					for(UMLOperation addedOperation : addedOperations) {
+						if(call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+							List<String> addedOperationVariables = addedOperation.getAllVariables();
+							if(addedOperationVariables.contains(pattern.getAfter())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(skip) {
+						break;
+					}
+				}
+				if(!skip) {
+					counter++;
+				}
 			}
 			if(variables2Contains && !variables1contains) {
-				counter++;
+				List<AbstractCall> calls = mapper.getContainer1().getAllOperationInvocations();
+				boolean skip = false;
+				for(AbstractCall call : calls) {
+					for(UMLOperation removedOperation : removedOperations) {
+						if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
+							List<String> removedOperationVariables = removedOperation.getAllVariables();
+							if(removedOperationVariables.contains(pattern.getBefore())) {
+								skip = true;
+								break;
+							}
+						}
+					}
+					if(skip) {
+						break;
+					}
+				}
+				if(!skip) {
+					counter++;
+				}
 			}
 			if(variables1contains || variables2Contains) {
 				allCases++;

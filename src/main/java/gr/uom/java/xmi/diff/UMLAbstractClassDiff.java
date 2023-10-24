@@ -23,6 +23,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -1212,42 +1213,46 @@ public abstract class UMLAbstractClassDiff {
 					!mapper.getContainer2().getParameterNameList().contains(pattern.getAfter())) ||
 					allVariables2.contains("this."+pattern.getAfter());
 			if(variables1contains && !variables2Contains) {
-				List<AbstractCall> calls = mapper.getContainer2().getAllOperationInvocations();
 				boolean skip = false;
-				for(AbstractCall call : calls) {
-					for(UMLOperation addedOperation : addedOperations) {
-						if(call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
-							List<String> addedOperationVariables = addedOperation.getAllVariables();
-							if(addedOperationVariables.contains(pattern.getAfter())) {
-								skip = true;
-								break;
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					for(AbstractCall call : mapping.getFragment2().getMethodInvocations()) {
+						for(UMLOperation addedOperation : addedOperations) {
+							if(call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff)) {
+								List<String> addedOperationVariables = addedOperation.getAllVariables();
+								if(addedOperationVariables.contains(pattern.getAfter())) {
+									skip = true;
+									break;
+								}
 							}
 						}
+						if(skip)
+							break;
 					}
-					if(skip) {
+					if(skip)
 						break;
-					}
 				}
 				if(!skip) {
 					counter++;
 				}
 			}
 			if(variables2Contains && !variables1contains) {
-				List<AbstractCall> calls = mapper.getContainer1().getAllOperationInvocations();
 				boolean skip = false;
-				for(AbstractCall call : calls) {
-					for(UMLOperation removedOperation : removedOperations) {
-						if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
-							List<String> removedOperationVariables = removedOperation.getAllVariables();
-							if(removedOperationVariables.contains(pattern.getBefore())) {
-								skip = true;
-								break;
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					for(AbstractCall call : mapping.getFragment1().getMethodInvocations()) {
+						for(UMLOperation removedOperation : removedOperations) {
+							if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
+								List<String> removedOperationVariables = removedOperation.getAllVariables();
+								if(removedOperationVariables.contains(pattern.getBefore())) {
+									skip = true;
+									break;
+								}
 							}
 						}
+						if(skip)
+							break;
 					}
-					if(skip) {
+					if(skip)
 						break;
-					}
 				}
 				if(!skip) {
 					counter++;

@@ -9085,6 +9085,86 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && modelDiff != null &&
+				invocationCoveringTheEntireStatement1.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression() != null &&
+				invocationCoveringTheEntireStatement1.getExpression().toLowerCase().contains("log") && invocationCoveringTheEntireStatement2.getExpression().toLowerCase().contains("log")) {
+			//check for added inner class
+			UMLClass addedInnerClass = null;
+			for(UMLClass c : modelDiff.getAddedClasses()) {
+				if(c.getName().startsWith(container1.getClassName() + ".") && c.getName().startsWith(container2.getClassName() + ".")) {
+					addedInnerClass = c;
+					break;
+				}
+			}
+			if(addedInnerClass != null) {
+				for(UMLOperation operation : addedInnerClass.getOperations()) {
+					if(invocationCoveringTheEntireStatement2.matchesOperation(operation, container2, classDiff, modelDiff)) {
+						String[] tokens = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(invocationCoveringTheEntireStatement2.getName());
+						boolean match = false;
+						for(String argument1 : invocationCoveringTheEntireStatement1.arguments()) {
+							String arg = argument1.toLowerCase();
+							int matchingTokens = 0;
+							for(String token : tokens) {
+								if(arg.contains(token.toLowerCase())) {
+									matchingTokens++;
+								}
+							}
+							int matchingArguments = 0;
+							for(String arg2 : invocationCoveringTheEntireStatement2.arguments()) {
+								if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
+									matchingArguments++;
+								}
+								else if(arg2.contains(".") && invocationCoveringTheEntireStatement1.arguments().contains(arg2.substring(0, arg2.indexOf(".")))) {
+									matchingArguments++;
+								}
+							}
+							if(tokens.length == matchingTokens && matchingArguments == invocationCoveringTheEntireStatement2.arguments().size()) {
+								match = true;
+								break;
+							}
+						}
+						if(match) {
+							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+					}
+				}
+			}
+			else {
+				String[] tokens = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(invocationCoveringTheEntireStatement2.getName());
+				boolean match = false;
+				for(String argument1 : invocationCoveringTheEntireStatement1.arguments()) {
+					String arg = argument1.toLowerCase();
+					int matchingTokens = 0;
+					for(String token : tokens) {
+						if(arg.contains(token.toLowerCase())) {
+							matchingTokens++;
+						}
+					}
+					int matchingArguments = 0;
+					for(String arg2 : invocationCoveringTheEntireStatement2.arguments()) {
+						if(argument1.contains(arg2) || invocationCoveringTheEntireStatement1.arguments().contains(arg2)) {
+							matchingArguments++;
+						}
+						else if(arg2.contains(".") && invocationCoveringTheEntireStatement1.arguments().contains(arg2.substring(0, arg2.indexOf(".")))) {
+							matchingArguments++;
+						}
+					}
+					if(tokens.length == matchingTokens && matchingArguments == invocationCoveringTheEntireStatement2.arguments().size()) {
+						match = true;
+						break;
+					}
+				}
+				if(match) {
+					Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
+							invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
+			}
+		}
 		//check if the argument of the method call in the first statement is returned in the second statement
 		Replacement r;
 		if(invocationCoveringTheEntireStatement1 != null && (r = invocationCoveringTheEntireStatement1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {

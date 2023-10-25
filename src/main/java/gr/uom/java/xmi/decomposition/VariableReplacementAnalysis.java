@@ -1495,7 +1495,8 @@ public class VariableReplacementAnalysis {
 					(!operation1.getAllVariables().contains(replacement.getAfter()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
 					(!operation2.getAllVariables().contains(replacement.getBefore()) || cyclicRename(finalConsistentRenames.keySet(), replacement)) &&
 					!fieldAssignmentWithPreviouslyExistingParameter(replacementOccurrenceMap.get(replacement)) &&
-					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement))) {
+					!fieldAssignmentToPreviouslyExistingAttribute(replacementOccurrenceMap.get(replacement)) &&
+					!(operation1.getName().equals("toString") && operation2.getName().equals("toString"))) {
 				CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 						replacement.getBefore(), replacement.getAfter(), operation1, operation2,
 						replacementOccurrenceMap.get(replacement));

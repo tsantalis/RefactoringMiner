@@ -1515,7 +1515,20 @@ public class UMLModelDiff {
 		if(attributeOfExtractedClassType != null || classDiff.getNextClass().isInnerClass(umlClass))
 			threshold = 0;
 		if(commonOperations.size() > threshold || commonAttributes.size() > threshold) {
-			return new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);
+			ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);
+			Set<UMLAttributeDiff> diffsToBeRemoved = new LinkedHashSet<UMLAttributeDiff>();
+			for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
+				if(diff.getAddedAttribute().equals(extractClassRefactoring.getAttributeOfExtractedClassTypeInOriginalClass()) &&
+						extractClassRefactoring.getExtractedAttributes().keySet().contains(diff.getRemovedAttribute())) {
+					diffsToBeRemoved.add(diff);
+				}
+			}
+			for(UMLAttributeDiff diff : diffsToBeRemoved) {
+				classDiff.getAttributeDiffList().remove(diff);
+				classDiff.getAddedAttributes().add(diff.getAddedAttribute());
+				classDiff.getRemovedAttributes().add(diff.getRemovedAttribute());
+			}
+			return extractClassRefactoring;
 		}
 		return null;
 	}

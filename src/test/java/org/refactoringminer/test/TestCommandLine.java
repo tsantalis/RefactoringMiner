@@ -18,15 +18,15 @@ import java.util.List;
 
 @Isolated
 public class TestCommandLine {
-    private static final String REPOS = "tmp";
+    private static final String REPOS = "tmp/";
     private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/commandline/";
     private String jsonPath;
 
     @BeforeAll
     public static void setUp() throws Exception {
         GitServiceImpl gitService = new GitServiceImpl();
-        gitService.cloneIfNotExists(REPOS + "/mondrian", "https://github.com/pentaho/mondrian.git");
-        gitService.cloneIfNotExists(REPOS + "/refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
+        gitService.cloneIfNotExists(REPOS + "mondrian", "https://github.com/pentaho/mondrian.git");
+        gitService.cloneIfNotExists(REPOS + "refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
     }
 
     @AfterEach
@@ -38,10 +38,10 @@ public class TestCommandLine {
 
     @Test
     public void testBetweenCommits() throws Exception {
-        jsonPath = REPOS + "/mondrian/mondrian-bc-actual.json";
+        jsonPath = REPOS + "mondrian/mondrian-bc-actual.json";
         String[] args = {
                 "-bc",
-                REPOS + "/mondrian",
+                REPOS + "mondrian",
                 "8cfaafedb27947aa22d71c77635bb8c8a36e23a4",
                 "871f7747deded94e721fa098561376ab304b24de",
                 "-json",
@@ -56,10 +56,10 @@ public class TestCommandLine {
 
     @Test
     public void testBetweenTags() throws Exception {
-        jsonPath = REPOS + "/mondrian/mondrian-bt-actual.json";
+        jsonPath = REPOS + "mondrian/mondrian-bt-actual.json";
         String[] args = {
                 "-bt",
-                REPOS + "/mondrian",
+                REPOS + "mondrian",
                 "3.5.14-R",
                 "3.5.15-R",
                 "-json",
@@ -74,10 +74,10 @@ public class TestCommandLine {
 
     @Test
     public void testAll() throws Exception {
-        jsonPath = REPOS + "/refactoring-toy-example/refactoring-toy-example-all-actual.json";
+        jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-all-actual.json";
         String[] args = {
                 "-a",
-                REPOS + "/refactoring-toy-example",
+                REPOS + "refactoring-toy-example",
                 "-json",
                 jsonPath
         };
@@ -90,10 +90,10 @@ public class TestCommandLine {
 
     @Test
     public void testAllBranch() throws Exception {
-        jsonPath = REPOS + "/refactoring-toy-example/refactoring-toy-example-branch-actual.json";
+        jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-branch-actual.json";
         String[] args = {
                 "-a",
-                REPOS + "/refactoring-toy-example",
+                REPOS + "refactoring-toy-example",
                 "branch1",
                 "-json",
                 jsonPath
@@ -107,10 +107,10 @@ public class TestCommandLine {
 
     @Test
     public void testCommit() throws Exception {
-        jsonPath = REPOS + "/refactoring-toy-example/refactoring-toy-example-commit-actual.json";
+        jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-commit-actual.json";
         String[] args = {
                 "-c",
-                REPOS + "/refactoring-toy-example",
+                REPOS + "refactoring-toy-example",
                 "36287f7c3b09eff78395267a3ac0d7da067863fd",
                 "-json",
                 jsonPath
@@ -133,7 +133,7 @@ public class TestCommandLine {
             "a3f8b3669bcb771ecb25de50d6d7f1431e763d8d"
     })
     public void testGitHubCommit(String commit) throws Exception {
-        jsonPath = REPOS + "/drill/drill-" + commit + "-actual.json";
+        jsonPath = REPOS + "drill-" + commit + "-actual.json";
         String[] args = {
                 "-gc",
                 "https://github.com/apache/drill.git",
@@ -150,7 +150,7 @@ public class TestCommandLine {
 
     @Test
     public void testGitHubPullRequest() throws Exception {
-        jsonPath = REPOS + "/drill/drill-gp-actual.json";
+        jsonPath = REPOS + "drill-gp-actual.json";
         String[] args = {
                 "-gp",
                 "https://github.com/apache/drill.git",

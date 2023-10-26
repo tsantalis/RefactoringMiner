@@ -166,8 +166,7 @@ public class ProjectASTDiffer
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
 			Set<ImmutablePair<String, String>> involvedClassesBeforeRefactoring = modelDiffRefactoring.getInvolvedClassesBeforeRefactoring();
 			Set<ImmutablePair<String, String>> involvedClassesAfterRefactoring = modelDiffRefactoring.getInvolvedClassesAfterRefactoring();
-			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue;
-			//TODO: Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
+			if (involvedClassesBeforeRefactoring.size() > 1 || involvedClassesAfterRefactoring.size() > 1) continue; //Must extend the logic to work for cases with more than one involving classes such as ExtractAndMoveMethodRefactoring
 			UMLClass umlClassBefore = classDiff.getOriginalClass();
 			UMLClass umlClassAfter = classDiff.getNextClass();
 			ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();
@@ -257,21 +256,21 @@ public class ProjectASTDiffer
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
 						beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
 					ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
-					findTreeFromMapperAndProcessBodyMapper(mappingStore, extractOperationRefactoring.getBodyMapper());
+					findTreeFromMapperAndProcessBodyMapper(extractOperationRefactoring.getBodyMapper(), mappingStore);
 				}
 			}
 			else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
 						beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
 					InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
-					findTreeFromMapperAndProcessBodyMapper(mappingStore, inlineOperationRefactoring.getBodyMapper());
+					findTreeFromMapperAndProcessBodyMapper(inlineOperationRefactoring.getBodyMapper(), mappingStore);
 				}
 			}
 
 		}
 	}
 
-	private void findTreeFromMapperAndProcessBodyMapper(ExtendedMultiMappingStore mappingStore, UMLOperationBodyMapper bodyMapper) {
+	private void findTreeFromMapperAndProcessBodyMapper(UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore) {
 		String srcPath = bodyMapper.getOperation1().getLocationInfo().getFilePath();
 		String dstPath = bodyMapper.getOperation2().getLocationInfo().getFilePath();
 		Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
@@ -338,7 +337,6 @@ public class ProjectASTDiffer
 		for (org.apache.commons.lang3.tuple.Pair<VariableDeclaration, VariableDeclaration> matchedPair: matchedVariables) {
 			VariableDeclaration leftVarDecl = matchedPair.getLeft();
 			VariableDeclaration rightVarDecl = matchedPair.getRight();
-			//TODO: get parent until method declaration
 			Tree leftTree =  TreeUtilFunctions.findByLocationInfo(srcTree,leftVarDecl.getLocationInfo());
 			Tree rightTree = TreeUtilFunctions.findByLocationInfo(dstTree,rightVarDecl.getLocationInfo());
 			if (leftTree == null || rightTree == null) return;
@@ -617,7 +615,6 @@ public class ProjectASTDiffer
 					if (srcSt.getType().name.equals(dstSt.getType().name))
 						mappingStore.addMapping(srcSt,dstSt);
 			} else if (refactoring instanceof ReplacePipelineWithLoopRefactoring) {
-				//TODO : ongoing problem
 				ReplacePipelineWithLoopRefactoring replaceLoopWithPipelineRefactoring = (ReplacePipelineWithLoopRefactoring) refactoring;
 				if (replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().size() != 1) continue;
 				AbstractCodeFragment next = replaceLoopWithPipelineRefactoring.getCodeFragmentsBefore().iterator().next();
@@ -664,7 +661,6 @@ public class ProjectASTDiffer
 				InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
 				UMLOperationBodyMapper bodyMapper = inlineOperationRefactoring.getBodyMapper();
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
-				//skip argument mappings, if the same method is inlined more than once to the target method.
 				processArgumentMappings(srcTree, dstTree, refactoringList, refactoring, inlineOperationRefactoring.getArgumentMappings());
 			} else if (refactoring instanceof MoveCodeRefactoring) {
 				MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
@@ -960,7 +956,7 @@ public class ProjectASTDiffer
 		}
 		//				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
-			// TODO: 8/3/2022 isoStructural can't be a good idea here, i.e anonymous class
+			//IsoStructural can't be a good idea here, i.e. anonymous class
 			mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);
 			return;
 		}
@@ -972,7 +968,7 @@ public class ProjectASTDiffer
 		matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
 		if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {
 			if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
-				//TODO: JavaDocs are mapped as well.
+				//JavaDocs are mapped as well.
 				new LeafMatcher().match(srcAttr,dstAttr,mappingStore);
 				return;
 			}
@@ -1109,7 +1105,7 @@ public class ProjectASTDiffer
 	private Tree findImportByTypeAndLabel(Tree inputTree, String searchingType, UMLImport label) {
 		for (Tree treeNode: inputTree.getChildren()) {
 			if (treeNode.getType().name.equals(searchingType)) {
-				if (treeNode.getChild(0).getLabel().equals(label.getName()) && treeNode.getPos() == label.getLocationInfo().getStartOffset()) //TODO getChild 0 will cause a lot of problem
+				if (treeNode.getChild(0).getLabel().equals(label.getName()) && treeNode.getPos() == label.getLocationInfo().getStartOffset()) //getChild 0 might be problematic
 					if (label.isOnDemand()) {
 						if (treeNode.getChild(0).getEndPos() + 3 == treeNode.getEndPos()) {
 							return treeNode;
@@ -1215,7 +1211,6 @@ public class ProjectASTDiffer
 	}
 
 	private void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
-		// TODO: 8/3/2022 Search should be limited to the method signature before the method name
 		String type = Constants.MODIFIER;
 		Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
 		Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);

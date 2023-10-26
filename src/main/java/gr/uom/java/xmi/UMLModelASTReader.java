@@ -374,6 +374,9 @@ public class UMLModelASTReader {
 			return;
 		}
 		String className = typeDeclaration.getName().getFullyQualifiedName();
+		if(className.equals("$")) {
+			return;
+		}
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, typeDeclaration, CodeElementType.TYPE_DECLARATION);
 		UMLClass umlClass = new UMLClass(packageName, className, locationInfo, typeDeclaration.isPackageMemberTypeDeclaration(), importedTypes);
 		umlClass.setJavadoc(javadoc);

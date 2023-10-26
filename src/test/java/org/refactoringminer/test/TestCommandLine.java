@@ -18,8 +18,8 @@ import java.util.List;
 
 @Isolated
 public class TestCommandLine {
-    private static final String REPOS = "tmp1";
-    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src-test/data/commandline/";
+    private static final String REPOS = "tmp";
+    private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/commandline/";
     private String jsonPath;
 
     @BeforeAll

@@ -504,16 +504,28 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			boolean oEqualNext = oNext1.getString().equals(oNext2.getString());
 			boolean oEqualPreviousAndNext = oEqualPrevious && oEqualNext;
+			boolean thisVariableDeclarationsWithSameName = false;
+			if(this.getFragment1().getVariableDeclarations().size() > 0 && this.getFragment2().getVariableDeclarations().size() > 0) {
+				if(this.getFragment1().getVariableDeclarations().get(0).getVariableName().equals(this.getFragment2().getVariableDeclarations().get(0).getVariableName())) {
+					thisVariableDeclarationsWithSameName = true;
+				}
+			}
+			boolean oVariableDeclarationsWithSameName = false;
+			if(o.getFragment1().getVariableDeclarations().size() > 0 && o.getFragment2().getVariableDeclarations().size() > 0) {
+				if(o.getFragment1().getVariableDeclarations().get(0).getVariableName().equals(o.getFragment2().getVariableDeclarations().get(0).getVariableName())) {
+					oVariableDeclarationsWithSameName = true;
+				}
+			}
 			if(thisEqualPreviousAndNext) {
 				this.identicalPreviousAndNextStatement = true;
 			}
-			else if(thisEqualPrevious && thisNext2 != null && thisNext2.equals(o.getFragment2()) && !oEqualNext) {
+			else if(thisEqualPrevious && thisNext2 != null && thisNext2.equals(o.getFragment2()) && !oEqualNext && !oVariableDeclarationsWithSameName) {
 				this.identicalPreviousStatement = true;
 			}
 			if(oEqualPreviousAndNext) {
 				o.identicalPreviousAndNextStatement = true;
 			}
-			else if(oEqualPrevious && oNext2 != null && oNext2.equals(this.getFragment2()) && !thisEqualNext) {
+			else if(oEqualPrevious && oNext2 != null && oNext2.equals(this.getFragment2()) && !thisEqualNext && !thisVariableDeclarationsWithSameName) {
 				o.identicalPreviousStatement = true;
 			}
 		}

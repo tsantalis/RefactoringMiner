@@ -166,16 +166,16 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **September 29, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **October 25, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11864  | 23  | 258  | 0.998  | 0.979|
+|**Total**|11879  | 23  | 255  | 0.998  | 0.979|
 |Extract Method|1006  |  1  | 24  | 0.999  | 0.977|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|23  |  0  |  1  | 1.000  | 0.958|
+|Replace Attribute|26  |  0  |  1  | 1.000  | 0.963|
 |Rename Method|378  |  4  | 22  | 0.990  | 0.945|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
 |Move Method|350  |  3  |  9  | 0.992  | 0.975|
@@ -199,23 +199,23 @@ As of **September 29, 2023** the precision and recall of the tool on an oracle c
 |Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|99  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|324  |  3  | 12  | 0.991  | 0.964|
+|Rename Variable|326  |  3  | 11  | 0.991  | 0.967|
 |Rename Parameter|486  |  2  | 26  | 0.996  | 0.949|
-|Rename Attribute|133  |  0  | 16  | 1.000  | 0.893|
+|Rename Attribute|134  |  0  | 15  | 1.000  | 0.899|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
 |Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|57  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|58  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
-|Localize Parameter|30  |  0  |  0  | 1.000  | 1.000|
+|Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|426  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|793  |  2  |  8  | 0.997  | 0.990|
+|Change Variable Type|796  |  2  |  7  | 0.997  | 0.991|
 |Change Parameter Type|643  |  1  | 11  | 0.998  | 0.983|
-|Change Attribute Type|226  |  0  |  8  | 1.000  | 0.966|
+|Change Attribute Type|228  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|330  |  0  |  3  | 1.000  | 0.991|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
@@ -229,7 +229,7 @@ As of **September 29, 2023** the precision and recall of the tool on an oracle c
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter|974  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|333  |  0  |  0  | 1.000  | 1.000|
+|Remove Parameter|336  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -238,12 +238,12 @@ As of **September 29, 2023** the precision and recall of the tool on an oracle c
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|331  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|223  |  0  |  0  | 1.000  | 1.000|
-|Encapsulate Attribute|48  |  0  |  0  | 1.000  | 1.000|
+|Encapsulate Attribute|49  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|87  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|110  |  0  |  0  | 1.000  | 1.000|
-|Add Attribute Modifier|135  |  0  |  0  | 1.000  | 1.000|
+|Add Attribute Modifier|136  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
-|Add Variable Modifier|129  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Modifier|130  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|61  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
@@ -279,7 +279,7 @@ Moreover, all unit tests can be executed in parallel. The more CPU cores, the fa
 The available test suites are:
 * [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the overall precision and recall of RefactoringMiner on the Refactoring Oracle (546 commits)
 * [src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit.java) : Tests the number of True Positives, False Positives and False Negatives, separately for each commit of the Refactoring Oracle (546 commits)
-* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (81 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (89 commits)
 * [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection
 * [src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest.java): Tests the AST node mapping accuracy of RefactoringMiner on the Defects4J dataset

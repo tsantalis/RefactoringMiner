@@ -1017,66 +1017,6 @@
 },
 {
 	"type": "Extract Method",
-	"description": "Extract Method public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint> extracted from public getAvailableEndpoints() : Collection<DrillbitEndpoint> in class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 238,
-		"endLine": 241,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration before extraction",
-		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 240,
-		"endLine": 240,
-		"startColumn": 5,
-		"endColumn": 27,
-		"codeElementType": "RETURN_STATEMENT",
-		"description": "extracted code from source method declaration",
-		"codeElement": null
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 242,
-		"endLine": 245,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "extracted method declaration",
-		"codeElement": "public getAvailableEndpointsUUID() : Map<String,DrillbitEndpoint>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 244,
-		"endLine": 244,
-		"startColumn": 5,
-		"endColumn": 30,
-		"codeElementType": "RETURN_STATEMENT",
-		"description": "extracted code to extracted method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 237,
-		"endLine": 240,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "source method declaration after extraction",
-		"codeElement": "public getAvailableEndpoints() : Collection<DrillbitEndpoint>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 239,
-		"endLine": 239,
-		"startColumn": 12,
-		"endColumn": 39,
-		"codeElementType": "METHOD_INVOCATION",
-		"description": "extracted method invocation",
-		"codeElement": "getAvailableEndpointsUUID()"
-}]
-},
-{
-	"type": "Extract Method",
 	"description": "Extract Method public mode(mode PersistentStoreMode) : StoreConfigBuilder<V> extracted from public blob() : StoreConfigBuilder<V> in class org.apache.drill.exec.store.sys.PersistentStoreConfig.StoreConfigBuilder",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/store/sys/PersistentStoreConfig.java",

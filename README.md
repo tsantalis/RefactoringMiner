@@ -292,11 +292,18 @@ The available test suites are:
 Since version 2.0, RefactoringMiner is available in the [Maven Central Repository](https://mvnrepository.com/artifact/com.github.tsantalis/refactoring-miner).
 In order to use RefactoringMiner as a maven dependency in your project, add the following snippet to your project's build configuration file:
 
+**pom.xml**
+
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>2.4.0</version>
+      <version>3.0.0</version>
     </dependency>
+
+**build.gradle**
+
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.0'
+
 
 # Chrome Extension
 If you want to get refactoring information when inspecting a commit on GitHub,

@@ -267,6 +267,7 @@ As of **October 25, 2023** the precision and recall of the tool on an oracle con
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
+Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.
 
 In order to build the project, run `./gradlew jar` (or `gradlew jar`, in Windows) in the project's root directory.
 Alternatively, you can generate a complete distribution zip including all runtime dependencies running `./gradlew distZip`.

@@ -74,7 +74,7 @@ public class MappingOptimizer {
 	}
 
 	public void optimizeDuplicateMappingsForInline(UMLOperationBodyMapper parentMapper, List<Refactoring> refactorings) {
-		if(parentMapper.getChildMappers().size() > 1) {
+		if(parentMapper.getChildMappers().size() > 0) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
 			for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {

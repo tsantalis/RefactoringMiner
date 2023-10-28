@@ -1089,6 +1089,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						if(addedOperation.hasParameterizedTestAnnotation()) {
+							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
 							List<List<String>> parameterValues = getParameterValues(addedOperation);
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
@@ -1102,11 +1103,34 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									if(max > overallMaxMatchingTestParameters) {
 										overallMaxMatchingTestParameters = max;
 									}
-									ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
-									refactorings.add(refactoring);
-									UMLOperation removedOperation = mapper.getOperation1();
-									removedOperations.remove(removedOperation);
+									filteredMapperSet.add(mapper);
 								}
+							}
+							//cluster mappers based on number of mappings and number of total replacements
+							Set<UMLOperationBodyMapper> filteredMapperSet2 = new LinkedHashSet<UMLOperationBodyMapper>();
+							int maxMappings = -1;
+							int minReplacements = Integer.MAX_VALUE;
+							for(UMLOperationBodyMapper mapper : filteredMapperSet) {
+								int mappings = mapper.getMappings().size();
+								if(mappings > maxMappings) {
+									maxMappings = mappings;
+								}
+								int replacements = mapper.getReplacements().size();
+								if(replacements < minReplacements) {
+									minReplacements = replacements;
+								}
+								if(mappings == maxMappings && replacements == minReplacements) {
+									filteredMapperSet2.add(mapper);
+								}
+								else if(mappings < maxMappings && replacements == minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
+									filteredMapperSet2.add(mapper);
+								}
+							}
+							for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
+								ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
+								refactorings.add(refactoring);
+								UMLOperation removedOperation = mapper.getOperation1();
+								removedOperations.remove(removedOperation);
 							}
 							if(overallMaxMatchingTestParameters > -1) {
 								addedOperationIterator.remove();

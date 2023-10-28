@@ -865,6 +865,27 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testParameterizedTestMappings2() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/apache/camel.git", "b57b72d0e85f2340cb2d55be44d2175c0caa7cc1", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ParameterizeTestRefactoring) {
+						ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)ref;
+						UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
+						mapperInfo(mapper, actual);
+					}
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testRestructuredStatementMappings3() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

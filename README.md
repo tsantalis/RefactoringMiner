@@ -145,6 +145,9 @@ Currently, it supports the detection of the following refactorings:
 93. Merge Catch
 94. Merge Method
 95. Split Method
+
+**<ins>supported by RefactoringMiner 3.0 and newer versions</ins>**
+
 96. Move Code (between methods)
 97. Replace Anonymous with Class
 98. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)

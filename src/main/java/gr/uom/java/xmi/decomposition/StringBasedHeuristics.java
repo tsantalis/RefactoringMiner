@@ -1965,7 +1965,7 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.contains("=") && string2.contains("=") && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
+		else if(string1.contains("=") && statement1.getString().endsWith(";\n") && string2.contains("=") && statement2.getString().endsWith(";\n") && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
 			boolean variableRename = false, rightHandSideReplacement = false;
 			String variableName1 = string1.substring(0, string1.indexOf("="));
 			String variableName2 = string2.substring(0, string2.indexOf("="));

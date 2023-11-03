@@ -301,12 +301,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.1</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.0'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.1'
 
 
 # Chrome Extension

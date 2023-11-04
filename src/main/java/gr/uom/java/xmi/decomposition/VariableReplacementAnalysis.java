@@ -1807,8 +1807,8 @@ public class VariableReplacementAnalysis {
 
 	private boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
 		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass()) {
-			return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
-					mapping.getFragment2().getString().equals("return " + replacement.getAfter() + JAVA.STATEMENT_TERMINATION);
+			return mapping.getFragment1().getString().equals(JAVA.RETURN + replacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
+					mapping.getFragment2().getString().equals(JAVA.RETURN + replacement.getAfter() + JAVA.STATEMENT_TERMINATION);
 		}
 		return false;
 	}

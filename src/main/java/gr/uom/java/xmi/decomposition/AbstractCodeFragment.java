@@ -261,7 +261,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 							isInsideStringLiteral = true;
 						}
 					}
-					else if(start == 0 && !afterReplacements.startsWith("return ")) {
+					else if(start == 0 && !afterReplacements.startsWith(JAVA.RETURN)) {
 						int indexOfNextChar = start + parameter.length();
 						if(afterReplacements.length() > indexOfNextChar) {
 							char nextChar = afterReplacements.charAt(indexOfNextChar);
@@ -360,7 +360,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if((infix + JAVA.STATEMENT_TERMINATION).equals(statement) || infix.equals(statement)) {
 				return infix;
 			}
-			else if(("return " + infix + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN + infix + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				return infix;
 			}
 			else if(expressionIsTheInitializerOfVariableDeclaration(infix)) {
@@ -384,7 +384,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				creation.coverage = StatementCoverageType.ONLY_CALL;
 				return (ObjectCreation) creation;
 			}
-			else if(("return " + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
 				return (ObjectCreation) creation;
 			}
@@ -408,7 +408,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				invocation.coverage = StatementCoverageType.ONLY_CALL;
 				return invocation;
 			}
-			else if(("return " + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				invocation.coverage = StatementCoverageType.RETURN_CALL;
 				return invocation;
 			}
@@ -485,7 +485,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 						!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
 						!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
 					String casting = prefix.substring(indexOfOpeningParenthesis, indexOfClosingParenthesis+1);
-					if(statement.endsWith(JAVA.STATEMENT_TERMINATION) && ("return " + casting + expression + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+					if(statement.endsWith(JAVA.STATEMENT_TERMINATION) && (JAVA.RETURN + casting + expression + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 						return true;
 					}
 					if(!statement.endsWith(JAVA.STATEMENT_TERMINATION) && (casting + expression).equals(statement)) {

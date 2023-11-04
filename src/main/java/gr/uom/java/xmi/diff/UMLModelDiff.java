@@ -3342,11 +3342,11 @@ public class UMLModelDiff {
 					return false;
 				}
 			}
-			if(fragment1.startsWith("return ") && fragment2.startsWith("return ")) {
+			if(fragment1.startsWith(JAVA.RETURN) && fragment2.startsWith(JAVA.RETURN)) {
 				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
 				if(extractedOperation != null) {
 					UMLType returnType = extractedOperation.getReturnParameter().getType();
-					String fragment1VariableName = fragment1.substring(7, fragment1.indexOf(JAVA.STATEMENT_TERMINATION));
+					String fragment1VariableName = fragment1.substring(JAVA.RETURN.length(), fragment1.indexOf(JAVA.STATEMENT_TERMINATION));
 					VariableDeclaration fragment1VariableDeclaration = operationBodyMapper.getContainer1().getVariableDeclaration(fragment1VariableName);
 					if(fragment1VariableDeclaration != null) {
 						if(!returnType.equals(fragment1VariableDeclaration.getType())) {
@@ -4196,7 +4196,7 @@ public class UMLModelDiff {
 		}
 		int exactLeafMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith("return ")) {
+			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN)) {
 				exactLeafMappings++;
 			}
 		}

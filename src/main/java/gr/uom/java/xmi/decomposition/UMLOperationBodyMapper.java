@@ -1840,7 +1840,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(nested && operationBodyMapper.getParentMapper() != null && operationBodyMapper.getParentMapper().getChildMappers().isEmpty()) {
 				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-						if(mapping.getFragment1().getString().equals("return null;\n")) {
+						if(mapping.getFragment1().getString().equals(JAVA.RETURN_NULL)) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 						}
@@ -1848,7 +1848,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
 					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-						if((mapping.getFragment1().getString().equals("return true;\n") || mapping.getFragment1().getString().equals("return false;\n")) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
+						if((mapping.getFragment1().getString().equals(JAVA.RETURN_TRUE) || mapping.getFragment1().getString().equals(JAVA.RETURN_FALSE)) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 						}
@@ -7889,10 +7889,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(prefixExpressions2.size() == 1 && prefixExpressions2.iterator().next().startsWith("!") && booleanLiterals2.isEmpty()) {
 			findReplacements(booleanLiterals1, prefixExpressions2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_PREFIX_EXPRESSION);
 		}
-		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals("return this;\n")) {
+		if(statement2.getThisExpressions().size() > 0 && !statement2.getString().equals(JAVA.RETURN_THIS)) {
 			findReplacements(variables1, Set.of("this"), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION);
 		}
-		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals("return this;\n")) {
+		if(statement1.getThisExpressions().size() > 0 && !statement1.getString().equals(JAVA.RETURN_THIS)) {
 			findReplacements(Set.of("this"), variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_THIS_EXPRESSION);
 		}
 		if(!container1.isGetter() && !container2.isGetter()) {
@@ -8136,16 +8136,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(parentMapper != null && statement1.getParent() != null && statement2.getParent() != null &&
 				statement1.getParent().getLocationInfo().getCodeElementType().equals(statement2.getParent().getLocationInfo().getCodeElementType())) {
-			if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals("return null;\n")) {
+			if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals(JAVA.RETURN_NULL)) {
 				return replacementInfo.getReplacements();
 			}
-			else if(statement1.getString().equals("return null;\n") && statement2.getString().equals(JAVA.RETURN_STATEMENT)) {
+			else if(statement1.getString().equals(JAVA.RETURN_NULL) && statement2.getString().equals(JAVA.RETURN_STATEMENT)) {
 				return replacementInfo.getReplacements();
 			}
-			if(statement1.getString().equals("return false;\n") && statement2.getString().equals("return null;\n")) {
+			if(statement1.getString().equals(JAVA.RETURN_FALSE) && statement2.getString().equals(JAVA.RETURN_NULL)) {
 				return replacementInfo.getReplacements();
 			}
-			else if(statement1.getString().equals("return null;\n") && statement2.getString().equals("return false;\n")) {
+			else if(statement1.getString().equals(JAVA.RETURN_NULL) && statement2.getString().equals(JAVA.RETURN_FALSE)) {
 				return replacementInfo.getReplacements();
 			}
 		}
@@ -8158,18 +8158,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					UMLType returnType1 = returnParameter1.getType();
 					UMLType returnType2 = returnParameter2.getType();
 					if(returnType1.getClassType().equals("void") && returnType2.getClassType().equals("boolean")) {
-						if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals("return false;\n")) {
+						if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals(JAVA.RETURN_FALSE)) {
 							return replacementInfo.getReplacements();
 						}
-						if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals("return true;\n")) {
+						if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getString().equals(JAVA.RETURN_TRUE)) {
 							return replacementInfo.getReplacements();
 						}
 					}
 					else if(returnType1.getClassType().equals("boolean") && returnType2.getClassType().equals("void")) {
-						if(statement2.getString().equals(JAVA.RETURN_STATEMENT) && statement1.getString().equals("return false;\n")) {
+						if(statement2.getString().equals(JAVA.RETURN_STATEMENT) && statement1.getString().equals(JAVA.RETURN_FALSE)) {
 							return replacementInfo.getReplacements();
 						}
-						if(statement2.getString().equals(JAVA.RETURN_STATEMENT) && statement1.getString().equals("return true;\n")) {
+						if(statement2.getString().equals(JAVA.RETURN_STATEMENT) && statement1.getString().equals(JAVA.RETURN_TRUE)) {
 							return replacementInfo.getReplacements();
 						}
 					}
@@ -11854,7 +11854,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				if(leaveSize1 == 1 && leaveSize2 == 1 && leaves1.get(0).getString().equals("continue;\n") && leaves2.get(0).getString().equals("return null;\n")) {
+				if(leaveSize1 == 1 && leaveSize2 == 1 && leaves1.get(0).getString().equals("continue;\n") && leaves2.get(0).getString().equals(JAVA.RETURN_NULL)) {
 					mappedLeavesSize++;
 				}
 				if(leaveSize1 == 2 && leaveSize2 == 1 && !leaves1.get(0).getString().equals("break;\n") && leaves1.get(1).getString().equals("break;\n") && leaves2.get(0).getString().startsWith(JAVA.RETURN_SPACE)) {

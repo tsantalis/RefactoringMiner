@@ -3449,7 +3449,7 @@ public class StringBasedHeuristics {
 			}
 			if(invertedMergedConditionals == mergedConditionals.size()) {
 				for(AbstractCodeFragment leaf : comp2.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						return true;
 					}
@@ -3471,7 +3471,7 @@ public class StringBasedHeuristics {
 			else if(mergedConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)mergedConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment1 = true;
 						break;
@@ -3485,7 +3485,7 @@ public class StringBasedHeuristics {
 			else if(statement2 instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement2;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment2 = true;
 						break;
@@ -3559,7 +3559,7 @@ public class StringBasedHeuristics {
 			}
 			if(invertedSplitConditionals == splitConditionals.size()) {
 				for(AbstractCodeFragment leaf : comp1.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						return true;
 					}
@@ -3581,7 +3581,7 @@ public class StringBasedHeuristics {
 			else if(splitConditional instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)splitConditional;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement2.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement2.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment2 = true;
 						break;
@@ -3595,7 +3595,7 @@ public class StringBasedHeuristics {
 			else if(statement1 instanceof CompositeStatementObject) {
 				CompositeStatementObject composite = (CompositeStatementObject)statement1;
 				for(AbstractCodeFragment leaf : composite.getLeaves()) {
-					if((leaf.isKeyword() || leaf.getString().equals("return false;\n") || leaf.getString().equals("return true;\n")) &&
+					if((leaf.isKeyword() || leaf.getString().equals(JAVA.RETURN_FALSE) || leaf.getString().equals(JAVA.RETURN_TRUE)) &&
 							(statement1.getLocationInfo().subsumes(leaf.getLocationInfo()) || statement1.getLocationInfo().before(leaf.getLocationInfo()))) {
 						nestedFragment1 = true;
 						break;

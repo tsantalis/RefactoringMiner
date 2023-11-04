@@ -336,7 +336,7 @@ public class MappingOptimizer {
 						}
 						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(i).getFragment2().getVariableDeclarations();
 						if(parentIsContainerBody.get(i) == true && fragment2VariableDeclarations.size() > 0 &&
-								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + "=")) {
+								mappings.get(parentMappingFound.indexOf(true)).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
 							skip = true;
 							splitDeclaration = true;
 						}
@@ -371,7 +371,7 @@ public class MappingOptimizer {
 						}
 						List<VariableDeclaration> fragment2VariableDeclarations = mappings.get(parentIsContainerBody.indexOf(true)).getFragment2().getVariableDeclarations();
 						if(fragment2VariableDeclarations.size() > 0 &&
-								mappings.get(i).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + "=")) {
+								mappings.get(i).getFragment2().getString().startsWith(fragment2VariableDeclarations.get(0).getVariableName() + JAVA.ASSIGNMENT)) {
 							skip = true;
 							splitDeclaration = true;
 						}

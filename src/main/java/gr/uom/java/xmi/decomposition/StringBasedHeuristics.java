@@ -140,10 +140,10 @@ public class StringBasedHeuristics {
 			else if(diff2.isEmpty() && diff1.equals("this.")) {
 				return true;
 			}
-			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith("=")) {
+			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith("=")) {
+			else if(diff2.isEmpty() && (diff1.equals("+") || diff1.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
 				return true;
 			}
 			if(!diff1.isEmpty() && !diff2.isEmpty() && diff1.equals("/") && diff2.equals("*")) {
@@ -170,7 +170,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement2 : info.getStatements2()) {
 								if(statement2.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement2.getVariableDeclarations().get(0);
-									if(e2.startsWith(variableDeclaration.getVariableName() + "=") && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + "=")) {
+									if(e2.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										matchingVariableDeclarations2.add(statement2);
 									}
 								}
@@ -181,7 +181,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement1 : info.getStatements1()) {
 								if(statement1.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement1.getVariableDeclarations().get(0);
-									if(e1.startsWith(variableDeclaration.getVariableName() + "=") && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + "=")) {
+									if(e1.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										matchingVariableDeclarations1.add(statement1);
 									}
 								}
@@ -247,7 +247,7 @@ public class StringBasedHeuristics {
 			}
 			if(cast(diff1, diff2)) {
 				for(Replacement r : info.getReplacements()) {
-					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + JAVA.ASSIGNMENT)) {
 						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
 							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
 								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
@@ -274,7 +274,7 @@ public class StringBasedHeuristics {
 			}
 			if(cast(diff2, diff1)) {
 				for(Replacement r : info.getReplacements()) {
-					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + "=")) {
+					if(r.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS) && s2.startsWith(r.getAfter() + JAVA.ASSIGNMENT)) {
 						if(variableDeclarations1.size() == 0 && !r.getBefore().contains("[") && !r.getBefore().contains("]")) {
 							if(r.getAfter().contains("[") && r.getAfter().contains("]") && variableDeclarations2.size() == 0) {
 								String arrayName = r.getAfter().substring(0, r.getAfter().indexOf("["));
@@ -577,7 +577,7 @@ public class StringBasedHeuristics {
 		sb.append(" ");
 		sb.append(variableDeclaration.getVariableName());
 		if(variableDeclaration.getInitializer() != null) {
-			sb.append("=").append(variableDeclaration.getInitializer());
+			sb.append(JAVA.ASSIGNMENT).append(variableDeclaration.getInitializer());
 		}
 		return sb.toString();
 	}
@@ -666,7 +666,7 @@ public class StringBasedHeuristics {
 			}
 		}
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(s1.contains("=") && s2.contains("=")) {
+		if(s1.contains(JAVA.ASSIGNMENT) && s2.contains(JAVA.ASSIGNMENT)) {
 			if(s1.equals(commonSuffix) || s2.equals(commonSuffix)) {
 				if(replacementInfo.getReplacements().size() == 2) {
 					StringBuilder sb = new StringBuilder();
@@ -674,7 +674,7 @@ public class StringBasedHeuristics {
 					for(Replacement r : replacementInfo.getReplacements()) {
 						sb.append(r.getAfter());
 						if(counter == 0) {
-							sb.append("=");
+							sb.append(JAVA.ASSIGNMENT);
 						}
 						else if(counter == 1) {
 							sb.append(JAVA.STATEMENT_TERMINATION);
@@ -748,7 +748,7 @@ public class StringBasedHeuristics {
 				}
 				return true;
 			}
-			if(commonSuffix.contains("=") && replacementInfo.getReplacements().size() == 0) {
+			if(commonSuffix.contains(JAVA.ASSIGNMENT) && replacementInfo.getReplacements().size() == 0) {
 				for(AbstractCodeFragment fragment1 : replacementInfo.getStatements1()) {
 					for(VariableDeclaration variableDeclaration : fragment1.getVariableDeclarations()) {
 						if(s1.equals(variableDeclaration.getVariableName() + "." + commonSuffix)) {
@@ -792,21 +792,21 @@ public class StringBasedHeuristics {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonSuffix.equals("null;\n") && !commonSuffix.equals("true;\n") && !commonSuffix.equals("false;\n") && !commonSuffix.equals("0;\n")) {
 			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
+					s2.contains(JAVA.ASSIGNMENT) && s2.substring(s2.indexOf(JAVA.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
 			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
+					s1.contains(JAVA.ASSIGNMENT) && s1.substring(s1.indexOf(JAVA.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}
 		if(variableDeclarations1.size() == 0 && variableDeclarations2.size() == 0 && commonSuffix.equals("0;\n")) {
 			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
-					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
+					s2.contains(JAVA.ASSIGNMENT) && s2.substring(s2.indexOf(JAVA.ASSIGNMENT)+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
 			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
-					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
+					s1.contains(JAVA.ASSIGNMENT) && s1.substring(s1.indexOf(JAVA.ASSIGNMENT)+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}
@@ -1149,8 +1149,8 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf("=") + 1);
+							if(s1.contains(JAVA.ASSIGNMENT) && !s2.contains(JAVA.ASSIGNMENT) && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
+								s1 = s1.substring(s1.indexOf(JAVA.ASSIGNMENT) + 1);
 								s2 = s2.substring(JAVA.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -1178,8 +1178,8 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
-								s1 = s1.substring(s1.indexOf("=") + 1);
+							if(s1.contains(JAVA.ASSIGNMENT) && !s2.contains(JAVA.ASSIGNMENT) && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
+								s1 = s1.substring(s1.indexOf(JAVA.ASSIGNMENT) + 1);
 								s2 = s2.substring(JAVA.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -1454,8 +1454,8 @@ public class StringBasedHeuristics {
 				if((variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
 						variableDeclarations1.toString().equals(variableDeclarations2.toString())) ||
 						(variables1.size() > 0 && variables2.size() > 0 &&
-						statement1.getString().startsWith(variables1.get(0).getString() + "=") &&
-						statement2.getString().startsWith(variables2.get(0).getString() + "=") &&
+						statement1.getString().startsWith(variables1.get(0).getString() + JAVA.ASSIGNMENT) &&
+						statement2.getString().startsWith(variables2.get(0).getString() + JAVA.ASSIGNMENT) &&
 						variables1.get(0).getString().equals(variables2.get(0).getString()))) {
 					List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1.substring(s1.indexOf("(") + 1, s1.lastIndexOf(")"))));
 					int count = 0;
@@ -1701,9 +1701,9 @@ public class StringBasedHeuristics {
 		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith(JAVA.RETURN_SPACE) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(string1.contains(JAVA.ASSIGNMENT) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith(JAVA.RETURN_SPACE) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(string1.indexOf(JAVA.ASSIGNMENT)+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			String assignment2 = string2.substring(JAVA.RETURN_SPACE.length(), string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
@@ -1753,10 +1753,10 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.startsWith(JAVA.RETURN_SPACE) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		else if(string1.startsWith(JAVA.RETURN_SPACE) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
 			String assignment1 = string1.substring(JAVA.RETURN_SPACE.length(), string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(JAVA.ASSIGNMENT)+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -1820,12 +1820,12 @@ public class StringBasedHeuristics {
 		if(containsMethodSignatureOfAnonymousClass2 && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(string1.contains(JAVA.ASSIGNMENT) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false;
-			String variableName1 = string1.substring(0, string1.indexOf("="));
-			String variableName2 = string2.substring(0, string2.indexOf("="));
-			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String variableName1 = string1.substring(0, string1.indexOf(JAVA.ASSIGNMENT));
+			String variableName2 = string2.substring(0, string2.indexOf(JAVA.ASSIGNMENT));
+			String assignment1 = string1.substring(string1.indexOf(JAVA.ASSIGNMENT)+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf(JAVA.ASSIGNMENT)+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			boolean fieldInitializationWithParemeter1 = false;
 			boolean fieldInitializationWithParemeter2 = false;
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
@@ -1968,12 +1968,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.contains("=") && statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION) && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
+		else if(string1.contains(JAVA.ASSIGNMENT) && statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains(JAVA.ASSIGNMENT) && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION) && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
 			boolean variableRename = false, rightHandSideReplacement = false;
-			String variableName1 = string1.substring(0, string1.indexOf("="));
-			String variableName2 = string2.substring(0, string2.indexOf("="));
-			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String variableName1 = string1.substring(0, string1.indexOf(JAVA.ASSIGNMENT));
+			String variableName2 = string2.substring(0, string2.indexOf(JAVA.ASSIGNMENT));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf(JAVA.ASSIGNMENT)+1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(JAVA.ASSIGNMENT)+1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
@@ -2615,7 +2615,7 @@ public class StringBasedHeuristics {
 		if(s.startsWith(JAVA.RETURN_SPACE) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			conditional = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
-		int indexOfEquals = s.indexOf("=");
+		int indexOfEquals = s.indexOf(JAVA.ASSIGNMENT);
 		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			conditional = s.substring(indexOfEquals+1, s.length()-JAVA.STATEMENT_TERMINATION.length());
 		}

@@ -345,13 +345,13 @@ public abstract class AbstractCodeMapping {
 			}
 			if(aliasedWithAttribute != null) {
 				for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
-					if(leaf2.getString().startsWith(initializer.getString() + "=")) {
+					if(leaf2.getString().startsWith(initializer.getString() + JAVA.ASSIGNMENT)) {
 						String rightHandSide = null;
 						if(leaf2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
-							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(JAVA.ASSIGNMENT)+1, leaf2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
 						}
 						else {
-							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length());
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf(JAVA.ASSIGNMENT)+1, leaf2.getString().length());
 						}
 						if(replacement instanceof VariableReplacementWithMethodInvocation) {
 							VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
@@ -539,16 +539,16 @@ public abstract class AbstractCodeMapping {
 			checkForAliasedVariable(getFragment2().getVariableDeclarations().get(0).getInitializer(), replacements.iterator().next(), nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=") && (statement.getLocationInfo().before(fragment2.getLocationInfo()) || fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
-			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+		if(argumentizedString.contains(JAVA.ASSIGNMENT) && (statement.getLocationInfo().before(fragment2.getLocationInfo()) || fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf(JAVA.ASSIGNMENT));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
 			if(argumentizedString.endsWith(JAVA.STATEMENT_TERMINATION)) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
 			}
 			else {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length());
 			}
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getAfter()) &&	(initializer.equals(replacement.getBefore()) ||
@@ -688,16 +688,16 @@ public abstract class AbstractCodeMapping {
 			}
 		}
 		String argumentizedString = statement.getArgumentizedString();
-		if(argumentizedString.contains("=") && (statement.getLocationInfo().before(fragment1.getLocationInfo()) || fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
-			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf("="));
+		if(argumentizedString.contains(JAVA.ASSIGNMENT) && (statement.getLocationInfo().before(fragment1.getLocationInfo()) || fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT))) {
+			String beforeAssignment = argumentizedString.substring(0, argumentizedString.indexOf(JAVA.ASSIGNMENT));
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
 			if(argumentizedString.endsWith(JAVA.STATEMENT_TERMINATION)) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
 			}
 			else {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
+				initializer = argumentizedString.substring(argumentizedString.indexOf(JAVA.ASSIGNMENT)+1, argumentizedString.length());
 			}
 			for(Replacement replacement : getReplacements()) {
 				if(variable.endsWith(replacement.getBefore()) && initializer.equals(replacement.getAfter())) {

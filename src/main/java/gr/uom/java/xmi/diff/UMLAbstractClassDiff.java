@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -968,8 +970,8 @@ public abstract class UMLAbstractClassDiff {
 							}
 							else {
 								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
-									if(statement.getString().startsWith(variableDeclaration.getVariableName() + "=") ||
-											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + "=")) {
+									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 										break;
 									}
@@ -1014,8 +1016,8 @@ public abstract class UMLAbstractClassDiff {
 							}
 							else {
 								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
-									if(statement.getString().startsWith(variableDeclaration.getVariableName() + "=") ||
-											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + "=")) {
+									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 										break;
 									}

@@ -1,6 +1,9 @@
 package gr.uom.java.xmi.decomposition;
 
 import java.util.AbstractMap.SimpleEntry;
+
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -1594,9 +1597,9 @@ public class VariableReplacementAnalysis {
 			AbstractCodeMapping mapping = mappings.iterator().next();
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
-			if(fragment1.contains("=") && fragment1.endsWith(";\n") && fragment2.contains("=") && fragment2.endsWith(";\n")) {
-				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(";\n"));
-				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(";\n"));
+			if(fragment1.contains("=") && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains("=") && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				String attribute1 = PrefixSuffixUtils.normalize(fragment1.substring(0, fragment1.indexOf("=")));
 				String attribute2 = PrefixSuffixUtils.normalize(fragment2.substring(0, fragment2.indexOf("=")));
 				if(value1.equals(attribute1) && classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(attribute1) && classDiff.getNextClass().containsAttributeWithName(attribute1)) {
@@ -1615,9 +1618,9 @@ public class VariableReplacementAnalysis {
 			AbstractCodeMapping mapping = mappings.iterator().next();
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
-			if(fragment1.contains("=") && fragment1.endsWith(";\n") && fragment2.contains("=") && fragment2.endsWith(";\n")) {
-				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(";\n"));
-				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(";\n"));
+			if(fragment1.contains("=") && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains("=") && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				if(operation1.getParameterNameList().contains(value1) && operation2.getParameterNameList().contains(value1) && operationDiff != null) {
 					for(UMLParameter addedParameter : operationDiff.getAddedParameters()) {
 						if(addedParameter.getName().equals(value2)) {
@@ -1804,8 +1807,8 @@ public class VariableReplacementAnalysis {
 
 	private boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
 		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass()) {
-			return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + ";\n") &&
-					mapping.getFragment2().getString().equals("return " + replacement.getAfter() + ";\n");
+			return mapping.getFragment1().getString().equals("return " + replacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
+					mapping.getFragment2().getString().equals("return " + replacement.getAfter() + JAVA.STATEMENT_TERMINATION);
 		}
 		return false;
 	}

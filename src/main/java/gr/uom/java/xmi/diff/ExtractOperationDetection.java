@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -463,7 +465,7 @@ public class ExtractOperationDetection {
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
 					for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(leaf2.countableStatement() && leaf2.getString().equals("return " + variableDeclaration.getVariableName() + ";\n")) {
+						if(leaf2.countableStatement() && leaf2.getString().equals("return " + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 							nonMappedElementsT2--;
 							break;
 						}

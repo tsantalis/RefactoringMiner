@@ -13,6 +13,9 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 import java.util.AbstractMap.SimpleEntry;
+
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -666,7 +669,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
 			for(UMLParameter removedParameter : removedParameters) {
 				for(AbstractCodeFragment leaf : removedOperationLeaves) {
-					if(leaf.getString().equals("this." + removedParameter.getName() + "=" + removedParameter.getName() + ";\n")) {
+					if(leaf.getString().equals("this." + removedParameter.getName() + "=" + removedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
 						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
 						break;
 					}
@@ -676,7 +679,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
 			for(UMLParameter addedParameter : addedParameters) {
 				for(AbstractCodeFragment leaf : addedOperationLeaves) {
-					if(leaf.getString().equals("this." + addedParameter.getName() + "=" + addedParameter.getName() + ";\n")) {
+					if(leaf.getString().equals("this." + addedParameter.getName() + "=" + addedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
 						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
 						break;
 					}

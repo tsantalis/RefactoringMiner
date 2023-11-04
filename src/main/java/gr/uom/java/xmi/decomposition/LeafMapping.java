@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
 
@@ -42,12 +43,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 
 	private boolean identicalAfterConcatenation() {
 		String s1 = getFragment1().getString();
-		if(s1.endsWith(";\n")) {
-			s1 = s1.substring(0, s1.length()-2);
+		if(s1.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			s1 = s1.substring(0, s1.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
 		String s2 = getFragment2().getString();
-		if(s2.endsWith(";\n")) {
-			s2 = s2.substring(0, s2.length()-2);
+		if(s2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			s2 = s2.substring(0, s2.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
 		if(s1.contains(s2) || s2.contains(s1)) {
 			return true;

@@ -11,6 +11,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -607,13 +609,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					}
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().equals("return " + variable + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
+						if(statement.getString().equals("return " + variable + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals("return " + variable + ".keySet()" + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals("return " + variable + ".keySet()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals("return " + variable + ".values()" + ";\n") && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals("return " + variable + ".values()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
 					}
@@ -639,7 +641,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(LeafExpression variableExpression : statement.getVariables()) {
 					String variable = variableExpression.getString();
-					if(statement.getString().equals(variable + "=" + parameterNames.get(0) + ";\n")) {
+					if(statement.getString().equals(variable + "=" + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
 						return true;
 					}
 				}
@@ -659,7 +661,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 						String variable = variableExpression.getString();
 						if(statement.getString().startsWith(variable + "=")) {
 							for(String parameterName : parameterNames) {
-								if(statement.getString().equals(variable + "=" + parameterName + ";\n")) {
+								if(statement.getString().equals(variable + "=" + parameterName + JAVA.STATEMENT_TERMINATION)) {
 									matchCount++;
 									break;
 								}

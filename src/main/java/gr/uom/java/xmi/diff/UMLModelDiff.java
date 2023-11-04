@@ -38,6 +38,8 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -3344,7 +3346,7 @@ public class UMLModelDiff {
 				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
 				if(extractedOperation != null) {
 					UMLType returnType = extractedOperation.getReturnParameter().getType();
-					String fragment1VariableName = fragment1.substring(7, fragment1.indexOf(";\n"));
+					String fragment1VariableName = fragment1.substring(7, fragment1.indexOf(JAVA.STATEMENT_TERMINATION));
 					VariableDeclaration fragment1VariableDeclaration = operationBodyMapper.getContainer1().getVariableDeclaration(fragment1VariableName);
 					if(fragment1VariableDeclaration != null) {
 						if(!returnType.equals(fragment1VariableDeclaration.getType())) {

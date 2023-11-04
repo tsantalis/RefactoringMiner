@@ -14,6 +14,8 @@ import gr.uom.java.xmi.ListCompositeType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
+
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -715,7 +717,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf1.getString()) &&
-									!nonMappedLeaf1.getString().endsWith("=" + initializer + ";\n") && !nonMappedLeaf1.getString().contains("=" + initializer + ".") &&
+									!nonMappedLeaf1.getString().endsWith("=" + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf1.getString().contains("=" + initializer + ".") &&
 									nonMappedLeaf1.getString().contains(initializer.getString())) {
 								UMLOperation inlinedOperation = callToInlinedMethod(nonMappedLeaf1);
 								boolean matchingInlinedOperationLeaf = false;
@@ -760,7 +762,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
-									!nonMappedLeaf2.getString().endsWith("=" + initializer + ";\n") && !nonMappedLeaf2.getString().contains("=" + initializer + ".") &&
+									!nonMappedLeaf2.getString().endsWith("=" + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains("=" + initializer + ".") &&
 									nonMappedLeaf2.getString().contains(initializer.getString())) {
 								UMLOperation extractedOperation = callToExtractedMethod(nonMappedLeaf2);
 								boolean matchingExtractedOperationLeaf = false;
@@ -1742,7 +1744,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(r.getType().equals(ReplacementType.VARIABLE_NAME)) {
 				String fragment1 = mapping.getFragment1().getString();
 				String fragment2 = mapping.getFragment2().getString();
-				if(fragment1.equals("return " + r.getBefore() + ";\n") && fragment2.equals("return " + r.getAfter() + ";\n")) {
+				if(fragment1.equals("return " + r.getBefore() + JAVA.STATEMENT_TERMINATION) && fragment2.equals("return " + r.getAfter() + JAVA.STATEMENT_TERMINATION)) {
 					return true;
 				}
 			}
@@ -5381,14 +5383,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					parent2 = parent2.getParent();
 				}
 				boolean possibleExtractVariable = false;
-				if(leaf2.getVariableDeclarations().size() > 0 && leaf.getString().equals("return " + leaf2.getVariableDeclarations().get(0).getVariableName() + ";\n")) {
+				if(leaf2.getVariableDeclarations().size() > 0 && leaf.getString().equals("return " + leaf2.getVariableDeclarations().get(0).getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 					possibleExtractVariable = true;
 				}
 				boolean possibleInlineVariable = false;
 				for(AbstractCodeFragment l1 : leaves1) {
-					if(l1.getVariableDeclarations().size() > 0 && leaf1.getString().equals("return " + l1.getVariableDeclarations().get(0).getVariableName() + ";\n") &&
+					if(l1.getVariableDeclarations().size() > 0 && leaf1.getString().equals("return " + l1.getVariableDeclarations().get(0).getVariableName() + JAVA.STATEMENT_TERMINATION) &&
 							l1.getVariableDeclarations().get(0).getInitializer() != null &&
-							leaf.getString().equals("return " + l1.getVariableDeclarations().get(0).getInitializer().getString() + ";\n")) {
+							leaf.getString().equals("return " + l1.getVariableDeclarations().get(0).getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
 						possibleInlineVariable = true;
 						break;
 					}
@@ -6474,7 +6476,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclaration = mapping.getFragment2().getVariableDeclarations().get(0);
 						String fragment1 = mapping.getFragment1().getString();
 						if(variableDeclaration.getInitializer() != null) {
-							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + ";\n")) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
 								matches++;
 							}
 						}
@@ -6482,7 +6484,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else if(variableDeclaration.equals(mapping.getFragment2().getVariableDeclarations().get(0))) {
 						String fragment1 = mapping.getFragment1().getString();
 						if(variableDeclaration.getInitializer() != null) {
-							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + ";\n")) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
 								matches++;
 							}
 						}
@@ -7138,9 +7140,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private String preprocessInput(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
 		String argumentizedString = new String(leaf1.getArgumentizedString());
 		if (leaf1 instanceof StatementObject && leaf2 instanceof AbstractExpression) {
-			if (argumentizedString.startsWith("return ") && argumentizedString.endsWith(";\n")) {
+			if (argumentizedString.startsWith("return ") && argumentizedString.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				argumentizedString = argumentizedString.substring("return ".length(),
-						argumentizedString.lastIndexOf(";\n"));
+						argumentizedString.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			}
 		}
 		return argumentizedString;
@@ -7239,8 +7241,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info, Replacement candidateReplacement) {
 		for(Replacement r : info.getReplacements()) {
-			if(statement1.getString().endsWith("=" + r.getBefore() + ";\n") &&
-					statement2.getString().endsWith("=" + r.getAfter() + ";\n") &&
+			if(statement1.getString().endsWith("=" + r.getBefore() + JAVA.STATEMENT_TERMINATION) &&
+					statement2.getString().endsWith("=" + r.getAfter() + JAVA.STATEMENT_TERMINATION) &&
 					(r.getAfter().startsWith(r.getBefore()) ||
 					r.getBefore().startsWith(r.getAfter()))) {
 				return true;
@@ -7248,9 +7250,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		if(statement1.getString().startsWith(candidateReplacement.getBefore() + "=") &&
 				statement2.getString().startsWith(candidateReplacement.getAfter() + "=") &&
-				statement1.getString().endsWith(";\n") && statement2.getString().endsWith(";\n")) {
-			String suffix1 = statement1.getString().substring(statement1.getString().indexOf("=") + 1, statement1.getString().lastIndexOf(";\n"));
-			String suffix2 = statement2.getString().substring(statement2.getString().indexOf("=") + 1, statement2.getString().lastIndexOf(";\n"));
+				statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+			String suffix1 = statement1.getString().substring(statement1.getString().indexOf("=") + 1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String suffix2 = statement2.getString().substring(statement2.getString().indexOf("=") + 1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			if(suffix1.startsWith(suffix2) || suffix2.startsWith(suffix1)) {
 				return true;
 			}
@@ -8172,7 +8174,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
-						if(statement1.getString().equals("return;\n") && statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n")) {
+						if(statement1.getString().equals("return;\n") && statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = container2.getVariableDeclaration(statement2.getVariables().get(0).getString());
 							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
 								return replacementInfo.getReplacements();
@@ -8180,7 +8182,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					else if(!returnType1.getClassType().equals("void") && returnType2.getClassType().equals("void")) {
-						if(statement2.getString().equals("return;\n") && statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n")) {
+						if(statement2.getString().equals("return;\n") && statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration1 = container1.getVariableDeclaration(statement1.getVariables().get(0).getString());
 							if(variableDeclaration1 != null && variableDeclaration1.getType().equals(returnType1)) {
 								return replacementInfo.getReplacements();
@@ -8251,7 +8253,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		replacementInfo.removeReplacements(replacementsToBeRemoved);
 		replacementInfo.addReplacements(replacementsToBeAdded);
-		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + ";\n").equals(s2) || (s2 + ";\n").equals(s1) || ("final " + s1 + ";\n").equals(s2) || ("final " + s2 + ";\n").equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
+		boolean isEqualWithReplacement = s1.equals(s2) || (s1 + JAVA.STATEMENT_TERMINATION).equals(s2) || (s2 + JAVA.STATEMENT_TERMINATION).equals(s1) || ("final " + s1 + JAVA.STATEMENT_TERMINATION).equals(s2) || ("final " + s2 + JAVA.STATEMENT_TERMINATION).equals(s1) || replacementInfo.argumentizedString1.equals(replacementInfo.argumentizedString2) || equalAfterParenthesisElimination(s1, s2) ||
 				differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(s1, s2, methodInvocationMap1, methodInvocationMap2, statement1, statement2, variableDeclarations1, variableDeclarations2, replacementInfo, this) ||
 				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
@@ -9185,7 +9187,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-				if(statement1.getString().endsWith(methodInvocation1 + ";\n") && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+				if(statement1.getString().endsWith(methodInvocation1 + JAVA.STATEMENT_TERMINATION) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 					if(operationInvocation1.makeReplacementForReturnedArgument(statement2.getString()) != null) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo);
@@ -9206,7 +9208,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(String methodInvocation2 : methodInvocations2) {
 			for(AbstractCall operationInvocation2 : methodInvocationMap2.get(methodInvocation2)) {
-				if(statement2.getString().endsWith(methodInvocation2 + ";\n") && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
+				if(statement2.getString().endsWith(methodInvocation2 + JAVA.STATEMENT_TERMINATION) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
 					if(operationInvocation2.makeReplacementForWrappedCall(statement1.getString()) != null) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo);
@@ -9226,7 +9228,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + ";\n")) {
+					if(statement1.getString().endsWith(key1 + JAVA.STATEMENT_TERMINATION)) {
 						if(methodInvocationMap2.keySet().contains(invocation1.getExpression())) {
 							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
 									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
@@ -9276,7 +9278,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(invocationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(statement2.getString().endsWith(key2 + ";\n")) {
+					if(statement2.getString().endsWith(key2 + JAVA.STATEMENT_TERMINATION)) {
 						if(methodInvocationMap1.keySet().contains(invocation2.getExpression())) {
 							Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 									invocation2.actualString(), invocationCoveringTheEntireStatement1, invocation2, ReplacementType.METHOD_INVOCATION);
@@ -9326,7 +9328,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(creationCoveringTheEntireStatement1 != null) {
 			for(String key2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-					if(statement2.getString().endsWith(key2 + ";\n") && invocation2.getExpression() != null &&
+					if(statement2.getString().endsWith(key2 + JAVA.STATEMENT_TERMINATION) && invocation2.getExpression() != null &&
 							invocation2.getExpression().startsWith(creationCoveringTheEntireStatement1.actualString())) {
 						Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
 								invocation2.getName(), creationCoveringTheEntireStatement1, invocation2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
@@ -9340,7 +9342,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(creationCoveringTheEntireStatement2 != null) {
 			for(String key1 : creationMap1.keySet()) {
 				for(AbstractCall creation1 : creationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + ";\n") &&
+					if(statement1.getString().endsWith(key1 + JAVA.STATEMENT_TERMINATION) &&
 							creationCoveringTheEntireStatement2.arguments().contains(creation1.actualString())) {
 						if(variableDeclarations1.size() > 0) {
 							VariableDeclaration declaration1 = variableDeclarations1.get(0);
@@ -9663,7 +9665,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		for(String creation1 : creations1) {
 			for(AbstractCall objectCreation1 : creationMap1.get(creation1)) {
-				if(statement1.getString().endsWith(creation1 + ";\n") && (r = objectCreation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
+				if(statement1.getString().endsWith(creation1 + JAVA.STATEMENT_TERMINATION) && (r = objectCreation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
@@ -9765,8 +9767,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		if(invocationCoveringTheEntireStatement2 != null && statement2.getString().equals(invocationCoveringTheEntireStatement2.actualString() + ";\n") &&
-				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith("=" + invocationCoveringTheEntireStatement2.arguments().get(0) + ";\n") &&
+		if(invocationCoveringTheEntireStatement2 != null && statement2.getString().equals(invocationCoveringTheEntireStatement2.actualString() + JAVA.STATEMENT_TERMINATION) &&
+				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith("=" + invocationCoveringTheEntireStatement2.arguments().get(0) + JAVA.STATEMENT_TERMINATION) &&
 				invocationCoveringTheEntireStatement2.expressionIsNullOrThis() && invocationCoveringTheEntireStatement2.getName().startsWith("set")) {
 			String prefix1 = statement1.getString().substring(0, statement1.getString().lastIndexOf("="));
 			if(variables1.contains(prefix1)) {
@@ -9825,10 +9827,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(creationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null) {
 			for(String key1 : creationMap1.keySet()) {
 				for(AbstractCall creation1 : creationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + ";\n")) {
+					if(statement1.getString().endsWith(key1 + JAVA.STATEMENT_TERMINATION)) {
 						for(String key2 : methodInvocationMap2.keySet()) {
 							for(AbstractCall invocation2 : methodInvocationMap2.get(key2)) {
-								if(statement2.getString().endsWith(key2 + ";\n")) {
+								if(statement2.getString().endsWith(key2 + JAVA.STATEMENT_TERMINATION)) {
 									if(invocation2.getName().equals("of")) {
 										String assignedVariable = null;
 										if(assignmentCreationCoveringTheEntireStatement1 != null) {
@@ -9900,10 +9902,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		else if(invocationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(statement1.getString().endsWith(key1 + ";\n")) {
+					if(statement1.getString().endsWith(key1 + JAVA.STATEMENT_TERMINATION)) {
 						for(String key2 : creationMap2.keySet()) {
 							for(AbstractCall creation2 : creationMap2.get(key2)) {
-								if(statement2.getString().endsWith(key2 + ";\n")) {
+								if(statement2.getString().endsWith(key2 + JAVA.STATEMENT_TERMINATION)) {
 									if(invocation1.equalArguments(creation2) && invocation1.arguments().size() > 0) {
 										Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocation1.getName(),
 												creation2.getName(), invocation1, (ObjectCreation)creation2, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION);
@@ -10116,20 +10118,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + ";\n");
+		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals("return " + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
 		boolean variableReturnQualified1 = false;
 		if(variableReturn1 && statement1.getVariables().get(0).getString().contains(".")) {
 			variableReturnQualified1 = true;
 		}
 		boolean variableReturnAsLastStatement1 = variableReturn1 && statement1.isLastStatement();
-		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + ";\n");
+		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals("return " + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
 		boolean variableReturnQualified2 = false;
 		if(variableReturn2 && statement2.getVariables().get(0).getString().contains(".")) {
 			variableReturnQualified2 = true;
 		}
 		boolean variableReturnAsLastStatement2 = variableReturn2 && statement2.isLastStatement();
-		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals("return " + statement1.getNumberLiterals().get(0).getString() + ";\n") && statement1.isLastStatementInParentBlock();
-		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals("return " + statement2.getNumberLiterals().get(0).getString() + ";\n") && statement2.isLastStatementInParentBlock();
+		boolean numberLiteralReturn1 = statement1.getNumberLiterals().size() > 0 && statement1.getString().equals("return " + statement1.getNumberLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION) && statement1.isLastStatementInParentBlock();
+		boolean numberLiteralReturn2 = statement2.getNumberLiterals().size() > 0 && statement2.getString().equals("return " + statement2.getNumberLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION) && statement2.isLastStatementInParentBlock();
 		boolean lastStatement = (statement1.isLastStatement() && statement2.isLastStatement()) || 
 				lastStatementInParentBlockWithSameParentType(statement1, statement2);
 		if(parentMapper == null && !variableReturnAsLastStatement1 && !variableReturnAsLastStatement2 && !numberLiteralReturn1 && !numberLiteralReturn2 && statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ") && lastStatement &&
@@ -10222,7 +10224,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(String key : methodInvocationMap1.keySet()) {
 						List<AbstractCall> calls = methodInvocationMap1.get(key);
 						for(AbstractCall call : calls) {
-							if(statement1.getString().endsWith(call.actualString() + ";\n")) {
+							if(statement1.getString().endsWith(call.actualString() + JAVA.STATEMENT_TERMINATION)) {
 								invocation1 = call;
 								break;
 							}
@@ -10243,7 +10245,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(String key : methodInvocationMap2.keySet()) {
 						List<AbstractCall> calls = methodInvocationMap2.get(key);
 						for(AbstractCall call : calls) {
-							if(statement2.getString().endsWith(call.actualString() + ";\n")) {
+							if(statement2.getString().endsWith(call.actualString() + JAVA.STATEMENT_TERMINATION)) {
 								invocation2 = call;
 								break;
 							}
@@ -10378,7 +10380,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return true;
 						}
 						if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getInitializer() != null &&
-								fragment.getString().equals("return " + statement1.getVariableDeclarations().get(0).getInitializer().getString() + ";\n") &&
+								fragment.getString().equals("return " + statement1.getVariableDeclarations().get(0).getInitializer().getString() + JAVA.STATEMENT_TERMINATION) &&
 								!fragment.getParent().equals(addedOperation.getBody().getCompositeStatement())) {
 							return true;
 						}
@@ -11332,8 +11334,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean variablesStartWithSameCase(String s1, String s2, ReplacementInfo replacementInfo) {
 		if(s1.length() > 0 && s2.length() > 0) {
-			if((s1.contains(".") || s2.contains(".")) && (replacementInfo.argumentizedString1.equals("return " + s1 + ";\n") ||
-					replacementInfo.argumentizedString2.equals("return " + s2 + ";\n")))
+			if((s1.contains(".") || s2.contains(".")) && (replacementInfo.argumentizedString1.equals("return " + s1 + JAVA.STATEMENT_TERMINATION) ||
+					replacementInfo.argumentizedString2.equals("return " + s2 + JAVA.STATEMENT_TERMINATION)))
 				return false;
 		}
 		return true;
@@ -11448,7 +11450,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				
 			}
-			if(fragment2.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + ";\n")) {
+			if(fragment2.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
@@ -11462,7 +11464,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(fragment2.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + ";\n")) {
+			if(fragment2.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}
@@ -11482,7 +11484,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				
 			}
-			if(fragment1.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + ";\n")) {
+			if(fragment1.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v2DeclarationInFragment1 = fragment1.getVariableDeclaration(v2.getVariableName());
@@ -11496,7 +11498,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(fragment1.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + ";\n")) {
+			if(fragment1.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}

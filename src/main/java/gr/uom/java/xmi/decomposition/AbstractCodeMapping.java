@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -108,7 +110,7 @@ public abstract class AbstractCodeMapping {
 			if(r.getType().equals(ReplacementType.TYPE)) {
 				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
 					String temp = s2.replace(r.getAfter(), r.getBefore());
-					if(s1.equals(temp) || (s1 + ";\n").equals(temp)) {
+					if(s1.equals(temp) || (s1 + JAVA.STATEMENT_TERMINATION).equals(temp)) {
 						return true;
 					}
 				}
@@ -345,8 +347,8 @@ public abstract class AbstractCodeMapping {
 				for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
 					if(leaf2.getString().startsWith(initializer.getString() + "=")) {
 						String rightHandSide = null;
-						if(leaf2.getString().endsWith(";\n")) {
-							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length()-2);
+						if(leaf2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
 						}
 						else {
 							rightHandSide = leaf2.getString().substring(leaf2.getString().indexOf("=")+1, leaf2.getString().length());
@@ -542,8 +544,8 @@ public abstract class AbstractCodeMapping {
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
-			if(argumentizedString.endsWith(";\n")) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			if(argumentizedString.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
 			}
 			else {
 				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
@@ -691,8 +693,8 @@ public abstract class AbstractCodeMapping {
 			String[] tokens = beforeAssignment.split("\\s");
 			String variable = tokens[tokens.length-1];
 			String initializer = null;
-			if(argumentizedString.endsWith(";\n")) {
-				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-2);
+			if(argumentizedString.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length()-JAVA.STATEMENT_TERMINATION.length());
 			}
 			else {
 				initializer = argumentizedString.substring(argumentizedString.indexOf("=")+1, argumentizedString.length());
@@ -740,10 +742,10 @@ public abstract class AbstractCodeMapping {
 						if(extract.getVariableDeclaration().getInitializer() != null &&
 								extract.getVariableDeclaration().getInitializer().getString().equals(r.getBefore())) {
 							temp = ReplacementUtil.performReplacement(temp, r.getBefore(), r.getAfter());
-							if(temp.endsWith(elseExpression.getString() + ";\n")) {
+							if(temp.endsWith(elseExpression.getString() + JAVA.STATEMENT_TERMINATION)) {
 								return true;
 							}
-							if(temp.endsWith(thenExpression.getString() + ";\n")) {
+							if(temp.endsWith(thenExpression.getString() + JAVA.STATEMENT_TERMINATION)) {
 								return true;
 							}
 						}

@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,7 +57,7 @@ public class StringBasedHeuristics {
 		if(s.contains(" -> ")) {
 			if(lines.length > 1)
 				return true;
-			else if(lines.length == 1 && s.endsWith(";\n"))
+			else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
 				return true;
 		}
 		for(String line : lines) {
@@ -409,7 +411,7 @@ public class StringBasedHeuristics {
 	private static boolean returnExpressionReplaced(String s1, String s2, Set<Replacement> replacements) {
 		if(s1.startsWith("return ") && s2.startsWith("return ")) {
 			for(Replacement r : replacements) {
-				if(s1.equals("return " + r.getAfter() + ";\n") || s2.equals("return " + r.getAfter() + ";\n")) {
+				if(s1.equals("return " + r.getAfter() + JAVA.STATEMENT_TERMINATION) || s2.equals("return " + r.getAfter() + JAVA.STATEMENT_TERMINATION)) {
 					return true;
 				}
 			}
@@ -556,8 +558,8 @@ public class StringBasedHeuristics {
 					defaultInitializers++;
 				}
 			}
-			tmpS1.append(";\n");
-			tmpS2.append(";\n");
+			tmpS1.append(JAVA.STATEMENT_TERMINATION);
+			tmpS2.append(JAVA.STATEMENT_TERMINATION);
 			if(s1.equals(tmpS1.toString()) && s2.equals(tmpS2.toString()) && defaultInitializers == variableDeclarations1.size()) {
 				return true;
 			}
@@ -675,7 +677,7 @@ public class StringBasedHeuristics {
 							sb.append("=");
 						}
 						else if(counter == 1) {
-							sb.append(";\n");
+							sb.append(JAVA.STATEMENT_TERMINATION);
 						}
 						counter++;
 					}
@@ -1279,10 +1281,10 @@ public class StringBasedHeuristics {
 						if(token1.equals(token2)) {
 							intersection.add(token1);
 						}
-						else if(token1.equals(token2 + ";\n")) {
+						else if(token1.equals(token2 + JAVA.STATEMENT_TERMINATION)) {
 							intersection.add(token2);
 						}
-						else if(token2.equals(token1 + ";\n")) {
+						else if(token2.equals(token1 + JAVA.STATEMENT_TERMINATION)) {
 							intersection.add(token1);
 						}
 						else if(token2.endsWith("+=" + token1)) {
@@ -1291,9 +1293,10 @@ public class StringBasedHeuristics {
 						else if(token1.endsWith("+=" + token2)) {
 							intersection.add(token2);
 						}
-						else if(token1.endsWith(");\n") && token2.endsWith(";\n")) {
+						else if(token1.endsWith(")" + JAVA.STATEMENT_TERMINATION) && token2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(token1, token2);
-							if(commonPrefix.length() == token1.length()-3 && commonPrefix.length() == token2.length()-2) {
+							int suffixLength = JAVA.STATEMENT_TERMINATION.length()+1;
+							if(commonPrefix.length() == token1.length()-suffixLength && commonPrefix.length() == token2.length()-JAVA.STATEMENT_TERMINATION.length()) {
 								intersection.add(commonPrefix);
 							}
 						}
@@ -1698,10 +1701,10 @@ public class StringBasedHeuristics {
 		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains("=") && string1.endsWith(";\n") && string2.startsWith("return ") && string2.endsWith(";\n")) {
+		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith("return ") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(";\n"));
-			String assignment2 = string2.substring(7, string2.lastIndexOf(";\n"));
+			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(7, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -1750,10 +1753,10 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.startsWith("return ") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
+		else if(string1.startsWith("return ") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(7, string1.lastIndexOf(";\n"));
-			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
+			String assignment1 = string1.substring(7, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -1817,12 +1820,12 @@ public class StringBasedHeuristics {
 		if(containsMethodSignatureOfAnonymousClass2 && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains("=") && string1.endsWith(";\n") && string2.contains("=") && string2.endsWith(";\n")) {
+		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, variableRename = false, classInstanceCreationReplacement = false, equalArguments = false, rightHandSideReplacement = false;
 			String variableName1 = string1.substring(0, string1.indexOf("="));
 			String variableName2 = string2.substring(0, string2.indexOf("="));
-			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(";\n"));
-			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(";\n"));
+			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			boolean fieldInitializationWithParemeter1 = false;
 			boolean fieldInitializationWithParemeter2 = false;
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
@@ -1965,12 +1968,12 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.contains("=") && statement1.getString().endsWith(";\n") && string2.contains("=") && statement2.getString().endsWith(";\n") && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
+		else if(string1.contains("=") && statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION) && containsMethodSignatureOfAnonymousClass1 != containsMethodSignatureOfAnonymousClass2) {
 			boolean variableRename = false, rightHandSideReplacement = false;
 			String variableName1 = string1.substring(0, string1.indexOf("="));
 			String variableName2 = string2.substring(0, string2.indexOf("="));
-			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(";\n"));
-			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(";\n"));
+			String assignment1 = statement1.getString().substring(statement1.getString().indexOf("=")+1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = statement2.getString().substring(statement2.getString().indexOf("=")+1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
 						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
@@ -2161,7 +2164,7 @@ public class StringBasedHeuristics {
 				}
 			}
 			if(statement1.getString().startsWith("return ") && statement2.getString().startsWith("return ")) {
-				return statement1.getString().equals("return " + stringBefore + ";\n") && statement2.getString().equals("return " + stringAfter + ";\n");
+				return statement1.getString().equals("return " + stringBefore + JAVA.STATEMENT_TERMINATION) && statement2.getString().equals("return " + stringAfter + JAVA.STATEMENT_TERMINATION);
 			}
 			else if(statement1.getString().startsWith("if(") && statement2.getString().startsWith("if(")) {
 				return statement1.getString().equals("if(" + stringBefore + ")") && statement2.getString().equals("if(" + stringAfter + ")");
@@ -2609,12 +2612,12 @@ public class StringBasedHeuristics {
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
 		}
-		if(s.startsWith("return ") && s.endsWith(";\n")) {
-			conditional = s.substring(7, s.length()-2);
+		if(s.startsWith("return ") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			conditional = s.substring(7, s.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
 		int indexOfEquals = s.indexOf("=");
-		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(";\n")) {
-			conditional = s.substring(indexOfEquals+1, s.length()-2);
+		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			conditional = s.substring(indexOfEquals+1, s.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
 		return conditional;
 	}

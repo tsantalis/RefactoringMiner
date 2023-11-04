@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -911,14 +913,13 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private int argumentIsStatement(String statement) {
-		if(statement.endsWith(";\n")) {
+		if(statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			int index = 0;
 			for(String argument : arguments()) {
 				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
 					return -1;
 				}
-				//length()-2 to remove ";\n" from the end of the statement
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-2))) {
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;
@@ -928,7 +929,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private int argumentIsExpression(String expression) {
-		if(!expression.endsWith(";\n")) {
+		if(!expression.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			//statement is actually an expression
 			int index = 0;
 			for(String argument : arguments()) {
@@ -952,7 +953,7 @@ public abstract class AbstractCall extends LeafExpression {
 					return -1;
 				}
 				//length()-2 to remove ";\n" from the end of the return statement, 7 to remove the prefix "return "
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(7, statement.length()-2))) {
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(7, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;
@@ -964,12 +965,12 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForReturnedArgument(String statement) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(7, statement.length()-2);
+			String arg = statement.substring(7, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
 		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(0, statement.length()-2);
+			String arg = statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
@@ -983,12 +984,12 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForWrappedCall(String statement) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(7, statement.length()-2);
+			String arg = statement.substring(7, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
 		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(0, statement.length()-2);
+			String arg = statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
@@ -1001,17 +1002,16 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForWrappedLambda(String statement) {
 		if(argumentIsLambdaStatement(statement) && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			return new Replacement(statement.substring(0, statement.length()-2), arguments().get(0),
+			return new Replacement(statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()), arguments().get(0),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
 		return null;
 	}
 
 	private boolean argumentIsLambdaStatement(String statement) {
-		if(statement.endsWith(";\n")) {
+		if(statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			for(String argument : arguments()) {
-				//length()-2 to remove ";\n" from the end of the statement
-				if(equalsIgnoringLambdaArrow(argument, statement.substring(0, statement.length()-2))) {
+				if(equalsIgnoringLambdaArrow(argument, statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return true;
 				}
 			}
@@ -1020,11 +1020,11 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private int argumentIsAssigned(String statement) {
-		if(statement.contains("=") && statement.endsWith(";\n")) {
+		if(statement.contains("=") && statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			int index = 0;
 			for(String argument : arguments()) {
 				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(statement.indexOf("=")+1, statement.length()-2))) {
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(statement.indexOf("=")+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;
@@ -1036,7 +1036,7 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
 		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-2),
+			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}
 		return null;

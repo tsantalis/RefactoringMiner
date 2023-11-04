@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -121,10 +123,10 @@ public class MappingOptimizer {
 		for(AbstractCodeMapping previousMapping : mappings) {
 			AbstractCodeFragment previousFragment2 = previousMapping.getFragment2();
 			AbstractCodeFragment newFragment2 = newMapping.getFragment2();
-			if(previousFragment2.getString().startsWith("return ") && previousFragment2.getString().endsWith(";\n") &&
-					newFragment2.getString().startsWith("return ") && newFragment2.getString().endsWith(";\n")) {
-				String previousReturnExpression = previousFragment2.getString().substring("return ".length(), previousFragment2.getString().length()-2);
-				String newReturnExpression = newFragment2.getString().substring("return ".length(), newFragment2.getString().length()-2);
+			if(previousFragment2.getString().startsWith("return ") && previousFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION) &&
+					newFragment2.getString().startsWith("return ") && newFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String previousReturnExpression = previousFragment2.getString().substring("return ".length(), previousFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+				String newReturnExpression = newFragment2.getString().substring("return ".length(), newFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
 				if(previousReturnExpression.contains("(" + newReturnExpression + ")") || newReturnExpression.contains("(" + previousReturnExpression + ")")) {
 					return true;
 				}
@@ -261,8 +263,8 @@ public class MappingOptimizer {
 				replacementTypeCount.add(mapper.getReplacementTypesExcludingParameterToArgumentMaps(mapping).size());
 				boolean replacementFound = false;
 				for(Replacement r : mapping.getReplacements()) {
-					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + ";\n").equals(mapping.getFragment1().getString())) &&
-							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + ";\n").equals(mapping.getFragment2().getString()))) {
+					if((r.getBefore().equals(mapping.getFragment1().getString()) || (r.getBefore() + JAVA.STATEMENT_TERMINATION).equals(mapping.getFragment1().getString())) &&
+							(r.getAfter().equals(mapping.getFragment2().getString()) || (r.getAfter() + JAVA.STATEMENT_TERMINATION).equals(mapping.getFragment2().getString()))) {
 						replacementFound = true;
 						break;
 					}

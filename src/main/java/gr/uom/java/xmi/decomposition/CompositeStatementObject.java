@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -577,11 +579,11 @@ public class CompositeStatementObject extends AbstractStatement {
 		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
 		for(AbstractCodeFragment statement : getLeaves()) {
 			String s = statement.getString();
-			if(!s.startsWith("this.") && s.endsWith(";\n")) {
+			if(!s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains("=")) {
 					String variable = s.substring(0, s.indexOf("="));
-					String value = s.substring(s.indexOf("=")+1, s.indexOf(";\n"));
+					String value = s.substring(s.indexOf("=")+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(variable);
 					}
@@ -600,11 +602,11 @@ public class CompositeStatementObject extends AbstractStatement {
 		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
 		for(AbstractCodeFragment statement : getLeaves()) {
 			String s = statement.getString();
-			if(s.startsWith("this.") && s.endsWith(";\n")) {
+			if(s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains("=")) {
 					String attribute = s.substring(5, s.indexOf("="));
-					String value = s.substring(s.indexOf("=")+1, s.indexOf(";\n"));
+					String value = s.substring(s.indexOf("=")+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(attribute);
 					}

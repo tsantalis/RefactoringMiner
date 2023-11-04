@@ -2025,7 +2025,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
 						for(String statement : addedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-									!statement.equals(JAVA.RETURN_TRUE) && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.equals(JAVA.RETURN_STATEMENT)) {
+									!statement.equals(JAVA.RETURN_TRUE) && !statement.equals(JAVA.RETURN_FALSE) && !statement.equals(JAVA.RETURN_THIS) && !statement.equals(JAVA.RETURN_NULL) && !statement.equals(JAVA.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -2097,7 +2097,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
 						for(String statement : removedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-									!statement.equals(JAVA.RETURN_TRUE) && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.equals(JAVA.RETURN_STATEMENT)) {
+									!statement.equals(JAVA.RETURN_TRUE) && !statement.equals(JAVA.RETURN_FALSE) && !statement.equals(JAVA.RETURN_THIS) && !statement.equals(JAVA.RETURN_NULL) && !statement.equals(JAVA.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}

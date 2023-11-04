@@ -4211,8 +4211,8 @@ public class UMLModelDiff {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				String fragment1 = mapping.getFragment1().getString();
 				String fragment2 = mapping.getFragment2().getString();
-				if(fragment1.startsWith("return true;") || fragment1.startsWith("return false;") || fragment1.startsWith("return this;") || fragment1.startsWith("return null;") || fragment1.equals(JAVA.RETURN_STATEMENT) ||
-						fragment2.startsWith("return true;") || fragment2.startsWith("return false;") || fragment2.startsWith("return this;") || fragment2.startsWith("return null;") || fragment2.equals(JAVA.RETURN_STATEMENT)) {
+				if(fragment1.equals(JAVA.RETURN_TRUE) || fragment1.startsWith("return false;") || fragment1.startsWith("return this;") || fragment1.startsWith("return null;") || fragment1.equals(JAVA.RETURN_STATEMENT) ||
+						fragment2.equals(JAVA.RETURN_TRUE) || fragment2.startsWith("return false;") || fragment2.startsWith("return this;") || fragment2.startsWith("return null;") || fragment2.equals(JAVA.RETURN_STATEMENT)) {
 					return false;
 				}
 			}

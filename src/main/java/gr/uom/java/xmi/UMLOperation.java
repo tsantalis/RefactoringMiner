@@ -624,7 +624,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 							returnParameter != null && returnParameter.getType().getClassType().equals("boolean")) {
 						return true;
 					}
-					if(statement.getString().equals("return null;\n")) {
+					if(statement.getString().equals(JAVA.RETURN_NULL)) {
 						return true;
 					}
 				}

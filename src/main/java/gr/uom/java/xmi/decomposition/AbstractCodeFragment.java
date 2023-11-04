@@ -196,7 +196,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	public boolean isKeyword() {
 		String statement = getString();
-		return statement.startsWith("return;") ||
+		return statement.equals(JAVA.RETURN_STATEMENT) ||
 				statement.startsWith("break;") ||
 				statement.startsWith("continue;");
 	}
@@ -261,7 +261,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 							isInsideStringLiteral = true;
 						}
 					}
-					else if(start == 0 && !afterReplacements.startsWith(JAVA.RETURN)) {
+					else if(start == 0 && !afterReplacements.startsWith(JAVA.RETURN_SPACE)) {
 						int indexOfNextChar = start + parameter.length();
 						if(afterReplacements.length() > indexOfNextChar) {
 							char nextChar = afterReplacements.charAt(indexOfNextChar);
@@ -360,7 +360,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if((infix + JAVA.STATEMENT_TERMINATION).equals(statement) || infix.equals(statement)) {
 				return infix;
 			}
-			else if((JAVA.RETURN + infix + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN_SPACE + infix + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				return infix;
 			}
 			else if(expressionIsTheInitializerOfVariableDeclaration(infix)) {
@@ -384,7 +384,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				creation.coverage = StatementCoverageType.ONLY_CALL;
 				return (ObjectCreation) creation;
 			}
-			else if((JAVA.RETURN + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
 				return (ObjectCreation) creation;
 			}
@@ -408,7 +408,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				invocation.coverage = StatementCoverageType.ONLY_CALL;
 				return invocation;
 			}
-			else if((JAVA.RETURN + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.RETURN_SPACE + methodInvocation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				invocation.coverage = StatementCoverageType.RETURN_CALL;
 				return invocation;
 			}
@@ -485,7 +485,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 						!openingParenthesisInsideSingleQuotes && !closingParenthesisInsideSingleQuotes &&
 						!openingParenthesisInsideDoubleQuotes && !closingParenthesisIndideDoubleQuotes) {
 					String casting = prefix.substring(indexOfOpeningParenthesis, indexOfClosingParenthesis+1);
-					if(statement.endsWith(JAVA.STATEMENT_TERMINATION) && (JAVA.RETURN + casting + expression + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+					if(statement.endsWith(JAVA.STATEMENT_TERMINATION) && (JAVA.RETURN_SPACE + casting + expression + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 						return true;
 					}
 					if(!statement.endsWith(JAVA.STATEMENT_TERMINATION) && (casting + expression).equals(statement)) {
@@ -608,6 +608,6 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			return true;
 		}
 		return !statement.equals("{") && !statement.startsWith("catch(") && !statement.startsWith("case ") &&
-				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;");
+				!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.equals(JAVA.RETURN_STATEMENT);
 	}
 }

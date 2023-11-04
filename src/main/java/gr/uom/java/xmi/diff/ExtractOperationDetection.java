@@ -465,7 +465,7 @@ public class ExtractOperationDetection {
 			if(variableDeclarations.size() > 0) {
 				for(VariableDeclaration variableDeclaration : variableDeclarations) {
 					for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(leaf2.countableStatement() && leaf2.getString().equals(JAVA.RETURN + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+						if(leaf2.countableStatement() && leaf2.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 							nonMappedElementsT2--;
 							break;
 						}
@@ -528,7 +528,7 @@ public class ExtractOperationDetection {
 		List<AbstractCodeFragment> nonMappedLeavesT2 = operationBodyMapper.getNonMappedLeavesT2();
 		return totalMappings.size() == 1 && totalMappings.get(0).containsReplacement(ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION) &&
 				nonMappedInnerNodesT2.size() == 1 && nonMappedInnerNodesT2.get(0).toString().startsWith("if") &&
-				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith(JAVA.RETURN);
+				nonMappedLeavesT2.size() == 1 && nonMappedLeavesT2.get(0).toString().startsWith(JAVA.RETURN_SPACE);
 	}
 
 	private UMLOperation findDelegateMethod(VariableDeclarationContainer originalOperation, UMLOperation addedOperation, AbstractCall addedOperationInvocation) {

@@ -597,7 +597,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			List<UMLParameter> parameters = getParametersWithoutReturnType();
 			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
 				StatementObject statement = (StatementObject)statements.get(0);
-				if(statement.getString().startsWith(JAVA.RETURN)) {
+				if(statement.getString().startsWith(JAVA.RETURN_SPACE)) {
 					boolean parameterUsed = false;
 					for(UMLParameter parameter : parameters) {
 						for(LeafExpression variableExpression : statement.getVariables()) {
@@ -609,13 +609,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					}
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().equals(JAVA.RETURN + variable + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						if(statement.getString().equals(JAVA.RETURN_SPACE + variable + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals(JAVA.RETURN + variable + ".keySet()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals(JAVA.RETURN_SPACE + variable + ".keySet()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
-						else if(statement.getString().equals(JAVA.RETURN + variable + ".values()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
+						else if(statement.getString().equals(JAVA.RETURN_SPACE + variable + ".values()" + JAVA.STATEMENT_TERMINATION) && (parameters.size() == 0 || !parameterUsed)) {
 							return true;
 						}
 					}

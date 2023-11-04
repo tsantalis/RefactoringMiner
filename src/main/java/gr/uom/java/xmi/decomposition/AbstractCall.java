@@ -946,13 +946,13 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private int argumentIsReturned(String statement) {
-		if(statement.startsWith(JAVA.RETURN)) {
+		if(statement.startsWith(JAVA.RETURN_SPACE)) {
 			int index = 0;
 			for(String argument : arguments()) {
 				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
 					return -1;
 				}
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(JAVA.RETURN.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;
@@ -964,7 +964,7 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForReturnedArgument(String statement) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(JAVA.RETURN.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
+			String arg = statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
@@ -983,7 +983,7 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForWrappedCall(String statement) {
 		int index = -1;
 		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			String arg = statement.substring(JAVA.RETURN.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
+			String arg = statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}

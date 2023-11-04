@@ -1597,11 +1597,11 @@ public class VariableReplacementAnalysis {
 			AbstractCodeMapping mapping = mappings.iterator().next();
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
-			if(fragment1.contains("=") && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains("=") && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
-				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-				String attribute1 = PrefixSuffixUtils.normalize(fragment1.substring(0, fragment1.indexOf("=")));
-				String attribute2 = PrefixSuffixUtils.normalize(fragment2.substring(0, fragment2.indexOf("=")));
+			if(fragment1.contains(JAVA.ASSIGNMENT) && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains(JAVA.ASSIGNMENT) && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String value1 = fragment1.substring(fragment1.indexOf(JAVA.ASSIGNMENT)+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf(JAVA.ASSIGNMENT)+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+				String attribute1 = PrefixSuffixUtils.normalize(fragment1.substring(0, fragment1.indexOf(JAVA.ASSIGNMENT)));
+				String attribute2 = PrefixSuffixUtils.normalize(fragment2.substring(0, fragment2.indexOf(JAVA.ASSIGNMENT)));
 				if(value1.equals(attribute1) && classDiff != null && classDiff.getOriginalClass().containsAttributeWithName(attribute1) && classDiff.getNextClass().containsAttributeWithName(attribute1)) {
 					return true;
 				}
@@ -1618,9 +1618,9 @@ public class VariableReplacementAnalysis {
 			AbstractCodeMapping mapping = mappings.iterator().next();
 			String fragment1 = mapping.getFragment1().getString();
 			String fragment2 = mapping.getFragment2().getString();
-			if(fragment1.contains("=") && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains("=") && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
-				String value1 = fragment1.substring(fragment1.indexOf("=")+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-				String value2 = fragment2.substring(fragment2.indexOf("=")+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			if(fragment1.contains(JAVA.ASSIGNMENT) && fragment1.endsWith(JAVA.STATEMENT_TERMINATION) && fragment2.contains(JAVA.ASSIGNMENT) && fragment2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String value1 = fragment1.substring(fragment1.indexOf(JAVA.ASSIGNMENT)+1, fragment1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+				String value2 = fragment2.substring(fragment2.indexOf(JAVA.ASSIGNMENT)+1, fragment2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 				if(operation1.getParameterNameList().contains(value1) && operation2.getParameterNameList().contains(value1) && operationDiff != null) {
 					for(UMLParameter addedParameter : operationDiff.getAddedParameters()) {
 						if(addedParameter.getName().equals(value2)) {

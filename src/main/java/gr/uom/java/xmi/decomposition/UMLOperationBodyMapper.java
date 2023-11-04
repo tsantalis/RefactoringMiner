@@ -717,7 +717,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf1.getString()) &&
-									!nonMappedLeaf1.getString().endsWith("=" + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf1.getString().contains("=" + initializer + ".") &&
+									!nonMappedLeaf1.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf1.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
 									nonMappedLeaf1.getString().contains(initializer.getString())) {
 								UMLOperation inlinedOperation = callToInlinedMethod(nonMappedLeaf1);
 								boolean matchingInlinedOperationLeaf = false;
@@ -762,7 +762,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
-									!nonMappedLeaf2.getString().endsWith("=" + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains("=" + initializer + ".") &&
+									!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
 									nonMappedLeaf2.getString().contains(initializer.getString())) {
 								UMLOperation extractedOperation = callToExtractedMethod(nonMappedLeaf2);
 								boolean matchingExtractedOperationLeaf = false;
@@ -5572,7 +5572,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + "=");
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
 						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations1.add(leaf1);
 						}
@@ -5605,7 +5605,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + "=");
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
 						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
@@ -5627,7 +5627,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!alreadyMatched1(l1)) {
 					if(l1.getVariableDeclarations().size() > 0) {
 						VariableDeclaration declaration1 = l1.getVariableDeclarations().get(0);
-						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && !mapping.getFragment1().getString().startsWith(declaration2.getVariableName() + "=");
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && !mapping.getFragment1().getString().startsWith(declaration2.getVariableName() + JAVA.ASSIGNMENT);
 						if(equalName && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations1.add(l1);
 						}
@@ -6211,14 +6211,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclarationNames2.add(variable.getVariableName());
 					}
 					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null) {
-						if(fragment1.getString().contains("=")) {
-							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf("="));
+						if(fragment1.getString().contains(JAVA.ASSIGNMENT)) {
+							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames1.add(assignedVariable);
 						}
 					}
 					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null) {
-						if(fragment2.getString().contains("=")) {
-							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf("="));
+						if(fragment2.getString().contains(JAVA.ASSIGNMENT)) {
+							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames2.add(assignedVariable);
 						}
 					}
@@ -6409,14 +6409,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclarationNames2.add(variable.getVariableName());
 					}
 					if(fragment1.assignmentInvocationCoveringEntireStatement() != null || fragment1.assignmentCreationCoveringEntireStatement() != null) {
-						if(fragment1.getString().contains("=")) {
-							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf("="));
+						if(fragment1.getString().contains(JAVA.ASSIGNMENT)) {
+							String assignedVariable = fragment1.getString().substring(0, fragment1.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames1.add(assignedVariable);
 						}
 					}
 					if(fragment2.assignmentInvocationCoveringEntireStatement() != null || fragment2.assignmentCreationCoveringEntireStatement() != null) {
-						if(fragment2.getString().contains("=")) {
-							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf("="));
+						if(fragment2.getString().contains(JAVA.ASSIGNMENT)) {
+							String assignedVariable = fragment2.getString().substring(0, fragment2.getString().indexOf(JAVA.ASSIGNMENT));
 							variableDeclarationNames2.add(assignedVariable);
 						}
 					}
@@ -6476,7 +6476,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						variableDeclaration = mapping.getFragment2().getVariableDeclarations().get(0);
 						String fragment1 = mapping.getFragment1().getString();
 						if(variableDeclaration.getInitializer() != null) {
-							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
 								matches++;
 							}
 						}
@@ -6484,7 +6484,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else if(variableDeclaration.equals(mapping.getFragment2().getVariableDeclarations().get(0))) {
 						String fragment1 = mapping.getFragment1().getString();
 						if(variableDeclaration.getInitializer() != null) {
-							if(fragment1.equals(variableDeclaration.getVariableName() + "=" + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
+							if(fragment1.equals(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT + variableDeclaration.getInitializer().getString() + JAVA.STATEMENT_TERMINATION)) {
 								matches++;
 							}
 						}
@@ -7241,18 +7241,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean containsRightHandSideReplacementWithAppendChange(AbstractCodeFragment statement1, AbstractCodeFragment statement2, ReplacementInfo info, Replacement candidateReplacement) {
 		for(Replacement r : info.getReplacements()) {
-			if(statement1.getString().endsWith("=" + r.getBefore() + JAVA.STATEMENT_TERMINATION) &&
-					statement2.getString().endsWith("=" + r.getAfter() + JAVA.STATEMENT_TERMINATION) &&
+			if(statement1.getString().endsWith(JAVA.ASSIGNMENT + r.getBefore() + JAVA.STATEMENT_TERMINATION) &&
+					statement2.getString().endsWith(JAVA.ASSIGNMENT + r.getAfter() + JAVA.STATEMENT_TERMINATION) &&
 					(r.getAfter().startsWith(r.getBefore()) ||
 					r.getBefore().startsWith(r.getAfter()))) {
 				return true;
 			}
 		}
-		if(statement1.getString().startsWith(candidateReplacement.getBefore() + "=") &&
-				statement2.getString().startsWith(candidateReplacement.getAfter() + "=") &&
+		if(statement1.getString().startsWith(candidateReplacement.getBefore() + JAVA.ASSIGNMENT) &&
+				statement2.getString().startsWith(candidateReplacement.getAfter() + JAVA.ASSIGNMENT) &&
 				statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
-			String suffix1 = statement1.getString().substring(statement1.getString().indexOf("=") + 1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String suffix2 = statement2.getString().substring(statement2.getString().indexOf("=") + 1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String suffix1 = statement1.getString().substring(statement1.getString().indexOf(JAVA.ASSIGNMENT) + 1, statement1.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String suffix2 = statement2.getString().substring(statement2.getString().indexOf(JAVA.ASSIGNMENT) + 1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			if(suffix1.startsWith(suffix2) || suffix2.startsWith(suffix1)) {
 				return true;
 			}
@@ -7714,7 +7714,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(typeTolowerCase.contains(variableDeclaration.getVariableName().toLowerCase()) &&	typeTolowerCase.contains(s2.toLowerCase())) {
 								typeContainsVariableName = true;
 							}
-							if(!typeContainsVariableName && statement1.getString().contains(s1 + "=") && statement2.getString().contains(s2 + "=")) {
+							if(!typeContainsVariableName && statement1.getString().contains(s1 + JAVA.ASSIGNMENT) && statement2.getString().contains(s2 + JAVA.ASSIGNMENT)) {
 								String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(variableType.toString());
 								String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s2);
 								int commonTokens = 0;
@@ -9768,11 +9768,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(invocationCoveringTheEntireStatement2 != null && statement2.getString().equals(invocationCoveringTheEntireStatement2.actualString() + JAVA.STATEMENT_TERMINATION) &&
-				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith("=" + invocationCoveringTheEntireStatement2.arguments().get(0) + JAVA.STATEMENT_TERMINATION) &&
+				invocationCoveringTheEntireStatement2.arguments().size() == 1 && statement1.getString().endsWith(JAVA.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0) + JAVA.STATEMENT_TERMINATION) &&
 				invocationCoveringTheEntireStatement2.expressionIsNullOrThis() && invocationCoveringTheEntireStatement2.getName().startsWith("set")) {
-			String prefix1 = statement1.getString().substring(0, statement1.getString().lastIndexOf("="));
+			String prefix1 = statement1.getString().substring(0, statement1.getString().lastIndexOf(JAVA.ASSIGNMENT));
 			if(variables1.contains(prefix1)) {
-				String before = prefix1 + "=" + invocationCoveringTheEntireStatement2.arguments().get(0);
+				String before = prefix1 + JAVA.ASSIGNMENT + invocationCoveringTheEntireStatement2.arguments().get(0);
 				String after = invocationCoveringTheEntireStatement2.actualString();
 				r = new Replacement(before, after, ReplacementType.FIELD_ASSIGNMENT_REPLACED_WITH_SETTER_METHOD_INVOCATION);
 				replacementInfo.addReplacement(r);
@@ -9834,7 +9834,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(invocation2.getName().equals("of")) {
 										String assignedVariable = null;
 										if(assignmentCreationCoveringTheEntireStatement1 != null) {
-											assignedVariable = statement1.getString().substring(0, statement1.getString().indexOf("="));
+											assignedVariable = statement1.getString().substring(0, statement1.getString().indexOf(JAVA.ASSIGNMENT));
 										}
 										Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
 										for(String argument2 : invocation2.arguments()) {
@@ -9962,8 +9962,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		if(classDiff != null && statement1.assignmentInvocationCoveringEntireStatement() != null && statement2.assignmentInvocationCoveringEntireStatement() != null) {
-			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf("="));
-			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf("="));
+			String assignedVariable1 = statement1.getString().substring(0, statement1.getString().indexOf(JAVA.ASSIGNMENT));
+			String assignedVariable2 = statement2.getString().substring(0, statement2.getString().indexOf(JAVA.ASSIGNMENT));
 			if(assignedVariable1.equals(assignedVariable2)) {
 				for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
 					if(assignmentInvocationCoveringTheEntireStatement1.matchesOperation(removedOperation, container1, classDiff, modelDiff)) {
@@ -11450,7 +11450,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				
 			}
-			if(fragment2.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(v2.getVariableName() + JAVA.ASSIGNMENT + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v1DeclarationInFragment2 = fragment2.getVariableDeclaration(v1.getVariableName());
@@ -11464,7 +11464,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(fragment2.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(v1.getVariableName() + JAVA.ASSIGNMENT + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}
@@ -11484,7 +11484,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				
 			}
-			if(fragment1.getString().equals(v1.getVariableName() + "=" + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(v1.getVariableName() + JAVA.ASSIGNMENT + v2.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 			VariableDeclaration v2DeclarationInFragment1 = fragment1.getVariableDeclaration(v2.getVariableName());
@@ -11498,7 +11498,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
-			if(fragment1.getString().equals(v2.getVariableName() + "=" + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(v2.getVariableName() + JAVA.ASSIGNMENT + v1.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
 				return true;
 			}
 		}

@@ -243,7 +243,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 					boolean isInsideStringLiteral = false;
 					if(start >= 1) {
 						String previousChar = afterReplacements.substring(start-1, start);
-						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ") || previousChar.equals("=")) {
+						if(previousChar.equals("(") || previousChar.equals(",") || previousChar.equals(" ") || previousChar.equals(JAVA.ASSIGNMENT)) {
 							int indexOfNextChar = start + parameter.length();
 							if(afterReplacements.length() > indexOfNextChar) {
 								char nextChar = afterReplacements.charAt(indexOfNextChar);
@@ -526,15 +526,15 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	private boolean expressionIsTheRightHandSideOfAssignment(String expression) {
 		String statement = getString();
-		if(statement.contains("=")) {
+		if(statement.contains(JAVA.ASSIGNMENT)) {
 			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
-				String s = variables.get(0).getString() + "=" + expression + JAVA.STATEMENT_TERMINATION;
+				String s = variables.get(0).getString() + JAVA.ASSIGNMENT + expression + JAVA.STATEMENT_TERMINATION;
 				if(statement.equals(s)) {
 					return true;
 				}
-				if(statement.startsWith(variables.get(0).getString() + "=")) {
-					String suffix = statement.substring(statement.indexOf("=") + 1);
+				if(statement.startsWith(variables.get(0).getString() + JAVA.ASSIGNMENT)) {
+					String suffix = statement.substring(statement.indexOf(JAVA.ASSIGNMENT) + 1);
 					if(suffix.endsWith(expression + JAVA.STATEMENT_TERMINATION)) {
 						int index = suffix.indexOf(expression + JAVA.STATEMENT_TERMINATION);
 						String prefix = suffix.substring(0, index);
@@ -550,16 +550,16 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 
 	private boolean expressionIsTheRightHandSideOfAssignmentAndLeftHandSideIsField(String expression, UMLAbstractClassDiff classDiff) {
 		String statement = getString();
-		if(statement.contains("=")) {
+		if(statement.contains(JAVA.ASSIGNMENT)) {
 			List<LeafExpression> variables = getVariables();
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
-				String s = variable + "=" + expression + JAVA.STATEMENT_TERMINATION;
+				String s = variable + JAVA.ASSIGNMENT + expression + JAVA.STATEMENT_TERMINATION;
 				if(statement.equals(s) && (variable.startsWith("this.") || classDiff.getOriginalClass().getFieldDeclarationMap().containsKey(variable) ||
 						classDiff.getNextClass().getFieldDeclarationMap().containsKey(variable))) {
 					return true;
 				}
-				String beforeAssignment = statement.substring(0, statement.indexOf("="));
+				String beforeAssignment = statement.substring(0, statement.indexOf(JAVA.ASSIGNMENT));
 				if(variables.size() >= 2) {
 					if(beforeAssignment.equals(variable + "." + variables.get(1).getString())) {
 						return true;

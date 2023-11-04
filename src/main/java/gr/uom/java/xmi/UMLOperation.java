@@ -641,7 +641,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				StatementObject statement = (StatementObject)statements.get(0);
 				for(LeafExpression variableExpression : statement.getVariables()) {
 					String variable = variableExpression.getString();
-					if(statement.getString().equals(variable + "=" + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
+					if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterNames.get(0) + JAVA.STATEMENT_TERMINATION)) {
 						return true;
 					}
 				}
@@ -659,9 +659,9 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 				if(statement instanceof StatementObject) {
 					for(LeafExpression variableExpression : statement.getVariables()) {
 						String variable = variableExpression.getString();
-						if(statement.getString().startsWith(variable + "=")) {
+						if(statement.getString().startsWith(variable + JAVA.ASSIGNMENT)) {
 							for(String parameterName : parameterNames) {
-								if(statement.getString().equals(variable + "=" + parameterName + JAVA.STATEMENT_TERMINATION)) {
+								if(statement.getString().equals(variable + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
 									matchCount++;
 									break;
 								}

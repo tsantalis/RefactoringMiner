@@ -581,9 +581,9 @@ public class CompositeStatementObject extends AbstractStatement {
 			String s = statement.getString();
 			if(!s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
-				if(firstLine.contains("=")) {
-					String variable = s.substring(0, s.indexOf("="));
-					String value = s.substring(s.indexOf("=")+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
+				if(firstLine.contains(JAVA.ASSIGNMENT)) {
+					String variable = s.substring(0, s.indexOf(JAVA.ASSIGNMENT));
+					String value = s.substring(s.indexOf(JAVA.ASSIGNMENT)+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(variable);
 					}
@@ -604,9 +604,9 @@ public class CompositeStatementObject extends AbstractStatement {
 			String s = statement.getString();
 			if(s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
-				if(firstLine.contains("=")) {
-					String attribute = s.substring(5, s.indexOf("="));
-					String value = s.substring(s.indexOf("=")+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
+				if(firstLine.contains(JAVA.ASSIGNMENT)) {
+					String attribute = s.substring(5, s.indexOf(JAVA.ASSIGNMENT));
+					String value = s.substring(s.indexOf(JAVA.ASSIGNMENT)+1, s.indexOf(JAVA.STATEMENT_TERMINATION));
 					if(map.containsKey(value)) {
 						map.get(value).add(attribute);
 					}

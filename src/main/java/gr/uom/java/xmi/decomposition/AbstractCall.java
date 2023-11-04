@@ -1019,11 +1019,10 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private int argumentIsAssigned(String statement) {
-		if(statement.contains("=") && statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(statement.contains(JAVA.ASSIGNMENT) && statement.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			int index = 0;
 			for(String argument : arguments()) {
-				//length()-2 to remove ";\n" from the end of the assignment statement, indexOf("=")+1 to remove the left hand side of the assignment
-				if(equalsIgnoringExtraParenthesis(argument, statement.substring(statement.indexOf("=")+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
+				if(equalsIgnoringExtraParenthesis(argument, statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
 					return index;
 				}
 				index++;
@@ -1035,7 +1034,7 @@ public abstract class AbstractCall extends LeafExpression {
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
 		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
-			return new Replacement(statement.substring(statement.indexOf("=")+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
+			return new Replacement(statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}
 		return null;

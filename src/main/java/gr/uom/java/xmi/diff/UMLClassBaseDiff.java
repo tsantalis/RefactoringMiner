@@ -1855,7 +1855,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				boolean returnFound = false;
 				if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
 					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
-						if(fragment1.getString().equals("return;\n")) {
+						if(fragment1.getString().equals(JAVA.RETURN_STATEMENT)) {
 							returnFound = true;
 							break;
 						}
@@ -1863,7 +1863,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				if(!returnFound) {
 					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
-						if(statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
+						if(statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
 							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
 								nonMappedElementsT2--;
@@ -2025,7 +2025,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> addedOperationStringRepresentation = addedOperation.stringRepresentation();
 						for(String statement : addedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {
+									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.equals(JAVA.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}
@@ -2097,7 +2097,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						List<String> removedOperationStringRepresentation = removedOperation.stringRepresentation();
 						for(String statement : removedOperationStringRepresentation) {
 							if(!statement.equals("{") && !statement.equals("}") && !statement.equals("try") && !statement.startsWith("catch(") && !statement.startsWith("case ") && !statement.startsWith("default :") &&
-									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.startsWith("return;")) {
+									!statement.startsWith("return true;") && !statement.startsWith("return false;") && !statement.startsWith("return this;") && !statement.startsWith("return null;") && !statement.equals(JAVA.RETURN_STATEMENT)) {
 								if(stringRepresentation.contains(statement)) {
 									commonStatements.add(statement);
 								}

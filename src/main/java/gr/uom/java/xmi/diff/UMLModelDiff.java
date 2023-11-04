@@ -3342,11 +3342,11 @@ public class UMLModelDiff {
 					return false;
 				}
 			}
-			if(fragment1.startsWith(JAVA.RETURN) && fragment2.startsWith(JAVA.RETURN)) {
+			if(fragment1.startsWith(JAVA.RETURN_SPACE) && fragment2.startsWith(JAVA.RETURN_SPACE)) {
 				UMLOperation extractedOperation = operationBodyMapper.getOperation2();
 				if(extractedOperation != null) {
 					UMLType returnType = extractedOperation.getReturnParameter().getType();
-					String fragment1VariableName = fragment1.substring(JAVA.RETURN.length(), fragment1.indexOf(JAVA.STATEMENT_TERMINATION));
+					String fragment1VariableName = fragment1.substring(JAVA.RETURN_SPACE.length(), fragment1.indexOf(JAVA.STATEMENT_TERMINATION));
 					VariableDeclaration fragment1VariableDeclaration = operationBodyMapper.getContainer1().getVariableDeclaration(fragment1VariableName);
 					if(fragment1VariableDeclaration != null) {
 						if(!returnType.equals(fragment1VariableDeclaration.getType())) {
@@ -4196,7 +4196,7 @@ public class UMLModelDiff {
 		}
 		int exactLeafMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN)) {
+			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN_SPACE)) {
 				exactLeafMappings++;
 			}
 		}
@@ -4211,8 +4211,8 @@ public class UMLModelDiff {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				String fragment1 = mapping.getFragment1().getString();
 				String fragment2 = mapping.getFragment2().getString();
-				if(fragment1.startsWith("return true;") || fragment1.startsWith("return false;") || fragment1.startsWith("return this;") || fragment1.startsWith("return null;") || fragment1.startsWith("return;") ||
-						fragment2.startsWith("return true;") || fragment2.startsWith("return false;") || fragment2.startsWith("return this;") || fragment2.startsWith("return null;") || fragment2.startsWith("return;")) {
+				if(fragment1.startsWith("return true;") || fragment1.startsWith("return false;") || fragment1.startsWith("return this;") || fragment1.startsWith("return null;") || fragment1.equals(JAVA.RETURN_STATEMENT) ||
+						fragment2.startsWith("return true;") || fragment2.startsWith("return false;") || fragment2.startsWith("return this;") || fragment2.startsWith("return null;") || fragment2.equals(JAVA.RETURN_STATEMENT)) {
 					return false;
 				}
 			}

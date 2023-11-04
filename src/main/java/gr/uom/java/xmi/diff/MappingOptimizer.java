@@ -123,10 +123,10 @@ public class MappingOptimizer {
 		for(AbstractCodeMapping previousMapping : mappings) {
 			AbstractCodeFragment previousFragment2 = previousMapping.getFragment2();
 			AbstractCodeFragment newFragment2 = newMapping.getFragment2();
-			if(previousFragment2.getString().startsWith(JAVA.RETURN) && previousFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION) &&
-					newFragment2.getString().startsWith(JAVA.RETURN) && newFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
-				String previousReturnExpression = previousFragment2.getString().substring(JAVA.RETURN.length(), previousFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
-				String newReturnExpression = newFragment2.getString().substring(JAVA.RETURN.length(), newFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+			if(previousFragment2.getString().startsWith(JAVA.RETURN_SPACE) && previousFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION) &&
+					newFragment2.getString().startsWith(JAVA.RETURN_SPACE) && newFragment2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+				String previousReturnExpression = previousFragment2.getString().substring(JAVA.RETURN_SPACE.length(), previousFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+				String newReturnExpression = newFragment2.getString().substring(JAVA.RETURN_SPACE.length(), newFragment2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
 				if(previousReturnExpression.contains("(" + newReturnExpression + ")") || newReturnExpression.contains("(" + previousReturnExpression + ")")) {
 					return true;
 				}
@@ -327,7 +327,7 @@ public class MappingOptimizer {
 							}
 						}
 						if(parentIsContainerBody.get(i) == true && editDistances.get(i).equals(editDistances.get(parentMappingFound.indexOf(true))) &&
-								!mappings.get(i).getFragment1().getString().startsWith(JAVA.RETURN) && !mappings.get(i).getFragment2().getString().startsWith(JAVA.RETURN)) {
+								!mappings.get(i).getFragment1().getString().startsWith(JAVA.RETURN_SPACE) && !mappings.get(i).getFragment2().getString().startsWith(JAVA.RETURN_SPACE)) {
 							skip = true;
 						}
 						if(parentIsContainerBody.get(i) == true && mappings.get(i).getFragment1().getAnonymousClassDeclarations().size() > 0 && mappings.get(i).getFragment2().getAnonymousClassDeclarations().size() > 0) {

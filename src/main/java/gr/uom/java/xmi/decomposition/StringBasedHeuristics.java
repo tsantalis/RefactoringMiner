@@ -116,7 +116,7 @@ public class StringBasedHeuristics {
 		updatedS1 = updatedS1.replace(")", "");
 		String updatedS2 = s2.replace("(", "");
 		updatedS2 = updatedS2.replace(")", "");
-		return updatedS1.equals(updatedS2) || updatedS1.equals(JAVA.RETURN + updatedS2) || updatedS2.equals(JAVA.RETURN + updatedS1);
+		return updatedS1.equals(updatedS2) || updatedS1.equals(JAVA.RETURN_SPACE + updatedS2) || updatedS2.equals(JAVA.RETURN_SPACE + updatedS1);
 	}
 
 	protected static boolean differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2,
@@ -409,9 +409,9 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean returnExpressionReplaced(String s1, String s2, Set<Replacement> replacements) {
-		if(s1.startsWith(JAVA.RETURN) && s2.startsWith(JAVA.RETURN)) {
+		if(s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
 			for(Replacement r : replacements) {
-				if(s1.equals(JAVA.RETURN + r.getAfter() + JAVA.STATEMENT_TERMINATION) || s2.equals(JAVA.RETURN + r.getAfter() + JAVA.STATEMENT_TERMINATION)) {
+				if(s1.equals(JAVA.RETURN_SPACE + r.getAfter() + JAVA.STATEMENT_TERMINATION) || s2.equals(JAVA.RETURN_SPACE + r.getAfter() + JAVA.STATEMENT_TERMINATION)) {
 					return true;
 				}
 			}
@@ -791,21 +791,21 @@ public class StringBasedHeuristics {
 	protected static boolean oneIsVariableDeclarationTheOtherIsReturnStatement(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
 		if(!commonSuffix.equals("null;\n") && !commonSuffix.equals("true;\n") && !commonSuffix.equals("false;\n") && !commonSuffix.equals("0;\n")) {
-			if(s1.startsWith(JAVA.RETURN) && s1.substring(JAVA.RETURN.length(), s1.length()).equals(commonSuffix) &&
+			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
 					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
-			if(s2.startsWith(JAVA.RETURN) && s2.substring(JAVA.RETURN.length(), s2.length()).equals(commonSuffix) &&
+			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
 					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
 		}
 		if(variableDeclarations1.size() == 0 && variableDeclarations2.size() == 0 && commonSuffix.equals("0;\n")) {
-			if(s1.startsWith(JAVA.RETURN) && s1.substring(JAVA.RETURN.length(), s1.length()).equals(commonSuffix) &&
+			if(s1.startsWith(JAVA.RETURN_SPACE) && s1.substring(JAVA.RETURN_SPACE.length(), s1.length()).equals(commonSuffix) &&
 					s2.contains("=") && s2.substring(s2.indexOf("=")+1, s2.length()).equals(commonSuffix)) {
 				return true;
 			}
-			if(s2.startsWith(JAVA.RETURN) && s2.substring(JAVA.RETURN.length(), s2.length()).equals(commonSuffix) &&
+			if(s2.startsWith(JAVA.RETURN_SPACE) && s2.substring(JAVA.RETURN_SPACE.length(), s2.length()).equals(commonSuffix) &&
 					s1.contains("=") && s1.substring(s1.indexOf("=")+1, s1.length()).equals(commonSuffix)) {
 				return true;
 			}
@@ -817,7 +817,7 @@ public class StringBasedHeuristics {
 			VariableDeclarationContainer container1, VariableDeclarationContainer container2, UMLOperationDiff operationSignatureDiff, UMLAbstractClassDiff classDiff) {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
-		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals(JAVA.RETURN)) {
+		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty() && !commonPrefix.equals(JAVA.RETURN_SPACE)) {
 			int beginIndexS1 = s1.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS1 = s1.lastIndexOf(commonSuffix);
 			String diff1 = beginIndexS1 > endIndexS1 ? "" :	s1.substring(beginIndexS1, endIndexS1);
@@ -1149,9 +1149,9 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN) && s2.startsWith(JAVA.RETURN)) {
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
 								s1 = s1.substring(s1.indexOf("=") + 1);
-								s2 = s2.substring(JAVA.RETURN.length());
+								s2 = s2.substring(JAVA.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
@@ -1178,9 +1178,9 @@ public class StringBasedHeuristics {
 							Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 							replacements.add(replacement);
 							commonVariableReplacementMap.put(key, replacements);
-							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN) && s2.startsWith(JAVA.RETURN)) {
+							if(s1.contains("=") && !s2.contains("=") && !s1.startsWith(JAVA.RETURN_SPACE) && s2.startsWith(JAVA.RETURN_SPACE)) {
 								s1 = s1.substring(s1.indexOf("=") + 1);
-								s2 = s2.substring(JAVA.RETURN.length());
+								s2 = s2.substring(JAVA.RETURN_SPACE.length());
 							}
 							String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
 							String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
@@ -1239,10 +1239,10 @@ public class StringBasedHeuristics {
 			return true;
 		}
 		else {
-			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() == 0 && statement2.getString().startsWith(JAVA.RETURN)) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations2.size() == 0 && statement2.getString().startsWith(JAVA.RETURN_SPACE)) {
 				return true;
 			}
-			else if(variableDeclarations1.size() == 0 && variableDeclarations2.size() > 0 && statement1.getString().startsWith(JAVA.RETURN)) {
+			else if(variableDeclarations1.size() == 0 && variableDeclarations2.size() > 0 && statement1.getString().startsWith(JAVA.RETURN_SPACE)) {
 				return true;
 			}
 		}
@@ -1701,10 +1701,10 @@ public class StringBasedHeuristics {
 		if(containsMethodSignatureOfAnonymousClass(string2) && string2.contains("\n")) {
 			string2 = string2.substring(0, string2.indexOf("\n"));
 		}
-		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith(JAVA.RETURN) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		if(string1.contains("=") && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.startsWith(JAVA.RETURN_SPACE) && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
 			String assignment1 = string1.substring(string1.indexOf("=")+1, string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
-			String assignment2 = string2.substring(JAVA.RETURN.length(), string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment2 = string2.substring(JAVA.RETURN_SPACE.length(), string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
 			Map<String, String> argumentToParameterMap = new LinkedHashMap<String, String>();
@@ -1753,9 +1753,9 @@ public class StringBasedHeuristics {
 				return true;
 			}
 		}
-		else if(string1.startsWith(JAVA.RETURN) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
+		else if(string1.startsWith(JAVA.RETURN_SPACE) && string1.endsWith(JAVA.STATEMENT_TERMINATION) && string2.contains("=") && string2.endsWith(JAVA.STATEMENT_TERMINATION)) {
 			boolean typeReplacement = false, compatibleTypes = false, classInstanceCreationReplacement = false;
-			String assignment1 = string1.substring(JAVA.RETURN.length(), string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
+			String assignment1 = string1.substring(JAVA.RETURN_SPACE.length(), string1.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			String assignment2 = string2.substring(string2.indexOf("=")+1, string2.lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			UMLType type1 = null, type2 = null;
 			ObjectCreation objectCreation1 = null, objectCreation2 = null;
@@ -2163,8 +2163,8 @@ public class StringBasedHeuristics {
 					stringAfter.append(replacement.getAfter());
 				}
 			}
-			if(statement1.getString().startsWith(JAVA.RETURN) && statement2.getString().startsWith(JAVA.RETURN)) {
-				return statement1.getString().equals(JAVA.RETURN + stringBefore + JAVA.STATEMENT_TERMINATION) && statement2.getString().equals(JAVA.RETURN + stringAfter + JAVA.STATEMENT_TERMINATION);
+			if(statement1.getString().startsWith(JAVA.RETURN_SPACE) && statement2.getString().startsWith(JAVA.RETURN_SPACE)) {
+				return statement1.getString().equals(JAVA.RETURN_SPACE + stringBefore + JAVA.STATEMENT_TERMINATION) && statement2.getString().equals(JAVA.RETURN_SPACE + stringAfter + JAVA.STATEMENT_TERMINATION);
 			}
 			else if(statement1.getString().startsWith("if(") && statement2.getString().startsWith("if(")) {
 				return statement1.getString().equals("if(" + stringBefore + ")") && statement2.getString().equals("if(" + stringAfter + ")");
@@ -2326,8 +2326,8 @@ public class StringBasedHeuristics {
 			if(statement2.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().size() == 0) {
 				String prefix1 = s1.substring(0, s1.indexOf(commonSuffix));
 				if(!prefix1.isEmpty()) {
-					if(prefix1.startsWith(JAVA.RETURN)) {
-						prefix1 = prefix1.substring(JAVA.RETURN.length());
+					if(prefix1.startsWith(JAVA.RETURN_SPACE)) {
+						prefix1 = prefix1.substring(JAVA.RETURN_SPACE.length());
 					}
 					for(AbstractCodeFragment fragment2 : info.getStatements2()) {
 						if(fragment2.getString().contains(prefix1) && fragment2.getString().contains(statement2.getVariableDeclarations().get(0).getVariableName())) {
@@ -2612,8 +2612,8 @@ public class StringBasedHeuristics {
 		if(s.startsWith("while(") && s.endsWith(")")) {
 			conditional = s.substring(6, s.length()-1);
 		}
-		if(s.startsWith(JAVA.RETURN) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
-			conditional = s.substring(JAVA.RETURN.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
+		if(s.startsWith(JAVA.RETURN_SPACE) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			conditional = s.substring(JAVA.RETURN_SPACE.length(), s.length()-JAVA.STATEMENT_TERMINATION.length());
 		}
 		int indexOfEquals = s.indexOf("=");
 		if(indexOfEquals > -1 && s.charAt(indexOfEquals+1) != '=' && s.charAt(indexOfEquals-1) != '!' && s.endsWith(JAVA.STATEMENT_TERMINATION)) {

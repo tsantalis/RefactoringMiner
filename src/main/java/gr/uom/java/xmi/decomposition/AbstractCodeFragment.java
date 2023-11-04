@@ -197,8 +197,8 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public boolean isKeyword() {
 		String statement = getString();
 		return statement.equals(JAVA.RETURN_STATEMENT) ||
-				statement.startsWith("break;") ||
-				statement.startsWith("continue;");
+				statement.equals(JAVA.BREAK_STATEMENT) ||
+				statement.equals(JAVA.CONTINUE_STATEMENT);
 	}
 
 	public boolean isLogCall() {

@@ -8190,7 +8190,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					//match break with already matched return
-					if(statement1.getString().equals("break;\n")) {
+					if(statement1.getString().equals(JAVA.BREAK_STATEMENT)) {
 						Set<AbstractCodeMapping> mappingsToBeAdded = new LinkedHashSet<>();
 						for(AbstractCodeMapping mapping : this.mappings) {
 							AbstractCodeFragment fragment2 = mapping.getFragment2();
@@ -11854,10 +11854,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
-				if(leaveSize1 == 1 && leaveSize2 == 1 && leaves1.get(0).getString().equals("continue;\n") && leaves2.get(0).getString().equals(JAVA.RETURN_NULL)) {
+				if(leaveSize1 == 1 && leaveSize2 == 1 && leaves1.get(0).getString().equals(JAVA.CONTINUE_STATEMENT) && leaves2.get(0).getString().equals(JAVA.RETURN_NULL)) {
 					mappedLeavesSize++;
 				}
-				if(leaveSize1 == 2 && leaveSize2 == 1 && !leaves1.get(0).getString().equals("break;\n") && leaves1.get(1).getString().equals("break;\n") && leaves2.get(0).getString().startsWith(JAVA.RETURN_SPACE)) {
+				if(leaveSize1 == 2 && leaveSize2 == 1 && !leaves1.get(0).getString().equals(JAVA.BREAK_STATEMENT) && leaves1.get(1).getString().equals(JAVA.BREAK_STATEMENT) && leaves2.get(0).getString().startsWith(JAVA.RETURN_SPACE)) {
 					mappedLeavesSize++;
 				}
 			}

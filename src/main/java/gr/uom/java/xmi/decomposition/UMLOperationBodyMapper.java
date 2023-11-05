@@ -11653,13 +11653,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean equalIfElseIfChain = false;
 		
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
-				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals("{") && !comp2.getString().equals("{")) {
-			if(compStatements1.get(0).getString().equals("{") && !compStatements2.get(0).getString().equals("{")) {
+				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && !comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			if(compStatements1.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && !compStatements2.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				CompositeStatementObject block = (CompositeStatementObject)compStatements1.get(0);
 				compStatements1 = new ArrayList<>(comp1.getStatements());
 				compStatements1.addAll(block.getStatements());
 			}
-			if(!compStatements1.get(0).getString().equals("{") && compStatements2.get(0).getString().equals("{")) {
+			if(!compStatements1.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && compStatements2.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				CompositeStatementObject block = (CompositeStatementObject)compStatements2.get(0);
 				compStatements2 = new ArrayList<>(comp2.getStatements());
 				compStatements2.addAll(block.getStatements());

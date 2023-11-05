@@ -549,7 +549,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	@Override
 	public int statementCount() {
 		int count = 0;
-		if(!this.getString().equals("{"))
+		if(!this.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
 			count++;
 		for(AbstractStatement statement : statementList) {
 			count += statement.statementCount();

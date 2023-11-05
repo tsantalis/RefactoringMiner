@@ -5517,6 +5517,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(leaf2.getVariableDeclarations().size() > 0) {
 						VariableDeclaration declaration2 = leaf2.getVariableDeclarations().get(0);
 						if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
+								declaration1.getType() != null &&
 								declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
@@ -5541,6 +5542,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(leaf1.getVariableDeclarations().size() > 0) {
 						VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
 						if(declaration1.getVariableName().equals(declaration2.getVariableName()) &&
+								declaration1.getType() != null &&
 								declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations1.add(leaf1);
 						}
@@ -5573,7 +5575,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
-						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
+						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations1.add(leaf1);
 						}
 					}
@@ -5606,7 +5608,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment2().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
-						if((equalName || variableRenamed) && declaration1.getType().equals(declaration2.getType())) {
+						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations2.add(leaf2);
 						}
 					}
@@ -5628,7 +5630,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(l1.getVariableDeclarations().size() > 0) {
 						VariableDeclaration declaration1 = l1.getVariableDeclarations().get(0);
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && !mapping.getFragment1().getString().startsWith(declaration2.getVariableName() + JAVA.ASSIGNMENT);
-						if(equalName && declaration1.getType().equals(declaration2.getType())) {
+						if(equalName && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
 							matchingVariableDeclarations1.add(l1);
 						}
 					}
@@ -8176,7 +8178,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(returnType1.getClassType().equals("void") && !returnType2.getClassType().equals("void")) {
 						if(statement1.getString().equals(JAVA.RETURN_STATEMENT) && statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = container2.getVariableDeclaration(statement2.getVariables().get(0).getString());
-							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
+							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								return replacementInfo.getReplacements();
 							}
 						}
@@ -8184,7 +8186,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					else if(!returnType1.getClassType().equals("void") && returnType2.getClassType().equals("void")) {
 						if(statement2.getString().equals(JAVA.RETURN_STATEMENT) && statement1.getVariables().size() > 0 && statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration1 = container1.getVariableDeclaration(statement1.getVariables().get(0).getString());
-							if(variableDeclaration1 != null && variableDeclaration1.getType().equals(returnType1)) {
+							if(variableDeclaration1 != null && variableDeclaration1.getType() != null && variableDeclaration1.getType().equals(returnType1)) {
 								return replacementInfo.getReplacements();
 							}
 						}
@@ -8551,7 +8553,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							//check if variable name and type are the same with the enhanced-for parameter
 							VariableDeclaration v1 = variableDeclarations.get(0);
 							VariableDeclaration v2 = variableDeclarations2.get(0);
-							if(v1.getVariableName().equals(v2.getVariableName()) && v1.getType().equals(v2.getType())) {
+							if(v1.getVariableName().equals(v2.getVariableName()) && v1.getType() != null && v1.getType().equals(v2.getType())) {
 								additionallyMatchedStatements1.add(codeFragment);
 							}
 						}

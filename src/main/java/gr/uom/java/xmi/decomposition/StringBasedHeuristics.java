@@ -170,7 +170,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement2 : info.getStatements2()) {
 								if(statement2.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement2.getVariableDeclarations().get(0);
-									if(e2.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+									if(e2.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && variableDeclaration.getType() != null && e1.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										matchingVariableDeclarations2.add(statement2);
 									}
 								}
@@ -181,7 +181,7 @@ public class StringBasedHeuristics {
 							for(AbstractCodeFragment statement1 : info.getStatements1()) {
 								if(statement1.getVariableDeclarations().size() > 0) {
 									VariableDeclaration variableDeclaration = statement1.getVariableDeclarations().get(0);
-									if(e1.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+									if(e1.startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) && variableDeclaration.getType() != null && e2.startsWith(variableDeclaration.getType() + " " + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										matchingVariableDeclarations1.add(statement1);
 									}
 								}
@@ -315,13 +315,13 @@ public class StringBasedHeuristics {
 						}
 					}
 				}
-				if(variableDeclarations1.isEmpty() && variableDeclarations2.size() == 1 && s1.startsWith("for(") && s2.startsWith("for(")) {
+				if(variableDeclarations1.isEmpty() && variableDeclarations2.size() == 1 && variableDeclarations2.get(0).getType() != null && s1.startsWith("for(") && s2.startsWith("for(")) {
 					String updatedS1 = "for(" + variableDeclarations2.get(0).getType().toString() + " " + commonSuffix;
 					if(updatedS1.equals(s2)) {
 						return true;
 					}
 				}
-				if(variableDeclarations1.size() == 1 && variableDeclarations2.isEmpty() && s1.startsWith("for(") && s2.startsWith("for(")) {
+				if(variableDeclarations1.size() == 1 && variableDeclarations2.isEmpty() && variableDeclarations1.get(0).getType() != null && s1.startsWith("for(") && s2.startsWith("for(")) {
 					String updatedS2 = "for(" + variableDeclarations1.get(0).getType().toString() + " " + commonSuffix;
 					if(updatedS2.equals(s1)) {
 						return true;

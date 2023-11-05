@@ -1865,7 +1865,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					for(AbstractCodeFragment statement2 : operationBodyMapper.getNonMappedLeavesT2()) {
 						if(statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
 							VariableDeclaration variableDeclaration2 = operationBodyMapper.getContainer2().getVariableDeclaration(statement2.getVariables().get(0).getString());
-							if(variableDeclaration2 != null && variableDeclaration2.getType().equals(returnType2)) {
+							if(variableDeclaration2 != null && variableDeclaration2.getType() != null && variableDeclaration2.getType().equals(returnType2)) {
 								nonMappedElementsT2--;
 							}
 						}

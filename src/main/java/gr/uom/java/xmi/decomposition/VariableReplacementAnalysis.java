@@ -1900,6 +1900,7 @@ public class VariableReplacementAnalysis {
 					if(comp1.getExpressions().size() == comp2.getExpressions().size() && comp1.getExpressions().size() == 2 &&
 							comp1.getVariableDeclarations().size() == comp2.getVariableDeclarations().size()) {
 						if(comp1.getExpressions().get(1).getString().equals(comp2.getExpressions().get(1).getString()) &&
+								comp1.getVariableDeclarations().get(0).getType() != null &&
 								comp1.getVariableDeclarations().get(0).getType().equals(comp2.getVariableDeclarations().get(0).getType())) {
 							if(!variableDeclarationMappingFound) {
 								enhancedForParameterReplacements.add(r);

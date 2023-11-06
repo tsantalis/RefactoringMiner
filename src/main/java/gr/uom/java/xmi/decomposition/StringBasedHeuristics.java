@@ -2805,7 +2805,7 @@ public class StringBasedHeuristics {
 					}
 					int identicalIfNodes1 = 0;
 					int identicalIfNodes2 = 0;
-					if(ifNodes1.size() == ifNodes2.size()) {
+					if(ifNodes1.size() == ifNodes2.size() && container1.getBody() != null && container2.getBody() != null) {
 						List<CompositeStatementObject> innerNodes1 = container1.getBody().getCompositeStatement().getInnerNodes();
 						List<CompositeStatementObject> innerNodes2 = container2.getBody().getCompositeStatement().getInnerNodes();
 						for(CompositeStatementObject ifNode1 : ifNodes1) {

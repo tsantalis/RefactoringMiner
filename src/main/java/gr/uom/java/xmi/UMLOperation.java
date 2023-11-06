@@ -674,6 +674,18 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return matchCount > 0;
 	}
 
+	public boolean isRecursive() {
+		if(hasVarargsParameter())
+			return false;
+		List<AbstractCall> calls = getAllOperationInvocations();
+		for(AbstractCall call : calls) {
+			if(call.getName().equals(this.getName()) && call.arguments().size() == this.getParametersWithoutReturnType().size()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean equalsIgnoringAbstraction(UMLOperation operation) {
 		return this.className.equals(operation.className) &&
 				this.name.equals(operation.name) &&

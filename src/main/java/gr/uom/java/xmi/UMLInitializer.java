@@ -237,4 +237,9 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	public boolean hasTearDownAnnotation() {
 		return false;
 	}
+
+	@Override
+	public boolean isRecursive() {
+		return false;
+	}
 }

@@ -144,6 +144,11 @@ public class InlineOperationDetection {
 
 	private void processNestedMapper(UMLOperationBodyMapper mapper,
 			UMLOperationBodyMapper operationBodyMapper, List<InlineOperationRefactoring> refactorings, CallTreeNode node) throws RefactoringMinerTimedOutException {
+		for(InlineOperationRefactoring inline : refactorings) {
+			if(inline.getBodyMapper().getContainer1().equals(node.getInvokedOperation()) && inline.getBodyMapper().getContainer2().equals(mapper.getContainer2())) {
+				return;
+			}
+		}
 		UMLOperationBodyMapper nestedMapper = createMapperForInlinedMethod(mapper, node.getInvokedOperation(), node.getInvocation(), true);
 		if(inlineMatchCondition(nestedMapper, mapper)) {
 			List<AbstractCall> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());

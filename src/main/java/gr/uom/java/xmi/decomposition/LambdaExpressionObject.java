@@ -392,4 +392,9 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	public AbstractCall isDelegate() {
 		return null;
 	}
+
+	@Override
+	public boolean isRecursive() {
+		return false;
+	}
 }

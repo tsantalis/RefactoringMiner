@@ -32,6 +32,13 @@ public class CallTree {
 			if(currentParent.getInvokedOperation().equals(invokedOperation)) {
 				return true;
 			}
+			if(currentParent.getOriginalOperation().isRecursive()) {
+				for(CallTreeNode sibling : currentParent.getChildren()) {
+					if(sibling.getInvokedOperation().equals(invokedOperation)) {
+						return true;
+					}
+				}
+			}
 			currentParent = currentParent.getParent();
 		}
 		return false;

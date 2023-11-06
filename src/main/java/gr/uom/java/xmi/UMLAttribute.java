@@ -77,6 +77,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return null;
 	}
 
+	public boolean isRecursive() {
+		return false;
+	}
+
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}

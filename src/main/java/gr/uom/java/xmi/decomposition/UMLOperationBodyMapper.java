@@ -8054,9 +8054,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(!statement1.getString().endsWith("=true;\n") && !statement1.getString().endsWith("=false;\n")) {
 			findReplacements(booleanLiterals1, arguments2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);
 			findReplacements(booleanLiterals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
+			if(booleanLiterals1.isEmpty() && statement1.getBooleanLiterals().size() != statement2.getBooleanLiterals().size()) {
+				Set<String> literals1 = convertToStringSet(statement1.getBooleanLiterals());
+				Set<String> literals2 = convertToStringSet(statement2.getBooleanLiterals());
+				if(literals1.equals(literals2) ||
+						matchingArgument(literals1, arguments2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+						matchingArgument(literals1, arguments2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
+					findReplacements(literals1, arguments2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_ARGUMENT);
+				}
+				if(literals1.equals(literals2) ||
+						matchingArgument(literals1, variables2, invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2) ||
+						matchingArgument(literals1, variables2, creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2)) {
+					findReplacements(literals1, variables2, replacementInfo, ReplacementType.BOOLEAN_REPLACED_WITH_VARIABLE);
+				}
+			}
 		}
 		if(!statement2.getString().endsWith("=true;\n") && !statement2.getString().endsWith("=false;\n")) {
-			if(!statement1.getBooleanLiterals().equals(statement2.getBooleanLiterals())) {
+			if(statement1.getBooleanLiterals().size() != statement2.getBooleanLiterals().size()) {
 				Set<String> literals1 = convertToStringSet(statement1.getBooleanLiterals());
 				Set<String> literals2 = convertToStringSet(statement2.getBooleanLiterals());
 				if(literals1.equals(literals2) ||

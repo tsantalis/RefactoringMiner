@@ -4722,7 +4722,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						else {
-							boolean isTestMethod = container1.hasTestAnnotation() || container2.hasTestAnnotation() || container1.getName().startsWith("test") || container2.getName().startsWith("test");
+							boolean isTestMethod = (container1.hasTestAnnotation() || container2.hasTestAnnotation() || container1.getName().startsWith("test") || container2.getName().startsWith("test"))
+									&& !container2.hasParameterizedTestAnnotation();
 							if(!isTestMethod)
 								checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
@@ -5344,7 +5345,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							counter++;
 						}
-						if(matchingReplacements == replacements.size()) {
+						if(matchingReplacements == replacements.size() || (matchingReplacements > 0 && matchingReplacements == min)) {
 							matchingMappings++;
 						}
 					}

@@ -762,6 +762,28 @@ public abstract class AbstractCodeMapping {
 		if(stringLiteralReplacents == replacements.size()) {
 			return true;
 		}
+		if(refactorings.size() > 1) {
+			String temp = new String(fragment1.getString());
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof InlineVariableRefactoring) {
+					InlineVariableRefactoring inline = (InlineVariableRefactoring)ref;
+					for(Replacement r : replacements) {
+						if(inline.getVariableDeclaration().getInitializer() != null &&
+								inline.getVariableDeclaration().getInitializer().getString().equals(r.getAfter())) {
+							if(r.getBefore().equals(inline.getVariableDeclaration().getVariableName())) {
+								temp = ReplacementUtil.performReplacement(temp, inline.getVariableDeclaration().getVariableName(), r.getAfter());
+							}
+							else {
+								temp = ReplacementUtil.performReplacement(temp, inline.getVariableDeclaration().getVariableName(), r.getBefore());
+							}
+						}
+					}
+				}
+			}
+			if(temp.equals(fragment2.getString())) {
+				return true;
+			}
+		}
 		return false;
 	}
 

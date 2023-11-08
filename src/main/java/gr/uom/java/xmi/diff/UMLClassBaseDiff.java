@@ -1130,6 +1130,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : filteredMapperSet2) {
 								ParameterizeTestRefactoring refactoring = new ParameterizeTestRefactoring(mapper);
 								refactorings.add(refactoring);
+								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 								UMLOperation removedOperation = mapper.getOperation1();
 								removedOperations.remove(removedOperation);
 							}

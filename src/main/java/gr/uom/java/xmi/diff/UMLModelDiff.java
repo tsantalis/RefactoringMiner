@@ -3557,10 +3557,14 @@ public class UMLModelDiff {
 	}
 
 	private UMLOperation findOperationWithIdenticalSignature(UMLOperation operation, List<UMLOperation> otherOperations) {
+		List<UMLOperation> matchingOperations = new ArrayList<UMLOperation>();
 		for(UMLOperation otherOperation : otherOperations) {
 			if(otherOperation.equalSignature(operation)) {
-				return otherOperation;
+				matchingOperations.add(otherOperation);
 			}
+		}
+		if(matchingOperations.size() == 1) {
+			return matchingOperations.get(0);
 		}
 		return null;
 	}
@@ -3580,11 +3584,13 @@ public class UMLModelDiff {
 						}
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation2, addedOperation, umlClassDiff);
 						processedOperationPairs.add(pair);
-						if(operationBodyMapper.mappingsWithoutBlocks() > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
+						int mappings = operationBodyMapper.mappingsWithoutBlocks();
+						if(mappings > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
 							createRefactoring(removedOperation2, addedOperation, operationBodyMapper, false);
 							continue;
 						}
-						else {
+						else if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || addedOperation.equalSignatureForAbstractMethods(removedOperation2) ||
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation2, addedOperation, addedOperations, umlClassDiff))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {
@@ -3682,11 +3688,13 @@ public class UMLModelDiff {
 						}
 						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation2, umlClassDiff);
 						processedOperationPairs.add(pair);
-						if(operationBodyMapper.mappingsWithoutBlocks() > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
+						int mappings = operationBodyMapper.mappingsWithoutBlocks();
+						if(mappings > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
 							createRefactoring(removedOperation, addedOperation2, operationBodyMapper, false);
 							continue;
 						}
-						else {
+						else if((mappings > 0 && mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper)) || removedOperation.equalSignatureForAbstractMethods(addedOperation2) ||
+								(mappings > 0 && isPartOfMethodExtracted(removedOperation, addedOperation2, addedOperations, umlClassDiff))) {
 							int exactMatches = operationBodyMapper.exactMatches();
 							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
 							for(AbstractCodeMapping mapping : exactMappings) {

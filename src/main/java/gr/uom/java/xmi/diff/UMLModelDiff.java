@@ -3556,11 +3556,55 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private UMLOperation findOperationWithIdenticalSignature(UMLOperation operation, List<UMLOperation> otherOperations) {
+		for(UMLOperation otherOperation : otherOperations) {
+			if(otherOperation.equalSignature(operation)) {
+				return otherOperation;
+			}
+		}
+		return null;
+	}
+
 	private void checkForOperationMoves(List<UMLOperation> addedOperations, List<UMLOperation> removedOperations) throws RefactoringMinerTimedOutException {
 		if(addedOperations.size() <= removedOperations.size()) {
 			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
+				UMLOperation removedOperation2 = findOperationWithIdenticalSignature(addedOperation, removedOperations);
+				if(removedOperation2 != null) {
+					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation2, addedOperation);
+					if(!processedOperationPairs.contains(pair) && removedOperation2.testMethodCheck(addedOperation) && !removedOperation2.getClassName().equals(addedOperation.getClassName())) {
+						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation2.getClassName());
+						if(umlClassDiff == null) {
+							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
+						}
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation2, addedOperation, umlClassDiff);
+						processedOperationPairs.add(pair);
+						if(operationBodyMapper.mappingsWithoutBlocks() > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
+							createRefactoring(removedOperation2, addedOperation, operationBodyMapper, false);
+							continue;
+						}
+						else {
+							int exactMatches = operationBodyMapper.exactMatches();
+							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
+							for(AbstractCodeMapping mapping : exactMappings) {
+								String fragment1 = mapping.getFragment1().getString();
+								if(RETURN_NUMBER_LITERAL.matcher(fragment1).matches()) {
+									exactMatches--;
+								}
+							}
+							if(operationBodyMapperMap.containsKey(exactMatches)) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+								mapperList.add(operationBodyMapper);
+							}
+							else {
+								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+								mapperList.add(operationBodyMapper);
+								operationBodyMapperMap.put(exactMatches, mapperList);
+							}
+						}
+					}
+				}
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
 
@@ -3619,101 +3663,7 @@ public class UMLModelDiff {
 							removedOperations.remove(removedOperation);
 						}
 
-						Refactoring refactoring = null;
-						if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
-								!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							boolean singleSuperConstructorInvocationMatch = false;
-							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
-								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
-								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
-									singleSuperConstructorInvocationMatch = true;
-								}
-							}
-							if(!singleSuperConstructorInvocationMatch) {
-								refactoring = new PullUpOperationRefactoring(firstMapper);
-							}
-						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
-							boolean singleSuperConstructorInvocationMatch = false;
-							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
-								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
-								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
-									singleSuperConstructorInvocationMatch = true;
-								}
-							}
-							if(!singleSuperConstructorInvocationMatch) {
-								refactoring = new PushDownOperationRefactoring(firstMapper);
-							}
-						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								movedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new MoveOperationRefactoring(firstMapper);
-						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								movedAndRenamedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new MoveOperationRefactoring(firstMapper);
-						}
-						if(refactoring != null) {
-							deleteRemovedOperation(removedOperation);
-							deleteAddedOperation(addedOperation);
-							Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
-							boolean skip = false;
-							for(Refactoring r : this.refactorings) {
-								if(r instanceof ExtractOperationRefactoring) {
-									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-									if(extract.getExtractedOperation().equals(addedOperation)) {
-										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
-											refactoringsToBeRemoved.add(r);
-											refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
-										}
-									}
-								}
-								else if(r instanceof MoveOperationRefactoring) {
-									MoveOperationRefactoring move = (MoveOperationRefactoring)r;
-									if(move.getMovedOperation().equals(addedOperation)) {
-										if(move.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION) && refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
-											UMLOperationBodyMapper movedBodyMapper = move.getBodyMapper();
-											if(movedBodyMapper.getMappings().size() >= firstMapper.getMappings().size()) {
-												int movedMapperNonMapped = movedBodyMapper.getNonMappedLeavesT1().size() + movedBodyMapper.getNonMappedLeavesT2().size() +
-														movedBodyMapper.getNonMappedInnerNodesT1().size() + movedBodyMapper.getNonMappedInnerNodesT2().size();
-												int firstMapperNonMapped = firstMapper.getNonMappedLeavesT1().size() + firstMapper.getNonMappedLeavesT2().size() +
-														firstMapper.getNonMappedInnerNodesT1().size() + firstMapper.getNonMappedInnerNodesT2().size();
-												if(movedMapperNonMapped < firstMapperNonMapped && movedMapperNonMapped == 0) {
-													skip = true;
-												}
-											}
-										}
-									}
-								}
-							}
-							refactorings.removeAll(refactoringsToBeRemoved);
-							if(!skip) {
-								refactorings.addAll(firstMapper.getRefactorings());
-								refactorings.add(refactoring);
-								UMLClass addedClass = getAddedClass(addedOperation.getClassName());
-								if(addedClass != null) {
-									List<UMLOperation> potentiallyMovedOperations = new ArrayList<>();
-									UMLClassBaseDiff removedClassDiff = getUMLClassDiff(removedOperation.getClassName());
-									if(removedClassDiff != null) {
-										potentiallyMovedOperations.addAll(removedClassDiff.getRemovedOperations());
-									}
-									else {
-										UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
-										if(removedClass != null) {
-											potentiallyMovedOperations.addAll(removedClass.getOperations());
-										}
-									}
-									//extracted in the class where the method is moved after refactoring
-									checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, addedClass, firstMapper.getClassDiff());
-									//extracted in the class from which the method is moved before refactoring
-									if(removedClassDiff != null) {
-										checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
-									}
-								}
-							}
-						}
+						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
 					}
 				}
 			}
@@ -3722,6 +3672,41 @@ public class UMLModelDiff {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
+				UMLOperation addedOperation2 = findOperationWithIdenticalSignature(removedOperation, addedOperations);
+				if(addedOperation2 != null) {
+					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation2);
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation2) && !removedOperation.getClassName().equals(addedOperation2.getClassName())) {
+						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
+						if(umlClassDiff == null) {
+							umlClassDiff = getUMLClassDiff(addedOperation2.getClassName());
+						}
+						UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation2, umlClassDiff);
+						processedOperationPairs.add(pair);
+						if(operationBodyMapper.mappingsWithoutBlocks() > 0 && operationBodyMapper.nonMappedElementsT1() == 0 && operationBodyMapper.nonMappedElementsT2() == 0) {
+							createRefactoring(removedOperation, addedOperation2, operationBodyMapper, false);
+							continue;
+						}
+						else {
+							int exactMatches = operationBodyMapper.exactMatches();
+							List<AbstractCodeMapping> exactMappings = operationBodyMapper.getExactMatches();
+							for(AbstractCodeMapping mapping : exactMappings) {
+								String fragment1 = mapping.getFragment1().getString();
+								if(RETURN_NUMBER_LITERAL.matcher(fragment1).matches()) {
+									exactMatches--;
+								}
+							}
+							if(operationBodyMapperMap.containsKey(exactMatches)) {
+								List<UMLOperationBodyMapper> mapperList = operationBodyMapperMap.get(exactMatches);
+								mapperList.add(operationBodyMapper);
+							}
+							else {
+								List<UMLOperationBodyMapper> mapperList = new ArrayList<UMLOperationBodyMapper>();
+								mapperList.add(operationBodyMapper);
+								operationBodyMapperMap.put(exactMatches, mapperList);
+							}
+						}
+					}
+				}
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
 
@@ -3780,101 +3765,107 @@ public class UMLModelDiff {
 							addedOperations.remove(addedOperation);
 						}
 
-						Refactoring refactoring = null;
-						if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
-								!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							boolean singleSuperConstructorInvocationMatch = false;
-							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
-								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
-								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
-									singleSuperConstructorInvocationMatch = true;
-								}
-							}
-							if(!singleSuperConstructorInvocationMatch) {
-								refactoring = new PullUpOperationRefactoring(firstMapper);
-							}
+						createRefactoring(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1);
+					}
+				}
+			}
+		}
+	}
+
+	private void createRefactoring(UMLOperation removedOperation, UMLOperation addedOperation,
+			UMLOperationBodyMapper firstMapper, boolean multipleMappers)
+			throws RefactoringMinerTimedOutException {
+		Refactoring refactoring = null;
+		if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+				isSubclassOf(removedOperation.getClassName(), addedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(removedOperation.getClassName(), addedOperation.getClassName())) &&
+				!refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
+			boolean singleSuperConstructorInvocationMatch = false;
+			if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+				AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+				if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+					singleSuperConstructorInvocationMatch = true;
+				}
+			}
+			if(!singleSuperConstructorInvocationMatch) {
+				refactoring = new PullUpOperationRefactoring(firstMapper);
+			}
+		}
+		else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+				isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
+			boolean singleSuperConstructorInvocationMatch = false;
+			if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
+				AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
+				if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
+					singleSuperConstructorInvocationMatch = true;
+				}
+			}
+			if(!singleSuperConstructorInvocationMatch) {
+				refactoring = new PushDownOperationRefactoring(firstMapper);
+			}
+		}
+		else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+				movedMethodSignature(removedOperation, addedOperation, firstMapper, multipleMappers) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
+			refactoring = new MoveOperationRefactoring(firstMapper);
+		}
+		else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
+				movedAndRenamedMethodSignature(removedOperation, addedOperation, firstMapper, multipleMappers) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
+			refactoring = new MoveOperationRefactoring(firstMapper);
+		}
+		if(refactoring != null) {
+			deleteRemovedOperation(removedOperation);
+			deleteAddedOperation(addedOperation);
+			Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
+			boolean skip = false;
+			for(Refactoring r : this.refactorings) {
+				if(r instanceof ExtractOperationRefactoring) {
+					ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+					if(extract.getExtractedOperation().equals(addedOperation)) {
+						if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
+							refactoringsToBeRemoved.add(r);
+							refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
 						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								isSubclassOf(addedOperation.getClassName(), removedOperation.getClassName()) && addedOperation.compatibleSignature(removedOperation, typeParameterToTypeArgumentMap(addedOperation.getClassName(), removedOperation.getClassName()))) {
-							boolean singleSuperConstructorInvocationMatch = false;
-							if(removedOperation.isConstructor() && addedOperation.isConstructor() && firstMapper.getMappings().size() == 1) {
-								AbstractCodeMapping mapping = firstMapper.getMappings().iterator().next();
-								if(mapping.getFragment1().getString().startsWith("super(") && mapping.getFragment2().getString().startsWith("super(")) {
-									singleSuperConstructorInvocationMatch = true;
-								}
-							}
-							if(!singleSuperConstructorInvocationMatch) {
-								refactoring = new PushDownOperationRefactoring(firstMapper);
-							}
-						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								movedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new MoveOperationRefactoring(firstMapper);
-						}
-						else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
-								movedAndRenamedMethodSignature(removedOperation, addedOperation, firstMapper, firstMappers.size() > 1) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-							refactoring = new MoveOperationRefactoring(firstMapper);
-						}
-						if(refactoring != null) {
-							deleteRemovedOperation(removedOperation);
-							deleteAddedOperation(addedOperation);
-							Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<>();
-							boolean skip = false;
-							for(Refactoring r : this.refactorings) {
-								if(r instanceof ExtractOperationRefactoring) {
-									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
-									if(extract.getExtractedOperation().equals(addedOperation)) {
-										if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
-											refactoringsToBeRemoved.add(r);
-											refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
-										}
-									}
-								}
-								else if(r instanceof MoveOperationRefactoring) {
-									MoveOperationRefactoring move = (MoveOperationRefactoring)r;
-									if(move.getMovedOperation().equals(addedOperation)) {
-										if(move.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION) && refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
-											UMLOperationBodyMapper movedBodyMapper = move.getBodyMapper();
-											if(movedBodyMapper.getMappings().size() >= firstMapper.getMappings().size()) {
-												int movedMapperNonMapped = movedBodyMapper.getNonMappedLeavesT1().size() + movedBodyMapper.getNonMappedLeavesT2().size() +
-														movedBodyMapper.getNonMappedInnerNodesT1().size() + movedBodyMapper.getNonMappedInnerNodesT2().size();
-												int firstMapperNonMapped = firstMapper.getNonMappedLeavesT1().size() + firstMapper.getNonMappedLeavesT2().size() +
-														firstMapper.getNonMappedInnerNodesT1().size() + firstMapper.getNonMappedInnerNodesT2().size();
-												if(movedMapperNonMapped < firstMapperNonMapped && movedMapperNonMapped == 0) {
-													skip = true;
-												}
-											}
-										}
-									}
-								}
-							}
-							refactorings.removeAll(refactoringsToBeRemoved);
-							if(!skip) {
-								refactorings.addAll(firstMapper.getRefactorings());
-								refactorings.add(refactoring);
-								UMLClass addedClass = getAddedClass(addedOperation.getClassName());
-								if(addedClass != null) {
-									List<UMLOperation> potentiallyMovedOperations = new ArrayList<>();
-									UMLClassBaseDiff removedClassDiff = getUMLClassDiff(removedOperation.getClassName());
-									if(removedClassDiff != null) {
-										potentiallyMovedOperations.addAll(removedClassDiff.getRemovedOperations());
-									}
-									else {
-										UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
-										if(removedClass != null) {
-											potentiallyMovedOperations.addAll(removedClass.getOperations());
-										}
-									}
-									//extracted in the class where the method is moved after refactoring
-									checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, addedClass, firstMapper.getClassDiff());
-									//extracted in the class from which the method is moved before refactoring
-									if(removedClassDiff != null) {
-										checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
-									}
+					}
+				}
+				else if(r instanceof MoveOperationRefactoring) {
+					MoveOperationRefactoring move = (MoveOperationRefactoring)r;
+					if(move.getMovedOperation().equals(addedOperation)) {
+						if(move.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION) && refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
+							UMLOperationBodyMapper movedBodyMapper = move.getBodyMapper();
+							if(movedBodyMapper.getMappings().size() >= firstMapper.getMappings().size()) {
+								int movedMapperNonMapped = movedBodyMapper.getNonMappedLeavesT1().size() + movedBodyMapper.getNonMappedLeavesT2().size() +
+										movedBodyMapper.getNonMappedInnerNodesT1().size() + movedBodyMapper.getNonMappedInnerNodesT2().size();
+								int firstMapperNonMapped = firstMapper.getNonMappedLeavesT1().size() + firstMapper.getNonMappedLeavesT2().size() +
+										firstMapper.getNonMappedInnerNodesT1().size() + firstMapper.getNonMappedInnerNodesT2().size();
+								if(movedMapperNonMapped < firstMapperNonMapped && movedMapperNonMapped == 0) {
+									skip = true;
 								}
 							}
 						}
+					}
+				}
+			}
+			refactorings.removeAll(refactoringsToBeRemoved);
+			if(!skip) {
+				refactorings.addAll(firstMapper.getRefactorings());
+				refactorings.add(refactoring);
+				UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+				if(addedClass != null) {
+					List<UMLOperation> potentiallyMovedOperations = new ArrayList<>();
+					UMLClassBaseDiff removedClassDiff = getUMLClassDiff(removedOperation.getClassName());
+					if(removedClassDiff != null) {
+						potentiallyMovedOperations.addAll(removedClassDiff.getRemovedOperations());
+					}
+					else {
+						UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
+						if(removedClass != null) {
+							potentiallyMovedOperations.addAll(removedClass.getOperations());
+						}
+					}
+					//extracted in the class where the method is moved after refactoring
+					checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, addedClass, firstMapper.getClassDiff());
+					//extracted in the class from which the method is moved before refactoring
+					if(removedClassDiff != null) {
+						checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
 					}
 				}
 			}

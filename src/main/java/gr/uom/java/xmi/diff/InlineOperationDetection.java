@@ -69,7 +69,7 @@ public class InlineOperationDetection {
 	public List<InlineOperationRefactoring> check(UMLOperation removedOperation) throws RefactoringMinerTimedOutException {
 		List<InlineOperationRefactoring> refactorings = new ArrayList<InlineOperationRefactoring>();
 		if(!mapper.getNonMappedLeavesT2().isEmpty() || !mapper.getNonMappedInnerNodesT2().isEmpty() ||
-			!mapper.getReplacementsInvolvingMethodInvocation().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
+			!mapper.getReplacementsInvolvingMethodInvocationForInline().isEmpty() || mapper.containsCompositeMappingWithoutReplacements()) {
 			List<AbstractCall> removedOperationInvocations = callCountMap != null ? callCountMap.get(removedOperation) : matchingInvocations(removedOperation, operationInvocations, mapper.getContainer1());
 			if(removedOperationInvocations.size() > 0 && !invocationMatchesWithAddedOperation(removedOperationInvocations.get(0), mapper.getContainer1(), mapper.getContainer2().getAllOperationInvocations())) {
 				int otherAddedMethodsCalled = 0;

@@ -3008,6 +3008,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	public Set<Replacement> getReplacementsInvolvingMethodInvocationForInline() {
+		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			Set<Replacement> replacementsInvolvingMethodInvocation = mapping.getReplacementsInvolvingMethodInvocation();
+			for(Replacement r : replacementsInvolvingMethodInvocation) {
+				if(r instanceof MethodInvocationReplacement) {
+					AbstractCall before = ((MethodInvocationReplacement)r).getInvokedOperationBefore();
+					AbstractCall after = ((MethodInvocationReplacement)r).getInvokedOperationAfter();
+					if(!before.identicalName(after)) {
+						replacements.add(r);
+					}
+					else if(before.arguments().size() != after.arguments().size()) {
+						replacements.add(r);
+					}
+				}
+				else {
+					replacements.add(r);
+				}
+			}
+		}
+		return replacements;
+	}
+
 	public Set<Replacement> getReplacementsInvolvingMethodInvocation() {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {

@@ -27,6 +27,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
@@ -816,15 +817,42 @@ public abstract class UMLAbstractClassDiff {
 		Set<Refactoring> refactorings2 = new LinkedHashSet<>();
 		refactorings2.addAll(mapper.getRefactoringsAfterPostProcessing());
 		refactorings2.addAll(mapper.getRefactorings());
-		for(Refactoring refactoring : refactorings2) {
-			if(refactorings.contains(refactoring)) {
+		for(Refactoring newRefactoring : refactorings2) {
+			if(refactorings.contains(newRefactoring)) {
+				boolean inlineExtractAttributeFound = false;
+				for(Refactoring refactoring : refactorings) {
+					if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractAttributeRefactoring) {
+						ExtractAttributeRefactoring newExtractVariableRefactoring = (ExtractAttributeRefactoring)newRefactoring;
+						Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+						ExtractAttributeRefactoring oldExtractVariableRefactoring = (ExtractAttributeRefactoring)refactoring;
+						oldExtractVariableRefactoring.addReferences(newReferences);
+						for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+							oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+						}
+						inlineExtractAttributeFound = true;
+						break;
+					}
+					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineAttributeRefactoring) {
+						InlineAttributeRefactoring newInlineVariableRefactoring = (InlineAttributeRefactoring)newRefactoring;
+						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+						InlineAttributeRefactoring oldInlineVariableRefactoring = (InlineAttributeRefactoring)refactoring;
+						oldInlineVariableRefactoring.addReferences(newReferences);
+						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+						}
+						inlineExtractAttributeFound = true;
+						break;
+					}
+				}
 				//special handling for replacing rename variable refactorings having statement mapping information
-				int index = refactorings.indexOf(refactoring);
-				refactorings.remove(index);
-				refactorings.add(index, refactoring);
+				if(!inlineExtractAttributeFound) {
+					int index = refactorings.indexOf(newRefactoring);
+					refactorings.remove(index);
+					refactorings.add(index, newRefactoring);
+				}
 			}
 			else {
-				refactorings.add(refactoring);
+				refactorings.add(newRefactoring);
 			}
 		}
 		for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {

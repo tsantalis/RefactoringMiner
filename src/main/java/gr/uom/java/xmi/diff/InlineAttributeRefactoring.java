@@ -36,6 +36,10 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		references.add(mapping);
 	}
 
+	public void addReferences(Set<AbstractCodeMapping> mappings) {
+		references.addAll(mappings);
+	}
+
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
 		boolean alreadyPresent = false; 
 		for(LeafMapping oldLeafMapping : subExpressionMappings) { 

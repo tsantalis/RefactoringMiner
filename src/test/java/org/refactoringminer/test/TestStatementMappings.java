@@ -886,6 +886,27 @@ public class TestStatementMappings {
 	}
 
 	@Test
+	public void testParameterizedTestMappings3() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/dropwizard/dropwizard.git", "9086577e29aba07058619a706701b6d07592aed9", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ParameterizeTestRefactoring) {
+						ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)ref;
+						UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
+						mapperInfo(mapper, actual);
+					}
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testRestructuredStatementMappings3() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

@@ -1874,12 +1874,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-		for(Refactoring r : operationBodyMapper.getRefactoringsAfterPostProcessing()) {
-			if(r instanceof InlineVariableRefactoring) {
-				nonMappedElementsT1--;
-			}
-			if(r instanceof ExtractVariableRefactoring) {
-				nonMappedElementsT2--;
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
+				for(Refactoring r : mapping.getRefactorings()) {
+					if(r instanceof InlineVariableRefactoring) {
+						nonMappedElementsT1--;
+					}
+					if(r instanceof ExtractVariableRefactoring) {
+						nonMappedElementsT2--;
+					}
+				}
 			}
 		}
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||

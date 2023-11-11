@@ -1,0 +1,14 @@
+package testNoPrettyPrintWithLineSeparator() : void -> package testNoPrettyPrint(appendLineSeparator boolean) : void
+line range:37-37==line range:28-28
+line range:38-38==line range:30-30
+line range:35-35==line range:26-26
+line range:41-41==line range:35-36
+package testNoPrettyPrintNoLineSeparator() : void -> package testNoPrettyPrint(appendLineSeparator boolean) : void
+line range:25-25==line range:26-26
+line range:29-29==line range:35-36
+package testPrettyPrintWithLineSeparator() : void -> package testPrettyPrint(appendLineSeparator boolean) : void
+line range:46-46==line range:42-42
+line range:47-51==line range:43-47
+package testPrettyPrintNoLineSeparator() : void -> package testPrettyPrint(appendLineSeparator boolean) : void
+line range:56-56==line range:42-42
+line range:57-61==line range:43-47

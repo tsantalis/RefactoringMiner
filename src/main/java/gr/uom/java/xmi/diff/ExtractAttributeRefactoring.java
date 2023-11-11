@@ -70,6 +70,10 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		return allRefactorings;
 	}
 
+	public void addReferences(Set<AbstractCodeMapping> mappings) {
+		references.addAll(mappings);
+	}
+
 	private static void recursivelyCollectAnonymousClassDeclarations(List<AnonymousClassDeclarationObject> all, List<AnonymousClassDeclarationObject> current) {
 		for(AnonymousClassDeclarationObject anonymous : current) {
 			recursivelyCollectAnonymousClassDeclarations(all, anonymous.getAnonymousClassDeclarations());

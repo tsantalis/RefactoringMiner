@@ -681,18 +681,20 @@ public class ProjectASTDiffer
 				lastStepMappings.addAll(assertThrowsRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof InlineAttributeRefactoring) {
 				InlineAttributeRefactoring inlineAttributeRefactoring = (InlineAttributeRefactoring) refactoring;
-				Tree srcAttrDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, inlineAttributeRefactoring.getVariableDeclaration().getLocationInfo());
-				for (AbstractCodeMapping reference : inlineAttributeRefactoring.getReferences()) {
-					Tree dstStatementTree = TreeUtilFunctions.findByLocationInfo(dstTree,reference.getFragment2().getLocationInfo());
-					new LeafMatcher().match(srcAttrDeclaration,dstStatementTree,mappingStore);
-				}
+				//Tree srcAttrDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, inlineAttributeRefactoring.getVariableDeclaration().getLocationInfo());
+				//for (AbstractCodeMapping reference : inlineAttributeRefactoring.getReferences()) {
+				//	Tree dstStatementTree = TreeUtilFunctions.findByLocationInfo(dstTree,reference.getFragment2().getLocationInfo());
+				//	new LeafMatcher().match(srcAttrDeclaration,dstStatementTree,mappingStore);
+				//}
+				lastStepMappings.addAll(inlineAttributeRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof ExtractAttributeRefactoring) {
 				ExtractAttributeRefactoring extractAttributeRefactoring = (ExtractAttributeRefactoring) refactoring;
-				Tree dstAttrDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, extractAttributeRefactoring.getVariableDeclaration().getLocationInfo());
-				for (AbstractCodeMapping reference : extractAttributeRefactoring.getReferences()) {
-					Tree srcStatementTree = TreeUtilFunctions.findByLocationInfo(srcTree,reference.getFragment1().getLocationInfo());
-					new LeafMatcher().match(srcStatementTree,dstAttrDeclaration,mappingStore);
-				}
+				//Tree dstAttrDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, extractAttributeRefactoring.getVariableDeclaration().getLocationInfo());
+				//for (AbstractCodeMapping reference : extractAttributeRefactoring.getReferences()) {
+				//	Tree srcStatementTree = TreeUtilFunctions.findByLocationInfo(srcTree,reference.getFragment1().getLocationInfo());
+				//	new LeafMatcher().match(srcStatementTree,dstAttrDeclaration,mappingStore);
+				//}
+				lastStepMappings.addAll(extractAttributeRefactoring.getSubExpressionMappings());
 				for (UMLAnonymousClassDiff umlAnonymousClassDiff : extractAttributeRefactoring.getAnonymousClassDiffList()) {
 					processAnonymousClassDiff(srcTree,dstTree,umlAnonymousClassDiff,mappingStore);
 				}

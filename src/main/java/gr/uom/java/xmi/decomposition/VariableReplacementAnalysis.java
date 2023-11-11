@@ -902,23 +902,36 @@ public class VariableReplacementAnalysis {
 					if(replacement.involvesVariable()) {
 						for(UMLAttribute addedAttribute : addedAttributes) {
 							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
-							if(addedAttribute.getName().equals(replacement.getAfter()) && extractInlineCondition(declaration2, replacement, replacement.getBefore())) {
-								ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
-								if(refactorings.contains(refactoring)) {
-									Iterator<Refactoring> it = refactorings.iterator();
-									while(it.hasNext()) {
-										Refactoring ref = it.next();
-										if(ref.equals(refactoring)) {
-											List<Refactoring> anonymousClassDiffRefactorings = ((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
-											refactorings.addAll(anonymousClassDiffRefactorings);
-											break;
+							if(addedAttribute.getName().equals(replacement.getAfter())) {
+								LeafExpression leafExpression = extractInlineCondition(declaration2, replacement, replacement.getBefore());
+								if(leafExpression != null) {
+									ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
+									if(refactorings.contains(refactoring)) {
+										Iterator<Refactoring> it = refactorings.iterator();
+										while(it.hasNext()) {
+											Refactoring ref = it.next();
+											if(ref.equals(refactoring)) {
+												List<Refactoring> anonymousClassDiffRefactorings = ((ExtractAttributeRefactoring)ref).addReference(mapping, classDiff, modelDiff);
+												refactorings.addAll(anonymousClassDiffRefactorings);
+												List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(replacement.getBefore());
+												for(LeafExpression subExpression : subExpressions) {
+													LeafMapping leafMapping = new LeafMapping(subExpression, leafExpression, operation1, operation2);
+													((ExtractAttributeRefactoring)ref).addSubExpressionMapping(leafMapping);
+												}
+												break;
+											}
 										}
 									}
-								}
-								else {
-									List<Refactoring> anonymousClassDiffRefactorings = refactoring.addReference(mapping, classDiff, modelDiff);
-									refactorings.add(refactoring);
-									refactorings.addAll(anonymousClassDiffRefactorings);
+									else {
+										List<Refactoring> anonymousClassDiffRefactorings = refactoring.addReference(mapping, classDiff, modelDiff);
+										refactorings.add(refactoring);
+										refactorings.addAll(anonymousClassDiffRefactorings);
+										List<LeafExpression> subExpressions = mapping.getFragment1().findExpression(replacement.getBefore());
+										for(LeafExpression subExpression : subExpressions) {
+											LeafMapping leafMapping = new LeafMapping(subExpression, leafExpression, operation1, operation2);
+											refactoring.addSubExpressionMapping(leafMapping);
+										}
+									}
 								}
 							}
 							else {
@@ -937,21 +950,34 @@ public class VariableReplacementAnalysis {
 						}
 						for(UMLAttribute removedAttribute : removedAttributes) {
 							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
-							if(removedAttribute.getName().equals(replacement.getBefore()) && extractInlineCondition(declaration1, replacement, replacement.getAfter())) {
-								InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
-								if(refactorings.contains(refactoring)) {
-									Iterator<Refactoring> it = refactorings.iterator();
-									while(it.hasNext()) {
-										Refactoring ref = it.next();
-										if(ref.equals(refactoring)) {
-											((InlineAttributeRefactoring)ref).addReference(mapping);
-											break;
+							if(removedAttribute.getName().equals(replacement.getBefore())) {
+								LeafExpression leafExpression = extractInlineCondition(declaration1, replacement, replacement.getAfter());
+								if(leafExpression != null) {
+									InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, classDiff.getOriginalClass(), classDiff.getNextClass(), insideExtractedOrInlinedMethod);
+									if(refactorings.contains(refactoring)) {
+										Iterator<Refactoring> it = refactorings.iterator();
+										while(it.hasNext()) {
+											Refactoring ref = it.next();
+											if(ref.equals(refactoring)) {
+												((InlineAttributeRefactoring)ref).addReference(mapping);
+												List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(replacement.getAfter());
+												for(LeafExpression subExpression : subExpressions) {
+													LeafMapping leafMapping = new LeafMapping(leafExpression, subExpression, operation1, operation2);
+													((InlineAttributeRefactoring)ref).addSubExpressionMapping(leafMapping);
+												}
+												break;
+											}
 										}
 									}
-								}
-								else {
-									refactoring.addReference(mapping);
-									refactorings.add(refactoring);
+									else {
+										refactoring.addReference(mapping);
+										List<LeafExpression> subExpressions = mapping.getFragment2().findExpression(replacement.getAfter());
+										for(LeafExpression subExpression : subExpressions) {
+											LeafMapping leafMapping = new LeafMapping(leafExpression, subExpression, operation1, operation2);
+											refactoring.addSubExpressionMapping(leafMapping);
+										}
+										refactorings.add(refactoring);
+									}
 								}
 							}
 							else {
@@ -977,21 +1003,82 @@ public class VariableReplacementAnalysis {
 		}
 	}
 
-	private boolean extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString) {
+	private LeafExpression extractInlineCondition(VariableDeclaration variableDeclaration, Replacement replacement, String replacementAsString) {
 		if(variableDeclaration.getInitializer() != null) {
 			if(variableDeclaration.getInitializer().getString().equals(replacementAsString)) {
-				return true;
+				List<LeafExpression> subExpressions = variableDeclaration.getInitializer().findExpression(replacementAsString);
+				if(subExpressions.size() > 0) {
+					return subExpressions.get(0);
+				}
 			}
 			if(replacement instanceof VariableReplacementWithMethodInvocation) {
 				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
 				for(AbstractCall call : variableDeclaration.getInitializer().getMethodInvocations()) {
 					if(call.identicalName(r.getInvokedOperation())) {
-						return true;
+						return call.asLeafExpression();
 					}
 				}
 			}
 		}
-		return false;
+		else if(classDiff != null) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				boolean process = false;
+				if(mapper.getContainer1().hasSetUpAnnotation() && mapper.getContainer2().hasSetUpAnnotation()) {
+					process = true;
+				}
+				else if(mapper.getContainer1().getName().equals("setUp") && mapper.getContainer2().getName().equals("setUp")) {
+					process = true;
+				}
+				else if(mapper.getContainer1().hasTearDownAnnotation() && mapper.getContainer2().hasTearDownAnnotation()) {
+					process = true;
+				}
+				else if(mapper.getContainer1().getName().equals("tearDown") && mapper.getContainer2().getName().equals("tearDown")) {
+					process = true;
+				}
+				else if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
+					process = true;
+				}
+				if(process) {
+					for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
+						if(f1.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+								f1.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+							String rightHandSide = null;
+							if(f1.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+								rightHandSide = f1.getString().substring(f1.getString().indexOf(JAVA.ASSIGNMENT)+1, f1.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+							}
+							else {
+								rightHandSide = f1.getString().substring(f1.getString().indexOf(JAVA.ASSIGNMENT)+1, f1.getString().length());
+							}
+							if(rightHandSide.equals(replacementAsString)) {
+								List<LeafExpression> subExpressions = f1.findExpression(replacementAsString);
+								if(subExpressions.size() > 0) {
+									return subExpressions.get(0);
+								}
+							}
+						}
+					}
+					for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
+						if(f2.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+								f2.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+							String rightHandSide = null;
+							if(f2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
+								rightHandSide = f2.getString().substring(f2.getString().indexOf(JAVA.ASSIGNMENT)+1, f2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
+							}
+							else {
+								rightHandSide = f2.getString().substring(f2.getString().indexOf(JAVA.ASSIGNMENT)+1, f2.getString().length());
+							}
+							if(rightHandSide.equals(replacementAsString)) {
+								List<LeafExpression> subExpressions = f2.findExpression(replacementAsString);
+								if(subExpressions.size() > 0) {
+									return subExpressions.get(0);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 	public Set<RenameVariableRefactoring> getVariableRenames() {
 		return variableRenames;

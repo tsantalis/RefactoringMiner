@@ -15,13 +15,15 @@ import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, LeafMappingProvider {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;
 	private Set<AbstractCodeMapping> references;
+	private List<LeafMapping> subExpressionMappings;
 	private boolean insideExtractedOrInlinedMethod;
 	private List<UMLAnonymousClassDiff> anonymousClassDiffList;
 
@@ -31,6 +33,7 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 		this.anonymousClassDiffList = new ArrayList<>();
 	}
@@ -74,6 +77,20 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 		}
 	}
 
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
+	}
+
 	public RefactoringType getRefactoringType() {
 		return RefactoringType.EXTRACT_ATTRIBUTE;
 	}
@@ -88,6 +105,10 @@ public class ExtractAttributeRefactoring implements Refactoring, ReferenceBasedR
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	public List<UMLAnonymousClassDiff> getAnonymousClassDiffList() {

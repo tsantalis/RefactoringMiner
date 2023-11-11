@@ -864,11 +864,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testParameterizedTestMappings2() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/apache/camel.git, b57b72d0e85f2340cb2d55be44d2175c0caa7cc1, camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt",
+		"https://github.com/dropwizard/dropwizard.git, 9086577e29aba07058619a706701b6d07592aed9, dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt"
+	})
+	public void testParameterizedTestMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/apache/camel.git", "b57b72d0e85f2340cb2d55be44d2175c0caa7cc1", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commit, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				for (Refactoring ref : refactorings) {
@@ -881,28 +885,7 @@ public class TestStatementMappings {
 			}
 		});
 		
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt"));
-		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
-	}
-
-	@Test
-	public void testParameterizedTestMappings3() throws Exception {
-		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
-		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/dropwizard/dropwizard.git", "9086577e29aba07058619a706701b6d07592aed9", new File(REPOS), new RefactoringHandler() {
-			@Override
-			public void handle(String commitId, List<Refactoring> refactorings) {
-				for (Refactoring ref : refactorings) {
-					if(ref instanceof ParameterizeTestRefactoring) {
-						ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)ref;
-						UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
-						mapperInfo(mapper, actual);
-					}
-				}
-			}
-		});
-		
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "dropwizard-9086577e29aba07058619a706701b6d07592aed9.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

@@ -1123,7 +1123,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								if(mappings == maxMappings && replacements == minReplacements) {
 									filteredMapperSet2.add(mapper);
 								}
-								else if(mappings < maxMappings && replacements == minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
+								else if(mappings < maxMappings && replacements >= minReplacements && mapper.getOperation1().getName().contains(mapper.getOperation2().getName())) {
 									filteredMapperSet2.add(mapper);
 								}
 							}
@@ -1872,6 +1872,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+			}
+		}
+		for(Refactoring r : operationBodyMapper.getRefactoringsAfterPostProcessing()) {
+			if(r instanceof InlineVariableRefactoring) {
+				nonMappedElementsT1--;
+			}
+			if(r instanceof ExtractVariableRefactoring) {
+				nonMappedElementsT2--;
 			}
 		}
 		return (mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||

@@ -12,12 +12,14 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.UMLAbstractClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
+public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring, LeafMappingProvider {
 	private UMLAttribute attributeDeclaration;
 	private UMLAbstractClass originalClass;
 	private UMLAbstractClass nextClass;
 	private Set<AbstractCodeMapping> references;
+	private List<LeafMapping> subExpressionMappings;
 	private boolean insideExtractedOrInlinedMethod;
 
 	public InlineAttributeRefactoring(UMLAttribute variableDeclaration, UMLAbstractClass originalClass, UMLAbstractClass nextClass,
@@ -26,11 +28,26 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
 
 	public void addReference(AbstractCodeMapping mapping) {
 		references.add(mapping);
+	}
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
 	}
 
 	public RefactoringType getRefactoringType() {
@@ -47,6 +64,10 @@ public class InlineAttributeRefactoring implements Refactoring, ReferenceBasedRe
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	public boolean isInsideExtractedOrInlinedMethod() {

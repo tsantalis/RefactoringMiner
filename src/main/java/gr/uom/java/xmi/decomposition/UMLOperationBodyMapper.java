@@ -4783,6 +4783,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(minStatementMapping.getFragment1().equals(leaf1)) {
 										leafIterator1.remove();
 									}
+									else {
+										leaves1ToBeRemoved.add(minStatementMapping.getFragment1());
+									}
 									checkForSplitVariableDeclaration(minStatementMapping.getFragment1(), leaves1, leaves2, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves2ToBeRemoved);
 									checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);
 								}
@@ -5189,6 +5192,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 													leaves1.remove(minStatementMapping.getFragment1());
 													if(minStatementMapping.getFragment2().equals(leaf2)) {
 														leafIterator2.remove();
+													}
+													else {
+														leaves2ToBeRemoved.add(minStatementMapping.getFragment2());
 													}
 												}
 												checkForMergedVariableDeclaration(minStatementMapping.getFragment2(), leaves1, minStatementMapping, parameterToArgumentMap, equalNumberOfAssertions, leaves1ToBeRemoved);

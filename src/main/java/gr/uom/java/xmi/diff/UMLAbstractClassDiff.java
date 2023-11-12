@@ -797,6 +797,21 @@ public abstract class UMLAbstractClassDiff {
 								candidate.getOperationBefore(), candidate.getOperationAfter(), candidate.getReferences(), false);
 						if(!refactorings.contains(ref)) {
 							refactorings.add(ref);
+							List<Refactoring> refactoringsToBeRemoved = new ArrayList<>();
+							for(Refactoring r : refactorings) {
+								if(r instanceof InlineAttributeRefactoring) {
+									InlineAttributeRefactoring inline = (InlineAttributeRefactoring)r;
+									if(inline.getVariableDeclaration().equals(a1)) {
+										for(LeafMapping leafMapping : inline.getSubExpressionMappings()) {
+											if(candidate.getRenamedVariableDeclaration().getVariableName().equals(leafMapping.getFragment2().getString())) {
+												refactoringsToBeRemoved.add(r);
+												break;
+											}
+										}
+									}
+								}
+							}
+							refactorings.removeAll(refactoringsToBeRemoved);
 						}
 					}
 					else {

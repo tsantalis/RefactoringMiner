@@ -39,7 +39,7 @@ public class OperationInvocation extends AbstractCall {
 	private String methodName;
 	private List<String> subExpressions = new ArrayList<String>();
 	private volatile int hashCode = 0;
-	private static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
+	public static Map<String, String> PRIMITIVE_WRAPPER_CLASS_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
     private static List<String> PRIMITIVE_TYPE_LIST;

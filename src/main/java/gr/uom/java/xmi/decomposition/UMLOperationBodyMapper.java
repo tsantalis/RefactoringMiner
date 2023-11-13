@@ -17,6 +17,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
+import static gr.uom.java.xmi.decomposition.OperationInvocation.PRIMITIVE_WRAPPER_CLASS_MAP;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.InitializerReplacement;
@@ -11381,8 +11382,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean variablesStartWithSameCase(String s1, String s2, ReplacementInfo replacementInfo) {
 		if(s1.length() > 0 && s2.length() > 0) {
 			if((s1.contains(".") || s2.contains(".")) && (replacementInfo.argumentizedString1.equals(JAVA.RETURN_SPACE + s1 + JAVA.STATEMENT_TERMINATION) ||
-					replacementInfo.argumentizedString2.equals(JAVA.RETURN_SPACE + s2 + JAVA.STATEMENT_TERMINATION)))
+					replacementInfo.argumentizedString2.equals(JAVA.RETURN_SPACE + s2 + JAVA.STATEMENT_TERMINATION))) {
 				return false;
+			}
+			else if(PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s1) != PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s2)) {
+				return false;
+			}
 		}
 		return true;
 	}

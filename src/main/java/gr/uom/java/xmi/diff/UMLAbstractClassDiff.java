@@ -675,7 +675,8 @@ public abstract class UMLAbstractClassDiff {
 			UMLAttribute a2 = findAttributeInNextClass(merge.getAfter());
 			Set<CandidateMergeVariableRefactoring> set = mergeMap.get(merge);
 			for(CandidateMergeVariableRefactoring candidate : set) {
-				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
+				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null &&
+						mergedAttributes.size() > 0 && mergedAttributes.iterator().next().getClassName().equals(a2.getClassName())) {
 					MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, getOriginalClassName(), getNextClassName(), set);
 					if(!refactorings.contains(ref)) {
 						refactorings.add(ref);

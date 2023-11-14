@@ -2187,7 +2187,7 @@ public class UMLModelDiff {
 				}
 				UMLAttribute a2 = diff.findAttributeInNextClass(merge.getAfter());
 				Set<CandidateMergeVariableRefactoring> set = mergeMap.get(merge);
-				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
+				if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null && a2.getClassName().equals(diff.getNextClassName())) {
 					int movedAttributeCount = diff.movedAttributeCount(set.iterator().next());
 					if(movedAttributeCount != mergedAttributes.size()) {
 						MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, diff.getOriginalClassName(), diff.getNextClassName(), set);

@@ -1595,7 +1595,9 @@ public class VariableReplacementAnalysis {
 					candidate.setOriginalVariableDeclaration(v1.getKey());
 				if(v2 != null)
 					candidate.setRenamedVariableDeclaration(v2.getKey());
-				this.candidateAttributeRenames.add(candidate);
+				if(!existsConflictingExtractVariableRefactoring(candidate)) {
+					this.candidateAttributeRenames.add(candidate);
+				}
 			}
 		}
 	}
@@ -2571,6 +2573,18 @@ public class VariableReplacementAnalysis {
 						ref.getOldVariable().equals(parameterDiff.getRemovedParameter().getVariableDeclaration())) {
 					return true;
 					
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean existsConflictingExtractVariableRefactoring(CandidateAttributeRefactoring ref) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extractVariableRef = (ExtractVariableRefactoring)refactoring;
+				if(extractVariableRef.getVariableDeclaration().equals(ref.getRenamedVariableDeclaration())) {
+					return true;
 				}
 			}
 		}

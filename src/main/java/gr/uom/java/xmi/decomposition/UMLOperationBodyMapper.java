@@ -6231,7 +6231,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					elseCondition = true;
 				}
 				else if(isIfBranch(grandParent, grandParent.getParent()) && !hasElseBranch(grandParent.getParent()) && !hasElseIfBranch(grandParent.getParent())) {
-					elseCondition = true;
+					int identicalCount = 0;
+					for(AbstractCodeMapping mapping : mappingSet) {
+						if(mapping.getFragment2().getString().contains(mapping.getFragment1().getString()) || mapping.getFragment1().getString().contains(mapping.getFragment2().getString())) {
+							identicalCount++;
+						}
+					}
+					if(identicalCount == 0)
+						elseCondition = true;
 				}
 			}
 			if(ifFound && (elseIfFound || (elseFound && elseCondition)) && (ifElseIfChain(parentMap.keySet()) || passDueToIfBecomingElseIf)) {

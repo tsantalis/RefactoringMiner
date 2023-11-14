@@ -1214,6 +1214,17 @@ public abstract class UMLAbstractClassDiff {
 				return enumConstant;
 			}
 		}
+		if(modelDiff != null && !originalClass.isTopLevel()) {
+			//search attribute declaration in parent class
+			for(UMLClassDiff diff : modelDiff.getCommonClassDiffList()) {
+				if(originalClass.getName().startsWith(diff.getOriginalClassName()) && !originalClass.getName().equals(diff.getOriginalClassName())) {
+					UMLAttribute attribute = diff.findAttributeInOriginalClass(attributeName);
+					if(attribute != null) {
+						return attribute;
+					}
+				}
+			}
+		}
 		return null;
 	}
 
@@ -1226,6 +1237,17 @@ public abstract class UMLAbstractClassDiff {
 		for(UMLEnumConstant enumConstant : nextClass.getEnumConstants()) {
 			if(enumConstant.getName().equals(attributeName) && addedEnumConstants.contains(enumConstant)) {
 				return enumConstant;
+			}
+		}
+		if(modelDiff != null && !nextClass.isTopLevel()) {
+			//search attribute declaration in parent class
+			for(UMLClassDiff diff : modelDiff.getCommonClassDiffList()) {
+				if(nextClass.getName().startsWith(diff.getNextClassName()) && !nextClass.getName().equals(diff.getNextClassName())) {
+					UMLAttribute attribute = diff.findAttributeInNextClass(attributeName);
+					if(attribute != null) {
+						return attribute;
+					}
+				}
 			}
 		}
 		return null;

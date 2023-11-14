@@ -6230,6 +6230,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else if(isElseBranch(grandParent, grandParent.getParent())) {
 					elseCondition = true;
 				}
+				else if(isIfBranch(grandParent, grandParent.getParent()) && !hasElseBranch(grandParent.getParent()) && !hasElseIfBranch(grandParent.getParent())) {
+					elseCondition = true;
+				}
 			}
 			if(ifFound && (elseIfFound || (elseFound && elseCondition)) && (ifElseIfChain(parentMap.keySet()) || passDueToIfBecomingElseIf)) {
 				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();
@@ -11385,7 +11388,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					replacementInfo.argumentizedString2.equals(JAVA.RETURN_SPACE + s2 + JAVA.STATEMENT_TERMINATION))) {
 				return false;
 			}
-			else if(PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s1) != PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s2)) {
+			else if(PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s1) != PRIMITIVE_WRAPPER_CLASS_MAP.values().contains(s2) &&
+					Character.isUpperCase(s1.charAt(0)) != Character.isUpperCase(s2.charAt(0))) {
 				return false;
 			}
 		}

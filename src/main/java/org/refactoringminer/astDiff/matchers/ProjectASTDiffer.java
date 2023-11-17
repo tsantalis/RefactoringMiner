@@ -210,12 +210,32 @@ public class ProjectASTDiffer
 			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
 				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
-				new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
+				if (srcExp == null || dstExp == null) continue;
+				if (srcExp.isIsomorphicTo(dstExp) && isTestRelated(srcExp) && isTestRelated(dstExp))
+					new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
+				else
+					new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
 			}
 		}
 		ExtendedMultiMappingStore allMappings = input.getAllMappings();
 		allMappings.replaceWithOptimizedMappings(lastStepMappingStore);
 		allMappings.replaceWithOptimizedMappings(optimizationData.optimizationMappingStore);
+	}
+
+	private static boolean isTestRelated(Tree srcTree) {
+		Tree p1 = TreeUtilFunctions.getParentUntilType(srcTree, Constants.METHOD_DECLARATION);
+		if (p1 == null) return false;
+		for (Tree child : p1.getChildren()) {
+			if (child.getType().name.equals(Constants.MARKER_ANNOTATION))
+			{
+				if (!child.getChildren().isEmpty())
+				{
+					Tree c0 = child.getChild(0);
+					if (c0.getLabel().equals("Test") || c0.getLabel().equals("ParameterizedTest")) return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void processEnumConstants(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<UMLEnumConstant, UMLEnumConstant>> commonEnumConstants, ExtendedMultiMappingStore mappingStore) {

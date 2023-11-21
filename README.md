@@ -169,16 +169,16 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **October 25, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **November 20, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11879  | 23  | 255  | 0.998  | 0.979|
+|**Total**|11882  | 23  | 255  | 0.998  | 0.979|
 |Extract Method|1006  |  1  | 24  | 0.999  | 0.977|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
-|Replace Attribute|26  |  0  |  1  | 1.000  | 0.963|
+|Replace Attribute|27  |  0  |  1  | 1.000  | 0.964|
 |Rename Method|378  |  4  | 22  | 0.990  | 0.945|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
 |Move Method|350  |  3  |  9  | 0.992  | 0.975|
@@ -199,10 +199,10 @@ As of **October 25, 2023** the precision and recall of the tool on an oracle con
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
 |Extract Variable|258  |  0  |  0  | 1.000  | 1.000|
-|Extract Attribute|19  |  0  |  0  | 1.000  | 1.000|
+|Extract Attribute|21  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|99  |  0  |  0  | 1.000  | 1.000|
-|Inline Attribute| 8  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|326  |  3  | 11  | 0.991  | 0.967|
+|Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
+|Rename Variable|325  |  3  | 11  | 0.991  | 0.967|
 |Rename Parameter|486  |  2  | 26  | 0.996  | 0.949|
 |Rename Attribute|134  |  0  | 15  | 1.000  | 0.899|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
@@ -216,7 +216,7 @@ As of **October 25, 2023** the precision and recall of the tool on an oracle con
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|426  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|796  |  2  |  7  | 0.997  | 0.991|
+|Change Variable Type|795  |  2  |  7  | 0.997  | 0.991|
 |Change Parameter Type|643  |  1  | 11  | 0.998  | 0.983|
 |Change Attribute Type|228  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|330  |  0  |  3  | 1.000  | 0.991|
@@ -247,7 +247,7 @@ As of **October 25, 2023** the precision and recall of the tool on an oracle con
 |Add Attribute Modifier|136  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|130  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|61  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|35  |  0  |  0  | 1.000  | 1.000|
 |Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|

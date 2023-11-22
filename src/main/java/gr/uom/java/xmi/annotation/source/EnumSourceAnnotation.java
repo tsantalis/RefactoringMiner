@@ -27,7 +27,7 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
         if (annotation.isNormalAnnotation() && annotation.getMemberValuePairs().containsKey("names")) {
             if (annotation.getMemberValuePairs().containsKey("mode")) {
                 String mode = annotation.getMemberValuePairs().get("mode").getString();
-                if (mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) {
+                if ((mode.equals("EXCLUDE") || mode.equals("Mode.EXCLUDE") || mode.equals("EnumSource.Mode.EXCLUDE")) && enumClassDeclaration != null) {
                     for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
                         if (!isExcluded(annotation, constant)) {
                             testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
@@ -39,7 +39,7 @@ public class EnumSourceAnnotation extends SourceAnnotation implements SingleMemb
             } else {
                 testParameters.addAll(extractIncludedNames(annotation));
             }
-        } else {
+        } else if (enumClassDeclaration != null) {
             for (UMLEnumConstant constant : enumClassDeclaration.getEnumConstants()) {
                 testParameters.add(Collections.singletonList(sanitizeLiteral(constant.getName())));
             }

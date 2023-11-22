@@ -265,7 +265,7 @@ public abstract class AbstractCodeMapping {
 	}
 
 	private boolean isVariableReferenced(ExtractVariableRefactoring parentRefactoring, VariableDeclaration variableDeclaration) {
-		if(parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
+		if(parentRefactoring.getVariableDeclaration().getInitializer() != null && parentRefactoring.getVariableDeclaration().getInitializer().findExpression(variableDeclaration.getVariableName()).size() > 0) {
 			return true;
 		}
 		if(parentRefactoring.getVariableDeclaration().isAttribute()) {

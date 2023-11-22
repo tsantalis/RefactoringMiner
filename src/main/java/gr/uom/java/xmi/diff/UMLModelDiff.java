@@ -3174,7 +3174,9 @@ public class UMLModelDiff {
 										}
 									}
 								}
-								attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
+								if(umlClassDiff != null) {
+									attributes.addAll(umlClassDiff.originalClassAttributesOfType(addedOperation.getClassName()));
+								}
 							}
 							Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 							for(UMLAttribute attribute : attributes) {

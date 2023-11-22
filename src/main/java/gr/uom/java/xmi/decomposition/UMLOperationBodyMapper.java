@@ -4600,10 +4600,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
 					if(matchingLeaves1.size() > matchingLeaves2.size() && matchingLeaves2.size() > 0 && !allMatchingLeaves1InMethodScope && !allMatchingLeaves2InMethodScope) {
 						processLeaves(matchingLeaves1, matchingLeaves2, parameterToArgumentMap, isomorphic);
+						boolean alreadyRemoved = false;
 						for(AbstractCodeMapping mapping : this.mappings) {
 							leaves2.remove(mapping.getFragment2());
-							if(mapping.getFragment1().equals(leaf1)) {
+							if(mapping.getFragment1().equals(leaf1) && !alreadyRemoved) {
 								leafIterator1.remove();
+								alreadyRemoved = true;
 							}
 						}
 						continue;
@@ -4870,10 +4872,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;
 					if(matchingLeaves2.size() > matchingLeaves1.size() && matchingLeaves1.size() > 0 && !allMatchingLeaves1InMethodScope && !allMatchingLeaves2InMethodScope) {
 						processLeaves(matchingLeaves1, matchingLeaves2, parameterToArgumentMap, isomorphic);
+						boolean alreadyRemoved = false;
 						for(AbstractCodeMapping mapping : this.mappings) {
 							leaves1.remove(mapping.getFragment1());
-							if(mapping.getFragment2().equals(leaf2)) {
+							if(mapping.getFragment2().equals(leaf2) && !alreadyRemoved) {
 								leafIterator2.remove();
+								alreadyRemoved = true;
 							}
 						}
 						continue;

@@ -2423,7 +2423,7 @@ public class StringBasedHeuristics {
 						break;
 					}
 				}
-				else if(c1.contains(".equals(") && c1.contains(")") && c2.contains(".equals(") && c2.contains(")")) {
+				else if(c1.contains(".equals(") && c1.endsWith(")") && c2.contains(".equals(") && c2.endsWith(")")) {
 					//check for invoker-argument swap
 					String arg1 = c1.substring(c1.indexOf(".equals(") + 8, c1.lastIndexOf(")"));
 					String arg2 = c2.substring(c2.indexOf(".equals(") + 8, c2.lastIndexOf(")"));
@@ -2547,7 +2547,7 @@ public class StringBasedHeuristics {
 						break;
 					}
 				}
-				else if(subCondition1.contains(".equals(") && subCondition1.contains(")") && subCondition2.contains(".equals(") && subCondition2.contains(")")) {
+				else if(subCondition1.contains(".equals(") && subCondition1.endsWith(")") && subCondition2.contains(".equals(") && subCondition2.endsWith(")")) {
 					//check for invoker-argument swap
 					String arg1 = subCondition1.substring(subCondition1.indexOf(".equals(") + 8, subCondition1.lastIndexOf(")"));
 					String arg2 = subCondition2.substring(subCondition2.indexOf(".equals(") + 8, subCondition2.lastIndexOf(")"));

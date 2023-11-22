@@ -211,13 +211,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		fileContentsCurrent.keySet().removeAll(identicalFiles.values());
 		//second iteration to find renamed/moved files with identical contents
 		for(String key1 : fileContentsBefore.keySet()) {
-			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1)) {
+			if(!identicalFiles.containsKey(key1) && !nonIdenticalFiles.containsKey(key1) && key1.contains("/")) {
 				String prefix1 = key1.substring(0, key1.indexOf("/"));
 				String fileBefore = fileContentsBefore.get(key1);
 				boolean matchWithConsistentSourceFolderChangeFound = false;
 				List<String> matches = new ArrayList<String>();
 				for(String key2 : fileContentsCurrent.keySet()) {
-					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2)) {
+					if(!identicalFiles.containsValue(key2) && !nonIdenticalFiles.containsValue(key2) && key2.contains("/")) {
 						String prefix2 = key2.substring(0, key2.indexOf("/"));
 						String fileAfter = fileContentsCurrent.get(key2);
 						if(matchCondition(fileBefore, fileAfter, astDiff)) {

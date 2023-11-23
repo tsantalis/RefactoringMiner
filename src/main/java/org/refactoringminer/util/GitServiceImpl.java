@@ -13,10 +13,11 @@ import java.util.stream.StreamSupport;
 
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.diff.DiffAlgorithm;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.Edit;
-import org.eclipse.jgit.diff.DiffEntry.ChangeType;
 import org.eclipse.jgit.diff.Edit.Type;
 import org.eclipse.jgit.diff.RenameDetector;
 import org.eclipse.jgit.lib.ObjectId;
@@ -340,7 +341,14 @@ public class GitServiceImpl implements GitService {
         	DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
     		diffFormatter.setRepository(repository);
     		diffFormatter.setContext(0);
-    		
+    		diffFormatter.setDetectRenames(true);
+    		diffFormatter.setDiffAlgorithm(DiffAlgorithm.getAlgorithm(DiffAlgorithm.SupportedAlgorithm.MYERS));
+
+    		RenameDetector rd = new RenameDetector(repository);
+    		rd.setRenameScore(50);
+    		rd.addAll(diffs);
+    		diffs = rd.compute();
+
         	int addedLines = 0;
     		int deletedLines = 0;
         	for (DiffEntry entry : diffs) {

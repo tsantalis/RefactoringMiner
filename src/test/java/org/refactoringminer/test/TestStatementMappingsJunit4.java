@@ -1152,6 +1152,66 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testExtractMethodStatementMappings20() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/phishman3579/java-algorithms-implementation.git", "4ffcb5a65e6d24c58ef75a5cd7692e875619548d", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "phishman-4ffcb5a65e6d24c58ef75a5cd7692e875619548d.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testExtractMethodStatementMappings21() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/phishman3579/java-algorithms-implementation.git", "f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "phishman-f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSlidedStatementMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

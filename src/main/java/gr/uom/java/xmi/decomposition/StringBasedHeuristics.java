@@ -55,7 +55,7 @@ public class StringBasedHeuristics {
 
 	protected static boolean containsMethodSignatureOfAnonymousClass(String s) {
 		String[] lines = s.split("\\n");
-		if(s.contains(" -> ")) {
+		if(s.contains(JAVA.LAMBDA_ARROW)) {
 			if(lines.length > 1)
 				return true;
 			else if(lines.length == 1 && s.endsWith(JAVA.STATEMENT_TERMINATION))
@@ -1710,7 +1710,7 @@ public class StringBasedHeuristics {
 			int replacedArguments = 0;
 			boolean expressionReplaced = false;
 			for(Replacement replacement : replacementInfo.getReplacements()) {
-				if(replacement.getBefore().contains(" -> ") != replacement.getAfter().contains(" -> ")) {
+				if(replacement.getBefore().contains(JAVA.LAMBDA_ARROW) != replacement.getAfter().contains(JAVA.LAMBDA_ARROW)) {
 					if(arguments1.contains(replacement.getBefore()) && arguments2.contains(replacement.getAfter())) {
 						replacedArguments++;
 					}

@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -196,7 +198,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			sb.append(")");
 		}
 		if(parameters.size() > 0 || hasParentheses) {
-			sb.append(" -> ");
+			sb.append(JAVA.LAMBDA_ARROW);
 		}
 		if(expression != null) {
 			sb.append(expression.getString());

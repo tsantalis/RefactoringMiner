@@ -60,8 +60,6 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	public int compareTo(LeafMapping o) {
 		CompositeReplacement compositeReplacement1 = this.containsCompositeReplacement();
 		CompositeReplacement compositeReplacement2 = o.containsCompositeReplacement();
-		boolean concatenationReplacement1 = this.containsReplacement(ReplacementType.CONCATENATION) && !this.identicalAfterConcatenation();
-		boolean concatenationReplacement2 = o.containsReplacement(ReplacementType.CONCATENATION) && !o.identicalAfterConcatenation();
 		if(compositeReplacement1 != null || compositeReplacement2 != null) {
 			if(compositeReplacement1 != null && compositeReplacement2 == null) {
 				return -1;
@@ -72,14 +70,6 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			else {
 				return -Integer.compare(compositeReplacement1.getTotalAdditionallyMatchedStatements(),
 						compositeReplacement2.getTotalAdditionallyMatchedStatements());
-			}
-		}
-		else if(concatenationReplacement1 != concatenationReplacement2) {
-			if(concatenationReplacement1 && !concatenationReplacement2) {
-				return 1;
-			}
-			else {
-				return -1;
 			}
 		}
 		else {

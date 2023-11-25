@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.replacement.MethodInvocationWithClassInstan
 import gr.uom.java.xmi.decomposition.replacement.ObjectCreationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
+import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
@@ -781,6 +782,26 @@ public abstract class AbstractCodeMapping {
 				}
 			}
 			if(temp.equals(fragment2.getString())) {
+				return true;
+			}
+		}
+		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
+			boolean listToArrayConversion = false;
+			for(Replacement r : replacements) {
+				if(r instanceof VariableReplacementWithMethodInvocation) {
+					VariableReplacementWithMethodInvocation replacement = (VariableReplacementWithMethodInvocation)r;
+					AbstractCall call = replacement.getInvokedOperation();
+					if(call.getName().equals("toArray") && call.getExpression() != null) {
+						if(replacement.getDirection().equals(Direction.VARIABLE_TO_INVOCATION) && call.getExpression().equals(r.getBefore())) {
+							listToArrayConversion = true;
+						}
+						else if(replacement.getDirection().equals(Direction.INVOCATION_TO_VARIABLE) && call.getExpression().equals(r.getAfter())) {
+							listToArrayConversion = true;
+						}
+					}
+				}
+			}
+			if(listToArrayConversion) {
 				return true;
 			}
 		}

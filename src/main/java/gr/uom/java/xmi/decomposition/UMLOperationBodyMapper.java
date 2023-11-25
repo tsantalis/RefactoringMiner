@@ -4613,15 +4613,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForInline(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator2 = leaves2.listIterator(); leafIterator2.hasNext();) {
 						AbstractCodeFragment leaf2 = leafIterator2.next();
-						if(mappingSet.size() == 1 && parentMapper != null && operationInvocation != null && this.callsToExtractedMethod > matchingLeaves1.size() && matchingLeaves1.size() > 0) {
+						if((mappingSet.size() == 1 || mappings.size() == 1) && parentMapper != null && operationInvocation != null && this.callsToExtractedMethod > matchingLeaves1.size() && matchingLeaves1.size() > 0) {
 							//find previous and next mapping in parentMapper
 							AbstractCodeMapping mappingBefore = null;
 							AbstractCodeMapping mappingAfter = null;
+							AbstractCodeMapping first = mappings.size() == 1 ? mappings.iterator().next() : mappingSet.iterator().next();
 							for(AbstractCodeMapping pMapping : parentMapper.mappings) {
-								if(pMapping.getFragment1().getLocationInfo().getStartLine() <= mappingSet.iterator().next().getFragment1().getLocationInfo().getStartLine()) {
+								if(pMapping.getFragment1().getLocationInfo().getStartLine() <= first.getFragment1().getLocationInfo().getStartLine()) {
 									mappingBefore = pMapping;
 								}
-								else if(pMapping.getFragment1().getLocationInfo().getStartLine() >= mappingSet.iterator().next().getFragment1().getLocationInfo().getStartLine()) {
+								else if(pMapping.getFragment1().getLocationInfo().getStartLine() >= first.getFragment1().getLocationInfo().getStartLine()) {
 									mappingAfter = pMapping;
 									break;
 								}
@@ -4745,7 +4746,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					if(skipCurrentIteration(matchingLeaves1)) {
+					if(matchingLeaves1.size() > 0 && skipCurrentIteration(matchingLeaves1)) {
 						continue;
 					}
 					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForInline(parentMapping)) : new TreeSet<LeafMapping>();
@@ -4921,7 +4922,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						continue;
 					}
-					if(skipCurrentIteration(matchingLeaves1)) {
+					if(matchingLeaves1.size() > 1 && skipCurrentIteration(matchingLeaves1)) {
 						continue;
 					}
 					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
@@ -5147,7 +5148,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					if(skipCurrentIteration(matchingLeaves1)) {
+					if(matchingLeaves1.size() > 1 && skipCurrentIteration(matchingLeaves1)) {
 						continue;
 					}
 					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
@@ -5306,7 +5307,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean skipCurrentIteration(List<AbstractCodeFragment> matchingLeaves1) {
-		if(mappings.size() == 1 && parentMapper != null && operationInvocation != null && this.callsToExtractedMethod > matchingLeaves1.size() && matchingLeaves1.size() > 1) {
+		if(mappings.size() == 1 && parentMapper != null && operationInvocation != null && this.callsToExtractedMethod > matchingLeaves1.size()) {
 			//find previous and next mapping in parentMapper
 			AbstractCodeMapping mappingBefore = null;
 			AbstractCodeMapping mappingAfter = null;

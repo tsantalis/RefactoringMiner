@@ -66,8 +66,10 @@ public main(args String[]) : void -> private collectGarbage() : void
 line range:575-575==line range:720-720
 public main(args String[]) : void -> private collectGarbage() : void
 line range:594-594==line range:720-720
-line range:607-607==line range:721-721
-line range:620-620==line range:722-722
+public main(args String[]) : void -> private collectGarbage() : void
+line range:607-607==line range:720-720
+public main(args String[]) : void -> private collectGarbage() : void
+line range:620-620==line range:720-720
 public main(args String[]) : void -> public main(args String[]) : void
 line range:62-62==line range:62-62
 line range:63-63==line range:63-63

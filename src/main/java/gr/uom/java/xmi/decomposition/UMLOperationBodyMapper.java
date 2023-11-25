@@ -130,7 +130,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(invocation == null) {
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
-			if(invocation != null && (invocation.actualString().contains(" -> ") ||
+			if(invocation != null && (invocation.actualString().contains(JAVA.LAMBDA_ARROW) ||
 					invocation.actualString().contains("::"))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {
@@ -160,7 +160,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(invocation == null) {
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
-			if(invocation != null && (invocation.actualString().contains(" -> ") ||
+			if(invocation != null && (invocation.actualString().contains(JAVA.LAMBDA_ARROW) ||
 					invocation.actualString().contains("::"))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {
@@ -1246,7 +1246,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
 									if(invocation != null && invocation.getName().equals("add")) {
 										for(String argument : invocation.arguments()) {
-											if(streamAPICall.arguments().get(0).startsWith(argument + " -> ")) {
+											if(streamAPICall.arguments().get(0).startsWith(argument + JAVA.LAMBDA_ARROW)) {
 												additionallyMatchedStatements2.add(leaf2);
 												break;
 											}
@@ -1260,7 +1260,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(invocation != null && invocation.getExpression() != null) {
 										if(invocation.getName().equals("next")) {
 											for(VariableDeclaration variableDeclaration : leaf2.getVariableDeclarations()) {
-												if(streamAPICall.arguments().get(0).startsWith(variableDeclaration.getVariableName() + " -> ")) {
+												if(streamAPICall.arguments().get(0).startsWith(variableDeclaration.getVariableName() + JAVA.LAMBDA_ARROW)) {
 													additionallyMatchedStatements2.add(leaf2);
 													break;
 												}
@@ -1515,7 +1515,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									AbstractCall invocation = leaf1.invocationCoveringEntireFragment();
 									if(invocation != null && invocation.getName().equals("add")) {
 										for(String argument : invocation.arguments()) {
-											if(streamAPICall.arguments().get(0).startsWith(argument + " -> ")) {
+											if(streamAPICall.arguments().get(0).startsWith(argument + JAVA.LAMBDA_ARROW)) {
 												additionallyMatchedStatements1.add(leaf1);
 												break;
 											}
@@ -1529,7 +1529,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(invocation != null && invocation.getExpression() != null) {
 										if(invocation.getName().equals("next")) {
 											for(VariableDeclaration variableDeclaration : leaf1.getVariableDeclarations()) {
-												if(streamAPICall.arguments().get(0).startsWith(variableDeclaration.getVariableName() + " -> ")) {
+												if(streamAPICall.arguments().get(0).startsWith(variableDeclaration.getVariableName() + JAVA.LAMBDA_ARROW)) {
 													additionallyMatchedStatements1.add(leaf1);
 													break;
 												}
@@ -10928,13 +10928,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean matchAsLambdaExpressionArgument(String s1, String s2, Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, AbstractCodeFragment statement1) {
-		if(parentMapper != null && s2.contains(" -> ")) {
+		if(parentMapper != null && s2.contains(JAVA.LAMBDA_ARROW)) {
 			for(String parameterName : parameterToArgumentMap.keySet()) {
 				String argument = parameterToArgumentMap.get(parameterName);
 				if(!parameterName.equals(argument) && !argument.isEmpty() && s2.contains(argument)) {
 					for(VariableDeclaration parameter : container2.getParameterDeclarationList()) {
 						if(parameterName.equals(parameter.getVariableName())) {
-							String lambdaArrow = "() -> ";
+							String lambdaArrow = "()" + JAVA.LAMBDA_ARROW;
 							String supplierGet = ".get()";
 							UMLType parameterType = parameter.getType();
 							if(parameterType != null && parameterType.getClassType().equals("Supplier") && s2.contains(supplierGet) && s2.contains(lambdaArrow)) {
@@ -11948,7 +11948,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize2 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
 						}
-						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
+						if(invocation != null && classDiff != null && invocation.actualString().contains(JAVA.LAMBDA_ARROW)) {
 							for(LambdaExpressionObject lambda : leaf2.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
 									if((matchingOperation = classDiff.matchesOperation(inv, addedOperations, container2)) != null && !matchingOperation.equals(container2) && !matchesRemovedOperationWithIdenticalBody(matchingOperation)) {
@@ -11982,7 +11982,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							mappedLeavesSize += matchingLeaves > 0 ? matchingLeaves : 1;
 							leaveSize1 += matchingOperation.getBody() != null ? matchingOperation.getBody().getCompositeStatement().getLeaves().size() : 0;
 						}
-						if(invocation != null && classDiff != null && invocation.actualString().contains(" -> ")) {
+						if(invocation != null && classDiff != null && invocation.actualString().contains(JAVA.LAMBDA_ARROW)) {
 							for(LambdaExpressionObject lambda : leaf1.getLambdas()) {
 								for(AbstractCall inv : lambda.getAllOperationInvocations()) {
 									if((matchingOperation = classDiff.matchesOperation(inv, removedOperations, container1)) != null && !matchingOperation.equals(container1) && !matchesAddedOperationWithIdenticalBody(matchingOperation)) {

@@ -367,7 +367,7 @@ public abstract class AbstractCall extends LeafExpression {
 			String argument1 = arguments1.get(i);
 			String argument2 = arguments2.get(i);
 			boolean argumentConcatenated = false;
-			if(argument1.contains(" + ") || argument2.contains(" + ")) {
+			if(argument1.contains(JAVA.STRING_CONCATENATION) || argument2.contains(JAVA.STRING_CONCATENATION)) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(argument2)));
 				Set<String> intersection = new LinkedHashSet<String>(tokens1);

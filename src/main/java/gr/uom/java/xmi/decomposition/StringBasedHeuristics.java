@@ -1273,7 +1273,7 @@ public class StringBasedHeuristics {
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if(s1.contains(" + ") && s2.contains(" + ")) {
+			if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>();
@@ -1356,7 +1356,7 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			else if(s1.contains(" + ") && !s2.contains(" + ") && !s1.contains(",") && s2.contains(",")) {
+			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && !s1.contains(",") && s2.contains(",")) {
 				List<String> tokens1 = Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1));
 				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
 				List<String> commonTokens = new ArrayList<>();
@@ -1394,7 +1394,7 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			else if((s1.contains(" + ") ^ s2.contains(" + ")) && s1.contains(",") && s2.contains(",")) {
+			else if((s1.contains(JAVA.STRING_CONCATENATION) ^ s2.contains(JAVA.STRING_CONCATENATION)) && s1.contains(",") && s2.contains(",")) {
 				List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1));
 				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
 				List<String> commonTokens = new ArrayList<>();
@@ -1575,7 +1575,7 @@ public class StringBasedHeuristics {
 					if(arg1.equals(arg2)) {
 						equalArguments++;
 					}
-					else if(!arg1.contains(" + ") && arg2.contains(" + ")) {
+					else if(!arg1.contains(JAVA.STRING_CONCATENATION) && arg2.contains(JAVA.STRING_CONCATENATION)) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg2)));
 						StringBuilder sb = new StringBuilder();
@@ -1609,7 +1609,7 @@ public class StringBasedHeuristics {
 							concatenatedArguments++;
 						}
 					}
-					else if(!arg2.contains(" + ") && arg1.contains(" + ")) {
+					else if(!arg2.contains(JAVA.STRING_CONCATENATION) && arg1.contains(JAVA.STRING_CONCATENATION)) {
 						boolean tokenMatchesArgument = false;
 						Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(arg1)));
 						StringBuilder sb = new StringBuilder();

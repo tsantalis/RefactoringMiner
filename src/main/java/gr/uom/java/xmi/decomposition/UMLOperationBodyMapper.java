@@ -131,7 +131,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
 			if(invocation != null && (invocation.actualString().contains(JAVA.LAMBDA_ARROW) ||
-					invocation.actualString().contains("::"))) {
+					invocation.actualString().contains(JAVA.METHOD_REFERENCE))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {
 						streamAPICalls.add(statement);
@@ -161,7 +161,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				invocation = statement.assignmentInvocationCoveringEntireStatement();
 			}
 			if(invocation != null && (invocation.actualString().contains(JAVA.LAMBDA_ARROW) ||
-					invocation.actualString().contains("::"))) {
+					invocation.actualString().contains(JAVA.METHOD_REFERENCE))) {
 				for(AbstractCall inv : statement.getMethodInvocations()) {
 					if(streamAPIName(inv.getName())) {
 						streamAPICalls.add(inv);

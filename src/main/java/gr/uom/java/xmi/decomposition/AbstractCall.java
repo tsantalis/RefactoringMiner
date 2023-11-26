@@ -344,7 +344,7 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 			boolean lambdaReplacement = false;
-			if(argument1.contains("->") && argument2.contains("->")) {
+			if(argument1.contains(JAVA.LAMBDA_ARROW) && argument2.contains(JAVA.LAMBDA_ARROW)) {
 				for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 					if(lambdaMapper.nonMappedElementsT1() == 0 && lambdaMapper.nonMappedElementsT2() == 0) {
 						lambdaReplacement = true;
@@ -840,7 +840,7 @@ public abstract class AbstractCall extends LeafExpression {
 				for(int i=0; i<arguments1.size(); i++) {
 					String argument1 = arguments1.get(i);
 					String argument2 = arguments2.get(i);
-					if(argument1.contains("->") && argument2.contains("->")) {
+					if(argument1.contains(JAVA.LAMBDA_ARROW) && argument2.contains(JAVA.LAMBDA_ARROW)) {
 						for(UMLOperationBodyMapper lambdaMapper : lambdaMappers) {
 							if(lambdaMapper.nonMappedElementsT1() > 0 && lambdaMapper.nonMappedElementsT2() > 0 &&
 									!lambdaMapper.containsCallToExtractedMethod() && !lambdaMapper.containsCallToInlinedMethod()) {
@@ -1059,14 +1059,14 @@ public abstract class AbstractCall extends LeafExpression {
 			if(s2WithoutGenerics.equals(s1))
 				return true;
 		}
-		if(s1.contains("::") && !s2.contains("::")) {
-			String methodReferenceName = s1.substring(s1.indexOf("::") + 2, s1.length());
+		if(s1.contains(JAVA.METHOD_REFERENCE) && !s2.contains(JAVA.METHOD_REFERENCE)) {
+			String methodReferenceName = s1.substring(s1.indexOf(JAVA.METHOD_REFERENCE) + 2, s1.length());
 			if(s2.endsWith(methodReferenceName + "()")) {
 				return true;
 			}
 		}
-		if(s2.contains("::") && !s1.contains("::")) {
-			String methodReferenceName = s2.substring(s2.indexOf("::") + 2, s2.length());
+		if(s2.contains(JAVA.METHOD_REFERENCE) && !s1.contains(JAVA.METHOD_REFERENCE)) {
+			String methodReferenceName = s2.substring(s2.indexOf(JAVA.METHOD_REFERENCE) + 2, s2.length());
 			if(s1.endsWith(methodReferenceName + "()")) {
 				return true;
 			}

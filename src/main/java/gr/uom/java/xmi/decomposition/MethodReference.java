@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class MethodReference extends AbstractCall {
     public String actualString() {
 		StringBuilder sb = new StringBuilder();
 		if(expression != null) {
-			sb.append(expression).append("::");
+			sb.append(expression).append(JAVA.METHOD_REFERENCE);
 		}
 		sb.append(getName());
 		return sb.toString();

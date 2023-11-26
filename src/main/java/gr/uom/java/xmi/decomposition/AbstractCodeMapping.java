@@ -870,7 +870,7 @@ public abstract class AbstractCodeMapping {
 	private boolean stringConcatMatch(AbstractExpression initializer, String replacedExpression) {
 		String s1 = initializer.getString();
 		String s2 = replacedExpression;
-		if(s1.contains(" + ") && s2.contains(" + ")) {
+		if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
 			Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 			Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 			Set<String> intersection = new LinkedHashSet<String>(tokens1);

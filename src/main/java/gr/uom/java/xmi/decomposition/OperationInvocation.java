@@ -8,6 +8,8 @@ import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
@@ -298,7 +300,7 @@ public class OperationInvocation extends AbstractCall {
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
-    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains("->") && !arg.contains("::") && arg.indexOf(")") < arg.length()) {
+    		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(JAVA.LAMBDA_ARROW) && !arg.contains(JAVA.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
     				inferredArgumentTypes.add(UMLType.extractTypeObject(cast));

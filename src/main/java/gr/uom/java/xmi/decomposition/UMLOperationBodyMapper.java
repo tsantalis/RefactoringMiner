@@ -893,6 +893,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	private boolean isInvolvedInSplitConditional(AbstractCodeMapping mapping) {
+		for(Refactoring r : this.refactorings) {
+			if(r instanceof SplitConditionalRefactoring) {
+				SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+				if(split.getOriginalConditional().equals(mapping.getFragment1()) && split.getSplitConditionals().contains(mapping.getFragment2())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean isSplitConditionalExpression(AbstractCodeMapping mapping) {
 		for(Refactoring r : this.refactorings) {
 			if(r instanceof SplitConditionalRefactoring) {
@@ -4041,6 +4053,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+		}
+		//check for possibly missed split conditional
+		Set<AbstractCodeMapping> mappingsToBeRemoved = new LinkedHashSet<AbstractCodeMapping>();
+		for(AbstractCodeMapping mapping : new LinkedHashSet<>(this.mappings)) {
+			if(mapping.getFragment1() instanceof CompositeStatementObject && mapping.containsReplacement(ReplacementType.CONDITIONAL) && !isInvolvedInSplitConditional(mapping)) {
+				String s1 = mapping.getFragment1().getString();
+				for(CompositeStatementObject innerNode2 : innerNodes2) {
+					if(innerNode2.getExpressions().size() > 0 && s1.contains(innerNode2.getExpressions().get(0).getString()) &&
+							!mapping.getFragment2().getString().contains(innerNode2.getExpressions().get(0).getString())) {
+						String s2 = innerNode2.getString();
+						List<AbstractCodeFragment> allUnmatchedNodes1 = new ArrayList<>();
+						allUnmatchedNodes1.addAll(innerNodes1);
+						allUnmatchedNodes1.addAll(leaves1);
+						List<AbstractCodeFragment> allUnmatchedNodes2 = new ArrayList<>();
+						allUnmatchedNodes2.addAll(innerNodes2);
+						allUnmatchedNodes2.addAll(leaves2);
+						ReplacementInfo replacementInfo = initializeReplacementInfo(mapping.getFragment1(), innerNode2, allUnmatchedNodes1, allUnmatchedNodes2);
+						mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
+						boolean commonConditional = commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, mapping.getFragment1(), innerNode2, this);
+						if(commonConditional) {
+							double score = computeScore((CompositeStatementObject)mapping.getFragment1(), innerNode2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
+							CompositeStatementObjectMapping newMapping = createCompositeMapping((CompositeStatementObject)mapping.getFragment1(), innerNode2, parameterToArgumentMap, score);
+							newMapping.addReplacements(replacementInfo.getReplacements());
+							newMapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+							addMapping(newMapping);
+							mappingsToBeRemoved.add(mapping);
+						}
+					}
+				}
+			}
+		}
+		for(AbstractCodeMapping mapping : mappingsToBeRemoved) {
+			removeMapping(mapping);
 		}
 	}
 

@@ -2875,7 +2875,7 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
-					if(ifNodes1.size() - identicalIfNodes1 < ifNodes2.size() - identicalIfNodes2) {
+					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2) {
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
@@ -3016,7 +3016,8 @@ public class StringBasedHeuristics {
 								}
 							}
 						}
-						if(splitConditional) {
+						boolean equalIfNodeNumberWithInvertedConditional = ifNodes1.size() == ifNodes2.size() && invertedConditionals > 0;
+						if(splitConditional && !equalIfNodeNumberWithInvertedConditional) {
 							List<Replacement> compositeReplacements = info.getReplacements(ReplacementType.COMPOSITE);
 							Set<AbstractCodeFragment> splitConditionals = new LinkedHashSet<>();
 							if(statement2 instanceof AbstractExpression) {

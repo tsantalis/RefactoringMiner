@@ -157,10 +157,12 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the name of the inlined variable"));
 		}
+		/*
 		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
+		*/
 		return ranges;
 	}
 
@@ -170,10 +172,12 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the initializer of the inlined variable"));
 		}
+		/*
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with inlined variable")
 				.setCodeElement(operationAfter.toString()));
+		*/
 		return ranges;
 	}
 }

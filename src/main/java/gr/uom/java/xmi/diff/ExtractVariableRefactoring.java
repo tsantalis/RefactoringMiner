@@ -161,10 +161,12 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment1().codeRange().setDescription("statement with the initializer of the extracted variable"));
 		}
+		/*
 		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
+		*/
 		return ranges;
 	}
 
@@ -177,10 +179,12 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the name of the extracted variable"));
 		}
+		/*
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with extracted variable")
 				.setCodeElement(operationAfter.toString()));
+		*/
 		return ranges;
 	}
 }

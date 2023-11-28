@@ -151,10 +151,15 @@ public class ChangeVariableTypeRefactoring implements Refactoring, ReferenceBase
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		for(AbstractCodeMapping mapping : variableReferences) {
+			ranges.add(mapping.getFragment1().codeRange().setDescription("statement referencing the original variable"));
+		}
+		/*
 		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
+		*/
 		return ranges;
 	}
 
@@ -164,10 +169,15 @@ public class ChangeVariableTypeRefactoring implements Refactoring, ReferenceBase
 		ranges.add(changedTypeVariable.codeRange()
 				.setDescription("changed-type variable declaration")
 				.setCodeElement(changedTypeVariable.toString()));
+		for(AbstractCodeMapping mapping : variableReferences) {
+			ranges.add(mapping.getFragment2().codeRange().setDescription("statement referencing the variable with changed type"));
+		}
+		/*
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with changed variable type")
 				.setCodeElement(operationAfter.toString()));
+		*/
 		return ranges;
 	}
 }

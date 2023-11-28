@@ -10,8 +10,9 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 
-public class RenameAttributeRefactoring implements Refactoring {
+public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
 	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;
@@ -35,8 +36,12 @@ public class RenameAttributeRefactoring implements Refactoring {
 		return renamedAttribute;
 	}
 
-	public Set<CandidateAttributeRefactoring> getAttributeRenames() {
-		return attributeRenames;
+	public Set<AbstractCodeMapping> getReferences() {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		for(CandidateAttributeRefactoring candidate : attributeRenames) {
+			references.addAll(candidate.getReferences());
+		}
+		return references;
 	}
 
 	public String getClassNameBefore() {

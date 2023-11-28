@@ -7,10 +7,11 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class MergeAttributeRefactoring implements Refactoring {
+public class MergeAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private Set<UMLAttribute> mergedAttributes;
 	private UMLAttribute newAttribute;
 	private Set<CandidateMergeVariableRefactoring> attributeMerges;
@@ -34,8 +35,12 @@ public class MergeAttributeRefactoring implements Refactoring {
 		return newAttribute;
 	}
 
-	public Set<CandidateMergeVariableRefactoring> getAttributeMerges() {
-		return attributeMerges;
+	public Set<AbstractCodeMapping> getReferences() {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		for(CandidateMergeVariableRefactoring candidate : attributeMerges) {
+			references.addAll(candidate.getReferences());
+		}
+		return references;
 	}
 
 	public String getClassNameBefore() {

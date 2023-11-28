@@ -7,10 +7,11 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.UMLAttribute;
 
-public class SplitAttributeRefactoring implements Refactoring {
+public class SplitAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute oldAttribute;
 	private Set<UMLAttribute> splitAttributes;
 	private Set<CandidateSplitVariableRefactoring> attributeSplits;
@@ -34,8 +35,12 @@ public class SplitAttributeRefactoring implements Refactoring {
 		return splitAttributes;
 	}
 
-	public Set<CandidateSplitVariableRefactoring> getAttributeSplits() {
-		return attributeSplits;
+	public Set<AbstractCodeMapping> getReferences() {
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
+		for(CandidateSplitVariableRefactoring candidate : attributeSplits) {
+			references.addAll(candidate.getReferences());
+		}
+		return references;
 	}
 
 	public String getClassNameBefore() {

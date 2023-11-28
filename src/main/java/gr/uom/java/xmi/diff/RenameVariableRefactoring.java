@@ -154,10 +154,15 @@ public class RenameVariableRefactoring implements Refactoring, ReferenceBasedRef
 		ranges.add(originalVariable.codeRange()
 				.setDescription("original variable declaration")
 				.setCodeElement(originalVariable.toString()));
+		for(AbstractCodeMapping mapping : variableReferences) {
+			ranges.add(mapping.getFragment1().codeRange().setDescription("statement referencing the original variable"));
+		}
+		/*
 		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
 				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
+		*/
 		return ranges;
 	}
 
@@ -167,10 +172,15 @@ public class RenameVariableRefactoring implements Refactoring, ReferenceBasedRef
 		ranges.add(renamedVariable.codeRange()
 				.setDescription("renamed variable declaration")
 				.setCodeElement(renamedVariable.toString()));
+		for(AbstractCodeMapping mapping : variableReferences) {
+			ranges.add(mapping.getFragment2().codeRange().setDescription("statement referencing the renamed variable"));
+		}
+		/*
 		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
 				.setDescription(elementType + " declaration with renamed variable")
 				.setCodeElement(operationAfter.toString()));
+		*/
 		return ranges;
 	}
 }

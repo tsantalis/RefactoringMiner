@@ -440,6 +440,13 @@ public class ExtractOperationDetection {
 					}
 				}
 			}
+			if(operationBodyMapper.isNested() && operationBodyMapper.getParentMapper() != null) {
+				if(operationBodyMapper.getParentMapper().getMappings().size() == 1 &&
+						operationBodyMapper.getParentMapper().getContainer1().isDelegate() != null &&
+						operationBodyMapper.getParentMapper().getContainer2().isDelegate() != null) {
+					return false;
+				}
+			}
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1();

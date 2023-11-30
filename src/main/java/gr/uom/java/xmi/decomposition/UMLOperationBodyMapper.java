@@ -6090,6 +6090,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				} 
 			} 
 		} 
+		if(nested && parentMapper.getParentMapper() != null) {
+			for(AbstractCodeFragment leaf : parentMapper.getParentMapper().getNonMappedLeavesT2()) { 
+				AbstractCall call = leaf.invocationCoveringEntireFragment();
+				if(call != null && call.matchesOperation(parentMapper.getContainer2(), parentMapper.getParentMapper().getContainer2(), classDiff, modelDiff)) {
+					statementContainingOperationInvocation = leaf; 
+					break; 
+				}
+			}
+			for(AbstractCodeMapping mapping : parentMapper.getParentMapper().getMappings()) { 
+				if(statementContainingOperationInvocation != null) { 
+					if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) { 
+						return mapping; 
+					} 
+					if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null && 
+							statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+							mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) { 
+						return mapping; 
+					} 
+				}
+			}
+		}
 		//Inline Method scenario 
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) { 
 			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
@@ -6780,6 +6801,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean allUnderTheSameParent(Set<? extends AbstractCodeMapping> mappings) {
+		if(nested) {
+			return true;
+		}
 		CompositeStatementObject parent1 = null;
 		CompositeStatementObject parent2 = null;
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();

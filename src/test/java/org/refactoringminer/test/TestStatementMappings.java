@@ -171,6 +171,7 @@ public class TestStatementMappings {
 			"https://github.com/infinispan/infinispan.git, 043030723632627b0908dca6b24dae91d3dfd938, infinispan-043030723632627b0908dca6b24dae91d3dfd938.txt",
 			"https://github.com/google/j2objc.git, d05d92de40542e85f9f26712d976e710be82914e, j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt",
 			"https://github.com/facebook/buck.git, 7e104c3ed4b80ec8e9b72356396f879d1067cc40, buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt",
+			"https://github.com/k9mail/k-9.git, 9d44f0e06232661259681d64002dd53c7c43099d, k9mail-9d44f0e06232661259681d64002dd53c7c43099d.txt", // FIX 3472-3472==3541-3541
 			"https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt" // WithIntermediateDelegate
 	})
 	public void testNestedExtractMethodStatementMappings(String url, String commitId, String testResultFileName) throws Exception {

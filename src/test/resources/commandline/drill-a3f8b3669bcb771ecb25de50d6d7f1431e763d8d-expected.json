@@ -114,13 +114,13 @@
 		"codeElement": "cpu : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 143,
-		"endLine": 145,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public create(cpu long) : NodeResources"
+		"startLine": 144,
+		"endLine": 144,
+		"startColumn": 5,
+		"endColumn": 26,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -133,13 +133,13 @@
 		"codeElement": "cpu : int"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 143,
-		"endLine": 145,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public create(cpu int) : NodeResources"
+		"startLine": 144,
+		"endLine": 144,
+		"startColumn": 5,
+		"endColumn": 26,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -156,13 +156,13 @@
 		"codeElement": "cpu : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 147,
-		"endLine": 149,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public create(cpu long, memory long) : NodeResources"
+		"startLine": 148,
+		"endLine": 148,
+		"startColumn": 5,
+		"endColumn": 60,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -175,13 +175,13 @@
 		"codeElement": "cpu : int"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 147,
-		"endLine": 149,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public create(cpu int, memory long) : NodeResources"
+		"startLine": 148,
+		"endLine": 148,
+		"startColumn": 5,
+		"endColumn": 60,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -198,13 +198,13 @@
 		"codeElement": "numVirtualCpu : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 51,
-		"endLine": 53,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu long)"
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 57,
+		"codeElementType": "CONSTRUCTOR_INVOCATION",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -217,13 +217,13 @@
 		"codeElement": "numVirtualCpu : int"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 51,
-		"endLine": 53,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public NodeResources(memoryInBytes long, numVirtualCpu int)"
+		"startLine": 52,
+		"endLine": 52,
+		"startColumn": 5,
+		"endColumn": 57,
+		"codeElementType": "CONSTRUCTOR_INVOCATION",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -240,13 +240,13 @@
 		"codeElement": "numVirtualCpu : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 55,
-		"endLine": 62,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu long)"
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
@@ -259,13 +259,13 @@
 		"codeElement": "numVirtualCpu : int"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/resourcemgr/NodeResources.java",
-		"startLine": 55,
-		"endLine": 62,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public NodeResources(version int, memoryInBytes long, numVirtualCpu int)"
+		"startLine": 61,
+		"endLine": 61,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -324,13 +324,13 @@
 		"codeElement": "endpointCollectionMap : Map<DrillbitEndpoint,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 105,
-		"endLine": 113,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 108,
+		"endLine": 110,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
@@ -343,13 +343,13 @@
 		"codeElement": "endpointCollectionMap : Map<DrillNode,List<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 109,
-		"endLine": 117,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 112,
+		"endLine": 114,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -366,13 +366,13 @@
 		"codeElement": "entry : Map.Entry<DrillbitEndpoint,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 105,
-		"endLine": 113,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 109,
+		"endLine": 109,
+		"startColumn": 9,
+		"endColumn": 68,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
@@ -385,13 +385,13 @@
 		"codeElement": "entry : Map.Entry<DrillNode,List<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 109,
-		"endLine": 117,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public getNodeMap() : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 113,
+		"endLine": 113,
+		"startColumn": 9,
+		"endColumn": 66,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -408,13 +408,22 @@
 		"codeElement": "operatorsMemory : Long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 65,
-		"endLine": 83,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+		"startLine": 71,
+		"endLine": 71,
+		"startColumn": 11,
+		"endColumn": 125,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 72,
+		"endLine": 72,
+		"startColumn": 11,
+		"endColumn": 34,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -427,13 +436,22 @@
 		"codeElement": "operatorsMemory : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 67,
-		"endLine": 81,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+		"startLine": 78,
+		"endLine": 78,
+		"startColumn": 7,
+		"endColumn": 121,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 79,
+		"endLine": 79,
+		"startColumn": 7,
+		"endColumn": 30,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -499,15 +517,6 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement with the initializer of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 78,
-		"endLine": 82,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
@@ -527,15 +536,6 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement with the name of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/ZKQueueParallelizer.java",
-		"startLine": 80,
-		"endLine": 86,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with extracted variable",
-		"codeElement": "private getMinorFragCountPerDrillbit(currFragment Wrapper, operator PhysicalOperator) : void"
 }]
 },
 {
@@ -1464,13 +1464,13 @@
 		"codeElement": "endpointUUID : String"
 }, {
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
-		"startLine": 280,
-		"endLine": 284,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public setEndpointUUID(endpointUUID String) : PlanFragment"
+		"startLine": 282,
+		"endLine": 282,
+		"startColumn": 9,
+		"endColumn": 42,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
@@ -1483,13 +1483,13 @@
 		"codeElement": "assignedEndpointUUID : String"
 }, {
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
-		"startLine": 280,
-		"endLine": 284,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public setAssignedEndpointUUID(assignedEndpointUUID String) : PlanFragment"
+		"startLine": 282,
+		"endLine": 282,
+		"startColumn": 9,
+		"endColumn": 58,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -1506,13 +1506,13 @@
 		"codeElement": "initialAllocation : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
-		"startLine": 90,
-		"endLine": 101,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, initialAllocation long)"
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 5,
+		"endColumn": 54,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
@@ -1525,13 +1525,13 @@
 		"codeElement": "optimalMemAllocation : long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/ops/OperatorStats.java",
-		"startLine": 90,
-		"endLine": 101,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public OperatorStats(operatorId int, operatorType int, inputCount int, allocator BufferAllocator, optimalMemAllocation long)"
+		"startLine": 100,
+		"endLine": 100,
+		"startColumn": 5,
+		"endColumn": 57,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -1548,13 +1548,13 @@
 		"codeElement": "optimalMemAllocation : long"
 }, {
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
-		"startLine": 180,
-		"endLine": 184,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public setOptimalMemAllocation(optimalMemAllocation long) : OperatorProfile"
+		"startLine": 182,
+		"endLine": 182,
+		"startColumn": 9,
+		"endColumn": 58,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
@@ -1567,13 +1567,13 @@
 		"codeElement": "maxAllocation : long"
 }, {
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/OperatorProfile.java",
-		"startLine": 180,
-		"endLine": 184,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public setMaxAllocation(maxAllocation long) : OperatorProfile"
+		"startLine": 182,
+		"endLine": 182,
+		"startColumn": 9,
+		"endColumn": 44,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -1590,13 +1590,22 @@
 		"codeElement": "other : Object"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
-		"startLine": 38,
-		"endLine": 49,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public equals(other Object) : boolean"
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 67,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 39,
+		"endLine": 41,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
@@ -1609,13 +1618,22 @@
 		"codeElement": "obj : Object"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
-		"startLine": 38,
-		"endLine": 70,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public equals(obj Object) : boolean"
+		"startLine": 45,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
+		"startLine": 39,
+		"endLine": 41,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -1632,13 +1650,13 @@
 		"codeElement": "otherEndpoint : DrillbitEndpoint"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
-		"startLine": 38,
-		"endLine": 49,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public equals(other Object) : boolean"
+		"startLine": 43,
+		"endLine": 43,
+		"startColumn": 5,
+		"endColumn": 67,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
@@ -1651,13 +1669,13 @@
 		"codeElement": "other : DrillbitEndpoint"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/common/DrillNode.java",
-		"startLine": 38,
-		"endLine": 70,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public equals(obj Object) : boolean"
+		"startLine": 45,
+		"endLine": 45,
+		"startColumn": 5,
+		"endColumn": 56,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 }
 ]

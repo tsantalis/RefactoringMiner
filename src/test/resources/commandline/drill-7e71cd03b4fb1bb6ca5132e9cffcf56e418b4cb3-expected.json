@@ -543,13 +543,22 @@
 		"codeElement": "defn : MinorFragmentDefn"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 246,
-		"endLine": 252,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private getBufferedOps(map Multimap<String,PhysicalOperator>, defn MinorFragmentDefn) : void"
+		"startLine": 248,
+		"endLine": 248,
+		"startColumn": 7,
+		"endColumn": 72,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 250,
+		"endLine": 250,
+		"startColumn": 9,
+		"endColumn": 79,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
@@ -562,13 +571,22 @@
 		"codeElement": "defn : QueryWorkUnit.MinorFragmentDefn"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 62,
-		"endLine": 68,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void"
+		"startLine": 64,
+		"endLine": 64,
+		"startColumn": 5,
+		"endColumn": 70,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 66,
+		"endLine": 66,
+		"startColumn": 7,
+		"endColumn": 77,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -585,13 +603,13 @@
 		"codeElement": "defn : MinorFragmentDefn"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 211,
-		"endLine": 227,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private buildBufferedOpMap() : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 224,
+		"endLine": 224,
+		"startColumn": 9,
+		"endColumn": 35,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
@@ -604,13 +622,13 @@
 		"codeElement": "defn : QueryWorkUnit.MinorFragmentDefn"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 97,
-		"endLine": 113,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>>"
+		"startLine": 110,
+		"endLine": 110,
+		"startColumn": 7,
+		"endColumn": 33,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -627,13 +645,13 @@
 		"codeElement": "entry : Entry<String,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 94,
-		"endLine": 119,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private planMemory() : void"
+		"startLine": 117,
+		"endLine": 117,
+		"startColumn": 9,
+		"endColumn": 65,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
@@ -646,13 +664,13 @@
 		"codeElement": "entry : Map.Entry<String,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 43,
-		"endLine": 60,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void"
+		"startLine": 58,
+		"endLine": 58,
+		"startColumn": 7,
+		"endColumn": 81,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -957,13 +975,22 @@
 		"codeElement": "nodeMap : Map<String,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 94,
-		"endLine": 119,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private planMemory() : void"
+		"startLine": 108,
+		"endLine": 108,
+		"startColumn": 7,
+		"endColumn": 52,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 116,
+		"endLine": 118,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
@@ -976,13 +1003,22 @@
 		"codeElement": "nodeMap : Map<String,Collection<PhysicalOperator>>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 43,
-		"endLine": 60,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void"
+		"startLine": 49,
+		"endLine": 49,
+		"startColumn": 5,
+		"endColumn": 50,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 57,
+		"endLine": 59,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {

@@ -294,13 +294,13 @@
 		"codeElement": "OPTIQ_FORMAT : String"
 }, {
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
-		"startLine": 93,
-		"endLine": 112,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public testPlanMatchingPatterns(query String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+		"startLine": 95,
+		"endLine": 95,
+		"startColumn": 5,
+		"endColumn": 114,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
@@ -313,13 +313,13 @@
 		"codeElement": "planFormat : String"
 }, {
 		"filePath": "exec/java-exec/src/test/java/org/apache/drill/PlanTestBase.java",
-		"startLine": 108,
-		"endLine": 128,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "private testPlanMatchingPatterns(query String, planFormat String, expectedPatterns Pattern[], excludedPatterns Pattern[]) : void"
+		"startLine": 111,
+		"endLine": 111,
+		"startColumn": 5,
+		"endColumn": 112,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 }
 ]

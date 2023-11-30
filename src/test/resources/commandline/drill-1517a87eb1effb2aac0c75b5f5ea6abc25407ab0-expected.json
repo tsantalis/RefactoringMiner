@@ -174,13 +174,13 @@
 		"codeElement": "endpoint : DrillbitEndpoint"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
-		"startLine": 50,
-		"endLine": 62,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public createDirectPlan(endpoint DrillbitEndpoint, records List<T>, clazz Class<T>) : PhysicalPlan"
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 5,
+		"endColumn": 48,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
@@ -193,13 +193,13 @@
 		"codeElement": "context : QueryContext"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
-		"startLine": 53,
-		"endLine": 69,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan"
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 5,
+		"endColumn": 68,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -328,15 +328,6 @@
 		"codeElementType": "RETURN_STATEMENT",
 		"description": "statement with the initializer of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 166,
-		"endLine": 220,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -356,15 +347,6 @@
 		"codeElementType": "RETURN_STATEMENT",
 		"description": "statement with the name of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 187,
-		"endLine": 246,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with extracted variable",
-		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
 }]
 },
 {
@@ -633,13 +615,13 @@
 		"codeElement": "endpoint : DrillbitEndpoint"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
-		"startLine": 50,
-		"endLine": 62,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public createDirectPlan(endpoint DrillbitEndpoint, records List<T>, clazz Class<T>) : PhysicalPlan"
+		"startLine": 53,
+		"endLine": 53,
+		"startColumn": 5,
+		"endColumn": 48,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
@@ -652,13 +634,13 @@
 		"codeElement": "context : QueryContext"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/sql/DirectPlan.java",
-		"startLine": 53,
-		"endLine": 69,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "public createDirectPlan(context QueryContext, records List<T>, clazz Class<T>) : PhysicalPlan"
+		"startLine": 56,
+		"endLine": 56,
+		"startColumn": 5,
+		"endColumn": 68,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -675,13 +657,22 @@
 		"codeElement": "totalMemory : Long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 166,
-		"endLine": 220,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+		"startLine": 191,
+		"endLine": 191,
+		"startColumn": 9,
+		"endColumn": 86,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 194,
+		"endLine": 194,
+		"startColumn": 11,
+		"endColumn": 120,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -694,13 +685,22 @@
 		"codeElement": "totalBufferedOperatorsMemoryReq : Long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 187,
-		"endLine": 246,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "private ensureOperatorMemoryWithinLimits(memoryPerOperator Map<DrillNode,List<Pair<PhysicalOperator,Long>>>, nodeResourceMap Map<DrillNode,NodeResources>, nodeLimit long) : Map<DrillNode,List<Pair<PhysicalOperator,Long>>>"
+		"startLine": 209,
+		"endLine": 209,
+		"startColumn": 9,
+		"endColumn": 106,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 220,
+		"endLine": 222,
+		"startColumn": 11,
+		"endColumn": 147,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 }
 ]

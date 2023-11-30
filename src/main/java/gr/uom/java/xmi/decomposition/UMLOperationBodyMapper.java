@@ -6801,9 +6801,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean allUnderTheSameParent(Set<? extends AbstractCodeMapping> mappings) {
-		if(nested) {
-			return true;
-		}
 		CompositeStatementObject parent1 = null;
 		CompositeStatementObject parent2 = null;
 		Set<AbstractCodeMapping> commonParentMappings = new LinkedHashSet<>();

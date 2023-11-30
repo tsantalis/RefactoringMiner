@@ -474,13 +474,31 @@
 		"codeElement": "key : MultiKey"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 273,
-		"endLine": 338,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 305,
+		"endLine": 305,
+		"startColumn": 11,
+		"endColumn": 36,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 302,
+		"endLine": 307,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 303,
+		"endLine": 306,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
@@ -493,13 +511,31 @@
 		"codeElement": "bitUUID : String"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 11,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 304,
+		"endLine": 316,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 305,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -516,13 +552,49 @@
 		"codeElement": "newDrillbitSet : Collection<DrillbitEndpoint>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 273,
-		"endLine": 338,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 276,
+		"endLine": 283,
+		"startColumn": 7,
+		"endColumn": 12,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 312,
+		"endLine": 312,
+		"startColumn": 9,
+		"endColumn": 47,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 293,
+		"endLine": 300,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 303,
+		"endLine": 306,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 315,
+		"endLine": 323,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
@@ -535,13 +607,49 @@
 		"codeElement": "activeEndpointsUUID : Map<String,DrillbitEndpoint>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with changed variable type",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 285,
+		"endLine": 286,
+		"startColumn": 7,
+		"endColumn": 89,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 321,
+		"endLine": 321,
+		"startColumn": 9,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 299,
+		"endLine": 301,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 305,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 324,
+		"endLine": 332,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
 }]
 },
 {
@@ -1183,15 +1291,6 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement with the initializer of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 273,
-		"endLine": 338,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
@@ -1211,15 +1310,6 @@
 		"codeElementType": "EXPRESSION_STATEMENT",
 		"description": "statement with the name of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with extracted variable",
-		"codeElement": "private updateEndpoints() : void"
 }]
 },
 {
@@ -1434,13 +1524,31 @@
 		"codeElement": "key : MultiKey"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 273,
-		"endLine": 338,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 305,
+		"endLine": 305,
+		"startColumn": 11,
+		"endColumn": 36,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 302,
+		"endLine": 307,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 303,
+		"endLine": 306,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
@@ -1453,13 +1561,31 @@
 		"codeElement": "bitUUID : String"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 314,
+		"endLine": 314,
+		"startColumn": 11,
+		"endColumn": 40,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 304,
+		"endLine": 316,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 305,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {
@@ -1476,13 +1602,49 @@
 		"codeElement": "newDrillbitSet : Collection<DrillbitEndpoint>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 273,
-		"endLine": 338,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 276,
+		"endLine": 283,
+		"startColumn": 7,
+		"endColumn": 12,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 312,
+		"endLine": 312,
+		"startColumn": 9,
+		"endColumn": 47,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 293,
+		"endLine": 300,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 303,
+		"endLine": 306,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 315,
+		"endLine": 323,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
@@ -1495,13 +1657,49 @@
 		"codeElement": "activeEndpointsUUID : Map<String,DrillbitEndpoint>"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
-		"startLine": 282,
-		"endLine": 347,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "method declaration with renamed variable",
-		"codeElement": "private updateEndpoints() : void"
+		"startLine": 285,
+		"endLine": 286,
+		"startColumn": 7,
+		"endColumn": 89,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 321,
+		"endLine": 321,
+		"startColumn": 9,
+		"endColumn": 52,
+		"codeElementType": "EXPRESSION_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 299,
+		"endLine": 301,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 305,
+		"endLine": 315,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 324,
+		"endLine": 332,
+		"startColumn": 9,
+		"endColumn": 10,
+		"codeElementType": "ENHANCED_FOR_STATEMENT",
+		"description": "statement referencing the renamed variable",
+		"codeElement": null
 }]
 },
 {

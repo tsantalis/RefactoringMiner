@@ -87,7 +87,8 @@ public class LocationInfo {
 	public CodeRange codeRange() {
 		return new CodeRange(getFilePath(),
 				getStartLine(), getEndLine(),
-				getStartColumn(), getEndColumn(), getCodeElementType());
+				getStartColumn(), getEndColumn(), getCodeElementType(),
+				getStartOffset(), getEndOffset());
 	}
 
 	public boolean before(LocationInfo other) {

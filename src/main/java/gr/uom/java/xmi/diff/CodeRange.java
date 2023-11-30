@@ -9,6 +9,8 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 
 public class CodeRange {
+	private final int startOffset;
+	private final int endOffset;
 	private String filePath;
 	private int startLine;
 	private int endLine;
@@ -19,13 +21,24 @@ public class CodeRange {
 	private String codeElement;
 
 	public CodeRange(String filePath, int startLine, int endLine,
-			int startColumn, int endColumn, CodeElementType codeElementType) {
+			int startColumn, int endColumn, CodeElementType codeElementType,
+			 int startOffset, int endOffset) {
 		this.filePath = filePath;
 		this.startLine = startLine;
 		this.endLine = endLine;
 		this.startColumn = startColumn;
 		this.endColumn = endColumn;
 		this.codeElementType = codeElementType;
+		this.startOffset = startOffset;
+		this.endOffset = endOffset;
+	}
+
+	public int getStartOffset() {
+		return startOffset;
+	}
+
+	public int getEndOffset() {
+		return endOffset;
 	}
 
 	public String getFilePath() {
@@ -127,6 +140,8 @@ public class CodeRange {
 		int maxEndLine = 0;
 		int startColumn = 0;
 		int endColumn = 0;
+		int minStartOffset = 0;
+		int maxEndOffset = 0;
 		
 		for(AbstractCodeFragment fragment : codeFragments) {
 			LocationInfo info = fragment.getLocationInfo();
@@ -139,7 +154,13 @@ public class CodeRange {
 				maxEndLine = info.getEndLine();
 				endColumn = info.getEndColumn();
 			}
+
+			if (minStartOffset == 0 || info.getStartOffset() < minStartOffset)
+				minStartOffset = info.getStartOffset();
+			if (maxEndOffset == 0 || info.getEndOffset() > maxEndOffset)
+				maxEndOffset = info.getEndOffset();
 		}
-		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn, CodeElementType.LIST_OF_STATEMENTS);
+		return new CodeRange(filePath, minStartLine, maxEndLine, startColumn, endColumn, CodeElementType.LIST_OF_STATEMENTS,
+				minStartOffset, maxEndOffset);
 	}
 }

@@ -10592,7 +10592,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(statement1.getVariableDeclarations().size() > 0 && statement1.getVariableDeclarations().get(0).getInitializer() != null &&
 								fragment.getString().equals(JAVA.RETURN_SPACE + statement1.getVariableDeclarations().get(0).getInitializer().getString() + JAVA.STATEMENT_TERMINATION) &&
-								!fragment.getParent().equals(addedOperation.getBody().getCompositeStatement())) {
+								(!fragment.getParent().equals(addedOperation.getBody().getCompositeStatement()) || nested)) {
 							return true;
 						}
 						for(AnonymousClassDeclarationObject anonymous : fragment.getAnonymousClassDeclarations()) {

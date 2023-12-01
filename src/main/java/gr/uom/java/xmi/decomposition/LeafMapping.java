@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
 
@@ -536,19 +537,37 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
 			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
 			if(thisEqualPrevious) {
-				this.identicalPreviousStatement = true;
+				if(!isFieldAssignment(thisPrevious1) && !isFieldAssignment(thisPrevious2)) {
+					this.identicalPreviousStatement = true;
+				}
 			}
 			else if(sameCall(thisPrevious1, thisPrevious2)) {
 				this.identicalPreviousStatement = true;
 			}
 			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
 			if(oEqualPrevious) {
-				o.identicalPreviousStatement = true;
+				if(!isFieldAssignment(oPrevious1) && !isFieldAssignment(oPrevious2)) {
+					o.identicalPreviousStatement = true;
+				}
 			}
 			else if(sameCall(oPrevious1, oPrevious2)) {
 				o.identicalPreviousStatement = true;
 			}
 		}
+	}
+
+	private static boolean isFieldAssignment(AbstractCodeFragment fragment) {
+		String statement = fragment.getString();
+		if(statement.contains(JAVA.ASSIGNMENT)) {
+			List<LeafExpression> variables = fragment.getVariables();
+			if(variables.size() > 0) {
+				String variable = variables.get(0).getString();
+				if(statement.startsWith(variable + JAVA.ASSIGNMENT) && variable.startsWith("this.")) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean sameCall(AbstractCodeFragment previous1, AbstractCodeFragment previous2) {

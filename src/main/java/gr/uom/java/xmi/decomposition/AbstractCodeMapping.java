@@ -787,6 +787,7 @@ public abstract class AbstractCodeMapping {
 		}
 		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			boolean listToArrayConversion = false;
+			boolean identicalCallWithExtraArguments = false;
 			for(Replacement r : replacements) {
 				if(r instanceof VariableReplacementWithMethodInvocation) {
 					VariableReplacementWithMethodInvocation replacement = (VariableReplacementWithMethodInvocation)r;
@@ -800,8 +801,16 @@ public abstract class AbstractCodeMapping {
 						}
 					}
 				}
+				else if(r instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement replacement = (MethodInvocationReplacement)r;
+					AbstractCall before = replacement.getInvokedOperationBefore();
+					AbstractCall after = replacement.getInvokedOperationAfter();
+					if(before.identicalName(after) && before.argumentIntersection(after).size() == Math.min(before.arguments().size(), after.arguments().size())) {
+						identicalCallWithExtraArguments = true;
+					}
+				}
 			}
-			if(listToArrayConversion) {
+			if(listToArrayConversion || identicalCallWithExtraArguments) {
 				return true;
 			}
 		}

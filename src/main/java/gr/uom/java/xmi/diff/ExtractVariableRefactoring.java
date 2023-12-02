@@ -113,7 +113,6 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 		result = prime * result + ((operationBefore == null) ? 0 : operationBefore.hashCode());
 		result = prime * result + ((operationAfter == null) ? 0 : operationAfter.hashCode());
 		result = prime * result + ((variableDeclaration == null) ? 0 : variableDeclaration.hashCode());
-		result = prime * result + ((references == null) ? 0 : references.hashCode());
 		return result;
 	}
 
@@ -140,11 +139,6 @@ public class ExtractVariableRefactoring implements Refactoring, ReferenceBasedRe
 			if (other.variableDeclaration != null)
 				return false;
 		} else if (!variableDeclaration.equals(other.variableDeclaration))
-			return false;
-		if (references == null) {
-			if (other.references != null)
-				return false;
-		} else if (!references.equals(other.references))
 			return false;
 		return true;
 	}

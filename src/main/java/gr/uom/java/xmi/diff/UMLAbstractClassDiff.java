@@ -848,10 +848,32 @@ public abstract class UMLAbstractClassDiff {
 						inlineExtractAttributeFound = true;
 						break;
 					}
+					if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
+						ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+						Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+						ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+						oldExtractVariableRefactoring.addReferences(newReferences);
+						for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+							oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+						}
+						inlineExtractAttributeFound = true;
+						break;
+					}
 					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineAttributeRefactoring) {
 						InlineAttributeRefactoring newInlineVariableRefactoring = (InlineAttributeRefactoring)newRefactoring;
 						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
 						InlineAttributeRefactoring oldInlineVariableRefactoring = (InlineAttributeRefactoring)refactoring;
+						oldInlineVariableRefactoring.addReferences(newReferences);
+						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+						}
+						inlineExtractAttributeFound = true;
+						break;
+					}
+					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
+						InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+						InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
 						oldInlineVariableRefactoring.addReferences(newReferences);
 						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
 							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);

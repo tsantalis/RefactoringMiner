@@ -5543,11 +5543,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment leaf : leaves2) {
 			if(!leaf.equals(leaf2)) {
 				CompositeStatementObject parent2 = leaf.getParent();
-				while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				while(parent2 != null && parent2.getParent() != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 					parent2 = parent2.getParent();
 				}
 				boolean possibleExtractVariable = false;
 				if(leaf2.getVariableDeclarations().size() > 0 && leaf.getString().equals(JAVA.RETURN_SPACE + leaf2.getVariableDeclarations().get(0).getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+					possibleExtractVariable = true;
+				}
+				if(leaf2.getVariableDeclarations().size() > 0 && leaf2.getVariableDeclarations().get(0).getInitializer() != null &&
+						leaf1.getString().contains(leaf2.getVariableDeclarations().get(0).getInitializer().getString()) && leaf.getString().contains(leaf2.getVariableDeclarations().get(0).getVariableName())) {
 					possibleExtractVariable = true;
 				}
 				boolean possibleInlineVariable = false;
@@ -5573,7 +5577,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if(allowAdd) {
+						if(allowAdd || nested) {
 							extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping);
 							mappingSet.add(mapping);
 						}

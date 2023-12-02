@@ -1,5 +1,5 @@
 public sendPendingMessagesSynchronous(account Account) : void -> private moveMessageToDraftsFolder(account Account, localFolder Folder, localStore Store, message Message) : void
-line range:3472-3472==line range:3540-3540
+line range:3472-3472==line range:3541-3541
 public sendPendingMessagesSynchronous(account Account) : void -> private notifySynchronizeMailboxFailed(account Account, localFolder Folder, exception Exception) : void
 line range:3480-3480==line range:3548-3548
 line range:3479-3481==line range:3547-3549

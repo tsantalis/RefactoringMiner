@@ -762,9 +762,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									break;
 								}
 							}
+							String initializerAfterRename = null;
 							if(!matchingVariableDeclaration && !containsMethodSignatureOfAnonymousClass(nonMappedLeaf2.getString()) &&
 									!nonMappedLeaf2.getString().endsWith(JAVA.ASSIGNMENT + initializer + JAVA.STATEMENT_TERMINATION) && !nonMappedLeaf2.getString().contains(JAVA.ASSIGNMENT + initializer + ".") &&
-									nonMappedLeaf2.getString().contains(initializer.getString())) {
+									(nonMappedLeaf2.getString().contains(initializer.getString()) || (initializerAfterRename = matchesWithOverlappingRenameVariable(initializer, nonMappedLeaf2)) != null) &&
+									existsMappingSubsumingBoth(statement, nonMappedLeaf2)) {
 								UMLOperation extractedOperation = callToExtractedMethod(nonMappedLeaf2);
 								boolean matchingExtractedOperationLeaf = false;
 								if(extractedOperation != null) {
@@ -778,7 +780,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								if(!matchingExtractedOperationLeaf) {
 									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
-									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializer.getString());
+									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
 									for(LeafExpression subExpression : subExpressions) {
 										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
@@ -793,6 +795,36 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			nonMappedLeavesT1.removeAll(leavesToBeRemovedT1);
 		}
+	}
+
+	private boolean existsMappingSubsumingBoth(AbstractCodeFragment nonMappedLeaf1, AbstractCodeFragment nonMappedLeaf2) {
+		if(nonMappedLeaf1.getParent().getParent() == null || nonMappedLeaf2.getParent().getParent() == null) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment1().getLocationInfo().subsumes(nonMappedLeaf1.getLocationInfo()) && mapping.getFragment2().getLocationInfo().subsumes(nonMappedLeaf2.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String matchesWithOverlappingRenameVariable(AbstractExpression initializer, AbstractCodeFragment nonMappedLeaf2) {
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment2().getLocationInfo().subsumes(nonMappedLeaf2.getLocationInfo())) {
+				Set<Replacement> replacements = mapping.getReplacements();
+				for(Replacement r : replacements) {
+					if(r.getType().equals(ReplacementType.VARIABLE_NAME) && initializer.getString().contains(r.getBefore())) {
+						String temp = initializer.getString();
+						temp = ReplacementUtil.performReplacement(temp, r.getBefore(), r.getAfter());
+						if(nonMappedLeaf2.getString().contains(temp)) {
+							return temp;
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	private void handleAssertThrowsLambda(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,

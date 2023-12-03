@@ -461,6 +461,26 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	private String matchesWithOverlappingRenameVariable(UMLOperationBodyMapper mapper, AbstractExpression initializer, AbstractCodeFragment nonMappedLeaf2) {
+		if(mapper != null) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				if(mapping.getFragment2().getLocationInfo().subsumes(nonMappedLeaf2.getLocationInfo())) {
+					Set<Replacement> replacements = mapping.getReplacements();
+					for(Replacement r : replacements) {
+						if(r.getType().equals(ReplacementType.VARIABLE_NAME) && initializer.getString().contains(r.getBefore())) {
+							String temp = initializer.getString();
+							temp = ReplacementUtil.performReplacement(temp, r.getBefore(), r.getAfter());
+							if(nonMappedLeaf2.getString().contains(temp)) {
+								return temp;
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	private void findMovedVariablesToExtractedFromInlinedMethods() {
 		// check in removedVariables for variables moved to extracted methods
 		Set<VariableDeclaration> removedVariablesToBeRemoved = new LinkedHashSet<>();
@@ -480,7 +500,8 @@ public class VariableReplacementAnalysis {
 						if(removedVariable.getVariableName().equals(addedVariable.getVariableName())) {
 							boolean argumentMatch = false;
 							for(String argument : childMapper.getOperationInvocation().arguments()) {
-								if(argument.equals(removedVariable.getInitializer().getString())) {
+								String initializerAfterRename = matchesWithOverlappingRenameVariable(childMapper.getParentMapper(), removedVariable.getInitializer(), childMapper.getOperationInvocation());
+								if(argument.equals(removedVariable.getInitializer().getString()) || argument.equals(initializerAfterRename)) {
 									argumentMatch = true;
 									if(childMapper.getParentMapper() != null) {
 										AbstractCodeFragment statementContainingOperationInvocation = null;

@@ -437,6 +437,30 @@ public class VariableReplacementAnalysis {
 		addedVariables.removeAll(addedVariablesToBeRemoved);
 	}
 
+	private boolean existsMappingSubsumingRemovedVariable(UMLOperationBodyMapper mapper, VariableDeclaration removedVariable, AbstractCodeFragment statementContainingOperationInvocation) {
+		if(statementContainingOperationInvocation.getParent().getParent() == null) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			if(mapping.getFragment1().getLocationInfo().subsumes(removedVariable.getLocationInfo()) && mapping.getFragment2().getLocationInfo().subsumes(statementContainingOperationInvocation.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean existsMappingSubsumingAddedVariable(UMLOperationBodyMapper mapper, AbstractCodeFragment statementContainingOperationInvocation, VariableDeclaration addedVariable) {
+		if(statementContainingOperationInvocation.getParent().getParent() == null) {
+			return true;
+		}
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			if(mapping.getFragment1().getLocationInfo().subsumes(statementContainingOperationInvocation.getLocationInfo()) && mapping.getFragment2().getLocationInfo().subsumes(addedVariable.getLocationInfo())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void findMovedVariablesToExtractedFromInlinedMethods() {
 		// check in removedVariables for variables moved to extracted methods
 		Set<VariableDeclaration> removedVariablesToBeRemoved = new LinkedHashSet<>();
@@ -474,7 +498,7 @@ public class VariableReplacementAnalysis {
 												}
 											}
 										}
-										if(statementContainingOperationInvocation != null) {
+										if(statementContainingOperationInvocation != null && existsMappingSubsumingRemovedVariable(childMapper.getParentMapper(), removedVariable, statementContainingOperationInvocation)) {
 											List<LeafExpression> expressions2 = statementContainingOperationInvocation.findExpression(argument);
 											if(expressions2.size() == 1) {
 												LeafMapping expressionMapping = new LeafMapping(removedVariable.getInitializer(), expressions2.get(0), childMapper.getContainer1(), childMapper.getContainer2());
@@ -533,7 +557,7 @@ public class VariableReplacementAnalysis {
 												}
 											}
 										}
-										if(statementContainingOperationInvocation != null) {
+										if(statementContainingOperationInvocation != null && existsMappingSubsumingAddedVariable(childMapper.getParentMapper(), statementContainingOperationInvocation, addedVariable)) {
 											List<LeafExpression> expressions1 = statementContainingOperationInvocation.findExpression(argument);
 											if(expressions1.size() == 1) {
 												LeafMapping expressionMapping = new LeafMapping(expressions1.get(0), addedVariable.getInitializer(), childMapper.getContainer1(), childMapper.getContainer2());

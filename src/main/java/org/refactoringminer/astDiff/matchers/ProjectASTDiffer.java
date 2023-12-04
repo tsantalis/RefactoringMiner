@@ -211,8 +211,11 @@ public class ProjectASTDiffer
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
 				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
 				if (srcExp == null || dstExp == null) continue;
-				if (srcExp.isIsomorphicTo(dstExp) && isTestRelated(srcExp) && isTestRelated(dstExp))
+
+				if (srcExp.isIsomorphicTo(dstExp) && needToOverride(input, srcExp, dstExp)) {
 					new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
+				}
+//				if (srcExp.isIsomorphicTo(dstExp) && isTestRelated(srcExp) && isTestRelated(dstExp))
 				else
 					new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
 			}
@@ -220,6 +223,28 @@ public class ProjectASTDiffer
 		ExtendedMultiMappingStore allMappings = input.getAllMappings();
 		allMappings.replaceWithOptimizedMappings(lastStepMappingStore);
 		allMappings.replaceWithOptimizedMappings(optimizationData.optimizationMappingStore);
+	}
+
+	private static boolean needToOverride(ASTDiff input, Tree srcExp, Tree dstExp) {
+		ExtendedMultiMappingStore allMappings = input.getAllMappings();
+		Set<Tree> dsts = allMappings.getDsts(srcExp);
+		if (dsts != null)
+		{
+			for (Tree dst : dsts)
+				if (!srcExp.isIsomorphicTo(dst))
+					return false;
+			return true;
+		}
+		Set<Tree> srcs = allMappings.getSrcs(dstExp);
+		if (srcs != null) {
+			for (Tree src : srcs) {
+				if (!src.isIsomorphicTo(dstExp)) {
+					return false;
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean isTestRelated(Tree srcTree) {

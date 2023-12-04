@@ -2,7 +2,7 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ");
+			" -> ", "::", " + ", "throw ");
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;
@@ -16,6 +16,7 @@ public enum Constants {
 	public final String LAMBDA_ARROW;
 	public final String METHOD_REFERENCE;
 	public final String STRING_CONCATENATION;
+	public final String THROW_SPACE;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -30,7 +31,8 @@ public enum Constants {
 			String CONTINUE_STATEMENT,
 			String LAMBDA_ARROW,
 			String METHOD_REFERENCE,
-			String STRING_CONCATENATION) {
+			String STRING_CONCATENATION,
+			String THROW_SPACE) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -44,5 +46,6 @@ public enum Constants {
 		this.LAMBDA_ARROW = LAMBDA_ARROW;
 		this.METHOD_REFERENCE = METHOD_REFERENCE;
 		this.STRING_CONCATENATION = STRING_CONCATENATION;
+		this.THROW_SPACE = THROW_SPACE;
 	}
 }

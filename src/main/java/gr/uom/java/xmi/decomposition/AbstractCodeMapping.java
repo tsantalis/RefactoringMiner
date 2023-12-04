@@ -920,6 +920,22 @@ public abstract class AbstractCodeMapping {
 		else if(initializerInvocation == null && replacementInvocation != null) {
 			methodInvocationMatch = false;
 		}
+		AbstractCall initializerCreation = initializer.creationCoveringEntireFragment();
+		String replacementCreation = replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION) ? replacement.getAfter() : null;
+		if(initializerCreation != null && replacementCreation != null) {
+			if(replacementCreation.startsWith("new " + initializerCreation.getName())) {
+				List<String> arguments = initializerCreation.arguments();
+				int matchingArguments = 0;
+				for(String argument : arguments) {
+					if(replacementCreation.contains(argument)) {
+						matchingArguments++;
+					}
+				}
+				if(matchingArguments == arguments.size()) {
+					return true;
+				}
+			}
+		}
 		String initializerReservedTokens = ReplacementUtil.keepReservedTokens(initializer.toString());
 		String replacementReservedTokens = ReplacementUtil.keepReservedTokens(replacedExpression);
 		return methodInvocationMatch && !initializerReservedTokens.isEmpty() && !initializerReservedTokens.equals("[]") && !initializerReservedTokens.equals(".()") && !initializerReservedTokens.equals(" ()") && initializerReservedTokens.equals(replacementReservedTokens);

@@ -388,7 +388,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				creation.coverage = StatementCoverageType.RETURN_CALL;
 				return (ObjectCreation) creation;
 			}
-			else if(("throw " + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
+			else if((JAVA.THROW_SPACE + objectCreation + JAVA.STATEMENT_TERMINATION).equals(statement)) {
 				creation.coverage = StatementCoverageType.THROW_CALL;
 				return (ObjectCreation) creation;
 			}
@@ -571,7 +571,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	}
 
 	public boolean throwsNewException() {
-		return getString().startsWith("throw new ");
+		return getString().startsWith(JAVA.THROW_SPACE + "new ");
 	}
 
 	public boolean isLastStatement() {

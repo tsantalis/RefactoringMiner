@@ -438,7 +438,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInThrow(String s1, String s2) {
-		return differOnlyInPrefix(s1, s2, "", "throw ");
+		return differOnlyInPrefix(s1, s2, "", JAVA.THROW_SPACE);
 	}
 
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {

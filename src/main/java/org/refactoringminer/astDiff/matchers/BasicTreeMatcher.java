@@ -63,6 +63,7 @@ public class BasicTreeMatcher implements TreeMatcher {
 						if (!_notEmptyIsoStructuralArguments) {
 							removeList.add(new Pair<>(mapping.first, mapping.second));
 							removeList.add(new Pair<>(srcMethodName, dstMethodName));
+							removeList.add(new Pair<>(srcMethodInvocationArguments, dstMethodInvocationArguments));
 						}
 					}
 				}

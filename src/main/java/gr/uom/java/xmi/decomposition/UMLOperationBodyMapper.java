@@ -733,6 +733,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								if(!matchingInlinedOperationLeaf) {
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+									ref.addUnmatchedStatementReference(nonMappedLeaf1);
 									List<LeafExpression> subExpressions = nonMappedLeaf1.findExpression(initializer.getString());
 									for(LeafExpression subExpression : subExpressions) {
 										LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
@@ -780,6 +781,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								if(!matchingExtractedOperationLeaf) {
 									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
+									ref.addUnmatchedStatementReference(nonMappedLeaf2);
 									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());
 									for(LeafExpression subExpression : subExpressions) {
 										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
@@ -1726,10 +1728,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
 									ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
 									Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
 									ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
 									oldExtractVariableRefactoring.addReferences(newReferences);
+									oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 									for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
 										oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+									}
+									break;
+								}
+								if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
+									InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+									Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
+									InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
+									oldInlineVariableRefactoring.addReferences(newReferences);
+									oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
+									for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+										oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 									}
 									break;
 								}
@@ -2764,8 +2780,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
 							InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
 							Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+							Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
 							InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
 							oldInlineVariableRefactoring.addReferences(newReferences);
+							oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 							for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
 								oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 							}
@@ -2792,8 +2810,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
 								ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
 								Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+								Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
 								ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
 								oldExtractVariableRefactoring.addReferences(newReferences);
+								oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 								for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
 									oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 								}
@@ -7007,8 +7027,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
 						ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
 						Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
 						ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
 						oldExtractVariableRefactoring.addReferences(newReferences);
+						oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 						for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
 							oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 						}
@@ -7017,8 +7039,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
 						InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
 						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
 						InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
 						oldInlineVariableRefactoring.addReferences(newReferences);
+						oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
 							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 						}

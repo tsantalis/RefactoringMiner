@@ -10,6 +10,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
@@ -19,6 +20,7 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> references;
+	private Set<AbstractCodeFragment> unmatchedStatementReferences;
 	private List<LeafMapping> subExpressionMappings;
 	private boolean insideExtractedOrInlinedMethod;
 
@@ -28,6 +30,7 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.references = new LinkedHashSet<AbstractCodeMapping>();
+		this.unmatchedStatementReferences = new LinkedHashSet<AbstractCodeFragment>();
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
 		this.insideExtractedOrInlinedMethod = insideExtractedOrInlinedMethod;
 	}
@@ -36,8 +39,16 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		references.add(mapping);
 	}
 
+	public void addUnmatchedStatementReference(AbstractCodeFragment fragmentT2) {
+		unmatchedStatementReferences.add(fragmentT2);
+	}
+
 	public void addReferences(Set<AbstractCodeMapping> mappings) {
 		references.addAll(mappings);
+	}
+
+	public void addUnmatchedStatementReferences(Set<AbstractCodeFragment> fragmentsT2) {
+		unmatchedStatementReferences.addAll(fragmentsT2);
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -76,6 +87,10 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 
 	public Set<AbstractCodeMapping> getReferences() {
 		return references;
+	}
+
+	public Set<AbstractCodeFragment> getUnmatchedStatementReferences() {
+		return unmatchedStatementReferences;
 	}
 
 	public List<LeafMapping> getSubExpressionMappings() {
@@ -171,6 +186,9 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		List<CodeRange> ranges = new ArrayList<CodeRange>();
 		for(AbstractCodeMapping mapping : references) {
 			ranges.add(mapping.getFragment2().codeRange().setDescription("statement with the initializer of the inlined variable"));
+		}
+		for(AbstractCodeFragment fragment : unmatchedStatementReferences) {
+			ranges.add(fragment.codeRange().setDescription("statement with the initializer of the inlined variable"));
 		}
 		/*
 		String elementType = operationAfter.getElementType();

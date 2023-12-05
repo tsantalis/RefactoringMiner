@@ -851,8 +851,10 @@ public abstract class UMLAbstractClassDiff {
 					if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
 						ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
 						Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
 						ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
 						oldExtractVariableRefactoring.addReferences(newReferences);
+						oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 						for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
 							oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 						}
@@ -873,8 +875,10 @@ public abstract class UMLAbstractClassDiff {
 					if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
 						InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
 						Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+						Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
 						InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
 						oldInlineVariableRefactoring.addReferences(newReferences);
+						oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
 						for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
 							oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
 						}

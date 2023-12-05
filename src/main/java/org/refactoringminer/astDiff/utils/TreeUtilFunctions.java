@@ -30,7 +30,7 @@ public class TreeUtilFunctions {
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
 		int startoffset = locationInfo.getStartOffset();
 		int endoffset = locationInfo.getEndOffset();
-
+		if (tree.getPos() > startoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, startoffset, endoffset);
 		if (treeBetweenPositions == null) return null;
 		if (treeBetweenPositions.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))

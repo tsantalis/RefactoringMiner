@@ -1209,6 +1209,23 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	private boolean initializerContainsTypeLiteral(VariableDeclaration v1, VariableDeclaration v2) {
+		if(v1.getInitializer() != null && v2.getInitializer() != null) {
+			List<String> typeLiterals1 = new ArrayList<>();
+			for(LeafExpression expression : v1.getInitializer().getTypeLiterals()) {
+				typeLiterals1.add(expression.getString());
+			}
+			List<String> typeLiterals2 = new ArrayList<>();
+			for(LeafExpression expression : v2.getInitializer().getTypeLiterals()) {
+				typeLiterals2.add(expression.getString());
+			}
+			if(typeLiterals1.equals(typeLiterals2) && typeLiterals1.size() > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean initializerContainsTypeLiteral(UMLAttribute addedAttribute, UMLAttribute removedAttribute) {
 		VariableDeclaration v1 = addedAttribute.getVariableDeclaration();
 		VariableDeclaration v2 = removedAttribute.getVariableDeclaration();
@@ -3993,7 +4010,7 @@ public class UMLModelDiff {
 					if(attributeDeclaration.getInitializer() != null && v1.getInitializer() != null) {
 						String attributeInitializer = attributeDeclaration.getInitializer().getString();
 						String variableInitializer = v1.getInitializer().getString();
-						if(attributeInitializer.equals(variableInitializer) && attributeDeclaration.equalType(v1) &&
+						if(attributeInitializer.equals(variableInitializer) && attributeDeclaration.equalType(v1) && !initializerContainsTypeLiteral(v1, attributeDeclaration) &&
 								(attribute.getName().equals(v1.getVariableName()) ||
 										attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) ||
 										v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {

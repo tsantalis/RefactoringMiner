@@ -25546,11 +25546,55 @@
   "firstLabel" : "",
   "secondLabel" : "",
   "firstParentType" : "IfStatement",
-  "secondParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "IfStatement",
   "firstPos" : 21821,
-  "secondPos" : 22181,
+  "secondPos" : 22574,
   "firstEndPos" : 21909,
-  "secondEndPos" : 22231
+  "secondEndPos" : 22610
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 21821,
+  "secondPos" : 21821,
+  "firstEndPos" : 21832,
+  "secondEndPos" : 21832
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "var",
+  "secondLabel" : "var",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 21821,
+  "secondPos" : 21821,
+  "firstEndPos" : 21824,
+  "secondEndPos" : 21824
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "!=",
+  "secondLabel" : "!=",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 21825,
+  "secondPos" : 21825,
+  "firstEndPos" : 21827,
+  "secondEndPos" : 21827
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "NullLiteral",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 21828,
+  "secondPos" : 21828,
+  "firstEndPos" : 21832,
+  "secondEndPos" : 21832
 }, {
   "firstType" : "INFIX_EXPRESSION_OPERATOR",
   "secondType" : "INFIX_EXPRESSION_OPERATOR",
@@ -25562,17 +25606,6 @@
   "secondPos" : 22586,
   "firstEndPos" : 21835,
   "secondEndPos" : 22588
-}, {
-  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
-  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "!",
-  "secondLabel" : "!",
-  "firstParentType" : "PrefixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 21846,
-  "secondPos" : 22589,
-  "firstEndPos" : 21847,
-  "secondEndPos" : 22590
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",

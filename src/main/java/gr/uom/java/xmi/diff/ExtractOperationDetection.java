@@ -70,6 +70,11 @@ public class ExtractOperationDetection {
 				for(AbstractCodeFragment statement : mapper.getNonMappedLeavesT2()) {
 					addStatementInvocations(operationInvocations, statement);
 				}
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					if(!mapping.isExact()) {
+						addStatementInvocations(operationInvocations, mapping.getFragment2());
+					}
+				}
 			}
 		}
 	}

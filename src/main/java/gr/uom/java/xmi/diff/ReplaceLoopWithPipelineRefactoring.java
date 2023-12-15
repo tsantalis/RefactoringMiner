@@ -12,12 +12,14 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
+public class ReplaceLoopWithPipelineRefactoring implements Refactoring, LeafMappingProvider {
 	private Set<AbstractCodeFragment> codeFragmentsBefore;
 	private Set<AbstractCodeFragment> codeFragmentsAfter;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private List<LeafMapping> subExpressionMappings;
 
 	public ReplaceLoopWithPipelineRefactoring(Set<AbstractCodeFragment> codeFragmentsBefore,
 			Set<AbstractCodeFragment> codeFragmentsAfter, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
@@ -25,8 +27,23 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 		this.codeFragmentsAfter = codeFragmentsAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
 	}
-	
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
+	}
+
 	public Set<AbstractCodeFragment> getCodeFragmentsBefore() {
 		return codeFragmentsBefore;
 	}
@@ -41,6 +58,10 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring {
 
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	public String toString() {

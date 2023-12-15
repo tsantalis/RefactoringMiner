@@ -1141,6 +1141,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(streamAPICallStatement != null && streamAPICalls != null) {
 							List<VariableDeclaration> lambdaParameters = nestedLambdaParameters(streamAPICallStatement.getLambdas());
+							List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
+							AbstractCall call1 = fragment1.invocationCoveringEntireFragment();
+							AbstractCall call2 = fragment2.invocationCoveringEntireFragment();
+							if(call1 != null && call2 != null) {
+								LeafMapping leafMapping = new LeafMapping(call1, call2, container1, container2);
+								leafMappings.add(leafMapping);
+							}
+							else {
+								call1 = fragment1.creationCoveringEntireFragment();
+								call2 = fragment2.creationCoveringEntireFragment();
+								if(call1 != null && call2 != null) {
+									LeafMapping leafMapping = new LeafMapping(call1, call2, container1, container2);
+									leafMappings.add(leafMapping);
+								}
+								else if(fragment1 instanceof AbstractExpression) {
+									List<LeafExpression> leafExpressions = fragment2.findExpression(fragment1.getString());
+									for(LeafExpression leafExpression : leafExpressions) {
+										LeafMapping leafMapping = new LeafMapping(fragment1, leafExpression, container1, container2);
+										leafMappings.add(leafMapping);
+									}
+								}
+							}
 							additionallyMatchedStatements1.add(streamAPICallStatement);
 							additionallyMatchedStatements2.add(fragment2);
 							for(AbstractCall streamAPICall : streamAPICalls) {
@@ -1148,6 +1170,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(!additionallyMatchedStatements2.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
+												List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(streamAPICall.getExpression());
+												for(LeafExpression leafExpression : leafExpressions) {
+													LeafMapping leafMapping = new LeafMapping(leafExpression, expression, container1, container2);
+													leafMappings.add(leafMapping);
+												}
 												additionallyMatchedStatements2.add(composite);
 												break;
 											}
@@ -1158,11 +1185,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(!additionallyMatchedStatements2.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
+												List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(streamAPICall.getExpression());
+												for(LeafExpression leafExpression : leafExpressions) {
+													LeafMapping leafMapping = new LeafMapping(leafExpression, expression, container1, container2);
+													leafMappings.add(leafMapping);
+												}
 												additionallyMatchedStatements2.add(composite);
 												break;
 											}
 											for(String argument : streamAPICall.arguments()) {
 												if(expression.getString().equals(argument)) {
+													List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(argument);
+													for(LeafExpression leafExpression : leafExpressions) {
+														LeafMapping leafMapping = new LeafMapping(leafExpression, expression, container1, container2);
+														leafMappings.add(leafMapping);
+													}
 													additionallyMatchedStatements2.add(composite);
 													break;
 												}
@@ -1199,6 +1236,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
+							for(LeafMapping leafMapping : leafMappings) {
+								ref.addSubExpressionMapping(leafMapping);
+							}
 							newMapping.addRefactoring(ref);
 							addToMappings(newMapping, mappingSet);
 							leaves1.remove(newMapping.getFragment1());
@@ -1410,6 +1450,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						if(streamAPICallStatement != null && streamAPICalls != null) {
 							List<VariableDeclaration> lambdaParameters = nestedLambdaParameters(streamAPICallStatement.getLambdas());
+							List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
+							AbstractCall call1 = fragment1.invocationCoveringEntireFragment();
+							AbstractCall call2 = fragment2.invocationCoveringEntireFragment();
+							if(call1 != null && call2 != null) {
+								LeafMapping leafMapping = new LeafMapping(call1, call2, container1, container2);
+								leafMappings.add(leafMapping);
+							}
+							else {
+								call1 = fragment1.creationCoveringEntireFragment();
+								call2 = fragment2.creationCoveringEntireFragment();
+								if(call1 != null && call2 != null) {
+									LeafMapping leafMapping = new LeafMapping(call1, call2, container1, container2);
+									leafMappings.add(leafMapping);
+								}
+								else if(fragment2 instanceof AbstractExpression) {
+									List<LeafExpression> leafExpressions = fragment1.findExpression(fragment2.getString());
+									for(LeafExpression leafExpression : leafExpressions) {
+										LeafMapping leafMapping = new LeafMapping(leafExpression, fragment2, container1, container2);
+										leafMappings.add(leafMapping);
+									}
+								}
+							}
 							additionallyMatchedStatements1.add(fragment1);
 							additionallyMatchedStatements2.add(streamAPICallStatement);
 							for(AbstractCall streamAPICall : streamAPICalls) {
@@ -1417,6 +1479,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(!additionallyMatchedStatements1.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
+												List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(streamAPICall.getExpression());
+												for(LeafExpression leafExpression : leafExpressions) {
+													LeafMapping leafMapping = new LeafMapping(expression, leafExpression, container1, container2);
+													leafMappings.add(leafMapping);
+												}
 												additionallyMatchedStatements1.add(composite);
 												break;
 											}
@@ -1427,11 +1494,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(!additionallyMatchedStatements1.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
+												List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(streamAPICall.getExpression());
+												for(LeafExpression leafExpression : leafExpressions) {
+													LeafMapping leafMapping = new LeafMapping(expression, leafExpression, container1, container2);
+													leafMappings.add(leafMapping);
+												}
 												additionallyMatchedStatements1.add(composite);
 												break;
 											}
 											for(String argument : streamAPICall.arguments()) {
 												if(expression.getString().equals(argument)) {
+													List<LeafExpression> leafExpressions = streamAPICallStatement.findExpression(argument);
+													for(LeafExpression leafExpression : leafExpressions) {
+														LeafMapping leafMapping = new LeafMapping(expression, leafExpression, container1, container2);
+														leafMappings.add(leafMapping);
+													}
 													additionallyMatchedStatements1.add(composite);
 													break;
 												}
@@ -1468,6 +1545,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 							ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
+							for(LeafMapping leafMapping : leafMappings) {
+								ref.addSubExpressionMapping(leafMapping);
+							}
 							newMapping.addRefactoring(ref);
 							addToMappings(newMapping, mappingSet);
 							leaves2.remove(newMapping.getFragment2());

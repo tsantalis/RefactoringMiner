@@ -169,11 +169,11 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **November 20, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **December 16, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11882  | 23  | 255  | 0.998  | 0.979|
+|**Total**|11949  | 23  | 255  | 0.998  | 0.979|
 |Extract Method|1006  |  1  | 24  | 0.999  | 0.977|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -198,9 +198,9 @@ As of **November 20, 2023** the precision and recall of the tool on an oracle co
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|258  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|259  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|21  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|99  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|100  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|325  |  3  | 11  | 0.991  | 0.967|
 |Rename Parameter|486  |  2  | 26  | 0.996  | 0.949|
@@ -211,7 +211,7 @@ As of **November 20, 2023** the precision and recall of the tool on an oracle co
 |Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
-|Replace Variable With Attribute|58  |  0  |  0  | 1.000  | 1.000|
+|Replace Variable With Attribute|122  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|27  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
@@ -260,7 +260,7 @@ As of **November 20, 2023** the precision and recall of the tool on an oracle co
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional|17  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|18  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition|12  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|13  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
@@ -301,12 +301,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.3</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.1'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.3'
 
 
 # Chrome Extension

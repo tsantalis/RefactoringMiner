@@ -231,7 +231,7 @@ public class MappingOptimizer {
 					int identicalStatements = 0;
 					for(int i=0; i<minSize; i++) {
 						if(stringRepresentation1.get(i).equals(stringRepresentation2.get(i)) &&
-								!stringRepresentation1.get(i).equals("{") && !stringRepresentation1.get(i).equals("}")) {
+								!stringRepresentation1.get(i).equals(JAVA.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(JAVA.CLOSE_BLOCK)) {
 							identicalStatements++;
 						}
 					}

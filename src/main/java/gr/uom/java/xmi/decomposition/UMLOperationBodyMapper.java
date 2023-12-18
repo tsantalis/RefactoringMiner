@@ -2925,7 +2925,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping))
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping))
 				count++;
 		}
 		return count;
@@ -2937,7 +2937,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping))
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping))
 				exactMatches.add(mapping);
 		}
 		return exactMatches;
@@ -2949,7 +2949,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping)) {
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping)) {
 				boolean logCallFound = false;
 				for(AbstractCall call : mapping.getFragment1().getMethodInvocations()) {
 					if(call.isLog() || call.isLogGuard()) {
@@ -2970,7 +2970,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : getMappings()) {
 			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
 			if(mapping.isExact() && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
-					!mapping.getFragment1().getString().equals("try") && !subExpressionMappings.contains(mapping) && mapping.getOperation1().equals(this.container1) && mapping.getOperation2().equals(this.container2))
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping) && mapping.getOperation1().equals(this.container1) && mapping.getOperation2().equals(this.container2))
 				exactMatches.add(mapping);
 		}
 		return exactMatches;
@@ -2983,7 +2983,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int mappingsWithVariableReplacement = 0;
 		int mappingsWithMethodInvocationRename = 0;
 		for(AbstractCodeMapping mapping : this.getMappings()) {
-			if(mapping.getFragment1().getString().equals("try") && mapping.getFragment2().getString().equals("try")) {
+			if(mapping.getFragment1().getString().equals(JAVA.TRY) && mapping.getFragment2().getString().equals(JAVA.TRY)) {
 				tryMappings++;
 			}
 			if(mapping.containsOnlyReplacement(ReplacementType.TYPE)) {
@@ -4076,7 +4076,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractExpression ifExpression = ifStatement1.getExpressions().get(0);
 					if(ifExpression.getString().contains(switchExpression.getString())) {
 						for(AbstractCodeFragment switchCase2 : switchCases2) {
-							if(switchCase2.getString().startsWith("case ")) {
+							if(switchCase2.getString().startsWith(JAVA.CASE_SPACE)) {
 								String caseExpression = switchCase2.getString().substring(5, switchCase2.getString().length()-1);
 								if(ifExpression.getString().contains(switchExpression.getString() + " == " + caseExpression) ||
 										ifExpression.getString().contains(caseExpression + " == " + switchExpression.getString()) ||
@@ -4111,7 +4111,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractExpression ifExpression = ifStatement2.getExpressions().get(0);
 					if(ifExpression.getString().contains(switchExpression.getString())) {
 						for(AbstractCodeFragment switchCase1 : switchCases1) {
-							if(switchCase1.getString().startsWith("case ")) {
+							if(switchCase1.getString().startsWith(JAVA.CASE_SPACE)) {
 								String caseExpression = switchCase1.getString().substring(5, switchCase1.getString().length()-1);
 								if(ifExpression.getString().contains(switchExpression.getString() + " == " + caseExpression) ||
 										ifExpression.getString().contains(caseExpression + " == " + switchExpression.getString()) ||
@@ -7734,13 +7734,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean equalIfElseIfChain = false;
 		
 		if(parentMapper != null && comp1.getLocationInfo().getCodeElementType().equals(comp2.getLocationInfo().getCodeElementType()) &&
-				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && !comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-			if(compStatements1.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && !compStatements2.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				childrenSize1 == 1 && childrenSize2 == 1 && !comp1.getString().equals(JAVA.OPEN_BLOCK) && !comp2.getString().equals(JAVA.OPEN_BLOCK)) {
+			if(compStatements1.get(0).getString().equals(JAVA.OPEN_BLOCK) && !compStatements2.get(0).getString().equals(JAVA.OPEN_BLOCK)) {
 				CompositeStatementObject block = (CompositeStatementObject)compStatements1.get(0);
 				compStatements1 = new ArrayList<>(comp1.getStatements());
 				compStatements1.addAll(block.getStatements());
 			}
-			if(!compStatements1.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && compStatements2.get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			if(!compStatements1.get(0).getString().equals(JAVA.OPEN_BLOCK) && compStatements2.get(0).getString().equals(JAVA.OPEN_BLOCK)) {
 				CompositeStatementObject block = (CompositeStatementObject)compStatements2.get(0);
 				compStatements2 = new ArrayList<>(comp2.getStatements());
 				compStatements2.addAll(block.getStatements());

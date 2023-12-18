@@ -534,7 +534,7 @@ public class ExtractOperationDetection {
 		List<CompositeStatementObject> nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>(operationBodyMapper.getNonMappedInnerNodesT2());
 		ListIterator<CompositeStatementObject> iterator = nonMappedInnerNodesT2.listIterator();
 		while(iterator.hasNext()) {
-			if(iterator.next().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			if(iterator.next().getString().equals(JAVA.OPEN_BLOCK)) {
 				iterator.remove();
 			}
 		}

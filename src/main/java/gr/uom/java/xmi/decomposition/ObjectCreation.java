@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_COMMA_PATTERN;
 
@@ -126,8 +127,8 @@ public class ObjectCreation extends AbstractCall {
     			if(this.anonymousClassDeclaration.equals(other.anonymousClassDeclaration)) {
     				return true;
     			}
-    			if(this.anonymousClassDeclaration.startsWith("{") && this.anonymousClassDeclaration.endsWith("}") &&
-    					other.anonymousClassDeclaration.startsWith("{") && other.anonymousClassDeclaration.endsWith("}")) {
+    			if(this.anonymousClassDeclaration.startsWith(JAVA.OPEN_ARRAY_INITIALIZER) && this.anonymousClassDeclaration.endsWith(JAVA.CLOSE_ARRAY_INITIALIZER) &&
+    					other.anonymousClassDeclaration.startsWith(JAVA.OPEN_ARRAY_INITIALIZER) && other.anonymousClassDeclaration.endsWith(JAVA.CLOSE_ARRAY_INITIALIZER)) {
     				String s1 = this.anonymousClassDeclaration.substring(1, this.anonymousClassDeclaration.length()-1);
     				String s2 = other.anonymousClassDeclaration.substring(1, other.anonymousClassDeclaration.length()-1);
     				List<String> tokens1 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s1));

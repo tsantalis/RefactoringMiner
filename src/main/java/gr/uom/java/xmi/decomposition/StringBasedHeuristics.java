@@ -2405,7 +2405,7 @@ public class StringBasedHeuristics {
 			if(before.contains("\n") && after.contains("\n")) {
 				before = before.substring(0, before.indexOf("\n"));
 				after = after.substring(0, after.indexOf("\n"));
-				if(before.endsWith("{") && after.endsWith("{")) {
+				if(before.endsWith(JAVA.OPEN_BLOCK) && after.endsWith(JAVA.OPEN_BLOCK)) {
 					before = before.substring(0, before.length()-1);
 					after = after.substring(0, after.length()-1);
 				}
@@ -2421,7 +2421,7 @@ public class StringBasedHeuristics {
 	protected static VariableDeclaration declarationWithArrayInitializer(List<VariableDeclaration> declarations) {
 		for(VariableDeclaration declaration : declarations) {
 			AbstractExpression initializer = declaration.getInitializer();
-			if(initializer != null && initializer.getString().startsWith("{") && initializer.getString().endsWith("}")) {
+			if(initializer != null && initializer.getString().startsWith(JAVA.OPEN_ARRAY_INITIALIZER) && initializer.getString().endsWith(JAVA.CLOSE_ARRAY_INITIALIZER)) {
 				return declaration;
 			}
 		}

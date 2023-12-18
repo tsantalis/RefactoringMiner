@@ -664,7 +664,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		if(parent1 != null && parent2 != null) {
 			if(parent1.getLocationInfo().getCodeElementType().equals(parent2.getLocationInfo().getCodeElementType()) &&
 					!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
-				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals("try")) {
+				if(parent1.getString().equals(parent2.getString()) && !parent1.getString().equals(JAVA.TRY)) {
 					return true;
 				}
 				return getFragment1().getDepth() == getFragment2().getDepth() && getFragment1().getIndex() == getFragment2().getIndex();
@@ -881,13 +881,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		else if(parent1 == null && parent2 != null) {
 			String s2 = parent2.getString();
-			int distance = StringDistance.editDistance("{", s2);
+			int distance = StringDistance.editDistance(JAVA.OPEN_BLOCK, s2);
 			double normalized = (double)distance/(double)Math.max(1, s2.length());
 			return normalized;
 		}
 		else if(parent1 != null && parent2 == null) {
 			String s1 = parent1.getString();
-			int distance = StringDistance.editDistance(s1, "{");
+			int distance = StringDistance.editDistance(s1, JAVA.OPEN_BLOCK);
 			double normalized = (double)distance/(double)Math.max(s1.length(), 1);
 			return normalized;
 		}

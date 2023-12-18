@@ -607,7 +607,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 				((AbstractStatement)this).getParent().statementCount() == 1 && ((AbstractStatement)this).getParent().getParent() == null) {
 			return true;
 		}
-		return !getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && !statement.startsWith("catch(") && !statement.startsWith("case ") &&
+		return !statement.equals(JAVA.OPEN_BLOCK) && !statement.startsWith("catch(") && !statement.startsWith(JAVA.CASE_SPACE) &&
 				!statement.equals(JAVA.RETURN_TRUE) && !statement.equals(JAVA.RETURN_FALSE) && !statement.equals(JAVA.RETURN_THIS) && !statement.equals(JAVA.RETURN_NULL) && !statement.equals(JAVA.RETURN_STATEMENT);
 	}
 }

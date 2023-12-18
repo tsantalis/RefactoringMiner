@@ -549,7 +549,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	@Override
 	public int statementCount() {
 		int count = 0;
-		if(!this.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))
+		if(!this.getString().equals(JAVA.OPEN_BLOCK))
 			count++;
 		for(AbstractStatement statement : statementList) {
 			count += statement.statementCount();
@@ -709,7 +709,7 @@ public class CompositeStatementObject extends AbstractStatement {
 			stringRepresentation.addAll(statement.stringRepresentation());
 		}
 		if(getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-			stringRepresentation.add("}");
+			stringRepresentation.add(JAVA.CLOSE_BLOCK);
 		}
 		return stringRepresentation;
 	}
@@ -720,7 +720,7 @@ public class CompositeStatementObject extends AbstractStatement {
 			stringRepresentation.addAll(statement.stringRepresentation());
 		}
 		if(getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
-			stringRepresentation.add("}");
+			stringRepresentation.add(JAVA.CLOSE_BLOCK);
 		}
 		return stringRepresentation;
 	}

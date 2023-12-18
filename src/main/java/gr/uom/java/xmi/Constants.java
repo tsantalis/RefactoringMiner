@@ -2,7 +2,7 @@ package gr.uom.java.xmi;
 
 public enum Constants {
 	JAVA(";\n", "return ", "return;\n", "return true;\n", "return false;\n", "return null;\n", "return this;\n", "=", "break;\n", "continue;\n",
-			" -> ", "::", " + ", "throw ");
+			" -> ", "::", " + ", "throw ", "case ", "try", "{", "}", "{", "}");
 	public final String STATEMENT_TERMINATION;
 	public final String RETURN_SPACE;
 	public final String RETURN_STATEMENT;
@@ -17,6 +17,12 @@ public enum Constants {
 	public final String METHOD_REFERENCE;
 	public final String STRING_CONCATENATION;
 	public final String THROW_SPACE;
+	public final String CASE_SPACE;
+	public final String TRY;
+	public final String OPEN_BLOCK;
+	public final String CLOSE_BLOCK;
+	public final String OPEN_ARRAY_INITIALIZER;
+	public final String CLOSE_ARRAY_INITIALIZER;
 	
 	Constants(
 			String STATEMENT_TERMINATION,
@@ -32,7 +38,13 @@ public enum Constants {
 			String LAMBDA_ARROW,
 			String METHOD_REFERENCE,
 			String STRING_CONCATENATION,
-			String THROW_SPACE) {
+			String THROW_SPACE,
+			String CASE_SPACE,
+			String TRY,
+			String OPEN_BLOCK,
+			String CLOSE_BLOCK,
+			String OPEN_ARRAY_INITIALIZER,
+			String CLOSE_ARRAY_INITIALIZER) {
 		this.STATEMENT_TERMINATION = STATEMENT_TERMINATION;
 		this.RETURN_SPACE = RETURN_SPACE;
 		this.RETURN_STATEMENT = RETURN_STATEMENT;
@@ -47,5 +59,11 @@ public enum Constants {
 		this.METHOD_REFERENCE = METHOD_REFERENCE;
 		this.STRING_CONCATENATION = STRING_CONCATENATION;
 		this.THROW_SPACE = THROW_SPACE;
+		this.CASE_SPACE = CASE_SPACE;
+		this.TRY = TRY;
+		this.OPEN_BLOCK = OPEN_BLOCK;
+		this.CLOSE_BLOCK = CLOSE_BLOCK;
+		this.OPEN_ARRAY_INITIALIZER = OPEN_ARRAY_INITIALIZER;
+		this.CLOSE_ARRAY_INITIALIZER = CLOSE_ARRAY_INITIALIZER;
 	}
 }

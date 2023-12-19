@@ -10,6 +10,7 @@ import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.UMLClassMatcher.Rename;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLGeneralization;
+import gr.uom.java.xmi.UMLImport;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -1474,8 +1475,17 @@ public class UMLModelDiff {
 							addedClass.getName().endsWith("." + classDiff.getNewSuperclass().getClassType());
 					UMLAttribute attributeOfExtractedClassType = attributeOfExtractedClassType(addedClass, classDiff);
 					boolean isTestClass =  addedClass.isTestClass() && classDiff.getOriginalClass().isTestClass();
-					if((!commonSuperType && !commonInterface && !extendsAddedClass) || attributeOfExtractedClassType != null || isTestClass) {
-						ExtractClassRefactoring refactoring = atLeastOneCommonAttributeOrOperation(addedClass, classDiff, attributeOfExtractedClassType);
+					UMLImportListDiff importDiff = classDiff.getImportDiffList();
+					boolean foundInAddedImport = false;
+					if(importDiff != null) {
+						for(UMLImport addedImport : importDiff.getAddedImports()) {
+							if(addedImport.getName().contains(addedClass.getName())) {
+								foundInAddedImport = true;
+							}
+						}
+					}
+					if((!commonSuperType && !commonInterface && !extendsAddedClass) || attributeOfExtractedClassType != null || isTestClass || foundInAddedImport) {
+						ExtractClassRefactoring refactoring = atLeastOneCommonAttributeOrOperation(addedClass, classDiff, attributeOfExtractedClassType, foundInAddedImport);
 						if(refactoring != null) {
 							CandidateExtractClassRefactoring candidate = new CandidateExtractClassRefactoring(classDiff, refactoring);
 							candidates.add(candidate);
@@ -1514,13 +1524,26 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	private ExtractClassRefactoring atLeastOneCommonAttributeOrOperation(UMLClass umlClass, UMLClassBaseDiff classDiff, UMLAttribute attributeOfExtractedClassType) {
+	private ExtractClassRefactoring atLeastOneCommonAttributeOrOperation(UMLClass umlClass, UMLClassBaseDiff classDiff, UMLAttribute attributeOfExtractedClassType, boolean addedClassFoundInAddedImport) {
 		Map<UMLOperation, UMLOperation> commonOperations = new LinkedHashMap<>();
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				UMLOperation matchedOperation = umlClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
 				if(matchedOperation != null) {
 					commonOperations.put(operation, matchedOperation);
+				}
+			}
+		}
+		for(UMLOperation operation : classDiff.getRemovedOperations()) {
+			if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.containsKey(operation)) {
+				UMLOperation matchedOperation = umlClass.operationWithTheSameName(operation);
+				if(matchedOperation != null) {
+					boolean matchedOperationEmptyBody = matchedOperation.getBody() == null || matchedOperation.hasEmptyBody();
+					boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
+					Set<String> commonParameters = operation.commonParameters(matchedOperation);
+					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size())) {
+						commonOperations.put(operation, matchedOperation);
+					}
 				}
 			}
 		}
@@ -1532,7 +1555,7 @@ public class UMLModelDiff {
 			}
 		}
 		int threshold = 1;
-		if(attributeOfExtractedClassType != null || classDiff.getNextClass().isInnerClass(umlClass))
+		if(attributeOfExtractedClassType != null || classDiff.getNextClass().isInnerClass(umlClass) || addedClassFoundInAddedImport)
 			threshold = 0;
 		if(commonOperations.size() > threshold || commonAttributes.size() > threshold) {
 			ExtractClassRefactoring extractClassRefactoring = new ExtractClassRefactoring(umlClass, classDiff, commonOperations, commonAttributes, attributeOfExtractedClassType);

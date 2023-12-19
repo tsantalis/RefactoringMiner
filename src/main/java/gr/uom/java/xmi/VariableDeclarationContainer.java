@@ -155,6 +155,20 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 		return Collections.emptyList();
 	}
 
+	default Set<String> commonParameters(VariableDeclarationContainer operation) {
+		Set<String> commonParameters = new LinkedHashSet<String>();
+		List<UMLParameter> parameters1 = this.getParametersWithoutReturnType();
+		List<UMLParameter> parameters2 = operation.getParametersWithoutReturnType();
+		for(UMLParameter parameter1 : parameters1) {
+			for(UMLParameter parameter2 : parameters2) {
+				if(parameter1.equalsIncludingName(parameter2)) {
+					commonParameters.add(parameter1.getName());
+				}
+			}
+		}
+		return commonParameters;
+	}
+
 	default List<UMLType> commonParameterTypes(VariableDeclarationContainer operation) {
 		List<UMLType> commonParameterTypes = new ArrayList<UMLType>();
 		List<UMLType> thisParameterTypeList = this.getParameterTypeList();

@@ -42,6 +42,8 @@ public class ExtractClassRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		if(extractedClass.isSubTypeOf(classDiff.getOriginalClass()) || extractedClass.isSubTypeOf(classDiff.getNextClass()))
 			return RefactoringType.EXTRACT_SUBCLASS;
+		if(classDiff.getOriginalClass().isSubTypeOf(extractedClass) || classDiff.getNextClass().isSubTypeOf(extractedClass))
+			return RefactoringType.EXTRACT_SUPERCLASS;
 		return RefactoringType.EXTRACT_CLASS;
 	}
 

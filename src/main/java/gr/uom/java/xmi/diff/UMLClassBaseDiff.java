@@ -930,12 +930,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							int perfectMappers = 0;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
 									candidate.addMapper(mapper);
+									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+										perfectMappers++;
+									}
 									methodsWithMapper.add(mapper.getContainer1());
 									matchingMergeCandidateFound = true;
 								}
+							}
+							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+								matchingMergeCandidateFound = false;
 							}
 							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
 								for(VariableDeclarationContainer deletedOperation : candidate.getMergedMethods()) {
@@ -948,12 +955,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							int perfectMappers = 0;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
 									candidate.addMapper(mapper);
+									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+										perfectMappers++;
+									}
 									methodsWithMapper.add(mapper.getContainer2());
 									matchingSplitCandidateFound = true;
 								}
+							}
+							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+								matchingSplitCandidateFound = false;
 							}
 							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
 								for(VariableDeclarationContainer addedOperation : candidate.getSplitMethods()) {
@@ -1053,12 +1067,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							int perfectMappers = 0;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
 									candidate.addMapper(mapper);
+									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+										perfectMappers++;
+									}
 									methodsWithMapper.add(mapper.getContainer1());
 									matchingMergeCandidateFound = true;
 								}
+							}
+							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+								matchingMergeCandidateFound = false;
 							}
 							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
 								for(VariableDeclarationContainer removedOperation : candidate.getMergedMethods()) {
@@ -1071,12 +1092,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 						for(CandidateSplitMethodRefactoring candidate : candidateMethodSplits) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
+							int perfectMappers = 0;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
 									candidate.addMapper(mapper);
+									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+										perfectMappers++;
+									}
 									methodsWithMapper.add(mapper.getContainer2());
 									matchingSplitCandidateFound = true;
 								}
+							}
+							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+								matchingSplitCandidateFound = false;
 							}
 							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
 								for(VariableDeclarationContainer insertedOperation : candidate.getSplitMethods()) {

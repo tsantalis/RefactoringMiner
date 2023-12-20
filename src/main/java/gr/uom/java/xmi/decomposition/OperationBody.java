@@ -97,6 +97,16 @@ public class OperationBody {
 		return containsAssertion;
 	}
 
+	public List<CompositeStatementObject> getSynchronizedStatements() {
+		List<CompositeStatementObject> synchronizedStatements = new ArrayList<CompositeStatementObject>();
+		for(CompositeStatementObject innerNode : compositeStatement.getInnerNodes()) {
+			if(innerNode.getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+				synchronizedStatements.add(innerNode);
+			}
+		}
+		return synchronizedStatements;
+	}
+
 	public List<AnonymousClassDeclarationObject> getAllAnonymousClassDeclarations() {
 		return new ArrayList<AnonymousClassDeclarationObject>(compositeStatement.getAllAnonymousClassDeclarations());
 	}

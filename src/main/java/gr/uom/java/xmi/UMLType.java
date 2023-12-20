@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.AnnotatableType;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.Dimension;
 import org.eclipse.jdt.core.dom.IntersectionType;
 import org.eclipse.jdt.core.dom.NameQualifiedType;
 import org.eclipse.jdt.core.dom.ParameterizedType;
@@ -77,8 +78,14 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		StringBuilder sb = new StringBuilder();
 		if(isParameterized())
 			sb.append(typeArgumentsToString());
-		for(int i=0; i<getArrayDimension(); i++)
+		for(int i=0; i<getArrayDimension(); i++) {
+			for(int j=0; j<annotations.size(); j++) {
+				if(i == j) {
+					sb.append(" " + annotations.get(j) + " ");
+				}
+			}
 			sb.append("[]");
+		}
 		return sb.toString();
 	}
 
@@ -108,21 +115,21 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	protected boolean equalTypeArgumentsAndArrayDimension(UMLType typeObject) {
 		if(!this.isParameterized() && !typeObject.isParameterized())
-			return this.arrayDimension == typeObject.arrayDimension;
+			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(this.isParameterized() && typeObject.isParameterized())
-			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		return false;
 	}
 
 	protected boolean equalTypeArgumentsAndArrayDimensionForSubType(UMLType typeObject) {
 		if(!this.isParameterized() && !typeObject.isParameterized())
-			return this.arrayDimension == typeObject.arrayDimension;
+			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(this.isParameterized() && typeObject.isParameterized())
-			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension;
+			return equalTypeArguments(typeObject) && this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(this.isParameterized() && this.typeArgumentsToString().equals("<?>") && !typeObject.isParameterized())
-			return this.arrayDimension == typeObject.arrayDimension;
+			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		else if(!this.isParameterized() && typeObject.isParameterized() && typeObject.typeArgumentsToString().equals("<?>"))
-			return this.arrayDimension == typeObject.arrayDimension;
+			return this.arrayDimension == typeObject.arrayDimension && this.annotations.equals(typeObject.annotations);
 		return false;
 	}
 
@@ -299,6 +306,13 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 		else if(type instanceof ArrayType) {
 			ArrayType array = (ArrayType)type;
 			UMLType arrayType = extractTypeObject(cu, filePath, array.getElementType());
+			for(Object dim : array.dimensions()) {
+				Dimension dimension = (Dimension)dim;
+				List<Annotation> annotations = dimension.annotations();
+				for(Annotation annotation : annotations) {
+					arrayType.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+				}
+			}
 			arrayType.arrayDimension = array.getDimensions();
 			return arrayType;
 		}

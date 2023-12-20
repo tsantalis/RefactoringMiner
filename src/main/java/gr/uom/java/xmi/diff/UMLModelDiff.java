@@ -1530,7 +1530,8 @@ public class UMLModelDiff {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				UMLOperation matchedOperation = umlClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
 				if(matchedOperation != null &&
-						operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size()) {
+						operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
+						operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
 					commonOperations.put(operation, matchedOperation);
 				}
 			}
@@ -1543,7 +1544,8 @@ public class UMLModelDiff {
 					boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 					Set<String> commonParameters = operation.commonParameters(matchedOperation);
 					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size()) &&
-							operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size()) {
+							operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size() &&
+							operation.getSynchronizedStatements().size() == matchedOperation.getSynchronizedStatements().size()) {
 						commonOperations.put(operation, matchedOperation);
 					}
 				}

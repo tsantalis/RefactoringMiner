@@ -1529,7 +1529,8 @@ public class UMLModelDiff {
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
 				UMLOperation matchedOperation = umlClass.operationWithTheSameSignatureIgnoringChangedTypes(operation);
-				if(matchedOperation != null) {
+				if(matchedOperation != null &&
+						operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size()) {
 					commonOperations.put(operation, matchedOperation);
 				}
 			}
@@ -1537,11 +1538,12 @@ public class UMLModelDiff {
 		for(UMLOperation operation : classDiff.getRemovedOperations()) {
 			if(!operation.isConstructor() && !operation.overridesObject() && !commonOperations.containsKey(operation)) {
 				UMLOperation matchedOperation = umlClass.operationWithTheSameName(operation);
-				if(matchedOperation != null) {
+				if(matchedOperation != null && !commonOperations.containsValue(matchedOperation)) {
 					boolean matchedOperationEmptyBody = matchedOperation.getBody() == null || matchedOperation.hasEmptyBody();
 					boolean operationEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 					Set<String> commonParameters = operation.commonParameters(matchedOperation);
-					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size())) {
+					if(matchedOperationEmptyBody == operationEmptyBody && (commonParameters.size() > 0 || operation.getParameters().size() == matchedOperation.getParameters().size()) &&
+							operation.getAnonymousClassList().size() == matchedOperation.getAnonymousClassList().size()) {
 						commonOperations.put(operation, matchedOperation);
 					}
 				}

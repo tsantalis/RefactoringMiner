@@ -18,6 +18,14 @@ public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 				return Double.compare(sourceFolderDistance1, sourceFolderDistance2);
 			}
 			else {
+				boolean sameNestingLevel1 = o1.getOriginalClass().isTopLevel() == o1.getMovedClass().isTopLevel();
+				boolean sameNestingLevel2 = o2.getOriginalClass().isTopLevel() == o2.getMovedClass().isTopLevel();
+				if(sameNestingLevel1 && !sameNestingLevel2) {
+					return -1;
+				}
+				else if(!sameNestingLevel1 && sameNestingLevel2) {
+					return 1;
+				}
 				double packageDistance1 = o1.getMovedClass().normalizedPackageNameDistance(o1.getOriginalClass());
 				double packageDistance2 = o2.getMovedClass().normalizedPackageNameDistance(o2.getOriginalClass());
 				return Double.compare(packageDistance1, packageDistance2);

@@ -692,6 +692,14 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		else if(!addedClass.isTopLevel()) {
+			for(UMLClassMoveDiff diff : classMoveDiffList) {
+				if(!diff.getOriginalClass().getName().startsWith(removedClass.getName()) &&
+						diff.getMovedClass().getName().equals(addedClass.getPackageName())) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

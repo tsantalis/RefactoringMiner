@@ -935,8 +935,18 @@ public class UMLModelDiff {
 					processedClassPairs.add(pair);
 				}
 			}
+			int matchingMovedInnerClasses = 0;
+			if(addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
+					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) {
+				for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
+					if(classMoveDiff.getOriginalClass().getName().startsWith(removedClass.getName() + ".") &&
+							classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".")) {
+						matchingMovedInnerClasses++;
+					}
+				}
+			}
 			MatchResult matchResult = matcher.match(removedClass, addedClass);
-			if(matchResult.isMatch()) {
+			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					diffSet.add(classRenameDiff);
@@ -959,8 +969,18 @@ public class UMLModelDiff {
 					processedClassPairs.add(pair);
 				}
 			}
+			int matchingMovedInnerClasses = 0;
+			if(addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
+					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) {
+				for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
+					if(classMoveDiff.getOriginalClass().getName().startsWith(removedClass.getName() + ".") &&
+							classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".")) {
+						matchingMovedInnerClasses++;
+					}
+				}
+			}
 			MatchResult matchResult = matcher.match(removedClass, addedClass);
-			if(matchResult.isMatch()) {
+			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 					diffSet.add(classRenameDiff);

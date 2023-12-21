@@ -1507,7 +1507,7 @@ public class UMLModelDiff {
 					if((!commonSuperType && !commonInterface && !extendsAddedClass) || attributeOfExtractedClassType != null || isTestClass || foundInAddedImport) {
 						ExtractClassRefactoring refactoring = atLeastOneCommonAttributeOrOperation(addedClass, classDiff, attributeOfExtractedClassType, foundInAddedImport);
 						if(refactoring != null) {
-							CandidateExtractClassRefactoring candidate = new CandidateExtractClassRefactoring(classDiff, refactoring);
+							CandidateExtractClassRefactoring candidate = new CandidateExtractClassRefactoring(classDiff, refactoring, classMoveDiffList);
 							candidates.add(candidate);
 						}
 					}

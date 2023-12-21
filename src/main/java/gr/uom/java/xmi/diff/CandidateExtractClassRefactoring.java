@@ -1,18 +1,35 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.List;
+
 import gr.uom.java.xmi.UMLType;
 
 public class CandidateExtractClassRefactoring implements Comparable<CandidateExtractClassRefactoring> {
 	private UMLClassBaseDiff classDiff;
 	private ExtractClassRefactoring refactoring;
+	private List<UMLClassMoveDiff> classMoveDiffList;
 	
-	public CandidateExtractClassRefactoring(UMLClassBaseDiff classDiff, ExtractClassRefactoring refactoring) {
+	public CandidateExtractClassRefactoring(UMLClassBaseDiff classDiff, ExtractClassRefactoring refactoring, List<UMLClassMoveDiff> classMoveDiffList) {
 		this.classDiff = classDiff;
 		this.refactoring = refactoring;
+		this.classMoveDiffList = classMoveDiffList;
 	}
 	
 	public boolean innerClassExtract() {
-		return refactoring.getExtractedClass().getName().startsWith(refactoring.getOriginalClass().getName() + ".");
+		String movedClassName = null;
+		for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
+			if(classMoveDiff.getOriginalClass().getName().equals(refactoring.getOriginalClass().getName())) {
+				movedClassName = classMoveDiff.getMovedClass().getName();
+				break;
+			}
+		}
+		if(refactoring.getExtractedClass().getName().startsWith(refactoring.getOriginalClass().getName() + ".")) {
+			return true;
+		}
+		else if(movedClassName != null && refactoring.getExtractedClass().getName().startsWith(movedClassName + ".")) {
+			return true;
+		}
+		return false;
 	}
 
 	public boolean subclassExtract() {

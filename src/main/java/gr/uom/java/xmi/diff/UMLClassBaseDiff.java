@@ -2040,6 +2040,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(call1 != null && call2 != null && call1.identicalExpression(call2) && call1.identicalName(call2)) {
 				return true;
 			}
+			call1 = fragment1.creationCoveringEntireFragment();
+			call2 = fragment2.creationCoveringEntireFragment();
+			if(call1 != null && call2 != null && call1.identicalExpression(call2) && call1.identicalName(call2)) {
+				return true;
+			}
 		}
 		return false;
 	}

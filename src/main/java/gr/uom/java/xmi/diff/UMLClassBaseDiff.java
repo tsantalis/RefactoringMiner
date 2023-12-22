@@ -934,14 +934,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
 									candidate.addMapper(mapper);
-									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+									if(isPerfectMapper(mapper)) {
 										perfectMappers++;
 									}
 									methodsWithMapper.add(mapper.getContainer1());
 									matchingMergeCandidateFound = true;
 								}
 							}
-							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+							if(perfectMappers > 0 && perfectMappers < mapperSet.size()) {
 								matchingMergeCandidateFound = false;
 							}
 							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
@@ -959,14 +959,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
 									candidate.addMapper(mapper);
-									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+									if(isPerfectMapper(mapper)) {
 										perfectMappers++;
 									}
 									methodsWithMapper.add(mapper.getContainer2());
 									matchingSplitCandidateFound = true;
 								}
 							}
-							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+							if(perfectMappers > 0 && perfectMappers < mapperSet.size()) {
 								matchingSplitCandidateFound = false;
 							}
 							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
@@ -1071,14 +1071,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getMergedMethods().contains(mapper.getContainer1()) && candidate.getNewMethodAfterMerge().equals(mapper.getContainer2())) {
 									candidate.addMapper(mapper);
-									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+									if(isPerfectMapper(mapper)) {
 										perfectMappers++;
 									}
 									methodsWithMapper.add(mapper.getContainer1());
 									matchingMergeCandidateFound = true;
 								}
 							}
-							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+							if(perfectMappers > 0 && perfectMappers < mapperSet.size()) {
 								matchingMergeCandidateFound = false;
 							}
 							if(matchingMergeCandidateFound && candidate.getMappers().size() < candidate.getMergedMethods().size()) {
@@ -1096,14 +1096,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							for(UMLOperationBodyMapper mapper : mapperSet) {
 								if(candidate.getSplitMethods().contains(mapper.getContainer2()) && candidate.getOriginalMethodBeforeSplit().equals(mapper.getContainer1())) {
 									candidate.addMapper(mapper);
-									if(mapper.getMappings().size() > 0 && mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 && mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0) {
+									if(isPerfectMapper(mapper)) {
 										perfectMappers++;
 									}
 									methodsWithMapper.add(mapper.getContainer2());
 									matchingSplitCandidateFound = true;
 								}
 							}
-							if(perfectMappers > 0 && perfectMappers != methodsWithMapper.size()) {
+							if(perfectMappers > 0 && perfectMappers < mapperSet.size()) {
 								matchingSplitCandidateFound = false;
 							}
 							if(matchingSplitCandidateFound && candidate.getMappers().size() < candidate.getSplitMethods().size()) {
@@ -1280,6 +1280,38 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean isPerfectMapper(UMLOperationBodyMapper mapper) {
+		int nonMappedLeavesT1 = mapper.getNonMappedLeavesT1().size();
+		int nonMappedLeavesT2 = mapper.getNonMappedLeavesT2().size();
+		int nonMappedInnerNodesT1 = mapper.getNonMappedInnerNodesT1().size();
+		int nonMappedInnerNodesT2 = mapper.getNonMappedInnerNodesT2().size();
+		for(AbstractCodeMapping mapping : mapper.getMappings()) {
+			if(mapping.isIdenticalWithInlinedVariable() || mapping.isIdenticalWithExtractedVariable()) {
+				for(Refactoring r : mapping.getRefactorings()) {
+					if(r instanceof InlineVariableRefactoring) {
+						InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+						for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
+							if(fragment.getLocationInfo().subsumes(inline.getVariableDeclaration().getLocationInfo())) {
+								nonMappedLeavesT1--;
+								break;
+							}
+						}
+					}
+					if(r instanceof ExtractVariableRefactoring) {
+						ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+						for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT2()) {
+							if(fragment.getLocationInfo().subsumes(extract.getVariableDeclaration().getLocationInfo())) {
+								nonMappedLeavesT2--;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		return mapper.getMappings().size() > 0 && nonMappedLeavesT1 <= 0 && nonMappedLeavesT2 <= 0 && nonMappedInnerNodesT1 == 0 && nonMappedInnerNodesT2 == 0;
 	}
 
 	private List<List<String>> getParameterValues(UMLOperation addedOperation) {

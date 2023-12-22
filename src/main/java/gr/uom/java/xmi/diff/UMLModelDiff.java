@@ -1176,13 +1176,39 @@ public class UMLModelDiff {
 			}
 		}
 		else if(candidates.size() == 1) {
-			refactorings.addAll(candidates);
-			for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
+			MoveAttributeRefactoring conflictingRefactoring = null;
+			for(Refactoring r : refactorings) {
+				if(r instanceof MoveAttributeRefactoring && !r.getRefactoringType().equals(RefactoringType.PUSH_DOWN_ATTRIBUTE)) {
+					MoveAttributeRefactoring old = (MoveAttributeRefactoring)r;
+					if(old.getOriginalAttribute().getVariableDeclaration().equals(candidates.get(0).getOriginalAttribute().getVariableDeclaration())) {
+						conflictingRefactoring = old;
+						break;
+					}
 				}
-				pastRefactorings.addAll(attributeDiff.getRefactorings());
+			}
+			if(conflictingRefactoring == null) {
+				refactorings.addAll(candidates);
+				for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList());
+					if(!movedAttributeDiffList.contains(attributeDiff)) {
+						movedAttributeDiffList.add(attributeDiff);
+					}
+					pastRefactorings.addAll(attributeDiff.getRefactorings());
+				}
+			}
+			else if((conflictingRefactoring.getRefactoringType().equals(RefactoringType.MOVE_ATTRIBUTE) || conflictingRefactoring.getRefactoringType().equals(RefactoringType.MOVE_RENAME_ATTRIBUTE)) &&
+					candidates.get(0).getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE)) {
+				refactorings.remove(conflictingRefactoring);
+				UMLAttributeDiff conflictingAttributeDiff = new UMLAttributeDiff(conflictingRefactoring.getOriginalAttribute(), conflictingRefactoring.getMovedAttribute(), Collections.emptyList());
+				pastRefactorings.removeAll(conflictingAttributeDiff.getRefactorings());
+				refactorings.addAll(candidates);
+				for(MoveAttributeRefactoring moveAttributeRefactoring : candidates) {
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList());
+					if(!movedAttributeDiffList.contains(attributeDiff)) {
+						movedAttributeDiffList.add(attributeDiff);
+					}
+					pastRefactorings.addAll(attributeDiff.getRefactorings());
+				}
 			}
 		}
 	}

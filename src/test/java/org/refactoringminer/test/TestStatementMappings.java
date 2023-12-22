@@ -488,7 +488,8 @@ public class TestStatementMappings {
 		"https://github.com/jOOQ/jOOQ.git, 58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357, jOOQ-58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357.txt",
 		"https://github.com/eclipse/jgit.git, df3469f6ad81dccb314bf2d5021a3cec2b184985, jgit-df3469f6ad81dccb314bf2d5021a3cec2b184985.txt",
 		"https://github.com/phishman3579/java-algorithms-implementation.git, 4ffcb5a65e6d24c58ef75a5cd7692e875619548d, phishman-4ffcb5a65e6d24c58ef75a5cd7692e875619548d.txt",
-		"https://github.com/phishman3579/java-algorithms-implementation.git, f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29, phishman-f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29.txt"
+		"https://github.com/phishman3579/java-algorithms-implementation.git, f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29, phishman-f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29.txt",
+		"https://github.com/spring-projects/spring-boot.git, 07766c436cb89128eac5389d33f76329b758d8df, spring-boot-07766c436cb89128eac5389d33f76329b758d8df.txt"
 	})
 	public void testExtractMethodStatementMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

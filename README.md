@@ -169,11 +169,11 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **December 16, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **December 23, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11949  | 23  | 255  | 0.998  | 0.979|
+|**Total**|11965  | 23  | 253  | 0.998  | 0.979|
 |Extract Method|1006  |  1  | 24  | 0.999  | 0.977|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
 |Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
@@ -181,7 +181,7 @@ As of **December 16, 2023** the precision and recall of the tool on an oracle co
 |Replace Attribute|27  |  0  |  1  | 1.000  | 0.964|
 |Rename Method|378  |  4  | 22  | 0.990  | 0.945|
 |Inline Method|116  |  0  |  2  | 1.000  | 0.983|
-|Move Method|350  |  3  |  9  | 0.992  | 0.975|
+|Move Method|352  |  3  |  7  | 0.992  | 0.981|
 |Move And Rename Method|124  |  0  |  5  | 1.000  | 0.961|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
@@ -193,7 +193,7 @@ As of **December 16, 2023** the precision and recall of the tool on an oracle co
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
 |Extract Superclass|73  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
-|Extract Class|96  |  0  |  0  | 1.000  | 1.000|
+|Extract Class|106  |  0  |  0  | 1.000  | 1.000|
 |Extract And Move Method|101  |  0  | 69  | 1.000  | 0.594|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
@@ -203,7 +203,7 @@ As of **December 16, 2023** the precision and recall of the tool on an oracle co
 |Inline Variable|100  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|325  |  3  | 11  | 0.991  | 0.967|
-|Rename Parameter|486  |  2  | 26  | 0.996  | 0.949|
+|Rename Parameter|488  |  2  | 26  | 0.996  | 0.949|
 |Rename Attribute|134  |  0  | 15  | 1.000  | 0.899|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -217,7 +217,7 @@ As of **December 16, 2023** the precision and recall of the tool on an oracle co
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|426  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|795  |  2  |  7  | 0.997  | 0.991|
-|Change Parameter Type|643  |  1  | 11  | 0.998  | 0.983|
+|Change Parameter Type|645  |  1  | 11  | 0.998  | 0.983|
 |Change Attribute Type|228  |  0  |  8  | 1.000  | 0.966|
 |Add Method Annotation|330  |  0  |  3  | 1.000  | 0.991|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|

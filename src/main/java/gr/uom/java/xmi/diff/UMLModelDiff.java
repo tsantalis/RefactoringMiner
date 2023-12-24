@@ -1779,7 +1779,7 @@ public class UMLModelDiff {
 				removedAttribute = classDiff.getOriginalClass().attributeWithTheSameSignature(addedAttribute);
 			}
 			if(removedAttribute == null) {
-				removedAttribute = classDiff.getOriginalClass().attributeWithTheSameNameIgnoringChangedType(addedAttribute);
+				removedAttribute = classDiff.containsRemovedAttributeWithTheSameNameIgnoringChangedType(addedAttribute);
 			}
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);

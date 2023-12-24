@@ -837,6 +837,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return null;
 	}
 
+	public UMLAttribute containsRemovedAttributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
+		for(UMLAttribute removedAttribute : removedAttributes) {
+			if(removedAttribute.equalsIgnoringChangedType(attribute))
+				return removedAttribute;
+		}
+		return null;
+	}
+
 	private void processInheritance() {
 		if(originalClass.getSuperclass() != null && nextClass.getSuperclass() != null) {
 			if(!originalClass.getSuperclass().equals(nextClass.getSuperclass())) {

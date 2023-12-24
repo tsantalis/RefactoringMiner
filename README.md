@@ -169,14 +169,14 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **December 23, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **December 24, 2023** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|11965  | 23  | 253  | 0.998  | 0.979|
+|**Total**|12008  | 23  | 253  | 0.998  | 0.979|
 |Extract Method|1006  |  1  | 24  | 0.999  | 0.977|
 |Rename Class|53  |  0  |  2  | 1.000  | 0.964|
-|Move Attribute|242  |  4  | 10  | 0.984  | 0.960|
+|Move Attribute|249  |  4  | 10  | 0.984  | 0.961|
 |Move And Rename Attribute|12  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute|27  |  0  |  1  | 1.000  | 0.964|
 |Rename Method|378  |  4  | 22  | 0.990  | 0.945|
@@ -187,7 +187,7 @@ As of **December 23, 2023** the precision and recall of the tool on an oracle co
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|34  |  0  |  1  | 1.000  | 0.971|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
-|Pull Up Attribute|128  |  0  |  1  | 1.000  | 0.992|
+|Pull Up Attribute|139  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|33  |  0  |  0  | 1.000  | 1.000|
 |Push Down Method|45  |  0  |  1  | 1.000  | 0.978|
 |Extract Interface|22  |  0  |  0  | 1.000  | 1.000|
@@ -218,7 +218,7 @@ As of **December 23, 2023** the precision and recall of the tool on an oracle co
 |Change Return Type|426  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|795  |  2  |  7  | 0.997  | 0.991|
 |Change Parameter Type|645  |  1  | 11  | 0.998  | 0.983|
-|Change Attribute Type|228  |  0  |  8  | 1.000  | 0.966|
+|Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|330  |  0  |  3  | 1.000  | 0.991|
 |Remove Method Annotation|99  |  0  |  0  | 1.000  | 1.000|
 |Modify Method Annotation|29  |  0  |  0  | 1.000  | 1.000|
@@ -240,12 +240,12 @@ As of **December 23, 2023** the precision and recall of the tool on an oracle co
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
 |Change Method Access Modifier|331  |  0  |  0  | 1.000  | 1.000|
-|Change Attribute Access Modifier|223  |  0  |  0  | 1.000  | 1.000|
+|Change Attribute Access Modifier|229  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|49  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|87  |  0  |  0  | 1.000  | 1.000|
 |Remove Method Modifier|110  |  0  |  0  | 1.000  | 1.000|
-|Add Attribute Modifier|136  |  0  |  0  | 1.000  | 1.000|
-|Remove Attribute Modifier|142  |  1  |  0  | 0.993  | 1.000|
+|Add Attribute Modifier|138  |  0  |  0  | 1.000  | 1.000|
+|Remove Attribute Modifier|143  |  1  |  0  | 0.993  | 1.000|
 |Add Variable Modifier|130  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|

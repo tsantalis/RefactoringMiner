@@ -2731,9 +2731,9 @@ public class StringBasedHeuristics {
 			if(containLogicalOperator || ternaryConditions || containsNotOperator) {
 				List<String> subConditionsAsList1 = new ArrayList<String>();
 				List<String> subConditionsAsList2 = new ArrayList<String>();
-				Map<String, LeafExpression> subConditionMap1 = new LinkedHashMap<>();
-				Map<String, LeafExpression> subConditionMap2 = new LinkedHashMap<>();
-				Map<String, LeafExpression> subConditionMap = null;
+				Map<String, List<LeafExpression>> subConditionMap1 = new LinkedHashMap<>();
+				Map<String, List<LeafExpression>> subConditionMap2 = new LinkedHashMap<>();
+				Map<String, List<LeafExpression>> subConditionMap = null;
 				if(ternaryConditions && (!containLogicalOperator || statement1 instanceof AbstractExpression)) {
 					if(ternaryConditionals1.isEmpty() && ternaryConditionals2.size() > 0) {
 						String conditional1 = prepareConditional(s1);
@@ -2743,7 +2743,7 @@ public class StringBasedHeuristics {
 							subConditionsAsList1.add(trimmed);
 							List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
 							if(leafExpressions.size() > 0) {
-								subConditionMap1.put(trimmed, leafExpressions.get(0));
+								subConditionMap1.put(trimmed, leafExpressions);
 							}
 						}
 						for(String ternaryConditional : ternaryConditionals2) {
@@ -2754,7 +2754,7 @@ public class StringBasedHeuristics {
 								subConditionsAsList2.add(trimmed);
 								List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
 								if(leafExpressions.size() > 0) {
-									subConditionMap2.put(trimmed, leafExpressions.get(0));
+									subConditionMap2.put(trimmed, leafExpressions);
 								}
 							}
 						}
@@ -2768,7 +2768,7 @@ public class StringBasedHeuristics {
 								subConditionsAsList1.add(trimmed);
 								List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
 								if(leafExpressions.size() > 0) {
-									subConditionMap1.put(trimmed, leafExpressions.get(0));
+									subConditionMap1.put(trimmed, leafExpressions);
 								}
 							}
 						}
@@ -2779,7 +2779,7 @@ public class StringBasedHeuristics {
 							subConditionsAsList2.add(trimmed);
 							List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
 							if(leafExpressions.size() > 0) {
-								subConditionMap2.put(trimmed, leafExpressions.get(0));
+								subConditionMap2.put(trimmed, leafExpressions);
 							}
 						}
 					}
@@ -2794,7 +2794,7 @@ public class StringBasedHeuristics {
 						subConditionsAsList1.add(trimmed);
 						List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
 						if(leafExpressions.size() > 0) {
-							subConditionMap1.put(trimmed, leafExpressions.get(0));
+							subConditionMap1.put(trimmed, leafExpressions);
 						}
 					}
 					for(String s : subConditions2) {
@@ -2802,7 +2802,7 @@ public class StringBasedHeuristics {
 						subConditionsAsList2.add(trimmed);
 						List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
 						if(leafExpressions.size() > 0) {
-							subConditionMap2.put(trimmed, leafExpressions.get(0));
+							subConditionMap2.put(trimmed, leafExpressions);
 						}
 					}
 				}
@@ -2891,7 +2891,7 @@ public class StringBasedHeuristics {
 									subConditionsAsList.add(trimmed);
 									List<LeafExpression> leafExpressions = ifNode2.findExpression(trimmed);
 									if(leafExpressions.size() > 0) {
-										subConditionMap.put(trimmed, leafExpressions.get(0));
+										subConditionMap.put(trimmed, leafExpressions);
 									}
 								}
 								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
@@ -3217,8 +3217,8 @@ public class StringBasedHeuristics {
 	private static void checkForMergeConditionals(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			UMLOperationBodyMapper mapper, Set<Refactoring> refactorings, VariableDeclarationContainer container1,
 			VariableDeclarationContainer container2, Set<AbstractCodeMapping> mappings,
-			List<String> subConditionsAsList2, Map<String, LeafExpression> subConditionMap1,
-			Map<String, LeafExpression> subConditionMap2, Map<String, LeafExpression> subConditionMap,
+			List<String> subConditionsAsList2, Map<String, List<LeafExpression>> subConditionMap1,
+			Map<String, List<LeafExpression>> subConditionMap2, Map<String, List<LeafExpression>> subConditionMap,
 			Set<String> intersection, Set<String> intersection2, Set<CompositeStatementObject> ifNodes1,
 			Set<CompositeStatementObject> ifNodes2, ReplacementInfo info, Map<String, String> parameterToArgumentMap) {
 		boolean mergeConditional = false;
@@ -3241,7 +3241,7 @@ public class StringBasedHeuristics {
 					}
 					subConditionsAsList.add(temp1);
 					if(leafExpressions.size() > 0) {
-						subConditionMap.put(temp1, leafExpressions.get(0));
+						subConditionMap.put(temp1, leafExpressions);
 					}
 				}
 				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
@@ -3297,16 +3297,16 @@ public class StringBasedHeuristics {
 	}
 
 	private static void createLeafMappings(VariableDeclarationContainer container1,
-			VariableDeclarationContainer container2, Map<String, LeafExpression> subConditionMap1,
-			Map<String, LeafExpression> subConditionMap2, Set<String> intersection, LeafMappingProvider provider) {
+			VariableDeclarationContainer container2, Map<String, List<LeafExpression>> subConditionMap1,
+			Map<String, List<LeafExpression>> subConditionMap2, Set<String> intersection, LeafMappingProvider provider) {
 		for(String key : intersection) {
-			LeafExpression leaf1 = subConditionMap1.get(key);
+			List<LeafExpression> leaf1 = subConditionMap1.get(key);
 			if(leaf1 == null)
 				leaf1 = subConditionMap1.get("!" + key);
 			if(leaf1 == null)
 				leaf1 = subConditionMap1.get("!(" + key + ")");
 			
-			LeafExpression leaf2 = subConditionMap2.get(key);
+			List<LeafExpression> leaf2 = subConditionMap2.get(key);
 			if(leaf2 == null)
 				leaf2 = subConditionMap2.get("!" + key);
 			if(leaf2 == null)
@@ -3323,8 +3323,12 @@ public class StringBasedHeuristics {
 				leaf2 = subConditionMap2.get(prefix + "==" + suffix);
 			}
 			if(leaf1 != null && leaf2 != null) {
-				LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
-				provider.addSubExpressionMapping(leafMapping);
+				for(LeafExpression l1 : leaf1) {
+					for(LeafExpression l2 : leaf2) {
+						LeafMapping leafMapping = new LeafMapping(l1, l2, container1, container2);
+						provider.addSubExpressionMapping(leafMapping);
+					}
+				}
 			}
 		}
 	}

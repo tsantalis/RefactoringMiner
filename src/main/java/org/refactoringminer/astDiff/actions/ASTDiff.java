@@ -61,14 +61,21 @@ public class ASTDiff extends Diff {
 		return classifier.getInsertedDsts();
 	}
 
+	public void computeVanillaEditScript() {
+		EditScript newEditScript = new com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore());
+		finalizeEditScript(newEditScript);
+	}
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
 		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap);
 		processMultiMappings(mappings, newEditScript);
-		for(Action action : newEditScript) {
+		finalizeEditScript(newEditScript);
+	}
+
+	private void finalizeEditScript(EditScript newEditScript) {
+		for(Action action : newEditScript)
 			editScript.add(action);
-		}
 		this.classifier = new ExtendedOnlyRootsClassifier(this);
-		classifier.classify();
+		this.classifier.classify();
 	}
 
 	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {

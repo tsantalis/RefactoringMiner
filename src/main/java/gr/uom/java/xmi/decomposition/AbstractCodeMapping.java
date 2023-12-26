@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -27,17 +28,18 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
+import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 
-public abstract class AbstractCodeMapping {
+public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	private AbstractCodeFragment fragment1;
 	private AbstractCodeFragment fragment2;
 	private VariableDeclarationContainer operation1;
 	private VariableDeclarationContainer operation2;
 	private Set<Replacement> replacements;
-	private Set<LeafMapping> subExpressionMappings;
+	private List<LeafMapping> subExpressionMappings;
 	private boolean identicalWithExtractedVariable;
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
@@ -50,7 +52,7 @@ public abstract class AbstractCodeMapping {
 		this.operation1 = operation1;
 		this.operation2 = operation2;
 		this.replacements = new LinkedHashSet<Replacement>();
-		this.subExpressionMappings = new LinkedHashSet<LeafMapping>();
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
 	}
 
 	public abstract double editDistance();
@@ -134,15 +136,27 @@ public abstract class AbstractCodeMapping {
 		return false;
 	}
 
-	public void addSubExpressionMapping(LeafMapping leafMapping) {
-		subExpressionMappings.add(leafMapping);
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
 	}
 
-	public void addSubExpressionMappings(Set<LeafMapping> leafMappings) {
-		subExpressionMappings.addAll(leafMappings);
+	public void addSubExpressionMappings(List<LeafMapping> leafMappings) {
+		for(LeafMapping leafMapping : leafMappings) {
+			addSubExpressionMapping(leafMapping);
+		}
 	}
 
-	public Set<LeafMapping> getSubExpressionMappings() {
+	public List<LeafMapping> getSubExpressionMappings() {
 		return subExpressionMappings;
 	}
 

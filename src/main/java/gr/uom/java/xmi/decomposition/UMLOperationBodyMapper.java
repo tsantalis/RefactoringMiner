@@ -32,6 +32,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
+import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.MergeCatchRefactoring;
 import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
 import gr.uom.java.xmi.diff.MergeVariableRefactoring;
@@ -7124,7 +7125,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mappingsToBeRemoved.add(m);
 					}
 				}
-				removeAllMappings(mappingsToBeRemoved);
+				//removeAllMappings(mappingsToBeRemoved);
 				//remove from this.refactorings nested refactorings (inside anonymous or lambdas) corresponding to loser mappings
 				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 				for(Refactoring r : this.refactorings) {
@@ -7443,7 +7444,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		private String argumentizedString2;
 		private int rawDistance;
 		private Set<Replacement> replacements;
-		private Set<LeafMapping> subExpressionMappings;
+		private List<LeafMapping> subExpressionMappings;
 		private List<? extends AbstractCodeFragment> statements1;
 		private List<? extends AbstractCodeFragment> statements2;
 		
@@ -7455,7 +7456,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			this.statements2 = statements2;
 			this.rawDistance = StringDistance.editDistance(argumentizedString1, argumentizedString2);
 			this.replacements = new LinkedHashSet<Replacement>();
-			this.subExpressionMappings = new LinkedHashSet<LeafMapping>();
+			this.subExpressionMappings = new ArrayList<LeafMapping>();
 		}
 		public String getArgumentizedString1() {
 			return argumentizedString1;
@@ -7505,10 +7506,28 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return false;
 		}
-		public void addSubExpressionMapping(LeafMapping leafMapping) {
-			subExpressionMappings.add(leafMapping);
+		public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+			boolean alreadyPresent = false; 
+			for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+				if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+						oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+					alreadyPresent = true; 
+					break; 
+				} 
+			} 
+			if(!alreadyPresent) { 
+				subExpressionMappings.add(newLeafMapping); 
+			}
 		}
-		public Set<LeafMapping> getSubExpressionMappings() {
+		public List<LeafMapping> getSubExpressionMappings() {
+			for(Replacement r : replacements) {
+				if(r instanceof LeafMappingProvider) {
+					LeafMappingProvider provider = (LeafMappingProvider)r;
+					for(LeafMapping mapping : provider.getSubExpressionMappings()) {
+						addSubExpressionMapping(mapping);
+					}
+				}
+			}
 			return subExpressionMappings;
 		}
 	}

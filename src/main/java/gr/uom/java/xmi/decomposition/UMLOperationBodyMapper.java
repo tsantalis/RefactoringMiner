@@ -7125,7 +7125,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mappingsToBeRemoved.add(m);
 					}
 				}
-				//removeAllMappings(mappingsToBeRemoved);
+				if(mapping.getFragment1().getString().contains(JAVA.LAMBDA_ARROW) || mapping.getFragment2().getString().contains(JAVA.LAMBDA_ARROW)) {
+					removeAllMappings(mappingsToBeRemoved);
+				}
 				//remove from this.refactorings nested refactorings (inside anonymous or lambdas) corresponding to loser mappings
 				Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
 				for(Refactoring r : this.refactorings) {

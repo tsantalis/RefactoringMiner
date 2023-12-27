@@ -24,6 +24,7 @@ public class Constants {
 	public static final String PRIMITIVE_TYPE = "PrimitiveType";
 	public static final String TYPE_DECLARATION = "TypeDeclaration";
 	public static final String ENUM_DECLARATION = "EnumDeclaration";
+	public static final String ANNOTATION_TYPE_DECLARATION = "AnnotationTypeDeclaration";
 	public static final String ENUM_CONSTANT_DECLARATION = "EnumConstantDeclaration";
 	public static final String TYPE_DECLARATION_STATEMENT = "TypeDeclarationStatement";
 

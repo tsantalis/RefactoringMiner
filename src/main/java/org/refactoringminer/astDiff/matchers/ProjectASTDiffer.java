@@ -1207,7 +1207,10 @@ public class ProjectASTDiffer
 
 	private void processClassDeclarationMapping(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		String AST_type = Constants.TYPE_DECLARATION;
-		if (classDiff.getOriginalClass().isEnum()) AST_type = Constants.ENUM_DECLARATION;
+		if (classDiff.getOriginalClass().isEnum()) 
+			AST_type = Constants.ENUM_DECLARATION;
+		else if (classDiff.getOriginalClass().isAnnotation())
+			AST_type = Constants.ANNOTATION_TYPE_DECLARATION;
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
 		if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;

@@ -4302,7 +4302,8 @@ public class UMLModelDiff {
 		}
 		int exactLeafMappings = 0;
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
-			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN_SPACE)) {
+			if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN_SPACE)
+					&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
 				exactLeafMappings++;
 			}
 		}

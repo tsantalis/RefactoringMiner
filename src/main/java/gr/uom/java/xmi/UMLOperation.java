@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.AnonymousClassDeclarationObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
@@ -41,6 +42,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private boolean isDefault;
 	private Optional<UMLAnonymousClass> anonymousClassContainer;
 	private OperationBody operationBody;
+	private AbstractExpression defaultExpression;
 	private List<UMLAnonymousClass> anonymousClassList;
 	private List<UMLTypeParameter> typeParameters;
 	private List<UMLType> thrownExceptionTypes;
@@ -186,6 +188,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return operationBody;
 	}
 
+	public AbstractExpression getDefaultExpression() {
+		return defaultExpression;
+	}
+
 	public boolean hasOverrideAnnotation() {
 		for(UMLAnnotation annotation : annotations) {
 			if(annotation.getTypeName().equals("Override")) {
@@ -319,6 +325,10 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 
 	public void setBody(OperationBody body) {
 		this.operationBody = body;
+	}
+
+	public void setDefaultExpression(AbstractExpression defaultExpression) {
+		this.defaultExpression = defaultExpression;
 	}
 
 	public String getNonQualifiedClassName() {

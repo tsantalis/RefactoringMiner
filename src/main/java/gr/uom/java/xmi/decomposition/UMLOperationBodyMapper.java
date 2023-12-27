@@ -759,6 +759,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			nonMappedLeavesT1.removeAll(leavesToBeRemovedT1);
 		}
+		AbstractExpression defaultExpression1 = operation1.getDefaultExpression();
+		AbstractExpression defaultExpression2 = operation2.getDefaultExpression();
+		if(defaultExpression1 != null && defaultExpression2 != null) {
+			List<AbstractExpression> leaves1 = new ArrayList<AbstractExpression>();
+			leaves1.add(defaultExpression1);
+			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
+			leaves2.add(defaultExpression2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		}
 	}
 
 	private boolean existsMappingSubsumingBoth(AbstractCodeFragment nonMappedLeaf1, AbstractCodeFragment nonMappedLeaf2) {

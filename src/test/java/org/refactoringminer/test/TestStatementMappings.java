@@ -21,6 +21,7 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
@@ -1417,6 +1418,8 @@ public class TestStatementMappings {
 		actual.add(bodyMapper.toString());
 		//System.out.println(bodyMapper.toString());
 		for(AbstractCodeMapping mapping : bodyMapper.getMappings()) {
+			if(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)
+				continue;
 			String line = mapping.getFragment1().getLocationInfo() + "==" + mapping.getFragment2().getLocationInfo();
 			actual.add(line);
 			//System.out.println(line);

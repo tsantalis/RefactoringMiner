@@ -2753,8 +2753,31 @@ public class StringBasedHeuristics {
 								String trimmed = s.trim();
 								subConditionsAsList2.add(trimmed);
 								List<LeafExpression> leafExpressions = statement2.findExpression(trimmed);
+								LeafExpression expressionMatchingTernaryComponent = null;
+								int matchCount = 0;
+								for(LeafExpression l : leafExpressions) {
+									for(TernaryOperatorExpression ternary : statement2.getTernaryOperatorExpressions()) {
+										if(l.getLocationInfo().equals(ternary.getCondition().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+										if(l.getLocationInfo().equals(ternary.getThenExpression().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+										if(l.getLocationInfo().equals(ternary.getElseExpression().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+									}
+								}
 								if(leafExpressions.size() > 0) {
-									subConditionMap2.put(trimmed, leafExpressions);
+									if(matchCount == 1) {
+										subConditionMap2.put(trimmed, List.of(expressionMatchingTernaryComponent));
+									}
+									else {
+										subConditionMap2.put(trimmed, leafExpressions);
+									}
 								}
 							}
 						}
@@ -2767,8 +2790,31 @@ public class StringBasedHeuristics {
 								String trimmed = s.trim();
 								subConditionsAsList1.add(trimmed);
 								List<LeafExpression> leafExpressions = statement1.findExpression(trimmed);
+								LeafExpression expressionMatchingTernaryComponent = null;
+								int matchCount = 0;
+								for(LeafExpression l : leafExpressions) {
+									for(TernaryOperatorExpression ternary : statement1.getTernaryOperatorExpressions()) {
+										if(l.getLocationInfo().equals(ternary.getCondition().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+										if(l.getLocationInfo().equals(ternary.getThenExpression().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+										if(l.getLocationInfo().equals(ternary.getElseExpression().getLocationInfo())) {
+											expressionMatchingTernaryComponent = l;
+											matchCount++;
+										}
+									}
+								}
 								if(leafExpressions.size() > 0) {
-									subConditionMap1.put(trimmed, leafExpressions);
+									if(matchCount == 1) {
+										subConditionMap1.put(trimmed, List.of(expressionMatchingTernaryComponent));
+									}
+									else {
+										subConditionMap1.put(trimmed, leafExpressions);
+									}
 								}
 							}
 						}

@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
+import org.eclipse.jdt.core.dom.AnnotationTypeMemberDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
@@ -54,6 +55,7 @@ import com.github.gumtreediff.gen.jdt.JdtVisitor;
 import com.github.gumtreediff.tree.TreeContext;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.OperationBody;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
@@ -330,10 +332,11 @@ public class UMLModelASTReader {
 			String sourceFile, List<UMLImport> importedTypes, UMLClass umlClass, UMLJavadoc packageDoc, List<UMLComment> comments) {
 		Map<BodyDeclaration, VariableDeclarationContainer> map = new LinkedHashMap<>();
 		List<BodyDeclaration> bodyDeclarations = abstractTypeDeclaration.bodyDeclarations();
+		boolean interfaceOrAnnotation = umlClass.isInterface() || umlClass.isAnnotation();
 		for(BodyDeclaration bodyDeclaration : bodyDeclarations) {
 			if(bodyDeclaration instanceof FieldDeclaration) {
 				FieldDeclaration fieldDeclaration = (FieldDeclaration)bodyDeclaration;
-				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, umlClass.isInterface(), sourceFile, comments);
+				List<UMLAttribute> attributes = processFieldDeclaration(cu, fieldDeclaration, interfaceOrAnnotation, sourceFile, comments);
 	    		for(UMLAttribute attribute : attributes) {
 	    			attribute.setClassName(umlClass.getName());
 	    			umlClass.addAttribute(attribute);
@@ -341,10 +344,17 @@ public class UMLModelASTReader {
 			}
 			else if(bodyDeclaration instanceof MethodDeclaration) {
 				MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
-				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, umlClass.isInterface(), sourceFile, comments);
+				UMLOperation operation = processMethodDeclaration(cu, methodDeclaration, packageName, interfaceOrAnnotation, sourceFile, comments);
 	    		operation.setClassName(umlClass.getName());
 	    		umlClass.addOperation(operation);
 	    		map.put(methodDeclaration, operation);
+			}
+			else if(bodyDeclaration instanceof AnnotationTypeMemberDeclaration) {
+				AnnotationTypeMemberDeclaration annotationTypeDeclaration = (AnnotationTypeMemberDeclaration)bodyDeclaration;
+				UMLOperation operation = processAnnotationTypeMember(cu, annotationTypeDeclaration, packageName, interfaceOrAnnotation, sourceFile, comments);
+	    		operation.setClassName(umlClass.getName());
+	    		umlClass.addOperation(operation);
+	    		map.put(annotationTypeDeclaration, operation);
 			}
 			else if(bodyDeclaration instanceof Initializer) {
 				Initializer initializer = (Initializer)bodyDeclaration;
@@ -686,6 +696,71 @@ public class UMLModelASTReader {
 			umlInitializer.setStatic(true);
 		
 		return umlInitializer;
+	}
+
+	private UMLOperation processAnnotationTypeMember(CompilationUnit cu, AnnotationTypeMemberDeclaration annotationTypeMemberDeclatation, String packageName, boolean isInterfaceMethod, String sourceFile, List<UMLComment> comments) {
+		UMLJavadoc javadoc = generateJavadoc(cu, annotationTypeMemberDeclatation, sourceFile);
+		String methodName = annotationTypeMemberDeclatation.getName().getFullyQualifiedName();
+		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, annotationTypeMemberDeclatation, CodeElementType.ANNOTATION_TYPE_MEMBER_DECLARATION);
+		
+		UMLOperation umlOperation = new UMLOperation(methodName, locationInfo);
+		umlOperation.setJavadoc(javadoc);
+		distributeComments(comments, locationInfo, umlOperation.getComments());
+		
+		int methodModifiers = annotationTypeMemberDeclatation.getModifiers();
+		if((methodModifiers & Modifier.PUBLIC) != 0)
+			umlOperation.setVisibility(Visibility.PUBLIC);
+		else if((methodModifiers & Modifier.PROTECTED) != 0)
+			umlOperation.setVisibility(Visibility.PROTECTED);
+		else if((methodModifiers & Modifier.PRIVATE) != 0)
+			umlOperation.setVisibility(Visibility.PRIVATE);
+		else if(isInterfaceMethod)
+			umlOperation.setVisibility(Visibility.PUBLIC);
+		else
+			umlOperation.setVisibility(Visibility.PACKAGE);
+		
+		if((methodModifiers & Modifier.ABSTRACT) != 0)
+			umlOperation.setAbstract(true);
+		
+		if((methodModifiers & Modifier.FINAL) != 0)
+			umlOperation.setFinal(true);
+		
+		if((methodModifiers & Modifier.STATIC) != 0)
+			umlOperation.setStatic(true);
+		
+		if((methodModifiers & Modifier.SYNCHRONIZED) != 0)
+			umlOperation.setSynchronized(true);
+		
+		if((methodModifiers & Modifier.NATIVE) != 0)
+			umlOperation.setNative(true);
+		
+		if((methodModifiers & Modifier.DEFAULT) != 0)
+			umlOperation.setDefault(true);
+		
+		List<IExtendedModifier> extendedModifiers = annotationTypeMemberDeclatation.modifiers();
+		for(IExtendedModifier extendedModifier : extendedModifiers) {
+			if(extendedModifier.isAnnotation()) {
+				Annotation annotation = (Annotation)extendedModifier;
+				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+			}
+			else if(extendedModifier.isModifier()) {
+				Modifier modifier = (Modifier)extendedModifier;
+				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifier));
+			}
+		}
+		
+		Type returnType = annotationTypeMemberDeclatation.getType();
+		if(returnType != null) {
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, 0);
+			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
+			umlOperation.addParameter(returnParameter);
+		}
+		
+		if(annotationTypeMemberDeclatation.getDefault() != null) {
+			AbstractExpression defaultExpression = new AbstractExpression(cu, sourceFile, annotationTypeMemberDeclatation.getDefault(), CodeElementType.ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION, umlOperation);
+			umlOperation.setDefaultExpression(defaultExpression);
+		}
+		return umlOperation;
 	}
 
 	private UMLOperation processMethodDeclaration(CompilationUnit cu, MethodDeclaration methodDeclaration, String packageName, boolean isInterfaceMethod, String sourceFile, List<UMLComment> comments) {

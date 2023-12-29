@@ -1000,6 +1000,13 @@ public class ProjectASTDiffer
 		if (dstFieldDeclaration == null) {
 			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.ENUM_CONSTANT_DECLARATION);
 		}
+		//handle Record Components (SingleVariableDeclaration)
+		if (srcFieldDeclaration == null) {
+			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.RECORD_COMPONENT);
+		}
+		if (dstFieldDeclaration == null) {
+			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.RECORD_COMPONENT);
+		}
 		//				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
 		if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
 			//IsoStructural can't be a good idea here, i.e. anonymous class
@@ -1211,6 +1218,8 @@ public class ProjectASTDiffer
 			AST_type = Constants.ENUM_DECLARATION;
 		else if (classDiff.getOriginalClass().isAnnotation())
 			AST_type = Constants.ANNOTATION_TYPE_DECLARATION;
+		else if (classDiff.getOriginalClass().isRecord())
+			AST_type = Constants.RECORD_DECLARATION;
 		Tree srcTypeDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,classDiff.getOriginalClass().getLocationInfo(),AST_type);
 		Tree dstTypeDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,classDiff.getNextClass().getLocationInfo(),AST_type);
 		if (srcTypeDeclaration == null || dstTypeDeclaration == null) return;

@@ -18,6 +18,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean isInterface;
 	private boolean isEnum;
 	private boolean isAnnotation;
+	private boolean isRecord;
 	private boolean topLevel;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
@@ -74,6 +75,8 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     		return "enum";
     	else if(isAnnotation)
     		return "annotation";
+    	else if(isRecord)
+    		return "record";
     	else
     		return "class";
     }
@@ -144,6 +147,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public void setAnnotation(boolean isAnnotation) {
 		this.isAnnotation = isAnnotation;
+	}
+
+	public boolean isRecord() {
+		return isRecord;
+	}
+
+	public void setRecord(boolean isRecord) {
+		this.isRecord = isRecord;
 	}
 
 	public boolean isInterface() {
@@ -331,7 +342,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	}
 
 	public boolean isSingleMethodClass() {
-		if(!isInterface && !isEnum) {
+		if(!isInterface && !isEnum && !isAnnotation && !isRecord) {
 			int counter = 0;
 			for(UMLOperation operation : operations) {
 				if(!operation.isConstructor()) {

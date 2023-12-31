@@ -3160,6 +3160,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				List<AbstractCall> methodInvocations1 = mapping.getFragment1().getMethodInvocations();
+				List<AbstractCall> methodInvocations2 = mapping.getFragment2().getMethodInvocations();
+				if(methodInvocations1.size() == methodInvocations2.size()) {
+					for(int i=0; i<methodInvocations1.size(); i++) {
+						AbstractCall call1 = methodInvocations1.get(i);
+						AbstractCall call2 = methodInvocations2.get(i);
+						if(!call1.equals(call2)) {
+							MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
+							replacements.add(r);
+						}
+					}
+				}
 			}
 		}
 		if(replacements.isEmpty()) {
@@ -3491,7 +3503,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								allUnmatchedNodes2.addAll(innerNodes2);
 								allUnmatchedNodes2.addAll(leaves2);
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, this);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
@@ -3566,7 +3578,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
 							
 							double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 							if(score == 0 && replacements != null) {
@@ -3640,7 +3652,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
 											ReplacementInfo replacementInfo2 = initializeReplacementInfo(matchingInnerNode1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-											Set<Replacement> replacements2 = findReplacementsWithExactMatching(matchingInnerNode1, statement2, parameterToArgumentMap, replacementInfo2, this);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(matchingInnerNode1, statement2, parameterToArgumentMap, replacementInfo2, false, this);
 											
 											double score2 = computeScore(matchingInnerNode1, statement2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
 											if(score2 > 0) {
@@ -3800,7 +3812,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								allUnmatchedNodes2.addAll(innerNodes2);
 								allUnmatchedNodes2.addAll(leaves2);
 								ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, this);
+								findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
 								double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 								if(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0) {
 									CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
@@ -3891,7 +3903,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							allUnmatchedNodes2.addAll(innerNodes2);
 							allUnmatchedNodes2.addAll(leaves2);
 							ReplacementInfo replacementInfo = initializeReplacementInfo(statement1, statement2, allUnmatchedNodes1, allUnmatchedNodes2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(statement1, statement2, parameterToArgumentMap, replacementInfo, false, this);
 							
 							double score = computeScore(statement1, statement2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
 							if(score == 0 && replacements != null) {
@@ -3965,7 +3977,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									for(CompositeStatementObject matchingInnerNode2 : matchingInnerNodes2) {
 										if(!matchingInnerNode2.equals(statement2)) {
 											ReplacementInfo replacementInfo2 = initializeReplacementInfo(statement1, matchingInnerNode2, allUnmatchedNodes1, allUnmatchedNodes2);
-											Set<Replacement> replacements2 = findReplacementsWithExactMatching(statement1, matchingInnerNode2, parameterToArgumentMap, replacementInfo2, this);
+											Set<Replacement> replacements2 = findReplacementsWithExactMatching(statement1, matchingInnerNode2, parameterToArgumentMap, replacementInfo2, false, this);
 											
 											double score2 = computeScore(statement1, matchingInnerNode2, Optional.of(replacementInfo2), removedOperations, addedOperations, tryWithResourceMigration);
 											if(score2 > 0) {
@@ -4894,7 +4906,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						AbstractCodeFragment leaf2 = leafIterator2.next();
 						if(!alreadyMatched2(leaf2)) {
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
@@ -5291,12 +5303,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(matchingLeaves1.size() > 1 && skipCurrentIteration(matchingLeaves1)) {
 						continue;
 					}
-					TreeSet<LeafMapping> mappingSet = new TreeSet<LeafMapping>();
+					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 						AbstractCodeFragment leaf1 = leafIterator1.next();
 						if(!alreadyMatched1(leaf1)) {
 							ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf2, leaves1, leaves2);
-							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, this);
+							Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
@@ -5586,7 +5598,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(!leaf.equals(leaf1)) {
 				int numberOfMappings = mappings.size();
 				ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
-				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, this);
+				Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 				if (replacements != null) {
 					int matchingMappings = 0;
 					for(LeafMapping m : mappingSet) {
@@ -5660,7 +5672,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) || possibleExtractVariable || possibleInlineVariable)) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
@@ -5737,7 +5749,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
-					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, this);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
@@ -6187,6 +6199,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) { 
 					return mapping; 
 				} 
+				if(operationInvocation.getContainer() instanceof LambdaExpressionObject && mapping.getFragment2().getLambdas().contains(operationInvocation.getContainer())) {
+					return mapping;
+				}
 			} 
 		} 
 		if(nested && parentMapper.getParentMapper() != null) {
@@ -6232,6 +6247,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						mapping.getFragment1().equals(statementContainingOperationInvocation.getParent().getParent())) { 
 					return mapping; 
 				} 
+				if(operationInvocation.getContainer() instanceof LambdaExpressionObject && mapping.getFragment1().getLambdas().contains(operationInvocation.getContainer())) {
+					return mapping;
+				}
 			} 
 		} 
 		return null; 

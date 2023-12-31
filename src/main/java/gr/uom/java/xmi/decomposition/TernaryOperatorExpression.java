@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import java.util.Map;
+
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 
@@ -41,22 +43,50 @@ public class TernaryOperatorExpression extends LeafExpression {
 		return getString();
 	}
 
-	public Replacement makeReplacementWithTernaryOnTheRight(String statement) {
+	public Replacement makeReplacementWithTernaryOnTheRight(String statement, Map<String, String> parameterToArgumentMap) {
 		if(getElseExpression().getString().equals(statement)) {
-			return new Replacement(statement, getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+			return new Replacement(statement, getElseExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
 		}
 		if(getThenExpression().getString().equals(statement)) {
-			return new Replacement(statement, getExpression(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+			return new Replacement(statement, getThenExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+		}
+		String temp = new String(statement);
+		for(String key : parameterToArgumentMap.keySet()) {
+			if(!key.equals(parameterToArgumentMap.get(key))) {
+				temp = ReplacementUtil.performReplacement(temp, parameterToArgumentMap.get(key), key);
+			}
+		}
+		if(!temp.equals(statement)) {
+			if(getElseExpression().getString().equals(temp)) {
+				return new Replacement(statement, getElseExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+			}
+			if(getThenExpression().getString().equals(temp)) {
+				return new Replacement(statement, getThenExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+			}
 		}
 		return null;
 	}
 
-	public Replacement makeReplacementWithTernaryOnTheLeft(String statement) {
+	public Replacement makeReplacementWithTernaryOnTheLeft(String statement, Map<String, String> parameterToArgumentMap) {
 		if(getElseExpression().getString().equals(statement)) {
-			return new Replacement(getExpression(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+			return new Replacement(getElseExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
 		}
 		if(getThenExpression().getString().equals(statement)) {
-			return new Replacement(getExpression(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+			return new Replacement(getThenExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+		}
+		String temp = new String(statement);
+		for(String key : parameterToArgumentMap.keySet()) {
+			if(!key.equals(parameterToArgumentMap.get(key))) {
+				temp = ReplacementUtil.performReplacement(temp, parameterToArgumentMap.get(key), key);
+			}
+		}
+		if(!temp.equals(statement)) {
+			if(getElseExpression().getString().equals(temp)) {
+				return new Replacement(getElseExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
+			}
+			if(getThenExpression().getString().equals(temp)) {
+				return new Replacement(getThenExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+			}
 		}
 		return null;
 	}

@@ -86,7 +86,7 @@ public class ReplacementAlgorithm {
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
 
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
-			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
 		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
@@ -1036,7 +1036,7 @@ public class ReplacementAlgorithm {
 								String signature1 = parent1.getSignature();
 								String signature2 = parent2.getSignature();
 								if(signature1.equals(signature2)) {
-									LeafMapping leafMapping = operationBodyMapper.createLeafMapping(statement1, fragment2, parameterToArgumentMap, false);
+									LeafMapping leafMapping = operationBodyMapper.createLeafMapping(statement1, fragment2, parameterToArgumentMap, equalNumberOfAssertions);
 									mappingsToBeAdded.add(leafMapping);
 									break;
 								}
@@ -1148,7 +1148,7 @@ public class ReplacementAlgorithm {
 													List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 													List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 													if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-														LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+														LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
 														operationBodyMapper.addMapping(mapping);
 													}
 													argumentMatched = true;
@@ -1817,7 +1817,7 @@ public class ReplacementAlgorithm {
 									if(leafExpressions2.size() == 1) {
 										List<LeafExpression> leafExpressions1 = statement1.findExpression(argument1);
 										if(leafExpressions1.size() == 1) {
-											LeafMapping leafMapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+											LeafMapping leafMapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
 											operationBodyMapper.addMapping(leafMapping);
 										}
 									}
@@ -2532,27 +2532,29 @@ public class ReplacementAlgorithm {
 		if(ternaryOperatorExpressions1.isEmpty() && ternaryOperatorExpressions2.size() == 1) {
 			TernaryOperatorExpression ternary = ternaryOperatorExpressions2.get(0);
 			for(String creation : creationIntersection) {
-				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String methodInvocation : methodInvocationIntersection) {
-				if((r = ternary.makeReplacementWithTernaryOnTheRight(methodInvocation)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(methodInvocation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
+					addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 					return replacementInfo.getReplacements();
 				}
 			}
-			if(invocationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(invocationCoveringTheEntireStatement1.actualString())) != null) {
+			if(invocationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(invocationCoveringTheEntireStatement1.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
+				addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 				return replacementInfo.getReplacements();
 			}
-			if(creationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(creationCoveringTheEntireStatement1.actualString())) != null) {
+			if(creationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(creationCoveringTheEntireStatement1.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
 				return replacementInfo.getReplacements();
 			}
 			for(String creation2 : creations2) {
-				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation2)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation2, parameterToArgumentMap)) != null) {
 					for(AbstractCall c2 : creationMap2.get(creation2)) {
 						for(String creation1 : creations1) {
 							for(AbstractCall c1 : creationMap1.get(creation1)) {
@@ -2569,27 +2571,29 @@ public class ReplacementAlgorithm {
 		if(ternaryOperatorExpressions1.size() == 1 && ternaryOperatorExpressions2.isEmpty()) {
 			TernaryOperatorExpression ternary = ternaryOperatorExpressions1.get(0);
 			for(String creation : creationIntersection) {
-				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
 					return replacementInfo.getReplacements();
 				}
 			}
 			for(String methodInvocation : methodInvocationIntersection) {
-				if((r = ternary.makeReplacementWithTernaryOnTheLeft(methodInvocation)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(methodInvocation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
+					addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 					return replacementInfo.getReplacements();
 				}
 			}
-			if(invocationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(invocationCoveringTheEntireStatement2.actualString())) != null) {
+			if(invocationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(invocationCoveringTheEntireStatement2.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
+				addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 				return replacementInfo.getReplacements();
 			}
-			if(creationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(creationCoveringTheEntireStatement2.actualString())) != null) {
+			if(creationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(creationCoveringTheEntireStatement2.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
 				return replacementInfo.getReplacements();
 			}
 			for(String creation1 : creations1) {
-				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation1)) != null) {
+				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation1, parameterToArgumentMap)) != null) {
 					for(AbstractCall c1 : creationMap1.get(creation1)) {
 						for(String creation2 : creations2) {
 							for(AbstractCall c2 : creationMap2.get(creation2)) {
@@ -2629,7 +2633,7 @@ public class ReplacementAlgorithm {
 									List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 									List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 									if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-										LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+										LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
 										operationBodyMapper.addMapping(mapping);
 										additionallyMatchedStatements1.add(fragment1);
 									}
@@ -2683,7 +2687,7 @@ public class ReplacementAlgorithm {
 															List<LeafExpression> leafExpressions1 = fragment1.findExpression(argument1);
 															List<LeafExpression> leafExpressions2 = statement2.findExpression(argument2);
 															if(leafExpressions1.size() == 1 && leafExpressions2.size() == 1) {
-																LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, isEqualWithReplacement);
+																LeafMapping mapping = operationBodyMapper.createLeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), parameterToArgumentMap, equalNumberOfAssertions);
 																operationBodyMapper.addMapping(mapping);
 																additionallyMatchedStatements1.add(fragment1);
 															}

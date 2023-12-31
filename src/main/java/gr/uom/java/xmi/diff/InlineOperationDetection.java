@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -117,29 +118,31 @@ public class InlineOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForInlinedMethod(mapper, removedOperation, removedOperationInvocation, false);
-		List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
-		for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
-			CallTreeNode node = nodesInBreadthFirstOrder.get(i);
-			//if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getContainer1()).size() == 0) {
-				processNestedMapper(operationBodyMapper, operationBodyMapper, refactorings, node);
-			//}
-		}
-		if(inlineMatchCondition(operationBodyMapper, mapper)) {
-			InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
-			refactorings.add(inlineOperationRefactoring);
-		}
-		else {
-			//add any mappings back to parent mapper as non-mapped statements
-			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				AbstractCodeFragment fragment2 = mapping.getFragment2();
-				if(fragment2 instanceof CompositeStatementObject) {
-					if(!mapper.getNonMappedInnerNodesT2().contains(fragment2)) {
-						mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject)fragment2);
+		if(operationBodyMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) {
+			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
+			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
+				CallTreeNode node = nodesInBreadthFirstOrder.get(i);
+				//if(matchingInvocations(node.getInvokedOperation(), operationInvocations, mapper.getContainer1()).size() == 0) {
+					processNestedMapper(operationBodyMapper, operationBodyMapper, refactorings, node);
+				//}
+			}
+			if(inlineMatchCondition(operationBodyMapper, mapper)) {
+				InlineOperationRefactoring inlineOperationRefactoring =	new InlineOperationRefactoring(operationBodyMapper, mapper.getContainer1(), removedOperationInvocations);
+				refactorings.add(inlineOperationRefactoring);
+			}
+			else {
+				//add any mappings back to parent mapper as non-mapped statements
+				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+					AbstractCodeFragment fragment2 = mapping.getFragment2();
+					if(fragment2 instanceof CompositeStatementObject) {
+						if(!mapper.getNonMappedInnerNodesT2().contains(fragment2)) {
+							mapper.getNonMappedInnerNodesT2().add((CompositeStatementObject)fragment2);
+						}
 					}
-				}
-				else {
-					if(!mapper.getNonMappedLeavesT2().contains(fragment2)) {
-						mapper.getNonMappedLeavesT2().add(fragment2);
+					else {
+						if(!mapper.getNonMappedLeavesT2().contains(fragment2)) {
+							mapper.getNonMappedLeavesT2().add(fragment2);
+						}
 					}
 				}
 			}
@@ -176,6 +179,17 @@ public class InlineOperationDetection {
 				}
 			}
 		}
+	}
+
+	private boolean containsRefactoringWithIdenticalMappings(List<InlineOperationRefactoring> refactorings, UMLOperationBodyMapper mapper) {
+		Set<AbstractCodeMapping> newMappings = mapper.getMappings();
+		for(InlineOperationRefactoring ref : refactorings) {
+			Set<AbstractCodeMapping> oldMappings = ref.getBodyMapper().getMappings();
+			if(oldMappings.containsAll(newMappings)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private List<AbstractCall> matchingInvocations(UMLOperation removedOperation, List<AbstractCall> operationInvocations, VariableDeclarationContainer callerOperation) {

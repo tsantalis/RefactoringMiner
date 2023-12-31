@@ -34,6 +34,10 @@ public class LeafExpression extends AbstractCodeFragment {
 		
 	}
 
+	public VariableDeclarationContainer getContainer() {
+		return container;
+	}
+
 	@Override
 	public LocationInfo getLocationInfo() {
 		return locationInfo;

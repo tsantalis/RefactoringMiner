@@ -75,9 +75,9 @@ public class UMLModelASTReader {
 	public static ASTNode processBlock(String methodBody) {
 		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
 		Map<String, String> options = JavaCore.getOptions();
-		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_20);
-		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_20);
-		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_20);
+		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
 		parser.setCompilerOptions(options);
 		parser.setResolveBindings(false);
 		parser.setKind(ASTParser.K_STATEMENTS);
@@ -99,9 +99,9 @@ public class UMLModelASTReader {
 		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_20);
-			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_20);
-			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_20);
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
 			parser.setCompilerOptions(options);
 			parser.setResolveBindings(false);
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);

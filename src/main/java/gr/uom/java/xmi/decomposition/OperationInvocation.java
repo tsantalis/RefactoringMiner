@@ -371,7 +371,7 @@ public class OperationInvocation extends AbstractCall {
 		return this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
     }
 
-    private boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
+    public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
     	if(collectionMatch(parameter.getType(), type))
@@ -393,6 +393,11 @@ public class OperationInvocation extends AbstractCall {
     	else if(isPrimitiveType(type2) && !isPrimitiveType(type1)) {
     		if(PRIMITIVE_WRAPPER_CLASS_MAP.get(type2).equals(type1))
     			return true;
+    	}
+    	//https://docs.oracle.com/javase/specs/jls/se7/html/jls-10.html
+    	//The direct superclass of an array type is Object
+    	if(type.getArrayDimension() > 0 && type1.equals("Object")) {
+    		return true;
     	}
     	if(modelDiff != null) {
 	    	UMLAbstractClass subClassInParentModel = modelDiff.findClassInParentModel(type2);
@@ -438,7 +443,7 @@ public class OperationInvocation extends AbstractCall {
     	if(superclassDiff != null && subclassDiff == null) {
     		return true;
     	}
-    	if(classDiff != null) {
+    	if(classDiff != null && modelDiff.partialModel()) {
     		List<UMLImport> imports = classDiff.getNextClass().getImportedTypes();
 			String qualifiedType1Prefix = null;
 			String qualifiedType2Prefix = null;
@@ -457,7 +462,7 @@ public class OperationInvocation extends AbstractCall {
     	return false;
     }
 
-	public static boolean collectionMatch(UMLType parameterType, UMLType type) {
+	private static boolean collectionMatch(UMLType parameterType, UMLType type) {
 		if(parameterType.getClassType().equals("Iterable") || parameterType.getClassType().equals("Collection") ) {
 			if(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) {
 				if(parameterType.getTypeArguments().equals(type.getTypeArguments())) {
@@ -486,7 +491,7 @@ public class OperationInvocation extends AbstractCall {
         return PRIMITIVE_TYPE_LIST.contains(argumentTypeClassName);
     }
 
-    private UMLClassBaseDiff getUMLClassDiff(UMLModelDiff modelDiff, UMLType type) {
+    private static UMLClassBaseDiff getUMLClassDiff(UMLModelDiff modelDiff, UMLType type) {
     	UMLClassBaseDiff classDiff = null;
     	if(modelDiff != null) {
     		classDiff = modelDiff.getUMLClassDiff(type.getClassType());

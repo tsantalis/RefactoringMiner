@@ -3135,6 +3135,55 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					replacements.add(r);
 				}
 			}
+			if(replacementsInvolvingMethodInvocation.isEmpty() && !mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				AbstractCall invocationCoveringEntireFragment1 = mapping.getFragment1().invocationCoveringEntireFragment();
+				AbstractCall invocationCoveringEntireFragment2 = mapping.getFragment2().invocationCoveringEntireFragment();
+				if(invocationCoveringEntireFragment1 != null && invocationCoveringEntireFragment2 != null) {
+					String expression1 = invocationCoveringEntireFragment1.getExpression();
+					String expression2 = invocationCoveringEntireFragment2.getExpression();
+					if(expression1 != null && expression2 != null) {
+						for(Replacement r : mapping.getReplacements()) {
+							if(r.getBefore().equals(expression1) && r.getAfter().equals(expression2)) {
+								if(Character.isUpperCase(expression1.charAt(0)) && Character.isUpperCase(expression2.charAt(0))) {
+									replacements.add(r);
+								}
+							}
+						}
+					}
+				}
+				List<AbstractCall> methodInvocations1 = mapping.getFragment1().getMethodInvocations();
+				List<AbstractCall> methodInvocations2 = mapping.getFragment2().getMethodInvocations();
+				if(methodInvocations1.size() == methodInvocations2.size()) {
+					for(int i=0; i<methodInvocations1.size(); i++) {
+						AbstractCall call1 = methodInvocations1.get(i);
+						AbstractCall call2 = methodInvocations2.get(i);
+						if(!call1.equals(call2)) {
+							MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
+							replacements.add(r);
+						}
+					}
+				}
+				List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+				List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+				if(lambdas1.size() == lambdas2.size()) {
+					for(int j=0; j<lambdas1.size(); j++) {
+						LambdaExpressionObject lambda1 = lambdas1.get(j);
+						LambdaExpressionObject lambda2 = lambdas2.get(j);
+						methodInvocations1 = lambda1.getAllOperationInvocations();
+						methodInvocations2 = lambda2.getAllOperationInvocations();
+						if(methodInvocations1.size() == methodInvocations2.size()) {
+							for(int i=0; i<methodInvocations1.size(); i++) {
+								AbstractCall call1 = methodInvocations1.get(i);
+								AbstractCall call2 = methodInvocations2.get(i);
+								if(!call1.equals(call2)) {
+									MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
+									replacements.add(r);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		return replacements;
 	}
@@ -3169,6 +3218,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						if(!call1.equals(call2)) {
 							MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
 							replacements.add(r);
+						}
+					}
+				}
+				List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+				List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+				if(lambdas1.size() == lambdas2.size()) {
+					for(int j=0; j<lambdas1.size(); j++) {
+						LambdaExpressionObject lambda1 = lambdas1.get(j);
+						LambdaExpressionObject lambda2 = lambdas2.get(j);
+						methodInvocations1 = lambda1.getAllOperationInvocations();
+						methodInvocations2 = lambda2.getAllOperationInvocations();
+						if(methodInvocations1.size() == methodInvocations2.size()) {
+							for(int i=0; i<methodInvocations1.size(); i++) {
+								AbstractCall call1 = methodInvocations1.get(i);
+								AbstractCall call2 = methodInvocations2.get(i);
+								if(!call1.equals(call2)) {
+									MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
+									replacements.add(r);
+								}
+							}
 						}
 					}
 				}

@@ -1871,6 +1871,21 @@ public class VariableReplacementAnalysis {
 							}
 						}
 					}
+					if(invocation.getName().startsWith("to") && invocation.getExpression() != null && !variable.equals(invocation.getExpression())) {
+						Replacement variableReplacement = new Replacement(variable, invocation.getExpression(), ReplacementType.VARIABLE_NAME);
+						if(!returnVariableMapping(mapping, replacement) &&
+								!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+								replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+							if(map.containsKey(variableReplacement)) {
+								map.get(variableReplacement).add(mapping);
+							}
+							else {
+								Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+								list.add(mapping);
+								map.put(variableReplacement, list);
+							}
+						}
+					}
 				}
 			}
 		}

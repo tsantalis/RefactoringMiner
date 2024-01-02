@@ -2534,6 +2534,7 @@ public class ReplacementAlgorithm {
 			for(String creation : creationIntersection) {
 				if((r = ternary.makeReplacementWithTernaryOnTheRight(creation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
+					addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -2551,6 +2552,7 @@ public class ReplacementAlgorithm {
 			}
 			if(creationCoveringTheEntireStatement1 != null && (r = ternary.makeReplacementWithTernaryOnTheRight(creationCoveringTheEntireStatement1.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
+				addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 				return replacementInfo.getReplacements();
 			}
 			for(String creation2 : creations2) {
@@ -2560,6 +2562,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCall c1 : creationMap1.get(creation1)) {
 								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
 									replacementInfo.addReplacement(r);
+									addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 									return replacementInfo.getReplacements();
 								}
 							}
@@ -2573,6 +2576,7 @@ public class ReplacementAlgorithm {
 			for(String creation : creationIntersection) {
 				if((r = ternary.makeReplacementWithTernaryOnTheLeft(creation, parameterToArgumentMap)) != null) {
 					replacementInfo.addReplacement(r);
+					addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -2590,6 +2594,7 @@ public class ReplacementAlgorithm {
 			}
 			if(creationCoveringTheEntireStatement2 != null && (r = ternary.makeReplacementWithTernaryOnTheLeft(creationCoveringTheEntireStatement2.actualString(), parameterToArgumentMap)) != null) {
 				replacementInfo.addReplacement(r);
+				addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 				return replacementInfo.getReplacements();
 			}
 			for(String creation1 : creations1) {
@@ -2599,6 +2604,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCall c2 : creationMap2.get(creation2)) {
 								if(((ObjectCreation)c1).getType().compatibleTypes(((ObjectCreation)c2).getType()) && c1.equalArguments(c2)) {
 									replacementInfo.addReplacement(r);
+									addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 									return replacementInfo.getReplacements();
 								}
 							}

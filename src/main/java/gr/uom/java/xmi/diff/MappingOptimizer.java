@@ -582,6 +582,9 @@ public class MappingOptimizer {
 					return true;
 				}
 			}
+			if(invocation.getExpression() != null && invocation.getExpression().equals(operationInvocation.actualString())) {
+				return true;
+			}
 		}
 		AbstractCall creation = callFragment.creationCoveringEntireFragment();
 		if(creation != null && creation.actualString().contains(operationInvocation.actualString())) {

@@ -3123,6 +3123,14 @@ public class ReplacementAlgorithm {
 					VariableReplacementWithMethodInvocation replacement = new VariableReplacementWithMethodInvocation(statement1.getVariables().get(0).getString(), creationCoveringTheEntireStatement2.actualString(), creationCoveringTheEntireStatement2, Direction.VARIABLE_TO_INVOCATION);
 					replacementInfo.addReplacement(replacement);
 				}
+				if(lambdas1.size() > 0 && lambdas2.size() > 0) {
+					boolean lambdaWithBody1 = lambdas1.get(0).getBody() != null;
+					boolean lambdaWithBody2 = lambdas2.get(0).getBody() != null;
+					if(lambdaWithBody1 != lambdaWithBody2) {
+						Replacement replacement = new Replacement(lambdas1.get(0).toString(), lambdas2.get(0).toString(), ReplacementType.LAMBDA_WITH_BODY_REPLACED_LAMBDA_WITH_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
 				return replacementInfo.getReplacements();
 			}
 		}

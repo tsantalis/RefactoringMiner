@@ -1123,7 +1123,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				replacement.getType().equals(ReplacementType.ARGUMENT_REPLACED_WITH_METHOD_INVOCATION) ||
 				replacement.getType().equals(ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CONDITIONAL_EXPRESSION) ||
 				replacement instanceof IntersectionReplacement ||
-				replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION);
+				replacement.getType().equals(ReplacementType.ANONYMOUS_CLASS_DECLARATION) ||
+				replacement.getType().equals(ReplacementType.LAMBDA_WITH_BODY_REPLACED_LAMBDA_WITH_EXPRESSION);
 	}
 
 	@Override

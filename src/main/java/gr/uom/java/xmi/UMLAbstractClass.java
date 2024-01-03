@@ -343,10 +343,16 @@ public abstract class UMLAbstractClass {
 			return false;
 		for(UMLOperation originalOperation : operations) {
 			String originalOperationName = originalOperation.getName();
-			if(originalOperationName.contains(pattern.getBefore())) {
+			if(originalOperationName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalOperationNameAfterReplacement = originalOperationName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalOperationNameAfterReplacement.equals(operation.getName()))
 					return true;
+			}
+			else if(operation.getName().contains(pattern.getAfter()) && pattern.getBefore().isEmpty()) {
+				String operationNameAfterReplacement = operation.getName().replace(pattern.getAfter(), "");
+				if(operationNameAfterReplacement.equals(originalOperation.getName())) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -357,10 +363,16 @@ public abstract class UMLAbstractClass {
 			return null;
 		for(UMLOperation originalOperation : operations) {
 			String originalOperationName = originalOperation.getName();
-			if(originalOperationName.contains(pattern.getBefore())) {
+			if(originalOperationName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalOperationNameAfterReplacement = originalOperationName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalOperationNameAfterReplacement.equals(operation.getName()))
 					return originalOperation;
+			}
+			else if(operation.getName().contains(pattern.getAfter()) && pattern.getBefore().isEmpty()) {
+				String operationNameAfterReplacement = operation.getName().replace(pattern.getAfter(), "");
+				if(operationNameAfterReplacement.equals(originalOperation.getName())) {
+					return originalOperation;
+				}
 			}
 		}
 		return null;
@@ -454,10 +466,16 @@ public abstract class UMLAbstractClass {
 			return false;
 		for(UMLAttribute originalAttribute : attributes) {
 			String originalAttributeName = originalAttribute.getName();
-			if(originalAttributeName.contains(pattern.getBefore())) {
+			if(originalAttributeName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
 				String originalAttributeNameAfterReplacement = originalAttributeName.replace(pattern.getBefore(), pattern.getAfter());
 				if(originalAttributeNameAfterReplacement.equals(attribute.getName()))
 					return true;
+			}
+			else if(attribute.getName().contains(pattern.getAfter()) && pattern.getBefore().isEmpty()) {
+				String attributeNameAfterReplacement = attribute.getName().replace(pattern.getAfter(), "");
+				if(attributeNameAfterReplacement.equals(originalAttribute.getName())) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -535,7 +553,7 @@ public abstract class UMLAbstractClass {
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(this.name, umlClass.name);
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(this.name, umlClass.name);
 		RenamePattern pattern = null;
-		if(!commonPrefix.isEmpty() && !commonSuffix.isEmpty()) {
+		if(!commonPrefix.isEmpty() || !commonSuffix.isEmpty()) {
 			int beginIndexS1 = this.name.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS1 = this.name.lastIndexOf(commonSuffix);
 			String diff1 = beginIndexS1 > endIndexS1 ? "" :	this.name.substring(beginIndexS1, endIndexS1);

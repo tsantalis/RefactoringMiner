@@ -1240,11 +1240,31 @@ public class UMLModelDiff {
 					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName())) {
 				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute)) {
 					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
-					if(!movedAttributeDiffList.contains(attributeDiff)) {
-						movedAttributeDiffList.add(attributeDiff);
+					boolean initializerWithMethodCallReplacement = false;
+					if(attributeDiff.getInitializerMapper().isPresent()) {
+						UMLOperationBodyMapper mapper = attributeDiff.getInitializerMapper().get();
+						for(AbstractCodeMapping mapping : mapper.getMappings()) {
+							for(Replacement r : mapping.getReplacements()) {
+								if(r instanceof MethodInvocationReplacement) {
+									MethodInvocationReplacement replacement = (MethodInvocationReplacement)r;
+									AbstractCall before = replacement.getInvokedOperationBefore();
+									AbstractCall after = replacement.getInvokedOperationAfter();
+									if(before.getExpression() != null && after.getExpression() != null &&
+											before.getExpression().contains(".") && after.getExpression().contains(".")) {
+										initializerWithMethodCallReplacement = true;
+										break;
+									}
+								}
+							}
+						}
 					}
-					MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
-					return moveAttribute;
+					if(!initializerWithMethodCallReplacement) {
+						if(!movedAttributeDiffList.contains(attributeDiff)) {
+							movedAttributeDiffList.add(attributeDiff);
+						}
+						MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
+						return moveAttribute;
+					}
 				}
 			}
 		}
@@ -1396,12 +1416,24 @@ public class UMLModelDiff {
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
 		}
+		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+			addedAttributes.addAll(classDiff.getAddedAttributes());
+		}
+		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
+			addedAttributes.addAll(classDiff.getAddedAttributes());
+		}
 		return addedAttributes;
 	}
 
 	private List<UMLAttribute> getRemovedAttributesInCommonClasses() {
 		List<UMLAttribute> removedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
+			removedAttributes.addAll(classDiff.getRemovedAttributes());
+		}
+		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
+			removedAttributes.addAll(classDiff.getRemovedAttributes());
+		}
+		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
 		}
 		return removedAttributes;

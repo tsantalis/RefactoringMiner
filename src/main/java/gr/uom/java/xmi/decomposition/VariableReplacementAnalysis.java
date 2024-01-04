@@ -184,41 +184,33 @@ public class VariableReplacementAnalysis {
 									UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
 									UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
 									if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
-										Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
-										for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
-											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
-												referencingStatements1.add(f1);
-											}
-										}
-										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
-										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
-											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
-												referencingStatements2.add(f2);
-											}
-										}
-										if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
-											CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
-													removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-													Collections.emptySet());
-											candidate.setOriginalAttribute(removedAttribute);
-											candidate.setRenamedAttribute(addedAttribute);
-											candidateAttributeRenames.add(candidate);
-										}
-										else if(mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()) {
-											for(AbstractCodeMapping mapping : mapper.getMappings()) {
-												for(Replacement r : mapping.getReplacements()) {
-													if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
-														CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
-																removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-																Collections.emptySet());
-														candidate.setOriginalAttribute(removedAttribute);
-														candidate.setRenamedAttribute(addedAttribute);
-														candidateAttributeRenames.add(candidate);
-														break;
-													}
-												}
-											}
-										}
+										createCandidate(removedAttribute, addedAttribute);
+									}
+								}
+							}
+						}
+						else if(index2 == 0 && index2 < previousClassAttributes.size()-1) {
+							UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
+							for(UMLAttribute addedAttribute : addedAttributes) {
+								List<UMLAttribute> nextClassAttributes = classDiff.getNextClass().getAttributes();
+								int index1 = nextClassAttributes.indexOf(addedAttribute);
+								if(index1 == 0 && index1 < nextClassAttributes.size()-1) {
+									UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
+									if(afterAdded.equals(afterRemoved)) {
+										createCandidate(removedAttribute, addedAttribute);
+									}
+								}
+							}
+						}
+						else if(index2 > 0 && index2 == previousClassAttributes.size()-1) {
+							UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
+							for(UMLAttribute addedAttribute : addedAttributes) {
+								List<UMLAttribute> nextClassAttributes = classDiff.getNextClass().getAttributes();
+								int index1 = nextClassAttributes.indexOf(addedAttribute);
+								if(index1 > 0 && index1 == nextClassAttributes.size()-1) {
+									UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
+									if(beforeAdded.equals(beforeRemoved)) {
+										createCandidate(removedAttribute, addedAttribute);
 									}
 								}
 							}
@@ -239,47 +231,77 @@ public class VariableReplacementAnalysis {
 									UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
 									UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
 									if(beforeAdded.equals(beforeRemoved) && afterAdded.equals(afterRemoved)) {
-										Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
-										for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
-											if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
-												referencingStatements1.add(f1);
-											}
-										}
-										Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
-										for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
-											if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
-												referencingStatements2.add(f2);
-											}
-										}
-										if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
-											CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
-													removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-													Collections.emptySet());
-											candidate.setOriginalAttribute(removedAttribute);
-											candidate.setRenamedAttribute(addedAttribute);
-											candidateAttributeRenames.add(candidate);
-										}
-										else if(mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()) {
-											for(AbstractCodeMapping mapping : mapper.getMappings()) {
-												for(Replacement r : mapping.getReplacements()) {
-													if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
-														CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
-																removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-																Collections.emptySet());
-														candidate.setOriginalAttribute(removedAttribute);
-														candidate.setRenamedAttribute(addedAttribute);
-														candidateAttributeRenames.add(candidate);
-														break;
-													}
-												}
-											}
-										}
+										createCandidate(removedAttribute, addedAttribute);
+									}
+								}
+							}
+						}
+						else if(index1 == 0 && index1 < nextClassAttributes.size()-1) {
+							UMLAttribute afterAdded = nextClassAttributes.get(index1+1);
+							for(UMLAttribute removedAttribute : removedAttributes) {
+								List<UMLAttribute> previousClassAttributes = classDiff.getOriginalClass().getAttributes();
+								int index2 = previousClassAttributes.indexOf(removedAttribute);
+								if(index2 == 0 && index2 < previousClassAttributes.size()-1) {
+									UMLAttribute afterRemoved = previousClassAttributes.get(index2+1);
+									if(afterAdded.equals(afterRemoved)) {
+										createCandidate(removedAttribute, addedAttribute);
+									}
+								}
+							}
+						}
+						else if(index1 > 0 && index1 == nextClassAttributes.size()-1) {
+							UMLAttribute beforeAdded = nextClassAttributes.get(index1-1);
+							for(UMLAttribute removedAttribute : removedAttributes) {
+								List<UMLAttribute> previousClassAttributes = classDiff.getOriginalClass().getAttributes();
+								int index2 = previousClassAttributes.indexOf(removedAttribute);
+								if(index2 > 0 && index2 == previousClassAttributes.size()-1) {
+									UMLAttribute beforeRemoved = previousClassAttributes.get(index2-1);
+									if(beforeAdded.equals(beforeRemoved)) {
+										createCandidate(removedAttribute, addedAttribute);
 									}
 								}
 							}
 						}
 					}
 				}	
+			}
+		}
+	}
+
+	private void createCandidate(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
+		Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
+		for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
+			if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
+				referencingStatements1.add(f1);
+			}
+		}
+		Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
+		for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
+			if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+				referencingStatements2.add(f2);
+			}
+		}
+		if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
+			CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+					removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+					Collections.emptySet());
+			candidate.setOriginalAttribute(removedAttribute);
+			candidate.setRenamedAttribute(addedAttribute);
+			candidateAttributeRenames.add(candidate);
+		}
+		else if(mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				for(Replacement r : mapping.getReplacements()) {
+					if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
+						CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
+								removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
+								Collections.emptySet());
+						candidate.setOriginalAttribute(removedAttribute);
+						candidate.setRenamedAttribute(addedAttribute);
+						candidateAttributeRenames.add(candidate);
+						break;
+					}
+				}
 			}
 		}
 	}

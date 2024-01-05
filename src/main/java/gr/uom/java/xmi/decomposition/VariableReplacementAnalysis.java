@@ -281,6 +281,16 @@ public class VariableReplacementAnalysis {
 				referencingStatements2.add(f2);
 			}
 		}
+		if(referencingStatements1.isEmpty() || referencingStatements2.isEmpty()) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				AbstractCodeFragment f1 = mapping.getFragment1();
+				AbstractCodeFragment f2 = mapping.getFragment2();
+				if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName()) && ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+					referencingStatements1.add(f1);
+					referencingStatements2.add(f2);
+				}
+			}
+		}
 		if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
 			CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 					removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,

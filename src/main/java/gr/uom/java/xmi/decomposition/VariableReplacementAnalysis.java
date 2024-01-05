@@ -164,7 +164,7 @@ public class VariableReplacementAnalysis {
 	}
 
 	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations() throws RefactoringMinerTimedOutException {
-		if(classDiff != null && ((mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0) || (mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()))) {
+		if(classDiff != null && ((mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0 || mapper.getReplacementsInvolvingMethodInvocation().size() > 0) || (mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()))) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
 			List<UMLAttribute> removedAttributes = new ArrayList<>();

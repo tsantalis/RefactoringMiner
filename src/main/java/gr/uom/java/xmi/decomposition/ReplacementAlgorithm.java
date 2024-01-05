@@ -1094,6 +1094,7 @@ public class ReplacementAlgorithm {
 				differOnlyInFinalModifier(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || differOnlyInThis(s1, s2) || differOnlyInThrow(s1, s2) || matchAsLambdaExpressionArgument(s1, s2, parameterToArgumentMap, replacementInfo, statement1, container2, operationBodyMapper) || differOnlyInDefaultInitializer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				oneIsVariableDeclarationTheOtherIsVariableAssignment(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) || identicalVariableDeclarationsWithDifferentNames(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				oneIsVariableDeclarationTheOtherIsReturnStatement(s1, s2, variableDeclarations1, variableDeclarations2) || oneIsVariableDeclarationTheOtherIsReturnStatement(statement1.getString(), statement2.getString(), variableDeclarations1, variableDeclarations2) ||
+				(invocationCoveringTheEntireStatement1 == null && invocationCoveringTheEntireStatement2 == null && creationCoveringTheEntireStatement1 == null && creationCoveringTheEntireStatement2 == null && wrapInMethodCall(s1, s2, methodInvocationMap1, replacementInfo)) ||
 				(containsValidOperatorReplacements(replacementInfo) && (equalAfterInfixExpressionExpansion(s1, s2, replacementInfo, statement1.getInfixExpressions()) || commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper))) ||
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, container1, container2, operationSignatureDiff, classDiff) ||
@@ -3135,6 +3136,34 @@ public class ReplacementAlgorithm {
 			}
 		}
 		return null;
+	}
+
+	private static boolean wrapInMethodCall(String s1, String s2, Map<String, List<AbstractCall>> methodInvocationMap1, ReplacementInfo info) {
+		for(String key : methodInvocationMap1.keySet()) {
+			List<AbstractCall> calls = methodInvocationMap1.get(key);
+			AbstractCall call = calls.get(0);
+			if(call.arguments().size() == 1) {
+				String argument = new String(call.arguments().get(0));
+				for(Replacement replacement : info.getReplacements()) {
+					argument = ReplacementUtil.performReplacement(argument, replacement.getBefore(), replacement.getAfter());
+				}
+				if(s2.contains(argument)) {
+					StringBuilder callBuilder = new StringBuilder();
+					if(call.getExpression() != null) {
+						callBuilder.append(call.getExpression()).append(".");
+					}
+					callBuilder.append(call.getName());
+					callBuilder.append("(");
+					callBuilder.append(argument);
+					callBuilder.append(")");
+					String updatedS2 = s2.replace(argument, callBuilder.toString());
+					if(updatedS2.equals(s1)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean existsVariableDeclarationForV2InitializedWithV1(VariableDeclaration v1, VariableDeclaration v2, ReplacementInfo info) {

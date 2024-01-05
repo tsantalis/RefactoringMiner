@@ -321,6 +321,30 @@
 		"description": "statement referencing the renamed variable",
 		"codeElement": null
 }]
+},
+{
+	"type": "Rename Attribute",
+	"description": "Rename Attribute expectedSubStr : String to expectedPattern : String in class org.apache.drill.exec.store.kafka.KafkaFilterPushdownTest",
+	"leftSideLocations": [{
+		"filePath": "contrib/storage-kafka/src/test/java/org/apache/drill/exec/store/kafka/KafkaFilterPushdownTest.java",
+		"startLine": 35,
+		"endLine": 38,
+		"startColumn": 31,
+		"endColumn": 66,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "expectedSubStr : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "contrib/storage-kafka/src/test/java/org/apache/drill/exec/store/kafka/KafkaFilterPushdownTest.java",
+		"startLine": 35,
+		"endLine": 36,
+		"startColumn": 31,
+		"endColumn": 79,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "renamed attribute declaration",
+		"codeElement": "expectedPattern : String"
+}]
 }
 ]
 },

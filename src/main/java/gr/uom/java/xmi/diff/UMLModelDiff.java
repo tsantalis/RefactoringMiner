@@ -1166,13 +1166,15 @@ public class UMLModelDiff {
 				}
 			}
 			int maxCompatibility = map.lastKey();
-			refactorings.addAll(map.get(maxCompatibility));
-			for(MoveAttributeRefactoring moveAttributeRefactoring : map.get(maxCompatibility)) {
-				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
-				if(!movedAttributeDiffList.contains(attributeDiff)) {
-					movedAttributeDiffList.add(attributeDiff);
+			if(maxCompatibility > 0) {
+				refactorings.addAll(map.get(maxCompatibility));
+				for(MoveAttributeRefactoring moveAttributeRefactoring : map.get(maxCompatibility)) {
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Collections.emptyList()); 
+					if(!movedAttributeDiffList.contains(attributeDiff)) {
+						movedAttributeDiffList.add(attributeDiff);
+					}
+					pastRefactorings.addAll(attributeDiff.getRefactorings());
 				}
-				pastRefactorings.addAll(attributeDiff.getRefactorings());
 			}
 		}
 		else if(candidates.size() == 1) {
@@ -1332,6 +1334,18 @@ public class UMLModelDiff {
 					count++;
 				}
 			}
+			else if(ref.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
+				InlineOperationRefactoring inlineRef = (InlineOperationRefactoring)ref;
+				if(candidate.getMovedAttribute().getClassName().equals(inlineRef.getTargetOperationAfterInline().getClassName()) &&
+						candidate.getOriginalAttribute().getClassName().equals(inlineRef.getInlinedOperation().getClassName())) {
+					List<String> originalOperationVariables = inlineRef.getTargetOperationAfterInline().getAllVariables();
+					List<String> movedOperationVariables = inlineRef.getInlinedOperation().getAllVariables();
+					if(originalOperationVariables.contains(candidate.getOriginalAttribute().getName()) &&
+							movedOperationVariables.contains(candidate.getMovedAttribute().getName())) {
+						count++;
+					}
+				}
+			}
 		}
 		UMLClassBaseDiff sourceClassDiff = getUMLClassDiff(candidate.getSourceClassName());
 		UMLClassBaseDiff targetClassDiff = getUMLClassDiff(candidate.getTargetClassName());
@@ -1348,6 +1362,13 @@ public class UMLModelDiff {
 				if(targetSuperclass != null && looksLikeSameType(addedAttribute.getType().getClassType(), targetSuperclass.getClassType())) {
 					count++;
 				}
+				if(targetClassDiff != null) {
+					for(UMLType addedImplementedInterface : targetClassDiff.getAddedImplementedInterfaces()) {
+						if(looksLikeSameType(addedAttribute.getType().getClassType(), addedImplementedInterface.getClassType())) {
+							count++;
+						}
+					}
+				}
 			}
 			List<UMLAttribute> originalAttributes = sourceClassDiff.originalClassAttributesOfType(candidate.getTargetClassName());
 			List<UMLAttribute> nextAttributes = sourceClassDiff.nextClassAttributesOfType(candidate.getTargetClassName());
@@ -1355,11 +1376,60 @@ public class UMLModelDiff {
 				originalAttributes.addAll(sourceClassDiff.originalClassAttributesOfType(targetSuperclass.getClassType()));
 				nextAttributes.addAll(sourceClassDiff.nextClassAttributesOfType(targetSuperclass.getClassType()));
 			}
+			if(targetClassDiff != null) {
+				for(UMLType addedImplementedInterface : targetClassDiff.getAddedImplementedInterfaces()) {
+					originalAttributes.addAll(sourceClassDiff.originalClassAttributesOfType(addedImplementedInterface.getClassType()));
+					nextAttributes.addAll(sourceClassDiff.nextClassAttributesOfType(addedImplementedInterface.getClassType()));
+				}
+			}
 			Set<UMLAttribute> intersection = new LinkedHashSet<UMLAttribute>(originalAttributes);
 			intersection.retainAll(nextAttributes);
 			if(!intersection.isEmpty()) {
 				count++;
 			}
+		}
+		if(sourceClassDiff != null && targetClassDiff != null) {
+			boolean parameterDeletedFromConstructor = false;
+			for(UMLOperationBodyMapper mapper : sourceClassDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
+					if(mapper.getOperationSignatureDiff().isPresent()) {
+						UMLOperationDiff signatureDiff = mapper.getOperationSignatureDiff().get();
+						for(UMLParameter parameter : signatureDiff.getRemovedParameters()) {
+							if(parameter.getVariableDeclaration().toString().equals(candidate.getOriginalAttribute().getVariableDeclaration().toString())) {
+								parameterDeletedFromConstructor = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+			boolean parameterAddedToConstructor = false;
+			for(UMLOperationBodyMapper mapper : targetClassDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
+					if(mapper.getOperationSignatureDiff().isPresent()) {
+						UMLOperationDiff signatureDiff = mapper.getOperationSignatureDiff().get();
+						for(UMLParameter parameter : signatureDiff.getAddedParameters()) {
+							if(parameter.getVariableDeclaration().toString().equals(candidate.getMovedAttribute().getVariableDeclaration().toString())) {
+								parameterAddedToConstructor = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+			if(parameterDeletedFromConstructor && parameterAddedToConstructor) {
+				count++;
+			}
+		}
+		//moved from inner class
+		if(sourceClassDiff != null && targetClassDiff != null &&
+				targetClassDiff.getOriginalClass().isInnerClass(sourceClassDiff.getOriginalClass()) &&
+				targetClassDiff.getNextClass().isInnerClass(sourceClassDiff.getNextClass())) {
+			count++;
+		}
+		//moved to superclass
+		if(candidate.getRefactoringType().equals(RefactoringType.PULL_UP_ATTRIBUTE)) {
+			count++;
 		}
 		return count;
 	}

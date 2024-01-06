@@ -872,6 +872,12 @@ public class ProjectASTDiffer
 				if (modifiedAnnotationRefactoring.getAnnotationBefore().getTypeName().equals(modifiedAnnotationRefactoring.getAnnotationAfter().getTypeName()))
 					processModifiedAnnotation(srcTree, dstTree, mappingStore, modifiedAnnotationRefactoring.getAnnotationBefore(), modifiedAnnotationRefactoring.getAnnotationAfter());
 			}
+			else if (refactoring instanceof RenameAttributeRefactoring) {
+				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
+				for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {
+					lastStepMappings.addAll(reference.getSubExpressionMappings());
+				}
+			}
 		}
 
 	}

@@ -11,6 +11,8 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
+import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
 public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRefactoring {
 	private UMLAttribute originalAttribute;
@@ -26,6 +28,20 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		this.classNameBefore = originalAttribute.getClassName();
 		this.classNameAfter = renamedAttribute.getClassName();
 		this.attributeRenames = attributeRenames;
+		for(CandidateAttributeRefactoring candidate : attributeRenames) {
+			for(AbstractCodeMapping mapping : candidate.getReferences()) {
+				List<LeafExpression> leafExpressions1 = mapping.getFragment1().findExpression(originalAttribute.getName());
+				List<LeafExpression> leafExpressions2 = mapping.getFragment2().findExpression(renamedAttribute.getName());
+				if(leafExpressions1.size() == leafExpressions2.size()) {
+					for(int i=0; i<leafExpressions1.size(); i++) {
+						LeafExpression leafExpression1 = leafExpressions1.get(i);
+						LeafExpression leafExpression2 = leafExpressions2.get(i);
+						LeafMapping leafMapping = new LeafMapping(leafExpression1, leafExpression2, candidate.getOperationBefore(), candidate.getOperationAfter());
+						mapping.addSubExpressionMapping(leafMapping);
+					}
+				}
+			}
+		}
 	}
 
 	public UMLAttribute getOriginalAttribute() {

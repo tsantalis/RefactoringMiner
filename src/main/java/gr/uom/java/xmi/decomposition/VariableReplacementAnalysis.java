@@ -281,6 +281,7 @@ public class VariableReplacementAnalysis {
 				referencingStatements2.add(f2);
 			}
 		}
+		Set<AbstractCodeMapping> references = new LinkedHashSet<AbstractCodeMapping>();
 		if(referencingStatements1.isEmpty() || referencingStatements2.isEmpty()) {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				AbstractCodeFragment f1 = mapping.getFragment1();
@@ -288,13 +289,14 @@ public class VariableReplacementAnalysis {
 				if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName()) && ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
 					referencingStatements1.add(f1);
 					referencingStatements2.add(f2);
+					references.add(mapping);
 				}
 			}
 		}
 		if(referencingStatements1.size() > 0 && referencingStatements2.size() > 0) {
 			CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 					removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-					Collections.emptySet());
+					references);
 			candidate.setOriginalAttribute(removedAttribute);
 			candidate.setRenamedAttribute(addedAttribute);
 			candidateAttributeRenames.add(candidate);
@@ -305,7 +307,7 @@ public class VariableReplacementAnalysis {
 					if(r.getBefore().equals(removedAttribute.getName()) && r.getAfter().equals(addedAttribute.getName())) {
 						CandidateAttributeRefactoring candidate = new CandidateAttributeRefactoring(
 								removedAttribute.getName(), addedAttribute.getName(), operation1, operation2,
-								Collections.emptySet());
+								references);
 						candidate.setOriginalAttribute(removedAttribute);
 						candidate.setRenamedAttribute(addedAttribute);
 						candidateAttributeRenames.add(candidate);

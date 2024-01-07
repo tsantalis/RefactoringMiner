@@ -4051,7 +4051,7 @@ public class UMLModelDiff {
 				if(r instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 					if(extract.getExtractedOperation().equals(addedOperation)) {
-						if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size() && firstMapper.exactMatches() > extract.getBodyMapper().exactMatches()) {
+						if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size() && (firstMapper.exactMatches() > extract.getBodyMapper().exactMatches() || firstMapper.getExactMatchesIncludingVariableRenames().size() > extract.getBodyMapper().getExactMatchesIncludingVariableRenames().size())) {
 							refactoringsToBeRemoved.add(r);
 							refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
 						}

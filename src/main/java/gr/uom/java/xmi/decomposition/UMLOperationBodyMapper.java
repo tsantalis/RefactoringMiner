@@ -2953,6 +2953,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return exactMatches;
 	}
 
+	public List<AbstractCodeMapping> getExactMatchesIncludingVariableRenames() {
+		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
+			if((mapping.isExact() || mapping.containsOnlyReplacement(ReplacementType.VARIABLE_NAME)) && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping))
+				exactMatches.add(mapping);
+		}
+		return exactMatches;
+	}
+
 	public List<AbstractCodeMapping> getExactMatchesWithoutLoggingStatements() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
 		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();

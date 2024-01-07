@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -269,6 +270,26 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 						attributeDiffList.add(attributeDiff);
 					}
 					break;
+				}
+			}
+		}
+		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
+			UMLAttribute removedAttribute = removedAttributeIterator.next();
+			if(removedAttribute.getVariableDeclaration().getInitializer() != null && this.getOriginalClass().uniqueInitializer(removedAttribute)) {
+				for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
+					UMLAttribute addedAttribute = addedAttributeIterator.next();
+					if(addedAttribute.getVariableDeclaration().getInitializer() != null && this.getNextClass().uniqueInitializer(addedAttribute)) {
+						if(removedAttribute.getVariableDeclaration().getInitializer().getString().equals(addedAttribute.getVariableDeclaration().getInitializer().getString())) {
+							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
+							refactorings.addAll(attributeDiff.getRefactorings(Collections.emptySet()));
+							addedAttributeIterator.remove();
+							removedAttributeIterator.remove();
+							if(!attributeDiffList.contains(attributeDiff)) {
+								attributeDiffList.add(attributeDiff);
+							}
+							break;
+						}
+					}
 				}
 			}
 		}

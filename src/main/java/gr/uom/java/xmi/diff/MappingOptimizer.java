@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -75,7 +76,7 @@ public class MappingOptimizer {
 		return null;
 	}
 
-	public void optimizeDuplicateMappingsForInline(UMLOperationBodyMapper parentMapper, List<Refactoring> refactorings) {
+	public void optimizeDuplicateMappingsForInline(UMLOperationBodyMapper parentMapper, Collection<Refactoring> refactorings) {
 		if(parentMapper.getChildMappers().size() > 0) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
@@ -135,7 +136,7 @@ public class MappingOptimizer {
 		return false;
 	}
 
-	public void optimizeDuplicateMappingsForExtract(UMLOperationBodyMapper parentMapper, List<Refactoring> refactorings) {
+	public void optimizeDuplicateMappingsForExtract(UMLOperationBodyMapper parentMapper, Collection<Refactoring> refactorings) {
 		if(parentMapper.getChildMappers().size() > 0) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();
@@ -182,7 +183,7 @@ public class MappingOptimizer {
 	}
 
 	private void optimizeDuplicateMappings(Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings,
-			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers, List<Refactoring> refactorings) {
+			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers, Collection<Refactoring> refactorings) {
 		for(Iterator<AbstractCodeFragment> it = oneToManyMappers.keySet().iterator(); it.hasNext();) {
 			AbstractCodeFragment fragment = it.next();
 			if(oneToManyMappings.get(fragment).size() == 1) {

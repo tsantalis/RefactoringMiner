@@ -13,6 +13,7 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 import gr.uom.java.xmi.UMLClassMatcher.MatchResult;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractExpression;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
@@ -824,6 +825,17 @@ public abstract class UMLAbstractClass {
     	return null;
     }
 
+    public UMLAttribute containsAttributeWithTheSameSignature(UMLAttribute otherAttribute) {
+    	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
+    	while(attributeIt.hasNext()) {
+    		UMLAttribute attribute = attributeIt.next();
+    		if(attribute.equalsIgnoringChangedVisibility(otherAttribute)) {
+    			return attribute;
+    		}
+    	}
+    	return null;
+    }
+
     public UMLAttribute matchAttribute(UMLAttribute otherAttribute) {
     	ListIterator<UMLAttribute> attributeIt = attributes.listIterator();
     	while(attributeIt.hasNext()) {
@@ -903,6 +915,26 @@ public abstract class UMLAbstractClass {
 			MatchResult matchResult = thisAnonymous.hasSameAttributesAndOperations(anonymous);
 			if(matchResult.isMatch())
 				return true;
+		}
+		return false;
+	}
+
+	public boolean uniqueInitializer(UMLAttribute attributeToCheck) {
+		AbstractExpression initializer = attributeToCheck.getVariableDeclaration().getInitializer();
+		if(initializer == null) {
+			return false;
+		}
+		int matches = 0;
+		for(UMLAttribute attribute : attributes) {
+			if(!attribute.equals(attributeToCheck)) {
+				if(attribute.getVariableDeclaration().getInitializer() != null &&
+						attribute.getVariableDeclaration().getInitializer().getString().equals(initializer.getString())) {
+					matches++;
+				}
+			}
+		}
+		if(matches == 0) {
+			return true;
 		}
 		return false;
 	}

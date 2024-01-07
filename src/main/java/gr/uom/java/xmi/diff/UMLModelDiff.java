@@ -84,7 +84,7 @@ public class UMLModelDiff {
 	private List<UMLClassMergeDiff> classMergeDiffList;
 	private List<UMLClassSplitDiff> classSplitDiffList;
 	private List<UMLAttributeDiff> movedAttributeDiffList;
-	private List<Refactoring> refactorings;
+	private Set<Refactoring> refactorings;
 	private Set<Refactoring> moveRenameClassRefactorings;
 	private Set<String> deletedFolderPaths;
 	private Set<Pair<VariableDeclarationContainer, VariableDeclarationContainer>> processedOperationPairs = new HashSet<Pair<VariableDeclarationContainer, VariableDeclarationContainer>>();
@@ -114,7 +114,7 @@ public class UMLModelDiff {
 		this.classMergeDiffList = new ArrayList<UMLClassMergeDiff>();
 		this.classSplitDiffList = new ArrayList<UMLClassSplitDiff>();
 		this.movedAttributeDiffList = new ArrayList<UMLAttributeDiff>();
-		this.refactorings = new ArrayList<Refactoring>();
+		this.refactorings = new LinkedHashSet<Refactoring>();
 		this.deletedFolderPaths = new LinkedHashSet<String>();
 	}
 
@@ -1883,6 +1883,18 @@ public class UMLModelDiff {
 			if(removedAttribute == null) {
 				removedAttribute = classDiff.containsRemovedAttributeWithTheSameNameIgnoringChangedType(addedAttribute);
 			}
+			if(removedAttribute == null) {
+				boolean renameFound = false;
+				for(UMLAttributeDiff diff : classDiff.getAttributeDiffList()) {
+					if((diff.isRenamed() || diff.isTypeChanged()) && diff.getRemovedAttribute().equalsIgnoringChangedVisibility(addedAttribute)) {
+						renameFound = true;
+						break;
+					}
+				}
+				if(renameFound) {
+					removedAttribute = classDiff.getOriginalClass().containsAttributeWithTheSameSignature(addedAttribute);
+				}
+			}
 			if(removedAttribute != null) {
 				classDiff.getRemovedAttributes().remove(removedAttribute);
 				Refactoring ref = null;
@@ -1894,6 +1906,11 @@ public class UMLModelDiff {
 				}
 				else if(parentType.equals(RefactoringType.EXTRACT_SUBCLASS)) {
 					ref = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
+				}
+				Set<Refactoring> conflictingRefactorings = movedAttributeRenamed(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), new LinkedHashSet<>(classDiff.getRefactoringsBeforePostProcessing()));
+				if(!conflictingRefactorings.isEmpty()) {
+					classDiff.getRefactoringsBeforePostProcessing().removeAll(conflictingRefactorings);
+					this.refactorings.removeAll(conflictingRefactorings);
 				}
 				this.refactorings.add(ref);
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
@@ -2317,7 +2334,7 @@ public class UMLModelDiff {
 	}
 
 	public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
-		Set<Refactoring> refactorings = getMoveRenameClassRefactorings();
+		refactorings.addAll(getMoveRenameClassRefactorings());
 		refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
 		Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 		Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
@@ -4034,7 +4051,7 @@ public class UMLModelDiff {
 				if(r instanceof ExtractOperationRefactoring) {
 					ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 					if(extract.getExtractedOperation().equals(addedOperation)) {
-						if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size()) {
+						if(firstMapper.getMappings().size() > extract.getBodyMapper().getMappings().size() && firstMapper.exactMatches() > extract.getBodyMapper().exactMatches()) {
 							refactoringsToBeRemoved.add(r);
 							refactoringsToBeRemoved.addAll(extract.getBodyMapper().getRefactoringsAfterPostProcessing());
 						}

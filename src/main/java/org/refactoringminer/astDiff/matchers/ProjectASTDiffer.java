@@ -875,7 +875,13 @@ public class ProjectASTDiffer
 			else if (refactoring instanceof RenameAttributeRefactoring) {
 				RenameAttributeRefactoring renameAttributeRefactoring = (RenameAttributeRefactoring) refactoring;
 				for (AbstractCodeMapping reference : renameAttributeRefactoring.getReferences()) {
-					lastStepMappings.addAll(reference.getSubExpressionMappings());
+					List<LeafMapping> subExpressionMappings = reference.getSubExpressionMappings();
+					for (LeafMapping subExpressionMapping : subExpressionMappings) {
+						Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.SIMPLE_NAME);
+						Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.SIMPLE_NAME);
+						if (srcSimpleName != null && dstSimpleName != null)
+							optimizationMappingStore.addMapping(srcSimpleName,dstSimpleName);
+					}
 				}
 			}
 		}

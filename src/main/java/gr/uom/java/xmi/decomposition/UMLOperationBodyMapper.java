@@ -6632,13 +6632,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(fragment1 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment1NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment1IsInsideIfElseIf = false;
 					if(fragment1.getParent() != null && fragment1.getParent().getParent() != null) {
-						boolean isWithinIfBranch = isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						boolean directlyNested = false;
+						boolean isBlock = fragment1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+						boolean isWithinIfBranch = isBlock ? isIfBranch(fragment1, fragment1.getParent()) : isIfBranch(fragment1.getParent(), fragment1.getParent().getParent());
+						if(!isBlock && fragment1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment1.getParent().getStatements().indexOf(fragment1) == 0) {
+							isWithinIfBranch = true;
+							directlyNested = true;
+						}
 						//boolean isWithinElseBranch = isElseBranch(fragment1.getParent(), fragment1.getParent().getParent());
 						//boolean isWithinElseIfBranch = false;
 						//if(fragment1.getParent().getParent().getParent() != null) {
 						//	isWithinElseIfBranch = isElseIfBranch(fragment1.getParent().getParent(), fragment1.getParent().getParent().getParent());
 						//}
-						if(isWithinIfBranch && (hasElseBranch(fragment1.getParent().getParent()) || hasElseIfBranch(fragment1.getParent().getParent()))) {
+						boolean hasElseIfOrElseBranch = false;
+						if(!directlyNested)
+							hasElseIfOrElseBranch = hasElseBranch(fragment1.getParent().getParent()) || hasElseIfBranch(fragment1.getParent().getParent());
+						else
+							hasElseIfOrElseBranch = hasElseBranch(fragment1.getParent()) || hasElseIfBranch(fragment1.getParent());
+						if(isWithinIfBranch && hasElseIfOrElseBranch) {
 							fragment1IsInsideIfElseIf = true;
 						}
 					}
@@ -6830,13 +6842,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!(fragment2 instanceof AbstractExpression) && ifElseIfChainNestedUnderLoop == fragment2NestedUnderLoop && variableDeclarationNames1.equals(variableDeclarationNames2)) {
 					boolean fragment2IsInsideIfElseIf = false;
 					if(fragment2.getParent() != null && fragment2.getParent().getParent() != null) {
-						boolean isWithinIfBranch = isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						boolean directlyNested = false;
+						boolean isBlock = fragment2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+						boolean isWithinIfBranch = isBlock ? isIfBranch(fragment2, fragment2.getParent()) : isIfBranch(fragment2.getParent(), fragment2.getParent().getParent());
+						if(!isBlock && fragment2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+								fragment2.getParent().getStatements().indexOf(fragment2) == 0) {
+							isWithinIfBranch = true;
+							directlyNested = true;
+						}
 						//boolean isWithinElseBranch = isElseBranch(fragment2.getParent(), fragment2.getParent().getParent());
 						//boolean isWithinElseIfBranch = false;
 						//if(fragment2.getParent().getParent().getParent() != null) {
 						//	isWithinElseIfBranch = isElseIfBranch(fragment2.getParent().getParent(), fragment2.getParent().getParent().getParent());
 						//}
-						if(isWithinIfBranch && (hasElseBranch(fragment2.getParent().getParent()) || hasElseIfBranch(fragment2.getParent().getParent()))) {
+						boolean hasElseIfOrElseBranch = false;
+						if(!directlyNested)
+							hasElseIfOrElseBranch = hasElseBranch(fragment2.getParent().getParent()) || hasElseIfBranch(fragment2.getParent().getParent());
+						else
+							hasElseIfOrElseBranch = hasElseBranch(fragment2.getParent()) || hasElseIfBranch(fragment2.getParent());
+						if(isWithinIfBranch && hasElseIfOrElseBranch) {
 							fragment2IsInsideIfElseIf = true;
 						}
 					}

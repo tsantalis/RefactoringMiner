@@ -27,6 +27,7 @@ import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
+import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassDiff;
@@ -1365,6 +1366,38 @@ public class TestStatementMappings {
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jscomp-CheckSideEffects.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testAvoidMultiMappings3() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "EncodedFieldSection-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "EncodedFieldSection-v2.txt"));
+		fileContentsBefore.put("src/main/java/org/eclipse/jetty/http3/qpack/internal/parser/EncodedFieldSection.java", contentsV1);
+		fileContentsCurrent.put("src/main/java/org/eclipse/jetty/http3/qpack/internal/parser/EncodedFieldSection.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+		
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("EncodedFieldSection") && mapper.getContainer2().getName().equals("EncodedFieldSection") && mapper.getContainer1().getClassName().equals("org.eclipse.jetty.http3.qpack.internal.parser.EncodedFieldSection")) {
+					mapperInfo(mapper, actual);
+					for(Refactoring r : classDiff.getRefactorings()) {
+						if(r instanceof RenameOperationRefactoring) {
+							RenameOperationRefactoring rename = (RenameOperationRefactoring)r;
+							mapperInfo(rename.getBodyMapper(), actual);
+						}
+					}
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jetty.project-a95fe3bfb83f7dbbbb0fd76580c0b8b24dd3323b.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

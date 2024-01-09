@@ -1139,7 +1139,7 @@ public class VariableReplacementAnalysis {
 				if(process) {
 					for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
 						if(f1.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-								f1.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+								f1.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 							String rightHandSide = null;
 							if(f1.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
 								rightHandSide = f1.getString().substring(f1.getString().indexOf(JAVA.ASSIGNMENT)+1, f1.getString().length()-JAVA.STATEMENT_TERMINATION.length());
@@ -1157,7 +1157,7 @@ public class VariableReplacementAnalysis {
 					}
 					for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
 						if(f2.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-								f2.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+								f2.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 							String rightHandSide = null;
 							if(f2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {
 								rightHandSide = f2.getString().substring(f2.getString().indexOf(JAVA.ASSIGNMENT)+1, f2.getString().length()-JAVA.STATEMENT_TERMINATION.length());
@@ -2245,7 +2245,7 @@ public class VariableReplacementAnalysis {
 					boolean v2InitializerContainsThisReference = false;
 					if(v2.getInitializer() != null) {
 						for(LeafExpression variable : v2.getInitializer().getVariables()) {
-							if(variable.getString().equals("this." + v2.getVariableName())) {
+							if(variable.getString().equals(JAVA.THIS_DOT + v2.getVariableName())) {
 								v2InitializerContainsThisReference = true;
 								break;
 							}
@@ -2282,7 +2282,7 @@ public class VariableReplacementAnalysis {
 					boolean v1InitializerContainsThisReference = false;
 					if(v1.getInitializer() != null) {
 						for(LeafExpression variable : v1.getInitializer().getVariables()) {
-							if(variable.getString().equals("this." + v1.getVariableName())) {
+							if(variable.getString().equals(JAVA.THIS_DOT + v1.getVariableName())) {
 								v1InitializerContainsThisReference = true;
 								break;
 							}

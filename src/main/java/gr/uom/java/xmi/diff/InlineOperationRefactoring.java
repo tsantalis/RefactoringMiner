@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -111,7 +113,7 @@ public class InlineOperationRefactoring implements Refactoring {
 		}
 		if(!argumentMatchFound) {
 			for(Replacement replacement : mapping.getReplacements()) {
-				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals("this." + replacement.getAfter()) || replacement.getAfter().equals("this." + replacement.getBefore())) {
+				if(replacement.getBefore().equals(replacement.getAfter()) || replacement.getBefore().equals(JAVA.THIS_DOT + replacement.getAfter()) || replacement.getAfter().equals(JAVA.THIS_DOT + replacement.getBefore())) {
 					List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
 					if(expressions2.size() > 0) {
 						List<AbstractCodeFragment> leaves = targetOperationBeforeInline.getBody().getCompositeStatement().getLeaves();

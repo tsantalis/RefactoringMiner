@@ -231,14 +231,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	public boolean isFieldAssignmentWithParameter() {
 		boolean fieldAssignmentWithParameter1 = false;
 		for(String parameterName : operation1.getParameterNameList()) {
-			if(fragment1.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(JAVA.THIS_DOT + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
 				fieldAssignmentWithParameter1 = true;
 				break;
 			}
 		}
 		boolean fieldAssignmentWithParameter2 = false;
 		for(String parameterName : operation2.getParameterNameList()) {
-			if(fragment2.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(JAVA.THIS_DOT + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
 				fieldAssignmentWithParameter2 = true;
 				break;
 			}
@@ -251,7 +251,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		UMLType type1 = null;
 		for(UMLParameter parameter : operation1.getParametersWithoutReturnType()) {
 			String parameterName = parameter.getName();
-			if(fragment1.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment1.getString().equals(JAVA.THIS_DOT + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
 				fieldAssignmentWithParameter1 = true;
 				type1 = parameter.getType();
 				break;
@@ -261,7 +261,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		UMLType type2 = null;
 		for(UMLParameter parameter : operation2.getParametersWithoutReturnType()) {
 			String parameterName = parameter.getName();
-			if(fragment2.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+			if(fragment2.getString().equals(JAVA.THIS_DOT + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
 				fieldAssignmentWithParameter2 = true;
 				type2 = parameter.getType();
 				break;
@@ -518,7 +518,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				if(variableName.equals(after) && initializer != null) {
 					checkForAliasedVariable(initializer, replacement, nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 					if(initializer.toString().equals(before) ||
-							initializer.toString().equals("this." + before) ||
+							initializer.toString().equals(JAVA.THIS_DOT + before) ||
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, before) ||
@@ -696,7 +696,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if(variableName.equals(before) && initializer != null) {
 					if(initializer.toString().equals(after) ||
-							initializer.toString().equals("this." + after) ||
+							initializer.toString().equals(JAVA.THIS_DOT + after) ||
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, after) ||

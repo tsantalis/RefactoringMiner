@@ -578,7 +578,7 @@ public class OperationInvocation extends AbstractCall {
 			String previousCommonPrefix = "";
 			String commonPrefix = null;
 			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression2)).length() > previousCommonPrefix.length()) {
-				modified = commonPrefix + "this." + modified.substring(commonPrefix.length(), modified.length());
+				modified = commonPrefix + JAVA.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
 				if(modified.equals(subExpression2)) {
 					return true;
 				}
@@ -590,7 +590,7 @@ public class OperationInvocation extends AbstractCall {
 			String previousCommonPrefix = "";
 			String commonPrefix = null;
 			while((commonPrefix = PrefixSuffixUtils.longestCommonPrefix(modified, subExpression1)).length() > previousCommonPrefix.length()) {
-				modified = commonPrefix + "this." + modified.substring(commonPrefix.length(), modified.length());
+				modified = commonPrefix + JAVA.THIS_DOT + modified.substring(commonPrefix.length(), modified.length());
 				if(modified.equals(subExpression1)) {
 					return true;
 				}

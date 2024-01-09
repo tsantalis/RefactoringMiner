@@ -555,7 +555,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
 				String s = variable + JAVA.ASSIGNMENT + expression + JAVA.STATEMENT_TERMINATION;
-				if(statement.equals(s) && (variable.startsWith("this.") || classDiff.getOriginalClass().getFieldDeclarationMap().containsKey(variable) ||
+				if(statement.equals(s) && (variable.startsWith(JAVA.THIS_DOT) || classDiff.getOriginalClass().getFieldDeclarationMap().containsKey(variable) ||
 						classDiff.getNextClass().getFieldDeclarationMap().containsKey(variable))) {
 					return true;
 				}

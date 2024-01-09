@@ -2351,7 +2351,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables1.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : originalClass.getAttributes()) {
-				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals("this." + attribute.getName())) {
+				if(attribute.getName().equals(variables1.get(0)) || variables1.get(0).equals(JAVA.THIS_DOT + attribute.getName())) {
 					index1 = count;
 					break;
 				}
@@ -2363,7 +2363,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		if(variables2.size() > 0) {
 			int count = 0;
 			for(UMLAttribute attribute : nextClass.getAttributes()) {
-				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals("this." + attribute.getName())) {
+				if(attribute.getName().equals(variables2.get(0)) || variables2.get(0).equals(JAVA.THIS_DOT + attribute.getName())) {
 					index2 = count;
 					break;
 				}

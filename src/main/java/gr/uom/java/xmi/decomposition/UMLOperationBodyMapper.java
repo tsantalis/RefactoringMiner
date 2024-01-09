@@ -361,7 +361,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(addedParameters.size() == 1) {
 				UMLParameter addedParameter = addedParameters.get(0);
 				if(!operation1.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName())) {
-					parameterToArgumentMap1.put("this.", "");
+					parameterToArgumentMap1.put(JAVA.THIS_DOT, "");
 					//replace "parameterName." with ""
 					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
 				}
@@ -371,7 +371,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				UMLParameter removedParameter = removedParameters.get(0);
 				if(!operation2.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
 					parameterToArgumentMap1.put(removedParameter.getName() + ".", "");
-					parameterToArgumentMap2.put("this.", "");
+					parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 				}
 			}
 			List<UMLParameterDiff> parameterDiffList = operationSignatureDiff.getParameterDiffList();
@@ -381,17 +381,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() &&
 						UMLModelDiff.looksLikeSameType(addedParameter.getType().getClassType(), operation1.getClassName()) &&
 						UMLModelDiff.looksLikeSameType(removedParameter.getType().getClassType(), operation2.getClassName())) {
-					parameterToArgumentMap1.put("this.", "");
+					parameterToArgumentMap1.put(JAVA.THIS_DOT, "");
 					parameterToArgumentMap2.put(addedParameter.getName() + ".", "");
 					parameterToArgumentMap1.put(removedParameter.getName() + ".", "");
-					parameterToArgumentMap2.put("this.", "");
+					parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 				}
 			}
 			if(classDiff != null) {
 				for(UMLAttribute attribute : classDiff.getOriginalClass().getAttributes()) {
 					if(!operation2.isDeclaredInAnonymousClass() && UMLModelDiff.looksLikeSameType(attribute.getType().getClassType(), operation2.getClassName())) {
 						parameterToArgumentMap1.put(attribute.getName() + ".", "");
-						parameterToArgumentMap2.put("this.", "");
+						parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 					}
 				}
 			}

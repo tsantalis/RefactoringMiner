@@ -115,8 +115,8 @@ public class ReplacementAlgorithm {
 		// ignore the variables in the intersection that one of them is part of a method invocation, but the same method invocation does not appear on the other side
 		Set<String> variablesToBeRemovedFromTheIntersection = new LinkedHashSet<String>();
 		for(String variable : variableIntersection) {
-			if(!variable.startsWith("this.") && !variableIntersection.contains("this."+variable) &&
-					(variables1.contains("this."+variable) || variables2.contains("this."+variable))) {
+			if(!variable.startsWith(JAVA.THIS_DOT) && !variableIntersection.contains(JAVA.THIS_DOT+variable) &&
+					(variables1.contains(JAVA.THIS_DOT+variable) || variables2.contains(JAVA.THIS_DOT+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
@@ -3172,7 +3172,7 @@ public class ReplacementAlgorithm {
 				AbstractExpression initializer = v2.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v1.getVariableName()) || variable.getString().equals("this." + v1.getVariableName())) {
+						if(variable.getString().equals(v1.getVariableName()) || variable.getString().equals(JAVA.THIS_DOT + v1.getVariableName())) {
 							return true;
 						}
 					}
@@ -3206,7 +3206,7 @@ public class ReplacementAlgorithm {
 				AbstractExpression initializer = v1.getInitializer();
 				if(initializer != null) {
 					for(LeafExpression variable : initializer.getVariables()) {
-						if(variable.getString().equals(v2.getVariableName()) || variable.getString().equals("this." + v2.getVariableName())) {
+						if(variable.getString().equals(v2.getVariableName()) || variable.getString().equals(JAVA.THIS_DOT + v2.getVariableName())) {
 							return true;
 						}
 					}
@@ -3667,7 +3667,7 @@ public class ReplacementAlgorithm {
 			if(parameterToArgumentMap1.isPresent() && parameterToArgumentMap1.get().containsKey(variable1) && !parameterToArgumentMap1.get().get(variable1).equals(variable1)) {
 				variable1 = parameterToArgumentMap1.get().get(variable1);
 			}
-			if((ReplacementUtil.contains(s1, variable1) || s1.endsWith(variable1)) && !s1.equals(variable1) && !s1.equals("this." + variable1) && !s1.equals("_" + variable1)) {
+			if((ReplacementUtil.contains(s1, variable1) || s1.endsWith(variable1)) && !s1.equals(variable1) && !s1.equals(JAVA.THIS_DOT + variable1) && !s1.equals("_" + variable1)) {
 				int startIndex1 = s1.indexOf(variable1);
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
 				String substringAfterIndex1 = s1.substring(startIndex1 + variable1.length(), s1.length());
@@ -3727,7 +3727,7 @@ public class ReplacementAlgorithm {
 	private static Map<Replacement, Boolean> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<AbstractCall>> methodInvocationMap, Direction direction) {
 		Map<Replacement, Boolean> replacements = new LinkedHashMap<Replacement, Boolean>();
 		for(String element1 : set1) {
-			if(s1.contains(element1) && !s1.equals(element1) && !s1.equals("this." + element1) && !s1.equals("_" + element1)) {
+			if(s1.contains(element1) && !s1.equals(element1) && !s1.equals(JAVA.THIS_DOT + element1) && !s1.equals("_" + element1)) {
 				int startIndex1 = s1.indexOf(element1);
 				String substringBeforeIndex1 = s1.substring(0, startIndex1);
 				String substringAfterIndex1 = s1.substring(startIndex1 + element1.length(), s1.length());

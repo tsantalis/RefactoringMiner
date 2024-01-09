@@ -1041,7 +1041,7 @@ public abstract class UMLAbstractClassDiff {
 							else {
 								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
 									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+											statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 										break;
 									}
@@ -1087,7 +1087,7 @@ public abstract class UMLAbstractClassDiff {
 							else {
 								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
 									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-											statement.getString().startsWith("this." + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+											statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
 										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
 										break;
 									}
@@ -1302,10 +1302,10 @@ public abstract class UMLAbstractClassDiff {
 			}
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
 					!mapper.getContainer1().getParameterNameList().contains(pattern.getBefore())) ||
-					allVariables1.contains("this."+pattern.getBefore());
+					allVariables1.contains(JAVA.THIS_DOT+pattern.getBefore());
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
 					!mapper.getContainer2().getParameterNameList().contains(pattern.getAfter())) ||
-					allVariables2.contains("this."+pattern.getAfter());
+					allVariables2.contains(JAVA.THIS_DOT+pattern.getAfter());
 			if(variables1contains && !variables2Contains) {
 				boolean skip = false;
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {

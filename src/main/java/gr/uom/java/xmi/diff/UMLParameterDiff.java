@@ -53,6 +53,8 @@ public class UMLParameterDiff {
 				varArgsChanged = true;
 			}
 		}
+		if(!removedParameter.getType().toString().equals(addedParameter.getType().toString()))
+			typeChanged = true;
 		if(!removedParameter.getName().equals(addedParameter.getName()))
 			nameChanged = true;
 		if(removedParameter.isFinal() != addedParameter.isFinal())

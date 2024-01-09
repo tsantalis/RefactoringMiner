@@ -850,6 +850,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(!originalClass.getSuperclass().equals(nextClass.getSuperclass())) {
 				setSuperclassChanged(true);
 			}
+			else if(!originalClass.getSuperclass().equalsQualified(nextClass.getSuperclass())) {
+				setSuperclassChanged(true);
+			}
+			if(!originalClass.getSuperclass().toString().equals(nextClass.getSuperclass().toString())) {
+				setSuperclassChanged(true);
+			}
 			setOldSuperclass(originalClass.getSuperclass());
 			setNewSuperclass(nextClass.getSuperclass());
 		}

@@ -18,6 +18,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.RenamePattern;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 
 public abstract class UMLAbstractClass {
 	protected LocationInfo locationInfo;
@@ -753,7 +754,9 @@ public abstract class UMLAbstractClass {
 				commonAttributes.add(attribute);
 			}
 		}
-		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
+		UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(this.getAnnotations(), umlClass.getAnnotations());
+		boolean identicalAnnotations = this.getAnnotations().size() > 0 && umlClass.getAnnotations().size() > 0 && annotationListDiff.isEmpty();
+		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && !identicalAnnotations) {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
 		}
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes) {

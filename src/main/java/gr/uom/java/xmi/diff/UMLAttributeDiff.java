@@ -105,6 +105,8 @@ public class UMLAttributeDiff {
 			typeChanged = true;
 		else if(!removedAttribute.getType().equalsQualified(addedAttribute.getType()))
 			qualifiedTypeChanged = true;
+		if(!removedAttribute.getType().toString().equals(addedAttribute.getType().toString()))
+			typeChanged = true;
 		if(removedAttribute.isStatic() != addedAttribute.isStatic())
 			staticChanged = true;
 		if(removedAttribute.isFinal() != addedAttribute.isFinal())

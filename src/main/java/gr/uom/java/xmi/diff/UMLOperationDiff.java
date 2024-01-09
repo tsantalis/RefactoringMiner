@@ -90,6 +90,9 @@ public class UMLOperationDiff {
 			returnTypeChanged = true;
 		else if(!removedOperation.equalQualifiedReturnParameter(addedOperation))
 			qualifiedReturnTypeChanged = true;
+		if(removedOperation.getReturnParameter() != null && addedOperation.getReturnParameter() != null &&
+				!removedOperation.getReturnParameter().getType().toString().equals(addedOperation.getReturnParameter().getType().toString()))
+			returnTypeChanged = true;
 		processThrownExceptionTypes(removedOperation.getThrownExceptionTypes(), addedOperation.getThrownExceptionTypes());
 		this.annotationListDiff = new UMLAnnotationListDiff(removedOperation.getAnnotations(), addedOperation.getAnnotations());
 		this.typeParameterListDiff = new UMLTypeParameterListDiff(removedOperation.getTypeParameters(), addedOperation.getTypeParameters());

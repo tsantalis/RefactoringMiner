@@ -520,10 +520,13 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 	private GitHub connectToGitHub() {
 		if(gitHub == null) {
 			try {
-				Properties prop = new Properties();
-				InputStream input = new FileInputStream("github-oauth.properties");
-				prop.load(input);
-				String oAuthToken = prop.getProperty("OAuthToken");
+				String oAuthToken = System.getenv("OAuthToken");
+				if (oAuthToken == null || oAuthToken.isEmpty()) {
+					Properties prop = new Properties();
+					InputStream input = new FileInputStream("github-oauth.properties");
+					prop.load(input);
+					oAuthToken = prop.getProperty("OAuthToken");
+				}
 				if (oAuthToken != null) {
 					gitHub = GitHub.connectUsingOAuth(oAuthToken);
 					if(gitHub.isCredentialValid()) {

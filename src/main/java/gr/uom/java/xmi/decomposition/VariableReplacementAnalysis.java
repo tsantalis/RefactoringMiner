@@ -160,11 +160,23 @@ public class VariableReplacementAnalysis {
 		findMatchingVariablesWithoutVariableDeclarationMapping();
 		findMovedVariablesToExtractedFromInlinedMethods();
 		findMatchingVariablesWithoutReferenceMapping();
-		findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations();
+		findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations(classDiff);
+		if(modelDiff != null && classDiff != null) {
+			for(UMLAbstractClassDiff diff : modelDiff.getCommonClassDiffList()) {
+				if(classDiff.getOriginalClass().isInnerClass(diff.getOriginalClass()) || classDiff.getNextClass().isInnerClass(diff.getNextClass())) {
+					findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations(diff);
+				}
+				else if(diff.getOriginalClass().isInnerClass(classDiff.getOriginalClass()) || diff.getNextClass().isInnerClass(classDiff.getNextClass())) {
+					findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations(diff);
+				}
+			}
+		}
 	}
 
-	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations() throws RefactoringMinerTimedOutException {
-		if(classDiff != null && ((mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0 || mapper.getReplacementsInvolvingMethodInvocation().size() > 0) || (mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter()))) {
+	private void findAttributeRenamesWithIdenticalPreviousAndNextFieldDeclarations(UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		boolean hasNonMappedElements = mapper.nonMappedElementsT1() > 0 && mapper.nonMappedElementsT2() > 0;
+		boolean isGetter = mapper.getContainer1().isGetter() && mapper.getContainer2().isGetter();
+		if(classDiff != null && ((hasNonMappedElements || mapper.getReplacementsInvolvingMethodInvocation().size() > 0 || mapper.mappingsWithoutBlocks() != mapper.exactMatches()) || isGetter)) {
 			List<UMLAttribute> addedAttributes = new ArrayList<>();
 			addedAttributes.addAll(classDiff.getAddedAttributes());
 			List<UMLAttribute> removedAttributes = new ArrayList<>();
@@ -271,13 +283,13 @@ public class VariableReplacementAnalysis {
 	private void createCandidate(UMLAttribute removedAttribute, UMLAttribute addedAttribute) {
 		Set<AbstractCodeFragment> referencingStatements1 = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeFragment f1 : mapper.getNonMappedLeavesT1()) {
-			if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName())) {
+			if(containsFieldAccess(removedAttribute, f1)) {
 				referencingStatements1.add(f1);
 			}
 		}
 		Set<AbstractCodeFragment> referencingStatements2 = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeFragment f2 : mapper.getNonMappedLeavesT2()) {
-			if(ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+			if(containsFieldAccess(addedAttribute, f2)) {
 				referencingStatements2.add(f2);
 			}
 		}
@@ -286,7 +298,7 @@ public class VariableReplacementAnalysis {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				AbstractCodeFragment f1 = mapping.getFragment1();
 				AbstractCodeFragment f2 = mapping.getFragment2();
-				if(ReplacementUtil.contains(f1.getString(), removedAttribute.getName()) && ReplacementUtil.contains(f2.getString(), addedAttribute.getName())) {
+				if(containsFieldAccess(removedAttribute, f1) && containsFieldAccess(addedAttribute, f2)) {
 					referencingStatements1.add(f1);
 					referencingStatements2.add(f2);
 					references.add(mapping);
@@ -316,6 +328,13 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
+	}
+
+	private boolean containsFieldAccess(UMLAttribute attribute, AbstractCodeFragment fragment) {
+		String variable = attribute.getName();
+		String capitalizedFirstLetter = Character.toUpperCase(variable.charAt(0)) + variable.substring(1, variable.length());
+		String getterCall = "get" + capitalizedFirstLetter + "()";
+		return ReplacementUtil.contains(fragment.getString(), attribute.getName()) || ReplacementUtil.contains(fragment.getString(), getterCall);
 	}
 
 	private void processIdenticalAnonymousAndLambdas() {

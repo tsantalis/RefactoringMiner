@@ -570,7 +570,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			List<LeafExpression> variables = fragment.getVariables();
 			if(variables.size() > 0) {
 				String variable = variables.get(0).getString();
-				if(statement.startsWith(variable + JAVA.ASSIGNMENT) && variable.startsWith("this.")) {
+				if(statement.startsWith(variable + JAVA.ASSIGNMENT) && variable.startsWith(JAVA.THIS_DOT)) {
 					return true;
 				}
 			}

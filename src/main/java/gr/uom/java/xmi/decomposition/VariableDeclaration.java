@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -386,7 +388,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			List<LeafExpression> variables = statement.getVariables();
 			boolean matchFound = false;
 			for(LeafExpression variable : variables) {
-				if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals("this." + variableName))) {
+				if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals(JAVA.THIS_DOT + variableName))) {
 					scope.addStatementUsingVariable(statement);
 					matchFound = true;
 					break;

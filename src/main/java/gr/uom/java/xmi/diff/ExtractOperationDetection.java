@@ -178,7 +178,7 @@ public class ExtractOperationDetection {
 				List<String> arguments = invocation.arguments();
 				int occurrences = 0;
 				for(String argument : arguments) {
-					if(argument.startsWith("this.") && !allVariables.contains(argument)) {
+					if(argument.startsWith(JAVA.THIS_DOT) && !allVariables.contains(argument)) {
 						String substringAfterThis = argument.substring(5);
 						occurrences += Collections.frequency(allVariables, substringAfterThis);
 					}

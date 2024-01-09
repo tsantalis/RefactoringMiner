@@ -579,7 +579,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
 		for(AbstractCodeFragment statement : getLeaves()) {
 			String s = statement.getString();
-			if(!s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			if(!s.startsWith(JAVA.THIS_DOT) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains(JAVA.ASSIGNMENT)) {
 					String variable = s.substring(0, s.indexOf(JAVA.ASSIGNMENT));
@@ -602,7 +602,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		Map<String, Set<String>> map = new LinkedHashMap<String, Set<String>>();
 		for(AbstractCodeFragment statement : getLeaves()) {
 			String s = statement.getString();
-			if(s.startsWith("this.") && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
+			if(s.startsWith(JAVA.THIS_DOT) && s.endsWith(JAVA.STATEMENT_TERMINATION)) {
 				String firstLine = s.substring(0, s.indexOf("\n"));
 				if(firstLine.contains(JAVA.ASSIGNMENT)) {
 					String attribute = s.substring(5, s.indexOf(JAVA.ASSIGNMENT));

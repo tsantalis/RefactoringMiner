@@ -672,7 +672,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> removedFieldAssignmentMap = new LinkedHashMap<>();
 			for(UMLParameter removedParameter : removedParameters) {
 				for(AbstractCodeFragment leaf : removedOperationLeaves) {
-					if(leaf.getString().equals("this." + removedParameter.getName() + JAVA.ASSIGNMENT + removedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(JAVA.THIS_DOT + removedParameter.getName() + JAVA.ASSIGNMENT + removedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
 						removedFieldAssignmentMap.put(removedParameter.getVariableDeclaration(), leaf);
 						break;
 					}
@@ -682,7 +682,7 @@ public class UMLOperationDiff {
 			Map<VariableDeclaration, AbstractCodeFragment> addedFieldAssignmentMap = new LinkedHashMap<>();
 			for(UMLParameter addedParameter : addedParameters) {
 				for(AbstractCodeFragment leaf : addedOperationLeaves) {
-					if(leaf.getString().equals("this." + addedParameter.getName() + JAVA.ASSIGNMENT + addedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
+					if(leaf.getString().equals(JAVA.THIS_DOT + addedParameter.getName() + JAVA.ASSIGNMENT + addedParameter.getName() + JAVA.STATEMENT_TERMINATION)) {
 						addedFieldAssignmentMap.put(addedParameter.getVariableDeclaration(), leaf);
 						break;
 					}

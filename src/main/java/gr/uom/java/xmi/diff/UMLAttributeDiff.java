@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -80,7 +82,7 @@ public class UMLAttributeDiff {
 		for(UMLOperation operation : operations) {
 			if(!operation.isConstructor() && !operation.hasOverrideAnnotation() && condition.apply(operation)) {
 				List<String> variables = operation.getAllVariables();
-				if(variables.contains(attribute.getName()) || variables.contains("this." + attribute.getName())) {
+				if(variables.contains(attribute.getName()) || variables.contains(JAVA.THIS_DOT + attribute.getName())) {
 					return operation;
 				}
 			}

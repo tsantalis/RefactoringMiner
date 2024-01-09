@@ -136,10 +136,10 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff1.isEmpty() && diff2.equals("this.")) {
+			if(diff1.isEmpty() && diff2.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && diff1.equals("this.")) {
+			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
 			if(diff1.isEmpty() && (diff2.equals("+") || diff2.equals("-")) && commonSuffix.startsWith(JAVA.ASSIGNMENT)) {
@@ -497,7 +497,7 @@ public class StringBasedHeuristics {
 	}
 
 	protected static boolean differOnlyInThis(String s1, String s2) {
-		if(differOnlyInPrefix(s1, s2, "", "this.")) {
+		if(differOnlyInPrefix(s1, s2, "", JAVA.THIS_DOT)) {
 			return true;
 		}
 		String commonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
@@ -509,10 +509,10 @@ public class StringBasedHeuristics {
 			int beginIndexS2 = s2.indexOf(commonPrefix) + commonPrefix.length();
 			int endIndexS2 = s2.lastIndexOf(commonSuffix);
 			String diff2 = beginIndexS2 > endIndexS2 ? "" :	s2.substring(beginIndexS2, endIndexS2);
-			if(diff1.isEmpty() && diff2.equals("this.")) {
+			if(diff1.isEmpty() && diff2.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
-			else if(diff2.isEmpty() && diff1.equals("this.")) {
+			else if(diff2.isEmpty() && diff1.equals(JAVA.THIS_DOT)) {
 				return true;
 			}
 			else if(diff1.isEmpty() && diff2.equals("!= null")) {
@@ -1887,7 +1887,7 @@ public class StringBasedHeuristics {
 			boolean fieldInitializationWithParemeter2 = false;
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor() && mapper.getClassDiff() != null) {
 				for(UMLAttribute removedAttribute : mapper.getClassDiff().getOriginalClass().getAttributes()) {
-					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals("this." + removedAttribute.getName())) {
+					if(variableName1.equals(removedAttribute.getName()) || variableName1.equals(JAVA.THIS_DOT + removedAttribute.getName())) {
 						for(String parameterName : mapper.getContainer1().getParameterNameList()) {
 							if(assignment1.equals(parameterName) || assignment1.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter1 = true;
@@ -1900,7 +1900,7 @@ public class StringBasedHeuristics {
 					}
 				}
 				for(UMLAttribute addedAttribute : mapper.getClassDiff().getNextClass().getAttributes()) {
-					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals("this." + addedAttribute.getName()))) {
+					if((variableName2.equals(addedAttribute.getName()) || variableName2.equals(JAVA.THIS_DOT + addedAttribute.getName()))) {
 						for(String parameterName : mapper.getContainer2().getParameterNameList()) {
 							if(assignment2.equals(parameterName) || assignment2.contains(parameterName + ".")) {
 								fieldInitializationWithParemeter2 = true;
@@ -1951,9 +1951,9 @@ public class StringBasedHeuristics {
 						classInstanceCreationReplacement = true;
 				}
 				else if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
-						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(JAVA.THIS_DOT + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(JAVA.THIS_DOT + replacement.getAfter())) &&
+						!variableName1.equals(JAVA.THIS_DOT + variableName2) && !variableName2.equals(JAVA.THIS_DOT + variableName1))
 					variableRename = true;
 				else if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) &&
 						assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()) &&
@@ -2033,9 +2033,9 @@ public class StringBasedHeuristics {
 			String assignment2 = statement2.getString().substring(statement2.getString().indexOf(JAVA.ASSIGNMENT)+1, statement2.getString().lastIndexOf(JAVA.STATEMENT_TERMINATION));
 			for(Replacement replacement : replacementInfo.getReplacements()) {
 				if((replacement.getType().equals(ReplacementType.VARIABLE_NAME) || replacement.getType().equals(ReplacementType.VARIABLE_REPLACED_WITH_ARRAY_ACCESS)) &&
-						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals("this." + replacement.getBefore())) &&
-						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals("this." + replacement.getAfter())) &&
-						!variableName1.equals("this." + variableName2) && !variableName2.equals("this." + variableName1))
+						(variableName1.equals(replacement.getBefore()) || variableName1.endsWith(" " + replacement.getBefore()) || variableName1.equals(JAVA.THIS_DOT + replacement.getBefore())) &&
+						(variableName2.equals(replacement.getAfter()) || variableName2.endsWith(" " + replacement.getAfter()) || variableName2.equals(JAVA.THIS_DOT + replacement.getAfter())) &&
+						!variableName1.equals(JAVA.THIS_DOT + variableName2) && !variableName2.equals(JAVA.THIS_DOT + variableName1))
 					variableRename = true;
 				else if(assignment1.equals(replacement.getBefore()) && assignment2.equals(replacement.getAfter()))
 					rightHandSideReplacement = true;

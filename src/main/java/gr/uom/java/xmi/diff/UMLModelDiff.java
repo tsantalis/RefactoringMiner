@@ -3120,7 +3120,7 @@ public class UMLModelDiff {
 								String expression = removedOperationInvocation.getExpression();
 								if(expression != null && !removedOperation.getClassName().endsWith("." + expression)) {
 									parameterToArgumentMap2.put(expression + ".", "");
-									parameterToArgumentMap1.put("this.", "");
+									parameterToArgumentMap1.put(JAVA.THIS_DOT, "");
 								}
 								UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, mapper, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(removedOperation.getClassName()), removedOperationInvocation, false);
 								if(moveAndInlineMatchCondition(operationBodyMapper, mapper)) {
@@ -3402,11 +3402,11 @@ public class UMLModelDiff {
 							Map<String, String> parameterToArgumentMap1 = new LinkedHashMap<String, String>();
 							for(UMLAttribute attribute : attributes) {
 								parameterToArgumentMap1.put(attribute.getName() + ".", "");
-								parameterToArgumentMap2.put("this.", "");
+								parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 							}
 							if(addedOperationInvocation.getExpression() != null) {
 								parameterToArgumentMap1.put(addedOperationInvocation.getExpression() + ".", "");
-								parameterToArgumentMap2.put("this.", "");
+								parameterToArgumentMap2.put(JAVA.THIS_DOT, "");
 							}
 							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(mapper, addedOperation, parameterToArgumentMap1, parameterToArgumentMap2, getUMLClassDiff(addedOperation.getClassName()), addedOperationInvocation, false);
 							if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
@@ -3592,10 +3592,10 @@ public class UMLModelDiff {
 			if(invocation1 != null && invocation2 != null && invocation1.getExpression() != null && invocation2.getExpression() != null) {
 				String expression1 = invocation1.getExpression();
 				String expression2 = invocation2.getExpression();
-				if(expression1.startsWith("this.")) {
+				if(expression1.startsWith(JAVA.THIS_DOT)) {
 					expression1 = expression1.substring(5);
 				}
-				if(expression2.startsWith("this.")) {
+				if(expression2.startsWith(JAVA.THIS_DOT)) {
 					expression2 = expression2.substring(5);
 				}
 				if(!expression1.equals(expression2) && operationBodyMapper.getClassDiff() != null) {

@@ -73,6 +73,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!this.isIdenticalWithInlinedVariable() && o.isIdenticalWithInlinedVariable()) {
 					return 1;
 				}
+				if(this.isFieldAssignmentWithParameter() && o.isFieldAssignmentWithParameter()) {
+					if(this.isFieldAssignmentWithParameterHavingSameType() && !o.isFieldAssignmentWithParameterHavingSameType()) {
+						return -1;
+					}
+					else if(!this.isFieldAssignmentWithParameterHavingSameType() && o.isFieldAssignmentWithParameterHavingSameType()) {
+						return 1;
+					}
+				}
 				computeIdenticalPreviousAndNextStatements(o);
 				if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {
 					return -1;

@@ -15,6 +15,8 @@ import org.refactoringminer.util.PrefixSuffixUtils;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
@@ -224,6 +226,48 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public String toString() {
 		return fragment1.toString() + fragment2.toString();
+	}
+
+	public boolean isFieldAssignmentWithParameter() {
+		boolean fieldAssignmentWithParameter1 = false;
+		for(String parameterName : operation1.getParameterNameList()) {
+			if(fragment1.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+				fieldAssignmentWithParameter1 = true;
+				break;
+			}
+		}
+		boolean fieldAssignmentWithParameter2 = false;
+		for(String parameterName : operation2.getParameterNameList()) {
+			if(fragment2.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+				fieldAssignmentWithParameter2 = true;
+				break;
+			}
+		}
+		return fieldAssignmentWithParameter1 && fieldAssignmentWithParameter2;
+	}
+
+	public boolean isFieldAssignmentWithParameterHavingSameType() {
+		boolean fieldAssignmentWithParameter1 = false;
+		UMLType type1 = null;
+		for(UMLParameter parameter : operation1.getParametersWithoutReturnType()) {
+			String parameterName = parameter.getName();
+			if(fragment1.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+				fieldAssignmentWithParameter1 = true;
+				type1 = parameter.getType();
+				break;
+			}
+		}
+		boolean fieldAssignmentWithParameter2 = false;
+		UMLType type2 = null;
+		for(UMLParameter parameter : operation2.getParametersWithoutReturnType()) {
+			String parameterName = parameter.getName();
+			if(fragment2.getString().equals("this." + parameterName + JAVA.ASSIGNMENT + parameterName + JAVA.STATEMENT_TERMINATION)) {
+				fieldAssignmentWithParameter2 = true;
+				type2 = parameter.getType();
+				break;
+			}
+		}
+		return fieldAssignmentWithParameter1 && fieldAssignmentWithParameter2 && type1.equals(type2);
 	}
 
 	public void temporaryVariableAssignment(Set<Refactoring> refactorings, List<? extends AbstractCodeFragment> nonMappedLeavesT2, boolean insideExtractedOrInlinedMethod) {

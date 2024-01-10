@@ -443,7 +443,7 @@ public class OperationInvocation extends AbstractCall {
     	if(superclassDiff != null && subclassDiff == null) {
     		return true;
     	}
-    	if(classDiff != null && modelDiff.partialModel()) {
+    	if(classDiff != null && (modelDiff == null || modelDiff.partialModel())) {
     		List<UMLImport> imports = classDiff.getNextClass().getImportedTypes();
 			String qualifiedType1Prefix = null;
 			String qualifiedType2Prefix = null;

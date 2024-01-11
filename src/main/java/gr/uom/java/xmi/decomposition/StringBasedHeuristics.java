@@ -2912,17 +2912,17 @@ public class StringBasedHeuristics {
 						List<CompositeStatementObject> innerNodes1 = container1.getBody().getCompositeStatement().getInnerNodes();
 						List<CompositeStatementObject> innerNodes2 = container2.getBody().getCompositeStatement().getInnerNodes();
 						for(CompositeStatementObject ifNode1 : ifNodes1) {
-							if(identicalCompositeInTheOtherContainer(ifNode1, innerNodes2)) {
+							if(identicalCompositeInTheOtherContainer(ifNode1, innerNodes2, mapper)) {
 								identicalIfNodes1++;
 							}
 						}
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
-							if(identicalCompositeInTheOtherContainer(ifNode2, innerNodes1)) {
+							if(identicalCompositeInTheOtherContainer(ifNode2, innerNodes1, mapper)) {
 								identicalIfNodes2++;
 							}
 						}
 					}
-					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2) {
+					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0) {
 						boolean splitConditional = false;
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
@@ -3234,11 +3234,27 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
-	private static boolean identicalCompositeInTheOtherContainer(CompositeStatementObject innedNode1,
-			List<CompositeStatementObject> innerNodes2) {
+	private static boolean identicalCompositeInTheOtherContainer(CompositeStatementObject innerNode1,
+			List<CompositeStatementObject> innerNodes2, UMLOperationBodyMapper mapper) {
+		List<AbstractCodeFragment> leaves1 = innerNode1.getLeaves();
 		for(CompositeStatementObject innerNode2 : innerNodes2) {
-			if(innerNode2.getString().equals(innedNode1.getString())) {
+			if(innerNode2.getString().equals(innerNode1.getString())) {
 				return true;
+			}
+			List<AbstractCodeFragment> leaves2 = innerNode2.getLeaves();
+			if(leaves1.size() == leaves2.size() && leaves1.size() > 0) {
+				int matches = 0;
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					if(leaves1.contains(mapping.getFragment1()) && leaves2.contains(mapping.getFragment2())) {
+						matches++;
+					}
+					else if(leaves2.contains(mapping.getFragment1()) && leaves1.contains(mapping.getFragment2())) {
+						matches++;
+					}
+				}
+				if(matches == leaves1.size()) {
+					return true;
+				}
 			}
 		}
 		return false;

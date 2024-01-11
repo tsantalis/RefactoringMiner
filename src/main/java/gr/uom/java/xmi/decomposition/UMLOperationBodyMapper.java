@@ -4262,11 +4262,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean commonConditional = commonConditional(s1, s2, parameterToArgumentMap, replacementInfo, mapping.getFragment1(), innerNode2, this);
 						if(commonConditional) {
 							double score = computeScore((CompositeStatementObject)mapping.getFragment1(), innerNode2, Optional.of(replacementInfo), removedOperations, addedOperations, tryWithResourceMigration);
-							CompositeStatementObjectMapping newMapping = createCompositeMapping((CompositeStatementObject)mapping.getFragment1(), innerNode2, parameterToArgumentMap, score);
-							newMapping.addReplacements(replacementInfo.getReplacements());
-							newMapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
-							addMapping(newMapping);
-							mappingsToBeRemoved.add(mapping);
+							if(score > 0) {
+								CompositeStatementObjectMapping newMapping = createCompositeMapping((CompositeStatementObject)mapping.getFragment1(), innerNode2, parameterToArgumentMap, score);
+								newMapping.addReplacements(replacementInfo.getReplacements());
+								newMapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+								addMapping(newMapping);
+								mappingsToBeRemoved.add(mapping);
+							}
 						}
 					}
 				}

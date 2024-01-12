@@ -756,7 +756,7 @@ public abstract class UMLAbstractClass {
 		}
 		UMLAnnotationListDiff annotationListDiff = new UMLAnnotationListDiff(this.getAnnotations(), umlClass.getAnnotations());
 		boolean identicalAnnotations = this.getAnnotations().size() > 0 && umlClass.getAnnotations().size() > 0 && annotationListDiff.isEmpty();
-		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && !identicalAnnotations) {
+		if(totalOperations == 0 && totalAttributes == 0 && (this.getEnumConstants().size() == 0 || umlClass.getEnumConstants().size() == 0) && !this.getNonQualifiedName().equals(umlClass.getNonQualifiedName()) && !identicalAnnotations && !identicalComments(umlClass)) {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
 		}
 		if(commonOperations.size() == totalOperations && commonAttributes.size() == totalAttributes) {
@@ -765,6 +765,21 @@ public abstract class UMLAbstractClass {
 		else {
 			return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, false);
 		}
+	}
+
+	private boolean identicalComments(UMLAbstractClass umlClass) {
+		List<UMLComment> comments1 = this.getComments();
+		List<UMLComment> comments2 = umlClass.getComments();
+		if(comments1.size() == comments2.size() && comments1.size() > 0) {
+			int identicalComments = 0;
+			for(int i=0; i<comments1.size(); i++) {
+				if(comments1.get(i).getText().equals(comments2.get(i).getText())) {
+					identicalComments++;
+				}
+			}
+			return identicalComments == comments1.size();
+		}
+		return false;
 	}
 
 	public MatchResult hasCommonOperationWithTheSameSignature(UMLAbstractClass umlClass) {

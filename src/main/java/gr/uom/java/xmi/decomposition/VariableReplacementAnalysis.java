@@ -2008,9 +2008,19 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
-		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass()) {
+		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && (!operation1.equals(operation2) || identicalChildMapper())) {
 			return mapping.getFragment1().getString().equals(JAVA.RETURN_SPACE + replacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
 					mapping.getFragment2().getString().equals(JAVA.RETURN_SPACE + replacement.getAfter() + JAVA.STATEMENT_TERMINATION);
+		}
+		return false;
+	}
+
+	private boolean identicalChildMapper() {
+		if(mapper.getChildMappers().size() > 0) {
+			UMLOperationBodyMapper childMapper = mapper.getChildMappers().iterator().next();
+			if(childMapper.getContainer1().getBody() != null && childMapper.getContainer1().getBodyHashCode() == childMapper.getContainer2().getBodyHashCode()) {
+				return true;
+			}
 		}
 		return false;
 	}

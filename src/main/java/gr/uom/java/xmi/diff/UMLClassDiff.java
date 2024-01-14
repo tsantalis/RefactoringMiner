@@ -1,9 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,22 +22,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 	public UMLClassDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
 		this.className = originalClass.getName();
-	}
-
-	private void reportAddedOperation(UMLOperation umlOperation) {
-		this.addedOperations.add(umlOperation);
-	}
-
-	private void reportRemovedOperation(UMLOperation umlOperation) {
-		this.removedOperations.add(umlOperation);
-	}
-
-	private void reportAddedAttribute(UMLAttribute umlAttribute) {
-		this.addedAttributes.add(umlAttribute);
-	}
-
-	private void reportRemovedAttribute(UMLAttribute umlAttribute) {
-		this.removedAttributes.add(umlAttribute);
 	}
 
 	protected void processAttributes() throws RefactoringMinerTimedOutException {
@@ -278,45 +260,6 @@ public class UMLClassDiff extends UMLClassBaseDiff {
 			}
 		}
 		return false;
-	}
-
-	protected void checkForAttributeChanges() throws RefactoringMinerTimedOutException {
-		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
-			UMLAttribute removedAttribute = removedAttributeIterator.next();
-			for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
-				UMLAttribute addedAttribute = addedAttributeIterator.next();
-				if(removedAttribute.getName().equals(addedAttribute.getName())) {
-					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
-					refactorings.addAll(attributeDiff.getRefactorings());
-					addedAttributeIterator.remove();
-					removedAttributeIterator.remove();
-					if(!attributeDiffList.contains(attributeDiff)) {
-						attributeDiffList.add(attributeDiff);
-					}
-					break;
-				}
-			}
-		}
-		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
-			UMLAttribute removedAttribute = removedAttributeIterator.next();
-			if(removedAttribute.getVariableDeclaration().getInitializer() != null && this.getOriginalClass().uniqueInitializer(removedAttribute)) {
-				for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
-					UMLAttribute addedAttribute = addedAttributeIterator.next();
-					if(addedAttribute.getVariableDeclaration().getInitializer() != null && this.getNextClass().uniqueInitializer(addedAttribute)) {
-						if(removedAttribute.getVariableDeclaration().getInitializer().getString().equals(addedAttribute.getVariableDeclaration().getInitializer().getString())) {
-							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
-							refactorings.addAll(attributeDiff.getRefactorings(Collections.emptySet()));
-							addedAttributeIterator.remove();
-							removedAttributeIterator.remove();
-							if(!attributeDiffList.contains(attributeDiff)) {
-								attributeDiffList.add(attributeDiff);
-							}
-							break;
-						}
-					}
-				}
-			}
-		}
 	}
 
 	protected boolean containsMapperForOperation1(UMLOperation operation) {

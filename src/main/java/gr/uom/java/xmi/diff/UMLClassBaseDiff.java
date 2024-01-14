@@ -98,6 +98,22 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return (UMLClass) nextClass;
 	}
 
+	protected void reportAddedOperation(UMLOperation umlOperation) {
+		this.addedOperations.add(umlOperation);
+	}
+
+	protected void reportRemovedOperation(UMLOperation umlOperation) {
+		this.removedOperations.add(umlOperation);
+	}
+
+	protected void reportAddedAttribute(UMLAttribute umlAttribute) {
+		this.addedAttributes.add(umlAttribute);
+	}
+
+	protected void reportRemovedAttribute(UMLAttribute umlAttribute) {
+		this.removedAttributes.add(umlAttribute);
+	}
+
 	public void process() throws RefactoringMinerTimedOutException {
 		processImports();
 		processInitializers();
@@ -526,7 +542,62 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	protected void checkForAttributeChanges() throws RefactoringMinerTimedOutException {
-		//optional step
+		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
+			UMLAttribute removedAttribute = removedAttributeIterator.next();
+			for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
+				UMLAttribute addedAttribute = addedAttributeIterator.next();
+				if(removedAttribute.getName().equals(addedAttribute.getName())) {
+					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
+					refactorings.addAll(attributeDiff.getRefactorings());
+					addedAttributeIterator.remove();
+					removedAttributeIterator.remove();
+					if(!attributeDiffList.contains(attributeDiff)) {
+						attributeDiffList.add(attributeDiff);
+					}
+					break;
+				}
+			}
+		}
+		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
+			UMLAttribute removedAttribute = removedAttributeIterator.next();
+			if(removedAttribute.getVariableDeclaration().getInitializer() != null && this.getOriginalClass().uniqueInitializer(removedAttribute)) {
+				for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
+					UMLAttribute addedAttribute = addedAttributeIterator.next();
+					if(addedAttribute.getVariableDeclaration().getInitializer() != null && this.getNextClass().uniqueInitializer(addedAttribute)) {
+						if(removedAttribute.getVariableDeclaration().getInitializer().getString().equals(addedAttribute.getVariableDeclaration().getInitializer().getString())) {
+							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
+							refactorings.addAll(attributeDiff.getRefactorings(Collections.emptySet()));
+							addedAttributeIterator.remove();
+							removedAttributeIterator.remove();
+							if(!attributeDiffList.contains(attributeDiff)) {
+								attributeDiffList.add(attributeDiff);
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(Iterator<UMLAttribute> removedAttributeIterator = removedAttributes.iterator(); removedAttributeIterator.hasNext();) {
+			UMLAttribute removedAttribute = removedAttributeIterator.next();
+			if(removedAttribute.getJavadoc() != null && this.getOriginalClass().uniqueJavadoc(removedAttribute)) {
+				for(Iterator<UMLAttribute> addedAttributeIterator = addedAttributes.iterator(); addedAttributeIterator.hasNext();) {
+					UMLAttribute addedAttribute = addedAttributeIterator.next();
+					if(addedAttribute.getJavadoc() != null && this.getNextClass().uniqueJavadoc(addedAttribute)) {
+						if(removedAttribute.getJavadoc().equalText(addedAttribute.getJavadoc())) {
+							UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, this, modelDiff);
+							refactorings.addAll(attributeDiff.getRefactorings(Collections.emptySet()));
+							addedAttributeIterator.remove();
+							removedAttributeIterator.remove();
+							if(!attributeDiffList.contains(attributeDiff)) {
+								attributeDiffList.add(attributeDiff);
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {

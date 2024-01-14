@@ -956,4 +956,24 @@ public abstract class UMLAbstractClass {
 		}
 		return false;
 	}
+
+	public boolean uniqueJavadoc(UMLAttribute attributeToCheck) {
+		UMLJavadoc javadoc = attributeToCheck.getJavadoc();
+		if(javadoc == null) {
+			return false;
+		}
+		int matches = 0;
+		for(UMLAttribute attribute : attributes) {
+			if(!attribute.equals(attributeToCheck)) {
+				if(attribute.getJavadoc() != null &&
+						attribute.getJavadoc().equalText(javadoc)) {
+					matches++;
+				}
+			}
+		}
+		if(matches == 0) {
+			return true;
+		}
+		return false;
+	}
 }

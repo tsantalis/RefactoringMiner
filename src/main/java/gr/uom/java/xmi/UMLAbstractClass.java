@@ -976,4 +976,24 @@ public abstract class UMLAbstractClass {
 		}
 		return false;
 	}
+
+	public boolean uniqueAnnotation(UMLOperation operationToCheck) {
+		List<UMLAnnotation> annotations = operationToCheck.getAnnotations();
+		if(annotations.isEmpty()) {
+			return false;
+		}
+		int matches = 0;
+		for(UMLOperation operation : operations) {
+			if(!operation.equals(operationToCheck)) {
+				if(!operation.getAnnotations().isEmpty() &&
+						operation.getAnnotations().equals(annotations)) {
+					matches++;
+				}
+			}
+		}
+		if(matches == 0) {
+			return true;
+		}
+		return false;
+	}
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -598,10 +599,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
-	}
-
-	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
-		//optional step
 	}
 
 	protected void processAnonymousClasses() {
@@ -2715,5 +2712,212 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public boolean samePackage() {
 		return originalClass.getPackageName().equals(nextClass.getPackageName());
+	}
+
+	protected boolean differentParameterNames(UMLOperation operation1, UMLOperation operation2) {
+		if(operation1 != null && operation2 != null && !operation1.getParameterNameList().equals(operation2.getParameterNameList())) {
+			int methodsWithIdenticalName1 = 0;
+			for(UMLOperation operation : originalClass.getOperations()) {
+				if(operation != operation1 && operation.getName().equals(operation1.getName()) && !operation.hasVarargsParameter()) {
+					methodsWithIdenticalName1++;
+				}
+			}
+			int methodsWithIdenticalName2 = 0;
+			for(UMLOperation operation : nextClass.getOperations()) {
+				if(operation != operation2 && operation.getName().equals(operation2.getName()) && !operation.hasVarargsParameter()) {
+					methodsWithIdenticalName2++;
+				}
+			}
+			if(methodsWithIdenticalName1 > 0 && methodsWithIdenticalName2 > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean containCallToOperation(VariableDeclarationContainer calledOperation, VariableDeclarationContainer callerOperation) {
+		for(AbstractCall invocation : callerOperation.getAllOperationInvocations()) {
+			if(invocation.matchesOperation(calledOperation, callerOperation, this, modelDiff)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
+		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
+		for(UMLOperation originalOperation : originalClass.getOperations()) {
+			for(UMLOperation nextOperation : nextClass.getOperations()) {
+				if(originalOperation.equalsQualified(nextOperation) && !differentParameterNames(originalOperation, nextOperation)) {
+					if(getModelDiff() != null) {
+						List<UMLOperationBodyMapper> mappers = getModelDiff().findMappersWithMatchingSignature2(nextOperation);
+						if(mappers.size() > 0) {
+							UMLOperation operation1 = mappers.get(0).getOperation1();
+							if(!operation1.equalSignature(originalOperation) &&
+									getModelDiff().commonlyImplementedOperations(operation1, nextOperation, this)) {
+								if(!removedOperations.contains(originalOperation)) {
+									removedOperations.add(originalOperation);
+								}
+								break;
+							}
+						}
+					}
+					boolean matchFound = removedOrAddedOperationWithIdenticalBody(originalOperation, nextOperation, removedOperationsToBeRemoved, addedOperationsToBeRemoved);
+					if(!matchFound) {
+		    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
+		    			this.addOperationBodyMapper(operationBodyMapper);
+					}
+				}
+			}
+		}
+		for(UMLOperation operation : originalClass.getOperations()) {
+			int index = nextClass.getOperations().indexOf(operation);
+			if(!containsMapperForOperation1(operation) && index != -1 && !removedOperations.contains(operation) && !differentParameterNames(operation, nextClass.getOperations().get(index))) {
+				int lastIndex = nextClass.getOperations().lastIndexOf(operation);
+				int finalIndex = index;
+				if(index != lastIndex) {
+					if(containsMapperForOperation2(nextClass.getOperations().get(index))) {
+						finalIndex = lastIndex;
+					}
+					else if(!operation.isConstructor()) {
+	    				double d1 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(index).getReturnParameter().getType());
+	    				double d2 = operation.getReturnParameter().getType().normalizedNameDistance(nextClass.getOperations().get(lastIndex).getReturnParameter().getType());
+	    				if(d2 < d1) {
+	    					finalIndex = lastIndex;
+	    				}
+					}
+				}
+				boolean matchFound = removedOrAddedOperationWithIdenticalBody(operation, nextClass.getOperations().get(finalIndex), removedOperationsToBeRemoved, addedOperationsToBeRemoved);
+				if(!matchFound) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(finalIndex), this);
+					this.addOperationBodyMapper(operationBodyMapper);
+				}
+			}
+		}
+		for(UMLOperation removedOperation : removedOperations) {
+			for(UMLOperation addedOperation : addedOperations) {
+				if(removedOperation.equalsIgnoringVisibility(addedOperation) && !differentParameterNames(removedOperation, addedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
+				else if(removedOperation.equalsIgnoringAbstraction(addedOperation) && !differentParameterNames(removedOperation, addedOperation) && !containsMapperForOperation1(removedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+				}
+				else if(removedOperation.equalsIgnoringNameCase(addedOperation) && !differentParameterNames(removedOperation, addedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					if(!removedOperation.getName().equals(addedOperation.getName()) &&
+							!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+						refactorings.add(rename);
+					}
+					this.addOperationBodyMapper(operationBodyMapper);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
+				else if(removedOperation.equalsIgoringTypeParameters(addedOperation) && !differentParameterNames(removedOperation, addedOperation) &&
+						removedOperations.size() == addedOperations.size()) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
+				else if(removedOperation.equalSignatureWithIdenticalNameIgnoringChangedTypesToFromObject(addedOperation) && !differentParameterNames(removedOperation, addedOperation) &&
+						removedOperations.size() == addedOperations.size() && !mapperListContainsOperation(removedOperation, addedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
+			}
+		}
+		removedOperations.removeAll(removedOperationsToBeRemoved);
+		addedOperations.removeAll(addedOperationsToBeRemoved);
+		for(UMLOperation removedOperation : removedOperations) {
+			if(!removedOperation.getAnnotations().isEmpty() && this.getOriginalClass().uniqueAnnotation(removedOperation)) {
+				for(UMLOperation addedOperation : addedOperations) {
+					if(!addedOperation.getAnnotations().isEmpty() && this.getNextClass().uniqueAnnotation(addedOperation)) {
+						if(removedOperation.getAnnotations().equals(addedOperation.getAnnotations()) && removedOperation.hasEmptyBody() && addedOperation.hasEmptyBody()) {
+							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+							this.addOperationBodyMapper(operationBodyMapper);
+							UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, this);
+							refactorings.addAll(operationSignatureDiff.getRefactorings());
+							if(!removedOperation.getName().equals(addedOperation.getName()) &&
+									!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+								RenameOperationRefactoring rename = new RenameOperationRefactoring(removedOperation, addedOperation);
+								refactorings.add(rename);
+							}
+							removedOperationsToBeRemoved.add(removedOperation);
+							addedOperationsToBeRemoved.add(addedOperation);
+						}
+					}
+				}
+			}
+		}
+		removedOperations.removeAll(removedOperationsToBeRemoved);
+		addedOperations.removeAll(addedOperationsToBeRemoved);
+	}
+
+	private boolean removedOrAddedOperationWithIdenticalBody(UMLOperation originalOperation, UMLOperation nextOperation, List<UMLOperation> removedOperationsToBeRemoved, List<UMLOperation> addedOperationsToBeRemoved) throws RefactoringMinerTimedOutException {
+		List<String> nextOperationStringRepresentation = nextOperation.stringRepresentation();
+		List<String> originalOperationStringRepresentation = originalOperation.stringRepresentation();
+		if(!nextOperationStringRepresentation.equals(originalOperationStringRepresentation) && nextOperationStringRepresentation.size() > 2) {
+			for(UMLOperation removedOperation : removedOperations) {
+				if(removedOperation.stringRepresentation().equals(nextOperationStringRepresentation) && !containCallToOperation(removedOperation, originalOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, nextOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					if(!removedOperation.getName().equals(nextOperation.getName()) &&
+							!(removedOperation.isConstructor() && nextOperation.isConstructor())) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+						refactorings.add(rename);
+					}
+					removedOperationsToBeRemoved.add(removedOperation);
+					if(!removedOperations.contains(originalOperation)) {
+						removedOperations.add(originalOperation);
+					}
+					return true;
+				}
+			}
+		}
+		if(!originalOperationStringRepresentation.equals(nextOperationStringRepresentation) && originalOperationStringRepresentation.size() > 2) {
+			for(UMLOperation addedOperation : addedOperations) {
+				if(addedOperation.stringRepresentation().equals(originalOperationStringRepresentation) && !containCallToOperation(addedOperation, nextOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					if(!originalOperation.getName().equals(addedOperation.getName()) &&
+							!(originalOperation.isConstructor() && addedOperation.isConstructor())) {
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(operationBodyMapper, new HashSet<MethodInvocationReplacement>());
+						refactorings.add(rename);
+					}
+					addedOperationsToBeRemoved.add(addedOperation);
+					if(!addedOperations.contains(nextOperation)) {
+						addedOperations.add(nextOperation);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	protected boolean containsMapperForOperation1(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation1() != null && mapper.getOperation1().equalsQualified(operation)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected boolean containsMapperForOperation2(UMLOperation operation) {
+		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
+			if(mapper.getOperation2() != null && mapper.getOperation2().equalsQualified(operation)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

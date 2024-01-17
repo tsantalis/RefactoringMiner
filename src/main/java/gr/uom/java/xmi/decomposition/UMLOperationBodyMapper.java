@@ -501,6 +501,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								mapping.getFragment1().getVariableDeclarations().toString().equals(mapping.getFragment2().getVariableDeclarations().toString())) {
 							continue;
 						}
+						AbstractCall call1 = expression.invocationCoveringEntireFragment();
+						if(call1 != null) {
+							CompositeStatementObject comp2 = (CompositeStatementObject)mapping.getFragment2();
+							if(comp2.getExpressions().size() == 1) {
+								AbstractExpression expression2 = comp2.getExpressions().get(0);
+								AbstractCall call2 = expression2.invocationCoveringEntireFragment();
+								if(call2 != null && call1.identicalExpression(call2) && call1.equalArguments(call2)) {
+									continue;
+								}
+							}
+						}
 						expression.replaceParametersWithArguments(parameterToArgumentMap1);
 						expressionsT1.add(expression);
 					}

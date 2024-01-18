@@ -1625,6 +1625,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return map;
 	}
 
+	private boolean delegatesToAnotherRemovedOperation(UMLOperation removedOperation) {
+		for(UMLOperation removedOperation2 : removedOperations) {
+			if(!removedOperation.equals(removedOperation2)) {
+				AbstractCall call = removedOperation.delegatesTo(removedOperation2, this, modelDiff);
+				if(call != null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
@@ -1642,7 +1654,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 		List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
-		if(mappings > 0 || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null)) {
+		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && addedOperation.stringRepresentation().size() > 3) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null)) {
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(exactMappings(operationBodyMapper)) {
 				mapperSet.add(operationBodyMapper);

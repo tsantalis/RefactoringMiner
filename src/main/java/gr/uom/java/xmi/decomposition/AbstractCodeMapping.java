@@ -944,6 +944,38 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			intersection.retainAll(tokens2);
 			return intersection.size() == Math.min(tokens1.size(), tokens2.size());
 		}
+		else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION)) {
+			List<String> tokens1 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s1));
+			StringBuilder concatenated = new StringBuilder();
+			for(int i=0; i<tokens1.size(); i++) {
+				String token = tokens1.get(i);
+				if(token.startsWith("\"") && token.endsWith("\"")) {
+					concatenated.append(token.substring(1, token.length()-1));
+				}
+				else {
+					concatenated.append(token);
+				}
+			}
+			if(s2.contains(concatenated)) {
+				return true;
+			}
+		}
+		else if(!s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
+			List<String> tokens2 = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(s2));
+			StringBuilder concatenated = new StringBuilder();
+			for(int i=0; i<tokens2.size(); i++) {
+				String token = tokens2.get(i);
+				if(token.startsWith("\"") && token.endsWith("\"")) {
+					concatenated.append(token.substring(1, token.length()-1));
+				}
+				else {
+					concatenated.append(token);
+				}
+			}
+			if(s1.contains(concatenated)) {
+				return true;
+			}
+		}
 		return false;
 	}
 

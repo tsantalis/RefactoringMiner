@@ -532,6 +532,24 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 							ref.addSubExpressionMapping(leafMapping);
 						}
+						if(infixOperandMatch(initializer, before)) {
+							List<LeafExpression> infixExpressions = initializer.getInfixExpressions();
+							for(LeafExpression infixExpression : infixExpressions) {
+								if(infixExpression.getString().contains(JAVA.STRING_CONCATENATION)) {
+									List<String> operands = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(infixExpression.getString()));
+									for(String operand : operands) {
+										List<LeafExpression> leafExpressions2 = initializer.findExpression(operand);
+										List<LeafExpression> leafExpressions1 = fragment1.findExpression(operand);
+										if(leafExpressions1.size() == leafExpressions2.size()) {
+											for(int i=0; i<leafExpressions1.size(); i++) {
+												LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), operation1, operation2);
+												ref.addSubExpressionMapping(leafMapping);
+											}
+										}
+									}
+								}
+							}
+						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						if(identical()) {

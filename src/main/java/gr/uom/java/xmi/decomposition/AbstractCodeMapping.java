@@ -550,6 +550,32 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 								}
 							}
 						}
+						else if(stringConcatMatch(initializer, before)) {
+							if(initializer.getString().contains(JAVA.STRING_CONCATENATION) && !before.contains(JAVA.STRING_CONCATENATION)) {
+								List<String> operands = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(initializer.getString()));
+								List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
+								StringBuilder concatenated = new StringBuilder();
+								for(String operand : operands) {
+									List<LeafExpression> leafExpressions2 = initializer.findExpression(operand);
+									List<LeafExpression> leafExpressions1 = fragment1.findExpression(before);
+									if(leafExpressions1.size() == leafExpressions2.size() && leafExpressions1.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), operation1, operation2);
+										leafMappings.add(leafMapping);
+									}
+									if(operand.startsWith("\"") && operand.endsWith("\"")) {
+										concatenated.append(operand.substring(1, operand.length()-1));
+									}
+									else {
+										concatenated.append(operand);
+									}
+								}
+								if(before.contains(concatenated)) {
+									for(LeafMapping leafMapping : leafMappings) {
+										ref.addSubExpressionMapping(leafMapping);
+									}
+								}
+							}
+						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
 						if(identical()) {

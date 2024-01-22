@@ -32,10 +32,17 @@ public class RefactoringOraclePerfectDiffTest {
         File mappingsDirFile = new File(getFinalFolderPath(dir, info.getRepo(), info.getCommit()));
         String[] files = mappingsDirFile.list();
         List<String> expectedFilesList = new ArrayList<>(List.of(Objects.requireNonNull(files)));
-        Set<ASTDiff> astDiffs = getProjectDiffLocally(info.makeURL());
+        boolean partial = info.getSrc_files() != null && !info.getSrc_files().isEmpty();
 
+
+        Set<ASTDiff> astDiffs = getProjectDiffLocally(info.makeURL());
+        boolean hit = false;
         for (ASTDiff astDiff : astDiffs) {
             String finalFilePath = getFinalFilePath(astDiff, dir, info.getRepo(), info.getCommit());
+            if (partial)
+                if (!info.getSrc_files().contains(astDiff.getSrcPath()))
+                    continue;
+            hit = true;
             String calculated = MappingExportModel.exportString(astDiff.getAllMappings()).replaceAll("\\r\\n", "\n").replaceAll("\\r", "\n");
             String msg = String.format("Failed for %s/commit/%s , srcFileName: %s",info.getRepo().replace(".git",""),info.getCommit(),astDiff.getSrcPath());
             String expected = null;
@@ -50,7 +57,9 @@ public class RefactoringOraclePerfectDiffTest {
         }
         for (String expectedButNotGeneratedFile : expectedFilesList) {
             String expectedDiffName = getSrcASTDiffFromFile(expectedButNotGeneratedFile);
-            fail(expectedDiffName);
+            fail(expectedDiffName + " not generated for " + expectedDiffName);
         }
+        if (!hit)
+            fail("No diff checked for " + info.getRepo() + "/commit/" + info.getCommit());
     }
 }

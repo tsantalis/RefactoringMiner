@@ -20,6 +20,8 @@ import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class InlineOperationDetection {
 	private UMLOperationBodyMapper mapper;
@@ -274,6 +276,27 @@ public class InlineOperationDetection {
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
+		if(nonMappedElementsT1 == 1) {
+			for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+				List<VariableDeclaration> variableDeclarations = fragment1.getVariableDeclarations();
+				if(variableDeclarations.size() > 0) {
+					for(VariableDeclaration variableDeclaration : variableDeclarations) {
+						for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+							boolean matchingReplacementFound = false;
+							for(Replacement r : mapping.getReplacements()) {
+								if(r.getBefore().equals(variableDeclaration.getVariableName())) {
+									matchingReplacementFound = true;
+								}
+							}
+							if(matchingReplacementFound) {
+								nonMappedElementsT1--;
+								break;
+							}
+						}
+		 			}
+				}
+			}
+		}
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatches = exactMatchList.size();

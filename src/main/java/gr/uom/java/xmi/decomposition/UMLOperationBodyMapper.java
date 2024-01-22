@@ -1805,6 +1805,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				int refactoringCount = mapping.getRefactorings().size();
+				mapping.inlinedVariableAssignment(statement, nonMappedLeavesT1, classDiff, parentMapper != null);
+				if(refactoringCount < mapping.getRefactorings().size()) {
+					for(Refactoring newRefactoring : mapping.getRefactorings()) {
+						if(!this.refactorings.contains(newRefactoring)) {
+							this.refactorings.add(newRefactoring);
+						}
+						else {
+							for(Refactoring refactoring : this.refactorings) {
+								if(refactoring.equals(newRefactoring) && refactoring instanceof ExtractVariableRefactoring) {
+									ExtractVariableRefactoring newExtractVariableRefactoring = (ExtractVariableRefactoring)newRefactoring;
+									Set<AbstractCodeMapping> newReferences = newExtractVariableRefactoring.getReferences();
+									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newExtractVariableRefactoring.getUnmatchedStatementReferences();
+									ExtractVariableRefactoring oldExtractVariableRefactoring = (ExtractVariableRefactoring)refactoring;
+									oldExtractVariableRefactoring.addReferences(newReferences);
+									oldExtractVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
+									for(LeafMapping newLeafMapping : newExtractVariableRefactoring.getSubExpressionMappings()) {
+										oldExtractVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+									}
+									break;
+								}
+								if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
+									InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+									Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+									Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
+									InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
+									oldInlineVariableRefactoring.addReferences(newReferences);
+									oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
+									for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+										oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public UMLAbstractClassDiff getClassDiff() {

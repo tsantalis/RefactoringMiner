@@ -22,5 +22,11 @@
 }, {
   "repo" : "https://github.com/apache/commons-lang.git",
   "commit" : "7f7d4b881d78dcb8d5a0149965f934df268919d7"
+}, {
+  "repo" : "https://github.com/neo4j/neo4j.git",
+  "commit" : "03ece4f24163204d8a3948eb53576f1feaa86a61",
+  "src_files" : [
+    "community/kernel/src/main/java/org/neo4j/kernel/StoreLocker.java"
+  ]
 } ]
 

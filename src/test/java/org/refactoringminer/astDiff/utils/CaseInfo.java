@@ -4,17 +4,42 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
 
+import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(using = CaseInfoSerializer.class)
 public class CaseInfo implements Serializable {
     String repo;
     String commit;
 
+    //Only consider these files for the diff, if empty, consider all files
+    List<String> src_files;
+
     public CaseInfo(String repo, String commit) {
         this.repo = repo;
         this.commit = commit;
+    }
+
+    public CaseInfo(String repo, String commit, List<String> src_files) {
+        this.repo = repo;
+        this.commit = commit;
+        this.src_files = src_files;
+    }
+
+    public void setSrc_files(List<String> src_files) {
+        this.src_files = src_files;
+    }
+
+    public List<String> getSrc_files() {
+        return src_files;
     }
 
     @Override
@@ -64,7 +89,17 @@ public class CaseInfo implements Serializable {
             String name = context.getParameter().getName();
             Class<?> type = context.getParameter().getType();
             if (type == CaseInfo.class) {
-                return new CaseInfo(json.getString("repo"),json.getString("commit"));
+                List<String> src_files = new ArrayList<>();
+                JsonArray jsonArray = json.getJsonArray("src_files");
+                if (jsonArray == null) src_files = null;
+                else
+                    for (JsonValue jsonValue : jsonArray)
+                        if (jsonValue.getValueType() == JsonValue.ValueType.STRING) {
+                            src_files.add(((JsonString) jsonValue).getString());
+                        }
+                return new CaseInfo(json.getString("repo"),
+                        json.getString("commit"),
+                        src_files);
             } else if (type == String.class) {
                 return json.getString(name);
             } else if (type == int.class) {

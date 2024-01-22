@@ -211,6 +211,14 @@ public class ProjectASTDiffer
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
 				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
 				if (srcExp == null || dstExp == null) continue;
+				if (srcExp.isLeaf() && dstExp.isLeaf())
+				{
+					if (srcExp.getType().name.equals(Constants.STRING_LITERAL) &&
+						dstExp.getType().name.equals(Constants.STRING_LITERAL)) {
+						input.getAllMappings().addMapping(srcExp, dstExp);
+						continue;
+					}
+				}
 				if (needToOverride(input, srcExp, dstExp))
 					new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
 				else

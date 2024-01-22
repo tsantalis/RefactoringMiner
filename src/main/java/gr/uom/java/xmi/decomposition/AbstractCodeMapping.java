@@ -754,6 +754,50 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 							ref.addSubExpressionMapping(leafMapping);
 						}
+						if(infixOperandMatch(initializer, after)) {
+							List<LeafExpression> infixExpressions = initializer.getInfixExpressions();
+							for(LeafExpression infixExpression : infixExpressions) {
+								if(infixExpression.getString().contains(JAVA.STRING_CONCATENATION)) {
+									List<String> operands = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(infixExpression.getString()));
+									for(String operand : operands) {
+										List<LeafExpression> leafExpressions1 = initializer.findExpression(operand);
+										List<LeafExpression> leafExpressions2 = fragment2.findExpression(operand);
+										if(leafExpressions1.size() == leafExpressions2.size()) {
+											for(int i=0; i<leafExpressions1.size(); i++) {
+												LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), operation1, operation2);
+												ref.addSubExpressionMapping(leafMapping);
+											}
+										}
+									}
+								}
+							}
+						}
+						else if(stringConcatMatch(initializer, after)) {
+							if(initializer.getString().contains(JAVA.STRING_CONCATENATION) && !after.contains(JAVA.STRING_CONCATENATION)) {
+								List<String> operands = Arrays.asList(StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(initializer.getString()));
+								List<LeafMapping> leafMappings = new ArrayList<LeafMapping>();
+								StringBuilder concatenated = new StringBuilder();
+								for(String operand : operands) {
+									List<LeafExpression> leafExpressions1 = initializer.findExpression(operand);
+									List<LeafExpression> leafExpressions2 = fragment2.findExpression(after);
+									if(leafExpressions1.size() == leafExpressions2.size() && leafExpressions1.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), operation1, operation2);
+										leafMappings.add(leafMapping);
+									}
+									if(operand.startsWith("\"") && operand.endsWith("\"")) {
+										concatenated.append(operand.substring(1, operand.length()-1));
+									}
+									else {
+										concatenated.append(operand);
+									}
+								}
+								if(after.contains(concatenated)) {
+									for(LeafMapping leafMapping : leafMappings) {
+										ref.addSubExpressionMapping(leafMapping);
+									}
+								}
+							}
+						}
 						processInlineVariableRefactoring(ref, refactorings);
 						if(identical()) {
 							identicalWithInlinedVariable = true;

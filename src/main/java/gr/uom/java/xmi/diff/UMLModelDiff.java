@@ -89,6 +89,8 @@ public class UMLModelDiff {
 	private Set<String> deletedFolderPaths;
 	private Set<Pair<VariableDeclarationContainer, VariableDeclarationContainer>> processedOperationPairs = new HashSet<Pair<VariableDeclarationContainer, VariableDeclarationContainer>>();
 	private Set<Pair<UMLClass, UMLClass>> processedClassPairs = new HashSet<Pair<UMLClass, UMLClass>>();
+	private Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
+	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -1866,6 +1868,27 @@ public class UMLModelDiff {
 					}
 					this.refactorings.add(ref);
 					refactorings.addAll(mapper.getRefactorings());
+					for(CandidateAttributeRefactoring candidate : mapper.getCandidateAttributeRenames()) {
+						String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+						String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+						if(before.contains(".") && after.contains(".")) {
+							String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
+							String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
+							if(prefix1.equals(prefix2)) {
+								before = before.substring(prefix1.length(), before.length());
+								after = after.substring(prefix2.length(), after.length());
+							}
+						}
+						Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+						if(renameMap.containsKey(renamePattern)) {
+							renameMap.get(renamePattern).add(candidate);
+						}
+						else {
+							Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+							set.add(candidate);
+							renameMap.put(renamePattern, set);
+						}
+					}
 				}
 			}
 		}
@@ -2336,8 +2359,6 @@ public class UMLModelDiff {
 	public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
 		refactorings.addAll(getMoveRenameClassRefactorings());
 		refactorings.addAll(identifyConvertAnonymousClassToTypeRefactorings());
-		Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
-		Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
 			refactorings.addAll(classDiffRefactorings);

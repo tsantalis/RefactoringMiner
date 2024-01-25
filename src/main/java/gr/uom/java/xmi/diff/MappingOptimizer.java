@@ -362,7 +362,8 @@ public class MappingOptimizer {
 								skip = true;
 							}
 							if(mappings.get(i).getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
-									mappings.get(i).getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+									mappings.get(i).getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+									mappings.get(indexOfTrueParentIsContainerBody).getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 								String condition = mappings.get(i).getFragment2().getString().substring(3, mappings.get(i).getFragment2().getString().length()-1);
 								String conditionOfTrueParentIsContainerBody = mappings.get(indexOfTrueParentIsContainerBody).getFragment2().getString().substring(3, mappings.get(indexOfTrueParentIsContainerBody).getFragment2().getString().length()-1);
 								if(mappings.get(i).getFragment1().getString().contains(condition) && mappings.get(indexOfTrueParentIsContainerBody).getFragment1().getString().contains(conditionOfTrueParentIsContainerBody)) {

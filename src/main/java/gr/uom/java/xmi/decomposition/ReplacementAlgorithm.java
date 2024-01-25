@@ -1056,9 +1056,19 @@ public class ReplacementAlgorithm {
 		replacementsToBeAdded = new LinkedHashSet<Replacement>();
 		for(Replacement replacement : replacementInfo.getReplacements()) {
 			s1 = ReplacementUtil.performReplacement(s1, s2, replacement.getBefore(), replacement.getAfter());
-			//find variable replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
-			Map<Replacement, Boolean> nestedReplacementMap = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, methodInvocations2, methodInvocationMap2, Direction.VARIABLE_TO_INVOCATION);
-			nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, variables2, methodInvocationMap1, Direction.INVOCATION_TO_VARIABLE));
+			//find method invocation replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
+			Map<Replacement, Boolean> nestedReplacementMap = replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, methodInvocations2, methodInvocationMap1, methodInvocationMap2);
+			if(!nestedReplacementMap.isEmpty()) {
+				if(!nestedReplacementMap.values().contains(false)) {
+					replacementsToBeRemoved.add(replacement);
+				}
+				replacementsToBeAdded.addAll(nestedReplacementMap.keySet());
+			}
+			//find variable-to-method-invocation replacements within method invocation replacements, the boolean value indicates if the remaining part of the original replacement is identical or not
+			if(nestedReplacementMap.isEmpty()) {
+				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), variables1, methodInvocations2, methodInvocationMap2, Direction.VARIABLE_TO_INVOCATION));
+				nestedReplacementMap.putAll(replacementsWithinMethodInvocations(replacement.getBefore(), replacement.getAfter(), methodInvocations1, variables2, methodInvocationMap1, Direction.INVOCATION_TO_VARIABLE));
+			}
 			if(!nestedReplacementMap.isEmpty()) {
 				if(!nestedReplacementMap.values().contains(false)) {
 					replacementsToBeRemoved.add(replacement);
@@ -3722,6 +3732,68 @@ public class ReplacementAlgorithm {
 		else {
 			return Collections.emptySet();
 		}
+	}
+
+	private static Map<Replacement, Boolean> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<AbstractCall>> methodInvocationMap1, Map<String, List<AbstractCall>> methodInvocationMap2) {
+		Map<Replacement, Boolean> replacements = new LinkedHashMap<Replacement, Boolean>();
+		for(String element1 : set1) {
+			if(s1.contains(element1) && !s1.equals(element1) && !s1.equals(JAVA.THIS_DOT + element1) && !s1.equals("_" + element1)) {
+				int startIndex1 = s1.indexOf(element1);
+				String substringBeforeIndex1 = s1.substring(0, startIndex1);
+				String substringAfterIndex1 = s1.substring(startIndex1 + element1.length(), s1.length());
+				for(String element2 : set2) {
+					if(element2.endsWith(substringAfterIndex1) && substringAfterIndex1.length() > 1) {
+						element2 = element2.substring(0, element2.indexOf(substringAfterIndex1));
+					}
+					if(s2.contains(element2) && !s2.equals(element2) && !element1.equals(element2)) {
+						int startIndex2 = s2.indexOf(element2);
+						String substringBeforeIndex2 = s2.substring(0, startIndex2);
+						String substringAfterIndex2 = s2.substring(startIndex2 + element2.length(), s2.length());
+						List<? extends AbstractCall> methodInvocationList1 = methodInvocationMap1.get(element1);
+						List<? extends AbstractCall> methodInvocationList2 = methodInvocationMap2.get(element2);
+						if(substringBeforeIndex1.equals(substringBeforeIndex2) && !substringAfterIndex1.isEmpty() && !substringAfterIndex2.isEmpty() && methodInvocationList1 != null && methodInvocationList2 != null) {
+							boolean skip = false;
+							if(substringAfterIndex1.length() > substringAfterIndex2.length()) {
+								skip = s2.contains(substringAfterIndex1);
+								if(substringAfterIndex1.startsWith(".") && !substringAfterIndex1.startsWith(".<")) {
+									skip = s2.contains(substringAfterIndex1.substring(1));
+								}
+								else if(substringAfterIndex1.startsWith(".<") && substringAfterIndex1.contains(">")) {
+									skip = s2.contains(substringAfterIndex1.substring(substringAfterIndex1.indexOf(">")+1));
+								}
+							}
+							else if(substringAfterIndex1.length() < substringAfterIndex2.length()) {
+								skip = s1.contains(substringAfterIndex2);
+								if(substringAfterIndex2.startsWith(".") && !substringAfterIndex2.startsWith(".<")) {
+									skip = s1.contains(substringAfterIndex2.substring(1));
+								}
+								else if(substringAfterIndex2.startsWith(".<") && substringAfterIndex2.contains(">")) {
+									skip = s1.contains(substringAfterIndex2.substring(substringAfterIndex2.indexOf(">")+1));
+								}
+							}
+							if(!skip) {
+								Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
+								replacements.put(r, substringAfterIndex1.equals(substringAfterIndex2));
+							}
+						}
+						else if(substringAfterIndex1.equals(substringAfterIndex2) && !substringBeforeIndex1.isEmpty() && !substringBeforeIndex2.isEmpty() && methodInvocationList1 != null && methodInvocationList2 != null) {
+							boolean skip = false;
+							if(substringBeforeIndex1.length() > substringBeforeIndex2.length()) {
+								skip = s2.contains(substringBeforeIndex1);
+							}
+							else if(substringBeforeIndex1.length() < substringBeforeIndex2.length()) {
+								skip = s1.contains(substringBeforeIndex2);
+							}
+							if(!skip) {
+								Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
+								replacements.put(r, substringBeforeIndex1.equals(substringBeforeIndex2));
+							}
+						}
+					}
+				}
+			}
+		}
+		return replacements;
 	}
 
 	private static Map<Replacement, Boolean> replacementsWithinMethodInvocations(String s1, String s2, Set<String> set1, Set<String> set2, Map<String, List<AbstractCall>> methodInvocationMap, Direction direction) {

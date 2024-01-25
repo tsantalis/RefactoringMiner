@@ -1509,7 +1509,9 @@ public class StringBasedHeuristics {
 				List<VariableDeclaration> variableDeclarations1 = statement1.getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = statement2.getVariableDeclarations();
 				if((variableDeclarations1.size() > 0 && variableDeclarations2.size() > 0 &&
-						variableDeclarations1.toString().equals(variableDeclarations2.toString())) ||
+						variableDeclarations1.toString().equals(variableDeclarations2.toString()) &&
+						declarationWithArrayInitializer(variableDeclarations1) == null &&
+						declarationWithArrayInitializer(variableDeclarations2) == null) ||
 						(variables1.size() > 0 && variables2.size() > 0 &&
 						statement1.getString().startsWith(variables1.get(0).getString() + JAVA.ASSIGNMENT) &&
 						statement2.getString().startsWith(variables2.get(0).getString() + JAVA.ASSIGNMENT) &&

@@ -1029,95 +1029,97 @@ public abstract class UMLAbstractClassDiff {
 						}
 					}
 				}
-				for(Refactoring refactoring : refactorings) {
-					if(refactoring instanceof MergeVariableRefactoring) {
-						MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
-						Set<String> nonMatchingVariableNames = new LinkedHashSet<String>();
-						String matchingVariableName = null;
-						for(VariableDeclaration variableDeclaration : merge.getMergedVariables()) {
-							if(originalAttributeName.equals(variableDeclaration.getVariableName())) {
-								matchingVariableName = variableDeclaration.getVariableName();
+				if(candidateMapper != null) {
+					for(Refactoring refactoring : refactorings) {
+						if(refactoring instanceof MergeVariableRefactoring) {
+							MergeVariableRefactoring merge = (MergeVariableRefactoring)refactoring;
+							Set<String> nonMatchingVariableNames = new LinkedHashSet<String>();
+							String matchingVariableName = null;
+							for(VariableDeclaration variableDeclaration : merge.getMergedVariables()) {
+								if(originalAttributeName.equals(variableDeclaration.getVariableName())) {
+									matchingVariableName = variableDeclaration.getVariableName();
+								}
+								else {
+									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+												statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
+											break;
+										}
+									}
+								}
 							}
-							else {
-								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT1()) {
-									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-											statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
-										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
-										break;
+							if(matchingVariableName != null && renamedAttributeName.equals(merge.getNewVariable().getVariableName()) && nonMatchingVariableNames.size() > 0) {
+								Set<UMLAttribute> mergedAttributes = new LinkedHashSet<UMLAttribute>();
+								Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
+								Set<String> allMatchingVariables = new LinkedHashSet<String>();
+								if(merge.getMergedVariables().iterator().next().getVariableName().equals(matchingVariableName)) {
+									allMatchingVariables.add(matchingVariableName);
+									allMatchingVariables.addAll(nonMatchingVariableNames);
+								}
+								else {
+									allMatchingVariables.addAll(nonMatchingVariableNames);
+									allMatchingVariables.add(matchingVariableName);
+								}
+								for(String mergedVariable : allMatchingVariables) {
+									UMLAttribute a1 = findAttributeInOriginalClass(mergedVariable);
+									if(a1 != null) {
+										mergedAttributes.add(a1);
+										mergedVariables.add(a1.getVariableDeclaration());
+									}
+								}
+								UMLAttribute a2 = findAttributeInNextClass(renamedAttributeName);
+								if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
+									MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, getOriginalClassName(), getNextClassName(), new LinkedHashSet<CandidateMergeVariableRefactoring>());
+									if(!refactorings.contains(ref)) {
+										newRefactorings.add(ref);
 									}
 								}
 							}
 						}
-						if(matchingVariableName != null && renamedAttributeName.equals(merge.getNewVariable().getVariableName()) && nonMatchingVariableNames.size() > 0) {
-							Set<UMLAttribute> mergedAttributes = new LinkedHashSet<UMLAttribute>();
-							Set<VariableDeclaration> mergedVariables = new LinkedHashSet<VariableDeclaration>();
-							Set<String> allMatchingVariables = new LinkedHashSet<String>();
-							if(merge.getMergedVariables().iterator().next().getVariableName().equals(matchingVariableName)) {
-								allMatchingVariables.add(matchingVariableName);
-								allMatchingVariables.addAll(nonMatchingVariableNames);
-							}
-							else {
-								allMatchingVariables.addAll(nonMatchingVariableNames);
-								allMatchingVariables.add(matchingVariableName);
-							}
-							for(String mergedVariable : allMatchingVariables) {
-								UMLAttribute a1 = findAttributeInOriginalClass(mergedVariable);
-								if(a1 != null) {
-									mergedAttributes.add(a1);
-									mergedVariables.add(a1.getVariableDeclaration());
+						else if(refactoring instanceof SplitVariableRefactoring) {
+							SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
+							Set<String> nonMatchingVariableNames = new LinkedHashSet<String>();
+							String matchingVariableName = null;
+							for(VariableDeclaration variableDeclaration : split.getSplitVariables()) {
+								if(renamedAttributeName.equals(variableDeclaration.getVariableName())) {
+									matchingVariableName = variableDeclaration.getVariableName();
 								}
-							}
-							UMLAttribute a2 = findAttributeInNextClass(renamedAttributeName);
-							if(mergedVariables.size() > 1 && mergedVariables.size() == merge.getMergedVariables().size() && a2 != null) {
-								MergeAttributeRefactoring ref = new MergeAttributeRefactoring(mergedAttributes, a2, getOriginalClassName(), getNextClassName(), new LinkedHashSet<CandidateMergeVariableRefactoring>());
-								if(!refactorings.contains(ref)) {
-									newRefactorings.add(ref);
-								}
-							}
-						}
-					}
-					else if(refactoring instanceof SplitVariableRefactoring) {
-						SplitVariableRefactoring split = (SplitVariableRefactoring)refactoring;
-						Set<String> nonMatchingVariableNames = new LinkedHashSet<String>();
-						String matchingVariableName = null;
-						for(VariableDeclaration variableDeclaration : split.getSplitVariables()) {
-							if(renamedAttributeName.equals(variableDeclaration.getVariableName())) {
-								matchingVariableName = variableDeclaration.getVariableName();
-							}
-							else {
-								for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
-									if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
-											statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
-										nonMatchingVariableNames.add(variableDeclaration.getVariableName());
-										break;
+								else {
+									for(AbstractCodeFragment statement : candidateMapper.getNonMappedLeavesT2()) {
+										if(statement.getString().startsWith(variableDeclaration.getVariableName() + JAVA.ASSIGNMENT) ||
+												statement.getString().startsWith(JAVA.THIS_DOT + variableDeclaration.getVariableName() + JAVA.ASSIGNMENT)) {
+											nonMatchingVariableNames.add(variableDeclaration.getVariableName());
+											break;
+										}
 									}
 								}
 							}
-						}
-						if(matchingVariableName != null && originalAttributeName.equals(split.getOldVariable().getVariableName()) && nonMatchingVariableNames.size() > 0) {
-							Set<UMLAttribute> splitAttributes = new LinkedHashSet<UMLAttribute>();
-							Set<VariableDeclaration> splitVariables = new LinkedHashSet<VariableDeclaration>();
-							Set<String> allMatchingVariables = new LinkedHashSet<String>();
-							if(split.getSplitVariables().iterator().next().getVariableName().equals(matchingVariableName)) {
-								allMatchingVariables.add(matchingVariableName);
-								allMatchingVariables.addAll(nonMatchingVariableNames);
-							}
-							else {
-								allMatchingVariables.addAll(nonMatchingVariableNames);
-								allMatchingVariables.add(matchingVariableName);
-							}
-							for(String splitVariable : allMatchingVariables) {
-								UMLAttribute a2 = findAttributeInNextClass(splitVariable);
-								if(a2 != null) {
-									splitAttributes.add(a2);
-									splitVariables.add(a2.getVariableDeclaration());
+							if(matchingVariableName != null && originalAttributeName.equals(split.getOldVariable().getVariableName()) && nonMatchingVariableNames.size() > 0) {
+								Set<UMLAttribute> splitAttributes = new LinkedHashSet<UMLAttribute>();
+								Set<VariableDeclaration> splitVariables = new LinkedHashSet<VariableDeclaration>();
+								Set<String> allMatchingVariables = new LinkedHashSet<String>();
+								if(split.getSplitVariables().iterator().next().getVariableName().equals(matchingVariableName)) {
+									allMatchingVariables.add(matchingVariableName);
+									allMatchingVariables.addAll(nonMatchingVariableNames);
 								}
-							}
-							UMLAttribute a1 = findAttributeInOriginalClass(originalAttributeName);
-							if(splitVariables.size() > 1 && splitVariables.size() == split.getSplitVariables().size() && a1 != null && findAttributeInNextClass(originalAttributeName) == null) {
-								SplitAttributeRefactoring ref = new SplitAttributeRefactoring(a1, splitAttributes, getOriginalClassName(), getNextClassName(), new LinkedHashSet<CandidateSplitVariableRefactoring>());
-								if(!refactorings.contains(ref)) {
-									newRefactorings.add(ref);
+								else {
+									allMatchingVariables.addAll(nonMatchingVariableNames);
+									allMatchingVariables.add(matchingVariableName);
+								}
+								for(String splitVariable : allMatchingVariables) {
+									UMLAttribute a2 = findAttributeInNextClass(splitVariable);
+									if(a2 != null) {
+										splitAttributes.add(a2);
+										splitVariables.add(a2.getVariableDeclaration());
+									}
+								}
+								UMLAttribute a1 = findAttributeInOriginalClass(originalAttributeName);
+								if(splitVariables.size() > 1 && splitVariables.size() == split.getSplitVariables().size() && a1 != null && findAttributeInNextClass(originalAttributeName) == null) {
+									SplitAttributeRefactoring ref = new SplitAttributeRefactoring(a1, splitAttributes, getOriginalClassName(), getNextClassName(), new LinkedHashSet<CandidateSplitVariableRefactoring>());
+									if(!refactorings.contains(ref)) {
+										newRefactorings.add(ref);
+									}
 								}
 							}
 						}

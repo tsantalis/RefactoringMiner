@@ -879,7 +879,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size() && fragment2.getTernaryOperatorExpressions().size() > 0) {
 			TernaryOperatorExpression ternary = fragment2.getTernaryOperatorExpressions().get(0);
 			AbstractExpression thenExpression = ternary.getThenExpression();
-			AbstractExpression elseExpression = ternary.getElseExpression();
+			AbstractCodeFragment elseExpression = ternary.getElseExpression();
 			String temp = new String(fragment1.getString());
 			if(replacements.size() > 0) {
 				Replacement r = replacements.iterator().next();
@@ -1209,7 +1209,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(variable, operation1, operation2, insideExtractedOrInlinedMethod);
 							List<LeafExpression> subExpressions = getFragment1().findExpression(s1);
 							for(LeafExpression subExpression : subExpressions) {
-								AbstractExpression initializerSubExpression =
+								AbstractCodeFragment initializerSubExpression =
 										ternaryOperator.getThenExpression().toString().equals(s1) ?
 										ternaryOperator.getThenExpression() : ternaryOperator.getElseExpression();
 								LeafMapping leafMapping = new LeafMapping(subExpression, initializerSubExpression, operation1, operation2);

@@ -14,13 +14,18 @@ public class TernaryOperatorExpression extends LeafExpression {
 
 	private AbstractExpression condition;
 	private AbstractExpression thenExpression;
-	private AbstractExpression elseExpression;
+	private AbstractCodeFragment elseExpression;
 
 	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression, VariableDeclarationContainer container) {
 		super(cu, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);
 		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
 		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
-		this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
+		if(expression.getElseExpression() instanceof ConditionalExpression) {
+			this.elseExpression = new TernaryOperatorExpression(cu, filePath, (ConditionalExpression)expression.getElseExpression(), container);
+		}
+		else {
+			this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
+		}
 	}
 
 	public LeafExpression asLeafExpression() {
@@ -35,7 +40,7 @@ public class TernaryOperatorExpression extends LeafExpression {
 		return thenExpression;
 	}
 
-	public AbstractExpression getElseExpression() {
+	public AbstractCodeFragment getElseExpression() {
 		return elseExpression;
 	}
 

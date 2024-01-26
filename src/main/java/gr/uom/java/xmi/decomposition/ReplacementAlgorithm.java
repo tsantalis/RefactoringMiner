@@ -820,7 +820,7 @@ public class ReplacementAlgorithm {
 				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
 				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
 				if((thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString())) ||
-						(elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString()))) {
+						(elseVariables.size() > 0 && ternary.getElseExpression().getString().equals(elseVariables.get(0).getString()))) {
 					ternaryExpressions2.add(ternary.getExpression());
 					tmpVariables1.addAll(convertToStringSet(ternary.getCondition().getVariables()));
 					tmpVariables1.addAll(convertToStringSet(ternary.getThenExpression().getVariables()));
@@ -857,7 +857,7 @@ public class ReplacementAlgorithm {
 				List<LeafExpression> thenVariables = ternary.getThenExpression().getVariables();
 				List<LeafExpression> elseVariables = ternary.getElseExpression().getVariables();
 				if((thenVariables.size() > 0 && ternary.getThenExpression().getExpression().equals(thenVariables.get(0).getString())) ||
-						(elseVariables.size() > 0 && ternary.getElseExpression().getExpression().equals(elseVariables.get(0).getString()))) {
+						(elseVariables.size() > 0 && ternary.getElseExpression().getString().equals(elseVariables.get(0).getString()))) {
 					ternaryExpressions1.add(ternary.getExpression());
 					tmpVariables2.addAll(convertToStringSet(ternary.getCondition().getVariables()));
 					tmpVariables2.addAll(convertToStringSet(thenVariables));

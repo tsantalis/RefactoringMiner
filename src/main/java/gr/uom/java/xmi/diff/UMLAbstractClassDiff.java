@@ -748,14 +748,41 @@ public abstract class UMLAbstractClassDiff {
 								}
 							}
 							else {
-								UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
-								if(!attributeDiffList.contains(attributeDiff)) {
-									attributeDiffList.add(attributeDiff);
+								//avoid infinite loop if the attributes are referenced within their own initializers
+								boolean a1ReferencedInItsOwnInitializer = false;
+								if(a1.getVariableDeclaration().getInitializer() != null) {
+									int subsumeCount = 0;
+									for(AbstractCodeMapping reference : candidate.getReferences()) {
+										if(a1.getVariableDeclaration().getInitializer().getLocationInfo().subsumes(reference.getFragment1().getLocationInfo())) {
+											subsumeCount++;
+										}
+									}
+									if(subsumeCount == candidate.getReferences().size()) {
+										a1ReferencedInItsOwnInitializer = true;
+									}
 								}
-								Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
-								if(!refactorings.containsAll(attributeDiffRefactorings)) {
-									refactorings.addAll(attributeDiffRefactorings);
-									break;//it's not necessary to repeat the same process for all candidates in the set
+								boolean a2ReferencedInItsOwnInitializer = false;
+								if(a2.getVariableDeclaration().getInitializer() != null) {
+									int subsumeCount = 0;
+									for(AbstractCodeMapping reference : candidate.getReferences()) {
+										if(a2.getVariableDeclaration().getInitializer().getLocationInfo().subsumes(reference.getFragment2().getLocationInfo())) {
+											subsumeCount++;
+										}
+									}
+									if(subsumeCount == candidate.getReferences().size()) {
+										a2ReferencedInItsOwnInitializer = true;
+									}
+								}
+								if(!a1ReferencedInItsOwnInitializer && !a2ReferencedInItsOwnInitializer) {
+									UMLAttributeDiff attributeDiff = new UMLAttributeDiff(a1, a2, this, modelDiff);
+									if(!attributeDiffList.contains(attributeDiff)) {
+										attributeDiffList.add(attributeDiff);
+									}
+									Set<Refactoring> attributeDiffRefactorings = attributeDiff.getRefactorings(set);
+									if(!refactorings.containsAll(attributeDiffRefactorings)) {
+										refactorings.addAll(attributeDiffRefactorings);
+										break;//it's not necessary to repeat the same process for all candidates in the set
+									}
 								}
 							}
 						}

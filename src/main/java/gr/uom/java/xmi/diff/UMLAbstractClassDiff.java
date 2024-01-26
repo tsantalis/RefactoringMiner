@@ -750,7 +750,7 @@ public abstract class UMLAbstractClassDiff {
 							else {
 								//avoid infinite loop if the attributes are referenced within their own initializers
 								boolean a1ReferencedInItsOwnInitializer = false;
-								if(a1.getVariableDeclaration().getInitializer() != null) {
+								if(a1.getVariableDeclaration().getInitializer() != null && a1.getVariableDeclaration().getInitializer().getAnonymousClassDeclarations().size() > 0) {
 									int subsumeCount = 0;
 									for(AbstractCodeMapping reference : candidate.getReferences()) {
 										if(a1.getVariableDeclaration().getInitializer().getLocationInfo().subsumes(reference.getFragment1().getLocationInfo())) {
@@ -762,7 +762,7 @@ public abstract class UMLAbstractClassDiff {
 									}
 								}
 								boolean a2ReferencedInItsOwnInitializer = false;
-								if(a2.getVariableDeclaration().getInitializer() != null) {
+								if(a2.getVariableDeclaration().getInitializer() != null && a2.getVariableDeclaration().getInitializer().getAnonymousClassDeclarations().size() > 0) {
 									int subsumeCount = 0;
 									for(AbstractCodeMapping reference : candidate.getReferences()) {
 										if(a2.getVariableDeclaration().getInitializer().getLocationInfo().subsumes(reference.getFragment2().getLocationInfo())) {

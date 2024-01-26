@@ -2336,6 +2336,15 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			for(AbstractCall creation : statement.getCreations()) {
+				if(creation instanceof ObjectCreation) {
+					ObjectCreation objectCreation = (ObjectCreation)creation;
+					if(objectCreation.getAnonymousClassDeclaration() != null &&
+							objectCreation.getAnonymousClassDeclaration().equals(anonymousClassDeclaration.toString())) {
+						return objectCreation.actualString();
+					}
+				}
+			}
 			//check if it is a second anonymous in the argument list
 			if(statement.getAnonymousClassDeclarations().indexOf(anonymousClassDeclaration) > 0) {
 				String[] anonymousLines = anonymousClassDeclaration.toString().split("\\R");

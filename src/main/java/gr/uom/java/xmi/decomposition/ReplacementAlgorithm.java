@@ -3884,7 +3884,7 @@ public class ReplacementAlgorithm {
 
 	private static boolean variablesStartWithSameCase(String s1, String s2, ReplacementInfo replacementInfo) {
 		if(s1.length() > 0 && s2.length() > 0) {
-			if((s1.contains(".") || s2.contains(".")) && (replacementInfo.getArgumentizedString1().equals(JAVA.RETURN_SPACE + s1 + JAVA.STATEMENT_TERMINATION) ||
+			if((s1.contains(".") || s2.contains(".")) && !s1.contains("."+s2) && !s2.contains("."+s1) && (replacementInfo.getArgumentizedString1().equals(JAVA.RETURN_SPACE + s1 + JAVA.STATEMENT_TERMINATION) ||
 					replacementInfo.getArgumentizedString2().equals(JAVA.RETURN_SPACE + s2 + JAVA.STATEMENT_TERMINATION))) {
 				return false;
 			}

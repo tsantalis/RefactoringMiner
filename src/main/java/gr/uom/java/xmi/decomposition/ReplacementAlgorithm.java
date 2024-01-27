@@ -85,6 +85,18 @@ import gr.uom.java.xmi.diff.UMLOperationDiff;
 public class ReplacementAlgorithm {
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_STRINGS = 100;
 
+	private static String stringEndingWithDotVariable(Set<String> set, String variable) {
+		for(String s : set) {
+			if(s.endsWith("."+variable)) {
+				String prefix = s.substring(0, s.indexOf("."+variable));
+				if(set.contains(prefix)) {
+					return s;
+				}
+			}
+		}
+		return null;
+	}
+
 	protected static Set<Replacement> findReplacementsWithExactMatching(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
@@ -110,6 +122,7 @@ public class ReplacementAlgorithm {
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
 		variableIntersection.retainAll(variables2);
 		// ignore the variables in the intersection that also appear with "this." prefix in the sets of variables
+		// ignore the variables in the intersection that also appear with "OtherVar." prefix in the sets of variables
 		// ignore the variables in the intersection that are static fields
 		// ignore the variables in the intersection that one of them is a variable declaration and the other is not
 		// ignore the variables in the intersection that one of them is part of a method invocation, but the same method invocation does not appear on the other side
@@ -118,6 +131,14 @@ public class ReplacementAlgorithm {
 			if(!variable.startsWith(JAVA.THIS_DOT) && !variableIntersection.contains(JAVA.THIS_DOT+variable) &&
 					(variables1.contains(JAVA.THIS_DOT+variable) || variables2.contains(JAVA.THIS_DOT+variable))) {
 				variablesToBeRemovedFromTheIntersection.add(variable);
+			}
+			String s1 = stringEndingWithDotVariable(variables1, variable);
+			String s2 = stringEndingWithDotVariable(variables2, variable);
+			if(!variable.contains(".") && stringEndingWithDotVariable(variableIntersection, variable) == null && (s1 != null || s2 != null)) {
+				if(s1 != null && !variables2.contains(s1))
+					variablesToBeRemovedFromTheIntersection.add(variable);
+				else if(s2 != null && !variables1.contains(s2))
+					variablesToBeRemovedFromTheIntersection.add(variable);
 			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {

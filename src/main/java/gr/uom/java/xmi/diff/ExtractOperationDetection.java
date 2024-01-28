@@ -205,6 +205,9 @@ public class ExtractOperationDetection {
 			List<ExtractOperationRefactoring> refactorings,
 			List<AbstractCall> addedOperationInvocations, AbstractCall addedOperationInvocation)
 			throws RefactoringMinerTimedOutException {
+		if(addedOperationInvocation.isSuperCall()) {
+			return;
+		}
 		CallTreeNode root = new CallTreeNode(mapper.getContainer1(), addedOperation, addedOperationInvocation);
 		CallTree callTree = null;
 		if(callTreeMap.containsKey(root)) {

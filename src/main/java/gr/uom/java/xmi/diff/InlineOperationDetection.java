@@ -109,6 +109,9 @@ public class InlineOperationDetection {
 	private void processRemovedOperation(UMLOperation removedOperation, List<InlineOperationRefactoring> refactorings,
 			List<AbstractCall> removedOperationInvocations, AbstractCall removedOperationInvocation)
 			throws RefactoringMinerTimedOutException {
+		if(removedOperationInvocation.isSuperCall()) {
+			return;
+		}
 		CallTreeNode root = new CallTreeNode(mapper.getContainer1(), removedOperation, removedOperationInvocation);
 		CallTree callTree = null;
 		if(callTreeMap.containsKey(root)) {

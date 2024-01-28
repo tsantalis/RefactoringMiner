@@ -60,6 +60,16 @@ public abstract class AbstractCall extends LeafExpression {
 		return coverage;
 	}
 
+	public boolean isSuperCall() {
+		if(expression != null && expression.equals("super")) {
+			return true;
+		}
+		if(getName().equals("super")) {
+			return true;
+		}
+		return false;
+	}
+
 	public abstract boolean identicalName(AbstractCall call);
 	public abstract String getName();
 	public abstract double normalizedNameDistance(AbstractCall call);

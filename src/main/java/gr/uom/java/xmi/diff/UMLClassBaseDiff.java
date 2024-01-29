@@ -58,7 +58,7 @@ import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
 
-	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 30;
+	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 20;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	private boolean visibilityChanged;
 	private Visibility oldVisibility;

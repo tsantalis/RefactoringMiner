@@ -1015,6 +1015,8 @@ public class UMLModelDiff {
 
 	public void inferClassRenameBasedOnFilePaths(UMLClassMatcher matcher) throws RefactoringMinerTimedOutException {
 		Set<UMLClassRenameDiff> diffsToBeAdded = new LinkedHashSet<UMLClassRenameDiff>();
+		Set<UMLClass> addedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
+		Set<UMLClass> removedClassesToBeRemoved = new LinkedHashSet<UMLClass>();
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 			UMLClass removedClass = removedClassIterator.next();
 			String removedClassFilePath = removedClass.getSourceFile();
@@ -1029,8 +1031,8 @@ public class UMLModelDiff {
 							UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 							newClassRenameDiff.process();
 							diffsToBeAdded.add(newClassRenameDiff);
-							addedClasses.remove(newClassRenameDiff.getRenamedClass());
-							removedClassIterator.remove();
+							addedClassesToBeRemoved.add(addedClass);
+							removedClassesToBeRemoved.add(removedClass);
 							break;
 						}
 					}
@@ -1038,6 +1040,8 @@ public class UMLModelDiff {
 			}
 		}
 		classRenameDiffList.addAll(diffsToBeAdded);
+		removedClasses.removeAll(removedClassesToBeRemoved);
+		addedClasses.removeAll(addedClassesToBeRemoved);
 	}
 
 	public List<UMLGeneralization> getAddedGeneralizations() {

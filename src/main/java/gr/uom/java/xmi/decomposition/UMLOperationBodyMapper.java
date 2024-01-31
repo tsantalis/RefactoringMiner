@@ -782,7 +782,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean existsMappingSubsumingBoth(AbstractCodeFragment nonMappedLeaf1, AbstractCodeFragment nonMappedLeaf2) {
-		if(nonMappedLeaf1.getParent().getParent() == null || nonMappedLeaf2.getParent().getParent() == null) {
+		if((nonMappedLeaf1.getParent() != null && nonMappedLeaf1.getParent().getParent() == null) || (nonMappedLeaf2.getParent() != null && nonMappedLeaf2.getParent().getParent() == null)) {
 			return true;
 		}
 		for(AbstractCodeMapping mapping : getMappings()) {

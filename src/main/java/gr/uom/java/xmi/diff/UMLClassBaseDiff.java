@@ -1413,13 +1413,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(fragment instanceof StatementObject && fragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.VARIABLE_DECLARATION_STATEMENT)) {
 				StatementObject statement = (StatementObject)fragment;
 				List<VariableDeclaration> declarations = statement.getVariableDeclarations();
-				assert declarations.size() == 1;
-				String variableInitialValue = declarations.get(0).getInitializer().getString();
-				for(int parameterIndex=0; parameterIndex<parameterValues.size(); parameterIndex++) {
-					for(String value : parameterValues.get(parameterIndex)) {
-						if(variableInitialValue.contains(sanitizeStringLiteral(value))) {
-							int previousValue = matchingTestParameters.getOrDefault(parameterIndex, 0);
-							matchingTestParameters.put(parameterIndex, previousValue + 1);
+				if(declarations.size() > 0 && declarations.get(0).getInitializer() != null) {
+					String variableInitialValue = declarations.get(0).getInitializer().getString();
+					for(int parameterIndex=0; parameterIndex<parameterValues.size(); parameterIndex++) {
+						for(String value : parameterValues.get(parameterIndex)) {
+							if(variableInitialValue.contains(sanitizeStringLiteral(value))) {
+								int previousValue = matchingTestParameters.getOrDefault(parameterIndex, 0);
+								matchingTestParameters.put(parameterIndex, previousValue + 1);
+							}
 						}
 					}
 				}

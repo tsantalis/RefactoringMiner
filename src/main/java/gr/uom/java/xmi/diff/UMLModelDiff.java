@@ -692,6 +692,12 @@ public class UMLModelDiff {
 								diff.getMovedClass().getName().startsWith(addedClass.getPackageName() + "."))) {
 					return true;
 				}
+				if((diff.getOriginalClass().getName().equals(removedClass.getPackageName()) &&
+						!diff.getMovedClass().getName().equals(addedClass.getPackageName())) ||
+						(!diff.getOriginalClass().getName().equals(removedClass.getPackageName()) &&
+								diff.getMovedClass().getName().equals(addedClass.getPackageName()))) {
+					return true;
+				}
 			}
 		}
 		else if(!addedClass.isTopLevel()) {

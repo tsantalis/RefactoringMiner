@@ -58,6 +58,7 @@ import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
 
 public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements Comparable<UMLClassBaseDiff> {
 
+	public static final double BUILDER_STATEMENT_RATIO_THRESHOLD = 0.7;
 	private static final int MAXIMUM_NUMBER_OF_COMPARED_METHODS = 20;
 	public static final double MAX_OPERATION_NAME_DISTANCE = 0.4;
 	private boolean visibilityChanged;
@@ -976,10 +977,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(isCommentedOut(removedOperation)) {
 					continue;
 				}
+				double removedOperationBuilderStatementRatio = removedOperation.builderStatementRatio();
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation)) {
+					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) &&
+							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						int maxDifferenceInPosition;
 						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
 							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());
@@ -1113,10 +1116,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			Set<VariableDeclarationContainer> addedOperationsToBeRemoved = new LinkedHashSet<>();
 			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
+				double addedOperationBuilderStatementRatio = addedOperation.builderStatementRatio();
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 					UMLOperation removedOperation = removedOperationIterator.next();
-					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation)) {
+					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) &&
+							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						int maxDifferenceInPosition;
 						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
 							maxDifferenceInPosition = Math.abs(removedOperations.size() - addedOperations.size());

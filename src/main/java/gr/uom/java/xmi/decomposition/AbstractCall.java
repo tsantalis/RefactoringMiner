@@ -1117,7 +1117,7 @@ public abstract class AbstractCall extends LeafExpression {
 		return Collections.emptySet();
 	}
 
-	boolean isAssertion() {
+	public boolean isAssertion() {
 		return getName().startsWith("assert") || getName().equals("fail");
 	}
 

@@ -317,6 +317,12 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return variableDeclarationMap;
 	}
 
+	public double builderStatementRatio() {
+		if(operationBody != null)
+			return operationBody.builderStatementRatio();
+		return 0;
+	}
+
 	public int statementCount() {
 		if(operationBody != null)
 			return operationBody.statementCount();

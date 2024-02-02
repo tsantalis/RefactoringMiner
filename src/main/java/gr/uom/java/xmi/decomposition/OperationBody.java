@@ -85,6 +85,27 @@ public class OperationBody {
 		this.activeVariableDeclarations = null;
 	}
 
+	public double builderStatementRatio() {
+		List<AbstractCodeFragment> fragments = compositeStatement.getLeaves();
+		int builderCount = 0;
+		for(AbstractCodeFragment fragment : fragments) {
+			AbstractCall invocation = fragment.invocationCoveringEntireFragment();
+			if(invocation == null) {
+				invocation = fragment.assignmentInvocationCoveringEntireStatement();
+			}
+			if(invocation instanceof OperationInvocation) {
+				OperationInvocation inv = (OperationInvocation)invocation;
+				if(inv.numberOfSubExpressions() > 2) {
+					builderCount++;
+				}
+			}
+		}
+		//fragments.size() == 1 corresponds to a single-statement method
+		if(fragments.size() > 1)
+			return (double)builderCount/(double)fragments.size();
+		return 0;
+	}
+
 	public int statementCount() {
 		return compositeStatement.statementCount();
 	}

@@ -2787,9 +2787,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					boolean matchFound = removedOrAddedOperationWithIdenticalBody(originalOperation, nextOperation, removedOperationsToBeRemoved, addedOperationsToBeRemoved);
-					if(!matchFound) {
-		    			UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
-		    			this.addOperationBodyMapper(operationBodyMapper);
+					if(!matchFound &&
+							originalOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && nextOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
+			    		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
+			    		this.addOperationBodyMapper(operationBodyMapper);
 					}
 				}
 			}
@@ -2811,9 +2812,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	    				}
 					}
 				}
-				boolean matchFound = removedOrAddedOperationWithIdenticalBody(operation, nextClass.getOperations().get(finalIndex), removedOperationsToBeRemoved, addedOperationsToBeRemoved);
-				if(!matchFound) {
-					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextClass.getOperations().get(finalIndex), this);
+				UMLOperation nextOperation = nextClass.getOperations().get(finalIndex);
+				boolean matchFound = removedOrAddedOperationWithIdenticalBody(operation, nextOperation, removedOperationsToBeRemoved, addedOperationsToBeRemoved);
+				if(!matchFound &&
+						operation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && nextOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(operation, nextOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
 				}
 			}

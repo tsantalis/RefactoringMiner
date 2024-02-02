@@ -41,6 +41,7 @@ import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodIn
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.diff.UMLClassBaseDiff.BUILDER_STATEMENT_RATIO_THRESHOLD;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -3889,11 +3890,13 @@ public class UMLModelDiff {
 		if(addedOperations.size() <= removedOperations.size()) {
 			for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 				UMLOperation addedOperation = addedOperationIterator.next();
+				double addedOperationBuilderStatementRatio = addedOperation.builderStatementRatio();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
 				UMLOperation removedOperation2 = findOperationWithIdenticalSignature(addedOperation, removedOperations);
 				if(removedOperation2 != null) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation2, addedOperation);
-					if(!processedOperationPairs.contains(pair) && removedOperation2.testMethodCheck(addedOperation) && !removedOperation2.getClassName().equals(addedOperation.getClassName())) {
+					if(!processedOperationPairs.contains(pair) && removedOperation2.testMethodCheck(addedOperation) && !removedOperation2.getClassName().equals(addedOperation.getClassName()) &&
+							removedOperation2.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation2.getClassName());
 						if(umlClassDiff == null) {
 							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
@@ -3931,7 +3934,8 @@ public class UMLModelDiff {
 					UMLOperation removedOperation = removedOperationIterator.next();
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
-					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName())) {
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+							removedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
 							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());
@@ -3993,11 +3997,13 @@ public class UMLModelDiff {
 		else {
 			for(Iterator<UMLOperation> removedOperationIterator = removedOperations.iterator(); removedOperationIterator.hasNext();) {
 				UMLOperation removedOperation = removedOperationIterator.next();
+				double removedOperationBuilderStatementRatio = removedOperation.builderStatementRatio();
 				TreeMap<Integer, List<UMLOperationBodyMapper>> operationBodyMapperMap = new TreeMap<Integer, List<UMLOperationBodyMapper>>();
 				UMLOperation addedOperation2 = findOperationWithIdenticalSignature(removedOperation, addedOperations);
 				if(addedOperation2 != null) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation2);
-					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation2) && !removedOperation.getClassName().equals(addedOperation2.getClassName())) {
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation2) && !removedOperation.getClassName().equals(addedOperation2.getClassName()) &&
+							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation2.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
 							umlClassDiff = getUMLClassDiff(addedOperation2.getClassName());
@@ -4035,7 +4041,8 @@ public class UMLModelDiff {
 					UMLOperation addedOperation = addedOperationIterator.next();
 
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(removedOperation, addedOperation);
-					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName())) {
+					if(!processedOperationPairs.contains(pair) && removedOperation.testMethodCheck(addedOperation) && !removedOperation.getClassName().equals(addedOperation.getClassName()) &&
+							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						UMLClassBaseDiff umlClassDiff = getUMLClassDiff(removedOperation.getClassName());
 						if(umlClassDiff == null) {
 							umlClassDiff = getUMLClassDiff(addedOperation.getClassName());

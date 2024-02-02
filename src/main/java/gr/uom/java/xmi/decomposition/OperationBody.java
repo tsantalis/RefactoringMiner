@@ -86,7 +86,7 @@ public class OperationBody {
 	}
 
 	public double builderStatementRatio() {
-		List<AbstractCodeFragment> fragments = compositeStatement.getLeaves();
+		List<AbstractStatement> fragments = compositeStatement.getStatements();
 		int builderCount = 0;
 		for(AbstractCodeFragment fragment : fragments) {
 			AbstractCall invocation = fragment.invocationCoveringEntireFragment();
@@ -95,7 +95,7 @@ public class OperationBody {
 			}
 			if(invocation instanceof OperationInvocation) {
 				OperationInvocation inv = (OperationInvocation)invocation;
-				if(inv.numberOfSubExpressions() > 2) {
+				if(inv.numberOfSubExpressions() > 3) {
 					builderCount++;
 				}
 			}

@@ -1037,7 +1037,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			StringBuilder concatenated = new StringBuilder();
 			for(int i=0; i<tokens1.size(); i++) {
 				String token = tokens1.get(i);
-				if(token.startsWith("\"") && token.endsWith("\"")) {
+				if(token.startsWith("\"") && token.endsWith("\"") && token.length() >= 2) {
 					concatenated.append(token.substring(1, token.length()-1));
 				}
 				else {
@@ -1053,7 +1053,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			StringBuilder concatenated = new StringBuilder();
 			for(int i=0; i<tokens2.size(); i++) {
 				String token = tokens2.get(i);
-				if(token.startsWith("\"") && token.endsWith("\"")) {
+				if(token.startsWith("\"") && token.endsWith("\"") && token.length() >= 2) {
 					concatenated.append(token.substring(1, token.length()-1));
 				}
 				else {

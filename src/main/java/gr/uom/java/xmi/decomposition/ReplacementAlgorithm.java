@@ -3793,8 +3793,20 @@ public class ReplacementAlgorithm {
 								}
 							}
 							if(!skip) {
-								Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
-								replacements.put(r, substringAfterIndex1.equals(substringAfterIndex2));
+								for(Replacement old : replacements.keySet()) {
+									if(old.getBefore().equals(element1) && !old.getAfter().equals(element2)) {
+										skip = true;
+										break;
+									}
+									else if(!old.getBefore().equals(element1) && old.getAfter().equals(element2)) {
+										skip = true;
+										break;
+									}
+								}
+								if(!skip) {
+									Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
+									replacements.put(r, substringAfterIndex1.equals(substringAfterIndex2));
+								}
 							}
 						}
 						else if(substringAfterIndex1.equals(substringAfterIndex2) && !substringBeforeIndex1.isEmpty() && !substringBeforeIndex2.isEmpty() && methodInvocationList1 != null && methodInvocationList2 != null) {
@@ -3806,8 +3818,20 @@ public class ReplacementAlgorithm {
 								skip = s1.contains(substringBeforeIndex2);
 							}
 							if(!skip) {
-								Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
-								replacements.put(r, substringBeforeIndex1.equals(substringBeforeIndex2));
+								for(Replacement old : replacements.keySet()) {
+									if(old.getBefore().equals(element1) && !old.getAfter().equals(element2)) {
+										skip = true;
+										break;
+									}
+									else if(!old.getBefore().equals(element1) && old.getAfter().equals(element2)) {
+										skip = true;
+										break;
+									}
+								}
+								if(!skip) {
+									Replacement r = new MethodInvocationReplacement(element1, element2, methodInvocationList1.get(0), methodInvocationList2.get(0), ReplacementType.METHOD_INVOCATION);
+									replacements.put(r, substringBeforeIndex1.equals(substringBeforeIndex2));
+								}
 							}
 						}
 					}

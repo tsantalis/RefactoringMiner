@@ -5019,6 +5019,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			
+			boolean allIdenticalStatementsHaveSameIndex = false;
+			if(leaves1.size() == leaves2.size() && isomorphic) {
+				int count = 0;
+				for(AbstractCodeMapping mapping : mappings) {
+					if(mapping.getFragment1().getIndex() == mapping.getFragment2().getIndex()) {
+						count++;
+					}
+				}
+				if(count == mappings.size() && count > 1) {
+					allIdenticalStatementsHaveSameIndex = true;
+				}
+			}
 			// exact matching with variable renames
 			Set<AbstractCodeFragment> leaves1ToBeRemoved = new LinkedHashSet<>();
 			Set<AbstractCodeFragment> leaves2ToBeRemoved = new LinkedHashSet<>();
@@ -5048,6 +5060,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf2, mapping);
 								mappingSet.add(mapping);
+								if(allIdenticalStatementsHaveSameIndex) {
+									break;
+								}
 							}
 						}
 					}
@@ -5077,7 +5092,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						else {
 							boolean isTestMethod = (container1.hasTestAnnotation() || container2.hasTestAnnotation() || container1.getName().startsWith("test") || container2.getName().startsWith("test"))
 									&& !container2.hasParameterizedTestAnnotation();
-							if(!isTestMethod)
+							if(!isTestMethod && !allIdenticalStatementsHaveSameIndex)
 								checkForOtherPossibleMatchesForFragment2(leaves1, leaves2, leaf1, mappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 							Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
 							Set<AbstractCodeMapping> movedOutOfIfElseBranch = movedOutOfIfElseIfBranch(mappingSet);

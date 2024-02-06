@@ -5022,12 +5022,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			boolean allIdenticalStatementsHaveSameIndex = false;
 			if(leaves1.size() == leaves2.size() && isomorphic) {
 				int count = 0;
+				int mappingsDirectlyNestedUnderMethodBody = 0;
 				for(AbstractCodeMapping mapping : mappings) {
-					if(mapping.getFragment1().getIndex() == mapping.getFragment2().getIndex()) {
+					AbstractCodeFragment f1 = mapping.getFragment1();
+					AbstractCodeFragment f2 = mapping.getFragment2();
+					if(f1.getIndex() == f2.getIndex()) {
 						count++;
+						if(f1.getParent() != null && f1.getParent().getParent() == null &&
+								f2.getParent() != null && f2.getParent().getParent() == null) {
+							mappingsDirectlyNestedUnderMethodBody++;
+						}
 					}
 				}
-				if(count == mappings.size() && count > 1) {
+				if(count == mappings.size() && mappingsDirectlyNestedUnderMethodBody == mappings.size() && count > 1) {
 					allIdenticalStatementsHaveSameIndex = true;
 				}
 			}

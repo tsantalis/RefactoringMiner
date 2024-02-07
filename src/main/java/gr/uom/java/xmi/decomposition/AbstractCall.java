@@ -204,7 +204,8 @@ public abstract class AbstractCall extends LeafExpression {
 						AbstractCall callBefore = r.getInvokedOperationBefore();
 						AbstractCall callAfter = r.getInvokedOperationAfter();
 						Set<String> argumentIntersection = callBefore.argumentIntersection(callAfter);
-						if(argumentIntersection.size() > 0 && argumentIntersection.size() == Math.min(callBefore.arguments().size(), callAfter.arguments().size()) &&
+						if(argumentIntersection.size() > 0 &&
+								argumentIntersection.size() == Math.min(new LinkedHashSet<>(callBefore.arguments()).size(), new LinkedHashSet<>(callAfter.arguments()).size()) &&
 								callBefore.arguments().size() != callAfter.arguments().size()) {
 							argumentAdditionReplacements++;
 						}

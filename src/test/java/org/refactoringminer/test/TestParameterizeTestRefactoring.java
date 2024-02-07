@@ -100,7 +100,7 @@ class TestParameterizeTestRefactoring {
                     Map.of("src/test/java/com/test/TestClass.java", newCodeBuilder.build()),
                     Set.of("."), repeat(RefactoringType.PARAMETERIZE_TEST, 6)));
         }
-        Function<String, String> enumDeclaration = (String methoDeclaration) -> String.format("package com.test;\npublic enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}",methoDeclaration);
+        Function<String, String> enumDeclaration = (String methoDeclaration) -> String.format("public enum TestEnum {TEST1, TEST2, TEST3, TEST4, TEST5;\n%s}",methoDeclaration);
         {
             Set<String> dirSet = Set.of("src/", "src/main/", "src/main/java", "src/main/java/test");
             TestSrcCodeBuilder newCodeBuilder = new TestSrcCodeBuilder().testPackage("com.test")
@@ -146,6 +146,8 @@ class TestParameterizeTestRefactoring {
                     "                         }");
             arguments.add(Arguments.of(
                     Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                        .testPackage("com.test")
+                        .importStatement("static org.junit.jupiter.api.Assertions.*")
                         .prefix(()->prefix)
                         .testMethod("testNullEnum_TEST1")
                             .statement("assertThrows(NullPointerException.class,()->TestEnum.TEST1.number());")
@@ -156,7 +158,11 @@ class TestParameterizeTestRefactoring {
                             .statement("assertThrows(NullPointerException.class,()->null.number());")
                         .build()),
                     Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
+                        .testPackage("com.test")
+                        .importStatement("static org.junit.jupiter.api.Assertions.*")
                         .importStatement("org.junit.jupiter.params.ParameterizedTest")
+                        .importStatement("org.junit.jupiter.params.provider.NullSource")
+                        .importStatement("org.junit.jupiter.params.provider.EnumSource")
                         .prefix(()->prefix)
                         .testMethod("testNullEnum")
                                 .parameterize()

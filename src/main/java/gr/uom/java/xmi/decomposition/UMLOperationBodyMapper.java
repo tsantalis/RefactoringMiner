@@ -5028,10 +5028,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCodeFragment f2 = mapping.getFragment2();
 					if(f1.getIndex() == f2.getIndex()) {
 						count++;
-						if((f1.getParent() != null && f1.getParent().getParent() == null &&
-								f2.getParent() != null && f2.getParent().getParent() == null) ||
-								(f1.getParent() == null && f2.getParent() == null) ||
-								(mapping instanceof LeafMapping && ((LeafMapping)mapping).levelParentEditDistanceSum() == 0)) {
+						if(nestedDirectlyUnderMethodBody(mapping)) {
 							mappingsDirectlyNestedUnderMethodBody++;
 						}
 					}
@@ -5615,6 +5612,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean nestedDirectlyUnderMethodBody(AbstractCodeMapping mapping) {
+		AbstractCodeFragment f1 = mapping.getFragment1();
+		AbstractCodeFragment f2 = mapping.getFragment2();
+		if(f1.getParent() != null && f1.getParent().getParent() == null &&
+				f2.getParent() != null && f2.getParent().getParent() == null) {
+			return true;
+		}
+		if(f1.getParent() == null && f2.getParent() == null) {
+			return true;
+		}
+		if(mapping instanceof LeafMapping) {
+			LeafMapping leafMapping = (LeafMapping)mapping;
+			if(leafMapping.levelParentEditDistanceSum() == 0) {
+				CompositeStatementObject parent1 = f1.getParent();
+				while(parent1 != null) {
+					if(!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+							!parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+						return false;
+					}
+					parent1 = parent1.getParent();
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean skipCurrentIteration(List<AbstractCodeFragment> matchingLeaves1) {

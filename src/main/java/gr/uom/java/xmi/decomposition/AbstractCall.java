@@ -182,13 +182,40 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean identicalExpression(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
 		return identicalExpression(call) ||
-		identicalExpressionAfterTypeReplacements(call, replacements, parameterToArgumentMap);
+		identicalExpressionAfterTypeReplacements(call, replacements, parameterToArgumentMap) ||
+		identicalExpressionAfterArgumentAddition(call, replacements);
 	}
 
 	public boolean identicalExpression(AbstractCall call) {
 		return (getExpression() != null && call.getExpression() != null &&
 				getExpression().equals(call.getExpression())) ||
 				(getExpression() == null && call.getExpression() == null);
+	}
+
+	private boolean identicalExpressionAfterArgumentAddition(AbstractCall call, Set<Replacement> replacements) {
+		if(getExpression() != null && call.getExpression() != null) {
+			int methodInvocationReplacements = 0;
+			int argumentAdditionReplacements = 0;
+			for(Replacement replacement : replacements) {
+				if(replacement instanceof MethodInvocationReplacement) {
+					if(getExpression().contains(replacement.getBefore()) && call.getExpression().contains(replacement.getAfter())) {
+						methodInvocationReplacements++;
+						MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+						AbstractCall callBefore = r.getInvokedOperationBefore();
+						AbstractCall callAfter = r.getInvokedOperationAfter();
+						Set<String> argumentIntersection = callBefore.argumentIntersection(callAfter);
+						if(argumentIntersection.size() > 0 && argumentIntersection.size() == Math.min(callBefore.arguments().size(), callAfter.arguments().size()) &&
+								callBefore.arguments().size() != callAfter.arguments().size()) {
+							argumentAdditionReplacements++;
+						}
+					}
+				}
+			}
+			if(methodInvocationReplacements == argumentAdditionReplacements && methodInvocationReplacements > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean identicalExpressionAfterTypeReplacements(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {

@@ -5028,8 +5028,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					AbstractCodeFragment f2 = mapping.getFragment2();
 					if(f1.getIndex() == f2.getIndex()) {
 						count++;
-						if(f1.getParent() != null && f1.getParent().getParent() == null &&
-								f2.getParent() != null && f2.getParent().getParent() == null) {
+						if((f1.getParent() != null && f1.getParent().getParent() == null &&
+								f2.getParent() != null && f2.getParent().getParent() == null) ||
+								(f1.getParent() == null && f2.getParent() == null) ||
+								(mapping instanceof LeafMapping && ((LeafMapping)mapping).levelParentEditDistanceSum() == 0)) {
 							mappingsDirectlyNestedUnderMethodBody++;
 						}
 					}

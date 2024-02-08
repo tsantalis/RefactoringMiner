@@ -115,6 +115,17 @@ public class ReplacementAlgorithm {
 		AbstractCall invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		AbstractCall assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;
 		AbstractCall assignmentInvocationCoveringTheEntireStatement2 = invocationCoveringTheEntireStatement2 == null ? statement2.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement2;
+		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
+		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
+		AbstractCall assignmentCreationCoveringTheEntireStatement1 = creationCoveringTheEntireStatement1 == null ? statement1.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement1;
+		AbstractCall assignmentCreationCoveringTheEntireStatement2 = creationCoveringTheEntireStatement2 == null ? statement2.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement2;
+		Map<String, List<AbstractCall>> methodInvocationMap1 = convertToMap(statement1.getMethodInvocations());
+		Map<String, List<AbstractCall>> methodInvocationMap2 = convertToMap(statement2.getMethodInvocations());
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
+		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
+		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
+		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
+		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 		if(assignmentInvocationCoveringTheEntireStatement1 instanceof OperationInvocation && assignmentInvocationCoveringTheEntireStatement2 instanceof OperationInvocation) {
 			OperationInvocation inv1 = (OperationInvocation)assignmentInvocationCoveringTheEntireStatement1;
 			OperationInvocation inv2 = (OperationInvocation)assignmentInvocationCoveringTheEntireStatement2;
@@ -122,16 +133,14 @@ public class ReplacementAlgorithm {
 				Set<String> callChainIntersection = inv1.callChainIntersection(inv2);
 				double ratio = (double)callChainIntersection.size()/(double)inv1.numberOfSubExpressions();
 				if(ratio >= 0.6) {
+					processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+							assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
+							assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
+							methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers, operationBodyMapper);
 					return replacementInfo.getReplacements();
 				}
 			}
 		}
-		ObjectCreation creationCoveringTheEntireStatement1 = statement1.creationCoveringEntireFragment();
-		ObjectCreation creationCoveringTheEntireStatement2 = statement2.creationCoveringEntireFragment();
-		AbstractCall assignmentCreationCoveringTheEntireStatement1 = creationCoveringTheEntireStatement1 == null ? statement1.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement1;
-		AbstractCall assignmentCreationCoveringTheEntireStatement2 = creationCoveringTheEntireStatement2 == null ? statement2.assignmentCreationCoveringEntireStatement() : creationCoveringTheEntireStatement2;
-		Map<String, List<AbstractCall>> methodInvocationMap1 = convertToMap(statement1.getMethodInvocations());
-		Map<String, List<AbstractCall>> methodInvocationMap2 = convertToMap(statement2.getMethodInvocations());
 		Set<String> variables1 = convertToStringSet(statement1.getVariables());
 		Set<String> variables2 = convertToStringSet(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);
@@ -1145,11 +1154,6 @@ public class ReplacementAlgorithm {
 				equalAfterArgumentMerge(s1, s2, replacementInfo) ||
 				equalAfterNewArgumentAdditions(s1, s2, replacementInfo, container1, container2, operationSignatureDiff, classDiff) ||
 				(validStatementForConcatComparison(statement1, statement2) && commonConcat(s1, s2, parameterToArgumentMap, replacementInfo, statement1, statement2, operationBodyMapper));
-		List<AnonymousClassDeclarationObject> anonymousClassDeclarations1 = statement1.getAnonymousClassDeclarations();
-		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
-		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
-		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
-		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 		if(isEqualWithReplacement) {
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 				List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);

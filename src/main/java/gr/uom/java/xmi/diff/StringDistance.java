@@ -14,7 +14,7 @@ import com.github.difflib.patch.Chunk;
 import com.github.difflib.patch.Patch;
 
 public class StringDistance {
-	private static final int MAX_STRING_LENGTH = 10000;
+	private static final int MAX_STRING_LENGTH = 1100;
 	private static final Pattern COMMENT_LINE = Pattern.compile("^\\s*(//|\\*|import\\s).*");
 	
 	public static int editDistance(String a, String b, int threshold) {

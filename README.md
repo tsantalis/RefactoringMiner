@@ -611,7 +611,8 @@ If you want to analyze all commits of a pull request, you can use the following 
 
 ```java
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-miner.detectAtPullRequest("https://github.com/apache/drill.git", 1807, new RefactoringHandler() {
+String repo = "https://github.com/apache/drill.git";
+miner.detectAtPullRequest(repo, 1807, new RefactoringHandler() {
   @Override
   public void handle(String commitId, List<Refactoring> refactorings) {
     System.out.println("Refactorings at " + commitId);
@@ -644,7 +645,8 @@ Repository repo = gitService.cloneIfNotExists(
     "tmp/refactoring-toy-example",
     "https://github.com/danilofes/refactoring-toy-example.git");
 
-ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo, "36287f7c3b09eff78395267a3ac0d7da067863fd");
+ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo,
+    "36287f7c3b09eff78395267a3ac0d7da067863fd");
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 ## With commit fetched directly from GitHub
@@ -653,7 +655,8 @@ You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> 
 ```java
 // With all information fetched directly from GitHub
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
-ProjectASTDiff projectASTDiff = miner.diffAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
+String repo = "https://github.com/danilofes/refactoring-toy-example.git";
+ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo,
     "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```

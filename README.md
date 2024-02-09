@@ -22,10 +22,12 @@ Table of Contents
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
       * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
-      * [With a GitHub pull request](#with-a-github-pull-request)
+      * [With each commit in a GitHub Pull request](#with-each-commit-in-a-github-pull-request)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
       * [With commit of a locally cloned git repository](#with-commit-of-a-locally-cloned-git-repository)
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
+      * [With the files changed in a GitHub Pull Request](#with-the-files-changed-in-a-github-pull-request)
+      * [With two directories](#with-two-directories)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
    * [Running RefactoringMiner from the command line](#running-refactoringminer-from-the-command-line)
@@ -600,7 +602,7 @@ miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
 }, 10);
 ```
 
-## With a GitHub pull request
+## With each commit in a GitHub Pull request
 
 To use this API, please provide a valid OAuth token in the `github-oauth.properties` file.
 You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
@@ -656,6 +658,17 @@ ProjectASTDiff projectASTDiff = miner.diffAtCommit("https://github.com/danilofes
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
+## With the files changed in a GitHub Pull Request
+To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+String repo = "https://github.com/JabRef/jabref.git";
+int PR = 10847;
+ProjectASTDiff projectASTDiff = miner.diffAtPullRequest(repo, PR, 100);
+```
+
+## With two directories
 ```java
 // With two directories containing Java source code (File API)
 GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
@@ -675,8 +688,6 @@ Path dir1 = Paths.get("/home/user/tmp/v2");
 ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
-
-To **visualize** the diff, you can use our [DiffBenchmark project](https://github.com/pouryafard75/DiffBenchmark).
 
 # Location information for the detected refactorings
 All classes implementing the `Refactoring` interface include refactoring-specific location information.

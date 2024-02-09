@@ -1537,22 +1537,49 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 		pool.shutdown();
 		pool.awaitTermination(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-		List<String> orderedFilesBefore = new ArrayList<>();
-		List<String> orderedFilesCurrent = new ArrayList<>();
-		for(String fileName : commitFileNames) {
-			if(filesBefore.containsKey(fileName)) {
-				orderedFilesBefore.add(fileName);
-			}
-			if(filesCurrent.containsKey(fileName)) {
-				orderedFilesCurrent.add(fileName);
-			}
+		
+		Set<ProjectASTDiff> diffs = new HashSet<>();
+		ExecutorService service = Executors.newSingleThreadExecutor();
+		Future<?> f = null;
+		try {
+			Runnable r = () -> {
+				try {
+					Map<String, String> filesContentsBefore = new LinkedHashMap<String, String>();
+					Map<String, String> filesContentsCurrent = new LinkedHashMap<String, String>();
+					for(String fileName : commitFileNames) {
+						if(filesBefore.containsKey(fileName)) {
+							filesContentsBefore.put(fileName, filesBefore.get(fileName));
+						}
+						if(filesCurrent.containsKey(fileName)) {
+							filesContentsCurrent.put(fileName, filesCurrent.get(fileName));
+						}
+					}
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(filesContentsBefore, filesContentsCurrent, renamedFilesHint, true);
+					UMLModel currentUMLModel = createModelForASTDiff(filesContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModel parentUMLModel = createModelForASTDiff(filesContentsBefore, repositoryDirectoriesBefore);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, filesBefore, filesCurrent);
+					diffs.add(differ.getProjectASTDiff());
+				}
+				catch(RefactoringMinerTimedOutException e) {
+					logger.warn(String.format("Ignored PR %s due to timeout", pullRequestId), e);
+				}
+				catch (Exception e) {
+					logger.warn(String.format("Ignored PR %s due to error", pullRequestId), e);
+				}
+			};
+			f = service.submit(r);
+			f.get(timeout, TimeUnit.SECONDS);
+		} catch (TimeoutException e) {
+			f.cancel(true);
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
 		}
-		List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(filesBefore, filesCurrent, renamedFilesHint, true);
-		UMLModel currentUMLModel = createModelForASTDiff(filesCurrent, repositoryDirectoriesCurrent);
-		UMLModel parentUMLModel = createModelForASTDiff(filesBefore, repositoryDirectoriesBefore);
-		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-		ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, filesBefore, filesCurrent);
-		return differ.getProjectASTDiff();
+		return diffs.iterator().next();
 	}
 
 	private List<String> createPatchLines(GHPullRequestFileDetail commitFile) {

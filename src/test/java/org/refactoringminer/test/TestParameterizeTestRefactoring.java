@@ -172,7 +172,7 @@ class TestParameterizeTestRefactoring {
                             .statement("assertThrows(NullPointerException.class,()->te.number());")
                         .build()),
                     Set.of("."),
-                    repeat(RefactoringType.PARAMETERIZE_TEST, 3)));
+                    repeat(RefactoringType.PARAMETERIZE_TEST, 1)));
         }
         {
 

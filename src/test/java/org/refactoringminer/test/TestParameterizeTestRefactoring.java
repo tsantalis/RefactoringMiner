@@ -114,7 +114,7 @@ class TestParameterizeTestRefactoring {
                     .statement("assertTrue(te.number() >= 1 && te.number() <= 5);");
             Map<String, String> files = new HashMap<>(Map.of(
                     "src/main/java/com/test/TestEnum.java",
-                    enumDeclaration.apply("int number() {return Integer.parseInt(name().substring(name().length() - 1));}"),
+                    "package com.test;\n" + enumDeclaration.apply("int number() {return Integer.parseInt(name().substring(name().length() - 1));}"),
                     "src/test/java/com/test/TestClass.java", newCodeBuilder.build()));
             HashMap<String, String> oldFiles = new HashMap<>(files);
             TestSrcCodeBuilder oldCodeBuilder = new TestSrcCodeBuilder().testPackage("com.test")

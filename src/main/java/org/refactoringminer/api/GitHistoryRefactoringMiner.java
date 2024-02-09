@@ -157,6 +157,17 @@ public interface GitHistoryRefactoringMiner {
 	ProjectASTDiff diffAtCommit(String gitURL, String commitId, int timeout);
 
 	/**
+	 * Generate the AST diff for the specified Pull Request. All required information is extracted using the GitHub API.
+	 *
+	 * @param gitURL The git URL of the repository.
+	 * @param pullRequestId The Pull Request ID.
+	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no AST diffs.
+	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
+	 * @throws Exception propagated from org.kohsuke.github API
+	 */
+	ProjectASTDiff diffAtPullRequest(String gitURL, int pullRequestId, int timeout) throws Exception;
+
+	/**
 	 * Generate the AST diff between two directories (or files) representing two versions of Java programs. 
 	 * 
 	 * @param previousPath The directory (or file) corresponding to the previous version.

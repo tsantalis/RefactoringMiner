@@ -620,7 +620,7 @@ miner.detectAtPullRequest(repo, 1807, new RefactoringHandler() {
       System.out.println(ref.toString());
     }
   }
-}, 10);
+}, 100);
 ```
 
 # AST Diff API usage guidelines

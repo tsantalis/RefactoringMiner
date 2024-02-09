@@ -18,10 +18,19 @@ public class CaseInfoSerializer extends JsonSerializer<CaseInfo> {
         jsonGenerator.writeStringField("commit", caseInfo.getCommit());
         // Add other properties as needed
 
-        // Check if src_files is not null before serializing
         if (caseInfo.getSrc_files() != null && !caseInfo.getSrc_files().isEmpty()) {
-            jsonGenerator.writeObjectField("src_files", caseInfo.getSrc_files());
+            jsonGenerator.writeFieldName("src_files");
+            jsonGenerator.writeStartArray();
+            jsonGenerator.writeRaw("\n");
+            for (String file : caseInfo.getSrc_files()) {
+                jsonGenerator.writeRaw("   ");
+                jsonGenerator.writeString(file);
+                jsonGenerator.writeRaw("\n");
+            }
+            jsonGenerator.writeRaw(" ");
+            jsonGenerator.writeEndArray();
         }
+
 
         jsonGenerator.writeEndObject();
     }

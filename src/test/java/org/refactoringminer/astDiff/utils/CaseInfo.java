@@ -9,9 +9,7 @@ import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -21,24 +19,24 @@ public class CaseInfo implements Serializable {
     String commit;
 
     //Only consider these files for the diff, if empty, consider all files
-    List<String> src_files;
+    Set<String> src_files;
 
     public CaseInfo(String repo, String commit) {
         this.repo = repo;
         this.commit = commit;
     }
 
-    public CaseInfo(String repo, String commit, List<String> src_files) {
+    public CaseInfo(String repo, String commit, Set<String> src_files) {
         this.repo = repo;
         this.commit = commit;
         this.src_files = src_files;
     }
 
-    public void setSrc_files(List<String> src_files) {
+    public void setSrc_files(Set<String> src_files) {
         this.src_files = src_files;
     }
 
-    public List<String> getSrc_files() {
+    public Set<String> getSrc_files() {
         return src_files;
     }
 
@@ -89,7 +87,7 @@ public class CaseInfo implements Serializable {
             String name = context.getParameter().getName();
             Class<?> type = context.getParameter().getType();
             if (type == CaseInfo.class) {
-                List<String> src_files = new ArrayList<>();
+                Set<String> src_files = new LinkedHashSet<>();
                 JsonArray jsonArray = json.getJsonArray("src_files");
                 if (jsonArray == null) src_files = null;
                 else

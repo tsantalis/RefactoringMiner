@@ -2008,7 +2008,9 @@ public class VariableReplacementAnalysis {
 	}
 
 	private boolean returnVariableMapping(AbstractCodeMapping mapping, Replacement replacement) {
-		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && (!operation1.equals(operation2) || identicalChildMapper())) {
+		boolean constantReplacement = replacement.getBefore().toUpperCase().equals(replacement.getBefore()) &&
+				replacement.getAfter().toUpperCase().equals(replacement.getAfter());
+		if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && (!operation1.equals(operation2) || identicalChildMapper()) && !constantReplacement) {
 			return mapping.getFragment1().getString().equals(JAVA.RETURN_SPACE + replacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
 					mapping.getFragment2().getString().equals(JAVA.RETURN_SPACE + replacement.getAfter() + JAVA.STATEMENT_TERMINATION);
 		}

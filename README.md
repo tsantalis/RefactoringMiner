@@ -669,6 +669,7 @@ GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
 String repo = "https://github.com/JabRef/jabref.git";
 int PR = 10847;
 ProjectASTDiff projectASTDiff = miner.diffAtPullRequest(repo, PR, 100);
+Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
 
 ## With two directories

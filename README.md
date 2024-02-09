@@ -17,13 +17,15 @@ Table of Contents
    * [Support for other programming languages](#support-for-other-programming-languages)
       * [Kotlin](#kotlin)
       * [Python](#python)
-   * [API usage guidelines](#api-usage-guidelines)
+   * [Refactoring detection API usage guidelines](#refactoring-detection-api-usage-guidelines)
       * [With a locally cloned git repository](#with-a-locally-cloned-git-repository)
       * [With two directories containing Java source code](#with-two-directories-containing-java-source-code)
       * [With file contents as strings](#with-file-contents-as-strings)
       * [With all information fetched directly from GitHub](#with-all-information-fetched-directly-from-github)
       * [With a GitHub pull request](#with-a-github-pull-request)
    * [AST Diff API usage guidelines](#ast-diff-api-usage-guidelines)
+      * [With commit of a locally cloned git repository](#with-commit-of-a-locally-cloned-git-repository)
+      * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
    * [Running RefactoringMiner from the command line](#running-refactoringminer-from-the-command-line)
@@ -440,7 +442,7 @@ The project is led and maintained by [Zarina Kurbatova](https://github.com/onewh
 * [PyRef](https://github.com/PyRef/PyRef) has been developed by Hassan Atwi and [Bin Lin](https://binlin.info/) from the Software Institute at USI - Università della Svizzera Italiana, Switzerland.
 * [Py-RefactoringMiner](https://github.com/maldil/RefactoringMiner) has been developed by [Malinda Dilhara](https://maldil.github.io/), a Ph.D. student in the department of Computer Science at University of Colorado Boulder under the suprevision of [Danny Dig](https://dig.cs.illinois.edu/).
 
-# API usage guidelines
+# Refactoring detection API usage guidelines
 ## With a locally cloned git repository
 RefactoringMiner can automatically detect refactorings in the entire history of 
 git repositories, between specified commits or tags, or at specified commits.
@@ -630,6 +632,7 @@ All AST Diff APIs return a `ProjectASTDiff` object. By calling `getDiffSet()` on
 
 More detailed documentation can be found in [GitHistoryRefactoringMiner](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/api/GitHistoryRefactoringMiner.java) JavaDoc.
 
+## With commit of a locally cloned git repository
 ```java
 // With a locally cloned git repository
 GitService gitService = new GitServiceImpl();
@@ -642,7 +645,7 @@ Repository repo = gitService.cloneIfNotExists(
 ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo, "36287f7c3b09eff78395267a3ac0d7da067863fd");
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 ```
-
+## With commit fetched directly from GitHub
 To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
 You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
 ```java

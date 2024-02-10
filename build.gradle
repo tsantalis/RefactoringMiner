@@ -127,11 +127,3 @@ signing {
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
 }
-
-jar {
-    manifest {
-        attributes(
-            'Main-Class': 'org.refactoringminer.RefactoringMiner'
-        )
-    }
-}

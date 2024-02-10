@@ -5,6 +5,7 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'idea'
+    id 'checkstyle'
 }
 
 group = "com.github.tsantalis"
@@ -18,6 +19,14 @@ idea {
         excludeDirs.add(file("src-test/data/astDiff/"))
         excludeDirs.add(file("tmp"))
     }
+}
+
+checkstyle {
+    toolVersion = '8.36'
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    configProperties = [suppressionFile: "${rootProject.file('config/checkstyle/checkstyle_supressions.xml')}"]
+    ignoreFailures = false
+    showViolations = true
 }
 
 repositories {

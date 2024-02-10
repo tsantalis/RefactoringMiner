@@ -30,8 +30,8 @@ public class WebDiff  {
     }
 
     public void run() throws IOException {
-        DirComparator comperator = new DirComparator(projectASTDiff);
-        configureSpark(comperator, this.port);
+        DirComparator comparator = new DirComparator(projectASTDiff);
+        configureSpark(comparator, this.port);
         Spark.awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
     }

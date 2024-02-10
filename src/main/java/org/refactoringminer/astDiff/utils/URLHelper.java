@@ -51,4 +51,14 @@ public class URLHelper{
         }
         return -1;
     }
+
+    public static int getPullRequestID(String prURL) {
+        prURL = removeAdditionalPart(prURL);
+        int index = nthIndexOf(prURL,'/',6);
+        return Integer.parseInt(prURL.substring(index+1));
+    }
+
+    public static boolean isPR(String url) {
+        return url.contains("/pull/");
+    }
 }

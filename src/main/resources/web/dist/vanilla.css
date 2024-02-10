@@ -1,0 +1,102 @@
+/*
+ * This file is part of GumTree.
+ *
+ * GumTree is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * GumTree is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with GumTree.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright 2011-2015 Jean-Rémy Falleri <jr.falleri@gmail.com>
+ * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
+ */
+
+.add {
+	border: 1px solid black;
+	background-color: MediumSeaGreen;
+	/*background-color: #8ceb34;;*/
+}
+
+.del {
+	border: 1px solid black;
+	background-color: IndianRed;
+	/*background-color: #f37998;*/
+}
+
+.mv {
+	border: 1px solid black;
+	background-color: Lavender;
+}
+
+.upd {
+	border: 1px solid black;
+	background-color: Plum;
+	font-weight: bold;
+}
+.mm {
+	border: 1px solid black;
+	background-color: #d2bada;
+}
+.mm.updOnTop.selected {
+	background-color: Gold;
+	border: 1px solid black;
+	font-weight: bold;
+}
+.mm.updOnTop
+{
+	background-color: #e57ecc;
+	border: 1px solid black;
+	font-weight: bold;
+}
+
+.moveIn {
+	border: 4px solid #d2bada;
+	/*background-color: #8ceb34;*/
+	background-color: MediumSeaGreen;
+}
+.moveOut {
+	border: 4px solid #d2bada;
+	background-color: IndianRed;
+	/*background-color: #f37998;*/
+}
+
+.cupd {
+	font-weight: normal;
+	color: DimGray;
+}
+
+.selected {
+	background-color: Gold;
+}
+
+.marker {
+	margin: 0;
+	padding: 0;
+}
+
+div {
+	margin: 0px;
+	padding: 0px;
+}
+
+.pre-scrollable {
+	margin: 0px;
+	padding: 0px;
+	font-size: 10pt;
+	color: black;
+	max-height: 90vh;
+	background-color: white;
+	border: 1px solid black;
+	font-family: "Hack, Inconsolata", "Consolas", "Liberation Sans Regular", "DejaVu Sans Mono", monospace;
+}
+
+.tooltip-inner {
+    max-width: none;
+}

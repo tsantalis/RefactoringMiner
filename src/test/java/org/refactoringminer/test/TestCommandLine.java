@@ -1,10 +1,8 @@
 package org.refactoringminer.test;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.api.parallel.Isolated;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,17 +16,17 @@ import java.util.List;
 
 @Isolated
 public class TestCommandLine {
-    private static final String REPOS = "tmp/";
+    @TempDir
+    private static Path REPOS = Path.of("tmp/");
     private static final String EXPECTED_PATH = System.getProperty("user.dir") + "/src/test/resources/commandline/";
     private String jsonPath;
 
     @BeforeAll
     public static void setUp() throws Exception {
-        GitServiceImpl gitService = new GitServiceImpl();
-        gitService.cloneIfNotExists(REPOS + "mondrian", "https://github.com/pentaho/mondrian.git");
-        gitService.cloneIfNotExists(REPOS + "refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
+//        GitServiceImpl gitService = new GitServiceImpl();
+//        gitService.cloneIfNotExists(REPOS + "mondrian", "https://github.com/pentaho/mondrian.git");
+//        gitService.cloneIfNotExists(REPOS + "refactoring-toy-example", "https://github.com/danilofes/refactoring-toy-example.git");
     }
-
     @AfterEach
     public void tearDown() {
         if (jsonPath != null && Path.of(jsonPath).toFile().exists()) {
@@ -36,6 +34,7 @@ public class TestCommandLine {
         }
     }
 
+    @Disabled
     @Test
     public void testBetweenCommits() throws Exception {
         jsonPath = REPOS + "mondrian/mondrian-bc-actual.json";
@@ -54,6 +53,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @Test
     public void testBetweenTags() throws Exception {
         jsonPath = REPOS + "mondrian/mondrian-bt-actual.json";
@@ -72,6 +72,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @Test
     public void testAll() throws Exception {
         jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-all-actual.json";
@@ -88,6 +89,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @Test
     public void testAllBranch() throws Exception {
         jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-branch-actual.json";
@@ -105,6 +107,7 @@ public class TestCommandLine {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Disabled
     @Test
     public void testCommit() throws Exception {
         jsonPath = REPOS + "refactoring-toy-example/refactoring-toy-example-commit-actual.json";

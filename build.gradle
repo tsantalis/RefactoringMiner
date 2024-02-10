@@ -48,13 +48,13 @@ dependencies {
     implementation 'io.github.java-diff-utils:java-diff-utils:4.12'
 	implementation 'com.github.gumtreediff:core:3.0.0'
 	implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
+    implementation "org.jcommander:jcommander:1.83"
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
     testImplementation 'net.joshka:junit-json-params:5.9.2-r0'
     testImplementation 'org.skyscreamer:jsonassert:1.5.1'
     testImplementation 'org.glassfish:javax.json:1.1.4'
-    testImplementation "org.jcommander:jcommander:1.83"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
 
     implementation 'it.unimi.dsi:fastutil:8.3.1'

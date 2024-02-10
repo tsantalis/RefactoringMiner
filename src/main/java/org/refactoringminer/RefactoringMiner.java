@@ -5,10 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import gui.webdiff.WebDiffRunner;
 import org.eclipse.jgit.lib.Repository;
 import org.refactoringminer.api.GitHistoryRefactoringMiner;
 import org.refactoringminer.api.GitService;
@@ -43,7 +45,10 @@ public class RefactoringMiner {
 			detectAtGitHubCommit(args);
 		} else if (option.equalsIgnoreCase("-gp")) {
 			detectAtGitHubPullRequest(args);
-		} else {
+		} else if (option.equalsIgnoreCase("diff")) {
+			new WebDiffRunner().execute(Arrays.copyOfRange(args, 1, args.length));
+		}
+		else {
 			throw argumentException();
 		}
 	}

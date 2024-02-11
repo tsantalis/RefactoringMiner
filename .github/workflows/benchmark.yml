@@ -1,0 +1,51 @@
+name: Benchmark
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [run-project]
+
+jobs:
+  build-and-run-project:
+    runs-on: ubuntu-latest
+
+    env:
+      OAuthToken: ${{ secrets.OAUTHTOKEN }} 
+      releaseVersion: CI-benchmark-SNAPSHOT
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Build the project and publish to Maven local
+      - name: Publish to Maven local
+        run: ./gradlew publishToMavenLocal -x test -x javadoc -Pversion=${{ env.releaseVersion }}
+
+      # Clone the DiffBenchmark repository and run benchmarks
+      - name: Clone DiffBenchmark repository and run benchmarks
+        run: |
+          git clone -b automation --depth 1 --single-branch https://github.com/pouryafard75/DiffBenchmark.git &&
+          cd DiffBenchmark &&
+          ./gradlew -b build.gradle clean run \
+          -PrefactoringMinerVersion=${{ env.releaseVersion }} \
+          -DrefactoringMinerPath=$(pwd)/.. \
+          -PmainClass=benchmark.CmdRunner \
+          --args="refOracle defects4j"
+
+      - name: Zip directory
+        run: |
+          zip -r Stats.zip DiffBenchmark/out/oracle/
+
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Stats
+          path: Stats.zip

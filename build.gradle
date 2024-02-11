@@ -9,7 +9,9 @@ plugins {
 }
 
 group = "com.github.tsantalis"
-version = "3.0.4"
+def version = project.hasProperty('version') ?
+        project.version
+        : '3.0.4'
 
 applicationName = rootProject.name
 mainClassName = "org.refactoringminer.RefactoringMiner"

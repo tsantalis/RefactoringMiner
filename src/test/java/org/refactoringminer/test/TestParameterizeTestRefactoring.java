@@ -166,8 +166,8 @@ class TestParameterizeTestRefactoring {
                                 .parameterize()
                                 .annotate("@NullSource")
                                 .annotate("@EnumSource(value=TestEnum.class,names={\"TEST1\"})")
-                                .parameter("TestEnum te")
-                            .statement("assertThrows(NullPointerException.class,()->te.number());")
+                                .parameter("TestEnum en")
+                            .statement("assertThrows(NullPointerException.class,()->en.number());")
                         .build()),
                     Set.of("."),
                     repeat(RefactoringType.PARAMETERIZE_TEST, 1)));

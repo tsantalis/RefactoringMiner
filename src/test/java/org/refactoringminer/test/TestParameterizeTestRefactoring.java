@@ -154,8 +154,6 @@ class TestParameterizeTestRefactoring {
                         .testMethod("testNullEnum_null")
                             .statement("TestEnum te = null;")
                             .statement("assertThrows(NullPointerException.class,()->te.number());")
-                        .testMethod("testNullEnum_nullLiteral")
-                            .statement("assertThrows(NullPointerException.class,()->null.number());")
                         .build()),
                     Map.of("src/test/java/com/test/TestClass.java",new TestSrcCodeBuilder()
                         .testPackage("com.test")

@@ -333,7 +333,7 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public boolean isStringLiteral(String argument) {
 		return (argument.startsWith("\"") && argument.endsWith("\"")) ||
-				(argument.contains("(\"") && argument.contains("\")"));
+				(argument.contains("(\"") && argument.endsWith("\")"));
 	}
 
 	public boolean equalArguments(AbstractCall call) {

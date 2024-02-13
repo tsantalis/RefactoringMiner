@@ -38,6 +38,11 @@ repositories {
 test {
     useJUnitPlatform()
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    if (project.hasProperty('notoken')) {
+        exclude '**/GHRepositoryWrapperTest.java'
+        exclude '**/TestCommandLine.class'
+        print 'Skipping tests that require a GitHub token'
+    }
 }
 
 dependencies {

@@ -5,7 +5,7 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Build and Test With Gradle
 
 on:
   push:
@@ -37,7 +37,12 @@ jobs:
       uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a # v3.0.0
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew build -x javadoc
+      run: |
+        if [ "${{ github.event_name }}" == 'pull_request' ]; then
+          ./gradlew build -x javadoc -Pnotoken
+        else
+          ./gradlew build -x javadoc
+        fi
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.

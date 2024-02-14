@@ -648,6 +648,8 @@ Repository repo = gitService.cloneIfNotExists(
 ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo,
     "36287f7c3b09eff78395267a3ac0d7da067863fd");
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).run();
 ```
 ## With commit fetched directly from GitHub
 To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
@@ -659,6 +661,8 @@ String repo = "https://github.com/danilofes/refactoring-toy-example.git";
 ProjectASTDiff projectASTDiff = miner.diffAtCommit(repo,
     "36287f7c3b09eff78395267a3ac0d7da067863fd", 10);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).run();
 ```
 
 ## With the files changed in a GitHub Pull Request
@@ -670,6 +674,8 @@ String repo = "https://github.com/JabRef/jabref.git";
 int PR = 10847;
 ProjectASTDiff projectASTDiff = miner.diffAtPullRequest(repo, PR, 100);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).run();
 ```
 
 ## With two directories
@@ -681,6 +687,8 @@ File dir1 = new File("/home/user/tmp/v1");
 File dir2 = new File("/home/user/tmp/v2");
 ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).run();
 ```
 
 ```java
@@ -691,6 +699,8 @@ Path dir1 = Paths.get("/home/user/tmp/v1");
 Path dir1 = Paths.get("/home/user/tmp/v2");
 ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
+// To visualize the diff add the following line
+new WebDiff(projectASTDiff).run();
 ```
 
 # Location information for the detected refactorings

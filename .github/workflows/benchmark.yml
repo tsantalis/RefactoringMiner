@@ -26,7 +26,7 @@ jobs:
 
       # Build the project and publish to Maven local
       - name: Publish to Maven local
-        run: ./gradlew publishToMavenLocal -x test -x javadoc -Pversion=${{ env.releaseVersion }}
+        run: ./gradlew publishToMavenLocal -x test -x javadoc -PbuildVersion=${{ env.releaseVersion }}
 
       # Clone the DiffBenchmark repository and run benchmarks
       - name: Clone DiffBenchmark repository and run benchmarks

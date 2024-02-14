@@ -69,8 +69,8 @@ public class WebDiffRunner {
                         URLHelper.getPullRequestID(runner.url),
                         timeout);
                 case DIR -> new GitHistoryRefactoringMinerImpl().diffAtDirectories(
-                        runner.src,
-                        runner.dst);
+                        runner.src.toAbsolutePath().normalize(),
+                        runner.dst.toAbsolutePath().normalize());
                 case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
                         runner.repo,
                         runner.commit,

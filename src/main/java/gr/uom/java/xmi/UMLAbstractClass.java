@@ -720,7 +720,7 @@ public abstract class UMLAbstractClass {
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||
 				(commonOperations.size() > Math.floor(totalOperations/3.0*2.0) && (commonAttributes.size() >= 2 || totalAttributes == 0)) ||
-				(identicalOperations.size() >= commonOperations.size() && commonOperations.size() > 2 && identicalOperations.size() >= Math.floor((totalOperations - abstractOperationsToBeDeducted)/3.0*2.0)) ||
+				(identicalOperations.size() > Math.floor(commonOperations.size()/3.0*2.0) && commonOperations.size() > 2 && identicalOperations.size() >= Math.floor((totalOperations - abstractOperationsToBeDeducted)/3.0*2.0)) ||
 				(commonAttributes.size() > Math.floor(totalAttributes/2.0) && (commonOperations.size() > 2 || totalOperations == 0)) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && this.attributes.size() == umlClass.attributes.size()) ||
 				(commonOperations.size() == totalOperations && commonOperations.size() > 2 && totalAttributes == 1) ||

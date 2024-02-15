@@ -3056,6 +3056,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			int count = 0;
 			int compositeCount = 0;
 			int identicalCompositeCount = 0;
+			int identicalLeafCount = 0;
 			for(AbstractCodeMapping mapping : mappings) {
 				AbstractCodeFragment f1 = mapping.getFragment1();
 				AbstractCodeFragment f2 = mapping.getFragment2();
@@ -3067,9 +3068,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							identicalCompositeCount++;
 						}
 					}
+					else if(f1 instanceof StatementObject && f2 instanceof StatementObject) {
+						if(f1.getString().equals(f2.getString())) {
+							identicalLeafCount++;
+						}
+					}
 				}
 			}
-			if(count == mappings.size() && compositeCount == identicalCompositeCount && compositeCount > 0) {
+			if(count == mappings.size() && compositeCount == identicalCompositeCount && compositeCount > 0 && identicalLeafCount > 0) {
 				return true;
 			}
 		}

@@ -549,6 +549,7 @@ public class ReplacementAlgorithm {
 		variablesAndMethodInvocations1.addAll(variables1);
 		
 		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		if(statement1.getString().startsWith(JAVA.THROW_SPACE) && statement2.getString().startsWith(JAVA.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {
 			findReplacements(variables1, Set.of(creationCoveringTheEntireStatement2.actualString()), replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		}

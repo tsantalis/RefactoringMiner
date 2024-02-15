@@ -3050,6 +3050,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return exactMatches;
 	}
 
+	public boolean allMappingsHaveSameDepthAndIndex() {
+		if(this.nonMappedInnerNodesT1.isEmpty() && this.nonMappedInnerNodesT2.isEmpty() &&
+				this.nonMappedLeavesT1.isEmpty() && this.nonMappedLeavesT2.isEmpty()) {
+			int count = 0;
+			int compositeCount = 0;
+			int identicalCompositeCount = 0;
+			for(AbstractCodeMapping mapping : mappings) {
+				AbstractCodeFragment f1 = mapping.getFragment1();
+				AbstractCodeFragment f2 = mapping.getFragment2();
+				if(f1.getDepth() == f2.getDepth() && f1.getIndex() == f2.getIndex()) {
+					count++;
+					if(mapping instanceof CompositeStatementObjectMapping) {
+						compositeCount++;
+						if(f1.getString().equals(f2.getString())) {
+							identicalCompositeCount++;
+						}
+					}
+				}
+			}
+			if(count == mappings.size() && compositeCount == identicalCompositeCount && compositeCount > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean allMappingsAreExactMatches() {
 		int mappings = this.mappingsWithoutBlocks();
 		int tryMappings = 0;

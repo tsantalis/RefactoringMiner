@@ -5883,7 +5883,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						break;
 					}
 				}
-				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) || possibleExtractVariable || possibleInlineVariable)) {
+				if(parent1 != null && parent2 != null && (parent1.getString().equals(parent2.getString()) ||
+						parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+						parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.TRY_STATEMENT) ||
+						possibleExtractVariable || possibleInlineVariable)) {
 					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
 					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
 					if (replacements != null) {

@@ -547,7 +547,9 @@ public class ReplacementAlgorithm {
 		methodInvocations1.addAll(variablesAndMethodInvocations1);
 		variablesAndMethodInvocations1.addAll(methodInvocations1);
 		variablesAndMethodInvocations1.addAll(variables1);
-		
+		//perform creation replacements
+		findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION, container1, container2, classDiff);
+
 		findReplacements(variables1, creations2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		findReplacements(creations1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_CLASS_INSTANCE_CREATION, container1, container2, classDiff);
 		if(statement1.getString().startsWith(JAVA.THROW_SPACE) && statement2.getString().startsWith(JAVA.THROW_SPACE) && creationCoveringTheEntireStatement2 != null && creations2.isEmpty()) {
@@ -730,9 +732,6 @@ public class ReplacementAlgorithm {
 				findReplacements(variables1, variables2, replacementInfo, ReplacementType.VARIABLE_NAME, container1, container2, classDiff);
 			}
 		}
-		//perform creation replacements
-		findReplacements(creations1, creations2, replacementInfo, ReplacementType.CLASS_INSTANCE_CREATION, container1, container2, classDiff);
-		
 		findReplacements(parenthesizedExpressions1, parenthesizedExpressions2, replacementInfo, ReplacementType.PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		
 		//perform literal replacements
@@ -3854,6 +3853,30 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		//remove subsumed replacements
+		if(replacements.values().contains(true) && replacements.values().contains(false)) {
+			Replacement trueReplacement = null;
+			for(Replacement key : replacements.keySet()) {
+				if(replacements.get(key) == true) {
+					trueReplacement = key;
+					break;
+				}
+			}
+			Set<Replacement> toBeRemoved = new LinkedHashSet<Replacement>();
+			for(Replacement key : replacements.keySet()) {
+				if(replacements.get(key) == false) {
+					if(key.getBefore().equals(trueReplacement.getBefore()) && trueReplacement.getAfter().contains(key.getAfter())) {
+						toBeRemoved.add(key);
+					}
+					else if(key.getAfter().equals(trueReplacement.getAfter()) && trueReplacement.getBefore().contains(key.getBefore())) {
+						toBeRemoved.add(key);
+					}
+				}
+			}
+			for(Replacement r : toBeRemoved) {
+				replacements.remove(r);
+			}
+		}
 		return replacements;
 	}
 
@@ -3917,6 +3940,30 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
+			}
+		}
+		//remove subsumed replacements
+		if(replacements.values().contains(true) && replacements.values().contains(false)) {
+			Replacement trueReplacement = null;
+			for(Replacement key : replacements.keySet()) {
+				if(replacements.get(key) == true) {
+					trueReplacement = key;
+					break;
+				}
+			}
+			Set<Replacement> toBeRemoved = new LinkedHashSet<Replacement>();
+			for(Replacement key : replacements.keySet()) {
+				if(replacements.get(key) == false) {
+					if(key.getBefore().equals(trueReplacement.getBefore()) && trueReplacement.getAfter().contains(key.getAfter())) {
+						toBeRemoved.add(key);
+					}
+					else if(key.getAfter().equals(trueReplacement.getAfter()) && trueReplacement.getBefore().contains(key.getBefore())) {
+						toBeRemoved.add(key);
+					}
+				}
+			}
+			for(Replacement r : toBeRemoved) {
+				replacements.remove(r);
 			}
 		}
 		return replacements;

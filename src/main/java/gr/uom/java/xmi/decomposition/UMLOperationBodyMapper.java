@@ -6733,6 +6733,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(identicalCount == 0)
 						elseCondition = true;
 				}
+				else {
+					List<CompositeStatementObject> ifParents = extractIfParentsFromBlocks(parentMap.keySet());
+					Set<CompositeStatementObject> grandParents = new LinkedHashSet<CompositeStatementObject>();
+					for(CompositeStatementObject ifParent : ifParents) {
+						CompositeStatementObject parent = ifParent.getParent();
+						while(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+							parent = parent.getParent(); 
+						}
+						grandParents.add(parent);
+					}
+					if(container1.getBody() != null && grandParents.size() == 1) {
+						CompositeStatementObject grandParent2 = grandParents.iterator().next();
+						List<CompositeStatementObject> innerNodes1 = container1.getBody().getCompositeStatement().getInnerNodes();
+						for(CompositeStatementObject innerNode1 : innerNodes1) {
+							if(innerNode1.getString().equals(grandParent2.getString())) {
+								elseCondition = true;
+								break;
+							}
+						}
+					}
+				}
 			}
 			if(ifFound && (elseIfFound || (elseFound && elseCondition)) && (ifElseIfChain(parentMap.keySet()) || passDueToIfBecomingElseIf)) {
 				Set<String> variableDeclarationNames1 = new LinkedHashSet<>();

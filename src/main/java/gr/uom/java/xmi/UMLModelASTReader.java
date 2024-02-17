@@ -119,6 +119,7 @@ public class UMLModelASTReader {
 					javaFileContent.contains(XTEXT_GENERATED) || javaFileContent.contains(LWJGL_GENERATED) || javaFileContent.contains(TEST_GENERATOR_GENERATED) ||
 					javaFileContent.contains(THRIFT_GENERATED) || javaFileContent.contains(AUTOREST_GENERATED) || javaFileContent.contains(FHIR_GENERATED) ||
 					javaFileContent.contains(CAMEL_GENERATED)) &&
+					!javaFileContent.contains("\"" + CAMEL_GENERATED + "\"") &&
 					!javaFileContent.contains("private static final String FREE_MARKER_GENERATED = \"generated using freemarker\";")) {
 				continue;
 			}

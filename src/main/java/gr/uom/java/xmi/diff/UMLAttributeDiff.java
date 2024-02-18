@@ -143,7 +143,7 @@ public class UMLAttributeDiff {
 							String variableInitializer = fragment.substring(fragment.indexOf("=")+1, fragment.lastIndexOf(";\n"));
 							List<LeafExpression> leafExpressions2 = fragment2.findExpression(variableInitializer);
 							if(leafExpressions2.size() == 1) {
-								this.mapper = new UMLOperationBodyMapper(initializer1, leafExpressions2.get(0), operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);
+								this.mapper = new UMLOperationBodyMapper(initializer1, fragment2, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);
 							}
 						}
 					}

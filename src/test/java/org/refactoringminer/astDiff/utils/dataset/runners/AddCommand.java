@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import static org.refactoringminer.astDiff.utils.UtilMethods.getFinalFilePath;
-import static org.refactoringminer.astDiff.utils.UtilMethods.getFinalFolderPath;
+import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 // Command class for the "add" command
 @Parameters(commandDescription = "Add files to the index")
@@ -28,6 +27,13 @@ public class AddCommand extends BaseCommand {
             variableArity = true,
             required = false)
     private Set<String> files;
+
+    @Parameter(names = "-snapshot", description = "Snapshot option", required = false)
+    private boolean isSnapshot;
+
+    public boolean isSnapshot() {
+        return isSnapshot;
+    }
 
     @Override
     void postValidationExecution() {
@@ -41,20 +47,23 @@ public class AddCommand extends BaseCommand {
                     commit,
                     projectASTDiff,
                     dir,
-                    infoFile, files);
+                    infoFile, files, isSnapshot());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private static void addTestCase(String repo, String commit, ProjectASTDiff projectASTDiff, String mappingsPath, String testInfoFile, Set<String> selected_files) throws IOException {
+    private static void addTestCase(String repo, String commit, ProjectASTDiff projectASTDiff, String mappingsPath, String testInfoFile, Set<String> selected_files, boolean snapshot) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonFile = mappingsPath + testInfoFile;
 
         for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
             String finalPath = getFinalFilePath(astDiff, mappingsPath,  repo, commit);
+            if (snapshot)
+                finalPath = getSnapShotPath(finalPath);
             Files.createDirectories(Paths.get(getFinalFolderPath(mappingsPath,repo,commit)));
             MappingExportModel.exportToFile(new File(finalPath), astDiff.getAllMappings());
         }
+        if (snapshot) return;
         List<CaseInfo> infos = mapper.readValue(new File(jsonFile), new TypeReference<List<CaseInfo>>(){});
         CaseInfo caseInfo = new CaseInfo(repo,commit, selected_files);
         boolean goingToAdd = true;

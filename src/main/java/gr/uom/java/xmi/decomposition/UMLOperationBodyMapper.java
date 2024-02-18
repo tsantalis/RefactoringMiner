@@ -954,6 +954,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	public UMLOperationBodyMapper(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2,
+			UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
+		this.classDiff = classDiff;
+		this.modelDiff = modelDiff;
+		this.container1 = container1;
+		this.container2 = container2;
+		this.mappings = new LinkedHashSet<AbstractCodeMapping>();
+		this.nonMappedLeavesT1 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedLeavesT2 = new ArrayList<AbstractCodeFragment>();
+		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
+		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
+		if(fragment1 != null && fragment2 != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<AbstractCodeFragment>();
+			leaves1.add(fragment1);
+			List<AbstractCodeFragment> leaves2 = new ArrayList<AbstractCodeFragment>();
+			leaves2.add(fragment2);
+			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		}
+	}
+
 	public UMLOperationBodyMapper(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = modelDiff;

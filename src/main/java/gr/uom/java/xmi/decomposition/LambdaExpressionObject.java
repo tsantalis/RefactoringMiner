@@ -40,9 +40,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private List<UMLParameter> umlParameters = new ArrayList<UMLParameter>();
 	private boolean hasParentheses = false;
 	private VariableDeclarationContainer owner;
+	private String asString;
 	
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner) {
 		this.owner = owner;
+		this.asString = lambda.toString();
 		this.locationInfo = new LocationInfo(cu, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
 		this.hasParentheses = lambda.hasParentheses();
 		List<org.eclipse.jdt.core.dom.VariableDeclaration> params = lambda.parameters();
@@ -79,18 +81,21 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner) {
 		this.owner = owner;
+		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
 		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this);
 	}
 
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, SuperMethodReference reference, VariableDeclarationContainer owner) {
 		this.owner = owner;
+		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
 		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this);
 	}
 
 	public LambdaExpressionObject(CompilationUnit cu, String filePath, TypeMethodReference reference, VariableDeclarationContainer owner) {
 		this.owner = owner;
+		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
 		this.expression = new AbstractExpression(cu, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this);
 	}
@@ -210,6 +215,14 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			}
 		}
 		return sb.toString();
+	}
+
+	public String getString() {
+		return asString;
+	}
+
+	public LeafExpression asLeafExpression() {
+		return new LeafExpression(getString(), getLocationInfo());
 	}
 
 	@Override

@@ -16,8 +16,10 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
@@ -131,6 +133,22 @@ public class UMLAttributeDiff {
 		}
 		else if(initializer1 != null && initializer2 == null) {
 			initializerChanged = true;
+			for(UMLOperationBodyMapper operationBodyMapper : operationBodyMapperList) {
+				if(operationBodyMapper.getContainer1().isConstructor() && operationBodyMapper.getContainer2().isConstructor()) {
+					for(AbstractCodeFragment fragment2 : operationBodyMapper.getNonMappedLeavesT2()) {
+						String fragment = fragment2.getString();
+						if((fragment.startsWith(removedAttribute.getName() + "=") ||
+								fragment.startsWith("this." + removedAttribute.getName() + "=")) &&
+								fragment.endsWith(";\n")) {
+							String variableInitializer = fragment.substring(fragment.indexOf("=")+1, fragment.lastIndexOf(";\n"));
+							List<LeafExpression> leafExpressions2 = fragment2.findExpression(variableInitializer);
+							if(leafExpressions2.size() == 1) {
+								this.mapper = new UMLOperationBodyMapper(initializer1, leafExpressions2.get(0), operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

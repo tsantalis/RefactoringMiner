@@ -57,8 +57,8 @@ public class ProjectASTDiffer
 		projectASTDiff.setRefactorings(this.modelDiffRefactorings);
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList(),false);
-		makeASTDiff(modelDiff.getClassRenameDiffList(),false);
-		makeASTDiff(modelDiff.getClassMoveDiffList(),false);
+		makeASTDiff(withCorrectOrder(modelDiff.getClassRenameDiffList()),false);
+		makeASTDiff(withCorrectOrder(modelDiff.getClassMoveDiffList()),false);
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		makeASTDiff(getExtraDiffs(),true);
 		long diff_execution_finished =  System.currentTimeMillis();
@@ -71,6 +71,32 @@ public class ProjectASTDiffer
 		}
 		computeAllEditScripts();
 	}
+
+	private List<? extends UMLAbstractClassDiff> withCorrectOrder(List<? extends UMLAbstractClassDiff> umlDiffs) {
+		ArrayList<UMLAbstractClassDiff> result = new ArrayList<>(umlDiffs);
+		Set<UMLAbstractClassDiff> seen = new HashSet<>();
+		for (UMLAbstractClassDiff umlDiff : umlDiffs) {
+			UMLAbstractClassDiff found = findDiffWith(result, umlDiff.getOriginalClassName(), umlDiff.getNextClassName());
+			if (found != null && !seen.contains(found))
+			{
+				seen.add(found);
+				result.remove(found);
+				result.add(0, found);
+			}
+		}
+		return result;
+	}
+
+	private UMLAbstractClassDiff findDiffWith(ArrayList<? extends UMLAbstractClassDiff> result, String originalClassName, String nextClassName) {
+		for (UMLAbstractClassDiff umlAbstractClassDiff : result) {
+			if (umlAbstractClassDiff.getOriginalClassName().equals(originalClassName)
+				&&
+				umlAbstractClassDiff.getNextClassName().equals(nextClassName))
+				return umlAbstractClassDiff;
+		}
+		return null;
+	}
+
 	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
 		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {

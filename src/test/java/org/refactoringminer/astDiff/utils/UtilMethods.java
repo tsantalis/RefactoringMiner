@@ -22,6 +22,10 @@ public class UtilMethods {
         String exportName = getFileNameFromSrcDiff(astDiff.getSrcPath());
         return getFinalFolderPath(dir,repo,commit)+ exportName;
     }
+    public static String getSnapShotPath(String path){
+        return path.replace("/resources/astDiff/", "/resources/astDiff/PREV-SNAPSHOT/");
+    }
+
     public static String getFileNameFromSrcDiff(String astSrcName)
     {
         String exportName1 = astSrcName.replace("/",".").replace(".java","");

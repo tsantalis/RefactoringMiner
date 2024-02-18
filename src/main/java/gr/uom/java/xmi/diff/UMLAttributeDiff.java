@@ -130,6 +130,22 @@ public class UMLAttributeDiff {
 		}
 		else if(initializer1 == null && initializer2 != null) {
 			initializerChanged = true;
+			for(UMLOperationBodyMapper operationBodyMapper : operationBodyMapperList) {
+				if(operationBodyMapper.getContainer1().isConstructor() && operationBodyMapper.getContainer2().isConstructor()) {
+					for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
+						String fragment = fragment1.getString();
+						if((fragment.startsWith(addedAttribute.getName() + "=") ||
+								fragment.startsWith("this." + addedAttribute.getName() + "=")) &&
+								fragment.endsWith(";\n")) {
+							String variableInitializer = fragment.substring(fragment.indexOf("=")+1, fragment.lastIndexOf(";\n"));
+							List<LeafExpression> leafExpressions1 = fragment1.findExpression(variableInitializer);
+							if(leafExpressions1.size() == 1) {
+								this.mapper = new UMLOperationBodyMapper(fragment1, initializer2, operationBodyMapper.getContainer1(), operationBodyMapper.getContainer2(), classDiff, modelDiff);
+							}
+						}
+					}
+				}
+			}
 		}
 		else if(initializer1 != null && initializer2 == null) {
 			initializerChanged = true;

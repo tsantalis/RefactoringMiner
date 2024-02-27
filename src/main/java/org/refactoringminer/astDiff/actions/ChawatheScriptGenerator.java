@@ -268,7 +268,7 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 
 	public String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
 		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {
-			if (stringTreeContextEntry.getValue().getRoot() == TreeUtilFunctions.getFinalRoot(t))
+			if (stringTreeContextEntry.getValue().getRoot().equals(TreeUtilFunctions.getFinalRoot(t)))
 			{
 				return stringTreeContextEntry.getKey();
 			}

@@ -35,7 +35,7 @@ public class BasicTreeMatcher implements TreeMatcher {
 
 	public MappingStore process(Tree src, Tree dst) {
 		MappingStore match;
-		match = new CustomGreedy(minP).match(src, dst);
+		match = new CustomTopDownMatcher(minP).match(src, dst);
 		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
 		customBottomUpMatcher.match(src, dst, match);
 		optimizeMappings(match);

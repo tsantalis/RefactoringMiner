@@ -7,8 +7,8 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 
-public class CustomGreedy extends GreedySubtreeMatcher {
-	public CustomGreedy(int minP) {
+public class CustomTopDownMatcher extends GreedySubtreeMatcher {
+	public CustomTopDownMatcher(int minP) {
 		super();
 		setMinPriority(minP);
 	}

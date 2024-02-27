@@ -30,6 +30,14 @@ public class ASTDiff extends Diff {
 		this.mappings = mappings;
 	}
 
+	public ASTDiff(String srcPath, String dstPath, TreeContext src, TreeContext dst, ExtendedMultiMappingStore mappings, EditScript ed) {
+		super(src, dst, new MappingStore(src.getRoot(),dst.getRoot()), new EditScript());
+		this.srcPath = srcPath;
+		this.dstPath = dstPath;
+		this.mappings = mappings;
+		finalizeEditScript(ed);
+	}
+
 	/**
 	 * @deprecated
 	 * This method is going to be replaced due to the misleading name

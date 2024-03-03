@@ -35,7 +35,7 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Modified files ")
-                                        .span(class_("badge badge-secondary")).content(comperator.getModifiedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getModifiedFilesName().size())
                                     ._h4()
                                 ._div()
                                 .render_if(new ModifiedFiles(comperator.getModifiedFilesName()), comperator.getModifiedFilesName().size() > 0)
@@ -48,7 +48,7 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header bg-danger"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Deleted files ")
-                                        .span(class_("badge badge-secondary")).content(comperator.getRemovedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getRemovedFilesName().size())
                                     ._h4()
                                 ._div()
                                 .render_if(new AddedOrDeletedFiles(comperator.getRemovedFilesName()),
@@ -60,7 +60,7 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header bg-success"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Added files ")
-                                        .span(class_("badge badge-secondary")).content(comperator.getAddedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getAddedFilesName().size())
                                     ._h4()
                                 ._div()
                                 .render_if(new AddedOrDeletedFiles(comperator.getAddedFilesName()),

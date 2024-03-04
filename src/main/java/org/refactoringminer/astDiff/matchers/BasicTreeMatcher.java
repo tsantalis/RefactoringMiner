@@ -34,10 +34,8 @@ public class BasicTreeMatcher implements TreeMatcher {
 	}
 
 	public MappingStore process(Tree src, Tree dst) {
-		MappingStore match;
-		match = new CustomTopDownMatcher(minP).match(src, dst);
-		CustomBottomUpMatcher customBottomUpMatcher = new CustomBottomUpMatcher();
-		customBottomUpMatcher.match(src, dst, match);
+		MappingStore match = new CustomTopDownMatcher(minP).match(src, dst);
+		new CustomBottomUpMatcher().match(src, dst, match);
 		optimizeMappings(match);
 		return match;
 	}

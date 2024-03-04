@@ -163,12 +163,12 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		Set<Tree> dstIgnored = new HashSet<>();
 		Collections.sort(ambiguousList, new ExtendedFullMappingComparator(mappings));
 		if (ambiguousList.size() > 1)
-			ambiguousStringLiteralModification(ambiguousList,srcIgnored,dstIgnored);
+			ambiguousLeafModification(ambiguousList,srcIgnored,dstIgnored);
 		// Select the best ambiguous mappings
 		retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
 	}
 
-	private void ambiguousStringLiteralModification(List<Mapping> ambiguousList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+	private void ambiguousLeafModification(List<Mapping> ambiguousList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> ret = new ArrayList<>();
 		for (Mapping mapping : ambiguousList) {
 			Tree asrc = mapping.first;

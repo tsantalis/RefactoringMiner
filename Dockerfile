@@ -12,7 +12,15 @@ RUN /opt/refactoringminer/gradlew -x test -p /opt/refactoringminer build -Pbuild
 RUN unzip /opt/refactoringminer/build/distributions/RefactoringMiner-DockerBuild.zip -d /opt/refactoringminer/build/distributions
 
 # Stage 2: Runtime stage
-FROM amazoncorretto:17
+# Use Alpine Linux as the base image
+FROM alpine:latest
+
+# Install OpenJDK 17 JRE from the Alpine package repository
+RUN apk add --no-cache openjdk17-jre
+
+# Set environment variables for Java
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm
+ENV PATH="$JAVA_HOME/bin:${PATH}"
 
 RUN mkdir -p /diff/left /diff/right
 

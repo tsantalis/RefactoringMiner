@@ -1443,7 +1443,7 @@ public class StringBasedHeuristics {
 						filteredIntersection.add(common);
 					}
 				}
-				if(filteredIntersection.size() == Math.min(tokens1.size(), tokens2.size()) || commonTokens.size() == Math.min(tokens1.size(), tokens2.size())) {
+				if(filteredIntersection.size() == Math.min(tokens1.size(), tokens2.size())) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
 					for(String key : filteredIntersection) {
 						List<LeafExpression> expressions1 = statement1.findExpression(key);

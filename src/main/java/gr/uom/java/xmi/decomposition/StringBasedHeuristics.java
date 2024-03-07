@@ -1365,6 +1365,16 @@ public class StringBasedHeuristics {
 					if(tokens2.contains(token1)) {
 						commonTokens.add(token1);
 					}
+					else {
+						for(String token2 : tokens2) {
+							if(token2.endsWith(");\n") && token2.length() > 3) {
+								String t2 = token2.substring(0, token2.length()-3);
+								if(token1.equals(t2)) {
+									commonTokens.add(token1);
+								}
+							}
+						}
+					}
 				}
 				Set<String> filteredIntersection = new LinkedHashSet<>();
 				for(String common : commonTokens) {
@@ -1391,6 +1401,7 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
+					processStringLiterals(statement1, statement2, container1, container2, r);
 					info.getReplacements().add(r);
 					return true;
 				}
@@ -1432,7 +1443,7 @@ public class StringBasedHeuristics {
 						filteredIntersection.add(common);
 					}
 				}
-				if(filteredIntersection.size() == Math.min(tokens1.size(), tokens2.size())) {
+				if(filteredIntersection.size() == Math.min(tokens1.size(), tokens2.size()) || commonTokens.size() == Math.min(tokens1.size(), tokens2.size())) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
 					for(String key : filteredIntersection) {
 						List<LeafExpression> expressions1 = statement1.findExpression(key);
@@ -1444,6 +1455,7 @@ public class StringBasedHeuristics {
 							}
 						}
 					}
+					processStringLiterals(statement1, statement2, container1, container2, r);
 					info.getReplacements().add(r);
 					return true;
 				}
@@ -1662,6 +1674,45 @@ public class StringBasedHeuristics {
 			}
 		}
 		return false;
+	}
+
+	private static void processStringLiterals(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
+			VariableDeclarationContainer container1, VariableDeclarationContainer container2,
+			IntersectionReplacement r) {
+		if(statement1.getStringLiterals().size() > 0 && statement2.getStringLiterals().size() > 0) {
+			if(statement1.getStringLiterals().size() <= statement2.getStringLiterals().size()) {
+				for(LeafExpression expr1 : statement1.getStringLiterals()) {
+					String token1 = expr1.getString();
+					String token1WithoutDoubleQuotes = token1.replaceAll("\"", "").trim();
+					for(LeafExpression expr2 : statement2.getStringLiterals()) {
+						String token2 = expr2.getString();
+						if(!token1.equals(token2)) {
+							String token2WithoutDoubleQuotes = token2.replaceAll("\"", "").trim();
+							if(token1WithoutDoubleQuotes.contains(token2WithoutDoubleQuotes) || token2WithoutDoubleQuotes.contains(token1WithoutDoubleQuotes)) {
+								LeafMapping leafMapping = new LeafMapping(expr1, expr2, container1, container2);
+								r.addSubExpressionMapping(leafMapping);
+							}
+						}
+					}
+				}
+			}
+			else {
+				for(LeafExpression expr2 : statement2.getStringLiterals()) {
+					String token2 = expr2.getString();
+					String token2WithoutDoubleQuotes = token2.replaceAll("\"", "").trim();
+					for(LeafExpression expr1 : statement1.getStringLiterals()) {
+						String token1 = expr1.getString();
+						if(!token1.equals(token2)) {
+							String token1WithoutDoubleQuotes = token1.replaceAll("\"", "").trim();
+							if(token1WithoutDoubleQuotes.contains(token2WithoutDoubleQuotes) || token2WithoutDoubleQuotes.contains(token1WithoutDoubleQuotes)) {
+								LeafMapping leafMapping = new LeafMapping(expr1, expr2, container1, container2);
+								r.addSubExpressionMapping(leafMapping);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	protected static boolean equalAfterInfixExpressionExpansion(String s1, String s2, ReplacementInfo replacementInfo, List<LeafExpression> infixExpressions1) {

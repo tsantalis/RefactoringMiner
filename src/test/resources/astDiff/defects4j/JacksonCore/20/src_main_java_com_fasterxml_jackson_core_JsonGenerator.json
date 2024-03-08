@@ -29776,6 +29776,17 @@
   "firstEndPos" : 52581,
   "secondEndPos" : 52778
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"No native support for writing embedded objects\"",
+  "secondLabel" : "\"No native support for writing embedded objects of type \"",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 52582,
+  "secondPos" : 52779,
+  "firstEndPos" : 52630,
+  "secondEndPos" : 52836
+}, {
   "firstType" : "ThisExpression",
   "secondType" : "ThisExpression",
   "firstLabel" : "",

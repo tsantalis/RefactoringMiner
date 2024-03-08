@@ -1357,7 +1357,7 @@ public class StringBasedHeuristics {
 					return true;
 				}
 			}
-			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && !s1.contains(",") && s2.contains(",")) {
+			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && noCommaS1(s1, statement1, statement2) && s2.contains(",")) {
 				List<String> tokens1 = Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1));
 				List<String> tokens2 = Arrays.asList(SPLIT_COMMA_PATTERN.split(s2));
 				List<String> commonTokens = new ArrayList<>();
@@ -1671,6 +1671,28 @@ public class StringBasedHeuristics {
 					info.getReplacements().addAll(concatReplacements);
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean noCommaS1(String s1, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
+		if(!s1.contains(",")) {
+			return true;
+		}
+		List<AbstractCall> calls1 = statement1.getMethodInvocations();
+		List<AbstractCall> calls2 = statement2.getMethodInvocations();
+		if(calls1.size() == calls2.size()) {
+			String tempS1 = new String(s1);
+			for(int i=0; i<calls1.size(); i++) {
+				AbstractCall call1 = calls1.get(i);
+				AbstractCall call2 = calls2.get(i);
+				if(call1.actualString().equals(call2.actualString()) && call1.actualString().contains(",")) {
+					tempS1 = tempS1.replace(call1.actualString(), "");
+				}
+			}
+			if(!tempS1.contains(",")) {
+				return true;
 			}
 		}
 		return false;

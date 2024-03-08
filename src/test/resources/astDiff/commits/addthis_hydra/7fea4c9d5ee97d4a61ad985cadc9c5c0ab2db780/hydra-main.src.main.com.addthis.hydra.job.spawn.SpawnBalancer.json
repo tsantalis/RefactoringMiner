@@ -13716,6 +13716,17 @@
   "firstEndPos" : 12251,
   "secondEndPos" : 17091
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balancer] invalid call to pairTasksAndHosts: tasks=\"",
+  "secondLabel" : "\"[spawn.balancer] invalid call to pairTasksAndHosts: tasks={} hosts={}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 12163,
+  "secondPos" : 17006,
+  "firstEndPos" : 12223,
+  "secondEndPos" : 17077
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "tasks",
@@ -13726,6 +13737,17 @@
   "secondPos" : 17079,
   "firstEndPos" : 12231,
   "secondEndPos" : 17084
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" hosts=\"",
+  "secondLabel" : "\"[spawn.balancer] invalid call to pairTasksAndHosts: tasks={} hosts={}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 12234,
+  "secondPos" : 17006,
+  "firstEndPos" : 12243,
+  "secondEndPos" : 17077
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18303,6 +18325,17 @@
   "firstEndPos" : 15936,
   "secondEndPos" : 44049
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Rebalancing job: \"",
+  "secondLabel" : "\"Rebalancing job: {} maxTasksToMove={} maxPerHost={}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 15835,
+  "secondPos" : 43955,
+  "firstEndPos" : 15854,
+  "secondEndPos" : 44008
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -18347,6 +18380,17 @@
   "firstEndPos" : 15866,
   "secondEndPos" : 44019
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" maxTasksToMove=\"",
+  "secondLabel" : "\"Rebalancing job: {} maxTasksToMove={} maxPerHost={}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 15871,
+  "secondPos" : 43955,
+  "firstEndPos" : 15889,
+  "secondEndPos" : 44008
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "maxTasksToMove",
@@ -18357,6 +18401,17 @@
   "secondPos" : 44023,
   "firstEndPos" : 15906,
   "secondEndPos" : 44037
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" maxPerHost=\"",
+  "secondLabel" : "\"Rebalancing job: {} maxTasksToMove={} maxPerHost={}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 15909,
+  "secondPos" : 43955,
+  "firstEndPos" : 15923,
+  "secondEndPos" : 44008
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19392,6 +19447,17 @@
   "firstEndPos" : 16790,
   "secondEndPos" : 44885
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"hostsSorted.size=\"",
+  "secondLabel" : "\"hostsSorted.size={} hostWithMost:{} hostWithLeast:{} mostTasksOnHost: {} leastTasksOnHost: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 16544,
+  "secondPos" : 44682,
+  "firstEndPos" : 16563,
+  "secondEndPos" : 44777
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -19436,6 +19502,17 @@
   "firstEndPos" : 16582,
   "secondEndPos" : 44819
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" hostWithMost:\"",
+  "secondLabel" : "\"hostsSorted.size={} hostWithMost:{} hostWithLeast:{} mostTasksOnHost: {} leastTasksOnHost: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 16613,
+  "secondPos" : 44682,
+  "firstEndPos" : 16629,
+  "secondEndPos" : 44777
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "hostWithMost",
@@ -19446,6 +19523,17 @@
   "secondPos" : 44823,
   "firstEndPos" : 16644,
   "secondEndPos" : 44835
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" hostWithLeast:\"",
+  "secondLabel" : "\"hostsSorted.size={} hostWithMost:{} hostWithLeast:{} mostTasksOnHost: {} leastTasksOnHost: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 16647,
+  "secondPos" : 44682,
+  "firstEndPos" : 16664,
+  "secondEndPos" : 44777
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19458,6 +19546,17 @@
   "firstEndPos" : 16680,
   "secondEndPos" : 44850
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" mostTasksOnHost: \"",
+  "secondLabel" : "\"hostsSorted.size={} hostWithMost:{} hostWithLeast:{} mostTasksOnHost: {} leastTasksOnHost: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 16709,
+  "secondPos" : 44682,
+  "firstEndPos" : 16729,
+  "secondEndPos" : 44777
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "mostTasksOnHost",
@@ -19468,6 +19567,17 @@
   "secondPos" : 44852,
   "firstEndPos" : 16747,
   "secondEndPos" : 44867
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" leastTasksOnHost: \"",
+  "secondLabel" : "\"hostsSorted.size={} hostWithMost:{} hostWithLeast:{} mostTasksOnHost: {} leastTasksOnHost: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 16750,
+  "secondPos" : 44682,
+  "firstEndPos" : 16771,
+  "secondEndPos" : 44777
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22021,6 +22131,17 @@
   "firstEndPos" : 18924,
   "secondEndPos" : 58795
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"received move assignment maxPerHost:\"",
+  "secondLabel" : "\"received move assignment maxPerHost:{} numToMove:{} pushHost:{}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 18819,
+  "secondPos" : 58675,
+  "firstEndPos" : 18857,
+  "secondEndPos" : 58740
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "maxPerHost",
@@ -22032,6 +22153,17 @@
   "firstEndPos" : 18870,
   "secondEndPos" : 58752
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" numToMove:\"",
+  "secondLabel" : "\"received move assignment maxPerHost:{} numToMove:{} pushHost:{}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 18873,
+  "secondPos" : 58675,
+  "firstEndPos" : 18886,
+  "secondEndPos" : 58740
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "numToMove",
@@ -22042,6 +22174,17 @@
   "secondPos" : 58754,
   "firstEndPos" : 18898,
   "secondEndPos" : 58763
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" pushHost:\"",
+  "secondLabel" : "\"received move assignment maxPerHost:{} numToMove:{} pushHost:{}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 18901,
+  "secondPos" : 58675,
+  "firstEndPos" : 18913,
+  "secondEndPos" : 58740
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -40270,6 +40413,17 @@
   "firstEndPos" : 30395,
   "secondEndPos" : 46840
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balancer] \"",
+  "secondLabel" : "\"[spawn.balancer] {} reallocation failed: host list empty\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 30325,
+  "secondPos" : 46774,
+  "firstEndPos" : 30344,
+  "secondEndPos" : 46832
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "hostID",
@@ -40280,6 +40434,17 @@
   "secondPos" : 46834,
   "firstEndPos" : 30353,
   "secondEndPos" : 46840
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" reallocation failed: host list empty\"",
+  "secondLabel" : "\"[spawn.balancer] {} reallocation failed: host list empty\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 30356,
+  "secondPos" : 46774,
+  "firstEndPos" : 30395,
+  "secondEndPos" : 46832
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -41183,6 +41348,17 @@
   "firstEndPos" : 31051,
   "secondEndPos" : 47510
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balancer] \"",
+  "secondLabel" : "\"[spawn.balancer] {} categorized as overloaded host; looking for tasks to push off of it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 30950,
+  "secondPos" : 47413,
+  "firstEndPos" : 30969,
+  "secondEndPos" : 47502
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "hostID",
@@ -41193,6 +41369,17 @@
   "secondPos" : 47504,
   "firstEndPos" : 30978,
   "secondEndPos" : 47510
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" categorized as overloaded host; looking for tasks to push off of it\"",
+  "secondLabel" : "\"[spawn.balancer] {} categorized as overloaded host; looking for tasks to push off of it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 30981,
+  "secondPos" : 47413,
+  "firstEndPos" : 31051,
+  "secondEndPos" : 47502
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -41711,6 +41898,17 @@
   "firstEndPos" : 31467,
   "secondEndPos" : 47922
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balancer] \"",
+  "secondLabel" : "\"[spawn.balancer] {} categorized as underloaded host; looking for tasks to pull onto it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 31367,
+  "secondPos" : 47826,
+  "firstEndPos" : 31386,
+  "secondEndPos" : 47914
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "hostID",
@@ -41721,6 +41919,17 @@
   "secondPos" : 47916,
   "firstEndPos" : 31395,
   "secondEndPos" : 47922
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" categorized as underloaded host; looking for tasks to pull onto it\"",
+  "secondLabel" : "\"[spawn.balancer] {} categorized as underloaded host; looking for tasks to pull onto it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 31398,
+  "secondPos" : 47826,
+  "firstEndPos" : 31467,
+  "secondEndPos" : 47914
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -42261,6 +42470,17 @@
   "firstEndPos" : 31865,
   "secondEndPos" : 48336
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balance] \"",
+  "secondLabel" : "\"[spawn.balance] {} categorized as overworked host; looking for tasks to push off it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 31768,
+  "secondPos" : 48243,
+  "firstEndPos" : 31786,
+  "secondEndPos" : 48328
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "hostID",
@@ -42271,6 +42491,17 @@
   "secondPos" : 48330,
   "firstEndPos" : 31795,
   "secondEndPos" : 48336
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" categorized as overworked host; looking for tasks to push off it\"",
+  "secondLabel" : "\"[spawn.balance] {} categorized as overworked host; looking for tasks to push off it\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 31798,
+  "secondPos" : 48243,
+  "firstEndPos" : 31865,
+  "secondEndPos" : 48328
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -75415,6 +75646,17 @@
   "firstEndPos" : 56853,
   "secondEndPos" : 54333
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"[spawn.balancer] Host \"",
+  "secondLabel" : "\"[spawn.balancer] Host {} with uuid {} is nearly full, with used disk {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 56711,
+  "secondPos" : 54177,
+  "firstEndPos" : 56735,
+  "secondEndPos" : 54250
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -75459,6 +75701,17 @@
   "firstEndPos" : 56750,
   "secondEndPos" : 54264
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" with uuid \"",
+  "secondLabel" : "\"[spawn.balancer] Host {} with uuid {} is nearly full, with used disk {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 56755,
+  "secondPos" : 54177,
+  "firstEndPos" : 56768,
+  "secondEndPos" : 54250
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -75502,6 +75755,17 @@
   "secondPos" : 54294,
   "firstEndPos" : 56787,
   "secondEndPos" : 54305
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" is nearly full, with used disk \"",
+  "secondLabel" : "\"[spawn.balancer] Host {} with uuid {} is nearly full, with used disk {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 56792,
+  "secondPos" : 54177,
+  "firstEndPos" : 56826,
+  "secondEndPos" : 54250
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -93147,6 +93411,17 @@
   "firstEndPos" : 70040,
   "secondEndPos" : 36562
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Warning: failed to recover task \"",
+  "secondLabel" : "\"Warning: failed to recover task {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 69971,
+  "secondPos" : 36504,
+  "firstEndPos" : 70005,
+  "secondEndPos" : 36540
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -93190,6 +93465,17 @@
   "secondPos" : 36547,
   "firstEndPos" : 70022,
   "secondEndPos" : 36556
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\": \"",
+  "secondLabel" : "\"Warning: failed to recover task {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 70027,
+  "secondPos" : 36504,
+  "firstEndPos" : 70031,
+  "secondEndPos" : 36540
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -93565,6 +93851,17 @@
   "firstEndPos" : 70304,
   "secondEndPos" : 36813
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Warning: failed to update job \"",
+  "secondLabel" : "\"Warning: failed to update job: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 70250,
+  "secondPos" : 36768,
+  "firstEndPos" : 70282,
+  "secondEndPos" : 36803
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "jobId",
@@ -93575,6 +93872,17 @@
   "secondPos" : 36805,
   "firstEndPos" : 70290,
   "secondEndPos" : 36810
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\": \"",
+  "secondLabel" : "\"Warning: failed to update job: {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 70293,
+  "secondPos" : 36768,
+  "firstEndPos" : 70297,
+  "secondEndPos" : 36803
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -95622,6 +95930,17 @@
   "firstEndPos" : 71683,
   "secondEndPos" : 38237
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Skipping nonexistent job for task \"",
+  "secondLabel" : "\"Skipping nonexistent job for task {} during host fail.\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 71617,
+  "secondPos" : 38175,
+  "firstEndPos" : 71653,
+  "secondEndPos" : 38231
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "task",
@@ -95632,6 +95951,17 @@
   "secondPos" : 38233,
   "firstEndPos" : 71660,
   "secondEndPos" : 38237
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" during host fail.\"",
+  "secondLabel" : "\"Skipping nonexistent job for task {} during host fail.\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 71663,
+  "secondPos" : 38175,
+  "firstEndPos" : 71683,
+  "secondEndPos" : 38231
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -96292,6 +96622,17 @@
   "secondPos" : 38611,
   "firstEndPos" : 72102,
   "secondEndPos" : 38659
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Found no replica for task \"",
+  "secondLabel" : "\"Found no replica for task {}\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 72055,
+  "secondPos" : 38611,
+  "firstEndPos" : 72083,
+  "secondEndPos" : 38641
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -97162,6 +97503,17 @@
   "firstEndPos" : 72859,
   "secondEndPos" : 39412
 }, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"Failed to find a host that could hold \"",
+  "secondLabel" : "\"Failed to find a host that could hold {} after host failure\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 72776,
+  "secondPos" : 39333,
+  "firstEndPos" : 72816,
+  "secondEndPos" : 39394
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -97205,6 +97557,17 @@
   "secondPos" : 39401,
   "firstEndPos" : 72833,
   "secondEndPos" : 39410
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\" after host failure\"",
+  "secondLabel" : "\"Failed to find a host that could hold {} after host failure\"",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 72838,
+  "secondPos" : 39333,
+  "firstEndPos" : 72859,
+  "secondEndPos" : 39394
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

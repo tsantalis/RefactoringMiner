@@ -61,14 +61,14 @@ public class ProjectASTDiffer
 		makeASTDiff(withCorrectOrder(modelDiff.getClassMoveDiffList()),false);
 		makeASTDiff(modelDiff.getInnerClassMoveDiffList(),true);
 		makeASTDiff(getExtraDiffs(),true);
-		long diff_execution_finished =  System.currentTimeMillis();
-		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			processOptimization(diff, optimizationDataMap.get(diff.getSrcPath()));
 		}
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
 			new MissingIdenticalSubtree().match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
+		long diff_execution_finished =  System.currentTimeMillis();
+		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
 	}
 

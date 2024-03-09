@@ -231,7 +231,14 @@ public class ExtractOperationRefactoring implements Refactoring {
 		if(creation2 == null) {
 			creation2 = mapping.getFragment2().assignmentCreationCoveringEntireStatement();
 		}
-		List<LeafExpression> expressions1 = mapping.getFragment1().findExpression(argument);
+		List<LeafExpression> expressions1 = null;
+		if(argument.contains(JAVA.LAMBDA_ARROW)) {
+			String actualArgument = argument.substring(argument.indexOf(JAVA.LAMBDA_ARROW) + JAVA.LAMBDA_ARROW.length());
+			expressions1 = mapping.getFragment1().findExpression(actualArgument);
+		}
+		else {
+			expressions1 = mapping.getFragment1().findExpression(argument);
+		}
 		if(expressions1.size() > 0) {
 			List<AbstractCodeFragment> leaves = sourceOperationAfterExtraction.getBody().getCompositeStatement().getLeaves();
 			for(AbstractCodeFragment leaf : leaves) {

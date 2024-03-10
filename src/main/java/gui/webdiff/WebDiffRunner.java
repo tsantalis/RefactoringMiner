@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
+import org.refactoringminer.util.GitServiceImpl;
 
 import java.nio.file.Path;
 
@@ -72,9 +73,7 @@ public class WebDiffRunner {
                         runner.src.toAbsolutePath().normalize(),
                         runner.dst.toAbsolutePath().normalize());
                 case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
-                        runner.repo,
-                        runner.commit,
-                        timeout);
+                        new GitServiceImpl().openRepository(runner.repo), runner.commit);
             };
         }
     }

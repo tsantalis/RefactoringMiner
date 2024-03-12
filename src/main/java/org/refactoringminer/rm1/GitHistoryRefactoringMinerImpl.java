@@ -871,12 +871,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
 						try {
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							String currentRawFile = null;
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								InputStream parentRawFileInputStream = repository.getFileContent(fileName, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
+								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
 							filesBefore.put(fileName, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
 						}
@@ -889,9 +899,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if (commitFile.getStatus().equals("added")) {
 					Runnable r = () -> {
 						try {
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							String currentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							}
 							filesCurrent.put(fileName, currentRawFile);
 						}
 						catch(IOException e) {
@@ -903,10 +920,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if (commitFile.getStatus().equals("removed")) {
 					Runnable r = () -> {
 						try {
-							URL rawURL = commitFile.getRawUrl();
-							InputStream rawFileInputStream = rawURL.openStream();
-							String rawFile = IOUtils.toString(rawFileInputStream);
-							filesBefore.put(fileName, rawFile);
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream parentRawFileInputStream = repository.getFileContent(fileName, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL rawURL = commitFile.getRawUrl();
+								InputStream rawFileInputStream = rawURL.openStream();
+								parentRawFile = IOUtils.toString(rawFileInputStream);
+							}
+							filesBefore.put(fileName, parentRawFile);
 							if(fileName.contains("/")) {
 								deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
 							}
@@ -922,14 +946,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					Runnable r = () -> {
 						try {
 							String previousFilename = commitFile.getPreviousFilename();
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-							String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							String currentRawFile = null;
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								InputStream parentRawFileInputStream = repository.getFileContent(previousFilename, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+								String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
+								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
+								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
 							filesBefore.put(previousFilename, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
 							renamedFilesHint.put(previousFilename, fileName);
@@ -1069,12 +1103,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				if (commitFile.getStatus().equals("modified")) {
 					Runnable r = () -> {
 						try {
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
-							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							String currentRawFile = null;
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								InputStream parentRawFileInputStream = repository.getFileContent(fileName, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId);
+								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
 							filesBefore.put(fileName, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
 							File parentFilePath = new File(rootFolder, repoName + "-" + parentCommitId + "/" + fileName);
@@ -1091,9 +1135,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if (commitFile.getStatus().equals("added")) {
 					Runnable r = () -> {
 						try {
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							String currentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+							}
 							filesCurrent.put(fileName, currentRawFile);
 							File currentFilePath = new File(rootFolder, repoName + "-" + currentCommitId + "/" + fileName);
 							FileUtils.writeStringToFile(currentFilePath, currentRawFile);
@@ -1107,9 +1158,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				else if (commitFile.getStatus().equals("removed")) {
 					Runnable r = () -> {
 						try {
-							URL rawURL = commitFile.getRawUrl();
-							InputStream rawFileInputStream = rawURL.openStream();
-							String parentRawFile = IOUtils.toString(rawFileInputStream);
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream parentRawFileInputStream = repository.getFileContent(fileName, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL rawURL = commitFile.getRawUrl();
+								InputStream rawFileInputStream = rawURL.openStream();
+								parentRawFile = IOUtils.toString(rawFileInputStream);
+							}
 							filesBefore.put(fileName, parentRawFile);
 							if(fileName.contains("/")) {
 								deletedAndRenamedFileParentDirectories.add(fileName.substring(0, fileName.lastIndexOf("/")));
@@ -1128,14 +1186,24 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					Runnable r = () -> {
 						try {
 							String previousFilename = commitFile.getPreviousFilename();
-							URL currentRawURL = commitFile.getRawUrl();
-							InputStream currentRawFileInputStream = currentRawURL.openStream();
-							String currentRawFile = IOUtils.toString(currentRawFileInputStream);
-							String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
-							String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
-							String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
-							InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
-							String parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							String currentRawFile = null;
+							String parentRawFile = null;
+							if(repository.isPrivate()) {
+								InputStream currentRawFileInputStream = repository.getFileContent(fileName, currentCommitId).read();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								InputStream parentRawFileInputStream = repository.getFileContent(previousFilename, parentCommitId).read();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
+							else {
+								URL currentRawURL = commitFile.getRawUrl();
+								InputStream currentRawFileInputStream = currentRawURL.openStream();
+								currentRawFile = IOUtils.toString(currentRawFileInputStream);
+								String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
+								String encodedPreviousFilename = URLEncoder.encode(previousFilename, StandardCharsets.UTF_8);
+								String rawURLInParentCommit = currentRawURL.toString().replace(commitId, parentCommitId).replace(encodedFileName, encodedPreviousFilename);
+								InputStream parentRawFileInputStream = new URL(rawURLInParentCommit).openStream();
+								parentRawFile = IOUtils.toString(parentRawFileInputStream);
+							}
 							filesBefore.put(previousFilename, parentRawFile);
 							filesCurrent.put(fileName, currentRawFile);
 							renamedFilesHint.put(previousFilename, fileName);

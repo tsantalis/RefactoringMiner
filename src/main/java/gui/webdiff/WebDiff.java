@@ -8,13 +8,8 @@ import org.rendersnake.Renderable;
 import spark.Spark;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static spark.Spark.*;
-
-;
 
 public class WebDiff  {
     public static final String JQUERY_JS_URL = "https://code.jquery.com/jquery-3.4.1.min.js";
@@ -94,10 +89,5 @@ public class WebDiff  {
         HtmlCanvas c = new HtmlCanvas();
         r.renderOn(c);
         return c.toHtml();
-    }
-
-    private static String readFile(String path, Charset encoding)  throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
     }
 }

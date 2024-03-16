@@ -346,7 +346,23 @@ public class ReplacementAlgorithm {
 		replaceVariablesWithArguments(methodInvocationMap1, methodInvocations1, map);
 		
 		//remove methodInvocation covering the entire statement
-		if(invocationCoveringTheEntireStatement1 != null) {
+		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+		boolean returnMatch2 = false;
+		if(variableReturn2 && invocationCoveringTheEntireStatement1 != null) {
+			for(AbstractCodeFragment f2 : replacementInfo.getStatements2()) {
+				if(f2.getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration2 = f2.getVariableDeclarations().get(0);
+					if(declaration2.getVariableName().equals(statement2.getVariables().get(0).getString()) &&
+							declaration2.getInitializer() != null) {
+						if(declaration2.getInitializer().getString().equals(invocationCoveringTheEntireStatement1.actualString())) {
+							returnMatch2 = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if(invocationCoveringTheEntireStatement1 != null && !returnMatch2) {
 			for(String methodInvocation1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall call : methodInvocationMap1.get(methodInvocation1)) {
 					if(invocationCoveringTheEntireStatement1.getLocationInfo().equals(call.getLocationInfo())) {
@@ -355,7 +371,23 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		if(invocationCoveringTheEntireStatement2 != null) {
+		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+		boolean returnMatch1 = false;
+		if(variableReturn1 && invocationCoveringTheEntireStatement2 != null) {
+			for(AbstractCodeFragment f1 : replacementInfo.getStatements1()) {
+				if(f1.getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration1 = f1.getVariableDeclarations().get(0);
+					if(declaration1.getVariableName().equals(statement1.getVariables().get(0).getString()) &&
+							declaration1.getInitializer() != null) {
+						if(declaration1.getInitializer().getString().equals(invocationCoveringTheEntireStatement2.actualString())) {
+							returnMatch1 = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if(invocationCoveringTheEntireStatement2 != null && !returnMatch1) {
 			for(String methodInvocation2 : methodInvocationMap2.keySet()) {
 				for(AbstractCall call : methodInvocationMap2.get(methodInvocation2)) {
 					if(invocationCoveringTheEntireStatement2.getLocationInfo().equals(call.getLocationInfo())) {
@@ -3011,13 +3043,11 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
-		boolean variableReturn1 = statement1.getVariables().size() > 0 && statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
 		boolean variableReturnQualified1 = false;
 		if(variableReturn1 && statement1.getVariables().get(0).getString().contains(".")) {
 			variableReturnQualified1 = true;
 		}
 		boolean variableReturnAsLastStatement1 = variableReturn1 && statement1.isLastStatement();
-		boolean variableReturn2 = statement2.getVariables().size() > 0 && statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION);
 		boolean variableReturnQualified2 = false;
 		if(variableReturn2 && statement2.getVariables().get(0).getString().contains(".")) {
 			variableReturnQualified2 = true;

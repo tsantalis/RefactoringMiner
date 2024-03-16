@@ -13022,63 +13022,27 @@
 }]
 },
 {
-	"type": "Move And Inline Method",
-	"description": "Move And Inline Method public getMaxAllocation() : long moved from class org.apache.drill.exec.physical.base.AbstractGroupScan to class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer & inlined to public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>",
+	"type": "Extract Variable",
+	"description": "Extract Variable operatorsMemory : Long in method public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long> from class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer",
 	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
-		"startLine": 110,
-		"endLine": 114,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "inlined method declaration",
-		"codeElement": "public getMaxAllocation() : long"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
-		"startLine": 113,
-		"endLine": 113,
-		"startColumn": 5,
-		"endColumn": 14,
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 68,
+		"endLine": 68,
+		"startColumn": 11,
+		"endColumn": 65,
 		"codeElementType": "RETURN_STATEMENT",
-		"description": "inlined code from inlined method declaration",
+		"description": "statement with the initializer of the extracted variable",
 		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 63,
-		"endLine": 77,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration before inline",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 70,
-		"endLine": 70,
-		"startColumn": 18,
-		"endColumn": 45,
-		"codeElementType": "METHOD_INVOCATION",
-		"description": "inlined method invocation",
-		"codeElement": "operator.getMaxAllocation()"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 74,
-		"endLine": 74,
-		"startColumn": 16,
-		"endColumn": 43,
-		"codeElementType": "METHOD_INVOCATION",
-		"description": "inlined method invocation",
-		"codeElement": "operator.getMaxAllocation()"
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 65,
-		"endLine": 83,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration after inline",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
+		"startLine": 70,
+		"endLine": 70,
+		"startColumn": 16,
+		"endColumn": 80,
+		"codeElementType": "VARIABLE_DECLARATION_STATEMENT",
+		"description": "extracted variable declaration",
+		"codeElement": "operatorsMemory : Long"
 }, {
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
 		"startLine": 72,
@@ -13086,76 +13050,7 @@
 		"startColumn": 11,
 		"endColumn": 34,
 		"codeElementType": "RETURN_STATEMENT",
-		"description": "inlined code in target method declaration",
-		"codeElement": null
-}]
-},
-{
-	"type": "Move And Inline Method",
-	"description": "Move And Inline Method public getMaxAllocation() : long moved from class org.apache.drill.exec.physical.base.AbstractGroupScan to class org.apache.drill.exec.planner.fragment.DistributedQueueParallelizer & inlined to public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
-		"startLine": 110,
-		"endLine": 114,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "inlined method declaration",
-		"codeElement": "public getMaxAllocation() : long"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/physical/base/AbstractGroupScan.java",
-		"startLine": 113,
-		"endLine": 113,
-		"startColumn": 5,
-		"endColumn": 14,
-		"codeElementType": "RETURN_STATEMENT",
-		"description": "inlined code from inlined method declaration",
-		"codeElement": null
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 63,
-		"endLine": 77,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration before inline",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 70,
-		"endLine": 70,
-		"startColumn": 18,
-		"endColumn": 45,
-		"codeElementType": "METHOD_INVOCATION",
-		"description": "inlined method invocation",
-		"codeElement": "operator.getMaxAllocation()"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 74,
-		"endLine": 74,
-		"startColumn": 16,
-		"endColumn": 43,
-		"codeElementType": "METHOD_INVOCATION",
-		"description": "inlined method invocation",
-		"codeElement": "operator.getMaxAllocation()"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 65,
-		"endLine": 83,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "target method declaration after inline",
-		"codeElement": "public getMemory() : BiFunction<DrillbitEndpoint,PhysicalOperator,Long>"
-}, {
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
-		"startLine": 72,
-		"endLine": 72,
-		"startColumn": 11,
-		"endColumn": 34,
-		"codeElementType": "RETURN_STATEMENT",
-		"description": "inlined code in target method declaration",
+		"description": "statement with the name of the extracted variable",
 		"codeElement": null
 }]
 },

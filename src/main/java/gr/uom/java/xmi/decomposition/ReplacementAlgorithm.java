@@ -360,6 +360,13 @@ public class ReplacementAlgorithm {
 						}
 					}
 				}
+				AbstractCall assignmentInvocation2 = f2.assignmentInvocationCoveringEntireStatement();
+				if(assignmentInvocation2 != null) {
+					if(assignmentInvocation2.actualString().equals(invocationCoveringTheEntireStatement1.actualString())) {
+						returnMatch2 = true;
+						break;
+					}
+				}
 			}
 		}
 		if(invocationCoveringTheEntireStatement1 != null && !returnMatch2) {
@@ -383,6 +390,13 @@ public class ReplacementAlgorithm {
 							returnMatch1 = true;
 							break;
 						}
+					}
+				}
+				AbstractCall assignmentInvocation1 = f1.assignmentInvocationCoveringEntireStatement();
+				if(assignmentInvocation1 != null) {
+					if(assignmentInvocation1.actualString().equals(invocationCoveringTheEntireStatement2.actualString())) {
+						returnMatch1 = true;
+						break;
 					}
 				}
 			}
@@ -452,25 +466,71 @@ public class ReplacementAlgorithm {
 		replaceVariablesWithArguments(creationMap1, creations1, map);
 		
 		//remove objectCreation covering the entire statement
-		for(String objectCreation1 : creationMap1.keySet()) {
-			for(AbstractCall creation1 : creationMap1.get(objectCreation1)) {
-				if(creationCoveringTheEntireStatement1 != null && 
-						creationCoveringTheEntireStatement1.getLocationInfo().equals(creation1.getLocationInfo())) {
-					creations1.remove(objectCreation1);
+		if(variableReturn2 && creationCoveringTheEntireStatement1 != null) {
+			for(AbstractCodeFragment f2 : replacementInfo.getStatements2()) {
+				if(f2.getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration2 = f2.getVariableDeclarations().get(0);
+					if(declaration2.getVariableName().equals(statement2.getVariables().get(0).getString()) &&
+							declaration2.getInitializer() != null) {
+						if(declaration2.getInitializer().getString().equals(creationCoveringTheEntireStatement1.actualString())) {
+							returnMatch2 = true;
+							break;
+						}
+					}
 				}
-				if(((ObjectCreation)creation1).getAnonymousClassDeclaration() != null) {
-					creations1.remove(objectCreation1);
+				AbstractCall assignmentCreation2 = f2.assignmentCreationCoveringEntireStatement();
+				if(assignmentCreation2 != null) {
+					if(assignmentCreation2.actualString().equals(creationCoveringTheEntireStatement1.actualString())) {
+						returnMatch2 = true;
+						break;
+					}
 				}
 			}
 		}
-		for(String objectCreation2 : creationMap2.keySet()) {
-			for(AbstractCall creation2 : creationMap2.get(objectCreation2)) {
-				if(creationCoveringTheEntireStatement2 != null &&
-						creationCoveringTheEntireStatement2.getLocationInfo().equals(creation2.getLocationInfo())) {
-					creations2.remove(objectCreation2);
+		if(!returnMatch2) {
+			for(String objectCreation1 : creationMap1.keySet()) {
+				for(AbstractCall creation1 : creationMap1.get(objectCreation1)) {
+					if(creationCoveringTheEntireStatement1 != null && 
+							creationCoveringTheEntireStatement1.getLocationInfo().equals(creation1.getLocationInfo())) {
+						creations1.remove(objectCreation1);
+					}
+					if(((ObjectCreation)creation1).getAnonymousClassDeclaration() != null) {
+						creations1.remove(objectCreation1);
+					}
 				}
-				if(((ObjectCreation)creation2).getAnonymousClassDeclaration() != null) {
-					creations2.remove(objectCreation2);
+			}
+		}
+		if(variableReturn1 && creationCoveringTheEntireStatement2 != null) {
+			for(AbstractCodeFragment f1 : replacementInfo.getStatements1()) {
+				if(f1.getVariableDeclarations().size() > 0) {
+					VariableDeclaration declaration1 = f1.getVariableDeclarations().get(0);
+					if(declaration1.getVariableName().equals(statement1.getVariables().get(0).getString()) &&
+							declaration1.getInitializer() != null) {
+						if(declaration1.getInitializer().getString().equals(creationCoveringTheEntireStatement2.actualString())) {
+							returnMatch1 = true;
+							break;
+						}
+					}
+				}
+				AbstractCall assignmentCreation1 = f1.assignmentCreationCoveringEntireStatement();
+				if(assignmentCreation1 != null) {
+					if(assignmentCreation1.actualString().equals(creationCoveringTheEntireStatement2.actualString())) {
+						returnMatch1 = true;
+						break;
+					}
+				}
+			}
+		}
+		if(!returnMatch1) {
+			for(String objectCreation2 : creationMap2.keySet()) {
+				for(AbstractCall creation2 : creationMap2.get(objectCreation2)) {
+					if(creationCoveringTheEntireStatement2 != null &&
+							creationCoveringTheEntireStatement2.getLocationInfo().equals(creation2.getLocationInfo())) {
+						creations2.remove(objectCreation2);
+					}
+					if(((ObjectCreation)creation2).getAnonymousClassDeclaration() != null) {
+						creations2.remove(objectCreation2);
+					}
 				}
 			}
 		}

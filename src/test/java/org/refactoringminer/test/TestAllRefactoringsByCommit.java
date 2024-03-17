@@ -90,9 +90,14 @@ public class TestAllRefactoringsByCommit {
 	        				actualFN++;
 	        			}
 	        		}
-	        		Assertions.assertEquals(expectedTP.get(commitId), actualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), actualTP));
-	        		Assertions.assertEquals(expectedFP.get(commitId), actualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), actualFP));
-	        		Assertions.assertEquals(expectedFN.get(commitId), actualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), actualFN));
+	        		final int finalActualTP = actualTP;
+	        		final int finalActualFP = actualFP;
+	        		final int finalActualFN = actualFN;
+	        		Assertions.assertAll(
+	        		() -> Assertions.assertEquals(expectedTP.get(commitId), finalActualTP, String.format("Should have %s True Positives, but has %s", expectedTP.get(commitId), finalActualTP)),
+	        		() -> Assertions.assertEquals(expectedFP.get(commitId), finalActualFP, String.format("Should have %s False Positives, but has %s", expectedFP.get(commitId), finalActualFP)),
+	        		() -> Assertions.assertEquals(expectedFN.get(commitId), finalActualFN, String.format("Should have %s False Negatives, but has %s", expectedFN.get(commitId), finalActualFN))
+	        		);
 	        	}
 	        });
     	}

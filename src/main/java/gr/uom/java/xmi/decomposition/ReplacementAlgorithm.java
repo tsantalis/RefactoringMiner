@@ -3268,6 +3268,22 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 					}
 				}
+				if(booleanLiterals1.size() == 1 && statement2.getInfixExpressions().size() == 1) {
+					boolean returnBoolean1 = statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getBooleanLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					boolean returnInfix2 = statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getInfixExpressions().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					if(returnBoolean1 && returnInfix2) {
+						Replacement replacement = new Replacement(statement1.getBooleanLiterals().get(0).getString(), statement2.getInfixExpressions().get(0).getString(), ReplacementType.BOOLEAN_REPLACED_WITH_INFIX_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
+				if(booleanLiterals2.size() == 1 && statement1.getInfixExpressions().size() == 1) {
+					boolean returnBoolean2 = statement2.getString().equals(JAVA.RETURN_SPACE + statement2.getBooleanLiterals().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					boolean returnInfix1 = statement1.getString().equals(JAVA.RETURN_SPACE + statement1.getInfixExpressions().get(0).getString() + JAVA.STATEMENT_TERMINATION);
+					if(returnBoolean2 && returnInfix1) {
+						Replacement replacement = new Replacement(statement1.getInfixExpressions().get(0).getString(), statement2.getBooleanLiterals().get(0).getString(), ReplacementType.BOOLEAN_REPLACED_WITH_INFIX_EXPRESSION);
+						replacementInfo.addReplacement(replacement);
+					}
+				}
 				return replacementInfo.getReplacements();
 			}
 		}

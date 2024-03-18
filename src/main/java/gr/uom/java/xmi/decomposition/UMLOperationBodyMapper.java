@@ -517,7 +517,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 				if(remainingUnmatchedIfStatements1 > 0 && mapping instanceof LeafMapping && mapping.getFragment1().getTernaryOperatorExpressions().size() == 0 &&
-						mapping.getFragment2().getTernaryOperatorExpressions().size() > 0 && !leaves2.contains(mapping.getFragment2())) {
+						(mapping.getFragment2().getTernaryOperatorExpressions().size() > 0 || mapping.getFragment2().getString().contains(" == ") || mapping.getFragment2().getString().contains(" != ")) &&
+						!leaves2.contains(mapping.getFragment2())) {
 					leaves2.add(mapping.getFragment2());
 					//remove from hashCodes, so that it can be re-matched
 					mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
@@ -7481,7 +7482,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
 					mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
-				conflictingMappingFound = true;
+				if(newMappingReplacents > 0)
+					conflictingMappingFound = true;
 				int oldMappingReplacements = validReplacements(mapping, parameterToArgumentMap);
 				if(newMappingReplacents < oldMappingReplacements) {
 					mappingToBeRemoved = mapping;
@@ -7502,6 +7504,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		int validReplacements = 0;
 		for(Replacement r : mapping.getReplacements()) {
 			if(parameterToArgumentMap.containsKey(r.getAfter()) && parameterToArgumentMap.get(r.getAfter()).equals(r.getBefore())) {
+				
+			}
+			else if(r.getType().equals(ReplacementType.INFIX_OPERATOR)) {
 				
 			}
 			else {

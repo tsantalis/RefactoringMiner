@@ -7479,13 +7479,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private boolean isConditionalExpression(LeafMapping minStatementMapping, AbstractCodeMapping mapping) {
 		if(minStatementMapping.getFragment1() instanceof AbstractExpression && mapping instanceof CompositeStatementObjectMapping) {
 			CompositeStatementObject composite1 = (CompositeStatementObject) mapping.getFragment1();
-			if(composite1.getExpressions().size() == 1 && composite1.getExpressions().contains(minStatementMapping.getFragment1())) {
+			if(composite1.getExpressions().size() == 1 && composite1.getExpressions().contains(minStatementMapping.getFragment1()) &&
+					!composite1.getExpressions().get(0).getString().contains(" && ") && !composite1.getExpressions().get(0).getString().contains(" || ")) {
 				return true;
 			}
 		}
 		if(minStatementMapping.getFragment2() instanceof AbstractExpression && mapping instanceof CompositeStatementObjectMapping) {
 			CompositeStatementObject composite2 = (CompositeStatementObject) mapping.getFragment2();
-			if(composite2.getExpressions().size() == 1 && composite2.getExpressions().contains(minStatementMapping.getFragment2())) {
+			if(composite2.getExpressions().size() == 1 && composite2.getExpressions().contains(minStatementMapping.getFragment2()) &&
+					!composite2.getExpressions().get(0).getString().contains(" && ") && !composite2.getExpressions().get(0).getString().contains(" || ")) {
 				return true;
 			}
 		}

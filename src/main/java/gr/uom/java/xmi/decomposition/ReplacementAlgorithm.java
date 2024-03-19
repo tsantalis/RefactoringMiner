@@ -74,6 +74,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InvertConditionRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
@@ -1363,6 +1364,37 @@ public class ReplacementAlgorithm {
 					assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 					assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
 					methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers, operationBodyMapper);
+			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo)) {
+				List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
+				boolean booleanOperatorReversed = false;
+				for(Replacement r : operatorReplacements) {
+					if(r.getBefore().equals("&&") && r.getAfter().equals("||")) {
+						booleanOperatorReversed = true;
+					}
+					else if(r.getBefore().equals("||") && r.getAfter().equals("&&")) {
+						booleanOperatorReversed = true;
+					}
+					else if(r.getBefore().equals("==") && r.getAfter().equals("!=")) {
+						booleanOperatorReversed = true;
+					}
+					else if(r.getBefore().equals("!=") && r.getAfter().equals("==")) {
+						booleanOperatorReversed = true;
+					}
+				}
+				if(booleanOperatorReversed) {
+					if(statement1 instanceof AbstractExpression) {
+						CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
+						if(owner != null) {
+							InvertConditionRefactoring invert = new InvertConditionRefactoring(owner, statement2, container1, container2);
+							operationBodyMapper.getRefactoringsAfterPostProcessing().add(invert);
+						}
+					}
+					else {
+						InvertConditionRefactoring invert = new InvertConditionRefactoring(statement1, statement2, container1, container2);
+						operationBodyMapper.getRefactoringsAfterPostProcessing().add(invert);
+					}
+				}
+			}
 			return replacementInfo.getReplacements();
 		}
 		Set<Replacement> replacements = processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,

@@ -442,6 +442,12 @@ public class MappingOptimizer {
 									refactoringsToBeRemoved.add(r);
 								}
 							}
+							else if(r instanceof InvertConditionRefactoring) {
+								InvertConditionRefactoring invert = (InvertConditionRefactoring)r;
+								if(mapping.getFragment1().equals(invert.getOriginalConditional()) || mapping.getFragment2().equals(invert.getInvertedConditional())) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
 						}
 						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
 						updatedMappers.add(mapper);

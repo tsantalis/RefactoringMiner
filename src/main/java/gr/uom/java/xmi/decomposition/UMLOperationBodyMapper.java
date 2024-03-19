@@ -7475,12 +7475,29 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private boolean isConditionalExpression(LeafMapping minStatementMapping, AbstractCodeMapping mapping) {
+		if(minStatementMapping.getFragment1() instanceof AbstractExpression && mapping instanceof CompositeStatementObjectMapping) {
+			CompositeStatementObject composite1 = (CompositeStatementObject) mapping.getFragment1();
+			if(composite1.getExpressions().size() == 1 && composite1.getExpressions().contains(minStatementMapping.getFragment1())) {
+				return true;
+			}
+		}
+		if(minStatementMapping.getFragment2() instanceof AbstractExpression && mapping instanceof CompositeStatementObjectMapping) {
+			CompositeStatementObject composite2 = (CompositeStatementObject) mapping.getFragment2();
+			if(composite2.getExpressions().size() == 1 && composite2.getExpressions().contains(minStatementMapping.getFragment2())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private boolean canBeAdded(LeafMapping minStatementMapping, Map<String, String> parameterToArgumentMap) {
 		int newMappingReplacents = validReplacements(minStatementMapping, parameterToArgumentMap);
 		AbstractCodeMapping mappingToBeRemoved = null;
 		boolean conflictingMappingFound = false;
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
+					isConditionalExpression(minStatementMapping, mapping) ||
 					mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
 				if(newMappingReplacents > 0)
 					conflictingMappingFound = true;
@@ -7820,6 +7837,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			return replacements;
 		}
+
+		public boolean containsOnlyReplacement(ReplacementType type) {
+			for(Replacement replacement : replacements) {
+				if(!replacement.getType().equals(type)) {
+					return false;
+				}
+			}
+			return replacements.size() > 0;
+		}
+
 		public boolean containsReplacement(ReplacementType type) {
 			for(Replacement replacement : replacements) {
 				if(replacement.getType().equals(type)) {

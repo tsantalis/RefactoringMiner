@@ -25537,20 +25537,9 @@
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 21817,
-  "secondPos" : 22570,
+  "secondPos" : 21817,
   "firstEndPos" : 22443,
-  "secondEndPos" : 22745
-}, {
-  "firstType" : "InfixExpression",
-  "secondType" : "InfixExpression",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "IfStatement",
-  "secondParentType" : "IfStatement",
-  "firstPos" : 21821,
-  "secondPos" : 22574,
-  "firstEndPos" : 21909,
-  "secondEndPos" : 22610
+  "secondEndPos" : 22753
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
@@ -25596,16 +25585,27 @@
   "firstEndPos" : 21832,
   "secondEndPos" : 21832
 }, {
-  "firstType" : "INFIX_EXPRESSION_OPERATOR",
-  "secondType" : "INFIX_EXPRESSION_OPERATOR",
-  "firstLabel" : "&&",
-  "secondLabel" : "&&",
+  "firstType" : "PrefixExpression",
+  "secondType" : "PrefixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "InfixExpression",
-  "firstPos" : 21833,
-  "secondPos" : 22586,
-  "firstEndPos" : 21835,
-  "secondEndPos" : 22588
+  "firstPos" : 21846,
+  "secondPos" : 22574,
+  "firstEndPos" : 21909,
+  "secondEndPos" : 22585
+}, {
+  "firstType" : "PREFIX_EXPRESSION_OPERATOR",
+  "secondType" : "PREFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "!",
+  "secondLabel" : "!",
+  "firstParentType" : "PrefixExpression",
+  "secondParentType" : "PrefixExpression",
+  "firstPos" : 21846,
+  "secondPos" : 22574,
+  "firstEndPos" : 21847,
+  "secondEndPos" : 22575
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
@@ -25746,9 +25746,9 @@
   "firstParentType" : "IfStatement",
   "secondParentType" : "IfStatement",
   "firstPos" : 21911,
-  "secondPos" : 22612,
+  "secondPos" : 21834,
   "firstEndPos" : 22443,
-  "secondEndPos" : 22745
+  "secondEndPos" : 22753
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -4714,7 +4714,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject statement2, Map<String, String> parameterToArgumentMap, double score) {
 		VariableDeclarationContainer container1 = codeFragmentOperationMap1.containsKey(statement1) ? codeFragmentOperationMap1.get(statement1) : this.container1;
 		VariableDeclarationContainer container2 = codeFragmentOperationMap2.containsKey(statement2) ? codeFragmentOperationMap2.get(statement2) : this.container2;
-		CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, container1, container2, score);
+		CompositeStatementObjectMapping mapping = new CompositeStatementObjectMapping(statement1, statement2, container1, container2, score, identicalCommentsInBody(statement1, statement2));
 		if(ifBecomingElseIf(mapping)) {
 			ifBecomingElseIf.add(mapping);
 		}

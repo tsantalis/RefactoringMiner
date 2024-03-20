@@ -3085,6 +3085,13 @@ public class StringBasedHeuristics {
 																	inferredLeafMappings.add(leafMapping);
 																}
 															}
+															if(leafExpressions1.size() > 0) {
+																leafExpressions2 = f2.findExpression(cond);
+																if(leafExpressions2.size() > 0) {
+																	LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(0), leafExpressions2.get(0), container1, container2);
+																	inferredLeafMappings.add(leafMapping);
+																}
+															}
 														}
 													}
 												}

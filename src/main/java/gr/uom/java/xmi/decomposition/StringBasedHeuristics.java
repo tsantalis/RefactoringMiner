@@ -2938,7 +2938,7 @@ public class StringBasedHeuristics {
 				}
 				Set<String> intersection = subConditionIntersection(subConditionsAsList1, subConditionsAsList2);
 				Set<String> intersection2 = null;
-				int matches = matchCount(intersection, info);
+				int matches = matchCount(intersection, info, statement1, statement2);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
 				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info)) {
@@ -3008,6 +3008,7 @@ public class StringBasedHeuristics {
 					}
 					if(ifNodes1.size() - identicalIfNodes1 <= ifNodes2.size() - identicalIfNodes2 && ifNodes2.size() - identicalIfNodes2 > 0) {
 						boolean splitConditional = false;
+						List<LeafMapping> inferredLeafMappings = new ArrayList<LeafMapping>();
 						for(CompositeStatementObject ifNode2 : ifNodes2) {
 							List<AbstractExpression> expressions2 = ifNode2.getExpressions();
 							if(expressions2.size() > 0 && !statement2.equals(ifNode2) && !ifNode2.getExpressions().contains(statement2) && !containsIdenticalIfNode(ifNodes1, ifNode2) && sequentiallySplitConditional(statement1, ifNode2, statement2, mappings)) {
@@ -3025,7 +3026,61 @@ public class StringBasedHeuristics {
 									}
 								}
 								intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
-								int matches2 = matchCount(intersection2, info);
+								if(intersection2.isEmpty()) {
+									for(AbstractCodeFragment f2 : info.getStatements2()) {
+										if(f2.getVariableDeclarations().size() > 0) {
+											for(String subCondition : new ArrayList<>(subConditionsAsList)) {
+												VariableDeclaration variableDeclaration = f2.getVariableDeclarations().get(0);
+												if(subCondition.equals(variableDeclaration.getVariableName()) ||
+														subCondition.equals("!" + variableDeclaration.getVariableName())) {
+													if(variableDeclaration.getInitializer() != null) {
+														String cond = variableDeclaration.getInitializer().getString();
+														String[] subCond = SPLIT_CONDITIONAL_PATTERN.split(cond);
+														for(String s : subCond) {
+															String trimmed = s.trim();
+															subConditionsAsList.add(trimmed);
+															List<LeafExpression> leafExpressions = f2.findExpression(trimmed);
+															if(leafExpressions.size() > 0) {
+																subConditionMap.put(trimmed, leafExpressions);
+															}
+														}
+														List<LeafExpression> leafExpressions2 = ifExpression2.findExpression(subCondition);
+														if(leafExpressions2.size() > 0) {
+															List<LeafExpression> leafExpressions1 = new ArrayList<LeafExpression>();
+															for(CompositeStatementObject ifNode1 : ifNodes1) {
+																leafExpressions1.addAll(ifNode1.findExpression(cond));
+															}
+															if(leafExpressions1.isEmpty()) {
+																String newCond = cond;
+																for(AbstractCodeFragment f : info.getStatements2()) {
+																	if(!f.equals(f2) && f.getVariableDeclarations().size() > 0) {
+																		for(String s : subCond) {
+																			VariableDeclaration variable = f.getVariableDeclarations().get(0);
+																			if(s.equals(variable.getVariableName()) && variable.getInitializer() != null) {
+																				newCond = newCond.replace(variable.getVariableName(), variable.getInitializer().getString());
+																			}
+																		}
+																	}
+																}
+																for(CompositeStatementObject ifNode1 : ifNodes1) {
+																	leafExpressions1.addAll(ifNode1.findExpression(newCond));
+																}
+															}
+															if(leafExpressions1.size() == leafExpressions2.size()) {
+																for(int i=0; i<leafExpressions1.size(); i++) {
+																	LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+																	inferredLeafMappings.add(leafMapping);
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									intersection2 = subConditionIntersection(subConditionsAsList1, subConditionsAsList);
+								}
+								int matches2 = matchCount(intersection2, info, statement1, statement2);
 								boolean pass2 = pass(subConditionsAsList1, subConditionsAsList, intersection2, matches2);
 								if(pass2 && !intersection.containsAll(intersection2)) {
 									Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
@@ -3182,6 +3237,9 @@ public class StringBasedHeuristics {
 									refactorings.add(split);
 									createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, split);
 									createLeafMappings(container1, container2, subConditionMap1, subConditionMap, intersection2, split);
+									for(LeafMapping leafMapping : inferredLeafMappings) {
+										split.addSubExpressionMapping(leafMapping);
+									}
 								}
 							}
 						}
@@ -3391,7 +3449,7 @@ public class StringBasedHeuristics {
 					}
 				}
 				intersection2 = subConditionIntersection(subConditionsAsList, subConditionsAsList2);
-				int matches2 = matchCount(intersection2, info);
+				int matches2 = matchCount(intersection2, info, statement1, statement2);
 				boolean pass2 = pass(subConditionsAsList, subConditionsAsList2, intersection2, matches2);
 				if(pass2 && !intersection.containsAll(intersection2)) {
 					Set<AbstractCodeFragment> additionallyMatchedStatements1 = new LinkedHashSet<>();
@@ -3479,7 +3537,7 @@ public class StringBasedHeuristics {
 		}
 	}
 
-	private static int matchCount(Set<String> intersection, ReplacementInfo info) {
+	private static int matchCount(Set<String> intersection, ReplacementInfo info, AbstractCodeFragment statement1, AbstractCodeFragment statement2) {
 		int matches = 0;
 		if(!intersection.isEmpty()) {
 			for(String element : intersection) {
@@ -3511,7 +3569,7 @@ public class StringBasedHeuristics {
 						break;
 					}
 				}
-				if(!replacementFound) {
+				if(!replacementFound || (statement1.getString().contains(element) && statement2.getString().contains(element))) {
 					matches++;
 				}
 			}

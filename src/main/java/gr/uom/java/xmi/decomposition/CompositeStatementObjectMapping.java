@@ -15,11 +15,13 @@ import gr.uom.java.xmi.diff.StringDistance;
 public class CompositeStatementObjectMapping extends AbstractCodeMapping implements Comparable<CompositeStatementObjectMapping> {
 
 	private double compositeChildMatchingScore;
+	private boolean identicalCommentsInBody;
 	
 	public CompositeStatementObjectMapping(CompositeStatementObject statement1, CompositeStatementObject statement2,
-			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2, double score) {
+			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2, double score, boolean identicalCommentsInBody) {
 		super(statement1, statement2, operation1, operation2);
 		this.compositeChildMatchingScore = score;
+		this.identicalCommentsInBody = identicalCommentsInBody;
 	}
 
 	public double getCompositeChildMatchingScore() {
@@ -38,6 +40,12 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 			return -1;
 		}
 		else if(o.compositeChildMatchingScore < 0.99 && o.compositeChildMatchingScore > 0 && this.getReplacementTypes().contains(ReplacementType.INVERT_CONDITIONAL) && this.compositeChildMatchingScore == 0.99) {
+			return 1;
+		}
+		if(this.identicalCommentsInBody && !o.identicalCommentsInBody && this.compositeChildMatchingScore > 0) {
+			return -1;
+		}
+		if(o.identicalCommentsInBody && !this.identicalCommentsInBody && o.compositeChildMatchingScore > 0) {
 			return 1;
 		}
 		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore ||

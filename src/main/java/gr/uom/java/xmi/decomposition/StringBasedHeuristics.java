@@ -3044,11 +3044,21 @@ public class StringBasedHeuristics {
 																subConditionMap.put(trimmed, leafExpressions);
 															}
 														}
-														List<LeafExpression> leafExpressions2 = ifExpression2.findExpression(subCondition);
+														List<LeafExpression> leafExpressions2 = null;
+														if(subCondition.startsWith("!")) {
+															leafExpressions2 = ifExpression2.findExpression(subCondition.substring(1));
+															leafExpressions2.addAll(ifExpression2.findExpression(subCondition));
+														}
+														else {
+															leafExpressions2 = ifExpression2.findExpression(subCondition);
+														}
 														if(leafExpressions2.size() > 0) {
 															List<LeafExpression> leafExpressions1 = new ArrayList<LeafExpression>();
 															for(CompositeStatementObject ifNode1 : ifNodes1) {
 																leafExpressions1.addAll(ifNode1.findExpression(cond));
+																//add possible parent prefix expressions
+																leafExpressions1.addAll(ifNode1.findExpression("!" + cond));
+																leafExpressions1.addAll(ifNode1.findExpression("!(" + cond + ")"));
 															}
 															if(leafExpressions1.isEmpty()) {
 																String newCond = cond;
@@ -3064,6 +3074,9 @@ public class StringBasedHeuristics {
 																}
 																for(CompositeStatementObject ifNode1 : ifNodes1) {
 																	leafExpressions1.addAll(ifNode1.findExpression(newCond));
+																	//add possible parent prefix expressions
+																	leafExpressions1.addAll(ifNode1.findExpression("!" + newCond));
+																	leafExpressions1.addAll(ifNode1.findExpression("!(" + newCond + ")"));
 																}
 															}
 															if(leafExpressions1.size() == leafExpressions2.size()) {

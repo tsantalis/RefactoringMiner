@@ -857,13 +857,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				parent.getStatements().indexOf(child) != -1;
 	}
 
-	private boolean hasElseBranch(CompositeStatementObject parent) {
-		if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-			return parent.getStatements().size() == 2 && parent.getStatements().get(1).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
-		}
-		return false;
-	}
-
 	private boolean ifAddingElseIf(CompositeStatementObject parent) {
 		for(AbstractCodeMapping mapping : ifAddingElseIf) {
 			if(mapping.getFragment1().equals(parent) || mapping.getFragment2().equals(parent)) {

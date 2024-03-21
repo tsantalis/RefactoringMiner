@@ -3931,6 +3931,13 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static boolean hasElseBranch(CompositeStatementObject parent) {
+		if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			return parent.getStatements().size() == 2 && parent.getStatements().get(1).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK);
+		}
+		return false;
+	}
+
 	protected static boolean hasElseIfBranch(CompositeStatementObject parent) {
 		if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 			return parent.getStatements().size() == 2 && parent.getStatements().get(1).getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT);

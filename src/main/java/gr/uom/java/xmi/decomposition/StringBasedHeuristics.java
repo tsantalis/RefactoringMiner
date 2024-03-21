@@ -3033,7 +3033,7 @@ public class StringBasedHeuristics {
 												VariableDeclaration variableDeclaration = f2.getVariableDeclarations().get(0);
 												if(subCondition.equals(variableDeclaration.getVariableName()) ||
 														subCondition.equals("!" + variableDeclaration.getVariableName())) {
-													if(variableDeclaration.getInitializer() != null) {
+													if(variableDeclaration.getInitializer() != null && !statement2.getString().contains(variableDeclaration.getVariableName())) {
 														String cond = variableDeclaration.getInitializer().getString();
 														String[] subCond = SPLIT_CONDITIONAL_PATTERN.split(cond);
 														for(String s : subCond) {

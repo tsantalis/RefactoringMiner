@@ -46,14 +46,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					parent2.getStatements().get(0) instanceof CompositeStatementObject) {
 				CompositeStatementObject ifBlock1 = (CompositeStatementObject) parent1.getStatements().get(0);
 				CompositeStatementObject ifBlock2 = (CompositeStatementObject) parent2.getStatements().get(0);
-				if(ifBlock1.stringRepresentation().equals(ifBlock2.stringRepresentation())) {
+				if(ifBlock1.stringRepresentation().equals(ifBlock2.stringRepresentation()) && !ifBlock1.isBlockReturningDefault()) {
 					ifParentWithIdenticalThen = true;
 				}
 			}
 			if(hasElseBranch(parent1) && hasElseBranch(parent2)) {
 				CompositeStatementObject elseBlock1 = (CompositeStatementObject) parent1.getStatements().get(1);
 				CompositeStatementObject elseBlock2 = (CompositeStatementObject) parent2.getStatements().get(1);
-				if(elseBlock1.stringRepresentation().equals(elseBlock2.stringRepresentation())) {
+				if(elseBlock1.stringRepresentation().equals(elseBlock2.stringRepresentation()) && !elseBlock1.isBlockReturningDefault()) {
 					ifParentWithIdenticalElse = true;
 				}
 			}

@@ -701,6 +701,18 @@ public class CompositeStatementObject extends AbstractStatement {
 		return null;
 	}
 
+	public boolean isBlockReturningDefault() {
+		if(locationInfo.getCodeElementType().equals(CodeElementType.BLOCK) && statementList.size() == 1) {
+			AbstractStatement statement = statementList.get(0);
+			String string = statement.getString();
+			if(string.equals(JAVA.RETURN_STATEMENT) || string.equals(JAVA.RETURN_NULL) || string.equals(JAVA.RETURN_TRUE) ||
+					string.equals(JAVA.RETURN_FALSE) || string.equals(JAVA.RETURN_THIS)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public List<String> stringRepresentation() {
 		List<String> stringRepresentation = new ArrayList<String>();

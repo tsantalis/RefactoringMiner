@@ -26,6 +26,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private boolean identicalPreviousAndNextStatement;
 	private boolean equalNumberOfAssertions;
 	private boolean ifParentWithIdenticalElse;
+	private boolean ifParentWithIdenticalThen;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -40,6 +41,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 		if(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			if(parent1.getStatements().size() > 0 && parent2.getStatements().size() > 0 &&
+					parent1.getStatements().get(0) instanceof CompositeStatementObject &&
+					parent2.getStatements().get(0) instanceof CompositeStatementObject) {
+				CompositeStatementObject ifBlock1 = (CompositeStatementObject) parent1.getStatements().get(0);
+				CompositeStatementObject ifBlock2 = (CompositeStatementObject) parent2.getStatements().get(0);
+				if(ifBlock1.stringRepresentation().equals(ifBlock2.stringRepresentation())) {
+					ifParentWithIdenticalThen = true;
+				}
+			}
 			if(hasElseBranch(parent1) && hasElseBranch(parent2)) {
 				CompositeStatementObject elseBlock1 = (CompositeStatementObject) parent1.getStatements().get(1);
 				CompositeStatementObject elseBlock2 = (CompositeStatementObject) parent2.getStatements().get(1);
@@ -349,6 +359,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return -1;
 				}
 				else if(o.ifParentWithIdenticalElse && !this.ifParentWithIdenticalElse) {
+					return 1;
+				}
+				if(this.ifParentWithIdenticalThen && !o.ifParentWithIdenticalThen) {
+					return -1;
+				}
+				else if(o.ifParentWithIdenticalThen && !this.ifParentWithIdenticalThen) {
 					return 1;
 				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());

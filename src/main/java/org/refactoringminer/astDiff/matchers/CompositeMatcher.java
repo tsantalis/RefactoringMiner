@@ -50,7 +50,7 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		super.match(srcFakeTree,dstFakeTree,tempMapping);
 		postOptimizationForComposites(srcFakeTree,dstFakeTree,tempMapping);
 		for(Mapping mapping : tempMapping) {
-			if (mapping.first == srcFakeTree) continue;
+//			if (mapping.first == srcFakeTree) continue;
 			mappingStore.addMapping(cpyToSrc.get(mapping.first), cpyToDst.get(mapping.second));
 		}
 	}

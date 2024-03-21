@@ -918,6 +918,16 @@ public class ProjectASTDiffer
 					}
 				}
 			}
+			else if (refactoring instanceof InvertConditionRefactoring) {
+				InvertConditionRefactoring invertConditionRefactoring = (InvertConditionRefactoring) refactoring;
+				Tree srcSubTree = TreeUtilFunctions.findByLocationInfo(srcTree,invertConditionRefactoring.getOriginalConditional().getLocationInfo());
+				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,invertConditionRefactoring.getInvertedConditional().getLocationInfo());
+//				new CompositeMatcher(invertConditionRefactoring.getOriginalConditional(), )
+				new GeneralMatcher(
+						invertConditionRefactoring.getOriginalConditional(),
+						invertConditionRefactoring.getInvertedConditional())
+						.match(srcSubTree,dstSubTree,mappingStore);
+			}
 		}
 
 	}

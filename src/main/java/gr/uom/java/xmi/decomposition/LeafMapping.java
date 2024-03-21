@@ -3,6 +3,7 @@ package gr.uom.java.xmi.decomposition;
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.hasElseBranch;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,10 +25,29 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private boolean identicalPreviousStatement;
 	private boolean identicalPreviousAndNextStatement;
 	private boolean equalNumberOfAssertions;
+	private boolean ifParentWithIdenticalElse;
 
 	public LeafMapping(AbstractCodeFragment statement1, AbstractCodeFragment statement2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
 		super(statement1, statement2, operation1, operation2);
+		CompositeStatementObject parent1 = statement1.getParent();
+		CompositeStatementObject parent2 = statement2.getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+			parent1 = parent1.getParent(); 
+		}
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+			parent2 = parent2.getParent(); 
+		}
+		if(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+				parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			if(hasElseBranch(parent1) && hasElseBranch(parent2)) {
+				CompositeStatementObject elseBlock1 = (CompositeStatementObject) parent1.getStatements().get(1);
+				CompositeStatementObject elseBlock2 = (CompositeStatementObject) parent2.getStatements().get(1);
+				if(elseBlock1.stringRepresentation().equals(elseBlock2.stringRepresentation())) {
+					ifParentWithIdenticalElse = true;
+				}
+			}
+		}
 	}
 
 	public boolean hasIdenticalPreviousAndNextStatement() {
@@ -312,10 +332,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						(levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
 						(levelParentEditDistance2.contains(0.0) && !levelParentEditDistance1.contains(0.0))) &&
 						!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
-					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && !levelParentEditDistance2.get(0).equals(0.0)) {
+					if(nLevelParentEditDistance1 < nLevelParentEditDistance2 && !levelParentEditDistance2.get(0).equals(0.0) && !o.ifParentWithIdenticalElse) {
 						return -1;
 					}
-					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0)) {
+					else if(nLevelParentEditDistance2 < nLevelParentEditDistance1 && !levelParentEditDistance1.get(0).equals(0.0) && !this.ifParentWithIdenticalElse) {
 						return 1;
 					}
 					if(headZeros1 > headZeros2) {
@@ -324,6 +344,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else if(headZeros2 > headZeros1) {
 						return 1;
 					}
+				}
+				if(this.ifParentWithIdenticalElse && !o.ifParentWithIdenticalElse) {
+					return -1;
+				}
+				else if(o.ifParentWithIdenticalElse && !this.ifParentWithIdenticalElse) {
+					return 1;
 				}
 				int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
 				int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());

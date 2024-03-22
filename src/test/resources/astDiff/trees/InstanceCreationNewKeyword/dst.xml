@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<root>
+  <context></context>
+  <tree type="ReturnStatement" pos="0" length="159">
+    <tree type="ClassInstanceCreation" pos="7" length="151">
+      <tree type="SimpleType" pos="11" length="23">
+        <tree type="SimpleName" label="AddMapConfigMessageTask" pos="11" length="23"></tree>
+      </tree>
+      <tree type="SimpleName" label="clientMessage" pos="35" length="13"></tree>
+      <tree type="SimpleName" label="logger" pos="50" length="6"></tree>
+      <tree type="SimpleName" label="mockNodeEngine" pos="58" length="14"></tree>
+      <tree type="MethodInvocation" pos="74" length="6">
+        <tree type="SimpleName" label="mock" pos="74" length="4"></tree>
+      </tree>
+      <tree type="SimpleName" label="mockClientEngine" pos="82" length="16"></tree>
+      <tree type="SimpleName" label="mockConnection" pos="100" length="14"></tree>
+      <tree type="SimpleName" label="mockNodeExtension" pos="116" length="17"></tree>
+      <tree type="MethodInvocation" pos="135" length="6">
+        <tree type="SimpleName" label="mock" pos="135" length="4"></tree>
+      </tree>
+      <tree type="SimpleName" label="config" pos="143" length="6"></tree>
+      <tree type="MethodInvocation" pos="151" length="6">
+        <tree type="SimpleName" label="mock" pos="151" length="4"></tree>
+      </tree>
+    </tree>
+  </tree>
+</root>

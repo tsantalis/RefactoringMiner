@@ -25,7 +25,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     protected Tree src;
     protected Tree dst;
     protected ExtendedMultiMappingStore mappings;
-    
+
     @Override
     public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
         this.src = src;
@@ -66,7 +66,9 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
     public void filterMappings(MultiMappingStore multiMappings) {
         List<Mapping> ambiguousList = new ArrayList<>();
         Set<Tree> ignored = new HashSet<>();
-        for (var src : multiMappings.allMappedSrcs()) {
+        Set<Tree> trees = new TreeSet<>(Comparator.comparingInt(Tree::getPos));
+        trees.addAll(multiMappings.allMappedSrcs());
+        for (var src : trees) {
             var isMappingUnique = false;
             if (tinyTrees(src,multiMappings,minPriority))
                 continue;
@@ -91,7 +93,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
             }
             Set<Tree> srcIgnored = new HashSet<>();
             Set<Tree> dstIgnored = new HashSet<>();
-            Collections.sort(ambiguousList, new MappingComparators.FullMappingComparator(mappings.getMonoMappingStore()));
+            Collections.sort(ambiguousList, new CustomTopDownMatcher.ExtendedFullMappingComparator(mappings.getMonoMappingStore()));
             // Select the best ambiguous mappings
             retainBestMapping(ambiguousList, srcIgnored, dstIgnored);
         }

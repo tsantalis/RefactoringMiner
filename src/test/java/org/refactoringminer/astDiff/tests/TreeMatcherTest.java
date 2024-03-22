@@ -1,8 +1,18 @@
 package org.refactoringminer.astDiff.tests;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.gumtreediff.gen.SyntaxException;
+import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
+import com.github.gumtreediff.gen.jdt.JdtTreeGenerator;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
 import org.apache.commons.io.FileUtils;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.compiler.IScanner;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ASTParser;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -11,15 +21,19 @@ import org.refactoringminer.astDiff.matchers.LeafMatcher;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.refactoringminer.astDiff.utils.UtilMethods.getTreesPath;
 
 
@@ -65,5 +79,48 @@ public class TreeMatcherTest {
                     });
         }
         return allCases.stream();
+    }
+    static class JdtPartialTreeGenerator extends JdtTreeGenerator{
+
+        private final int kind;
+        JdtPartialTreeGenerator(int kind)
+        {
+            this.kind = kind;
+        }
+        @Override
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        public TreeContext generate(Reader r) throws IOException {
+            ASTParser parser = ASTParser.newParser(AST.JLS14);
+            parser.setKind(kind);
+            Map pOptions = JavaCore.getOptions();
+            pOptions.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_14);
+            pOptions.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_14);
+            pOptions.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_14);
+            pOptions.put(JavaCore.COMPILER_DOC_COMMENT_SUPPORT, JavaCore.ENABLED);
+            parser.setCompilerOptions(pOptions);
+            char[] source = readerToCharArray(r);
+            parser.setSource(source);
+            IScanner scanner = ToolFactory.createScanner(false, false, false, false);
+            scanner.setSource(source);
+            AbstractJdtVisitor v = createVisitor(scanner);
+            ASTNode node = parser.createAST(null);
+            if ((node.getFlags() & ASTNode.MALFORMED) != 0) // bitwise flag to check if the node has a syntax error
+                throw new SyntaxException(this, r, null);
+            node.accept(v);
+            return v.getTreeContext();
+        }
+        private static char[] readerToCharArray(Reader r) throws IOException {
+            StringBuilder fileData = new StringBuilder();
+            try (BufferedReader br = new BufferedReader(r)) {
+                char[] buf = new char[10];
+                int numRead = 0;
+                while ((numRead = br.read(buf)) != -1) {
+                    String readData = String.valueOf(buf, 0, numRead);
+                    fileData.append(readData);
+                    buf = new char[1024];
+                }
+            }
+            return  fileData.toString().toCharArray();
+        }
     }
 }

@@ -321,6 +321,11 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			for(String arg1 : arguments1) {
+				if(methodInvocationMap1.containsKey(arg1) && (arg1.contains(JAVA.METHOD_REFERENCE) || arg1.contains(JAVA.LAMBDA_ARROW))) {
+					argsAreMethodCalls = true;
+				}
+			}
 			if(!argsAreMethodCalls) {
 				findReplacements(arguments1, variables2, replacementInfo, ReplacementType.ARGUMENT_REPLACED_WITH_VARIABLE, container1, container2, classDiff);
 			}

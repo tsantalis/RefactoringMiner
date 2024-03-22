@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<root>
+  <context></context>
+  <tree type="VariableDeclarationStatement" pos="0" length="127">
+    <tree type="SimpleType" pos="0" length="23">
+      <tree type="SimpleName" label="AddMapConfigMessageTask" pos="0" length="23"></tree>
+    </tree>
+    <tree type="VariableDeclarationFragment" pos="24" length="102">
+      <tree type="SimpleName" label="addMapConfigMessageTask" pos="24" length="23"></tree>
+      <tree type="ClassInstanceCreation" pos="48" length="78">
+        <tree type="SimpleType" pos="52" length="23">
+          <tree type="SimpleName" label="AddMapConfigMessageTask" pos="52" length="23"></tree>
+        </tree>
+        <tree type="SimpleName" label="addMapConfigClientMessage" pos="76" length="25"></tree>
+        <tree type="SimpleName" label="mockNode" pos="102" length="8"></tree>
+        <tree type="SimpleName" label="mockConnection" pos="111" length="14"></tree>
+      </tree>
+    </tree>
+  </tree>
+</root>

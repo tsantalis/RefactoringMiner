@@ -494,7 +494,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			for(AbstractCodeMapping mapping : mappings) {
-				if(mapping instanceof CompositeStatementObjectMapping && !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
+				if(mapping instanceof CompositeStatementObjectMapping && !mapping.getFragment1().equalFragment(mapping.getFragment2()) && !mapping.isIdenticalWithExtractedVariable() && !mapping.isIdenticalWithInlinedVariable()) {
 					CompositeStatementObject composite = (CompositeStatementObject)mapping.getFragment1();
 					for(AbstractExpression expression : composite.getExpressions()) {
 						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME) &&

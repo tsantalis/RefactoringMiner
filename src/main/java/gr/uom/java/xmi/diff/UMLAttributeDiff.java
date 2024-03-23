@@ -255,7 +255,7 @@ public class UMLAttributeDiff {
 		return refactorings;
 	}
 
-	public Set<Refactoring> getRefactorings() {
+	public Set<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		if(changeTypeCondition()) {
 			ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute, addedAttribute,
@@ -265,36 +265,7 @@ public class UMLAttributeDiff {
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
 		if(mapper != null) {
-			for(AbstractCodeMapping mapping : mapper.getMappings()) {
-				for(Replacement r : mapping.getReplacements()) {
-					if(r.getType().equals(ReplacementType.TYPE)) {
-						if(r.getBefore().contains("<") && r.getBefore().contains(">") &&
-								!r.getBefore().contains("<>") &&
-								r.getAfter().contains("<>")) {
-							AbstractCall matchedCreation1 = null;
-							for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
-								if(creation1.actualString().contains(r.getBefore())) {
-									matchedCreation1 = creation1;
-									break;
-								}
-							}
-							AbstractCall matchedCreation2 = null;
-							for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
-								if(creation2.actualString().contains(r.getAfter())) {
-									matchedCreation2 = creation2;
-									break;
-								}
-							}
-							if(matchedCreation1 != null && matchedCreation2 != null) {
-								ReplaceGenericWithDiamondRefactoring refactoring =
-										new ReplaceGenericWithDiamondRefactoring(mapping.getFragment1(), mapping.getFragment2(), matchedCreation1, matchedCreation2, removedAttribute, addedAttribute);
-								refactorings.add(refactoring);
-							}
-						}
-					}
-				}
-			}
-			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+			refactorings.addAll(mapper.getRefactorings());
 		}
 		return refactorings;
 	}
@@ -352,7 +323,7 @@ public class UMLAttributeDiff {
 		return refactorings;
 	}
 	
-	public Set<Refactoring> getRefactorings(Set<CandidateAttributeRefactoring> set) {
+	public Set<Refactoring> getRefactorings(Set<CandidateAttributeRefactoring> set) throws RefactoringMinerTimedOutException {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		RenameAttributeRefactoring rename = null;
 		if(isRenamed()) {
@@ -370,36 +341,7 @@ public class UMLAttributeDiff {
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
 		if(mapper != null) {
-			for(AbstractCodeMapping mapping : mapper.getMappings()) {
-				for(Replacement r : mapping.getReplacements()) {
-					if(r.getType().equals(ReplacementType.TYPE)) {
-						if(r.getBefore().contains("<") && r.getBefore().contains(">") &&
-								!r.getBefore().contains("<>") &&
-								r.getAfter().contains("<>")) {
-							AbstractCall matchedCreation1 = null;
-							for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
-								if(creation1.actualString().contains(r.getBefore())) {
-									matchedCreation1 = creation1;
-									break;
-								}
-							}
-							AbstractCall matchedCreation2 = null;
-							for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
-								if(creation2.actualString().contains(r.getAfter())) {
-									matchedCreation2 = creation2;
-									break;
-								}
-							}
-							if(matchedCreation1 != null && matchedCreation2 != null) {
-								ReplaceGenericWithDiamondRefactoring refactoring =
-										new ReplaceGenericWithDiamondRefactoring(mapping.getFragment1(), mapping.getFragment2(), matchedCreation1, matchedCreation2, removedAttribute, addedAttribute);
-								refactorings.add(refactoring);
-							}
-						}
-					}
-				}
-			}
-			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+			refactorings.addAll(mapper.getRefactorings());
 		}
 		return refactorings;
 	}

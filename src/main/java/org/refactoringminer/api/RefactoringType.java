@@ -109,7 +109,8 @@ public enum RefactoringType {
 	SPLIT_OPERATION("Split Method", "Split Method (.+) to \\[(.+)\\] in class (.+)"),
 	MOVE_CODE("Move Code", "Move Code from (.+) to (.+) in class (.+)"),
 	PARAMETERIZE_TEST("Parameterize Test", "Parameterize Test (.+) to (.+) in class (.+)"),
-	ASSERT_THROWS("Assert Throws", "Assert Throws (.+) in method (.+) from class (.+)");
+	ASSERT_THROWS("Assert Throws", "Assert Throws (.+) in method (.+) from class (.+)"),
+	REPLACE_GENERIC_WITH_DIAMOND("Replace Generic With Diamond", "Replace Generic With Diamond (.+) with (.+) in method (.+) from class (.+)");
 
 	private String displayName;
 	private Pattern regex;
@@ -214,7 +215,8 @@ public enum RefactoringType {
 		MOVE_CODE,
 		REPLACE_ANONYMOUS_WITH_CLASS,
 		PARAMETERIZE_TEST,
-		ASSERT_THROWS
+		ASSERT_THROWS,
+		REPLACE_GENERIC_WITH_DIAMOND
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

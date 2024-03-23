@@ -50,6 +50,7 @@ import gr.uom.java.xmi.diff.ModifyVariableAnnotationRefactoring;
 import gr.uom.java.xmi.diff.RemoveVariableAnnotationRefactoring;
 import gr.uom.java.xmi.diff.RemoveVariableModifierRefactoring;
 import gr.uom.java.xmi.diff.RenameVariableRefactoring;
+import gr.uom.java.xmi.diff.ReplaceGenericWithDiamondRefactoring;
 import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnnotationDiff;
@@ -890,6 +891,33 @@ public class VariableReplacementAnalysis {
 
 	private void findTypeChanges() {
 		for(AbstractCodeMapping mapping : mappings) {
+			for(Replacement r : mapping.getReplacements()) {
+				if(r.getType().equals(ReplacementType.TYPE)) {
+					if(r.getBefore().contains("<") && r.getBefore().contains(">") &&
+							!r.getBefore().contains("<>") &&
+							r.getAfter().contains("<>")) {
+						AbstractCall matchedCreation1 = null;
+						for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
+							if(creation1.actualString().contains(r.getBefore())) {
+								matchedCreation1 = creation1;
+								break;
+							}
+						}
+						AbstractCall matchedCreation2 = null;
+						for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
+							if(creation2.actualString().contains(r.getAfter())) {
+								matchedCreation2 = creation2;
+								break;
+							}
+						}
+						if(matchedCreation1 != null && matchedCreation2 != null) {
+							ReplaceGenericWithDiamondRefactoring refactoring =
+									new ReplaceGenericWithDiamondRefactoring(mapping.getFragment1(), mapping.getFragment2(), matchedCreation1, matchedCreation2, operation1, operation2);
+							refactorings.add(refactoring);
+						}
+					}
+				}
+			}
 			AbstractCodeFragment fragment1 = mapping.getFragment1();
 			AbstractCodeFragment fragment2 = mapping.getFragment2();
 			List<VariableDeclaration> declarations1 = fragment1.getVariableDeclarations();

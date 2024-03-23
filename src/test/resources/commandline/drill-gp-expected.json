@@ -3228,6 +3228,48 @@
 		"description": "method declaration with introduced lambda",
 		"codeElement": "private updateEndpoints() : void"
 }]
+},
+{
+	"type": "Replace Generic With Diamond",
+	"description": "Replace Generic With Diamond ConcurrentHashMap<MultiKey,DrillbitEndpoint> with ConcurrentHashMap<> in attribute private endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint> from class org.apache.drill.exec.coord.zk.ZKClusterCoordinator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 78,
+		"endLine": 78,
+		"startColumn": 72,
+		"endColumn": 122,
+		"codeElementType": "CLASS_INSTANCE_CREATION",
+		"description": "original creation",
+		"codeElement": "new ConcurrentHashMap<MultiKey,DrillbitEndpoint>()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 78,
+		"endLine": 78,
+		"startColumn": 57,
+		"endColumn": 122,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "original attribute declaration",
+		"codeElement": "private endpointsMap : ConcurrentHashMap<MultiKey,DrillbitEndpoint>"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 77,
+		"endLine": 77,
+		"startColumn": 70,
+		"endColumn": 95,
+		"codeElementType": "CLASS_INSTANCE_CREATION",
+		"description": "creation with diamond operator",
+		"codeElement": "new ConcurrentHashMap<>()"
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/coord/zk/ZKClusterCoordinator.java",
+		"startLine": 77,
+		"endLine": 77,
+		"startColumn": 55,
+		"endColumn": 95,
+		"codeElementType": "FIELD_DECLARATION",
+		"description": "attribute declaration with diamond operator",
+		"codeElement": "private endpointsMap : ConcurrentHashMap<String,DrillbitEndpoint>"
+}]
 }
 ]
 },

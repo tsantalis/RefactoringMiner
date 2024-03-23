@@ -1,6 +1,8 @@
 package org.refactoringminer.api;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -335,11 +337,24 @@ public enum RefactoringType {
     }
 
     public static RefactoringType extractFromDescription(String refactoringDescription) {
+    	Set<RefactoringType> matchingTypes = new HashSet<>();
         for (RefactoringType refType : RefactoringType.values()) {
             if (refactoringDescription.startsWith(refType.getDisplayName())) {
-                return refType;
+                matchingTypes.add(refType);
             }
         }
+        //return refType with longer display name
+        RefactoringType longer = null;
+        for(RefactoringType refType : matchingTypes) {
+        	if(longer == null) {
+        		longer = refType;
+        	}
+        	else if(refType.getDisplayName().length() > longer.getDisplayName().length()) {
+        		longer = refType;
+        	}
+        }
+        if(longer != null)
+        	return longer;
         throw new RuntimeException("Unknown refactoring type: " + refactoringDescription);
     }
 

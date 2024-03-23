@@ -581,6 +581,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 		return getString().startsWith(JAVA.THROW_SPACE + "new ");
 	}
 
+	public boolean isLastStatementWithBooleanReturn() {
+		if(isLastStatement()) {
+			return getString().equals(JAVA.RETURN_TRUE) || getString().equals(JAVA.RETURN_FALSE);
+		}
+		return false;
+	}
+
 	public boolean isLastStatement() {
 		if(this instanceof AbstractExpression) {
 			return false;

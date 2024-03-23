@@ -2941,10 +2941,13 @@ public class StringBasedHeuristics {
 				int matches = matchCount(intersection, info, statement1, statement2);
 				boolean pass = pass(subConditionsAsList1, subConditionsAsList2, intersection, matches);
 				int invertedConditionals = 0;
-				if(pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info)) {
+				boolean booleanReturn = statement1.isLastStatementWithBooleanReturn() || statement2.isLastStatementWithBooleanReturn();
+				if((pass && info.getReplacements(ReplacementType.TYPE).isEmpty() && validMethodInvocationReplacement(info)) || booleanReturn) {
 					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONDITIONAL);
-					createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
-					info.addReplacement(r);
+					if(!booleanReturn) {
+						createLeafMappings(container1, container2, subConditionMap1, subConditionMap2, intersection, r);
+						info.addReplacement(r);
+					}
 					CompositeStatementObject root1 = statement1.getParent();
 					CompositeStatementObject root2 = statement2.getParent();
 					Set<CompositeStatementObject> ifNodes1 = new LinkedHashSet<>(), ifNodes2 = new LinkedHashSet<>();

@@ -131,7 +131,8 @@ public class RefactoringPopulator {
 		ReplaceAnonymousWithClass(new BigInteger("158456325028528675187087900672")),
 		ParameterizeTest(new BigInteger("316912650057057350374175801344")),
 		AssertThrows(new BigInteger("633825300114114700748351602688")),
-		All(new BigInteger("1267650600228229401496703205375"));
+		ReplaceGenericWithDiamond(new BigInteger("1267650600228229401496703205376")),
+		All(new BigInteger("2535301200456458802993406410751"));
 
 		private BigInteger value;
 

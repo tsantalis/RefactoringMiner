@@ -85,11 +85,13 @@ public class TestAllRefactoringsByCommit {
 	        				else if(expectedRefactoring.validation.equals("FP")) {
 	        					actualFP++;
 	        				}
+	        				foundRefactorings.remove(description);
 	        			}
 	        			else if(expectedRefactoring.validation.contains("TP")) {
 	        				actualFN++;
 	        			}
 	        		}
+	        		actualFP += foundRefactorings.size();
 	        		final int finalActualTP = actualTP;
 	        		final int finalActualFP = actualFP;
 	        		final int finalActualFN = actualFN;

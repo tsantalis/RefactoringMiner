@@ -16,6 +16,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
+import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -23,6 +24,8 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
+import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class UMLAttributeDiff {
 	private UMLAttribute removedAttribute;
@@ -262,6 +265,35 @@ public class UMLAttributeDiff {
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
 		if(mapper != null) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				for(Replacement r : mapping.getReplacements()) {
+					if(r.getType().equals(ReplacementType.TYPE)) {
+						if(r.getBefore().contains("<") && r.getBefore().contains(">") &&
+								!r.getBefore().contains("<>") &&
+								r.getAfter().contains("<>")) {
+							AbstractCall matchedCreation1 = null;
+							for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
+								if(creation1.actualString().contains(r.getBefore())) {
+									matchedCreation1 = creation1;
+									break;
+								}
+							}
+							AbstractCall matchedCreation2 = null;
+							for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
+								if(creation2.actualString().contains(r.getAfter())) {
+									matchedCreation2 = creation2;
+									break;
+								}
+							}
+							if(matchedCreation1 != null && matchedCreation2 != null) {
+								ReplaceGenericWithDiamondRefactoring refactoring =
+										new ReplaceGenericWithDiamondRefactoring(mapping.getFragment1(), mapping.getFragment2(), matchedCreation1, matchedCreation2, removedAttribute, addedAttribute);
+								refactorings.add(refactoring);
+							}
+						}
+					}
+				}
+			}
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 		}
 		return refactorings;
@@ -338,6 +370,35 @@ public class UMLAttributeDiff {
 		refactorings.addAll(getModifierRefactorings());
 		refactorings.addAll(getAnnotationRefactorings());
 		if(mapper != null) {
+			for(AbstractCodeMapping mapping : mapper.getMappings()) {
+				for(Replacement r : mapping.getReplacements()) {
+					if(r.getType().equals(ReplacementType.TYPE)) {
+						if(r.getBefore().contains("<") && r.getBefore().contains(">") &&
+								!r.getBefore().contains("<>") &&
+								r.getAfter().contains("<>")) {
+							AbstractCall matchedCreation1 = null;
+							for(AbstractCall creation1 : mapping.getFragment1().getCreations()) {
+								if(creation1.actualString().contains(r.getBefore())) {
+									matchedCreation1 = creation1;
+									break;
+								}
+							}
+							AbstractCall matchedCreation2 = null;
+							for(AbstractCall creation2 : mapping.getFragment2().getCreations()) {
+								if(creation2.actualString().contains(r.getAfter())) {
+									matchedCreation2 = creation2;
+									break;
+								}
+							}
+							if(matchedCreation1 != null && matchedCreation2 != null) {
+								ReplaceGenericWithDiamondRefactoring refactoring =
+										new ReplaceGenericWithDiamondRefactoring(mapping.getFragment1(), mapping.getFragment2(), matchedCreation1, matchedCreation2, removedAttribute, addedAttribute);
+								refactorings.add(refactoring);
+							}
+						}
+					}
+				}
+			}
 			refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
 		}
 		return refactorings;

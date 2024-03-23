@@ -56,8 +56,9 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring {
 		ranges.add(creationBefore.codeRange()
 				.setDescription("original creation")
 				.setCodeElement(creationBefore.toString()));
+		String elementType = operationBefore.getElementType();
 		ranges.add(operationBefore.codeRange()
-				.setDescription("original method declaration")
+				.setDescription("original " + elementType + " declaration")
 				.setCodeElement(operationBefore.toString()));
 		return ranges;
 	}
@@ -68,8 +69,9 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring {
 		ranges.add(creationAfter.codeRange()
 				.setDescription("creation with diamond operator")
 				.setCodeElement(creationAfter.toString()));
+		String elementType = operationAfter.getElementType();
 		ranges.add(operationAfter.codeRange()
-				.setDescription("method declaration with diamond operator")
+				.setDescription(elementType + " declaration with diamond operator")
 				.setCodeElement(operationAfter.toString()));
 		return ranges;
 	}
@@ -125,7 +127,8 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring {
 		sb.append(extractType(creationBefore));
 		sb.append(" with ");
 		sb.append(extractType(creationAfter));
-		sb.append(" in method ");
+		String elementType = operationAfter.getElementType();
+		sb.append(" in " + elementType + " ");
 		sb.append(operationAfter);
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();

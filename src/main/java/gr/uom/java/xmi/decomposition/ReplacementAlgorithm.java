@@ -1446,6 +1446,14 @@ public class ReplacementAlgorithm {
 						break;
 					}
 				}
+				if(fragment1.getVariableDeclarations().toString().equals(for2.getVariableDeclarations().toString())) {
+					for(int i=0; i<fragment1.getVariableDeclarations().size(); i++) {
+						VariableDeclaration declaration1 = fragment1.getVariableDeclarations().get(i);
+						VariableDeclaration declaration2 = for2.getVariableDeclarations().get(i);
+						LeafMapping leafMapping = new LeafMapping(declaration1.asLeafExpression(), declaration2.asLeafExpression(), container1, container2);
+						replacementInfo.addSubExpressionMapping(leafMapping);
+					}
+				}
 			}
 			//search for previous variable declaration mappings having these for loops in their scope
 			String renamedVariable = null;

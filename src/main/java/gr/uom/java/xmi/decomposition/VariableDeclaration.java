@@ -174,6 +174,11 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
+	public LeafExpression asLeafExpression() {
+		String asString = type != null ? type.toQualifiedString() : "" + variableName;
+		return new LeafExpression(asString, getLocationInfo());
+	}
+
 	public String getVariableName() {
 		return variableName;
 	}

@@ -74,6 +74,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
+import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
@@ -112,6 +113,16 @@ public class ReplacementAlgorithm {
 		List<VariableDeclaration> variableDeclarations2 = new ArrayList<VariableDeclaration>(statement2.getVariableDeclarations());
 		VariableDeclaration variableDeclarationWithArrayInitializer1 = declarationWithArrayInitializer(variableDeclarations1);
 		VariableDeclaration variableDeclarationWithArrayInitializer2 = declarationWithArrayInitializer(variableDeclarations2);
+		if(parentMapper != null && variableDeclarations1.size() > 0) {
+			for(Refactoring r : parentMapper.getRefactoringsAfterPostProcessing()) {
+				if(r instanceof InlineVariableRefactoring) {
+					InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+					if(inline.getVariableDeclaration().equals(variableDeclarations1.get(0))) {
+						return null;
+					}
+				}
+			}
+		}
 		AbstractCall invocationCoveringTheEntireStatement1 = statement1.invocationCoveringEntireFragment();
 		AbstractCall invocationCoveringTheEntireStatement2 = statement2.invocationCoveringEntireFragment();
 		AbstractCall assignmentInvocationCoveringTheEntireStatement1 = invocationCoveringTheEntireStatement1 == null ? statement1.assignmentInvocationCoveringEntireStatement() : invocationCoveringTheEntireStatement1;

@@ -485,12 +485,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractExpression> expressionsT1 = new ArrayList<AbstractExpression>();
 			int remainingUnmatchedIfStatements1 = 0;
 			for(CompositeStatementObject composite : innerNodes1) {
-				if(composite.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
-					remainingUnmatchedIfStatements1++;
-				}
-				for(AbstractExpression expression : composite.getExpressions()) {
-					expression.replaceParametersWithArguments(parameterToArgumentMap1);
-					expressionsT1.add(expression);
+				if(!nonMappedCompositeExistsIdenticalInExtractedMethod(composite)) {
+					if(composite.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+						remainingUnmatchedIfStatements1++;
+					}
+					for(AbstractExpression expression : composite.getExpressions()) {
+						expression.replaceParametersWithArguments(parameterToArgumentMap1);
+						expressionsT1.add(expression);
+					}
 				}
 			}
 			for(AbstractCodeMapping mapping : mappings) {
@@ -4394,6 +4396,35 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractExpression expression2 = expressions2.get(0);
 				if(expression1.getString().contains(expression2.getString()) || expression2.getString().contains(expression1.getString())) {
 					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean nonMappedCompositeExistsIdenticalInExtractedMethod(CompositeStatementObject comp1) {
+		if(classDiff != null && classDiff.getAddedOperations().size() > 0) {
+			for(AbstractCodeMapping mapping : mappings) {
+				if(!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+					AbstractCodeFragment leaf2 = mapping.getFragment2();
+					AbstractCall invocation = leaf2.invocationCoveringEntireFragment();
+					if(invocation == null) {
+						invocation = leaf2.assignmentInvocationCoveringEntireStatement();
+					}
+					UMLOperation matchingOperation = null;
+					if(invocation != null && (matchingOperation = classDiff.matchesOperation(invocation, classDiff.getAddedOperations(), container2)) != null && matchingOperation.getBody() != null) {
+						List<String> fragmentStringRepresentation = comp1.stringRepresentation();
+						List<String> operationStringRepresentation = matchingOperation.stringRepresentation();
+						for(int index = 0; index<operationStringRepresentation.size(); index++) {
+							if(operationStringRepresentation.get(index).equals(fragmentStringRepresentation.get(0)) &&
+									operationStringRepresentation.size() >= index + fragmentStringRepresentation.size()) {
+								List<String> subList = operationStringRepresentation.subList(index, index + fragmentStringRepresentation.size());
+								if(subList.equals(fragmentStringRepresentation)) {
+									return true;
+								}
+							}
+						}
+					}
 				}
 			}
 		}

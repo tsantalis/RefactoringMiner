@@ -46,6 +46,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private boolean identicalWithInlinedVariable;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	private int matchingArgumentsWithOperationInvocation;
+	private boolean matchedWithNullReplacements;
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -192,6 +193,13 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(replacements != null) {
 			this.replacements.addAll(replacements);
 		}
+		else {
+			matchedWithNullReplacements = true;
+		}
+	}
+
+	public boolean isMatchedWithNullReplacements() {
+		return matchedWithNullReplacements;
 	}
 
 	public Set<Replacement> getReplacements() {

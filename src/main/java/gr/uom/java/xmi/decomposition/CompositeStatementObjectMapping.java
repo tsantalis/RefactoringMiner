@@ -42,10 +42,10 @@ public class CompositeStatementObjectMapping extends AbstractCodeMapping impleme
 		else if(o.compositeChildMatchingScore < 0.99 && o.compositeChildMatchingScore > 0 && this.getReplacementTypes().contains(ReplacementType.INVERT_CONDITIONAL) && this.compositeChildMatchingScore == 0.99) {
 			return 1;
 		}
-		if(this.identicalCommentsInBody && !o.identicalCommentsInBody && this.compositeChildMatchingScore > 0) {
+		if(this.identicalCommentsInBody && !this.isMatchedWithNullReplacements() && !o.identicalCommentsInBody && this.compositeChildMatchingScore > 0) {
 			return -1;
 		}
-		if(o.identicalCommentsInBody && !this.identicalCommentsInBody && o.compositeChildMatchingScore > 0) {
+		if(o.identicalCommentsInBody && !o.isMatchedWithNullReplacements() && !this.identicalCommentsInBody && o.compositeChildMatchingScore > 0) {
 			return 1;
 		}
 		if(this.compositeChildMatchingScore >= 2.0*o.compositeChildMatchingScore ||

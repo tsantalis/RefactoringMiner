@@ -452,7 +452,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod, Set<AbstractCodeMapping> currentMappings) {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
@@ -659,21 +659,31 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					List<VariableDeclaration> variableDeclarations = operation2.getVariableDeclarationsInScope(fragment2.getLocationInfo());
 					for(VariableDeclaration declaration : variableDeclarations) {
 						if(declaration.getVariableName().equals(variable)) {
-							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-							List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());
-							for(LeafExpression subExpression : subExpressions) {
-								List<LeafExpression> initializerSubExpressions = statement.findExpression(initializer);
-								if(initializerSubExpressions.size() > 0) {
-									LeafMapping leafMapping = new LeafMapping(subExpression, initializerSubExpressions.get(0), operation1, operation2);
-									ref.addSubExpressionMapping(leafMapping);
+							boolean declarationMappingFound = false;
+							for(AbstractCodeMapping currentMapping : currentMappings) {
+								if(currentMapping.getFragment2().getVariableDeclarations().contains(declaration) &&
+										currentMapping.getFragment1().getVariableDeclaration(variable) != null) {
+									declarationMappingFound = true;
+									break;
 								}
 							}
-							processExtractVariableRefactoring(ref, refactorings);
-							checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-							if(identical()) {
-								identicalWithExtractedVariable = true;
+							if(!declarationMappingFound) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> subExpressions = getFragment1().findExpression(replacement.getBefore());
+								for(LeafExpression subExpression : subExpressions) {
+									List<LeafExpression> initializerSubExpressions = statement.findExpression(initializer);
+									if(initializerSubExpressions.size() > 0) {
+										LeafMapping leafMapping = new LeafMapping(subExpression, initializerSubExpressions.get(0), operation1, operation2);
+										ref.addSubExpressionMapping(leafMapping);
+									}
+								}
+								processExtractVariableRefactoring(ref, refactorings);
+								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+								if(identical()) {
+									identicalWithExtractedVariable = true;
+								}
+								return;
 							}
-							return;
 						}
 					}
 				}

@@ -117,7 +117,7 @@ public class ReplacementAlgorithm {
 			for(Refactoring r : parentMapper.getRefactoringsAfterPostProcessing()) {
 				if(r instanceof InlineVariableRefactoring) {
 					InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
-					if(inline.getVariableDeclaration().equals(variableDeclarations1.get(0))) {
+					if(!inline.isInsideExtractedOrInlinedMethod() && inline.getVariableDeclaration().equals(variableDeclarations1.get(0))) {
 						return null;
 					}
 				}

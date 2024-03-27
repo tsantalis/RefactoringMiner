@@ -1786,7 +1786,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		for(AbstractCodeFragment statement : getNonMappedLeavesT2()) {
 			for(AbstractCodeMapping mapping : mapper.getMappings()) {
 				int refactoringCount = mapping.getRefactorings().size();
-				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
+				mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null, mappings);
 				if(refactoringCount < mapping.getRefactorings().size()) {
 					for(Refactoring newRefactoring : mapping.getRefactorings()) {
 						if(!this.refactorings.contains(newRefactoring)) {
@@ -2913,7 +2913,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
 			int refactoringCount = mapping.getRefactorings().size();
-			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
+			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null, mappings);
 			if(refactoringCount < mapping.getRefactorings().size()) {
 				for(Refactoring newRefactoring : mapping.getRefactorings()) {
 					if(!this.refactorings.contains(newRefactoring)) {
@@ -3857,7 +3857,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
-										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
+										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
 										if(mapping.isIdenticalWithExtractedVariable()) {
 											List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
 											List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();
@@ -4200,7 +4200,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
-										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
+										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
 										if(mapping.isIdenticalWithExtractedVariable()) {
 											List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
 											List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();
@@ -5857,7 +5857,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(leaf.equals(leaf2)) {
 				break;
 			}
-			mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
+			mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null, mappings);
 			if(mapping.isIdenticalWithExtractedVariable()) {
 				List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
 				List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();

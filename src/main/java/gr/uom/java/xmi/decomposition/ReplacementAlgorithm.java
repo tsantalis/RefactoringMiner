@@ -4618,7 +4618,7 @@ public class ReplacementAlgorithm {
 		return null;
 	}
 
-	private static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
+	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
 			List<UMLOperationBodyMapper> lambdaMappers, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
 		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, operationBodyMapper);

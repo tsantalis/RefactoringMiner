@@ -13,6 +13,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
+import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPICalls;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
@@ -3858,6 +3859,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
 										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithExtractedVariable()) {
+											List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+											List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();
+											if(lambdas1.size() == lambdas2.size()) {
+												for(int i=0; i<lambdas1.size(); i++) {
+													LambdaExpressionObject lambda1 = lambdas1.get(i);
+													LambdaExpressionObject lambda2 = lambdas2.get(i);
+													processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+												}
+											}
 											break;
 										}
 									}
@@ -3866,6 +3876,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf.getLocationInfo().before(mapping.getFragment1().getLocationInfo())) {
 										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithInlinedVariable()) {
+											List<LambdaExpressionObject> lambdas1 = leaf.getLambdas();
+											List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+											if(lambdas1.size() == lambdas2.size()) {
+												for(int i=0; i<lambdas1.size(); i++) {
+													LambdaExpressionObject lambda1 = lambdas1.get(i);
+													LambdaExpressionObject lambda2 = lambdas2.get(i);
+													processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+												}
+											}
 											break;
 										}
 									}
@@ -4183,6 +4202,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									if(leaf.getLocationInfo().before(mapping.getFragment2().getLocationInfo())) {
 										mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 										if(mapping.isIdenticalWithExtractedVariable()) {
+											List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+											List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();
+											if(lambdas1.size() == lambdas2.size()) {
+												for(int i=0; i<lambdas1.size(); i++) {
+													LambdaExpressionObject lambda1 = lambdas1.get(i);
+													LambdaExpressionObject lambda2 = lambdas2.get(i);
+													processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+												}
+											}
 											break;
 										}
 									}
@@ -5823,7 +5851,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void extractInlineVariableAnalysis(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,
-			LeafMapping mapping) {
+			LeafMapping mapping) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeFragment leaf : leaves2) {
 			if(leaf.equals(leaf2)) {
@@ -5831,6 +5859,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			mapping.temporaryVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 			if(mapping.isIdenticalWithExtractedVariable()) {
+				List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+				List<LambdaExpressionObject> lambdas2 = leaf.getLambdas();
+				if(lambdas1.size() == lambdas2.size()) {
+					for(int i=0; i<lambdas1.size(); i++) {
+						LambdaExpressionObject lambda1 = lambdas1.get(i);
+						LambdaExpressionObject lambda2 = lambdas2.get(i);
+						processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+					}
+				}
 				break;
 			}
 		}
@@ -5840,6 +5877,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 			if(mapping.isIdenticalWithInlinedVariable()) {
+				List<LambdaExpressionObject> lambdas1 = leaf.getLambdas();
+				List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+				if(lambdas1.size() == lambdas2.size()) {
+					for(int i=0; i<lambdas1.size(); i++) {
+						LambdaExpressionObject lambda1 = lambdas1.get(i);
+						LambdaExpressionObject lambda2 = lambdas2.get(i);
+						processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+					}
+				}
 				break;
 			}
 		}
@@ -5848,6 +5894,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment leaf : composite.getAdditionallyMatchedStatements1()) {
 				mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
 				if(mapping.isIdenticalWithInlinedVariable()) {
+					List<LambdaExpressionObject> lambdas1 = leaf.getLambdas();
+					List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+					if(lambdas1.size() == lambdas2.size()) {
+						for(int i=0; i<lambdas1.size(); i++) {
+							LambdaExpressionObject lambda1 = lambdas1.get(i);
+							LambdaExpressionObject lambda2 = lambdas2.get(i);
+							processLambdas(lambda1, lambda2, new ArrayList<>(), this);
+						}
+					}
 					break;
 				}
 			}

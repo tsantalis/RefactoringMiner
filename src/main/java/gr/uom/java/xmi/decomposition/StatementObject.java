@@ -37,6 +37,7 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> typeLiterals;
 	private List<AbstractCall> creations;
 	private List<LeafExpression> infixExpressions;
+	private List<LeafExpression> assignments;
 	private List<String> infixOperators;
 	private List<LeafExpression> arrayAccesses;
 	private List<LeafExpression> prefixExpressions;
@@ -66,6 +67,7 @@ public class StatementObject extends AbstractStatement {
 		this.typeLiterals = visitor.getTypeLiterals();
 		this.creations = visitor.getCreations();
 		this.infixExpressions = visitor.getInfixExpressions();
+		this.assignments = visitor.getAssignments();
 		this.infixOperators = visitor.getInfixOperators();
 		this.arrayAccesses = visitor.getArrayAccesses();
 		this.prefixExpressions = visitor.getPrefixExpressions();
@@ -217,6 +219,11 @@ public class StatementObject extends AbstractStatement {
 	@Override
 	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
+	}
+
+	@Override
+	public List<LeafExpression> getAssignments() {
+		return assignments;
 	}
 
 	@Override

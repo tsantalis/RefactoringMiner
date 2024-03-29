@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.ArrayType;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
@@ -80,6 +81,7 @@ public class Visitor extends ASTVisitor {
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
 	private List<AbstractCall> creations = new ArrayList<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
+	private List<LeafExpression> assignments = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
 	private List<LeafExpression> arrayAccesses = new ArrayList<>();
 	private List<LeafExpression> prefixExpressions = new ArrayList<>();
@@ -147,6 +149,16 @@ public class Visitor extends ASTVisitor {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 			anonymous.getInfixExpressions().add(expression);
 			anonymous.getInfixOperators().add(node.getOperator().toString());
+		}
+		return super.visit(node);
+	}
+
+	public boolean visit(Assignment node) {
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.ASSIGNMENT, container);
+		assignments.add(expression);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getAssignments().add(expression);
 		}
 		return super.visit(node);
 	}
@@ -238,6 +250,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.typeLiterals, anonymous.getTypeLiterals());
 			removeLast(this.numberLiterals, anonymous.getNumberLiterals());
 			removeLast(this.infixExpressions, anonymous.getInfixExpressions());
+			removeLast(this.assignments, anonymous.getAssignments());
 			removeLastString(this.infixOperators, anonymous.getInfixOperators());
 			removeLast(this.postfixExpressions, anonymous.getPostfixExpressions());
 			removeLast(this.prefixExpressions, anonymous.getPrefixExpressions());
@@ -871,6 +884,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
+	}
+
+	public List<LeafExpression> getAssignments() {
+		return assignments;
 	}
 
 	public List<String> getInfixOperators() {

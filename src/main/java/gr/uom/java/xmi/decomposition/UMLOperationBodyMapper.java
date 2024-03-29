@@ -7575,13 +7575,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private boolean canBeAdded(LeafMapping minStatementMapping, Map<String, String> parameterToArgumentMap) {
 		int newMappingReplacents = validReplacements(minStatementMapping, parameterToArgumentMap);
+		boolean intersectionReplacement = minStatementMapping.getReplacements().size() == 1 && minStatementMapping.getReplacements().iterator().next() instanceof IntersectionReplacement;
 		AbstractCodeMapping mappingToBeRemoved = null;
 		boolean conflictingMappingFound = false;
 		for(AbstractCodeMapping mapping : mappings) {
 			if(mapping.getFragment1().equals(minStatementMapping.getFragment1()) ||
 					isConditionalExpression(minStatementMapping, mapping) ||
 					mapping.getFragment2().equals(minStatementMapping.getFragment2())) {
-				if(newMappingReplacents > 0)
+				if(newMappingReplacents > 0 && !intersectionReplacement)
 					conflictingMappingFound = true;
 				int oldMappingReplacements = validReplacements(mapping, parameterToArgumentMap);
 				if(newMappingReplacents < oldMappingReplacements) {

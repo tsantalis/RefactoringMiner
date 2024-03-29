@@ -3274,6 +3274,26 @@ public class StringBasedHeuristics {
 						checkForMergeConditionals(statement1, statement2, mapper, refactorings, container1, container2,
 								mappings, subConditionsAsList2, subConditionMap1, subConditionMap2, subConditionMap,
 								intersection, intersection2, ifNodes1, ifNodes2, info, parameterToArgumentMap);
+						if(ternaryConditionals2.size() > 0 && ternaryConditionals1.size() == 0) {
+							for(CompositeStatementObject comp1 : ifNodes1) {
+								List<AbstractCodeFragment> leaves1 = comp1.getLeaves();
+								for(AbstractCodeFragment leaf1 : leaves1) {
+									for(String s : ternaryConditionals2) {
+										List<LeafExpression> leafExpressions1 = leaf1.findExpression(s);
+										if(subConditionMap2.containsKey(s)) {
+											List<LeafExpression> leafExpressions2 = subConditionMap2.get(s);
+											if(leafExpressions1.size() == leafExpressions2.size()) {
+												for(int i=0; i<leafExpressions1.size(); i++) {
+													LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+													r.addSubExpressionMapping(leafMapping);
+												}
+												break;
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				invertedConditionals = checkForInvertedConditionals(subConditionsAsList1, subConditionsAsList2, info);
@@ -3613,7 +3633,7 @@ public class StringBasedHeuristics {
 	}
 
 	private static boolean includesLocalVariable(AbstractCodeFragment statement1, AbstractCodeFragment statement2, Set<String> intersection, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
-		if(statement1 instanceof AbstractExpression) {
+		if(statement1 instanceof AbstractExpression && statement2.getTernaryOperatorExpressions().size() == 0) {
 			for(String commonString : intersection) {
 				if((statement1.getString().equals(commonString) || statement1.getString().equals("!" + commonString)) &&
 						container1.getVariableDeclaration(commonString) != null) {
@@ -3621,7 +3641,7 @@ public class StringBasedHeuristics {
 				}
 			}
 		}
-		if(statement2 instanceof AbstractExpression) {
+		if(statement2 instanceof AbstractExpression && statement1.getTernaryOperatorExpressions().size() == 0) {
 			for(String commonString : intersection) {
 				if((statement2.getString().equals(commonString) || statement2.getString().equals("!" + commonString)) &&
 						container2.getVariableDeclaration(commonString) != null) {

@@ -30,6 +30,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<LeafExpression> typeLiterals = new ArrayList<>();
 	private List<AbstractCall> creations = new ArrayList<>();
 	private List<LeafExpression> infixExpressions = new ArrayList<>();
+	private List<LeafExpression> assignments = new ArrayList<>();
 	private List<String> infixOperators = new ArrayList<>();
 	private List<LeafExpression> arrayAccesses = new ArrayList<>();
 	private List<LeafExpression> prefixExpressions = new ArrayList<>();
@@ -118,6 +119,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<LeafExpression> getInfixExpressions() {
 		return infixExpressions;
+	}
+
+	public List<LeafExpression> getAssignments() {
+		return assignments;
 	}
 
 	public List<String> getInfixOperators() {

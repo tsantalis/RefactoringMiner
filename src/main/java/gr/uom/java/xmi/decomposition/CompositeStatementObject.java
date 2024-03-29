@@ -320,6 +320,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<LeafExpression> getAssignments() {
+		List<LeafExpression> assignments = new ArrayList<>();
+		for(AbstractExpression expression : expressionList) {
+			assignments.addAll(expression.getAssignments());
+		}
+		return assignments;
+	}
+
+	@Override
 	public List<String> getInfixOperators() {
 		List<String> infixOperators = new ArrayList<String>();
 		for(AbstractExpression expression : expressionList) {

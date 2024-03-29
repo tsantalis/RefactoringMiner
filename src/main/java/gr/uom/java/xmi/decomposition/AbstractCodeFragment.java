@@ -57,6 +57,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getTypeLiterals();
 	public abstract List<AbstractCall> getCreations();
 	public abstract List<LeafExpression> getInfixExpressions();
+	public abstract List<LeafExpression> getAssignments();
 	public abstract List<String> getInfixOperators();
 	public abstract List<LeafExpression> getArrayAccesses();
 	public abstract List<LeafExpression> getPrefixExpressions();
@@ -130,6 +131,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		for(LeafExpression expression : getInfixExpressions()) {
+			if(expression.getString().equals(s)) {
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
+		for(LeafExpression expression : getAssignments()) {
 			if(expression.getString().equals(s)) {
 				if(!locations.contains(expression.getLocationInfo()))
 					matchingExpressions.add(expression);

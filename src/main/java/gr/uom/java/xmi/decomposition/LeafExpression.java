@@ -124,6 +124,11 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
+	public List<LeafExpression> getAssignments() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<String> getInfixOperators() {
 		return Collections.emptyList();
 	}

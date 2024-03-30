@@ -3278,17 +3278,15 @@ public class StringBasedHeuristics {
 							for(CompositeStatementObject comp1 : ifNodes1) {
 								List<AbstractCodeFragment> leaves1 = comp1.getLeaves();
 								for(AbstractCodeFragment leaf1 : leaves1) {
-									for(String s : ternaryConditionals2) {
+									for(String s : subConditionMap2.keySet()) {
 										List<LeafExpression> leafExpressions1 = leaf1.findExpression(s);
-										if(subConditionMap2.containsKey(s)) {
-											List<LeafExpression> leafExpressions2 = subConditionMap2.get(s);
-											if(leafExpressions1.size() == leafExpressions2.size()) {
-												for(int i=0; i<leafExpressions1.size(); i++) {
-													LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
-													r.addSubExpressionMapping(leafMapping);
-												}
-												break;
+										List<LeafExpression> leafExpressions2 = subConditionMap2.get(s);
+										if(leafExpressions1.size() == leafExpressions2.size()) {
+											for(int i=0; i<leafExpressions1.size(); i++) {
+												LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+												r.addSubExpressionMapping(leafMapping);
 											}
+											break;
 										}
 									}
 								}

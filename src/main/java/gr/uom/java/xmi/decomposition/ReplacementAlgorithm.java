@@ -3808,7 +3808,7 @@ public class ReplacementAlgorithm {
 				}
 			}
 			else {
-				Set<Replacement> conflictingReplacements = conflictingReplacements(globalReplacementMap);
+				Set<Replacement> conflictingReplacements = conflictingReplacements(globalReplacementMap, replacementCache);
 				Set<String> processedBefores = new LinkedHashSet<String>();
 				for(Set<Replacement> replacements : globalReplacementMap.values()) {
 					for(Replacement replacement : replacements) {
@@ -3843,9 +3843,11 @@ public class ReplacementAlgorithm {
 		}
 	}
 
-	private static Set<Replacement> conflictingReplacements(TreeMap<Double, Set<Replacement>> globalReplacementMap) {
+	private static Set<Replacement> conflictingReplacements(TreeMap<Double, Set<Replacement>> globalReplacementMap, TreeMap<Double, Set<Replacement>> replacementCache) {
 		Map<String, Set<Replacement>> map = new LinkedHashMap<String, Set<Replacement>>();
-		for(Set<Replacement> replacements : globalReplacementMap.values()) {
+		for(Map.Entry<Double, Set<Replacement>> entry : globalReplacementMap.entrySet()) {
+			Set<Replacement> replacements = entry.getValue();
+			Double score = entry.getKey();
 			for(Replacement replacement : replacements) {
 				String after = replacement.getAfter();
 				if(map.containsKey(after)) {
@@ -3855,6 +3857,17 @@ public class ReplacementAlgorithm {
 					Set<Replacement> set = new LinkedHashSet<Replacement>();
 					set.add(replacement);
 					map.put(after, set);
+				}
+			}
+			if(replacementCache.containsKey(score)) {
+				Set<Replacement> replacements2 = replacementCache.get(score);
+				if(replacements2.size() > 1) {
+					for(Replacement replacement : replacements2) {
+						String after = replacement.getAfter();
+						if(map.containsKey(after)) {
+							map.get(after).add(replacement);
+						}
+					}
 				}
 			}
 		}

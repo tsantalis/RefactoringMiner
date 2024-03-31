@@ -445,9 +445,22 @@ public class StringBasedHeuristics {
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
 				differOnlyInPrefix(s1, s2, "catch(", "catch(final ") ||
-				differOnlyInPrefix(s1, s2, "", "final ") ||
+				variableDeclarationDifferInFinalModifer(s1, s2, variableDeclarations1, variableDeclarations2) ||
 				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
+	}
+
+	private static boolean variableDeclarationDifferInFinalModifer(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2) {
+		if(differOnlyInPrefix(s1, s2, "", "final ")) {
+			if(variableDeclarations1.size() > 0 && variableDeclarations1.size() == variableDeclarations2.size()) {
+				VariableDeclaration v1 = variableDeclarations1.get(0);
+				VariableDeclaration v2 = variableDeclarations2.get(0);
+				if(v1.getType().equals(v2.getType())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private static boolean enhancedForDifferInFinalModifierAndFormalParameterName(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {

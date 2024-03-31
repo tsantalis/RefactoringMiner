@@ -445,6 +445,7 @@ public class StringBasedHeuristics {
 	protected static boolean differOnlyInFinalModifier(String s1, String s2, List<VariableDeclaration> variableDeclarations1, List<VariableDeclaration> variableDeclarations2, ReplacementInfo replacementInfo) {
 		return differOnlyInPrefix(s1, s2, "for(", "for(final ") ||
 				differOnlyInPrefix(s1, s2, "catch(", "catch(final ") ||
+				differOnlyInPrefix(s1, s2, "", "final ") ||
 				catchDifferInFinalModifierAndExceptionName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo) ||
 				enhancedForDifferInFinalModifierAndFormalParameterName(s1, s2, variableDeclarations1, variableDeclarations2, replacementInfo);
 	}

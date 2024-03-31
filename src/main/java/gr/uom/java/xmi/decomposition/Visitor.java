@@ -763,6 +763,14 @@ public class Visitor extends ASTVisitor {
 				}
 			}
 		}
+		else if(qualifier instanceof QualifiedName && !(node.getParent() instanceof QualifiedName)) {
+			LeafExpression expression = new LeafExpression(cu, filePath, qualifier, CodeElementType.QUALIFIED_NAME, container);
+			variables.add(expression);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(expression);
+			}
+		}
 		return super.visit(node);
 	}
 

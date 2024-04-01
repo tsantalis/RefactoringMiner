@@ -28,7 +28,7 @@ public class UtilMethods {
 
     public static String getFileNameFromSrcDiff(String astSrcName)
     {
-        String exportName1 = astSrcName.replace("/",".").replace(".java","");
+        String exportName1 = astSrcName.replace(".java","").replace("/",".");
         return exportName1 + JSON_SUFFIX;
     }
     public static String getSrcASTDiffFromFile(String astSrcName)

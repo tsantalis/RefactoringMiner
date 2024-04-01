@@ -7028,6 +7028,94 @@
   "firstEndPos" : 6914,
   "secondEndPos" : 6596
 }, {
+  "firstType" : "VariableDeclarationStatement",
+  "secondType" : "VariableDeclarationStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7122,
+  "secondPos" : 6608,
+  "firstEndPos" : 7213,
+  "secondEndPos" : 6669
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Intent",
+  "secondLabel" : "Intent",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 7128,
+  "secondPos" : 6608,
+  "firstEndPos" : 7134,
+  "secondEndPos" : 6614
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 7128,
+  "secondPos" : 6608,
+  "firstEndPos" : 7134,
+  "secondEndPos" : 6614
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationStatement",
+  "secondParentType" : "VariableDeclarationStatement",
+  "firstPos" : 7135,
+  "secondPos" : 6615,
+  "firstEndPos" : 7212,
+  "secondEndPos" : 6668
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "newIntent",
+  "secondLabel" : "intent",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 7135,
+  "secondPos" : 6615,
+  "firstEndPos" : 7144,
+  "secondEndPos" : 6621
+}, {
+  "firstType" : "ClassInstanceCreation",
+  "secondType" : "ClassInstanceCreation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 7147,
+  "secondPos" : 6624,
+  "firstEndPos" : 7212,
+  "secondEndPos" : 6668
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Intent",
+  "secondLabel" : "Intent",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 7151,
+  "secondPos" : 6628,
+  "firstEndPos" : 7157,
+  "secondEndPos" : 6634
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 7151,
+  "secondPos" : 6628,
+  "firstEndPos" : 7157,
+  "secondEndPos" : 6634
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

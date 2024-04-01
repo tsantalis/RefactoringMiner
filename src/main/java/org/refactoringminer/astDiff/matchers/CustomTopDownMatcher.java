@@ -13,7 +13,6 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		setMinPriority(minP);
 	}
 
-	@Override
 	protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
 		List<Mapping> verifiedList = new ArrayList<>();
 		for (Mapping mapping : mappingList) {
@@ -23,7 +22,20 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 			}
 			else verifiedList.add(mapping);
 		}
-		super.retainBestMapping(verifiedList, srcIgnored, dstIgnored);
+		original_retainBestMapping(verifiedList, srcIgnored, dstIgnored);
+	}
+
+	protected void original_retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
+		while (mappingList.size() > 0) {
+			var mapping = mappingList.remove(0);
+			if (!(srcIgnored.contains(mapping.first) || dstIgnored.contains(mapping.second))) {
+				mappings.addMappingRecursively(mapping.first, mapping.second);
+				srcIgnored.add(mapping.first);
+				srcIgnored.addAll(mapping.first.getDescendants());
+				dstIgnored.add(mapping.second);
+				dstIgnored.addAll(mapping.second.getDescendants());
+			}
+		}
 	}
 
 	private static boolean isAcceptableMatch(Mapping mapping) {
@@ -132,7 +144,7 @@ public class CustomTopDownMatcher extends GreedySubtreeMatcher {
 		return this.mappings;
 	}
 
-	@Override
+
 	public void filterMappings(MultiMappingStore multiMappings) {
 		// Select unique mappings first and extract ambiguous mappings.
 		List<Mapping> ambiguousList = new ArrayList<>();

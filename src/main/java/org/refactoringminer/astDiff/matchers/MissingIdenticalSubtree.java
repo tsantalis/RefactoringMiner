@@ -62,7 +62,6 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
 
         filterMappings(multiMappings);
     }
-    @Override
     public void filterMappings(MultiMappingStore multiMappings) {
         List<Mapping> ambiguousList = new ArrayList<>();
         Set<Tree> ignored = new HashSet<>();
@@ -176,7 +175,7 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
         return false;
     }
 
-    @Override
+
     protected void retainBestMapping(List<Mapping> mappingList, Set<Tree> srcIgnored, Set<Tree> dstIgnored) {
         List<Mapping> verifiedList = new ArrayList<>();
         for (Mapping mapping : mappingList) {

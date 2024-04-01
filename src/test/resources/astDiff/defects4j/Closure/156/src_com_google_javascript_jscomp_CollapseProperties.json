@@ -5930,6 +5930,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "Var",
+  "secondLabel" : "Var",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 8341,
+  "secondPos" : 8341,
+  "firstEndPos" : 8344,
+  "secondEndPos" : 8344
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 8341,
+  "secondPos" : 8341,
+  "firstEndPos" : 8344,
+  "secondEndPos" : 8344
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "equalTo",
   "secondLabel" : "equalTo",
   "firstParentType" : "MethodInvocation",

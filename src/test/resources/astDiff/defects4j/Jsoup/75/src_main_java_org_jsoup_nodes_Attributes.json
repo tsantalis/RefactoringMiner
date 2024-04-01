@@ -13584,16 +13584,27 @@
   "firstEndPos" : 9856,
   "secondEndPos" : 9856
 }, {
-  "firstType" : "MethodInvocation",
-  "secondType" : "MethodInvocation",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "PrefixExpression",
-  "firstPos" : 9963,
-  "secondPos" : 9856,
-  "firstEndPos" : 9996,
-  "secondEndPos" : 9904
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "val",
+  "secondLabel" : "val",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 9944,
+  "secondPos" : 9895,
+  "firstEndPos" : 9947,
+  "secondEndPos" : 9898
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "key",
+  "secondLabel" : "key",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 9955,
+  "secondPos" : 9890,
+  "firstEndPos" : 9958,
+  "secondEndPos" : 9893
 }, {
   "firstType" : "METHOD_INVOCATION_RECEIVER",
   "secondType" : "METHOD_INVOCATION_RECEIVER",
@@ -13616,39 +13627,6 @@
   "secondPos" : 9856,
   "firstEndPos" : 9972,
   "secondEndPos" : 9865
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "isBooleanAttribute",
-  "secondLabel" : "shouldCollapseAttribute",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 9973,
-  "secondPos" : 9866,
-  "firstEndPos" : 9991,
-  "secondEndPos" : 9889
-}, {
-  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "MethodInvocation",
-  "secondParentType" : "MethodInvocation",
-  "firstPos" : 9992,
-  "secondPos" : 9890,
-  "firstEndPos" : 9995,
-  "secondEndPos" : 9903
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "key",
-  "secondLabel" : "key",
-  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
-  "firstPos" : 9992,
-  "secondPos" : 9890,
-  "firstEndPos" : 9995,
-  "secondEndPos" : 9893
 }, {
   "firstType" : "Block",
   "secondType" : "Block",

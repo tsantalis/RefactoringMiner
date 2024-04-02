@@ -6,6 +6,7 @@ plugins {
     id 'signing'
     id 'idea'
     id 'checkstyle'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = "com.github.tsantalis"
@@ -133,4 +134,12 @@ signing {
 
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
+}
+
+def jarName = project.hasProperty('jarName') ? project.jarName : 'RM-fat.jar'
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'org.refactoringminer.RefactoringMiner'
+    }
+    archiveFileName = jarName
 }

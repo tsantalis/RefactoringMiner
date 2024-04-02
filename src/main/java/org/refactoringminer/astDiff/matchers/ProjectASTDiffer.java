@@ -797,10 +797,12 @@ public class ProjectASTDiffer
 			} else if (refactoring instanceof SplitConditionalRefactoring) {
 				SplitConditionalRefactoring splitConditionalRefactoring = (SplitConditionalRefactoring) refactoring;
 				lastStepMappings.addAll(splitConditionalRefactoring.getSubExpressionMappings());
-
 			} else if (refactoring instanceof MergeConditionalRefactoring) {
 				MergeConditionalRefactoring mergeConditionalRefactoring = (MergeConditionalRefactoring) refactoring;
 				lastStepMappings.addAll(mergeConditionalRefactoring.getSubExpressionMappings());
+			} else if (refactoring instanceof ReplaceGenericWithDiamondRefactoring) {
+				ReplaceGenericWithDiamondRefactoring replaceGenericWithDiamondRefactoring = (ReplaceGenericWithDiamondRefactoring) refactoring;
+				lastStepMappings.addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof MergeCatchRefactoring) {
 				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
 				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());

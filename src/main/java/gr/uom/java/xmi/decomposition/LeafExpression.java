@@ -25,7 +25,7 @@ public class LeafExpression extends AbstractCodeFragment {
     	this.container = container;
 	}
 
-	protected LeafExpression(String string, LocationInfo locationInfo) {
+	public LeafExpression(String string, LocationInfo locationInfo) {
 		this.string = string;
 		this.locationInfo = locationInfo;
 	}

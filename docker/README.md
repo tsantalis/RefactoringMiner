@@ -13,7 +13,7 @@ In addition to this image which relies on JDK, you can try our native-image whic
 To use refactoringminer image, You need to:
 * bind the port `6789` of the container to access web interface
 
-The classical way to run the container is the command `docker run -v /my/original-folder:/diff/left -v /my/modified-folder:/diff/right -p 6789:6789 tsantalis/refactoringminer webdiff left/ right/`. You can consult the diff at the URL `http://localhost:6789`.
+The classical way to run the container is the command `docker run -v /my/original-folder:/diff/left -v /my/modified-folder:/diff/right -p 6789:6789 tsantalis/refactoringminer diff --src left/ --dst right/`. You can consult the diff at the URL `http://localhost:6789`.
 
 Of course, all other RefactoringMiner's commands are available.
 

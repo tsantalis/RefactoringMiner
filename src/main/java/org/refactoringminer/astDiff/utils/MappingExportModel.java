@@ -3,7 +3,12 @@ package org.refactoringminer.astDiff.utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.gumtreediff.actions.model.*;
+import com.github.gumtreediff.io.ActionsIoUtils;
 import com.github.gumtreediff.matchers.Mapping;
+import com.github.gumtreediff.tree.Tree;
+import org.apache.commons.io.FileUtils;
+import org.refactoringminer.astDiff.actions.ASTDiff;
 
 import java.io.File;
 import java.io.IOException;
@@ -191,5 +196,13 @@ public class MappingExportModel implements Serializable {
         List<MappingExportModel> mappingExportModels = exportModelList(mappings);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, mappingExportModels);
+    }
+
+    public static void exportActions(File outputFile, ASTDiff astDiff) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for (Action a : astDiff.editScript) {
+            sb.append(a);
+        }
+        FileUtils.write(outputFile, sb.toString());
     }
 }

@@ -15,6 +15,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /**

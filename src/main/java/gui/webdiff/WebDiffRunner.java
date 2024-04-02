@@ -2,12 +2,18 @@ package gui.webdiff;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+
+import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 
 /* Created by pourya on 2024-02-09*/
 public class WebDiffRunner {
@@ -24,7 +30,19 @@ public class WebDiffRunner {
     String commit;
     @Parameter(names = {"-h", "--help"}, description = "Help", help = true)
     boolean help;
+    @Parameter(names = {"-e", "--export"}, description = "Export Mappings/Actions into files")
+    boolean export = false;
 
+
+    private static final String HELP_MSG = """
+You can run the diff with the following options:
+    --url <commit-url>                           \t\t      Run the diff with a GitHub commit url
+    --url <pr-url>                               \t\t      Run the diff with a GitHub PullRequest url
+    --src <folder1> --dst <folder2>            \t\t              Run the diff with two local directories
+    --repo <repo-folder-path> --commit <commitID>  \t\t      Run the diff with a locally cloned GitHub repo
+
+To export the mappings/actions, add --export to the end of the command.
+""";
     public void execute(String[] args) {
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(this)
@@ -32,17 +50,43 @@ public class WebDiffRunner {
         jCommander.parse(args);
 
         if (help) {
-            jCommander.usage();
+            System.out.println(HELP_MSG);
+//            jCommander.usage();
             return;
         }
-        RunMode runMode = RunMode.getRunMode(this);
+        RunMode runMode;
+        try{
+            runMode = RunMode.getRunMode(this);
+        }
+        catch (Exception e){
+            System.out.println(HELP_MSG);
+//            jCommander.usage();
+            return;
+        }
         try {
             ProjectASTDiff projectASTDiff = runMode.getProjectASTDIFF(this);
-            new WebDiff(projectASTDiff).run();
+            if (export){
+                export(projectASTDiff);
+            }
+            else
+                new WebDiff(projectASTDiff).run();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static void export(ProjectASTDiff projectASTDiff) throws IOException {
+        for (ASTDiff astDiff : projectASTDiff.getDiffSet()) {
+            String fileNameFromSrcDiff = getFileNameFromSrcDiff(astDiff.getSrcPath());
+            int lastIndex = fileNameFromSrcDiff.lastIndexOf(".json");
+            if (lastIndex != -1) {
+                fileNameFromSrcDiff = fileNameFromSrcDiff.substring(0, lastIndex) + fileNameFromSrcDiff.substring(lastIndex + 5);
+            }
+            MappingExportModel.exportToFile(new File(fileNameFromSrcDiff + "_mappings.json"), astDiff.getAllMappings());
+            MappingExportModel.exportActions(new File(fileNameFromSrcDiff + "_actions.txt"), astDiff);
+        }
+    }
+
     enum RunMode{
         URL,
         PR,
@@ -56,7 +100,9 @@ public class WebDiffRunner {
             }
             else if (runner.src != null && runner.dst != null) return DIR;
             else if (runner.repo != null && runner.commit != null) return CLONED;
-            else throw new RuntimeException("Invalid mode");
+            else {
+                throw new RuntimeException("Invalid mode");
+            }
         }
 
         public ProjectASTDiff getProjectASTDIFF(WebDiffRunner runner) throws Exception {
@@ -77,5 +123,4 @@ public class WebDiffRunner {
             };
         }
     }
-
 }

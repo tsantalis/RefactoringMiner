@@ -9,12 +9,11 @@ import org.refactoringminer.astDiff.utils.CaseInfo;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
-import static org.refactoringminer.astDiff.utils.UtilMethods.getFinalFolderPath;
+import static org.refactoringminer.astDiff.utils.ExportUtils.getFinalFolderPath;
+
 
 // Command class for the "remove" command
 @Parameters(commandDescription = "Remove files from the index")

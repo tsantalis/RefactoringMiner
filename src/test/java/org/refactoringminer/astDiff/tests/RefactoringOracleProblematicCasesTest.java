@@ -17,8 +17,8 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
-import static org.refactoringminer.astDiff.utils.UtilMethods.getSrcASTDiffFromFile;
 
 /* Created by pourya on 2024-02-17*/
 public class RefactoringOracleProblematicCasesTest {

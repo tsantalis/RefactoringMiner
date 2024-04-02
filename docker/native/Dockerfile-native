@@ -1,0 +1,52 @@
+# Stage 1: Build stage
+FROM amazoncorretto:17 AS build
+
+RUN yum install -y tar unzip
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=GMT
+
+COPY . /opt/refactoringminer/
+
+RUN /opt/refactoringminer/gradlew -x test -p /opt/refactoringminer build -PbuildVersion=DockerBuild 2>/dev/null
+RUN unzip /opt/refactoringminer/build/distributions/RefactoringMiner-DockerBuild.zip -d /opt/refactoringminer/build/distributions
+
+
+# Stage 2: Build stage for Native RM Image
+FROM ghcr.io/graalvm/graalvm-community:21 AS native_build
+
+# Copy necessary files from build stage or elsewhere
+COPY --from=build /opt/refactoringminer/dockerMETA-INF /opt/META-INF/
+COPY --from=build /opt/refactoringminer/build/libs/RM-fat.jar  /opt/RM-fat.jar
+
+WORKDIR /opt
+
+RUN native-image --enable-url-protocols=https \
+    --allow-incomplete-classpath \
+    --no-fallback \
+    --enable-all-security-services \
+    --no-server \
+    --initialize-at-build-time=org.eclipse.jetty.util.thread.TryExecutor \
+    -H:+ReportExceptionStackTraces \
+    -H:ReflectionConfigurationFiles=docker/native/META-INF/reflect-config.json \
+    -H:ResourceConfigurationFiles=docker/native/META-INF/resource-config.json \
+    -H:DynamicProxyConfigurationFiles=docker/native/META-INF/proxy-config.json \
+    -H:JNIConfigurationFiles=docker/native/META-INF/jni-config.json \
+    -jar RM-fat.jar RM-native
+
+
+# Stage 3: Runtime stage for Native RM Image
+FROM alpine:latest
+
+RUN mkdir -p /diff/left /diff/right
+# Copy necessary files from build stage or elsewhere
+COPY --from=native_build /opt/RM-native /opt/refactoringminer
+
+RUN ln -s /opt/refactoringminer /usr/bin/refactoringminer
+
+RUN apk add gcompat
+ENV LANG C.UTF-8
+EXPOSE 6789
+
+WORKDIR /diff
+ENTRYPOINT ["refactoringminer"]

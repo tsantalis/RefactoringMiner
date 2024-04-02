@@ -13,15 +13,18 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
+import gr.uom.java.xmi.decomposition.VariableDeclaration;
 
-public class ReplaceGenericWithDiamondRefactoring implements Refactoring {
+public class ReplaceGenericWithDiamondRefactoring implements Refactoring, LeafMappingProvider {
 	private AbstractCodeFragment statementBefore;
 	private AbstractCodeFragment statementAfter;
 	private AbstractCall creationBefore;
 	private AbstractCall creationAfter;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private List<LeafMapping> subExpressionMappings;
 	
 	public ReplaceGenericWithDiamondRefactoring(AbstractCodeFragment statementBefore, AbstractCodeFragment statementAfter,
 			AbstractCall creationBefore, AbstractCall creationAfter,
@@ -32,6 +35,37 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring {
 		this.creationAfter = creationAfter;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
+		if(statementBefore.getVariableDeclarations().size() > 0 && statementBefore.getVariableDeclarations().size() == statementAfter.getVariableDeclarations().size()) {
+			for(int i=0; i<statementBefore.getVariableDeclarations().size(); i++) {
+				VariableDeclaration declaration1 = statementBefore.getVariableDeclarations().get(i);
+				VariableDeclaration declaration2 = statementAfter.getVariableDeclarations().get(i);
+				if(declaration1.getType() != null && declaration2.getType() != null) {
+					LeafMapping leafMapping = new LeafMapping(declaration1.getType().asLeafExpression(), declaration2.getType().asLeafExpression(), operationBefore, operationAfter);
+					addSubExpressionMapping(leafMapping);
+				}
+			}
+		}
+		LeafMapping leafMapping = new LeafMapping(creationBefore, creationAfter, operationBefore, operationAfter);
+		addSubExpressionMapping(leafMapping);
+	}
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	public AbstractCall getCreationBefore() {

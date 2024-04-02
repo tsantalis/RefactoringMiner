@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import static org.refactoringminer.astDiff.utils.UtilMethods.*;
+import static org.refactoringminer.astDiff.utils.ExportUtils.getFinalFilePath;
+import static org.refactoringminer.astDiff.utils.ExportUtils.getFinalFolderPath;
+import static org.refactoringminer.astDiff.utils.UtilMethods.getSnapShotPath;
 
 // Command class for the "add" command
 @Parameters(commandDescription = "Add files to the index")

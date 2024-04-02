@@ -1,0 +1,158 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.net.spi.InetAddressResolverProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.net.spi.URLStreamHandlerProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.nio.channels.spi.SelectorProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.util.spi.ResourceBundleControlProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.eclipse.jetty.http.HttpFieldPreEncoder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/org.slf4j.spi.SLF4JServiceProvider\\E"
+  }, {
+    "pattern":"\\Qjetty-logging-linux.properties\\E"
+  }, {
+    "pattern":"\\Qjetty-logging.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/core/internal/runtime/messages.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/core/internal/runtime/messages_en.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/core/internal/runtime/messages_en_CA.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/messages.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/messages_en.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/messages_en_CA.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser1.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser10.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser11.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser12.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser13.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser14.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser15.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser16.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser17.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser18.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser19.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser2.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser20.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser21.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser22.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser23.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser24.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser3.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser4.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser5.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser6.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser7.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser8.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/parser9.rsc\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jdt/internal/compiler/parser/readableNames.props\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/http/encoding.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/http/mime.properties\\E"
+  }, {
+    "pattern":"\\Qorg/eclipse/jetty/version/build.properties\\E"
+  }, {
+    "pattern":"\\Qsimplelogger.properties\\E"
+  }, {
+    "pattern":"\\Qweb/\\E"
+  }, {
+    "pattern":"\\Qweb/dist/monaco.css\\E"
+  }, {
+    "pattern":"\\Qweb/dist/monaco.js\\E"
+  }, {
+    "pattern":"\\Qweb/dist/shortcuts.js\\E"
+  }, {
+    "pattern":"\\Qweb/dist/vanilla.css\\E"
+  }, {
+    "pattern":"\\Qweb/dist/vanilla.js\\E"
+  }, {
+    "pattern":"\\Qweb/favicon.ico\\E"
+  }, {
+    "pattern":"\\Qweb/index.html\\E"
+  }, {
+    "pattern":"\\Qweb/left/0\\E"
+  }, {
+    "pattern":"\\Qweb/left/1\\E"
+  }, {
+    "pattern":"\\Qweb/list\\E"
+  }, {
+    "pattern":"\\Qweb/monaco-diff/0\\E"
+  }, {
+    "pattern":"\\Qweb/monaco-diff/1\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/base/browser/ui/codicons/codicon/codicon.ttf\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/base/common/worker/simpleWorker.nls.js\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/base/worker/workerMain.js\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/basic-languages/java/java.js\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/editor/editor.main.css\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/editor/editor.main.js\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/editor/editor.main.nls.js\\E"
+  }, {
+    "pattern":"\\Qweb/monaco/min/vs/loader.js\\E"
+  }, {
+    "pattern":"\\Qweb/right/0\\E"
+  }, {
+    "pattern":"\\Qweb/right/1\\E"
+  }, {
+    "pattern":"\\Qweb/vanilla-diff/0\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/nfkc.nrm\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt72b/uprops.icu\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
+  }]},
+  "bundles":[{
+    "name":"javax.servlet.LocalStrings",
+    "locales":["und"]
+  }, {
+    "name":"org.eclipse.jdt.internal.compiler.problem.messages",
+    "locales":["", "und"]
+  }, {
+    "name":"org.eclipse.jgit.internal.JGitText",
+    "locales":["und"]
+  }]
+}

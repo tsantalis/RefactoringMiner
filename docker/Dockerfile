@@ -31,3 +31,4 @@ ENV LANG C.UTF-8
 EXPOSE 6789
 
 WORKDIR /diff
+ENTRYPOINT ["refactoringminer"]

@@ -1,0 +1,41 @@
+name: Docker Build and Push
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Every Monday midnight
+  workflow_dispatch:
+    branches:
+      - master
+
+jobs:
+  push_to_docker_hub:
+    if: github.repository == 'tsantalis/RefactoringMiner' # To ensure it doesn't get executed in the forks
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - name: Setup QEMU
+          uses: docker/setup-qemu-action@v1
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Login to Docker Hub
+          run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+        - name: Check if checks are passing
+          run: |
+            CHECK_STATUS=$(curl -s -X GET \
+            -H "Accept: application/vnd.github.antiope-preview+json" \
+            https://api.github.com/repos/tsantalis/refactoringminer/commits/master/check-runs | jq -r '.check_runs[0].conclusion')
+  
+            if [[ "$CHECK_STATUS" == "success" ]]; then
+              echo "Latest check passed. Proceeding with Docker build and push."
+            else
+              echo "Checks are failing/on-going. Aborting Docker build and push."
+              exit 1
+            fi
+
+        - name: Build and Push Docker Image
+          run: docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile -t tsantalis/refactoringminer:latest --push .

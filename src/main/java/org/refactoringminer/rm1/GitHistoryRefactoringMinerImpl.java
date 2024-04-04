@@ -1331,8 +1331,10 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		repositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent, new LinkedHashSet<>(orderedFilesCurrent));
 		//repositoryDirectoriesCurrent.addAll(deletedAndRenamedFileParentDirectories);
 		//allRepositoryDirectories(currentCommit.getTree(), "", repositoryDirectoriesCurrent);
-		GHCommit parentCommit = repository.getCommit(parentCommitId);
-		repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
+		if(parentCommitId != null) {
+			GHCommit parentCommit = repository.getCommit(parentCommitId);
+			repositoryDirectories(parentCommit.getTree(), "", repositoryDirectoriesBefore, new LinkedHashSet<>(orderedFilesBefore));
+		}
 		ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, commitId, orderedFilesBefore, orderedFilesCurrent, repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
 		final ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue(jsonFile, changedFileInfo);

@@ -331,6 +331,41 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	public static void populateFileContentsAndSave(Repository repository, RevCommit commit,
+			Set<String> filePaths, Map<String, String> fileContents, Set<String> repositoryDirectories, File rootFolder) throws Exception {
+		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
+		String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
+		logger.info("Processing {} {} ...", repository.getDirectory().getParent().toString(), commit.getName());
+		RevTree parentTree = commit.getTree();
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(parentTree);
+			treeWalk.setRecursive(true);
+			while (treeWalk.next()) {
+				String pathString = treeWalk.getPathString();
+				if(filePaths.contains(pathString)) {
+					ObjectId objectId = treeWalk.getObjectId(0);
+					ObjectLoader loader = repository.open(objectId);
+					StringWriter writer = new StringWriter();
+					IOUtils.copy(loader.openStream(), writer);
+					String fileContent = writer.toString();
+					fileContents.put(pathString, fileContent);
+					File currentFilePath = new File(rootFolder, repoName + "-" + commit.getId().getName() + "/" + pathString);
+					FileUtils.writeStringToFile(currentFilePath, fileContent);
+				}
+				if(pathString.endsWith(".java") && pathString.contains("/")) {
+					String directory = pathString.substring(0, pathString.lastIndexOf("/"));
+					repositoryDirectories.add(directory);
+					//include sub-directories
+					String subDirectory = new String(directory);
+					while(subDirectory.contains("/")) {
+						subDirectory = subDirectory.substring(0, subDirectory.lastIndexOf("/"));
+						repositoryDirectories.add(subDirectory);
+					}
+				}
+			}
+		}
+	}
+
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
 		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
 		try {
@@ -1057,6 +1092,61 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			return modelDiff;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static ChangedFileInfo populateWithLocalRepositoryAndSaveFiles(Repository repository, String currentCommitId,
+			Map<String, String> filesBefore, Map<String, String> filesCurrent, Map<String, String> renamedFilesHint,
+			Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent, File rootFolder) throws IOException {
+		String cloneURL = repository.getConfig().getString("remote", "origin", "url");
+		logger.info("Processing {} {} ...", cloneURL, currentCommitId);
+		String repoName = cloneURL.substring(cloneURL.lastIndexOf('/') + 1, cloneURL.lastIndexOf('.'));
+		String jsonFilePath = repoName + "-" + currentCommitId + ".json";
+		File jsonFile = new File(rootFolder, jsonFilePath);
+		if(jsonFile.exists()) {
+			final ObjectMapper mapper = new ObjectMapper();
+			ChangedFileInfo changedFileInfo = mapper.readValue(jsonFile, ChangedFileInfo.class);
+			String parentCommitId = changedFileInfo.getParentCommitId();
+			String commitId = changedFileInfo.getCurrentCommitId();
+			repositoryDirectoriesBefore.addAll(changedFileInfo.getRepositoryDirectoriesBefore());
+			repositoryDirectoriesCurrent.addAll(changedFileInfo.getRepositoryDirectoriesCurrent());
+			renamedFilesHint.putAll(changedFileInfo.getRenamedFilesHint());
+			for(String filePathBefore : changedFileInfo.getFilesBefore()) {
+				String fullPath = rootFolder + File.separator + repoName + "-" + parentCommitId + File.separator + filePathBefore.replaceAll("/", systemFileSeparator);
+				String contents = FileUtils.readFileToString(new File(fullPath));
+				filesBefore.put(filePathBefore, contents);
+			}
+			for(String filePathCurrent : changedFileInfo.getFilesCurrent()) {
+				String fullPath = rootFolder + File.separator + repoName + "-" + commitId + File.separator + filePathCurrent.replaceAll("/", systemFileSeparator);
+				String contents = FileUtils.readFileToString(new File(fullPath));
+				filesCurrent.put(filePathCurrent, contents);
+			}
+			return changedFileInfo;
+		}
+		RevWalk walk = new RevWalk(repository);
+		try {
+			RevCommit currentCommit = walk.parseCommit(repository.resolve(currentCommitId));
+			if (currentCommit.getParentCount() > 0) {
+				walk.parseCommit(currentCommit.getParent(0));
+				Set<String> filePathsBefore = new LinkedHashSet<String>();
+				Set<String> filePathsCurrent = new LinkedHashSet<String>();
+				new GitServiceImpl().fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+				
+				RevCommit parentCommit = currentCommit.getParent(0);
+				populateFileContentsAndSave(repository, parentCommit, filePathsBefore, filesBefore, repositoryDirectoriesBefore, rootFolder);
+				populateFileContentsAndSave(repository, currentCommit, filePathsCurrent, filesCurrent, repositoryDirectoriesCurrent, rootFolder);
+				
+				String parentCommitId = parentCommit.getId().getName();
+				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId, 
+						new ArrayList<>(filePathsBefore), new ArrayList<>(filePathsCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+				final ObjectMapper mapper = new ObjectMapper();
+				mapper.writeValue(jsonFile, changedFileInfo);
+				walk.close();
+				return changedFileInfo;
+			}
+		} catch (Exception e) {
+			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
 		}
 		return null;
 	}

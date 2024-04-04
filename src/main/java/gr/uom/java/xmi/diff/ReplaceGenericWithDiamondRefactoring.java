@@ -46,7 +46,7 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring, LeafMa
 				}
 			}
 		}
-		LeafMapping leafMapping = new LeafMapping(creationBefore, creationAfter, operationBefore, operationAfter);
+		LeafMapping leafMapping = new LeafMapping(creationBefore.asLeafExpression(), creationAfter.asLeafExpression(), operationBefore, operationAfter);
 		addSubExpressionMapping(leafMapping);
 	}
 

@@ -29,9 +29,8 @@ public class ProjectASTDiffer
 {
 	private final static Logger logger = LoggerFactory.getLogger(ProjectASTDiffer.class);
 	private final UMLModelDiff modelDiff;
-	private List<AbstractCodeMapping> lastStepMappings;
-	private ExtendedMultiMappingStore optimizationMappingStore;
-	private List<AbstractCodeMapping> mustOverrideMappings;
+	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
+	private OptimizationData optimizationData;
 	private List<Refactoring> modelDiffRefactorings;
 	private final ProjectASTDiff projectASTDiff;
 
@@ -154,16 +153,10 @@ public class ProjectASTDiffer
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 
 		String key = classDiff.getOriginalClass().getLocationInfo().getFilePath();
-		if (optimizationDataMap.containsKey(key)) {
-			this.lastStepMappings = optimizationDataMap.get(key).lastStepMappings;
-			this.optimizationMappingStore = optimizationDataMap.get(key).optimizationMappingStore;
-			this.mustOverrideMappings = optimizationDataMap.get(key).mustOverrideMappings;
-		}
-		else {
-			this.lastStepMappings = new ArrayList<>();
-			this.optimizationMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
-			this.mustOverrideMappings = new ArrayList<>();
-		}
+		if (optimizationDataMap.containsKey(key))
+			optimizationData = optimizationDataMap.get(key);
+		else
+			optimizationData = new OptimizationData(srcTree, dstTree);
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);
 			processPackageDeclaration(srcTree,dstTree,mappingStore);
@@ -185,7 +178,6 @@ public class ProjectASTDiffer
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
 			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 		}
-		OptimizationData optimizationData = new OptimizationData(lastStepMappings, optimizationMappingStore, mustOverrideMappings);
 		optimizationDataMap.put(key, optimizationData);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
@@ -505,14 +497,14 @@ public class ProjectASTDiffer
 					_abstractExpWithNonCompositeOwner = false;
 		}
 		if (_abstractExpWithNonCompositeOwner || _leafExp) {
-			lastStepMappings.add(abstractCodeMapping);
+			optimizationData.lastStepMappings.add(abstractCodeMapping);
 		} else {
 			new LeafMatcher().match(srcStatementNode,dstStatementNode,mappingStore);
 			additionallyMatchedStatements(srcTree, dstTree, srcStatementNode, dstStatementNode, abstractCodeMapping, mappingStore);
 		}
 		optimizeVariableDeclarations(abstractCodeMapping);
 		if (!isPartOfExtractedMethod && srcStatementNode.getType().name.equals(Constants.RETURN_STATEMENT) && dstStatementNode.getType().name.equals(Constants.RETURN_STATEMENT)) {
-			optimizationMappingStore.addMapping(srcStatementNode,dstStatementNode);
+			optimizationData.optimizationMappingStore.addMapping(srcStatementNode,dstStatementNode);
 		}
 		if (abstractCodeMapping.getRefactorings().size() > 0) {
 			leafMappingRefactoringAwareness(dstTree, abstractCodeMapping, mappingStore);
@@ -552,12 +544,12 @@ public class ProjectASTDiffer
 		if (variableDeclarations1.size() == 1 && variableDeclarations2.size() == 0){
 			if (variableDeclarations1.get(0).getInitializer() != null)
 				if (abstractCodeMapping.getFragment2().toString().contains(variableDeclarations1.get(0).getInitializer().toString()))
-					lastStepMappings.add(new LeafMapping(variableDeclarations1.get(0).getInitializer(), abstractCodeMapping.getFragment2(),null,null));
+					optimizationData.lastStepMappings.add(new LeafMapping(variableDeclarations1.get(0).getInitializer(), abstractCodeMapping.getFragment2(),null,null));
 		}
 		if (variableDeclarations1.size() == 0 && variableDeclarations2.size() == 1){
 			if (variableDeclarations2.get(0).getInitializer() != null)
 				if (abstractCodeMapping.getFragment1().toString().contains(variableDeclarations2.get(0).getInitializer().toString()))
-					lastStepMappings.add(new LeafMapping(abstractCodeMapping.getFragment1(),variableDeclarations2.get(0).getInitializer(),null,null));
+					optimizationData.lastStepMappings.add(new LeafMapping(abstractCodeMapping.getFragment1(),variableDeclarations2.get(0).getInitializer(),null,null));
 		}
 	}
 
@@ -758,13 +750,13 @@ public class ProjectASTDiffer
 				processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore, false);
 			} else if (refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRefactoring = (ExtractVariableRefactoring) refactoring;
-				lastStepMappings.addAll(extractVariableRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(extractVariableRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof InlineVariableRefactoring) {
 				InlineVariableRefactoring inlineVariableRefactoring = (InlineVariableRefactoring) refactoring;
-				lastStepMappings.addAll(inlineVariableRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(inlineVariableRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof AssertThrowsRefactoring) {
 				AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) refactoring;
-				lastStepMappings.addAll(assertThrowsRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(assertThrowsRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof InlineAttributeRefactoring) {
 				InlineAttributeRefactoring inlineAttributeRefactoring = (InlineAttributeRefactoring) refactoring;
 				//Tree srcAttrDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, inlineAttributeRefactoring.getVariableDeclaration().getLocationInfo());
@@ -772,7 +764,7 @@ public class ProjectASTDiffer
 				//	Tree dstStatementTree = TreeUtilFunctions.findByLocationInfo(dstTree,reference.getFragment2().getLocationInfo());
 				//	new LeafMatcher().match(srcAttrDeclaration,dstStatementTree,mappingStore);
 				//}
-				lastStepMappings.addAll(inlineAttributeRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(inlineAttributeRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof ExtractAttributeRefactoring) {
 				ExtractAttributeRefactoring extractAttributeRefactoring = (ExtractAttributeRefactoring) refactoring;
 				//Tree dstAttrDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree, extractAttributeRefactoring.getVariableDeclaration().getLocationInfo());
@@ -780,7 +772,7 @@ public class ProjectASTDiffer
 				//	Tree srcStatementTree = TreeUtilFunctions.findByLocationInfo(srcTree,reference.getFragment1().getLocationInfo());
 				//	new LeafMatcher().match(srcStatementTree,dstAttrDeclaration,mappingStore);
 				//}
-				lastStepMappings.addAll(extractAttributeRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(extractAttributeRefactoring.getSubExpressionMappings());
 				for (UMLAnonymousClassDiff umlAnonymousClassDiff : extractAttributeRefactoring.getAnonymousClassDiffList()) {
 					processAnonymousClassDiff(srcTree,dstTree,umlAnonymousClassDiff,mappingStore);
 				}
@@ -804,13 +796,13 @@ public class ProjectASTDiffer
 				}
 			} else if (refactoring instanceof SplitConditionalRefactoring) {
 				SplitConditionalRefactoring splitConditionalRefactoring = (SplitConditionalRefactoring) refactoring;
-				lastStepMappings.addAll(splitConditionalRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(splitConditionalRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof MergeConditionalRefactoring) {
 				MergeConditionalRefactoring mergeConditionalRefactoring = (MergeConditionalRefactoring) refactoring;
-				lastStepMappings.addAll(mergeConditionalRefactoring.getSubExpressionMappings());
+				optimizationData.lastStepMappings.addAll(mergeConditionalRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof ReplaceGenericWithDiamondRefactoring) {
 				ReplaceGenericWithDiamondRefactoring replaceGenericWithDiamondRefactoring = (ReplaceGenericWithDiamondRefactoring) refactoring;
-				mustOverrideMappings.addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
+				optimizationData.mustOverrideMappings.addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof MergeCatchRefactoring) {
 				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
 				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());
@@ -924,7 +916,7 @@ public class ProjectASTDiffer
 						Tree srcSimpleName = TreeUtilFunctions.findByLocationInfo(srcTree, subExpressionMapping.getFragment1().getLocationInfo(), Constants.SIMPLE_NAME);
 						Tree dstSimpleName = TreeUtilFunctions.findByLocationInfo(dstTree, subExpressionMapping.getFragment2().getLocationInfo(), Constants.SIMPLE_NAME);
 						if (srcSimpleName != null && dstSimpleName != null)
-							optimizationMappingStore.addMapping(srcSimpleName,dstSimpleName);
+							optimizationData.optimizationMappingStore.addMapping(srcSimpleName,dstSimpleName);
 					}
 				}
 			}
@@ -948,7 +940,7 @@ public class ProjectASTDiffer
 			for(AbstractCodeMapping expressionMapping : argumentMappings) {
 				Tree t1 = TreeUtilFunctions.findByLocationInfo(srcTree,expressionMapping.getFragment1().getLocationInfo());
 				Tree t2 = TreeUtilFunctions.findByLocationInfo(dstTree,expressionMapping.getFragment2().getLocationInfo());
-				new LeafMatcher().match(t1,t2,optimizationMappingStore);
+				new LeafMatcher().match(t1,t2,optimizationData.optimizationMappingStore);
 			}
 		}
 	}
@@ -986,12 +978,12 @@ public class ProjectASTDiffer
 		List<Tree> dstRefs = TreeUtilFunctions.findVariable(dstStatement ,renamedVariableName);
 		if (srcRefs == null || dstRefs == null) return;
 		if (srcRefs.size() == 1 && dstRefs.size() == 1)
-			optimizationMappingStore.addMapping(srcRefs.get(0),dstRefs.get(0));
+			optimizationData.optimizationMappingStore.addMapping(srcRefs.get(0),dstRefs.get(0));
 		else{
 			if (srcRefs.size() == dstRefs.size())
 			{
 				for (int i = 0; i < srcRefs.size(); i++) {
-					optimizationMappingStore.addMapping(srcRefs.get(i),dstRefs.get(i));
+					optimizationData.optimizationMappingStore.addMapping(srcRefs.get(i),dstRefs.get(i));
 				}
 			}
 		}
@@ -1342,7 +1334,6 @@ public class ProjectASTDiffer
 			mappingStore.addMapping(srcTree,dstTree);
 		}
 	}
-	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
 
 	private static class OptimizationData{
 		List<AbstractCodeMapping> lastStepMappings; //ProjectASTDiff decides whether to overwrite or add these mappings
@@ -1352,6 +1343,12 @@ public class ProjectASTDiffer
 			this.lastStepMappings = lastStepMappings;
 			this.optimizationMappingStore = optimizationMappingStore;
 			this.mustOverrideMappings = mustOverrideMappings;
+		}
+
+		public OptimizationData(Tree srcTree, Tree dstTree) {
+			this.lastStepMappings = new ArrayList<>();
+			this.optimizationMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+			this.mustOverrideMappings = new ArrayList<>();
 		}
 	}
 }

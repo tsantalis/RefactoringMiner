@@ -31,6 +31,7 @@ public class ProjectASTDiffer
 	private final UMLModelDiff modelDiff;
 	private List<AbstractCodeMapping> lastStepMappings;
 	private ExtendedMultiMappingStore optimizationMappingStore;
+	private List<AbstractCodeMapping> mustOverrideMappings;
 	private List<Refactoring> modelDiffRefactorings;
 	private final ProjectASTDiff projectASTDiff;
 
@@ -156,10 +157,12 @@ public class ProjectASTDiffer
 		if (optimizationDataMap.containsKey(key)) {
 			this.lastStepMappings = optimizationDataMap.get(key).lastStepMappings;
 			this.optimizationMappingStore = optimizationDataMap.get(key).optimizationMappingStore;
+			this.mustOverrideMappings = optimizationDataMap.get(key).mustOverrideMappings;
 		}
 		else {
 			this.lastStepMappings = new ArrayList<>();
 			this.optimizationMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+			this.mustOverrideMappings = new ArrayList<>();
 		}
 		if (!mergeFlag) {
 			mappingStore.addMapping(srcTree, dstTree);
@@ -182,7 +185,8 @@ public class ProjectASTDiffer
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
 			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 		}
-		optimizationDataMap.put(key, new OptimizationData(lastStepMappings, optimizationMappingStore));
+		OptimizationData optimizationData = new OptimizationData(lastStepMappings, optimizationMappingStore, mustOverrideMappings);
+		optimizationDataMap.put(key, optimizationData);
 		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
 				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
 	}
@@ -232,7 +236,6 @@ public class ProjectASTDiffer
 		Tree dstTree = input.dst.getRoot();
 		ExtendedMultiMappingStore lastStepMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		for (AbstractCodeMapping lastStepMapping : optimizationData.lastStepMappings) {
-//			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(lastStepMapping.getFragment2().getLocationInfo().getFilePath())) {
 			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
 				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
@@ -250,6 +253,11 @@ public class ProjectASTDiffer
 				else
 					new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
 			}
+		}
+		for (AbstractCodeMapping mustOverrideMapping : optimizationData.mustOverrideMappings) {
+			Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, mustOverrideMapping.getFragment1().getLocationInfo());
+			Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, mustOverrideMapping.getFragment2().getLocationInfo());
+			new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
 		}
 		ExtendedMultiMappingStore allMappings = input.getAllMappings();
 		allMappings.replaceWithOptimizedMappings(lastStepMappingStore);
@@ -802,7 +810,7 @@ public class ProjectASTDiffer
 				lastStepMappings.addAll(mergeConditionalRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof ReplaceGenericWithDiamondRefactoring) {
 				ReplaceGenericWithDiamondRefactoring replaceGenericWithDiamondRefactoring = (ReplaceGenericWithDiamondRefactoring) refactoring;
-				lastStepMappings.addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
+				mustOverrideMappings.addAll(replaceGenericWithDiamondRefactoring.getSubExpressionMappings());
 			} else if (refactoring instanceof MergeCatchRefactoring) {
 				MergeCatchRefactoring mergeCatchRefactoring = (MergeCatchRefactoring) refactoring;
 				Tree dstSubTree = TreeUtilFunctions.findByLocationInfo(dstTree,mergeCatchRefactoring.getNewCatchBlock().getLocationInfo());
@@ -1337,11 +1345,13 @@ public class ProjectASTDiffer
 	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
 
 	private static class OptimizationData{
-		List<AbstractCodeMapping> lastStepMappings;
+		List<AbstractCodeMapping> lastStepMappings; //ProjectASTDiff decides whether to overwrite or add these mappings
 		ExtendedMultiMappingStore optimizationMappingStore;
-		public OptimizationData(List<AbstractCodeMapping> lastStepMappings, ExtendedMultiMappingStore optimizationMappingStore) {
+		List<AbstractCodeMapping> mustOverrideMappings; //Override happens for those mappings without any decision
+		public OptimizationData(List<AbstractCodeMapping> lastStepMappings, ExtendedMultiMappingStore optimizationMappingStore, List<AbstractCodeMapping> mustOverrideMappings) {
 			this.lastStepMappings = lastStepMappings;
 			this.optimizationMappingStore = optimizationMappingStore;
+			this.mustOverrideMappings = mustOverrideMappings;
 		}
 	}
 }

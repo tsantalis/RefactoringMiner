@@ -1046,6 +1046,30 @@
 }]
 },
 {
+	"type": "Move And Rename Class",
+	"description": "Move And Rename Class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator moved and renamed to org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 67,
+		"endLine": 268,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original type declaration",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 40,
+		"endLine": 256,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "moved and renamed type declaration",
+		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
+}]
+},
+{
 	"type": "Move Attribute",
 	"description": "Move Attribute private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultResourceAllocator to private queryContext : QueryContext from class org.apache.drill.exec.work.foreman.rm.DefaultResourceManager.DefaultQueryResourceManager",
 	"leftSideLocations": [{
@@ -1166,150 +1190,6 @@
 }]
 },
 {
-	"type": "Move Method",
-	"description": "Move Method private buildBufferedOpMap() : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 211,
-		"endLine": 227,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private buildBufferedOpMap() : Map<String,Collection<PhysicalOperator>>"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 97,
-		"endLine": 113,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "private buildBufferedOpMap(work QueryWorkUnit) : Map<String,Collection<PhysicalOperator>>"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 125,
-		"endLine": 132,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 115,
-		"endLine": 121,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "private countBufferingOperators(nodeMap Map<String,Collection<PhysicalOperator>>) : int"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method private getBufferedOps(map Multimap<String,PhysicalOperator>, defn MinorFragmentDefn) : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 246,
-		"endLine": 252,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private getBufferedOps(map Multimap<String,PhysicalOperator>, defn MinorFragmentDefn) : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 62,
-		"endLine": 68,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public getBufferedOps(map Multimap<String,PhysicalOperator>, defn QueryWorkUnit.MinorFragmentDefn) : void"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method private getBufferedOps(root FragmentRoot) : List<PhysicalOperator> from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private getBufferedOps(root FragmentRoot) : List<PhysicalOperator> from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 254,
-		"endLine": 267,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private getBufferedOps(root FragmentRoot) : List<PhysicalOperator>"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 82,
-		"endLine": 95,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "private getBufferedOps(root FragmentRoot) : List<PhysicalOperator>"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method private planMemory() : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 94,
-		"endLine": 119,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private planMemory() : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 43,
-		"endLine": 60,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void"
-}]
-},
-{
-	"type": "Move Method",
-	"description": "Move Method private planNodeMemory(nodeAddr String, bufferedOps Collection<PhysicalOperator>, width int) : void from class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator to private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 134,
-		"endLine": 205,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "private planNodeMemory(nodeAddr String, bufferedOps Collection<PhysicalOperator>, width int) : void"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 123,
-		"endLine": 193,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "moved method declaration",
-		"codeElement": "private planNodeMemory(nodeAddr String, queryContext QueryContext, bufferedOps Collection<PhysicalOperator>, width int, rm QueryResourceManager) : void"
-}]
-},
-{
 	"type": "Parameterize Variable",
 	"description": "Parameterize Variable nodeMap : Map<String,Collection<PhysicalOperator>> to nodeMap : Map<String,Collection<PhysicalOperator>> in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
 	"leftSideLocations": [{
@@ -1400,6 +1280,30 @@
 		"codeElementType": "FIELD_DECLARATION",
 		"description": "attribute declaration with removed annotation",
 		"codeElement": "private rm : DefaultResourceManager"
+}]
+},
+{
+	"type": "Remove Class Modifier",
+	"description": "Remove Class Modifier static in class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
+		"startLine": 67,
+		"endLine": 268,
+		"startColumn": 3,
+		"endColumn": 4,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "original class declaration",
+		"codeElement": "org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
+		"startLine": 40,
+		"endLine": 256,
+		"startColumn": 0,
+		"endColumn": 2,
+		"codeElementType": "TYPE_DECLARATION",
+		"description": "class declaration with removed modifier",
+		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities"
 }]
 },
 {

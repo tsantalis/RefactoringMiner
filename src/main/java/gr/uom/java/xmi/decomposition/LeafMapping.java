@@ -272,6 +272,36 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				if(this.getMatchingArgumentsWithOperationInvocation() != o.getMatchingArgumentsWithOperationInvocation()) {
 					return -Integer.valueOf(this.getMatchingArgumentsWithOperationInvocation()).compareTo(Integer.valueOf(o.getMatchingArgumentsWithOperationInvocation()));
 				}
+				int typeIntersection1 = 0;
+				int identicalTypeIntersection1 = 0;
+				for(String type1 : this.getFragment1().getTypes()) {
+					for(String type2 : this.getFragment2().getTypes()) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+							typeIntersection1++;
+						}
+						if(type1.equals(type2)) {
+							identicalTypeIntersection1++;
+						}
+					}
+				}
+				int typeIntersection2 = 0;
+				int identicalTypeIntersection2 = 0;
+				for(String type1 : o.getFragment1().getTypes()) {
+					for(String type2 : o.getFragment2().getTypes()) {
+						if(type1.equals(type2) || type1.endsWith(type2) || type2.endsWith(type1)) {
+							typeIntersection2++;
+						}
+						if(type1.equals(type2)) {
+							identicalTypeIntersection2++;
+						}
+					}
+				}
+				if(typeIntersection1 > 0 && typeIntersection2 == 0 && o.getFragment1().getTypes().size() > 0 && o.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
+					return -1;
+				}
+				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
+					return 1;
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {

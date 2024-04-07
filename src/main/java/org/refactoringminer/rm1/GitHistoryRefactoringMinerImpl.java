@@ -1147,6 +1147,21 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				walk.close();
 				return changedFileInfo;
 			}
+			else if(currentCommit.getParentCount() == 0) {
+				//initial commit of the repository
+				Set<String> filePathsBefore = new LinkedHashSet<String>();
+				Set<String> filePathsCurrent = new LinkedHashSet<String>();
+				new GitServiceImpl().fileTreeDiff(repository, currentCommit, filePathsBefore, filePathsCurrent, renamedFilesHint);
+				populateFileContentsAndSave(repository, currentCommit, filePathsCurrent, filesCurrent, repositoryDirectoriesCurrent, rootFolder);
+				
+				String parentCommitId = "0";
+				ChangedFileInfo changedFileInfo = new ChangedFileInfo(parentCommitId, currentCommitId, 
+						new ArrayList<>(filePathsBefore), new ArrayList<>(filePathsCurrent), repositoryDirectoriesBefore, repositoryDirectoriesCurrent, renamedFilesHint);
+				final ObjectMapper mapper = new ObjectMapper();
+				mapper.writeValue(jsonFile, changedFileInfo);
+				walk.close();
+				return changedFileInfo;
+			}
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
 		}
@@ -1498,6 +1513,16 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				if (!filePathsBefore.isEmpty() && !filePathsCurrent.isEmpty() && currentCommit.getParentCount() > 0) {
 					RevCommit parentCommit = currentCommit.getParent(0);
 					populateFileContents(repository, parentCommit, filePathsBefore, fileContentsBefore, repositoryDirectoriesBefore);
+					populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
+					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, true);
+					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);
+					UMLModel currentUMLModel = createModelForASTDiff(fileContentsCurrent, repositoryDirectoriesCurrent);
+					UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+					ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, fileContentsBefore, fileContentsCurrent);
+					return differ.getProjectASTDiff();
+				}
+				else if (currentCommit.getParentCount() == 0) {
+					//initial commit of the repository
 					populateFileContents(repository, currentCommit, filePathsCurrent, fileContentsCurrent, repositoryDirectoriesCurrent);
 					List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, true);
 					UMLModel parentUMLModel = createModelForASTDiff(fileContentsBefore, repositoryDirectoriesBefore);

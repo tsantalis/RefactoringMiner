@@ -321,6 +321,27 @@ public class GitServiceImpl implements GitService {
         		}
         	}
         }
+        else if(currentCommit.getParentCount() == 0) {
+        	//initial commit of the repository
+        	ObjectId newTree = currentCommit.getTree();
+        	final TreeWalk tw = new TreeWalk(repository);
+        	tw.setRecursive(true);
+        	tw.addTree(newTree);
+        	
+        	final RenameDetector rd = new RenameDetector(repository);
+        	rd.setRenameScore(55);
+        	rd.addAll(DiffEntry.scan(tw));
+
+        	for (DiffEntry diff : rd.compute(tw.getObjectReader(), null)) {
+        		ChangeType changeType = diff.getChangeType();
+        		String newPath = diff.getNewPath();
+        		if (changeType == ChangeType.ADD) {
+	        		if (isJavafile(newPath)) {
+	        			javaFilesCurrent.add(newPath);
+	        		}
+	        	}
+        	}
+        }
 	}
 
 	private boolean isJavafile(String path) {

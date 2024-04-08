@@ -2723,52 +2723,54 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		for(Pair<UMLAbstractClass, UMLAbstractClass> pair : classPairsBasedOnMovedMethods.keySet()) {
-			List<MoveOperationRefactoring> refs = classPairsBasedOnMovedMethods.get(pair);
-			UMLAbstractClass parentClass = pair.getLeft();
-			UMLAbstractClass childClass = pair.getRight();
-			if(refs.size() >= parentClass.getOperations().size()/2 && refs.size() >= childClass.getOperations().size()/2) {
-				if(parentClass instanceof UMLClass && childClass instanceof UMLClass) {
-					if(!parentClass.getNonQualifiedName().equals(childClass.getNonQualifiedName())) {
-						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
-						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-						MatchResult matchResult = new MatchResult(refs.size(), 0, totalOperations, totalAttributes, true);
-						UMLClassRenameDiff renameDiff = new UMLClassRenameDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
-						renameDiff.process();
-						refactorings.addAll(renameDiff.getRefactorings());
-						classRenameDiffList.add(renameDiff);
-						Refactoring refactoring = null;
-						if(renameDiff.samePackage())
-							refactoring = new RenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
-						else
-							refactoring = new MoveAndRenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
-						refactorings.add(refactoring);
-						removedClasses.remove(parentClass);
-						addedClasses.remove(childClass);
-						for(MoveOperationRefactoring moveRef : refs) {
-							if(!renameDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
-								renameDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
+		if(!partialModel()) {
+			for(Pair<UMLAbstractClass, UMLAbstractClass> pair : classPairsBasedOnMovedMethods.keySet()) {
+				List<MoveOperationRefactoring> refs = classPairsBasedOnMovedMethods.get(pair);
+				UMLAbstractClass parentClass = pair.getLeft();
+				UMLAbstractClass childClass = pair.getRight();
+				if(refs.size() >= parentClass.getOperations().size()/2 && refs.size() >= childClass.getOperations().size()/2) {
+					if(parentClass instanceof UMLClass && childClass instanceof UMLClass) {
+						if(!parentClass.getNonQualifiedName().equals(childClass.getNonQualifiedName())) {
+							int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
+							int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
+							MatchResult matchResult = new MatchResult(refs.size(), 0, totalOperations, totalAttributes, true);
+							UMLClassRenameDiff renameDiff = new UMLClassRenameDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
+							renameDiff.process();
+							refactorings.addAll(renameDiff.getRefactorings());
+							classRenameDiffList.add(renameDiff);
+							Refactoring refactoring = null;
+							if(renameDiff.samePackage())
+								refactoring = new RenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
+							else
+								refactoring = new MoveAndRenameClassRefactoring(renameDiff.getOriginalClass(), renameDiff.getRenamedClass());
+							refactorings.add(refactoring);
+							removedClasses.remove(parentClass);
+							addedClasses.remove(childClass);
+							for(MoveOperationRefactoring moveRef : refs) {
+								if(!renameDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
+									renameDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
+								}
+								refactorings.remove(moveRef);
 							}
-							refactorings.remove(moveRef);
 						}
-					}
-					else {
-						int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
-						int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
-						MatchResult matchResult = new MatchResult(refs.size(), 0, totalOperations, totalAttributes, true);
-						UMLClassMoveDiff moveDiff = new UMLClassMoveDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
-						moveDiff.process();
-						refactorings.addAll(moveDiff.getRefactorings());
-						classMoveDiffList.add(moveDiff);
-						Refactoring refactoring = new MoveClassRefactoring(moveDiff.getOriginalClass(), moveDiff.getMovedClass());
-						refactorings.add(refactoring);
-						removedClasses.remove(parentClass);
-						addedClasses.remove(childClass);
-						for(MoveOperationRefactoring moveRef : refs) {
-							if(!moveDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
-								moveDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
+						else {
+							int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
+							int totalAttributes = parentClass.getAttributes().size() + childClass.getAttributes().size();
+							MatchResult matchResult = new MatchResult(refs.size(), 0, totalOperations, totalAttributes, true);
+							UMLClassMoveDiff moveDiff = new UMLClassMoveDiff((UMLClass)parentClass, (UMLClass)childClass, this, matchResult);
+							moveDiff.process();
+							refactorings.addAll(moveDiff.getRefactorings());
+							classMoveDiffList.add(moveDiff);
+							Refactoring refactoring = new MoveClassRefactoring(moveDiff.getOriginalClass(), moveDiff.getMovedClass());
+							refactorings.add(refactoring);
+							removedClasses.remove(parentClass);
+							addedClasses.remove(childClass);
+							for(MoveOperationRefactoring moveRef : refs) {
+								if(!moveDiff.getOperationBodyMapperList().contains(moveRef.getBodyMapper())) {
+									moveDiff.getOperationBodyMapperList().add(moveRef.getBodyMapper());
+								}
+								refactorings.remove(moveRef);
 							}
-							refactorings.remove(moveRef);
 						}
 					}
 				}

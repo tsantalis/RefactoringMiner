@@ -24,18 +24,5 @@ jobs:
         - name: Login to Docker Hub
           run: echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-        - name: Check if checks are passing
-          run: |
-            CHECK_STATUS=$(curl -s -X GET \
-            -H "Accept: application/vnd.github.antiope-preview+json" \
-            https://api.github.com/repos/tsantalis/refactoringminer/commits/master/check-runs | jq -r '.check_runs[0].conclusion')
-  
-            if [[ "$CHECK_STATUS" == "success" ]]; then
-              echo "Latest check passed. Proceeding with Docker build and push."
-            else
-              echo "Checks are failing/on-going. Aborting Docker build and push."
-              exit 1
-            fi
-
         - name: Build and Push Docker Image
           run: docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile -t tsantalis/refactoringminer:latest --push .

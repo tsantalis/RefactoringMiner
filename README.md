@@ -2,6 +2,7 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
+[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 
 Table of Contents
 =================
@@ -13,7 +14,7 @@ Table of Contents
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
    * [How to use RefactoringMiner as a docker image](#how-to-use-refactoringminer-as-a-docker-image)
-   * [Chrome extension](#chrome-extension)
+   * [How to use RefactoringMiner as a Chrome extension](#how-to-use-refactoringminer-as-a-chrome-extension)
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
       * [Talks about RefactoringMiner](#talks-about-refactoringminer)
@@ -328,9 +329,11 @@ Since version 3.0, RefactoringMiner is available in [DockerHub](https://hub.dock
 A new image is created automatically on every Monday midnight.
 You can find detailed instructions on how to install and use the image at [Docker README](https://github.com/tsantalis/RefactoringMiner/blob/master/docker/README.md).
 
-# Chrome Extension
+# How to use RefactoringMiner as a Chrome extension
+[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
+
 If you want to get refactoring information when inspecting a commit on GitHub,
-you can install our [Refactoring Aware Commit Review](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd) Chrome Extension.
+you can install our [Refactoring Aware Commit Review](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd) Chrome extension.
 
 The Chrome extension can detect refactorings for **public** projects and commits matching the following URL patterns:
 * `https://github.com/user/project/commit/id`

@@ -1,5 +1,8 @@
 ![Alt](https://repobeats.axiom.co/api/embed/aaedbff1e1adfcefc54fff9dbdac2f5384cbcf87.svg "Repobeats analytics image")
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.tsantalis/refactoring-miner)
+<a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
+
 Table of Contents
 =================
 
@@ -9,6 +12,7 @@ Table of Contents
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
    * [How to test RefactoringMiner](#how-to-test-refactoringminer)
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
+   * [How to use RefactoringMiner as a docker image](#how-to-use-refactoringminer-as-a-docker-image)
    * [Chrome extension](#chrome-extension)
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
@@ -317,6 +321,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
 
     implementation 'com.github.tsantalis:refactoring-miner:3.0.4'
 
+# How to use RefactoringMiner as a docker image
+<a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
+
+Since version 3.0, RefactoringMiner is available in [DockerHub](https://hub.docker.com/r/tsantalis/refactoringminer).
+A new image is created automatically on every Monday midnight.
+You can find detailed instructions on how to install and use the image at [Docker README](https://github.com/tsantalis/RefactoringMiner/blob/master/docker/README.md).
 
 # Chrome Extension
 If you want to get refactoring information when inspecting a commit on GitHub,

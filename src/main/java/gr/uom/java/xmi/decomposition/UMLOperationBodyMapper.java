@@ -5783,8 +5783,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	private boolean equalCatchClauseIndex(AbstractCodeFragment leaf1, AbstractCodeFragment leaf2) {
-		if(leaf1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
-				leaf2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+		if(leaf1.getParent() != null && leaf1.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+				leaf2.getParent() != null && leaf2.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 			Optional<TryStatementObject> tryContainer1 = leaf1.getParent().getTryContainer();
 			Optional<TryStatementObject> tryContainer2 = leaf2.getParent().getTryContainer();
 			if(tryContainer1.isPresent() && tryContainer2.isPresent()) {

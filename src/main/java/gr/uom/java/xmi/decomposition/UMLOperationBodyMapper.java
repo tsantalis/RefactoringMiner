@@ -4694,7 +4694,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private List<String> extractCommentsWithinStatement(CompositeStatementObject statement, VariableDeclarationContainer container) {
+	public static List<String> extractCommentsWithinStatement(CompositeStatementObject statement, VariableDeclarationContainer container) {
 		List<UMLComment> comments1 = container.getComments();
 		List<String> commentsWithinStatement1 = new ArrayList<>();
 		for(UMLComment comment1 : comments1) {

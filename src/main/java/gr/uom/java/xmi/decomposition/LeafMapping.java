@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONDITIONAL_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.subConditionIntersection;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.hasElseBranch;
+import static gr.uom.java.xmi.decomposition.UMLOperationBodyMapper.extractCommentsWithinStatement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -310,6 +311,16 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				else if(!this.isIdenticalWithExtractedVariable() && o.isIdenticalWithExtractedVariable()) {
 					return 1;
+				}
+				else if(this.isIdenticalWithExtractedVariable() && o.isIdenticalWithExtractedVariable()) {
+					boolean thisIdenticalCommentsInParent = this.identicalCommentsInParent();
+					boolean otherIdenticalCommentsInParent = o.identicalCommentsInParent();
+					if(thisIdenticalCommentsInParent && !otherIdenticalCommentsInParent) {
+						return -1;
+					}
+					else if(!thisIdenticalCommentsInParent && otherIdenticalCommentsInParent) {
+						return 1;
+					}
 				}
 				if(this.isIdenticalWithInlinedVariable() && !o.isIdenticalWithInlinedVariable()) {
 					return -1;
@@ -1022,6 +1033,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return true;
 				}
 			}
+		}
+		return false;
+	}
+
+	private boolean identicalCommentsInParent() {
+		if(getFragment1().getParent() != null && getFragment2().getParent() != null) {
+			List<String> commentsWithinStatement1 = extractCommentsWithinStatement(getFragment1().getParent(), getOperation1());
+			List<String> commentsWithinStatement2 = extractCommentsWithinStatement(getFragment2().getParent(), getOperation2());
+			return commentsWithinStatement1.size() > 0 && commentsWithinStatement1.equals(commentsWithinStatement2);
 		}
 		return false;
 	}

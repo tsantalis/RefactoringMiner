@@ -4937,7 +4937,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						if(parentMapper != null && matchCount > 1) {
-							continue;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet);
+							boolean identicalSwitch = false;
+							if(switchParentEntry != null) {
+								identicalSwitch = switchParentEntry.getLeft().stringRepresentation().equals(switchParentEntry.getRight().stringRepresentation());
+							}
+							if(!identicalSwitch) {
+								continue;
+							}
 						}
 						if(equalNumberOfAssertions && leaf1.isAssertCall() && mappingSet.size() > 0) {
 							LeafMapping minStatementMapping = mappingSet.first();
@@ -5282,7 +5289,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 						if(parentMapper != null && matchCount > 1) {
-							continue;
+							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet);
+							boolean identicalSwitch = false;
+							if(switchParentEntry != null) {
+								identicalSwitch = switchParentEntry.getLeft().stringRepresentation().equals(switchParentEntry.getRight().stringRepresentation());
+							}
+							if(!identicalSwitch) {
+								continue;
+							}
 						}
 						if(!mappingSet.isEmpty()) {
 							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;

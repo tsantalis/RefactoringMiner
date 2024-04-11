@@ -483,10 +483,10 @@ When you build a distributable application with `./gradlew distZip`, you can run
 
     > ./RefactoringMiner diff -h
 
-    --url <commit-url>                           		      Run the diff with a GitHub commit url
-    --url <pr-url>                               		      Run the diff with a GitHub PullRequest url
-    --src <folder1> --dst <folder2>            		              Run the diff with two local directories
-    --repo <repo-folder-path> --commit <commitID>  		      Run the diff with a locally cloned GitHub repository
+    --url <commit-url> 				Run the diff with a GitHub commit url
+    --url <pr-url> 					Run the diff with a GitHub PullRequest url
+    --src <folder1> --dst <folder2> 		Run the diff with two local directories
+    --repo <repo-folder-path> --commit <commitID>	Run the diff with a locally cloned GitHub repository
 
 Each command creates a jetty server instance to visualize the AST diff in your web browser http://127.0.0.1:6789 
 

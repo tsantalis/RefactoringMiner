@@ -15,6 +15,9 @@ Table of Contents
    * [How to use RefactoringMiner as a maven dependency](#how-to-use-refactoringminer-as-a-maven-dependency)
    * [How to use RefactoringMiner as a docker image](#how-to-use-refactoringminer-as-a-docker-image)
    * [How to use RefactoringMiner as a Chrome extension](#how-to-use-refactoringminer-as-a-chrome-extension)
+   * [How to run RefactoringMiner from the command line](#how-to-run-refactoringminer-from-the-command-line)
+      * [Refactoring detection command line options](#refactoring-detection-command-line-options)
+      * [AST diff command line options](#ast-diff-command-line-options)
    * [Research](#research)
       * [How to cite RefactoringMiner](#how-to-cite-refactoringminer)
       * [Talks about RefactoringMiner](#talks-about-refactoringminer)
@@ -35,7 +38,6 @@ Table of Contents
       * [With two directories](#with-two-directories)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
-   * [Running RefactoringMiner from the command line](#running-refactoringminer-from-the-command-line)
 
 # General info
 RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
@@ -340,6 +342,166 @@ The Chrome extension can detect refactorings for **public** projects and commits
 * `https://github.com/user/project/pull/id/commits/id`
 
 ![Refactoring Aware Commit Review Chrome Extension](https://user-images.githubusercontent.com/1483516/80326324-62fab400-8806-11ea-9595-4906018b831a.png)
+
+# How to run RefactoringMiner from the command line
+## Refactoring detection command line options
+When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner-version.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner -h` to show its usage:
+
+    > ./RefactoringMiner -h
+
+	-h											Show options
+	-a <git-repo-folder> <branch> -json <path-to-json-file>					Detect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.
+	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1> -json <path-to-json-file>	Detect refactorings between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
+	-bt <git-repo-folder> <start-tag> <end-tag> -json <path-to-json-file>			Detect refactorings between <start-tag> and <end-tag> for project <git-repo-folder>
+	-c <git-repo-folder> <commit-sha1> -json <path-to-json-file>				Detect refactorings at specified commit <commit-sha1> for project <git-repo-folder>
+	-gc <git-URL> <commit-sha1> <timeout> -json <path-to-json-file>				Detect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
+	-gp <git-URL> <pull-request> <timeout> -json <path-to-json-file>			Detect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
+	
+With a locally cloned repository, run:
+
+    > git clone https://github.com/danilofes/refactoring-toy-example.git refactoring-toy-example
+    > ./RefactoringMiner -c refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
+
+If you don't want to clone locally the repository, run:
+
+    > ./RefactoringMiner -gc https://github.com/danilofes/refactoring-toy-example.git 36287f7c3b09eff78395267a3ac0d7da067863fd 10
+
+**For all options you can add the `-json <path-to-json-file>` command arguments to save the JSON output in a file. The results are appended to the file after each processed commit.**
+
+For the `-gc` and `-gp` options you must provide a valid OAuth token in the `github-oauth.properties` file stored in the `bin` folder.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+In both cases, you will get the output in JSON format:
+
+    {
+	"commits": [{
+		"repository": "https://github.com/danilofes/refactoring-toy-example.git",
+		"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
+		"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
+		"refactorings": [{
+				"type": "Pull Up Attribute",
+				"description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Labrador.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "original attribute declaration",
+					"codeElement": "age : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "pulled up attribute declaration",
+					"codeElement": "age : int"
+				}]
+			},
+			{
+				"type": "Pull Up Attribute",
+				"description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Poodle.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "original attribute declaration",
+					"codeElement": "age : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 5,
+					"endLine": 5,
+					"startColumn": 14,
+					"endColumn": 21,
+					"codeElementType": "FIELD_DECLARATION",
+					"description": "pulled up attribute declaration",
+					"codeElement": "age : int"
+				}]
+			},
+			{
+				"type": "Pull Up Method",
+				"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Labrador.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "original method declaration",
+					"codeElement": "public getAge() : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "pulled up method declaration",
+					"codeElement": "public getAge() : int"
+				}]
+			},
+			{
+				"type": "Pull Up Method",
+				"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
+				"leftSideLocations": [{
+					"filePath": "src/org/animals/Poodle.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "original method declaration",
+					"codeElement": "public getAge() : int"
+				}],
+				"rightSideLocations": [{
+					"filePath": "src/org/animals/Dog.java",
+					"startLine": 7,
+					"endLine": 9,
+					"startColumn": 2,
+					"endColumn": 3,
+					"codeElementType": "METHOD_DECLARATION",
+					"description": "pulled up method declaration",
+					"codeElement": "public getAge() : int"
+				}]
+			}
+		]
+	}]
+	}
+
+## AST diff command line options
+When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner-version.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner diff -h` to show its usage:
+
+    > ./RefactoringMiner diff -h
+
+    --url <commit-url>                           		      Run the diff with a GitHub commit url
+    --url <pr-url>                               		      Run the diff with a GitHub PullRequest url
+    --src <folder1> --dst <folder2>            		              Run the diff with two local directories
+    --repo <repo-folder-path> --commit <commitID>  		      Run the diff with a locally cloned GitHub repository
+
+Each command creates a jetty server instance to visualize the AST diff in your web browser http://127.0.0.1:6789 
+
+To export the mappings/actions, add `--export` to the end of the command. The files are saved by default in the RefactoringMiner `bin` directory.
+
+For example, to visualize the diff of a GitHub Pull Request, run
+
+    > ./RefactoringMiner diff --url https://github.com/JabRef/jabref/pull/11180
+
+To visualize the diff of a GitHub commit, run
+
+    > ./RefactoringMiner diff --url https://github.com/JetBrains/intellij-community/commit/7ed3f273ab0caf0337c22f0b721d51829bb0c877
+
+For the `--url` option you must provide a valid OAuth token in the `github-oauth.properties` file stored in the `bin` folder.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
 
 # Research
 ## How to cite RefactoringMiner
@@ -815,138 +977,3 @@ because variable `coursesContainer = getFromStepic(url,CoursesContainer.class)` 
 ```java
 final List<CourseInfo> courseInfos = getFromStepic("courses",CoursesContainer.class).courses;
 ```
-
-# Running RefactoringMiner from the command line
-
-When you build a distributable application with `./gradlew distZip`, you can run Refactoring Miner as a command line application. Extract the file under `build/distribution/RefactoringMiner.zip` in the desired location, and cd into the `bin` folder (or include it in your path). Then, run `RefactoringMiner -h` to show its usage:
-
-    > RefactoringMiner -h
-
-	-h											Show options
-	-a <git-repo-folder> <branch> -json <path-to-json-file>					Detect all refactorings at <branch> for <git-repo-folder>. If <branch> is not specified, commits from all branches are analyzed.
-	-bc <git-repo-folder> <start-commit-sha1> <end-commit-sha1> -json <path-to-json-file>	Detect refactorings between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>
-	-bt <git-repo-folder> <start-tag> <end-tag> -json <path-to-json-file>			Detect refactorings between <start-tag> and <end-tag> for project <git-repo-folder>
-	-c <git-repo-folder> <commit-sha1> -json <path-to-json-file>				Detect refactorings at specified commit <commit-sha1> for project <git-repo-folder>
-	-gc <git-URL> <commit-sha1> <timeout> -json <path-to-json-file>				Detect refactorings at specified commit <commit-sha1> for project <git-URL> within the given <timeout> in seconds. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
-	-gp <git-URL> <pull-request> <timeout> -json <path-to-json-file>			Detect refactorings at specified pull request <pull-request> for project <git-URL> within the given <timeout> in seconds for each commit in the pull request. All required information is obtained directly from GitHub using the OAuth token in github-oauth.properties
-	
-With a locally cloned repository, run:
-
-    > git clone https://github.com/danilofes/refactoring-toy-example.git refactoring-toy-example
-    > ./RefactoringMiner -c refactoring-toy-example 36287f7c3b09eff78395267a3ac0d7da067863fd
-
-If you don't want to clone locally the repository, run:
-
-    > ./RefactoringMiner -gc https://github.com/danilofes/refactoring-toy-example.git 36287f7c3b09eff78395267a3ac0d7da067863fd 10
-
-**For all options you can add the `-json <path-to-json-file>` command arguments to save the JSON output in a file. The results are appended to the file after each processed commit.**
-
-For the `-gc` and `-gp` options you must provide a valid OAuth token in the `github-oauth.properties` file stored in the `bin` folder.
-You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
-
-In both cases, you will get the output in JSON format:
-
-    {
-	"commits": [{
-		"repository": "https://github.com/danilofes/refactoring-toy-example.git",
-		"sha1": "36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"url": "https://github.com/danilofes/refactoring-toy-example/commit/36287f7c3b09eff78395267a3ac0d7da067863fd",
-		"refactorings": [{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Labrador to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Attribute",
-				"description": "Pull Up Attribute private age : int from class org.animals.Poodle to class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "original attribute declaration",
-					"codeElement": "age : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 5,
-					"endLine": 5,
-					"startColumn": 14,
-					"endColumn": 21,
-					"codeElementType": "FIELD_DECLARATION",
-					"description": "pulled up attribute declaration",
-					"codeElement": "age : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Labrador to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Labrador.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			},
-			{
-				"type": "Pull Up Method",
-				"description": "Pull Up Method public getAge() : int from class org.animals.Poodle to public getAge() : int from class org.animals.Dog",
-				"leftSideLocations": [{
-					"filePath": "src/org/animals/Poodle.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "original method declaration",
-					"codeElement": "public getAge() : int"
-				}],
-				"rightSideLocations": [{
-					"filePath": "src/org/animals/Dog.java",
-					"startLine": 7,
-					"endLine": 9,
-					"startColumn": 2,
-					"endColumn": 3,
-					"codeElementType": "METHOD_DECLARATION",
-					"description": "pulled up method declaration",
-					"codeElement": "public getAge() : int"
-				}]
-			}
-		]
-	}]
-	}

@@ -25,6 +25,6 @@ public class MoveIn extends TreeAddition {
 
 	@Override
 	public String toString()  {
-		return "Moved from File: " + getSrcFile();
+		return "moved from file: " + getSrcFile();
 	}
 }

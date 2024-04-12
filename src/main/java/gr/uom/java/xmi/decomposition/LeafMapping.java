@@ -645,6 +645,33 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				o.identicalPreviousStatement = true;
 			}
 		}
+		else if(lastStatement1 && !lastStatement2 &&
+				this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() < thisComp2.getStatements().size()-1 &&
+				o.getFragment2().getIndex() > 0 && o.getFragment2().getIndex() < oComp2.getStatements().size()-1) {
+			AbstractCodeFragment thisPrevious1 = thisComp1.getStatements().get(this.getFragment1().getIndex()-1);
+			AbstractCodeFragment thisPrevious2 = thisComp2.getStatements().get(this.getFragment2().getIndex()-1);
+			
+			AbstractCodeFragment oPrevious1 = oComp1.getStatements().get(o.getFragment1().getIndex()-1);
+			AbstractCodeFragment oPrevious2 = oComp2.getStatements().get(o.getFragment2().getIndex()-1);
+			boolean thisEqualPrevious = thisPrevious1.getString().equals(thisPrevious2.getString());
+			if(thisEqualPrevious) {
+				if(!isFieldAssignment(thisPrevious1) && !isFieldAssignment(thisPrevious2)) {
+					this.identicalPreviousStatement = true;
+				}
+			}
+			else if(sameCall(thisPrevious1, thisPrevious2)) {
+				this.identicalPreviousStatement = true;
+			}
+			boolean oEqualPrevious = oPrevious1.getString().equals(oPrevious2.getString());
+			if(oEqualPrevious) {
+				if(!isFieldAssignment(oPrevious1) && !isFieldAssignment(oPrevious2)) {
+					o.identicalPreviousStatement = true;
+				}
+			}
+			else if(sameCall(oPrevious1, oPrevious2)) {
+				o.identicalPreviousStatement = true;
+			}
+		}
 	}
 
 	private static boolean isFieldAssignment(AbstractCodeFragment fragment) {

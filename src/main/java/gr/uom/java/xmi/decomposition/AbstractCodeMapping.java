@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -94,6 +95,15 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public Set<Refactoring> getRefactorings() {
 		return refactorings;
+	}
+
+	public boolean containsRefactoringOfType(RefactoringType type) {
+		for(Refactoring r : refactorings) {
+			if(r.getRefactoringType().equals(type)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getMatchingArgumentsWithOperationInvocation() {

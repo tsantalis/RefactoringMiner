@@ -69,28 +69,28 @@ public class SimplifiedChawatheScriptGenerator implements EditScriptGenerator {
 				}
 			}
 		}
-//		for (Tree t : MoveInTrees.keySet()) {
-//			if (MoveInTrees.containsKey(t.getParent())
-//					&& MoveInTrees.keySet().containsAll(t.getParent().getDescendants())) {
-////				actions.remove(MoveInTrees.get(t));
-//			}
-//			else {
-//				if (t.getChildren().size() > 0 && deletedTrees.keySet().containsAll(t.getDescendants())) {
-//
-//				}
-//			}
-//		}
-//		for (Tree t : MoveOutTrees.keySet()) {
-//			if (MoveOutTrees.containsKey(t.getParent())
-//					&& MoveOutTrees.keySet().containsAll(t.getParent().getDescendants())) {
-////				actions.remove(MoveOutTrees.get(t));
-//			}
-//			else {
-//				if (t.getChildren().size() > 0 && deletedTrees.keySet().containsAll(t.getDescendants())) {
-//
-//				}
-//			}
-//		}
+		for (Tree t : MoveInTrees.keySet()) {
+			if (MoveInTrees.containsKey(t.getParent())
+					&& MoveInTrees.keySet().containsAll(t.getParent().getDescendants())) {
+				actions.remove(MoveInTrees.get(t));
+			}
+			else {
+				if (!t.getChildren().isEmpty() && deletedTrees.keySet().containsAll(t.getDescendants())) {
+					//TODO:
+				}
+			}
+		}
+		for (Tree t : MoveOutTrees.keySet()) {
+			if (MoveOutTrees.containsKey(t.getParent())
+					&& MoveOutTrees.keySet().containsAll(t.getParent().getDescendants())) {
+				actions.remove(MoveOutTrees.get(t));
+			}
+			else {
+				if (!t.getChildren().isEmpty() && deletedTrees.keySet().containsAll(t.getDescendants())) {
+					//TODO:
+				}
+			}
+		}
 		return actions;
 	}
 }

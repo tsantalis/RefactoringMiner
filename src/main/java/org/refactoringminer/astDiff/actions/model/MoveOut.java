@@ -25,6 +25,6 @@ public class MoveOut extends TreeAddition {
 
 	@Override
 	public String toString()  {
-		return "Moved to File: " + getDstFile();
+		return "moved to file: " + getDstFile();
 	}
 }

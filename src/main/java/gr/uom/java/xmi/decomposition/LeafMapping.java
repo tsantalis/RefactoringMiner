@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.refactoringminer.api.RefactoringType;
+
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -645,7 +647,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				o.identicalPreviousStatement = true;
 			}
 		}
-		else if(lastStatement1 && !lastStatement2 &&
+		else if(lastStatement1 && !lastStatement2 && this != o && !this.containsRefactoringOfType(RefactoringType.EXTRACT_VARIABLE) &&
 				this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() < thisComp2.getStatements().size()-1 &&
 				o.getFragment2().getIndex() > 0 && o.getFragment2().getIndex() < oComp2.getStatements().size()-1) {
 			AbstractCodeFragment thisPrevious1 = thisComp1.getStatements().get(this.getFragment1().getIndex()-1);

@@ -967,6 +967,25 @@ public class TestStatementMappings {
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "flink-7407076d3990752eb5fa4072cd036efd2f656cbc.txt"));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
+
+	@Test
+	public void testRestructuredStatementMappings19() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/square/okhttp.git", "a91124b6d4e2eb1bb3c71a7a8ddff7d40b7db55a", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("synStream") && mapper.getContainer2().getName().equals("headers")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "okhttp-a91124b6d4e2eb1bb3c71a7a8ddff7d40b7db55a.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/apache/flink.git, 536675b03a5050fda9c3e1fd403818cb50dcc6ff, getUnguardedFileSystem, true, flink-536675b03a5050fda9c3e1fd403818cb50dcc6ff.txt",

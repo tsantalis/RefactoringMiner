@@ -2349,13 +2349,24 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	private boolean nullDeclarationOrDifferentCodeElementType(AbstractCodeFragment fragment, String variableName, VariableDeclaration otherVariable) {
+		VariableDeclaration thisVariable = fragment.getVariableDeclaration(variableName);
+		if(thisVariable == null) {
+			return true;
+		}
+		else if(!thisVariable.getLocationInfo().getCodeElementType().equals(otherVariable.getLocationInfo().getCodeElementType())) {
+			return true;
+		}
+		return false;
+	}
+
 	private boolean inconsistentVariableMapping(VariableDeclaration v1, VariableDeclaration v2, Set<AbstractCodeMapping> set) {
 		if(v1 != null && v2 != null) {
 			for(AbstractCodeMapping mapping : mappings) {
 				List<VariableDeclaration> variableDeclarations1 = mapping.getFragment1().getVariableDeclarations();
 				List<VariableDeclaration> variableDeclarations2 = mapping.getFragment2().getVariableDeclarations();
 				if(variableDeclarations1.contains(v1)) {
-					if(variableDeclarations2.size() > 0 && !variableDeclarations2.contains(v2)) {
+					if(variableDeclarations2.size() > 0 && !variableDeclarations2.contains(v2) && nullDeclarationOrDifferentCodeElementType(mapping.getFragment2(), v2.getVariableName(), v1)) {
 						if(!traditionalForToEnhancedForMapping(mapping)) {
 							return true;
 						}
@@ -2366,7 +2377,7 @@ public class VariableReplacementAnalysis {
 					}
 				}
 				if(variableDeclarations2.contains(v2)) {
-					if(variableDeclarations1.size() > 0 && !variableDeclarations1.contains(v1)) {
+					if(variableDeclarations1.size() > 0 && !variableDeclarations1.contains(v1) && nullDeclarationOrDifferentCodeElementType(mapping.getFragment1(), v1.getVariableName(), v2)) {
 						if(!traditionalForToEnhancedForMapping(mapping)) {
 							return true;
 						}

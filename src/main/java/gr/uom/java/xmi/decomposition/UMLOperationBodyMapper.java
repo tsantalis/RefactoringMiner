@@ -6200,6 +6200,39 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				addMapping(newMapping);
 				leaves1ToBeRemoved.add(matchingVariableDeclaration1);
 			}
+			if(matchingVariableDeclarations1.size() == 0) {
+				AbstractCodeMapping mappingToBeRemoved = null;
+				for(AbstractCodeMapping m : mappings) {
+					AbstractCodeFragment leaf1 = m.getFragment1();
+					if(leaf1.getVariableDeclarations().size() > 0) {
+						VariableDeclaration declaration1 = leaf1.getVariableDeclarations().get(0);
+						boolean variableRenamed = false;
+						for(Replacement r : mapping.getReplacements()) {
+							if(r.getBefore().equals(declaration1.getVariableName()) &&
+									r.getAfter().equals(declaration2.getVariableName())) {
+								variableRenamed = true;
+								break;
+							}
+						}
+						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && mapping.getFragment1().getString().startsWith(declaration1.getVariableName() + JAVA.ASSIGNMENT);
+						if((equalName || variableRenamed) && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
+							matchingVariableDeclarations1.add(leaf1);
+							mappingToBeRemoved = m;
+						}
+					}
+				}
+				if(matchingVariableDeclarations1.size() == 1) {
+					boolean sameVariableName = 
+							mappingToBeRemoved.getFragment2().getVariableDeclarations().size() > 0 &&
+							mappingToBeRemoved.getFragment2().getVariableDeclarations().get(0).getVariableName().equals(declaration2.getVariableName());
+					if(!sameVariableName)
+						removeMapping(mappingToBeRemoved);
+					AbstractCodeFragment matchingVariableDeclaration1 = matchingVariableDeclarations1.iterator().next();
+					LeafMapping newMapping = createLeafMapping(matchingVariableDeclaration1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+					addMapping(newMapping);
+					leaves1ToBeRemoved.add(matchingVariableDeclaration1);
+				}
+			}
 		}
 	}
 

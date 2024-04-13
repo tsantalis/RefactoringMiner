@@ -2051,6 +2051,24 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testRestructuredStatementMappings19() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/square/okhttp.git", "a91124b6d4e2eb1bb3c71a7a8ddff7d40b7db55a", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("synStream") && mapper.getContainer2().getName().equals("headers")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "okhttp-a91124b6d4e2eb1bb3c71a7a8ddff7d40b7db55a.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testInlinedMethodMovedToExtractedMethod() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

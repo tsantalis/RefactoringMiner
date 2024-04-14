@@ -5,17 +5,66 @@ import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
     private final DirComparator comperator;
+    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
+        for(Map.Entry<String, String> pair : comperator.getModifiedFilesName().entrySet()) {
+            String fileName = pair.getValue();
+            String[] tokens = fileName.split("/");
+            int counter = 1;
+            for(String token : tokens) {
+                String pathToNode = concatWithSlash(tokens, counter);
+                DefaultMutableTreeNode parent = findNode(pathToNode);
+                if(!parent.getUserObject().equals(token)) {
+                    DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(token);
+                    parent.add(newChild);
+                }
+                counter++;
+            }
+        }
+    }
 
+    private static String concatWithSlash(String[] tokens, int numberOfTokensToConcat) {
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        for(String token : tokens) {
+            if(index < numberOfTokensToConcat) {
+                sb.append(token);
+            }
+            if(index < numberOfTokensToConcat - 1) {
+                sb.append("/");
+            }
+            index++;
+        }
+        return sb.toString();
+    }
+
+    private DefaultMutableTreeNode findNode(String pathToNode) {
+        String[] tokens = pathToNode.split("/");
+        Enumeration<TreeNode> enumeration = root.children();
+        int index = 0;
+        DefaultMutableTreeNode lastNode = null;
+        while(enumeration.hasMoreElements() && index < tokens.length) {
+            DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
+            if(treeNode.getUserObject().equals(tokens[index])) {
+                lastNode = treeNode;
+                index++;
+                enumeration = treeNode.children();
+            }
+        }
+        return lastNode != null ? lastNode : root;
     }
 
     @Override

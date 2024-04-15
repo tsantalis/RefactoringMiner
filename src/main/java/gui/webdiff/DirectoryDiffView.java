@@ -16,8 +16,8 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
     private final DirComparator comperator;
-    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
-    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode("root");
+    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode("");
+    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode("");
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
@@ -46,7 +46,7 @@ public class DirectoryDiffView implements Renderable {
                 DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
                 String nodeName = treeNode.getUserObject().toString();
                 if(!nodeName.endsWith(".java")) {
-                    newNode.setUserObject(newNode.getUserObject() + "/" + nodeName);
+                    newNode.setUserObject(newNode.getUserObject() + ((newNode.getUserObject().equals("") ? "" : "/")) + nodeName);
                     compressNode(newNode, treeNode);
                 }
                 else {
@@ -116,7 +116,7 @@ public class DirectoryDiffView implements Renderable {
                                         .span(class_("badge badge-secondary").style("color:black")).content(comperator.getModifiedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new ModifiedFiles(comperator.getModifiedFilesName()), comperator.getModifiedFilesName().size() > 0)
+                                .render_if(new ModifiedFiles(comperator.getModifiedFilesName(), compressedTree), !comperator.getModifiedFilesName().isEmpty())
                             ._div()
                         ._div()
                     ._div()
@@ -155,46 +155,82 @@ public class DirectoryDiffView implements Renderable {
 //        private List<Pair<File, File>> files;
 
         private Map<String,String> diffInfos;
+        private final DefaultMutableTreeNode root;
 
-        private ModifiedFiles(Map<String,String> diffInfos) {
+        private ModifiedFiles(Map<String,String> diffInfos, DefaultMutableTreeNode root) {
             this.diffInfos = diffInfos;
+            this.root = root;
+        }
+
+        private int renderNode(HtmlCanvas ul, DefaultMutableTreeNode node, int nodeId) throws IOException {
+            if (node == null) {
+                return nodeId;
+            }
+
+            // Start a list item for this node
+            HtmlCanvas li = null;
+            if (!node.isLeaf())
+                li = ul.li();
+
+            // Content of the current node
+            if (node.getUserObject() != null) {
+                if (node.isLeaf()) {
+                    ul.tr()
+                            .td().content((String) node.getUserObject()) //TODO:
+                            .td()
+                            .div(class_("btn-toolbar justify-content-end"))
+                            .div(class_("btn-group"))
+                            .a(class_("btn btn-primary btn-sm").href("/monaco-diff/" + nodeId)).content("MonacoDiff")
+                            .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeId)).content("ClassicDiff")
+                            ._div()
+                            ._div()
+                            ._td()
+                            ._tr();
+                    nodeId++;
+                }
+                else {
+                    li.span().content(node.getUserObject().toString());
+                }
+            }
+
+            // Increment the ID for the next node
+
+            // Check if this node has children
+            if (!node.isLeaf()) {
+                // Start a nested list for the children
+                HtmlCanvas childUl = li.ul();
+                for (int i = 0; i < node.getChildCount(); i++) {
+                    DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) node.getChildAt(i);
+                    if (childNode.isLeaf())
+                        childUl.table(class_("table card-table table-striped table-condensed mb-0"))
+                            .tbody();
+                    // Recursively render the child node
+                    nodeId = renderNode(childUl, childNode, nodeId);
+                    if (childNode.isLeaf())
+                        childUl._tbody()._table();
+                }
+                // End the nested list
+                childUl._ul();
+            }
+
+            // End the list item
+            if (li != null)
+                li._li();
+            return nodeId;
         }
 
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
-            HtmlCanvas tbody = html
-            .table(class_("table card-table table-striped table-condensed mb-0"))
-                .tbody();
+            if (root != null) {
+                // Start the outer list
+                HtmlCanvas ul = html.div(class_("tree-root")).ul();
 
-            int id = 0;
-            for (Map.Entry<String,String> entry : diffInfos.entrySet())
-            {
-                String nameBefore = entry.getKey();
-                String nameAfter = entry.getValue();
-                tbody
-                .tr()
-//                    .td().content(comparator.getSrc().toAbsolutePath().relativize(file.first.toPath().toAbsolutePath()).toString())
-                    .td().content(properText(nameBefore,nameAfter))
-                    .td()
-                        .div(class_("btn-toolbar justify-content-end"))
-                            .div(class_("btn-group"))
-                                //TODO: integrate this with the -g option
-//                                .if_(TreeGenerators.getInstance().hasGeneratorForFile(file.first.getAbsolutePath()))
-                                    .a(class_("btn btn-primary btn-sm").href("/monaco-diff/" + id)).content("MonacoDiff")
-                                    .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + id)).content("ClassicDiff")
-//                                ._if()
-//                                .a(class_("btn btn-primary btn-sm").href("/monaco-native-diff/" + id)).content("monaco-native")
-//                                .a(class_("btn btn-primary btn-sm").href("/mergely-diff/" + id)).content("mergely")
-//                                    .a(class_("btn btn-primary btn-sm").href("/raw-diff/" + id)).content("raw")
-                            ._div()
-                        ._div()
-                    ._td()
-                ._tr();
-                id++;
+                // Recursively process each node
+                renderNode(ul, root,0);
+
+                // Close the list and div
+                ul._ul()._div();
             }
-            tbody
-                ._tbody()
-                ._table();
         }
 
         private String properText(String nameBefore, String nameAfter) {

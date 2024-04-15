@@ -17,6 +17,7 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 public class DirectoryDiffView implements Renderable {
     private final DirComparator comperator;
     private final DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
+    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode("root");
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
@@ -32,6 +33,34 @@ public class DirectoryDiffView implements Renderable {
                     parent.add(newChild);
                 }
                 counter++;
+            }
+        }
+        compressNode(compressedTree, root);
+    }
+
+    private static void compressNode(DefaultMutableTreeNode newNode, DefaultMutableTreeNode oldNode) {
+        Enumeration<TreeNode> enumeration = oldNode.children();
+        int childCount = oldNode.getChildCount();
+        if(childCount == 1) {
+            while(enumeration.hasMoreElements()) {
+                DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
+                String nodeName = treeNode.getUserObject().toString();
+                if(!nodeName.endsWith(".java")) {
+                    newNode.setUserObject(newNode.getUserObject() + "/" + nodeName);
+                    compressNode(newNode, treeNode);
+                }
+                else {
+                    // this node is a leaf
+                    newNode.add(treeNode);
+                }
+            }
+        }
+        else {
+            while(enumeration.hasMoreElements()) {
+                DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
+                DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(treeNode.getUserObject());
+                newNode.add(newChild);
+                compressNode(newChild, treeNode);
             }
         }
     }

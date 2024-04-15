@@ -107,19 +107,21 @@ require(['vs/editor/editor.main'], function() {
         leftEditor.deltaDecorations([], leftDecorations);
 
         leftEditor.onMouseDown((event) => {
-            const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
-                .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-            if (allDecorations.length >= 1) {
-                let activatedRange = allDecorations[0].range;
-                if (allDecorations.length > 1)  {
-                    for (let i = 1; i < allDecorations.length; i = i + 1) {
-                        const candidateRange = allDecorations[i].range;
-                        if (activatedRange.containsRange(candidateRange))
-                            activatedRange = candidateRange;
+            if (event.target.range) {
+                const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
+                    .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                if (allDecorations.length >= 1) {
+                    let activatedRange = allDecorations[0].range;
+                    if (allDecorations.length > 1) {
+                        for (let i = 1; i < allDecorations.length; i = i + 1) {
+                            const candidateRange = allDecorations[i].range;
+                            if (activatedRange.containsRange(candidateRange))
+                                activatedRange = candidateRange;
+                        }
                     }
+                    const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
+                    rightEditor.revealRangeInCenter(mapping[1]);
                 }
-                const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
-                rightEditor.revealRangeInCenter(mapping[1]);
             }
         });
 
@@ -131,18 +133,20 @@ require(['vs/editor/editor.main'], function() {
         rightEditor.deltaDecorations([], rightDecorations);
 
         rightEditor.onMouseDown((event) => {
-            const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
-                .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-            if (allDecorations.length >= 1) {
-                let activatedRange = allDecorations[0].range;
-                if (allDecorations.length > 1)  {
-                    for (let i = 1; i < allDecorations.length; i = i + 1) {
-                        const candidateRange = allDecorations[i].range;
-                        if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
+            if (event.target.range) {
+                const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
+                    .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                if (allDecorations.length >= 1) {
+                    let activatedRange = allDecorations[0].range;
+                    if (allDecorations.length > 1) {
+                        for (let i = 1; i < allDecorations.length; i = i + 1) {
+                            const candidateRange = allDecorations[i].range;
+                            if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
+                        }
                     }
+                    const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
+                    leftEditor.revealRangeInCenter(mapping[0]);
                 }
-                const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
-                leftEditor.revealRangeInCenter(mapping[0]);
             }
         });
     });

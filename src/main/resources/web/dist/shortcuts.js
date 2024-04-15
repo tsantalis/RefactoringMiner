@@ -26,18 +26,20 @@ $(function(){
 
     $("body").keypress(function (event) {
         switch (event.which) {
-            case 116:
-                $('html, body').animate({scrollTop: 0}, 100);
-                break;
-            case 98:
-                $("html, body").animate({ scrollTop: $(document).height() }, 100);
-                break;
-            case 113:
-                window.location = "/quit";
-                break;
-            case 108:
-                window.location = "/list";
-                break;
+            //TODO: Disable hotkeys (temp)
+
+            // case 116:
+            //     $('html, body').animate({scrollTop: 0}, 100);
+            //     break;
+            // case 98:
+            //     $("html, body").animate({ scrollTop: $(document).height() }, 100);
+            //     break;
+            // case 113:
+            //     window.location = "/quit";
+            //     break;
+            // case 108:
+            //     window.location = "/list";
+            //     break;
         }
     });
 });

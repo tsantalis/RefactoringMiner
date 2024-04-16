@@ -5,25 +5,18 @@ import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Map;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
-
-
     private final DirComparator comperator;
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
     }
-
-
 
     @Override
     public void renderOn(HtmlCanvas html) throws IOException {
@@ -81,9 +74,6 @@ public class DirectoryDiffView implements Renderable {
     }
 
     private static class ModifiedFiles implements Renderable {
-//        private List<Pair<File, File>> files;
-
-        private Map<String,String> diffInfos;
         private final DefaultMutableTreeNode root;
 
         private ModifiedFiles(DirComparator comparator) {
@@ -105,7 +95,7 @@ public class DirectoryDiffView implements Renderable {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
                     ul.tr()
-                            .td().content(nodeInfo.getName()) //TODO:
+                            .td().content(nodeInfo.getName())
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))
@@ -158,13 +148,6 @@ public class DirectoryDiffView implements Renderable {
                 // Close the list and div
                 ul._ul()._div();
             }
-        }
-
-        private String properText(String nameBefore, String nameAfter) {
-            if (nameBefore.equals(nameAfter))
-                return nameAfter;
-            else
-                return nameBefore + " -> " + nameAfter;
         }
     }
 

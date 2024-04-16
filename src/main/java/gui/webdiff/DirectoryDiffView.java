@@ -16,108 +16,14 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
 
-    private static class TreeNodeInfo {
-        private final String name;
-        private final String fullPath;
-
-        public TreeNodeInfo(String name, String fullPath) {
-            this.name = name;
-            this.fullPath = fullPath;
-        }
-    }
 
     private final DirComparator comperator;
-    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
-    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
-        for(Map.Entry<String, String> pair : comperator.getModifiedFilesName().entrySet()) {
-            String fileName = pair.getValue();
-            String[] tokens = fileName.split("/");
-            int counter = 1;
-            for(String token : tokens) {
-                String pathToNode = concatWithSlash(tokens, counter);
-                DefaultMutableTreeNode parent = findNode(pathToNode);
-                TreeNodeInfo parentNodeInfo = (TreeNodeInfo) parent.getUserObject();
-                if(!parentNodeInfo.name.equals(token)) {
-                    TreeNodeInfo nodeInfo = new TreeNodeInfo(token, pathToNode);
-                    DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(nodeInfo);
-                    parent.add(newChild);
-                }
-                counter++;
-            }
-        }
-        compressNode(compressedTree, root);
     }
 
-    private static void compressNode(DefaultMutableTreeNode newNode, DefaultMutableTreeNode oldNode) {
-        Enumeration<TreeNode> enumeration = oldNode.children();
-        int childCount = oldNode.getChildCount();
-        if(childCount == 1) {
-            while(enumeration.hasMoreElements()) {
-                DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
-                TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
-                String nodeName = treeNodeInfo.name;
-                if(!nodeName.endsWith(".java")) {
-                	if(oldNode.isRoot()) {
-                        TreeNodeInfo newNodeInfo = new TreeNodeInfo(nodeName, nodeName);
-                        newNode.setUserObject(newNodeInfo);
-                	}
-                	else {
-                        TreeNodeInfo newNodeInfo = (TreeNodeInfo) newNode.getUserObject();
-                        TreeNodeInfo updatedNodeInfo = new TreeNodeInfo(newNodeInfo.name + "/" + nodeName, newNodeInfo.fullPath + "/" + nodeName);
-                        newNode.setUserObject(updatedNodeInfo);
-                	}
-                    compressNode(newNode, treeNode);
-                }
-                else {
-                    // this node is a leaf
-                    newNode.add(treeNode);
-                }
-            }
-        }
-        else {
-            while(enumeration.hasMoreElements()) {
-                DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
-                DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(treeNode.getUserObject());
-                newNode.add(newChild);
-                compressNode(newChild, treeNode);
-            }
-        }
-    }
 
-    private static String concatWithSlash(String[] tokens, int numberOfTokensToConcat) {
-        StringBuilder sb = new StringBuilder();
-        int index = 0;
-        for(String token : tokens) {
-            if(index < numberOfTokensToConcat) {
-                sb.append(token);
-            }
-            if(index < numberOfTokensToConcat - 1) {
-                sb.append("/");
-            }
-            index++;
-        }
-        return sb.toString();
-    }
-
-    private DefaultMutableTreeNode findNode(String pathToNode) {
-        String[] tokens = pathToNode.split("/");
-        Enumeration<TreeNode> enumeration = root.children();
-        int index = 0;
-        DefaultMutableTreeNode lastNode = null;
-        while(enumeration.hasMoreElements() && index < tokens.length) {
-            DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
-            TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
-            if(treeNodeInfo.name.equals(tokens[index])) {
-                lastNode = treeNode;
-                index++;
-                enumeration = treeNode.children();
-            }
-        }
-        return lastNode != null ? lastNode : root;
-    }
 
     @Override
     public void renderOn(HtmlCanvas html) throws IOException {
@@ -139,7 +45,7 @@ public class DirectoryDiffView implements Renderable {
                                         .span(class_("badge badge-secondary").style("color:black")).content(comperator.getModifiedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new ModifiedFiles(comperator.getModifiedFilesName(), compressedTree), !comperator.getModifiedFilesName().isEmpty())
+                                .render_if(new ModifiedFiles(comperator), !comperator.getModifiedFilesName().isEmpty())
                             ._div()
                         ._div()
                     ._div()
@@ -180,14 +86,13 @@ public class DirectoryDiffView implements Renderable {
         private Map<String,String> diffInfos;
         private final DefaultMutableTreeNode root;
 
-        private ModifiedFiles(Map<String,String> diffInfos, DefaultMutableTreeNode root) {
-            this.diffInfos = diffInfos;
-            this.root = root;
+        private ModifiedFiles(DirComparator comparator) {
+            this.root = comparator.getCompressedTree();
         }
 
-        private int renderNode(HtmlCanvas ul, DefaultMutableTreeNode node, int nodeId) throws IOException {
+        private void renderNode(HtmlCanvas ul, DefaultMutableTreeNode node) throws IOException {
             if (node == null) {
-                return nodeId;
+                return;
             }
 
             // Start a list item for this node
@@ -197,22 +102,22 @@ public class DirectoryDiffView implements Renderable {
 
             // Content of the current node
             if (node.getUserObject() != null) {
+                TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
                     ul.tr()
-                            .td().content(((TreeNodeInfo) node.getUserObject()).name) //TODO:
+                            .td().content(nodeInfo.getName()) //TODO:
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))
-                            .a(class_("btn btn-primary btn-sm").href("/monaco-diff/" + nodeId)).content("MonacoDiff")
-                            .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeId)).content("ClassicDiff")
+                            .a(class_("btn btn-primary btn-sm").href("/monaco-diff/" + nodeInfo.getId())).content("MonacoDiff")
+                            .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeInfo.getId())).content("ClassicDiff")
                             ._div()
                             ._div()
                             ._td()
                     ._tr();
-                    nodeId++;
                 }
                 else {
-                    li.span().content(((TreeNodeInfo)node.getUserObject()).name);
+                    li.span().content(nodeInfo.getName());
                 }
             }
 
@@ -228,7 +133,7 @@ public class DirectoryDiffView implements Renderable {
                         childUl.table(class_("table card-table table-striped table-condensed mb-0"))
                             .tbody();
                     // Recursively render the child node
-                    nodeId = renderNode(childUl, childNode, nodeId);
+                    renderNode(childUl, childNode);
                     if (childNode.isLeaf())
                         childUl._tbody()._table();
                 }
@@ -239,7 +144,6 @@ public class DirectoryDiffView implements Renderable {
             // End the list item
             if (li != null)
                 li._li();
-            return nodeId;
         }
 
         @Override
@@ -249,7 +153,7 @@ public class DirectoryDiffView implements Renderable {
                 HtmlCanvas ul = html.div(class_("tree-root")).ul();
 
                 // Recursively process each node
-                renderNode(ul, root,0);
+                renderNode(ul, root);
 
                 // Close the list and div
                 ul._ul()._div();

@@ -4,14 +4,20 @@ import com.github.gumtreediff.utils.Pair;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.*;
 
 public class DirComparator {
     private final List<ASTDiff> diffs;
     private final ProjectASTDiff projectASTDiff;
+    private final DefaultMutableTreeNode compressedTree;
+    private final Map<String,String> modifiedFilesName;
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
-    private Map<String,String> modifiedFilesName;
+
+    public DefaultMutableTreeNode getCompressedTree() {
+        return compressedTree;
+    }
 
     public Set<String> getRemovedFilesName() {
         return removedFilesName;
@@ -37,8 +43,9 @@ public class DirComparator {
         this.projectASTDiff = projectASTDiff;
         this.diffs = new ArrayList<>(projectASTDiff.getDiffSet());
         modifiedFilesName = new LinkedHashMap<>();
-
         compare();
+        compressedTree = new TreeViewGenerator(getModifiedFilesName(), diffs).getCompressedTree();
+        System.out.println();
     }
 
     private void compare() {

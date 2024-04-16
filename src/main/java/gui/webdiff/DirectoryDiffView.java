@@ -15,9 +15,20 @@ import javax.swing.tree.TreeNode;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
+
+    private static class TreeNodeInfo {
+        private final String name;
+        private final String fullPath;
+
+        public TreeNodeInfo(String name, String fullPath) {
+            this.name = name;
+            this.fullPath = fullPath;
+        }
+    }
+
     private final DirComparator comperator;
-    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode("");
-    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode("");
+    private final DefaultMutableTreeNode root = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
+    private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
@@ -28,8 +39,10 @@ public class DirectoryDiffView implements Renderable {
             for(String token : tokens) {
                 String pathToNode = concatWithSlash(tokens, counter);
                 DefaultMutableTreeNode parent = findNode(pathToNode);
-                if(!parent.getUserObject().equals(token)) {
-                    DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(token);
+                TreeNodeInfo parentNodeInfo = (TreeNodeInfo) parent.getUserObject();
+                if(!parentNodeInfo.name.equals(token)) {
+                    TreeNodeInfo nodeInfo = new TreeNodeInfo(token, pathToNode);
+                    DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(nodeInfo);
                     parent.add(newChild);
                 }
                 counter++;
@@ -44,13 +57,17 @@ public class DirectoryDiffView implements Renderable {
         if(childCount == 1) {
             while(enumeration.hasMoreElements()) {
                 DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
-                String nodeName = treeNode.getUserObject().toString();
+                TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
+                String nodeName = treeNodeInfo.name;
                 if(!nodeName.endsWith(".java")) {
                 	if(oldNode.isRoot()) {
-                		newNode.setUserObject(nodeName);
+                        TreeNodeInfo newNodeInfo = new TreeNodeInfo(nodeName, nodeName);
+                        newNode.setUserObject(newNodeInfo);
                 	}
                 	else {
-                		newNode.setUserObject(newNode.getUserObject() + "/" + nodeName);
+                        TreeNodeInfo newNodeInfo = (TreeNodeInfo) newNode.getUserObject();
+                        TreeNodeInfo updatedNodeInfo = new TreeNodeInfo(newNodeInfo.name + "/" + nodeName, newNodeInfo.fullPath + "/" + nodeName);
+                        newNode.setUserObject(updatedNodeInfo);
                 	}
                     compressNode(newNode, treeNode);
                 }
@@ -92,7 +109,8 @@ public class DirectoryDiffView implements Renderable {
         DefaultMutableTreeNode lastNode = null;
         while(enumeration.hasMoreElements() && index < tokens.length) {
             DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
-            if(treeNode.getUserObject().equals(tokens[index])) {
+            TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
+            if(treeNodeInfo.name.equals(tokens[index])) {
                 lastNode = treeNode;
                 index++;
                 enumeration = treeNode.children();
@@ -181,7 +199,7 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 if (node.isLeaf()) {
                     ul.tr()
-                            .td().content((String) node.getUserObject()) //TODO:
+                            .td().content(((TreeNodeInfo) node.getUserObject()).name) //TODO:
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))
@@ -190,11 +208,11 @@ public class DirectoryDiffView implements Renderable {
                             ._div()
                             ._div()
                             ._td()
-                            ._tr();
+                    ._tr();
                     nodeId++;
                 }
                 else {
-                    li.span().content(node.getUserObject().toString());
+                    li.span().content(((TreeNodeInfo)node.getUserObject()).name);
                 }
             }
 

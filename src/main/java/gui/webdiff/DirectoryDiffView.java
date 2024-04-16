@@ -282,6 +282,7 @@ public class DirectoryDiffView implements Renderable {
                         .macros().javascript(WebDiff.JQUERY_JS_URL)
                         .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
                         .macros().javascript("/dist/shortcuts.js")
+                        .macros().stylesheet("/dist/style.css")
                      ._head();
         }
     }

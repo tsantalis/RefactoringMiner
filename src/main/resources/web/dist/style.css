@@ -1,0 +1,8 @@
+ul {
+    list-style: none;
+}
+
+ul li::before {
+    content: url('icons8-file-folder.svg');
+    margin-right: 5px;
+}

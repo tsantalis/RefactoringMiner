@@ -46,7 +46,12 @@ public class DirectoryDiffView implements Renderable {
                 DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
                 String nodeName = treeNode.getUserObject().toString();
                 if(!nodeName.endsWith(".java")) {
-                    newNode.setUserObject(newNode.getUserObject() + ((newNode.getUserObject().equals("") ? "" : "/")) + nodeName);
+                	if(oldNode.isRoot()) {
+                		newNode.setUserObject(nodeName);
+                	}
+                	else {
+                		newNode.setUserObject(newNode.getUserObject() + "/" + nodeName);
+                	}
                     compressNode(newNode, treeNode);
                 }
                 else {

@@ -1077,6 +1077,7 @@ public class ProjectASTDiffer
 
 		mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
 		matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
+		matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);
 		if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {
 			if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
 				//JavaDocs are mapped as well.
@@ -1098,6 +1099,23 @@ public class ProjectASTDiffer
 		processJavaDocs(srcTree,dstTree,srcUMLAttribute.getJavadoc(),dstUMLAttribute.getJavadoc(),mappingStore);
 		if (srcVarDeclaration != null && dstVarDeclaration != null)
 			mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
+	}
+
+	private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {
+		Tree srcField = findFirstByType(srcFieldDeclaration, Constants.MARKER_ANNOTATION);
+		Tree dstField = findFirstByType(dstFieldDeclaration, Constants.MARKER_ANNOTATION);
+		new LeafMatcher().match(srcField, dstField, mappingStore);
+	}
+
+	private static Tree findFirstByType(Tree srcFieldDeclaration, String typeName) {
+		Tree fieldAnnotation = null;
+		for (Tree child : srcFieldDeclaration.getChildren()) {
+			if (child.getType().name.equals(typeName)) {
+				fieldAnnotation = child;
+				break;
+			}
+		}
+		return fieldAnnotation;
 	}
 
 	private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {

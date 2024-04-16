@@ -45,3 +45,5 @@ You can invoke RefactoringMiner from git by running the command `git difftool -d
 ```
 
 You can then use the command `git rmd`.
+
+Note: Ensure your Docker setup includes access to virtual file shares, particularly for the tmp folder, as Git temporarily stores revisions there. Configure necessary read permissions appropriately.

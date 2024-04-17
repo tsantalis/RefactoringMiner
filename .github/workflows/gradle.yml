@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: write
+      actions: write
 
     env:
       OAuthToken: ${{ secrets.OAUTHTOKEN }} 
@@ -44,14 +46,18 @@ jobs:
           ./gradlew build -x javadoc
         fi
 
-    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
-    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
-    #
-    # - name: Setup Gradle
-    #   uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a # v3.0.0
-    #   with:
-    #     gradle-version: '8.5'
-    #
-    # - name: Build with Gradle 8.5
-    #   run: gradle build
+    - name: Archive Test Results
+      uses: actions/upload-artifact@v2
+      if: always()  # Ensures that this step runs even if the build fails
+      with:
+        name: test-results
+        path: build/reports/tests/test
 
+    - name: Publish Test Report
+      uses: dorny/test-reporter@v1
+      if: github.event_name != 'pull_request' && always()
+      with:
+        name: 'Unit Test Results'
+        path: 'build/test-results/test/TEST-*.xml'
+        reporter: 'java-junit'
+        fail-on-error: true

@@ -88,7 +88,7 @@ public class DirectoryDiffView implements Renderable {
             // Start a list item for this node
             HtmlCanvas li = null;
             if (!node.isLeaf())
-                li = ul.li();
+                li = ul.li().details(add("open", "true", false));
 
             // Content of the current node
             if (node.getUserObject() != null) {
@@ -107,7 +107,7 @@ public class DirectoryDiffView implements Renderable {
                     ._tr();
                 }
                 else {
-                    li.span().content(nodeInfo.getName());
+                    li.summary().content(nodeInfo.getName());
                 }
             }
 
@@ -133,7 +133,7 @@ public class DirectoryDiffView implements Renderable {
 
             // End the list item
             if (li != null)
-                li._li();
+                li._details()._li();
         }
 
         @Override

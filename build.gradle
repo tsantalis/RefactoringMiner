@@ -39,6 +39,7 @@ repositories {
 test {
     useJUnitPlatform()
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    jvmArgs '-Xmx4096M', '-Xms1024M' /* In case of heap-space error*/
     if (project.hasProperty('notoken')) {
         exclude '**/GHRepositoryWrapperTest.*'
         exclude '**/TestCommandLine.*'

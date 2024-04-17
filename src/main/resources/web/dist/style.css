@@ -1,3 +1,23 @@
 ul {
     list-style: none;
 }
+
+summary {
+  display : block;
+  cursor  : pointer;
+}
+
+summary::marker,
+summary::-webkit-details-marker {
+  display : none;
+}
+
+summary::before {
+    content: url('icons8-file-folder-closed.svg');
+    margin-right: 5px;
+}
+
+details[open] > summary::before {
+	content: url('icons8-file-folder-opened.svg');
+    margin-right: 5px;
+}

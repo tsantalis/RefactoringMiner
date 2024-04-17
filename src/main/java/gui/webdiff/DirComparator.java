@@ -45,7 +45,6 @@ public class DirComparator {
         modifiedFilesName = new LinkedHashMap<>();
         compare();
         compressedTree = new TreeViewGenerator(getModifiedFilesName(), diffs).getCompressedTree();
-        System.out.println();
     }
 
     private void compare() {

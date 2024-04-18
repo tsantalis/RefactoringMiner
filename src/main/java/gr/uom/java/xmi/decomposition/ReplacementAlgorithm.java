@@ -2,39 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.OperationInvocation.PRIMITIVE_WRAPPER_CLASS_MAP;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.argumentsWithIdenticalMethodCalls;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.classInstanceCreationWithEverythingReplaced;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.commonConcat;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.commonConditional;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsValidOperatorReplacements;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.declarationWithArrayInitializer;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.differOnlyInCastExpressionOrPrefixOperatorOrInfixOperand;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.differOnlyInDefaultInitializer;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.differOnlyInFinalModifier;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.differOnlyInThis;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.differOnlyInThrow;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.equalAfterArgumentMerge;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.equalAfterInfixExpressionExpansion;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.equalAfterNewArgumentAdditions;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.equalAfterParenthesisElimination;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.extractedToVariable;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.hasElseIfBranch;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.identicalAfterVariableAndTypeReplacements;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.identicalVariableDeclarationsWithDifferentNames;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.invocationWithEverythingReplaced;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.isElseBranch;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.isElseIfBranch;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.isIfBranch;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.oneIsVariableDeclarationTheOtherIsReturnStatement;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.oneIsVariableDeclarationTheOtherIsVariableAssignment;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.onlyDifferentInvoker;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.operatorExpressionWithEverythingReplaced;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.statementWithoutAnonymous;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.thisConstructorCallWithEverythingReplaced;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.validStatementForConcatComparison;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.variableAssignmentWithEverythingReplaced;
-import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.variableDeclarationsWithEverythingReplaced;
+import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1427,6 +1395,66 @@ public class ReplacementAlgorithm {
 			CompositeStatementObject switch2 = (CompositeStatementObject)statement2;
 			List<AbstractExpression> expressions1 = if1.getExpressions();
 			List<AbstractExpression> expressions2 = switch2.getExpressions();
+			Set<CompositeStatementObject> elseIfChain = new LinkedHashSet<CompositeStatementObject>();
+			elseIfChain.add(if1);
+			CompositeStatementObject current = if1;
+			while(current != null) {
+				current = getElseIfParent(current);
+				if(current != null) {
+					elseIfChain.add(current);
+				}
+			}
+			current = if1;
+			while(current != null) {
+				current = getElseIfBranch(current);
+				if(current != null) {
+					elseIfChain.add(current);
+				}
+			}
+			Set<StatementObject> switchCases = new LinkedHashSet<StatementObject>(); 
+			for(AbstractStatement statement : switch2.getStatements()) {
+				if(statement.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_CASE) && !statement.getString().equals("default:")) {
+					switchCases.add((StatementObject)statement);
+				}
+			}
+			List<LeafExpression> switchLeafExpression = switch2.findExpression(switch2.getExpressions().get(0).getString());
+			Set<LeafMapping> caseLeafMappings = new LinkedHashSet<LeafMapping>();
+			Set<LeafMapping> switchExpressionLeafMappings = new LinkedHashSet<LeafMapping>(); 
+			for(StatementObject switchCase : switchCases) {
+				String string = switchCase.getString();
+				if(string.startsWith("case ")) {
+					String caseExpression = string.substring(5, string.length()-1);
+					List<LeafExpression> leafExpressions2 = switchCase.findExpression(caseExpression);
+					for(CompositeStatementObject ifStatement : elseIfChain) {
+						List<LeafExpression> leafExpressions1 = ifStatement.findExpression(caseExpression);
+						if(leafExpressions1.size() > 0 && leafExpressions2.size() == leafExpressions1.size()) {
+							for(int i=0; i<leafExpressions1.size(); i++) {
+								LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+								caseLeafMappings.add(leafMapping);
+							}
+						}
+						if(switchLeafExpression.size() == 1) {
+							leafExpressions1 = ifStatement.findExpression(switch2.getExpressions().get(0).getString());
+							if(leafExpressions1.size() == 1) {
+								for(int i=0; i<leafExpressions1.size(); i++) {
+									LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), switchLeafExpression.get(i), container1, container2);
+									switchExpressionLeafMappings.add(leafMapping);
+								}
+							}
+						}
+					}
+				}
+			}
+			if(caseLeafMappings.size() == Math.min(elseIfChain.size(), switchCases.size()) ||
+					switchExpressionLeafMappings.size() == Math.min(elseIfChain.size(), switchCases.size())) {
+				for(LeafMapping leafMapping : caseLeafMappings) {
+					replacementInfo.addSubExpressionMapping(leafMapping);
+				}
+				for(LeafMapping leafMapping : switchExpressionLeafMappings) {
+					replacementInfo.addSubExpressionMapping(leafMapping);
+				}
+				return replacementInfo.getReplacements();
+			}
 			if(expressions1.size() == 1 && expressions2.size() == 1 && expressions1.get(0).getString().equals(expressions2.get(0).getString())) {
 				return replacementInfo.getReplacements();
 			}

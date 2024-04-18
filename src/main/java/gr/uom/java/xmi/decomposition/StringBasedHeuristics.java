@@ -3980,6 +3980,24 @@ public class StringBasedHeuristics {
 		return false;
 	}
 
+	protected static CompositeStatementObject getElseIfParent(CompositeStatementObject parent) {
+		if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent.getParent() != null && parent.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			if(parent.getParent().getStatements().size() == 2 && parent.getParent().getStatements().get(1).equals(parent)) {
+				return parent.getParent();
+			}
+		}
+		return null;
+	}
+
+	protected static CompositeStatementObject getElseIfBranch(CompositeStatementObject parent) {
+		if(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			if(parent.getStatements().size() == 2 && parent.getStatements().get(1).getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+				return (CompositeStatementObject)parent.getStatements().get(1);
+			}
+		}
+		return null;
+	}
+
 	protected static boolean isElseIfBranch(AbstractCodeFragment child, CompositeStatementObject parent) {
 		return parent.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
 				child.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&

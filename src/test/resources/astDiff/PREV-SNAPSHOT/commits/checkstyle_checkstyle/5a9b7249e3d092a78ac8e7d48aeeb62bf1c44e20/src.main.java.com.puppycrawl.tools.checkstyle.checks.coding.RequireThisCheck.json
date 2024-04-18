@@ -2667,61 +2667,6 @@
   "secondLabel" : "parentType",
   "firstParentType" : "InfixExpression",
   "secondParentType" : "SwitchStatement",
-  "firstPos" : 4619,
-  "secondPos" : 4622,
-  "firstEndPos" : 4629,
-  "secondEndPos" : 4632
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR",
-  "secondLabel" : "TokenTypes.ANNOTATION_MEMBER_VALUE_PAIR",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "SwitchCase",
-  "firstPos" : 4633,
-  "secondPos" : 4653,
-  "firstEndPos" : 4672,
-  "secondEndPos" : 4692
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "TokenTypes.ANNOTATION",
-  "secondLabel" : "TokenTypes.ANNOTATION",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "SwitchCase",
-  "firstPos" : 4702,
-  "secondPos" : 4711,
-  "firstEndPos" : 4723,
-  "secondEndPos" : 4732
-}, {
-  "firstType" : "QualifiedName",
-  "secondType" : "QualifiedName",
-  "firstLabel" : "TokenTypes.ANNOTATION_FIELD_DEF",
-  "secondLabel" : "TokenTypes.ANNOTATION_FIELD_DEF",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "SwitchCase",
-  "firstPos" : 4753,
-  "secondPos" : 4751,
-  "firstEndPos" : 4784,
-  "secondEndPos" : 4782
-}, {
-  "firstType" : "Block",
-  "secondType" : "Block",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "IfStatement",
-  "secondParentType" : "SwitchStatement",
-  "firstPos" : 4786,
-  "secondPos" : 5162,
-  "firstEndPos" : 4871,
-  "secondEndPos" : 5304
-}, {
-  "firstType" : "SimpleName",
-  "secondType" : "SimpleName",
-  "firstLabel" : "parentType",
-  "secondLabel" : "parentType",
-  "firstParentType" : "InfixExpression",
-  "secondParentType" : "SwitchStatement",
   "firstPos" : 4921,
   "secondPos" : 4622,
   "firstEndPos" : 4931,
@@ -2991,6 +2936,17 @@
   "firstEndPos" : 5084,
   "secondEndPos" : 5081
 }, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5115,
+  "secondPos" : 5920,
+  "firstEndPos" : 5122,
+  "secondEndPos" : 5927
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3155,6 +3111,17 @@
   "secondPos" : 5583,
   "firstEndPos" : 5483,
   "secondEndPos" : 5745
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5466,
+  "secondPos" : 6095,
+  "firstEndPos" : 5473,
+  "secondEndPos" : 6102
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3452,6 +3419,17 @@
   "secondPos" : 6037,
   "firstEndPos" : 5842,
   "secondEndPos" : 6112
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5825,
+  "secondPos" : 6218,
+  "firstEndPos" : 5832,
+  "secondEndPos" : 6225
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",

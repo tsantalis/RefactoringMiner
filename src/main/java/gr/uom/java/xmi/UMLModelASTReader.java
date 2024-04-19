@@ -103,11 +103,12 @@ public class UMLModelASTReader {
 
 	private void processJavaFileContents(Map<String, String> javaFileContents, boolean astDiff) {
 		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
+		String javaCoreVersion = JavaCore.VERSION_1_8;
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
-			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);
-			options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
-			options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
+			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, javaCoreVersion);
+			options.put(JavaCore.COMPILER_SOURCE, javaCoreVersion);
+			options.put(JavaCore.COMPILER_COMPLIANCE, javaCoreVersion);
 			parser.setCompilerOptions(options);
 			parser.setResolveBindings(false);
 			parser.setKind(ASTParser.K_COMPILATION_UNIT);

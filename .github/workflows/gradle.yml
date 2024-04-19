@@ -60,4 +60,5 @@ jobs:
         name: 'Unit Test Results'
         path: 'build/test-results/test/TEST-*.xml'
         reporter: 'java-junit'
+        list-tests: failed
         fail-on-error: true

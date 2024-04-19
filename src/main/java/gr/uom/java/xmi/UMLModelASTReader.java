@@ -106,16 +106,10 @@ public class UMLModelASTReader {
 		String javaCoreVersion = JavaCore.VERSION_1_8;
 		for(String filePath : javaFileContents.keySet()) {
 			Map<String, String> options = JavaCore.getOptions();
+			String javaFileContent = javaFileContents.get(filePath);
 			options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, javaCoreVersion);
 			options.put(JavaCore.COMPILER_SOURCE, javaCoreVersion);
 			options.put(JavaCore.COMPILER_COMPLIANCE, javaCoreVersion);
-			parser.setCompilerOptions(options);
-			parser.setResolveBindings(false);
-			parser.setKind(ASTParser.K_COMPILATION_UNIT);
-			parser.setStatementsRecovery(true);
-			String javaFileContent = javaFileContents.get(filePath);
-			char[] charArray = javaFileContent.toCharArray();
-			parser.setSource(charArray);
 			if((javaFileContent.contains(FREE_MARKER_GENERATED) || javaFileContent.contains(FREE_MARKER_GENERATED_2) || javaFileContent.contains(ANTLR_GENERATED) ||
 					javaFileContent.contains(XTEXT_GENERATED) || javaFileContent.contains(LWJGL_GENERATED) || javaFileContent.contains(TEST_GENERATOR_GENERATED) ||
 					javaFileContent.contains(THRIFT_GENERATED) || javaFileContent.contains(AUTOREST_GENERATED) || javaFileContent.contains(FHIR_GENERATED) ||
@@ -124,6 +118,12 @@ public class UMLModelASTReader {
 					!javaFileContent.contains("private static final String FREE_MARKER_GENERATED = \"generated using freemarker\";")) {
 				continue;
 			}
+			parser.setCompilerOptions(options);
+			parser.setResolveBindings(false);
+			parser.setKind(ASTParser.K_COMPILATION_UNIT);
+			parser.setStatementsRecovery(true);
+			char[] charArray = javaFileContent.toCharArray();
+			parser.setSource(charArray);
 			try {
 				CompilationUnit compilationUnit = (CompilationUnit)parser.createAST(null);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);

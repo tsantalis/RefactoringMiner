@@ -15,6 +15,7 @@ import javax.swing.tree.TreeNode;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -144,6 +145,25 @@ public class UMLModelASTReader {
 		parser.setStatementsRecovery(true);
 		parser.setSource(charArray);
 		return (CompilationUnit) parser.createAST(null);
+	}
+
+	private static String getMaxRecommendedVersionFromProblems(CompilationUnit compilationUnit) {
+		IProblem[] problems = compilationUnit.getProblems();
+		String result = null;
+		for (IProblem problem : problems) {
+			String[] arguments = problem.getArguments();
+			if (arguments != null && arguments.length > 1) {
+				try {
+					double value = Double.parseDouble(arguments[1]);
+					if (result == null || value > Double.parseDouble(result)) {
+						result = arguments[1];
+					}
+				} catch (NumberFormatException e) {
+//					System.out.println("Invalid number format in arguments: " + arguments[1]);
+				}
+			}
+		}
+		return result;
 	}
 
 	public UMLModel getUmlModel() {

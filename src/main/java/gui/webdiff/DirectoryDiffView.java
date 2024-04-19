@@ -1,5 +1,6 @@
 package gui.webdiff;
 
+import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -16,6 +17,13 @@ public class DirectoryDiffView implements Renderable {
 
     public DirectoryDiffView(DirComparator comperator) {
         this.comperator = comperator;
+    }
+
+    private boolean isModifiedFile(TreeNodeInfo info) {
+    	ASTDiff astDiff = comperator.getASTDiff(info.getId());
+    	if(astDiff != null && astDiff.getSrcPath() != null)
+    		return astDiff.getSrcPath().equals(astDiff.getDstPath());
+    	return false;
     }
 
     @Override
@@ -73,7 +81,7 @@ public class DirectoryDiffView implements Renderable {
         ._html();
     }
 
-    private static class ModifiedFiles implements Renderable {
+    private class ModifiedFiles implements Renderable {
         private final DefaultMutableTreeNode root;
 
         private ModifiedFiles(DirComparator comparator) {
@@ -94,8 +102,21 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
+                	String iconPath = null;
+                	int iconWidth = 0, iconHeight = 0;
+                	if(isModifiedFile(nodeInfo)) {
+                		iconPath = "dist/icons8-file-edit.svg";
+                		iconWidth = 15;
+                		iconHeight = 17;
+                	}
+                	else {
+                		iconPath = "dist/icons8-file-move.svg";
+                		iconWidth = 15;
+                		iconHeight = 17;
+                	}
                     ul.tr()
-                            .td().content(nodeInfo.getName())
+                            //.td().content(nodeInfo.getName())
+                    		.td().img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + nodeInfo.getName())._td()
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))

@@ -118,6 +118,9 @@ public class UMLModelASTReader {
 			char[] charArray = javaFileContent.toCharArray();
 			try {
 				CompilationUnit compilationUnit = getCompilationUnit(javaCoreVersion, parser, charArray);
+				String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
+				if (maxRecommendedVersionFromProblems != null)
+					compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray);
 				processCompilationUnit(filePath, compilationUnit, javaFileContent);
 				if(astDiff) {
 					IScanner scanner = ToolFactory.createScanner(true, false, false, false);

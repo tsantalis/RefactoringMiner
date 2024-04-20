@@ -13,11 +13,21 @@ summary::-webkit-details-marker {
 }
 
 summary::before {
+	margin-left: 3px;
     content: url('icons8-file-folder-closed.svg');
     margin-right: 5px;
 }
 
 details[open] > summary::before {
+	margin-left: 3px;
 	content: url('icons8-file-folder-opened.svg');
     margin-right: 5px;
+}
+
+ul li {
+  border-left : 2px solid #ddd;
+}
+
+ul li:last-child {
+  border-color : transparent;
 }

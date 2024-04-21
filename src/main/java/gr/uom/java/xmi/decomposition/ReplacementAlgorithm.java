@@ -105,7 +105,6 @@ public class ReplacementAlgorithm {
 		List<AnonymousClassDeclarationObject> anonymousClassDeclarations2 = statement2.getAnonymousClassDeclarations();
 		List<LambdaExpressionObject> lambdas1 = statement1.getLambdas();
 		List<LambdaExpressionObject> lambdas2 = statement2.getLambdas();
-		List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 		if(assignmentInvocationCoveringTheEntireStatement1 instanceof OperationInvocation && assignmentInvocationCoveringTheEntireStatement2 instanceof OperationInvocation) {
 			OperationInvocation inv1 = (OperationInvocation)assignmentInvocationCoveringTheEntireStatement1;
 			OperationInvocation inv2 = (OperationInvocation)assignmentInvocationCoveringTheEntireStatement2;
@@ -116,7 +115,7 @@ public class ReplacementAlgorithm {
 					processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
 							assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 							assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
-							methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers, operationBodyMapper);
+							methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
 					return replacementInfo.getReplacements();
 				}
 			}
@@ -1347,7 +1346,7 @@ public class ReplacementAlgorithm {
 			processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
 					assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 					assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
-					methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers, operationBodyMapper);
+					methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
 			if(s1.equals(s2) && replacementInfo.containsOnlyReplacement(ReplacementType.INFIX_OPERATOR) && containsValidOperatorReplacements(replacementInfo)) {
 				List<Replacement> operatorReplacements = replacementInfo.getReplacements(ReplacementType.INFIX_OPERATOR);
 				boolean booleanOperatorReversed = false;
@@ -1384,7 +1383,7 @@ public class ReplacementAlgorithm {
 		Set<Replacement> replacements = processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
 				assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
 				assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
-				methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, lambdaMappers, operationBodyMapper);
+				methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
 		if(replacements != null) {
 			return replacements;
 		}
@@ -1683,7 +1682,7 @@ public class ReplacementAlgorithm {
 		if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {
 				for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
-					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers) &&
+					if(invocation1.identical(assignmentInvocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers()) &&
 							!assignmentInvocationCoveringTheEntireStatement1.arguments().contains(key1)) {
 						if(variableDeclarationsWithEverythingReplaced(variableDeclarations1, variableDeclarations2, replacementInfo) &&
 								!statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
@@ -1864,7 +1863,7 @@ public class ReplacementAlgorithm {
 					invocationCoveringTheEntireStatement2.actualString().endsWith("." + invocationCoveringTheEntireStatement1.actualString()) ||
 					s2.endsWith("." + s1) || s1.endsWith("." + s2);
 			if((invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) || invocationCoveringTheEntireStatement1.compatibleName(invocationCoveringTheEntireStatement2)) &&
-					(staticVSNonStatic || additionalCaller) && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers)) {
+					(staticVSNonStatic || additionalCaller) && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
 				return replacementInfo.getReplacements();
@@ -1876,7 +1875,7 @@ public class ReplacementAlgorithm {
 				invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2) ) {
 			for(String key : methodInvocationMap2.keySet()) {
 				for(AbstractCall invocation2 : methodInvocationMap2.get(key)) {
-					if(invocation2.arguments().size() > 0 && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo.getReplacements(), lambdaMappers)) {
+					if(invocation2.arguments().size() > 0 && invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocation2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 						return replacementInfo.getReplacements();
 					}
 				}
@@ -1913,7 +1912,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation has been renamed but the expression and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null && statement1.getClass().equals(statement2.getClass()) &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers,
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers(),
 						matchPairOfRemovedAddedOperationsWithIdenticalBody(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, operationBodyMapper), argumentsWithVariableDeclarationMapping(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, mappings))) {
 			boolean variableDeclarationMatch = true;
 			if(variableDeclarations1.size() > 0  && variableDeclarations2.size() > 0 && !variableDeclarations1.toString().equals(variableDeclarations2.toString()) && !invocationCoveringTheEntireStatement1.arguments().equals(invocationCoveringTheEntireStatement2.arguments()) &&
@@ -1931,7 +1930,7 @@ public class ReplacementAlgorithm {
 				methodInvocationMap1.size() == methodInvocationMap2.size() && methodInvocationMap1.size() == 1 && methodInvocations1.size() == methodInvocations2.size() && methodInvocations1.size() == 1) {
 			AbstractCall invocation1 = methodInvocationMap1.get(methodInvocations1.iterator().next()).get(0);
 			AbstractCall invocation2 = methodInvocationMap2.get(methodInvocations2.iterator().next()).get(0);
-			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers, matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocation2, operationBodyMapper), argumentsWithVariableDeclarationMapping(invocation1, invocation2, mappings))) {
+			if(invocation1.renamedWithIdenticalExpressionAndArguments(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers(), matchPairOfRemovedAddedOperationsWithIdenticalBody(invocation1, invocation2, operationBodyMapper), argumentsWithVariableDeclarationMapping(invocation1, invocation2, mappings))) {
 				Replacement replacement = new MethodInvocationReplacement(invocation1.getName(),
 						invocation2.getName(), invocation1, invocation2, ReplacementType.METHOD_INVOCATION_NAME);
 				replacementInfo.addReplacement(replacement);
@@ -1949,7 +1948,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation has been renamed but the expressions are null and arguments are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalArgumentsAndNoExpression(invocationCoveringTheEntireStatement2, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers())) {
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.getName(),
 					invocationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_NAME);
 			replacementInfo.addReplacement(replacement);
@@ -2018,7 +2017,7 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation has been renamed and arguments changed, but the expressions are identical
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers)) {
+				invocationCoveringTheEntireStatement1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers())) {
 			ReplacementType type = invocationCoveringTheEntireStatement1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
 			Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(),
 					invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, type);
@@ -2076,7 +2075,7 @@ public class ReplacementAlgorithm {
 			}
 			for(String methodInvocation1 : methodInvocations1) {
 				for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
-					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, lambdaMappers) &&
+					if(operationInvocation1.renamedWithIdenticalExpressionAndDifferentArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, UMLClassBaseDiff.MAX_OPERATION_NAME_DISTANCE, replacementInfo.getLambdaMappers()) &&
 							!isExpressionOfAnotherMethodInvocation(operationInvocation1, methodInvocationMap1) &&
 							!variableDeclarationMatchedWithNonVariableDeclaration) {
 						ReplacementType type = operationInvocation1.getName().equals(invocationCoveringTheEntireStatement2.getName()) ? ReplacementType.METHOD_INVOCATION_ARGUMENT : ReplacementType.METHOD_INVOCATION_NAME_AND_ARGUMENT;
@@ -2464,7 +2463,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCodeFragment codeFragment : replacementInfo.getStatements2()) { 
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment(); 
 								if(invocation != null) { 
-									if(invocation.identical(invocation1, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) { 
+									if(invocation.identical(invocation1, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) { 
 										additionallyMatchedStatements2.add(codeFragment); 
 									} 
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation1.actualString())) ||
@@ -2528,7 +2527,7 @@ public class ReplacementAlgorithm {
 							for(AbstractCodeFragment codeFragment : replacementInfo.getStatements1()) {
 								AbstractCall invocation = codeFragment.invocationCoveringEntireFragment();
 								if(invocation != null) {
-									if(invocation.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) {
+									if(invocation.identical(invocation2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
 										additionallyMatchedStatements1.add(codeFragment);
 									}
 									if((invocation.getExpression() != null && invocation.getExpression().equals(invocation2.actualString())) ||
@@ -2556,7 +2555,7 @@ public class ReplacementAlgorithm {
 		}
 		//object creation is identical
 		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
-				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, lambdaMappers)) {
+				creationCoveringTheEntireStatement1.identical(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap, replacementInfo.getLambdaMappers())) {
 			boolean identicalArrayInitializer = true;
 			if(creationCoveringTheEntireStatement1.isArray() && creationCoveringTheEntireStatement2.isArray()) {
 				identicalArrayInitializer = creationCoveringTheEntireStatement1.identicalArrayInitializer(creationCoveringTheEntireStatement2);
@@ -2997,7 +2996,7 @@ public class ReplacementAlgorithm {
 		if(creationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null) {
 			if(creationCoveringTheEntireStatement1.arguments().size() > 1 && creationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2).size() > 0 &&
 					creationCoveringTheEntireStatement1.getCoverage().equals(invocationCoveringTheEntireStatement2.getCoverage()) &&
-					creationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers)) {
+					creationCoveringTheEntireStatement1.identicalOrReplacedArguments(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 				Replacement replacement = new ClassInstanceCreationWithMethodInvocationReplacement(creationCoveringTheEntireStatement1.getName(),
 						invocationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
 				replacementInfo.addReplacement(replacement);
@@ -3007,7 +3006,7 @@ public class ReplacementAlgorithm {
 		if(invocationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null) {
 			if(invocationCoveringTheEntireStatement1.arguments().size() > 1 && invocationCoveringTheEntireStatement1.argumentIntersection(creationCoveringTheEntireStatement2).size() > 0 &&
 					invocationCoveringTheEntireStatement1.getCoverage().equals(creationCoveringTheEntireStatement2.getCoverage()) &&
-					invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), lambdaMappers)) {
+					invocationCoveringTheEntireStatement1.identicalOrReplacedArguments(creationCoveringTheEntireStatement2, replacementInfo.getReplacements(), replacementInfo.getLambdaMappers())) {
 				Replacement replacement = new MethodInvocationWithClassInstanceCreationReplacement(invocationCoveringTheEntireStatement1.getName(),
 						creationCoveringTheEntireStatement2.getName(), invocationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_CLASS_INSTANCE_CREATION);
 				replacementInfo.addReplacement(replacement);
@@ -4505,12 +4504,12 @@ public class ReplacementAlgorithm {
 			List<AnonymousClassDeclarationObject> anonymousClassDeclarations2,
 			List<LambdaExpressionObject> lambdas1,
 			List<LambdaExpressionObject> lambdas2,
-			List<UMLOperationBodyMapper> lambdaMappers,
 			UMLOperationBodyMapper operationBodyMapper)
 			throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
 		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
+		List<UMLOperationBodyMapper> lambdaMappers = replacementInfo.getLambdaMappers();
 		boolean replacementAdded = false;
 		if(!anonymousClassDeclarations1.isEmpty() && !anonymousClassDeclarations2.isEmpty() && container1 != null && container2 != null) {
 			if(anonymousClassDeclarations1.size() == anonymousClassDeclarations2.size()) {
@@ -4602,7 +4601,7 @@ public class ReplacementAlgorithm {
 				for(int i=0; i<lambdas1.size(); i++) {
 					LambdaExpressionObject lambda1 = lambdas1.get(i);
 					LambdaExpressionObject lambda2 = lambdas2.get(i);
-					processLambdas(lambda1, lambda2, lambdaMappers, operationBodyMapper);
+					processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
 				}
 			}
 			else {
@@ -4610,7 +4609,7 @@ public class ReplacementAlgorithm {
 					for(int j=0; j<lambdas2.size(); j++) {
 						LambdaExpressionObject lambda1 = lambdas1.get(i);
 						LambdaExpressionObject lambda2 = lambdas2.get(j);
-						processLambdas(lambda1, lambda2, lambdaMappers, operationBodyMapper);
+						processLambdas(lambda1, lambda2, replacementInfo, operationBodyMapper);
 					}
 				}
 			}
@@ -4643,7 +4642,7 @@ public class ReplacementAlgorithm {
 								Replacement replacement = new Replacement(anonymousClassDeclaration1.toString(), lambda2.toString(), ReplacementType.ANONYMOUS_CLASS_DECLARATION_REPLACED_WITH_LAMBDA);
 								replacementInfo.addReplacement(replacement);
 								replacementAdded = true;
-								lambdaMappers.add(mapper);
+								replacementInfo.addLambdaMapper(mapper);
 							}
 						}
 					}
@@ -4660,7 +4659,7 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static void processLambdas(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2,
-			List<UMLOperationBodyMapper> lambdaMappers, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			ReplacementInfo replacementInfo, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
 		UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(lambda1, lambda2, operationBodyMapper);
 		int mappings = mapper.mappingsWithoutBlocks();
@@ -4686,7 +4685,7 @@ public class ReplacementAlgorithm {
 				if(operationBodyMapper.getContainer1() != null && operationBodyMapper.getContainer2() != null) {
 					operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getRefactorings());
 				}
-				lambdaMappers.add(mapper);
+				replacementInfo.addLambdaMapper(mapper);
 			}
 		}
 	}

@@ -2562,6 +2562,28 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testMergeMethod2() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse-jgit/jgit.git", "f5fe2dca3cb9f57891e1a4b18832fcc158d0c490", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof MergeOperationRefactoring) {
+						MergeOperationRefactoring ex = (MergeOperationRefactoring)ref;
+						for(UMLOperationBodyMapper bodyMapper : ex.getMappers()) {
+							mapperInfo(bodyMapper, actual);
+						}
+					}
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-f5fe2dca3cb9f57891e1a4b18832fcc158d0c490.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testConsecutiveChangedStatements() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

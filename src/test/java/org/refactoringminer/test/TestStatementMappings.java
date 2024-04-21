@@ -1465,11 +1465,15 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testMergeMethod() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/eclipse/jgit.git, 2fbcba41e365752681f635c706d577e605d3336a, jgit-2fbcba41e365752681f635c706d577e605d3336a.txt",
+		"https://github.com/eclipse/jgit.git, f5fe2dca3cb9f57891e1a4b18832fcc158d0c490, jgit-f5fe2dca3cb9f57891e1a4b18832fcc158d0c490.txt"
+	})
+	public void testMergeMethod(String cloneURL, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse/jgit.git", "2fbcba41e365752681f635c706d577e605d3336a", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(cloneURL, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				for (Refactoring ref : refactorings) {
@@ -1483,7 +1487,7 @@ public class TestStatementMappings {
 			}
 		});
 		
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-2fbcba41e365752681f635c706d577e605d3336a.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

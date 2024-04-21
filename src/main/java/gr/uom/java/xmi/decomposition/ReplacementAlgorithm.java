@@ -1983,7 +1983,8 @@ public class ReplacementAlgorithm {
 		}
 		//method invocation has been renamed (one name contains the other), both expressions are null, and one contains all the arguments of the other
 		if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
-				invocationCoveringTheEntireStatement1.renamedWithNoExpressionAndArgumentIntersection(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap)) {
+				invocationCoveringTheEntireStatement1.renamedWithNoExpressionAndArgumentIntersection(invocationCoveringTheEntireStatement2, replacementInfo.getReplacements(), parameterToArgumentMap,
+						classDiff != null ? classDiff.matchesPairOfRemovedAddedOperations(invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, container1, container2) : false)) {
 			boolean callToAddedOperation = false;
 			boolean callToDeletedOperation = false;
 			if(classDiff != null && !invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {

@@ -5194,7 +5194,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(int i=orderedMappings.size()-1; i>=0; i--) {
 									AbstractCodeMapping m = orderedMappings.get(i);
 									if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
-											replacementInfo.lambdaMapperContainsMapping(m) && !mappingSet.isEmpty()) {
+											replacementInfo.lambdaMapperContainsMapping(m)) {
 										removeMapping(m);
 									}
 									else {
@@ -5617,7 +5617,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								for(int i=orderedMappings.size()-1; i>=0; i--) {
 									AbstractCodeMapping m = orderedMappings.get(i);
 									if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
-											replacementInfo.lambdaMapperContainsMapping(m) && !mappingSet.isEmpty()) {
+											replacementInfo.lambdaMapperContainsMapping(m)) {
 										removeMapping(m);
 									}
 									else {
@@ -6003,7 +6003,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(int i=orderedMappings.size()-1; i>=0; i--) {
 						AbstractCodeMapping m = orderedMappings.get(i);
 						if(leaf.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf2.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
-								replacementInfo.lambdaMapperContainsMapping(m) && !mappingSet.isEmpty()) {
+								replacementInfo.lambdaMapperContainsMapping(m)) {
 							removeMapping(m);
 						}
 						else {
@@ -6075,7 +6075,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						for(int i=orderedMappings.size()-1; i>=0; i--) {
 							AbstractCodeMapping m = orderedMappings.get(i);
 							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
-									replacementInfo.lambdaMapperContainsMapping(m) && !mappingSet.isEmpty()) {
+									replacementInfo.lambdaMapperContainsMapping(m)) {
 								removeMapping(m);
 							}
 							else {

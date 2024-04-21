@@ -28,6 +28,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafMapping;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.ConsistentReplacementDetector;
@@ -1498,5 +1499,29 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		return false;
+	}
+
+	public boolean matchesPairOfRemovedAddedOperations(AbstractCall call1, AbstractCall call2, VariableDeclarationContainer container1, VariableDeclarationContainer container2) {
+		boolean foundInRemoved = false;
+		if(call1 instanceof OperationInvocation) {
+			OperationInvocation inv1 = (OperationInvocation)call1;
+			for(UMLOperation removedOperation : removedOperations) {
+				if(inv1.matchesOperation(removedOperation, container1, this, modelDiff)) {
+					foundInRemoved = true;
+					break;
+				}
+			}
+		}
+		boolean foundInAdded = false;
+		if(call2 instanceof OperationInvocation) {
+			OperationInvocation inv2 = (OperationInvocation)call2;
+			for(UMLOperation addedOperation : addedOperations) {
+				if(inv2.matchesOperation(addedOperation, container2, this, modelDiff)) {
+					foundInAdded = true;
+					break;
+				}
+			}
+		}
+		return foundInRemoved && foundInAdded;
 	}
 }

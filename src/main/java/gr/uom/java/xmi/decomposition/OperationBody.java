@@ -36,6 +36,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
+import org.eclipse.jdt.core.dom.YieldStatement;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -267,6 +268,12 @@ public class OperationBody {
 		else if(statement instanceof SwitchCase) {
 			SwitchCase switchCase = (SwitchCase)statement;
 			StatementObject child = new StatementObject(cu, filePath, switchCase, parent.getDepth()+1, CodeElementType.SWITCH_CASE, container);
+			parent.addStatement(child);
+			addStatementInVariableScopes(child);
+		}
+		else if(statement instanceof YieldStatement) {
+			YieldStatement yieldStatement = (YieldStatement)statement;
+			StatementObject child = new StatementObject(cu, filePath, yieldStatement, parent.getDepth()+1, CodeElementType.YIELD_STATEMENT, container);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
 		}

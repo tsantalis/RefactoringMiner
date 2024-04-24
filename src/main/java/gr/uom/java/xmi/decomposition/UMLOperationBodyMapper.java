@@ -3832,6 +3832,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								else if(replacements.size() == 1 && replacementInfo.getReplacements(ReplacementType.TYPE).size() > 0) {
+									List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
+									Replacement typeReplacement = typeReplacements.get(0);
+									if(typeReplacement.getBefore().startsWith(typeReplacement.getAfter() + "<") || typeReplacement.getAfter().startsWith(typeReplacement.getBefore() + "<")) {
+										score = 0.99;
+									}
+								}
 								if(score == 0.99) {
 									for(CompositeStatementObject matchingInnerNode1 : matchingInnerNodes1) {
 										if(!matchingInnerNode1.equals(statement1)) {
@@ -4173,6 +4180,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											score = 0.99;
 											break;
 										}
+									}
+								}
+								else if(replacements.size() == 1 && replacementInfo.getReplacements(ReplacementType.TYPE).size() > 0) {
+									List<Replacement> typeReplacements = replacementInfo.getReplacements(ReplacementType.TYPE);
+									Replacement typeReplacement = typeReplacements.get(0);
+									if(typeReplacement.getBefore().startsWith(typeReplacement.getAfter() + "<") || typeReplacement.getAfter().startsWith(typeReplacement.getBefore() + "<")) {
+										score = 0.99;
 									}
 								}
 								if(score == 0.99) {

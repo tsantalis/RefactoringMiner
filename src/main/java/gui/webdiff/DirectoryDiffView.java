@@ -102,7 +102,7 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
-                	String iconPath = null;
+                	String iconPath = null, description = nodeInfo.getName();
                 	int iconWidth = 0, iconHeight = 0;
                 	if(isModifiedFile(nodeInfo)) {
                 		iconPath = "dist/icons8-file-edit.svg";
@@ -113,10 +113,21 @@ public class DirectoryDiffView implements Renderable {
                 		iconPath = "dist/icons8-file-move.svg";
                 		iconWidth = 15;
                 		iconHeight = 17;
+                		ASTDiff astDiff = comperator.getASTDiff(nodeInfo.getId());
+                    	if(astDiff != null && astDiff.getSrcPath() != null) {
+                    		String srcName = astDiff.getSrcPath();
+                    		if(astDiff.getSrcPath().contains("/")) {
+                    			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                    		}
+                    		if(!srcName.equals(nodeInfo.getName())) {
+                    			//file is renamed
+                    			description = srcName + " → " + nodeInfo.getName();
+                    		}
+                    	}
                 	}
                     ul.tr()
                             //.td().content(nodeInfo.getName())
-                    		.td().a(href("/monaco-diff/" + nodeInfo.getId())).img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + nodeInfo.getName())._a()._td()
+                    		.td().a(href("/monaco-diff/" + nodeInfo.getId())).img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + description)._a()._td()
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))

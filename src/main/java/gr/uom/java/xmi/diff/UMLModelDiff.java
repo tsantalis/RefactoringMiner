@@ -954,20 +954,24 @@ public class UMLModelDiff {
 				}
 			}
 			int matchingMovedInnerClasses = 0;
-			if(addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
-					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) {
+			MatchResult matchResult = matcher.match(removedClass, addedClass);
+			if((addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
+					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) || 
+					matchResult.getMatchedOperations() >= 10) {
 				for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
 					if(classMoveDiff.getOriginalClass().getName().startsWith(removedClass.getName() + ".") &&
-							classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".")) {
+							(classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".") ||
+									classMoveDiff.getMovedClass().getPackageName().equals(addedClass.getPackageName()))) {
 						matchingMovedInnerClasses++;
 					}
 				}
 			}
-			MatchResult matchResult = matcher.match(removedClass, addedClass);
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-					diffSet.add(classRenameDiff);
+					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+						diffSet.add(classRenameDiff);
+					}
 				}
 			}
 		}
@@ -988,20 +992,24 @@ public class UMLModelDiff {
 				}
 			}
 			int matchingMovedInnerClasses = 0;
-			if(addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
-					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) {
+			MatchResult matchResult = matcher.match(removedClass, addedClass);
+			if((addedClass.getAttributes().size() == 0 && addedClass.getOperations().size() == 0 &&
+					removedClass.getAttributes().size() == 0 && removedClass.getOperations().size() == 0) || 
+					matchResult.getMatchedOperations() >= 10) {
 				for(UMLClassMoveDiff classMoveDiff : classMoveDiffList) {
 					if(classMoveDiff.getOriginalClass().getName().startsWith(removedClass.getName() + ".") &&
-							classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".")) {
+							(classMoveDiff.getMovedClass().getName().startsWith(addedClass.getName() + ".") ||
+									classMoveDiff.getMovedClass().getPackageName().equals(addedClass.getPackageName()))) {
 						matchingMovedInnerClasses++;
 					}
 				}
 			}
-			MatchResult matchResult = matcher.match(removedClass, addedClass);
 			if(matchResult.isMatch() || matchingMovedInnerClasses > 0) {
 				if(!conflictingMoveOfTopLevelClass(removedClass, addedClass) && !innerClassWithTheSameName(removedClass, addedClass)) {
 					UMLClassRenameDiff classRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-					diffSet.add(classRenameDiff);
+					if(!classRenameDiff.getOriginalClass().getNonQualifiedName().equals(classRenameDiff.getRenamedClass().getNonQualifiedName())) {
+						diffSet.add(classRenameDiff);
+					}
 				}
 			}
 		}

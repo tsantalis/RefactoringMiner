@@ -59,6 +59,8 @@ public class ProjectASTDiffer
 		long finish = System.currentTimeMillis();
 		logger.info("ModelDiff.getRefactorings() execution time: " + (finish - start)/ 1000 + " seconds");
 		projectASTDiff.setRefactorings(this.modelDiffRefactorings);
+		projectASTDiff.setParentContextMap(modelDiff.getParentModel().getTreeContextMap());
+		projectASTDiff.setChildContextMap(modelDiff.getChildModel().getTreeContextMap());
 		long diff_execution_started = System.currentTimeMillis();
 		makeASTDiff(modelDiff.getCommonClassDiffList(),false);
 		makeASTDiff(withCorrectOrder(modelDiff.getClassRenameDiffList()),false);

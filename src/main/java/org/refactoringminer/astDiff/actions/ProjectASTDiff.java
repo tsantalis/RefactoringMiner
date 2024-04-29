@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.actions;
 
+import com.github.gumtreediff.tree.TreeContext;
 import org.refactoringminer.api.Refactoring;
 
 import java.util.LinkedHashSet;
@@ -13,6 +14,8 @@ public class ProjectASTDiff {
 	private Map<String, String> fileContentsBefore;
 	private Map<String, String> fileContentsAfter;
 	private List<Refactoring> refactorings;
+	private Map<String, TreeContext> parentContextMap;
+	private Map<String, TreeContext> childContextMap;
 
 	public ProjectASTDiff(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) {
 		this.fileContentsBefore = fileContentsBefore;
@@ -46,4 +49,20 @@ public class ProjectASTDiff {
 	public void setRefactorings(List<Refactoring> refactorings) {this.refactorings = refactorings;}
 
 	public List<Refactoring> getRefactorings() { return refactorings;}
+
+	public void setParentContextMap(Map<String, TreeContext> treeContextMap) {
+		this.parentContextMap = treeContextMap;
+	}
+
+	public void setChildContextMap(Map<String, TreeContext> treeContextMap) {
+		this.childContextMap = treeContextMap;
+	}
+
+	public Map<String, TreeContext> getParentContextMap() {
+		return parentContextMap;
+	}
+
+	public Map<String, TreeContext> getChildContextMap() {
+		return childContextMap;
+	}
 }

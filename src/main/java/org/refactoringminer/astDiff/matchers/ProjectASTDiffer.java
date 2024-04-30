@@ -1,5 +1,7 @@
 package org.refactoringminer.astDiff.matchers;
 
+import com.github.gumtreediff.actions.model.Action;
+import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
@@ -14,7 +16,9 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.actions.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +74,111 @@ public class ProjectASTDiffer
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
+		createASTDiffsForMovedDeclarations();
 	}
+
+	private void createASTDiffsForMovedDeclarations() {
+		Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
+        for(ASTDiff diff : projectASTDiff.getDiffSet()) {
+        	Map<Tree, List<Mapping>> methodDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
+            Map<Tree, List<Mapping>> fieldDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
+            Map<Tree, Action> actionMap = new LinkedHashMap<Tree, Action>();
+        	ExtendedOnlyRootsClassifier classifier = (ExtendedOnlyRootsClassifier) diff.createRootNodesClassifier();
+        	Map<Tree, Action> map = classifier.getSrcMoveOutTreeMap();
+        	for(Tree src : map.keySet()) {
+        		Tree methodRoot = TreeUtilFunctions.getParentUntilType(src, Constants.METHOD_DECLARATION);
+        		if(methodRoot != null) {
+        			if(methodDeclarationMappings.containsKey(methodRoot)) {
+        				methodDeclarationMappings.get(methodRoot).addAll(getMappingForLeft(diff, src));
+        			}
+        			else {
+        				List<Mapping> mappings = new ArrayList<Mapping>();
+        				mappings.addAll(getMappingForLeft(diff, src));
+        				methodDeclarationMappings.put(methodRoot, mappings);
+        				if(map.containsKey(methodRoot)) {
+        					actionMap.put(methodRoot, map.get(methodRoot));
+        				}
+        			}
+        		}
+        		Tree fieldRoot = TreeUtilFunctions.getParentUntilType(src, Constants.FIELD_DECLARATION);
+        		if(fieldRoot != null) {
+        			if(methodDeclarationMappings.containsKey(fieldRoot)) {
+        				fieldDeclarationMappings.get(fieldRoot).addAll(getMappingForLeft(diff, src));
+        			}
+        			else {
+        				List<Mapping> mappings = new ArrayList<Mapping>();
+        				mappings.addAll(getMappingForLeft(diff, src));
+        				fieldDeclarationMappings.put(fieldRoot, mappings);
+        				if(map.containsKey(fieldRoot)) {
+        					actionMap.put(fieldRoot, map.get(fieldRoot));
+        				}
+        			}
+        		}
+        	}
+        	//group the mappings based on the pair of src and dst files.
+        	String srcPath = diff.getSrcPath();
+        	for(Tree key : methodDeclarationMappings.keySet()) {
+        		if(actionMap.containsKey(key)) {
+        			Action action = actionMap.get(key);
+        			if(action instanceof MoveOut) {
+        				MoveOut moveOut = (MoveOut)action;
+        				String dstPath = moveOut.getDstFile();
+        				Pair<String, String> pair = new Pair<String, String>(srcPath, dstPath);
+        				if(filePairMappings.containsKey(pair)) {
+        					filePairMappings.get(pair).addAll(methodDeclarationMappings.get(key));
+        				}
+        				else {
+        					List<Mapping> mappings = new ArrayList<Mapping>();
+        					mappings.addAll(methodDeclarationMappings.get(key));
+        					filePairMappings.put(pair, mappings);
+        				}
+        			}
+        		}
+        	}
+        	for(Tree key : fieldDeclarationMappings.keySet()) {
+        		if(actionMap.containsKey(key)) {
+        			Action action = actionMap.get(key);
+        			if(action instanceof MoveOut) {
+        				MoveOut moveOut = (MoveOut)action;
+        				String dstPath = moveOut.getDstFile();
+        				Pair<String, String> pair = new Pair<String, String>(srcPath, dstPath);
+        				if(filePairMappings.containsKey(pair)) {
+        					filePairMappings.get(pair).addAll(fieldDeclarationMappings.get(key));
+        				}
+        				else {
+        					List<Mapping> mappings = new ArrayList<Mapping>();
+        					mappings.addAll(fieldDeclarationMappings.get(key));
+        					filePairMappings.put(pair, mappings);
+        				}
+        			}
+            	}
+        	}
+        }
+        for(Pair<String, String> pair : filePairMappings.keySet()) {
+        	Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(pair.first, pair.second);
+        	List<Mapping> mappings = filePairMappings.get(pair);
+        	if(mappings.size() > 0) {
+	        	Tree leftRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).first);
+	        	Tree rightRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).second);
+	        	ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot);
+	        	for(Mapping m : mappings) {
+	        		store.addMapping(m.first, m.second);
+	        	}
+	        	ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store);
+	        	projectASTDiff.addMoveASTDiff(diff);
+        	}
+        }
+	}
+
+    private List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
+    	List<Mapping> matchingMappings = new ArrayList<Mapping>();
+    	for(Mapping mapping : diff.getAllMappings()) {
+    		if(mapping.first.equals(left)) {
+    			matchingMappings.add(mapping);
+    		}
+    	}
+    	return matchingMappings;
+    }
 
 	private List<? extends UMLAbstractClassDiff> withCorrectOrder(List<? extends UMLAbstractClassDiff> umlDiffs) {
 		ArrayList<UMLAbstractClassDiff> result = new ArrayList<>(umlDiffs);
@@ -138,6 +246,11 @@ public class ProjectASTDiffer
 				return existing;
 		}
 		return null;
+	}
+
+	private Pair<TreeContext, TreeContext> findTreeContexts(String srcPath, String dstPath) {
+		return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(srcPath),
+				modelDiff.getChildModel().getTreeContextMap().get(dstPath));
 	}
 
 	private Pair<TreeContext, TreeContext> findTreeContexts(UMLAbstractClassDiff classDiff) {

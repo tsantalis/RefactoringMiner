@@ -11,7 +11,7 @@ public class DirComparator {
     private final List<ASTDiff> diffs;
     private final ProjectASTDiff projectASTDiff;
     private final DefaultMutableTreeNode compressedTree;
-    private final Map<String,String> modifiedFilesName;
+    private final List<Pair<String,String>> modifiedFilesName;
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
 
@@ -27,7 +27,7 @@ public class DirComparator {
         return addedFilesName;
     }
 
-    public Map<String,String> getModifiedFilesName() {
+    public List<Pair<String,String>> getModifiedFilesName() {
         return modifiedFilesName;
     }
     public Pair<String,String> getFileContentsPair(int id)
@@ -42,7 +42,8 @@ public class DirComparator {
     {
         this.projectASTDiff = projectASTDiff;
         this.diffs = new ArrayList<>(projectASTDiff.getDiffSet());
-        modifiedFilesName = new LinkedHashMap<>();
+        this.diffs.addAll(projectASTDiff.getMoveDiffSet());
+        modifiedFilesName = new ArrayList<>();
         compare();
         compressedTree = new TreeViewGenerator(getModifiedFilesName(), diffs).getCompressedTree();
     }
@@ -55,7 +56,7 @@ public class DirComparator {
         addedFilesName = new HashSet<>(afterFiles);
 
         for (ASTDiff diff : diffs) {
-            modifiedFilesName.put(diff.getSrcPath(),diff.getDstPath());
+            modifiedFilesName.add(new Pair<>(diff.getSrcPath(),diff.getDstPath()));
             removedFilesName.remove(diff.getSrcPath());
             addedFilesName.remove(diff.getDstPath());
         }

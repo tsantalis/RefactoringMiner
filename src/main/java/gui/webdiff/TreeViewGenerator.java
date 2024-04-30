@@ -2,11 +2,12 @@ package gui.webdiff;
 
 import org.refactoringminer.astDiff.actions.ASTDiff;
 
+import com.github.gumtreediff.utils.Pair;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 /* Created by pourya on 2024-04-16*/
 public class TreeViewGenerator {
@@ -18,10 +19,10 @@ public class TreeViewGenerator {
         return compressedTree;
     }
 
-    public TreeViewGenerator(Map<String, String> modifiedFilesName, List<ASTDiff> diffs){
+    public TreeViewGenerator(List<Pair<String,String>> modifiedFilesName, List<ASTDiff> diffs){
         this.diffs = diffs;
-        for(Map.Entry<String, String> pair : modifiedFilesName.entrySet()) {
-            String fileName = pair.getValue();
+        for(Pair<String, String> pair : modifiedFilesName) {
+            String fileName = pair.second;
             String[] tokens = fileName.split("/");
             int counter = 1;
             for(String token : tokens) {

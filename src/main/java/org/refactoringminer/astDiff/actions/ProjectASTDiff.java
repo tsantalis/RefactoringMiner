@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class ProjectASTDiff {
 	private final Set<ASTDiff> diffSet = new LinkedHashSet<>();
+	private final Set<ASTDiff> moveDiffSet = new LinkedHashSet<>();
 	private Map<String, String> fileContentsBefore;
 	private Map<String, String> fileContentsAfter;
 	private List<Refactoring> refactorings;
@@ -30,8 +31,16 @@ public class ProjectASTDiff {
 		return diffSet;
 	}
 
+	public Set<ASTDiff> getMoveDiffSet() {
+		return moveDiffSet;
+	}
+
 	public void addASTDiff(ASTDiff diff) {
 		diffSet.add(diff);
+	}
+
+	public void addMoveASTDiff(ASTDiff diff) {
+		moveDiffSet.add(diff);
 	}
 
 	public void setRefactorings(List<Refactoring> refactorings) {this.refactorings = refactorings;}

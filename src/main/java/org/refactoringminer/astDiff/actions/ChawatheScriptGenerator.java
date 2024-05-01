@@ -110,7 +110,9 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 					}
 					else {
 						TreeUtilFunctions.getFinalRoot(origMappings.getSrcForDst(x));
-						actions.add(new MoveIn(origMappings.getSrcForDst(x), x, findNameByTree(parentContextMap, origMappings.getSrcForDst(x)), +1));
+						String nameByTree = findNameByTree(parentContextMap, origMappings.getSrcForDst(x));
+						if (nameByTree != null)
+							actions.add(new MoveIn(origMappings.getSrcForDst(x), x, nameByTree, +1));
 					}
 				}
 				else if (!x.equals(origDst)) { // TODO => x != origDst // Case of the root
@@ -161,10 +163,13 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 				else if (!TreeUtilFunctions.getFinalRoot(cpyMappings.getDstForSrc(w)).equals(origDst))
 				{
 					Tree a = cpyMappings.getDstForSrc(w);
-					actions.add(new MoveOut(copyToOrig.get(w),cpyMappings.getDstForSrc(w),findNameByTree(childContextMap,a),+1));
+					String nameByTree = findNameByTree(childContextMap, a);
+					if (nameByTree != null)
+						actions.add(new MoveOut(copyToOrig.get(w),cpyMappings.getDstForSrc(w), nameByTree,+1));
 				}
 			}
 		}
+		origDst.setParent(null);
 		return actions;
 	}
 
@@ -267,12 +272,13 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 	}
 
 	public String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
+		if (contextMap == null) return null;
 		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {
 			if (stringTreeContextEntry.getValue().getRoot().equals(TreeUtilFunctions.getFinalRoot(t)))
 			{
 				return stringTreeContextEntry.getKey();
 			}
 		}
-		return "";
+		return null;
 	}
 }

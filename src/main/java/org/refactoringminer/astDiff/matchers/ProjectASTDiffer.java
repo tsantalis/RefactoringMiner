@@ -165,7 +165,7 @@ public class ProjectASTDiffer
 	        	Tree rightRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).second);
 	        	ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot);
 	        	for(Mapping m : mappings) {
-	        		store.addMapping(m.first, m.second);
+	        		store.addMappingRecursively(m.first, m.second);
 	        	}
 	        	ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store, new SimplifiedChawatheScriptGenerator().computeActions(store, null, null));
 	        	projectASTDiff.addMoveASTDiff(diff);

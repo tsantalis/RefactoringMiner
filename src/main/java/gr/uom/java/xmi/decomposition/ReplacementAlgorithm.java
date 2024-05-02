@@ -845,6 +845,25 @@ public class ReplacementAlgorithm {
 		findReplacements(parenthesizedExpressions1, variables2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(variables1, parenthesizedExpressions2, replacementInfo, ReplacementType.VARIABLE_REPLACED_WITH_PARENTHESIZED_EXPRESSION, container1, container2, classDiff);
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
+			for(String stringLiteral1 : stringLiterals1) {
+				String value1 = stringLiteral1.substring(1, stringLiteral1.length()-1);
+				for(AbstractCall call2 : statement2.getMethodInvocations()) {
+					String expression = call2.getExpression();
+					if(expression != null && methodInvocations2.contains(call2.actualString())) {
+						if(expression.startsWith("\"") && expression.endsWith("\"")) {
+							String value2 = expression.substring(1, expression.length()-1);
+							if(value1.contains(value2) || value2.contains(value1)) {
+								Set<String> set1 = Set.of(stringLiteral1);
+								Set<String> set2 = Set.of(call2.actualString());
+								findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 		if((statement1.getNullLiterals().isEmpty() && !statement2.getNullLiterals().isEmpty()) ||
 				bothContainNullInDifferentIndexes(invocationCoveringTheEntireStatement1 != null ? invocationCoveringTheEntireStatement1 : creationCoveringTheEntireStatement1,
 						invocationCoveringTheEntireStatement2 != null ? invocationCoveringTheEntireStatement2 : creationCoveringTheEntireStatement2)) {

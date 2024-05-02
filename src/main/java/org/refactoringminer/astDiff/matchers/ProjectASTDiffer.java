@@ -85,6 +85,7 @@ public class ProjectASTDiffer
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
         	Map<Tree, List<Mapping>> methodDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
             Map<Tree, List<Mapping>> fieldDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
+            Map<Tree, List<Mapping>> typeDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
             Map<Tree, Action> actionMap = new LinkedHashMap<Tree, Action>();
         	ExtendedOnlyRootsClassifier classifier = (ExtendedOnlyRootsClassifier) diff.createRootNodesClassifier();
         	Map<Tree, Action> map = classifier.getSrcMoveOutTreeMap();
@@ -116,6 +117,14 @@ public class ProjectASTDiffer
         					actionMap.put(fieldRoot, map.get(fieldRoot));
         				}
         			}
+        		}
+        		if(src.getType().name.equals(Constants.TYPE_DECLARATION) ||
+        				src.getType().name.equals(Constants.ENUM_DECLARATION) ||
+        				src.getType().name.equals(Constants.RECORD_DECLARATION)) {
+        			actionMap.put(src, map.get(src));
+        			List<Mapping> mappings = new ArrayList<Mapping>();
+    				mappings.addAll(getMappingForLeft(diff, src));
+    				typeDeclarationMappings.put(src, mappings);
         		}
         	}
         	//group the mappings based on the pair of src and dst files.
@@ -151,6 +160,24 @@ public class ProjectASTDiffer
         				else {
         					List<Mapping> mappings = new ArrayList<Mapping>();
         					mappings.addAll(fieldDeclarationMappings.get(key));
+        					filePairMappings.put(pair, mappings);
+        				}
+        			}
+            	}
+        	}
+        	for(Tree key : typeDeclarationMappings.keySet()) {
+        		if(actionMap.containsKey(key)) {
+        			Action action = actionMap.get(key);
+        			if(action instanceof MoveOut) {
+        				MoveOut moveOut = (MoveOut)action;
+        				String dstPath = moveOut.getDstFile();
+        				Pair<String, String> pair = new Pair<String, String>(srcPath, dstPath);
+        				if(filePairMappings.containsKey(pair)) {
+        					filePairMappings.get(pair).addAll(typeDeclarationMappings.get(key));
+        				}
+        				else {
+        					List<Mapping> mappings = new ArrayList<Mapping>();
+        					mappings.addAll(typeDeclarationMappings.get(key));
         					filePairMappings.put(pair, mappings);
         				}
         			}

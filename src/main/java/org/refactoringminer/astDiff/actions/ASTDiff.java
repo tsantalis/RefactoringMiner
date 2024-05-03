@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator;
 import com.github.gumtreediff.matchers.MappingStore;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
@@ -70,10 +71,10 @@ public class ASTDiff extends Diff {
 	}
 
 	public void computeVanillaEditScript() {
-		finalizeEditScript(new com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore()));
+		finalizeEditScript(new SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore()));
 	}
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		finalizeEditScript(new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap));
+		finalizeEditScript(new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap));
 	}
 
 	private void finalizeEditScript(EditScript newEditScript) {

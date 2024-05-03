@@ -19,7 +19,7 @@ import java.util.*;
  * An edit script generator based upon Chawathe algorithm supporting multi-mappings.
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-public class ChawatheScriptGenerator implements EditScriptGenerator {
+public class ExtendedChawatheScriptGenerator implements ExtendedEditScriptGenerator {
 	private Tree origSrc;
 	private Tree cpySrc;
 	private Tree origDst;
@@ -41,21 +41,12 @@ public class ChawatheScriptGenerator implements EditScriptGenerator {
 		this.multiMappingStore = ms;
 		initWith(ms.getMonoMappingStore());
 		generate();
-		processMultiMappings(ms, actions);
+		processMultiMappings();
 		return actions;
 	}
-	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {
-		Map<Tree, Set<Tree>> dstToSrcMultis = mappings.dstToSrcMultis();
-		MultiMoveActionGenerator multiMoveActionGenerator = new MultiMoveActionGenerator();
-
-		for(Map.Entry<Tree, Set<Tree>> entry : dstToSrcMultis.entrySet())
-		{
-			Set<Tree> srcTrees = entry.getValue();
-			Set<Tree> dstTrees = mappings.getDsts(srcTrees.iterator().next());
-			multiMoveActionGenerator.addMapping(srcTrees,dstTrees);
-		}
-		for (Action action : multiMoveActionGenerator.generate()) {
-			editScript.add(action);
+	private void processMultiMappings() {
+		for (Action action : new SimplifiedMultiMoveActionGenerator().computeActions(multiMappingStore)) {
+			actions.add(action);
 		}
 	}
 

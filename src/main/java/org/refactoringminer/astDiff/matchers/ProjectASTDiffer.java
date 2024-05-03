@@ -18,7 +18,7 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
-import org.refactoringminer.astDiff.actions.SimplifiedChawatheScriptGenerator;
+import org.refactoringminer.astDiff.actions.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
@@ -194,7 +194,7 @@ public class ProjectASTDiffer
 	        	for(Mapping m : mappings) {
 	        		store.addMappingRecursively(m.first, m.second);
 	        	}
-	        	ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store, new SimplifiedChawatheScriptGenerator().computeActions(store, null, null));
+	        	ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store, new SimplifiedExtendedChawatheScriptGenerator().computeActions(store, null, null));
 	        	projectASTDiff.addMoveASTDiff(diff);
         	}
         }

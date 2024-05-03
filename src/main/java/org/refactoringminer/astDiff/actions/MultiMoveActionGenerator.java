@@ -1,124 +1,50 @@
 package org.refactoringminer.astDiff.actions;
 
+import com.github.gumtreediff.actions.EditScript;
+import com.github.gumtreediff.actions.EditScriptGenerator;
 import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
+import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
 import java.util.*;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-public class MultiMoveActionGenerator {
-	private Map<Set<Tree>, Set<Tree>> fullMap;
-	private Map<Tree,List<MultiMove>> actionMapSrc = new HashMap<>();
-	private Map<Tree,List<MultiMove>> actionMapDst = new HashMap<>();
-
-	ArrayList<Action> actions;
+public class MultiMoveActionGenerator implements ExtendedEditScriptGenerator {
+	protected Map<Tree, List<MultiMove>> actionMapSrc = new HashMap<>();
+	protected Map<Tree, List<MultiMove>> actionMapDst = new HashMap<>();
+	private final List<Action> actions = new ArrayList<>();
 	private static int counter = 0;
 
-	public MultiMoveActionGenerator() {
-		fullMap = new LinkedHashMap<>();
-		actions = new ArrayList<>();
+	@Override
+	public EditScript computeActions(ExtendedMultiMappingStore mappings, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
+		addMultiMappings(mappings);
+		return toEditScript(actions);
 	}
 
-	public ArrayList<Action> generate() {
-		//return actions;
-		return simplify(actions);
-	}
-
-	private ArrayList<Action> simplify(ArrayList<Action> actions) {
-		for (Tree t : actionMapSrc.keySet()) {
-			if (actionMapSrc.containsKey(t.getParent())
-					&& actionMapSrc.keySet().containsAll(t.getParent().getDescendants()))
-				removeActionsForThisTreeFromSrc(t);
-			else {
-				if (t.getChildren().size() > 0 && actionMapSrc.keySet().containsAll(t.getDescendants())) {
-
-				}
-			}
+	private void addMultiMappings(ExtendedMultiMappingStore mappings) {
+		Map<Tree, Set<Tree>> dstToSrcMulti = mappings.dstToSrcMultis();
+		for (Map.Entry<Tree, Set<Tree>> entry : dstToSrcMulti.entrySet()) {
+			Set<Tree> srcTrees = entry.getValue();
+			Set<Tree> dstTrees = mappings.getDsts(srcTrees.iterator().next());
+			this.addMapping(srcTrees, dstTrees);
 		}
-		for (Tree t : actionMapDst.keySet()) {
-			if (actionMapDst.containsKey(t.getParent())
-					&& actionMapDst.keySet().containsAll(t.getParent().getDescendants()))
-				removeActionsForThisTreeFromDst(t);
-			else {
-				if (t.getChildren().size() > 0 && actionMapDst.keySet().containsAll(t.getDescendants())) {
-				}
-			}
-		}
-		return actions;
-	}
-
-	private void removeActionsForThisTreeFromSrc(Tree t) {
-		List<MultiMove> mappedSrc = actionMapSrc.get(t);
-		List<Action> removable = new ArrayList<>();
-		boolean _flag = false;
-		for(MultiMove action : mappedSrc) {
-			if (action.isUpdated())
-			{
-				_flag = true;
-				break;
-			}
-			else {
-				Tree actionSrc = action.getNode();
-				Tree actionDst = action.getParent();
-				if (       actionMapSrc.containsKey(actionSrc.getParent())
-						&& actionMapSrc.keySet().containsAll(actionSrc.getParent().getDescendants())
-						&& actionMapDst.containsKey(actionDst.getParent())
-						&& actionMapDst.keySet().containsAll(actionDst.getParent().getDescendants()))
-					removable.add(action);
-				else {
-					_flag = true;
-					break;
-				}
-			}
-		}
-		if (!_flag)
-			actions.removeAll(removable);
-	}
-
-	private void removeActionsForThisTreeFromDst(Tree t) {
-		List<MultiMove> mappedDst = actionMapDst.get(t);
-		List<Action> removable = new ArrayList<>();
-		boolean _flag = false;
-		for(MultiMove action : mappedDst) {
-			if (action.isUpdated()) {
-				_flag = true;
-				break;
-			}
-			else {
-				Tree actionSrc = action.getNode();
-				Tree actionDst = action.getParent();
-				if (       actionMapSrc.containsKey(actionSrc.getParent())
-						&& actionMapSrc.keySet().containsAll(actionSrc.getParent().getDescendants())
-						&& actionMapDst.containsKey(actionDst.getParent())
-						&& actionMapDst.keySet().containsAll(actionDst.getParent().getDescendants()))
-					removable.add(action);
-				else {
-					_flag = true;
-					break;
-				}
-			}
-		}
-		if (_flag)
-			actions.removeAll(removable);
 	}
 
 	public void addMapping(Set<Tree> srcTrees, Set<Tree> dstTrees) {
-		this.fullMap.put(srcTrees,dstTrees);
-		for (Tree srcTree : srcTrees)
-		{
+		for (Tree srcTree : srcTrees) {
 			if (srcTree == null)
 				continue;
-			for (Tree dstTree : dstTrees)
-			{
+			for (Tree dstTree : dstTrees) {
 				if (dstTree == null)
 					continue;
 				boolean updated = false;
 				if (srcTree.isLeaf() && dstTree.isLeaf())
 					updated = (srcTree.getMetrics().hash != dstTree.getMetrics().hash);
-				MultiMove action = new MultiMove(srcTree,dstTree,-1, counter + 1,updated);
+				MultiMove action = new MultiMove(srcTree, dstTree, -1, counter + 1, updated);
 				if (!actions.contains(action)) {
 					actions.add(action);
 					if (!actionMapSrc.containsKey(srcTree))
@@ -132,5 +58,13 @@ public class MultiMoveActionGenerator {
 			}
 		}
 		counter += 1;
+	}
+
+	protected static EditScript toEditScript(List<Action> actions) {
+		EditScript result = new EditScript();
+		for (Action action : actions) {
+			result.add(action);
+		}
+		return result;
 	}
 }

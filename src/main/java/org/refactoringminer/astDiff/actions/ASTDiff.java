@@ -70,13 +70,10 @@ public class ASTDiff extends Diff {
 	}
 
 	public void computeVanillaEditScript() {
-		EditScript newEditScript = new com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore());
-		finalizeEditScript(newEditScript);
+		finalizeEditScript(new com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore()));
 	}
 	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		EditScript newEditScript = new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap);
-		processMultiMappings(mappings, newEditScript);
-		finalizeEditScript(newEditScript);
+		finalizeEditScript(new SimplifiedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap));
 	}
 
 	private void finalizeEditScript(EditScript newEditScript) {
@@ -86,20 +83,7 @@ public class ASTDiff extends Diff {
 		this.classifier.classify();
 	}
 
-	private static void processMultiMappings(ExtendedMultiMappingStore mappings, EditScript editScript) {
-		Map<Tree, Set<Tree>> dstToSrcMultis = mappings.dstToSrcMultis();
-		MultiMoveActionGenerator multiMoveActionGenerator = new MultiMoveActionGenerator();
 
-		for(Map.Entry<Tree, Set<Tree>> entry : dstToSrcMultis.entrySet())
-		{
-			Set<Tree> srcTrees = entry.getValue();
-			Set<Tree> dstTrees = mappings.getDsts(srcTrees.iterator().next());
-			multiMoveActionGenerator.addMapping(srcTrees,dstTrees);
-		}
-		for (Action action : multiMoveActionGenerator.generate()) {
-			editScript.add(action);
-		}
-	}
 
 	/**
 	 * Compute and return a root node classifier that indicates which node have

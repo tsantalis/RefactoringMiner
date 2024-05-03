@@ -14,11 +14,11 @@ import java.util.Map;
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-public class SimplifiedChawatheScriptGenerator implements EditScriptGenerator {
+public class SimplifiedExtendedChawatheScriptGenerator implements ExtendedEditScriptGenerator {
 
 	@Override
 	public EditScript computeActions(ExtendedMultiMappingStore ms, Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		EditScript actions = new ChawatheScriptGenerator().computeActions(ms,parentContextMap,childContextMap);
+		EditScript actions = new ExtendedChawatheScriptGenerator().computeActions(ms,parentContextMap,childContextMap);
 		//return actions;
 		return simplify(actions);
 	}

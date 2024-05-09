@@ -63,6 +63,7 @@ public abstract class UMLAbstractClassDiff {
 	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	protected List<Refactoring> refactorings;
 	protected UMLModelDiff modelDiff;
+	private UMLImplementedInterfaceListDiff interfaceListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
 	
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
@@ -82,7 +83,8 @@ public abstract class UMLAbstractClassDiff {
 		this.refactorings = new ArrayList<Refactoring>();
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
-		this.modelDiff = modelDiff;		
+		this.modelDiff = modelDiff;
+		this.interfaceListDiff = new UMLImplementedInterfaceListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
 	}
 
 	public List<UMLOperation> getAddedOperations() {
@@ -143,6 +145,25 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
+	}
+
+	public UMLImplementedInterfaceListDiff getInterfaceListDiff() {
+		return interfaceListDiff;
+	}
+
+	public void findInterfaceChanges(String nameBefore, String nameAfter) {
+		interfaceListDiff.findInterfaceChanges(nameBefore, nameAfter);
+	}
+
+	public void findInterfaceChanges(UMLType typeBefore, UMLType typeAfter) {
+		interfaceListDiff.findInterfaceChanges(typeBefore, typeAfter);
+	}
+
+	public boolean hasBothAddedAndRemovedInterfaces() {
+		if(interfaceListDiff != null) {
+			return interfaceListDiff.getAddedInterfaces().size() > 0 && interfaceListDiff.getRemovedInterfaces().size() > 0;
+		}
+		return false;
 	}
 
 	protected boolean mapperListContainsOperation(UMLOperation operation1, UMLOperation operation2) {

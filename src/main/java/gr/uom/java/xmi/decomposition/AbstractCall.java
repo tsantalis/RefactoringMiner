@@ -244,6 +244,19 @@ public abstract class AbstractCall extends LeafExpression {
 						}
 					}
 				}
+				else if(replacement instanceof VariableReplacementWithMethodInvocation) {
+					VariableReplacementWithMethodInvocation methodInvocationReplacement = (VariableReplacementWithMethodInvocation)replacement;
+					AbstractCall invokedOperation = methodInvocationReplacement.getInvokedOperation();
+					if(invokedOperation.actualString().contains("(")) {
+						String subString = invokedOperation.actualString().substring(0, invokedOperation.actualString().indexOf("("));
+						if(replacement.getBefore().startsWith(subString) && replacement.getAfter().startsWith(subString)) {
+							if(replacement.getBefore().equals(expression1) && (replacement.getAfter().equals(expression2) ||
+									(parameterToArgumentMap.containsKey(expression2) && replacement.getAfter().equals(parameterToArgumentMap.get(expression2))))) {
+								return true;
+							}
+						}
+					}
+				}
 			}
 			if(expression1AfterReplacements.equals(expression2)) {
 				return true;

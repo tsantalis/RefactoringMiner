@@ -2410,6 +2410,7 @@ public class UMLModelDiff {
 			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
 			refactorings.addAll(classDiffRefactorings);
 			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
+			detectInterfaceChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 			checkForExtractedAndMovedOperationsToInnerClasses(classDiff);
@@ -2418,6 +2419,7 @@ public class UMLModelDiff {
 			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
 			refactorings.addAll(classDiffRefactorings);
 			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
+			detectInterfaceChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
@@ -2425,6 +2427,7 @@ public class UMLModelDiff {
 			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
 			refactorings.addAll(classDiffRefactorings);
 			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
+			detectInterfaceChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
@@ -2432,6 +2435,7 @@ public class UMLModelDiff {
 			List<Refactoring> classDiffRefactorings = classDiff.getRefactorings();
 			refactorings.addAll(classDiffRefactorings);
 			detectImportDeclarationChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
+			detectInterfaceChangesBasedOnTypeChanges(classDiff, classDiffRefactorings);
 			extractMergePatterns(classDiff, mergeMap);
 			extractRenamePatterns(classDiff, renameMap);
 		}
@@ -2667,18 +2671,22 @@ public class UMLModelDiff {
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassMoveDiff classDiff : innerClassMoveDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			inferMethodSignatureRelatedRefactorings(classDiff, refactorings, map);
 			detectImportDeclarationChanges(classDiff, packageRefactorings);
+			detectInterfaceChanges(classDiff, packageRefactorings);
 		}
 		Map<Pair<UMLAbstractClass, UMLAbstractClass>, List<MoveOperationRefactoring>> classPairsBasedOnMovedMethods = new LinkedHashMap<>();
 		for(Refactoring r : refactorings) {
@@ -2868,6 +2876,25 @@ public class UMLModelDiff {
 		return filtered;
 	}
 
+	private void detectInterfaceChanges(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
+		if(classDiff.hasBothAddedAndRemovedInterfaces()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof RenameClassRefactoring) {
+					RenameClassRefactoring rename = (RenameClassRefactoring)ref;
+					classDiff.findInterfaceChanges(rename.getOriginalClassName(), rename.getRenamedClassName());
+				}
+				else if(ref instanceof MoveClassRefactoring) {
+					MoveClassRefactoring move = (MoveClassRefactoring)ref;
+					classDiff.findInterfaceChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+				else if(ref instanceof MoveAndRenameClassRefactoring) {
+					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
+					classDiff.findInterfaceChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+			}
+		}
+	}
+
 	private void detectImportDeclarationChanges(UMLClassBaseDiff classDiff, Set<Refactoring> refactorings) {
 		if(classDiff.hasBothAddedAndRemovedImports()) {
 			for(Refactoring ref : refactorings) {
@@ -2882,6 +2909,39 @@ public class UMLModelDiff {
 				else if(ref instanceof MoveAndRenameClassRefactoring) {
 					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
 					classDiff.findImportChanges(move.getOriginalClassName(), move.getMovedClassName());
+				}
+			}
+		}
+	}
+
+	private void detectInterfaceChangesBasedOnTypeChanges(UMLClassBaseDiff classDiff, List<Refactoring> refactorings) {
+		if(classDiff.hasBothAddedAndRemovedInterfaces()) {
+			for(Refactoring ref : refactorings) {
+				if(ref instanceof ChangeReturnTypeRefactoring) {
+					ChangeReturnTypeRefactoring changeReturnType = (ChangeReturnTypeRefactoring)ref;
+					classDiff.findInterfaceChanges(changeReturnType.getOriginalType(), changeReturnType.getChangedType());
+				}
+				else if(ref instanceof ChangeAttributeTypeRefactoring) {
+					ChangeAttributeTypeRefactoring changeAttributeType = (ChangeAttributeTypeRefactoring)ref;
+					classDiff.findInterfaceChanges(changeAttributeType.getOriginalAttribute().getType(), changeAttributeType.getChangedTypeAttribute().getType());
+					if(changeAttributeType.getAttributeDiff().getInitializerMapper().isPresent()) {
+						UMLOperationBodyMapper initializerMapper = changeAttributeType.getAttributeDiff().getInitializerMapper().get();
+						for(Replacement r : initializerMapper.getReplacements()) {
+							if(r.getType().equals(ReplacementType.TYPE)) {
+								classDiff.findInterfaceChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+							}
+						}
+					}
+				}
+				else if(ref instanceof ChangeVariableTypeRefactoring) {
+					ChangeVariableTypeRefactoring changeVariableType = (ChangeVariableTypeRefactoring)ref;
+					classDiff.findInterfaceChanges(changeVariableType.getOriginalVariable().getType(), changeVariableType.getChangedTypeVariable().getType());
+				}
+			}
+			Set<Replacement> replacements = classDiff.getReplacementsOfType(ReplacementType.TYPE);
+			for(Replacement r : replacements) {
+				if(r.getType().equals(ReplacementType.TYPE)) {
+					classDiff.findInterfaceChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
 				}
 			}
 		}

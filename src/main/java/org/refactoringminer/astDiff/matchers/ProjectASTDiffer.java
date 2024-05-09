@@ -1135,20 +1135,19 @@ public class ProjectASTDiffer
 	}
 
 	private void processClassImplementedInterfaces(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-		List<UMLType> srcImplementedInterfaces = classDiff.getOriginalClass().getImplementedInterfaces();
-		List<UMLType> dstImplementedInterfaces = classDiff.getNextClass().getImplementedInterfaces();
-		List<UMLType> removedOnes = classDiff.getRemovedImplementedInterfaces();
-		for (UMLType srcUmlType : srcImplementedInterfaces) {
-			if (!removedOnes.contains(srcUmlType)) {
-				Tree srcInterfaceTree =TreeUtilFunctions.findByLocationInfo(srcTree,srcUmlType.getLocationInfo());
-				for (UMLType dstUmlType : dstImplementedInterfaces) {
-					if (dstUmlType.getClassType().equals(srcUmlType.getClassType())) {
-						Tree dstInterfaceTree =TreeUtilFunctions.findByLocationInfo(dstTree,dstUmlType.getLocationInfo());
-						mappingStore.addMappingRecursively(srcInterfaceTree, dstInterfaceTree);
-						break;
-					}
-				}
-			}
+		for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getInterfaceListDiff().getCommonInterfaces()) {
+			Tree srcInterfaceTree = TreeUtilFunctions.findByLocationInfo(srcTree, commonInterface.getLeft().getLocationInfo());
+			Tree dstInterfaceTree = TreeUtilFunctions.findByLocationInfo(dstTree, commonInterface.getRight().getLocationInfo());
+			if (srcInterfaceTree == null || dstInterfaceTree == null) return;
+			if (srcInterfaceTree.isIsoStructuralTo(dstInterfaceTree))
+				mappingStore.addMappingRecursively(srcInterfaceTree,dstInterfaceTree);
+		}
+		for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getInterfaceListDiff().getChangedInterfaces()) {
+			Tree srcInterfaceTree = TreeUtilFunctions.findByLocationInfo(srcTree, commonInterface.getLeft().getLocationInfo());
+			Tree dstInterfaceTree = TreeUtilFunctions.findByLocationInfo(dstTree, commonInterface.getRight().getLocationInfo());
+			if (srcInterfaceTree == null || dstInterfaceTree == null) return;
+			if (srcInterfaceTree.isIsoStructuralTo(dstInterfaceTree))
+				mappingStore.addMappingRecursively(srcInterfaceTree,dstInterfaceTree);
 		}
 	}
 

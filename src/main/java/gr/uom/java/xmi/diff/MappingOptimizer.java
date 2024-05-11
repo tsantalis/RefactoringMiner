@@ -197,6 +197,22 @@ public class MappingOptimizer {
 		for(AbstractCodeFragment fragment : sortedKeys) {
 			List<AbstractCodeMapping> mappings = oneToManyMappings.get(fragment);
 			List<UMLOperationBodyMapper> mappers = oneToManyMappers.get(fragment);
+			boolean identicalExtractedMethod = false;
+			int exactMappers = 0;
+			for(UMLOperationBodyMapper mapper : mappers) {
+				if(mapper.mappingsWithoutBlocks() == mapper.exactMatches()) {
+					exactMappers++;
+				}
+				if(mapper.getParentMapper() != null && mapper.getParentMapper().getExtractedStatements().keySet().contains(mapper.getContainer2()) &&
+						mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() != null &&
+						mapper.getContainer1().getBody().stringRepresentation().equals(mapper.getContainer2().getBody().stringRepresentation())) {
+					identicalExtractedMethod = true;
+					break;
+				}
+			}
+			if(identicalExtractedMethod && exactMappers == mappers.size()) {
+				continue;
+			}
 			Iterator<AbstractCodeMapping> mappingIterator = mappings.iterator();
 			Iterator<UMLOperationBodyMapper> mapperIterator = mappers.iterator();
 			List<Boolean> callsExtractedInlinedMethod = new ArrayList<>();

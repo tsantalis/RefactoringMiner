@@ -1964,6 +1964,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return operationInvocation;
 	}
 
+	public Map<UMLOperation, Set<AbstractCodeFragment>> getExtractedStatements() {
+		return extractedStatements;
+	}
+
 	private void resetNodes(List<? extends AbstractCodeFragment> nodes) {
 		for(AbstractCodeFragment node : nodes) {
 			node.resetArgumentization();

@@ -493,7 +493,8 @@ public class TestStatementMappings {
 		"https://github.com/phishman3579/java-algorithms-implementation.git, f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29, phishman-f2385a56e6aa040ea4ff18a23ce5b63a4eeacf29.txt",
 		"https://github.com/spring-projects/spring-boot.git, 07766c436cb89128eac5389d33f76329b758d8df, spring-boot-07766c436cb89128eac5389d33f76329b758d8df.txt",
 		"https://github.com/spring-projects/spring-framework.git, 58fbf60d2d5d28d96c351eb539a52bceffac270a, spring-framework-58fbf60d2d5d28d96c351eb539a52bceffac270a.txt",
-		"https://github.com/hibernate/hibernate-orm.git, bf7607e24495af5133165ae6ed6b85feecf59148, hibernate-orm-bf7607e24495af5133165ae6ed6b85feecf59148.txt"
+		"https://github.com/hibernate/hibernate-orm.git, bf7607e24495af5133165ae6ed6b85feecf59148, hibernate-orm-bf7607e24495af5133165ae6ed6b85feecf59148.txt",
+		"https://github.com/tsantalis/RefactoringMiner.git, 0894f346564f8b31cf836def67e952fb93a6036d, miner-0894f346564f8b31cf836def67e952fb93a6036d.txt"
 	})
 	public void testExtractMethodStatementMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

@@ -110,6 +110,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Map<String, String> parameterToArgumentMap2;
 	private Set<CompositeStatementObjectMapping> ifBecomingElseIf = new HashSet<>();
 	private Set<CompositeStatementObjectMapping> ifAddingElseIf = new HashSet<>();
+	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements = new LinkedHashMap<>();
 
 	public boolean isNested() {
 		return nested;
@@ -233,6 +234,62 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		OperationBody body1 = operation1.getBody();
 		OperationBody body2 = operation2.getBody();
 		if(body1 != null && body2 != null) {
+			if(classDiff != null) {
+				List<String> list1 = body1.stringRepresentation();
+				for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+					if(addedOperation.getBody() != null) {
+						List<String> list2 = new ArrayList<>(addedOperation.getBody().stringRepresentation());
+						if(list2.size() > 3) {
+							//remove first and last blocks
+							list2.remove(0);
+							list2.remove(list2.size()-1);
+							int indexOfSubList = Collections.indexOfSubList(list1, list2);
+							if(indexOfSubList >= 0) {
+								while(list2.contains("}")) {
+									list2.remove("}");
+								}
+								List<AbstractStatement> allStatements = body1.getCompositeStatement().getAllStatements();
+								Set<AbstractCodeFragment> subSet = new LinkedHashSet<AbstractCodeFragment>();
+								boolean firstFound = false;
+								int index = 0;
+								for(AbstractStatement statement1 : allStatements) {
+									if(index == list2.size()) {
+										break;
+									}
+									if(!firstFound) {
+										if(statement1 instanceof CompositeStatementObject) {
+											CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+											if(comp1.toStringForStringRepresentation().equals(list1.get(indexOfSubList))) {
+												firstFound = true;
+												subSet.add(statement1);
+												index++;
+											}
+										}
+										else if(statement1.getString().equals(list1.get(indexOfSubList))) {
+											firstFound = true;
+											subSet.add(statement1);
+											index++;
+										}
+									}
+									else {
+										if(statement1 instanceof CompositeStatementObject) {
+											CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+											if(comp1.toStringForStringRepresentation().equals(list2.get(index))) {
+												subSet.add(statement1);
+											}
+										}
+										else if(statement1.getString().equals(list2.get(index))) {
+											subSet.add(statement1);
+										}
+										index++;
+									}
+								}
+								extractedStatements.put(addedOperation, subSet);
+							}
+						}
+					}
+				}
+			}
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> nestedAnonymous1 = new ArrayList<AnonymousClassDeclarationObject>();
 			for(AnonymousClassDeclarationObject anonymous : anonymous1) {
@@ -1975,6 +2032,65 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			this.callsToExtractedMethod = callsToExtractedMethod(leavesT2);
 			this.callsToExtractedMethod += callsToExtractedMethod(expressionsT2);
+			if(operationBodyMapper.extractedStatements.containsKey(addedOperation)) {
+				Set<AbstractCodeFragment> fragments = operationBodyMapper.extractedStatements.get(addedOperation);
+				List<AbstractCodeFragment> leaves1 = new ArrayList<AbstractCodeFragment>();
+				List<CompositeStatementObject> innerNodes1 = new ArrayList<CompositeStatementObject>();
+				for(AbstractCodeFragment fragment : fragments) {
+					if(fragment instanceof CompositeStatementObject) {
+						innerNodes1.add((CompositeStatementObject) fragment);
+					}
+					else {
+						leaves1.add(fragment);
+					}
+					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				}
+				CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
+				List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
+				List<CompositeStatementObject> innerNodes2 = composite2.getInnerNodes();
+				for(AbstractCodeFragment statement : new ArrayList<>(leaves2)) {
+					expandAnonymousAndLambdas(statement, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, container2, false);
+				}
+				innerNodes2.remove(composite2);
+				resetNodes(leaves1);
+				//replace parameters with arguments in leaves1
+				if(!parameterToArgumentMap1.isEmpty()) {
+					for(AbstractCodeFragment leave1 : leaves1) {
+						leave1.replaceParametersWithArguments(parameterToArgumentMap1);
+					}
+				}
+				resetNodes(leaves2);
+				//replace parameters with arguments in leaves2
+				if(!parameterToArgumentMap2.isEmpty()) {
+					for(AbstractCodeFragment leave2 : leaves2) {
+						leave2.replaceParametersWithArguments(parameterToArgumentMap2);
+					}
+				}
+				resetNodes(innerNodes1);
+				//replace parameters with arguments in innerNodes1
+				if(!parameterToArgumentMap1.isEmpty()) {
+					for(CompositeStatementObject innerNode1 : innerNodes1) {
+						innerNode1.replaceParametersWithArguments(parameterToArgumentMap1);
+					}
+				}
+				resetNodes(innerNodes2);
+				//replace parameters with arguments in innerNode2
+				if(!parameterToArgumentMap2.isEmpty()) {
+					for(CompositeStatementObject innerNode2 : innerNodes2) {
+						innerNode2.replaceParametersWithArguments(parameterToArgumentMap2);
+					}
+				}
+				//compare leaves from T1 with leaves from T2
+				processLeaves(leaves1, leaves2, parameterToArgumentMap2, false);
+				
+				//compare inner nodes from T1 with inner nodes from T2
+				processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false);
+				nonMappedLeavesT1.addAll(leaves1);
+				nonMappedLeavesT2.addAll(leaves2);
+				nonMappedInnerNodesT1.addAll(innerNodes1);
+				nonMappedInnerNodesT2.addAll(innerNodes2);
+				return;
+			}
 			CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = operationBodyMapper.getNonMappedLeavesT1();
 			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
@@ -5010,6 +5126,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							matchingLeaves2.add(l2);
 							parents2.add(l2.getParent());
 						}
+					}
+					boolean found = false;
+					for(Set<AbstractCodeFragment> set : extractedStatements.values()) {
+						if(set.contains(leaf1)) {
+							found = true;
+							break;
+						}
+					}
+					if(found) {
+						continue;
 					}
 					boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
 					boolean allMatchingLeaves2InMethodScope = parents2.size() == 1 && parents2.iterator().next() != null && parents2.iterator().next().getParent() == null;

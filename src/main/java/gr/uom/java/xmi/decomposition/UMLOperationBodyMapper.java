@@ -254,7 +254,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								int index = 0;
 								for(AbstractStatement statement1 : allStatements) {
 									if(index == list2.size()) {
-										break;
+										firstFound = false;
+										index = 0;
 									}
 									if(!firstFound) {
 										if(statement1 instanceof CompositeStatementObject) {
@@ -5131,14 +5132,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							parents2.add(l2.getParent());
 						}
 					}
-					boolean found = false;
+					boolean foundInExtractedStatements = false;
 					for(Set<AbstractCodeFragment> set : extractedStatements.values()) {
 						if(set.contains(leaf1)) {
-							found = true;
+							foundInExtractedStatements = true;
 							break;
 						}
 					}
-					if(found) {
+					if(foundInExtractedStatements) {
 						continue;
 					}
 					boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
@@ -5215,7 +5216,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings2(mapping).getMiddle();
-								levelParentEditDistanceSum.put(mapping.levelParentEditDistanceSum(), mapping);
+								double parentEditDistanceSum = mapping.levelParentEditDistanceSum();
+								if(!levelParentEditDistanceSum.containsKey(parentEditDistanceSum)) {
+									levelParentEditDistanceSum.put(parentEditDistanceSum, mapping);
+								}
 								if(!lineDistanceMap.containsKey(lineDistance)) {
 									lineDistanceMap.put(lineDistance, mapping);
 								}
@@ -5519,6 +5523,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					TreeSet<LeafMapping> mappingSet = parentMapping != null ? new TreeSet<LeafMapping>(new ScopedLeafMappingComparatorForExtract(parentMapping)) : new TreeSet<LeafMapping>();
 					for(ListIterator<? extends AbstractCodeFragment> leafIterator1 = leaves1.listIterator(); leafIterator1.hasNext();) {
 						AbstractCodeFragment leaf1 = leafIterator1.next();
+						boolean foundInExtractedStatements = false;
+						for(Set<AbstractCodeFragment> set : extractedStatements.values()) {
+							if(set.contains(leaf1)) {
+								foundInExtractedStatements = true;
+								break;
+							}
+						}
+						if(foundInExtractedStatements) {
+							continue;
+						}
 						if(!alreadyMatched1(leaf1)) {
 							String argumentizedString1 = preprocessInput1(leaf1, leaf2);
 							String argumentizedString2 = preprocessInput2(leaf1, leaf2);
@@ -5573,7 +5587,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							TreeMap<Double, LeafMapping> levelParentEditDistanceSum = new TreeMap<>();
 							for(LeafMapping mapping : mappingSet) {
 								int lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
-								levelParentEditDistanceSum.put(mapping.levelParentEditDistanceSum(), mapping);
+								double parentEditDistanceSum = mapping.levelParentEditDistanceSum();
+								if(!levelParentEditDistanceSum.containsKey(parentEditDistanceSum)) {
+									levelParentEditDistanceSum.put(parentEditDistanceSum, mapping);
+								}
 								if(!lineDistanceMap.containsKey(lineDistance)) {
 									lineDistanceMap.put(lineDistance, mapping);
 								}

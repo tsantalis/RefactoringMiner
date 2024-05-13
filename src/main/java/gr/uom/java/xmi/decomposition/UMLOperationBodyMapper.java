@@ -6780,7 +6780,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			} 
 			if(statementContainingOperationInvocation != null) { 
 				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) { 
-					return mapping; 
+					boolean extractedStatement = parentMapper.extractedStatements.containsKey(this.container2) && parentMapper.extractedStatements.get(this.container2).contains(mapping.getFragment1());
+					if(!extractedStatement)
+						return mapping; 
 				} 
 				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null && 
 						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 

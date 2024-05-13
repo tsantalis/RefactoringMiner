@@ -228,9 +228,9 @@ public class ProjectASTDiffer
 					List<Mapping> mappings = new ArrayList<Mapping>();
 					mappings.addAll(getMappingForLeft(diff, src));
 					methodDeclarationMappings.put(methodRoot, mappings);
-					if(map.containsKey(methodRoot)) {
-						actionMap.put(methodRoot, map.get(methodRoot));
-					}
+				}
+				if(map.containsKey(methodRoot)) {
+					actionMap.put(methodRoot, map.get(methodRoot));
 				}
 			}
 			Tree fieldRoot = TreeUtilFunctions.getParentUntilType(src, Constants.FIELD_DECLARATION);
@@ -242,9 +242,9 @@ public class ProjectASTDiffer
 					List<Mapping> mappings = new ArrayList<Mapping>();
 					mappings.addAll(getMappingForLeft(diff, src));
 					fieldDeclarationMappings.put(fieldRoot, mappings);
-					if(map.containsKey(fieldRoot)) {
-						actionMap.put(fieldRoot, map.get(fieldRoot));
-					}
+				}
+				if(map.containsKey(fieldRoot)) {
+					actionMap.put(fieldRoot, map.get(fieldRoot));
 				}
 			}
 			if(src.getType().name.equals(Constants.TYPE_DECLARATION) ||

@@ -46,6 +46,7 @@ import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithLambdaRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.TryWithResourcesRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -1674,6 +1675,8 @@ public class ReplacementAlgorithm {
 					}
 					Replacement composite = new CompositeReplacement(statement1.getString(), statement2.getString(), additionallyMatchedStatements1, new LinkedHashSet<AbstractCodeFragment>());
 					replacementInfo.addReplacement(composite);
+					TryWithResourcesRefactoring ref = new TryWithResourcesRefactoring(try1, try2, container1, container2);
+					operationBodyMapper.getRefactoringsAfterPostProcessing().add(ref);
 					return replacementInfo.getReplacements();
 				}
 			}

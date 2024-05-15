@@ -112,6 +112,7 @@ public enum RefactoringType {
 	MOVE_CODE("Move Code", "Move Code from (.+) to (.+) in class (.+)"),
 	PARAMETERIZE_TEST("Parameterize Test", "Parameterize Test (.+) to (.+) in class (.+)"),
 	ASSERT_THROWS("Assert Throws", "Assert Throws (.+) in method (.+) from class (.+)"),
+	TRY_WITH_RESOURCES("Try With Resources", "Try With Resources (.+) in method (.+) from class (.+)"),
 	REPLACE_GENERIC_WITH_DIAMOND("Replace Generic With Diamond", "Replace Generic With Diamond (.+) with (.+) in method (.+) from class (.+)");
 
 	private String displayName;
@@ -218,6 +219,7 @@ public enum RefactoringType {
 		REPLACE_ANONYMOUS_WITH_CLASS,
 		PARAMETERIZE_TEST,
 		ASSERT_THROWS,
+		TRY_WITH_RESOURCES,
 		REPLACE_GENERIC_WITH_DIAMOND
 	};
 

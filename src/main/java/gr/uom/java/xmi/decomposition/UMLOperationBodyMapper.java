@@ -2,6 +2,7 @@ package gr.uom.java.xmi.decomposition;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
@@ -8258,6 +8259,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		if(anonymousClass1 == null && container1.isConstructor() && modelDiff != null) {
+			for(UMLClass umlClass : modelDiff.getParentModel().getClassList()) {
+				if(umlClass.getName().equals(container1.getClassName())) {
+					for(UMLAttribute attribute : umlClass.getAttributes()) {
+						anonymousClass1 = attribute.findAnonymousClass(anonymousClassDeclaration1);
+						if(anonymousClass1 != null) {
+							break;
+						}
+					}
+				}
+			}
+		}
 		return anonymousClass1;
 	}
 
@@ -8268,6 +8281,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				anonymousClass2 = childMapper.container2.findAnonymousClass(anonymousClassDeclaration2);
 				if(anonymousClass2 != null) {
 					break;
+				}
+			}
+		}
+		if(anonymousClass2 == null && container2.isConstructor() && modelDiff != null) {
+			for(UMLClass umlClass : modelDiff.getChildModel().getClassList()) {
+				if(umlClass.getName().equals(container2.getClassName())) {
+					for(UMLAttribute attribute : umlClass.getAttributes()) {
+						anonymousClass2 = attribute.findAnonymousClass(anonymousClassDeclaration2);
+						if(anonymousClass2 != null) {
+							break;
+						}
+					}
 				}
 			}
 		}

@@ -220,33 +220,9 @@ public class ProjectASTDiffer
 			Map<Tree, Action> actionMap, Map<Tree, Action> map) {
 		for(Tree src : map.keySet()) {
 			Tree methodRoot = TreeUtilFunctions.getParentUntilType(src, Constants.METHOD_DECLARATION);
-			if(methodRoot != null) {
-				if(methodDeclarationMappings.containsKey(methodRoot)) {
-					methodDeclarationMappings.get(methodRoot).addAll(getMappingForLeft(diff, src));
-				}
-				else {
-					List<Mapping> mappings = new ArrayList<Mapping>();
-					mappings.addAll(getMappingForLeft(diff, src));
-					methodDeclarationMappings.put(methodRoot, mappings);
-				}
-				if(map.containsKey(methodRoot)) {
-					actionMap.put(methodRoot, map.get(methodRoot));
-				}
-			}
+			populateMappingsRoot(diff, methodDeclarationMappings, actionMap, map, src, methodRoot);
 			Tree fieldRoot = TreeUtilFunctions.getParentUntilType(src, Constants.FIELD_DECLARATION);
-			if(fieldRoot != null) {
-				if(fieldDeclarationMappings.containsKey(fieldRoot)) {
-					fieldDeclarationMappings.get(fieldRoot).addAll(getMappingForLeft(diff, src));
-				}
-				else {
-					List<Mapping> mappings = new ArrayList<Mapping>();
-					mappings.addAll(getMappingForLeft(diff, src));
-					fieldDeclarationMappings.put(fieldRoot, mappings);
-				}
-				if(map.containsKey(fieldRoot)) {
-					actionMap.put(fieldRoot, map.get(fieldRoot));
-				}
-			}
+			populateMappingsRoot(diff, fieldDeclarationMappings, actionMap, map, src, fieldRoot);
 			if(src.getType().name.equals(Constants.TYPE_DECLARATION) ||
 					src.getType().name.equals(Constants.ENUM_DECLARATION) ||
 					src.getType().name.equals(Constants.RECORD_DECLARATION)) {
@@ -258,7 +234,23 @@ public class ProjectASTDiffer
 		}
 	}
 
-    private List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
+	private void populateMappingsRoot(ASTDiff diff, Map<Tree, List<Mapping>> elementDeclMappings, Map<Tree, Action> actionMap, Map<Tree, Action> map, Tree src, Tree elementRoot) {
+		if(elementRoot != null) {
+			if(elementDeclMappings.containsKey(elementRoot)) {
+				elementDeclMappings.get(elementRoot).addAll(getMappingForLeft(diff, src));
+			}
+			else {
+				List<Mapping> mappings = new ArrayList<Mapping>();
+				mappings.addAll(getMappingForLeft(diff, src));
+				elementDeclMappings.put(elementRoot, mappings);
+			}
+			if(map.containsKey(elementRoot)) {
+				actionMap.put(elementRoot, map.get(elementRoot));
+			}
+		}
+	}
+
+	private List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
     	List<Mapping> matchingMappings = new ArrayList<Mapping>();
     	for(Mapping mapping : diff.getAllMappings()) {
     		if(mapping.first.equals(left)) {

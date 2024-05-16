@@ -165,6 +165,7 @@ Currently, it supports the detection of the following refactorings:
 98. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 99. Assert Throws
 100. Replace Generic With Diamond
+101. Try With Resources
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
@@ -182,17 +183,17 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **April 10, 2024** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **May 16, 2024** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12165  | 20  | 238  | 0.998  | 0.981|
-|Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12176  | 20  | 238  | 0.998  | 0.981|
+|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
 |Move And Rename Attribute|13  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|385  |  4  | 21  | 0.990  | 0.948|
+|Rename Method|386  |  4  | 21  | 0.990  | 0.948|
 |Inline Method|116  |  0  |  1  | 1.000  | 0.991|
 |Move Method|349  |  3  |  6  | 0.991  | 0.983|
 |Move And Rename Method|120  |  0  |  5  | 1.000  | 0.960|
@@ -212,11 +213,11 @@ As of **April 10, 2024** the precision and recall of the tool on an oracle consi
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|263  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|261  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|102  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|326  |  3  | 11  | 0.991  | 0.967|
+|Rename Variable|327  |  3  | 11  | 0.991  | 0.967|
 |Rename Parameter|488  |  2  | 26  | 0.996  | 0.949|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
@@ -230,9 +231,9 @@ As of **April 10, 2024** the precision and recall of the tool on an oracle consi
 |Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|428  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|796  |  2  |  7  | 0.997  | 0.991|
-|Change Parameter Type|646  |  1  | 11  | 0.998  | 0.983|
+|Change Return Type|429  |  0  | 12  | 1.000  | 0.973|
+|Change Variable Type|799  |  2  |  7  | 0.998  | 0.991|
+|Change Parameter Type|647  |  1  | 11  | 0.998  | 0.983|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|331  |  0  |  1  | 1.000  | 0.997|
 |Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
@@ -254,14 +255,14 @@ As of **April 10, 2024** the precision and recall of the tool on an oracle consi
 |Add Thrown Exception Type|41  |  0  |  0  | 1.000  | 1.000|
 |Remove Thrown Exception Type|245  |  0  |  0  | 1.000  | 1.000|
 |Change Thrown Exception Type| 9  |  0  |  0  | 1.000  | 1.000|
-|Change Method Access Modifier|331  |  0  |  0  | 1.000  | 1.000|
+|Change Method Access Modifier|332  |  0  |  0  | 1.000  | 1.000|
 |Change Attribute Access Modifier|230  |  0  |  0  | 1.000  | 1.000|
 |Encapsulate Attribute|49  |  0  |  0  | 1.000  | 1.000|
 |Add Method Modifier|89  |  0  |  0  | 1.000  | 1.000|
-|Remove Method Modifier|110  |  0  |  0  | 1.000  | 1.000|
+|Remove Method Modifier|111  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
-|Add Variable Modifier|133  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Modifier|134  |  0  |  0  | 1.000  | 1.000|
 |Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Modifier|61  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
@@ -284,6 +285,7 @@ As of **April 10, 2024** the precision and recall of the tool on an oracle consi
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
 |Move Code|16  |  0  |  0  | 1.000  | 1.000|
+|Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner

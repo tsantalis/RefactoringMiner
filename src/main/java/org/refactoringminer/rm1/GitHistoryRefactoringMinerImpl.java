@@ -139,6 +139,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	protected List<Refactoring> detectRefactorings(GitService gitService, Repository repository, final RefactoringHandler handler, RevCommit currentCommit) throws Exception {
 		List<Refactoring> refactoringsAtRevision;
+		UMLModelDiff modelDiff;
 		String commitId = currentCommit.getId().getName();
 		Set<String> filePathsBefore = new LinkedHashSet<String>();
 		Set<String> filePathsCurrent = new LinkedHashSet<String>();
@@ -159,15 +160,17 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 			UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
 			
-			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+			modelDiff = parentUMLModel.diff(currentUMLModel);
 			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
 			refactoringsAtRevision = filter(refactoringsAtRevision);
 		} else {
 			//logger.info(String.format("Ignored revision %s with no changes in java files", commitId));
+			modelDiff = new UMLModelDiff(createModel(Collections.emptyMap(), Collections.emptySet()), createModel(Collections.emptyMap(), Collections.emptySet()));
 			refactoringsAtRevision = Collections.emptyList();
 		}
 		handler.handle(commitId, refactoringsAtRevision);
+		handler.handleModelDiff(commitId, refactoringsAtRevision, modelDiff);
 		return refactoringsAtRevision;
 	}
 
@@ -368,6 +371,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 	protected List<Refactoring> detectRefactorings(final RefactoringHandler handler, File projectFolder, String cloneURL, String currentCommitId) {
 		List<Refactoring> refactoringsAtRevision = Collections.emptyList();
+		UMLModelDiff modelDiff;
 		try {
 			ChangedFileInfo changedFileInfo = populateWithGitHubAPI(projectFolder, cloneURL, currentCommitId);
 			String parentCommitId = changedFileInfo.getParentCommitId();
@@ -392,19 +396,21 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 				List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = processIdenticalFiles(fileContentsBefore, fileContentsCurrent, renamedFilesHint, false); 
 				UMLModel parentUMLModel = createModel(fileContentsBefore, repositoryDirectoriesBefore);
 				UMLModel currentUMLModel = createModel(fileContentsCurrent, repositoryDirectoriesCurrent);
-				UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+				modelDiff = parentUMLModel.diff(currentUMLModel);
 				refactoringsAtRevision = modelDiff.getRefactorings();
 				refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
 				refactoringsAtRevision = filter(refactoringsAtRevision);
 			}
 			else {
+				modelDiff = new UMLModelDiff(createModel(Collections.emptyMap(), Collections.emptySet()), createModel(Collections.emptyMap(), Collections.emptySet()));
 				logger.warn(String.format("Folder %s not found", currentFolder.getPath()));
 			}
+			handler.handle(currentCommitId, refactoringsAtRevision);
+			handler.handleModelDiff(currentCommitId, refactoringsAtRevision, modelDiff);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
 			handler.handleException(currentCommitId, e);
 		}
-		handler.handle(currentCommitId, refactoringsAtRevision);
 
 		return refactoringsAtRevision;
 	}
@@ -684,6 +690,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			refactorings = modelDiff.getRefactorings();
 			refactorings.addAll(moveSourceFolderRefactorings);
 			refactorings = filter(refactorings);
+			handler.handleModelDiff(id, refactorings, modelDiff);
 		} catch (Exception e) {
 			logger.warn(String.format("Ignored revision %s due to error", id), e);
 			handler.handleException(id, e);
@@ -718,6 +725,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 					refactorings = modelDiff.getRefactorings();
 					refactorings.addAll(moveSourceFolderRefactorings);
 					refactorings = filter(refactorings);
+					handler.handleModelDiff(id, refactorings, modelDiff);
 				}
 				else if(previousFile.isFile() && nextFile.isFile()) {
 					String previousFileName = previousFile.getName();
@@ -736,6 +744,7 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 						refactorings = modelDiff.getRefactorings();
 						refactorings.addAll(moveSourceFolderRefactorings);
 						refactorings = filter(refactorings);
+						handler.handleModelDiff(id, refactorings, modelDiff);
 					}
 				}
 			}
@@ -875,6 +884,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
 			refactoringsAtRevision = filter(refactoringsAtRevision);
+			handler.handle(currentCommitId, refactoringsAtRevision);
+			handler.handleModelDiff(currentCommitId, refactoringsAtRevision, modelDiff);
 		}
 		catch(RefactoringMinerTimedOutException e) {
 			logger.warn(String.format("Ignored revision %s due to timeout", currentCommitId), e);
@@ -884,7 +895,6 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			logger.warn(String.format("Ignored revision %s due to error", currentCommitId), e);
 			handler.handleException(currentCommitId, e);
 		}
-		handler.handle(currentCommitId, refactoringsAtRevision);
 
 		return refactoringsAtRevision;
 	}
@@ -1055,7 +1065,8 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
 			refactoringsAtRevision = modelDiff.getRefactorings();
 			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-			m.handle(commitId, refactoringsAtRevision);	
+			m.handle(commitId, refactoringsAtRevision);
+			m.handleModelDiff(commitId, refactoringsAtRevision, modelDiff);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

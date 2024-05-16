@@ -235,7 +235,7 @@ public class ProjectASTDiffer
 			}
 			Tree fieldRoot = TreeUtilFunctions.getParentUntilType(src, Constants.FIELD_DECLARATION);
 			if(fieldRoot != null) {
-				if(methodDeclarationMappings.containsKey(fieldRoot)) {
+				if(fieldDeclarationMappings.containsKey(fieldRoot)) {
 					fieldDeclarationMappings.get(fieldRoot).addAll(getMappingForLeft(diff, src));
 				}
 				else {

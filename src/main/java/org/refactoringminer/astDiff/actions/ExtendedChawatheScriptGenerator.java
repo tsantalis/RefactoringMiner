@@ -174,6 +174,21 @@ public class ExtendedChawatheScriptGenerator implements ExtendedEditScriptGenera
 						actions.add(new MoveOut(copyToOrig.get(w),cpyMappings.getDstForSrc(w), nameByTree,+1));
 				}
 			}
+			else if (multiMappingStore.isSrcMultiMapped(copyToOrig.get(w)))
+			{
+				Tree origSrc = copyToOrig.get(w);
+				Set<Tree> dstCandidates = multiMappingStore.getDsts(origSrc);
+				if (dstCandidates != null){
+					for (Tree dstCandidate : dstCandidates) {
+						if (dstCandidate.equals(TreeUtilFunctions.getFakeTreeInstance())) {}
+						else if (!TreeUtilFunctions.getFinalRoot(dstCandidate).equals(origDst)) {
+							String nameByTree = findNameByTree(childContextMap, dstCandidate);
+							if (nameByTree != null)
+								actions.add(new MoveOut(origSrc, dstCandidate, nameByTree, +1));
+						}
+					}
+				}
+			}
 		}
 		origDst.setParent(null);
 		return actions;

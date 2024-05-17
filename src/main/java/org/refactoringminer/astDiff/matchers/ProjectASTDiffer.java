@@ -77,7 +77,7 @@ public class ProjectASTDiffer
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
-		movedDeclarationGenerator.generate();
+		projectASTDiff.addMoveASTDiff(movedDeclarationGenerator.make());
 
 	}
 	public static String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {

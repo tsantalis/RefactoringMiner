@@ -3,17 +3,14 @@ package org.refactoringminer.astDiff;
 import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
-import org.refactoringminer.astDiff.actions.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.actions.model.MoveOut;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 import org.refactoringminer.astDiff.matchers.Constants;
-import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.ArrayList;
@@ -25,15 +22,12 @@ import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.findNameByT
 
 /* Created by pourya on 2024-05-16*/
 public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
-
-
     public MovedDeclarationGenerator(UMLModelDiff modelDiff, ProjectASTDiff projectASTDiff) {
         super(modelDiff, projectASTDiff);
     }
 
     @Override
-    public void generate() {
-        Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
+    public void populateFilePairMappings() {
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
             Map<Tree, List<Mapping>> methodDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
             Map<Tree, List<Mapping>> fieldDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
@@ -138,20 +132,6 @@ public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
                 }
             }
         }
-        for(Pair<String, String> pair : filePairMappings.keySet()) {
-            Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(pair.first, pair.second);
-            List<Mapping> mappings = filePairMappings.get(pair);
-            if(mappings.size() > 0) {
-                Tree leftRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).first);
-                Tree rightRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).second);
-                ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot);
-                for(Mapping m : mappings) {
-                    store.addMappingRecursively(m.first, m.second);
-                }
-                ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store, new SimplifiedExtendedChawatheScriptGenerator().computeActions(store, null, null));
-                projectASTDiff.addMoveASTDiff(diff);
-            }
-        }
     }
 
     private void populateMoveMappings(ASTDiff diff, Map<Tree, List<Mapping>> methodDeclarationMappings,
@@ -188,20 +168,4 @@ public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
             }
         }
     }
-
-    private List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
-        List<Mapping> matchingMappings = new ArrayList<Mapping>();
-        for(Mapping mapping : diff.getAllMappings()) {
-            if(mapping.first.equals(left)) {
-                matchingMappings.add(mapping);
-            }
-        }
-        return matchingMappings;
-    }
-    private Pair<TreeContext, TreeContext> findTreeContexts(String srcPath, String dstPath) {
-        return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(srcPath),
-                modelDiff.getChildModel().getTreeContextMap().get(dstPath));
-    }
-
-
 }

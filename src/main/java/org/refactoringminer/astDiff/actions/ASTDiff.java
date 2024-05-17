@@ -4,13 +4,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.github.gumtreediff.actions.SimplifiedChawatheScriptGenerator;
+import com.github.gumtreediff.actions.*;
 import com.github.gumtreediff.matchers.MappingStore;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
-import com.github.gumtreediff.actions.Diff;
-import com.github.gumtreediff.actions.EditScript;
-import com.github.gumtreediff.actions.TreeClassifier;
 import com.github.gumtreediff.actions.model.Action;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
@@ -85,6 +82,10 @@ public class ASTDiff extends Diff {
 	}
 
 
+	public TreeClassifier createAllNodeClassifier() {
+		//TODO: Have to write our own version of AllNodesClassifier
+		return new AllNodesClassifier(this);
+	}
 
 	/**
 	 * Compute and return a root node classifier that indicates which node have

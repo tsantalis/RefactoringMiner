@@ -47,6 +47,9 @@ public class ProjectASTDiff {
 	public void addMoveASTDiff(ASTDiff diff) {
 		moveDiffSet.add(diff);
 	}
+	public void addMoveASTDiff(Set<ASTDiff> diffs) {
+		moveDiffSet.addAll(diffs);
+	}
 
 	public void setRefactorings(List<Refactoring> refactorings) {this.refactorings = refactorings;}
 

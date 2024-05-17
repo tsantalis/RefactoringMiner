@@ -13,6 +13,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.astDiff.AllSubTreesMovedASTDiffGenerator;
 import org.refactoringminer.astDiff.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.MovedDeclarationGenerator;
 import org.refactoringminer.astDiff.actions.ASTDiff;

@@ -27,7 +27,8 @@ public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
     }
 
     @Override
-    public void populateFilePairMappings() {
+    public Map<Pair<String, String>, List<Mapping>> makeFilePairMappings() {
+        Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
             Map<Tree, List<Mapping>> methodDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
             Map<Tree, List<Mapping>> fieldDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();
@@ -132,6 +133,7 @@ public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
                 }
             }
         }
+        return filePairMappings;
     }
 
     private void populateMoveMappings(ASTDiff diff, Map<Tree, List<Mapping>> methodDeclarationMappings,

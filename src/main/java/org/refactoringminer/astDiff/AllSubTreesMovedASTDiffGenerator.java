@@ -23,7 +23,8 @@ public class AllSubTreesMovedASTDiffGenerator extends MovedASTDiffGenerator {
     }
 
     @Override
-    public void populateFilePairMappings() {
+    public Map<Pair<String, String>, List<Mapping>> makeFilePairMappings() {
+        Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
             ExtendedOnlyRootsClassifier classifier = (ExtendedOnlyRootsClassifier) diff.createRootNodesClassifier(); // TODO: Switch to AllNodesClassifier
             for (Map.Entry<Tree, Action> treeActionEntry : classifier.getSrcMoveOutTreeMap().entrySet()) {
@@ -38,5 +39,6 @@ public class AllSubTreesMovedASTDiffGenerator extends MovedASTDiffGenerator {
                 target.add(new Mapping(moveOut.getNode(), moveOut.getParent()));
             }
         }
+        return filePairMappings;
     }
 }

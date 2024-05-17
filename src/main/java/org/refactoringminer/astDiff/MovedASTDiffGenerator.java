@@ -16,14 +16,13 @@ import java.util.*;
 public abstract class MovedASTDiffGenerator {
     protected final ProjectASTDiff projectASTDiff;
     protected final UMLModelDiff modelDiff;
-    protected final Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
     public MovedASTDiffGenerator(UMLModelDiff modelDiff, ProjectASTDiff projectASTDiff) {
         this.modelDiff = modelDiff;
         this.projectASTDiff = projectASTDiff;
     }
-    protected abstract void populateFilePairMappings();
+    protected abstract Map<Pair<String, String>, List<Mapping>> makeFilePairMappings();
     public Set<ASTDiff> make() {
-        populateFilePairMappings();
+        Map<Pair<String, String>, List<Mapping>> filePairMappings = makeFilePairMappings();
         Set<ASTDiff> movedDiffs = new LinkedHashSet<>();
         for(Pair<String, String> pair : filePairMappings.keySet()) {
             Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(pair.first, pair.second);

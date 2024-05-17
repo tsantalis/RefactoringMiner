@@ -1288,7 +1288,13 @@ public class StringBasedHeuristics {
 		boolean arrayCreation1 = creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement1.isArray();
 		boolean arrayCreation2 = creationCoveringTheEntireStatement2 != null && creationCoveringTheEntireStatement2.isArray();
 		if(!arrayCreation1 && !arrayCreation2 && !containsMethodSignatureOfAnonymousClass(s1) && !containsMethodSignatureOfAnonymousClass(s2)) {
-			if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
+			if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
+				boolean result = stringConcatTextBlock(s1, s2, info, statement1, statement2, container1, container2);
+				if(result) {
+					return true;
+				}
+			}
+			else if(s1.contains(JAVA.STRING_CONCATENATION) && s2.contains(JAVA.STRING_CONCATENATION)) {
 				Set<String> tokens1 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s1)));
 				Set<String> tokens2 = new LinkedHashSet<String>(Arrays.asList(SPLIT_CONCAT_STRING_PATTERN.split(s2)));
 				Set<String> intersection = new LinkedHashSet<String>();
@@ -1368,6 +1374,12 @@ public class StringBasedHeuristics {
 						r.addSubExpressionMapping(m);
 					}
 					info.getReplacements().add(r);
+					return true;
+				}
+			}
+			else if(s1.contains(JAVA.STRING_CONCATENATION) && !s2.contains(JAVA.STRING_CONCATENATION) && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
+				boolean result = stringConcatTextBlock(s1, s2, info, statement1, statement2, container1, container2);
+				if(result) {
 					return true;
 				}
 			}
@@ -1570,6 +1582,12 @@ public class StringBasedHeuristics {
 					}
 				}
 			}
+			else if(statement1.getStringLiterals().size() > 0 && statement1.getTextBlocks().size() == 0 && statement2.getTextBlocks().size() > 0) {
+				boolean result = stringConcatTextBlock(s1, s2, info, statement1, statement2, container1, container2);
+				if(result) {
+					return true;
+				}
+			}
 			List<String> arguments1 = null;
 			AbstractCall invocation1 = null;
 			if(creationCoveringTheEntireStatement1 != null) {
@@ -1683,6 +1701,57 @@ public class StringBasedHeuristics {
 				}
 				if(equalArguments + replacedArguments + concatenatedArguments == minSize && concatenatedArguments > 0) {
 					info.getReplacements().addAll(concatReplacements);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static boolean stringConcatTextBlock(String s1, String s2, ReplacementInfo info,
+			AbstractCodeFragment statement1, AbstractCodeFragment statement2, VariableDeclarationContainer container1,
+			VariableDeclarationContainer container2) {
+		StringBuilder sb = new StringBuilder();
+		for(LeafExpression leaf1 : statement1.getStringLiterals()) {
+			String literal = leaf1.getString();
+			sb.append(literal.substring(1, literal.length()-1));
+		}
+		String concatenated = sb.toString().replaceAll("\\s+","").replace("\\\"", "\"");
+		for(LeafExpression leaf2 : statement2.getTextBlocks()) {
+			String literal = leaf2.getString();
+			//remove 3 opening/closing double quotes
+			String s = literal.substring(3, literal.length()-3);
+			String lines[] = s.split("\\r?\\n");
+			Set<String> comments = new LinkedHashSet<String>();
+			for(String line : lines) {
+				if(line.contains("%")) {
+					String comment = line.substring(line.indexOf("%"), line.length());
+					comments.add(comment);
+				}
+			}
+			for(String comment : comments) {
+				s = s.replace(comment, "");
+			}
+			String formatted = s.replaceAll("\\s+","");
+			if(formatted.equals(concatenated)) {
+				IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+				for(LeafExpression leaf1 : statement1.getStringLiterals()) {
+					LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+					r.addSubExpressionMapping(leafMapping);
+				}
+				info.getReplacements().add(r);
+				return true;
+			}
+			else {
+				int distance = StringDistance.editDistance(concatenated, formatted);
+				double normalized = (double)distance/(double)Math.max(concatenated.length(), formatted.length());
+				if(normalized < 0.1) {
+					IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+					for(LeafExpression leaf1 : statement1.getStringLiterals()) {
+						LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+						r.addSubExpressionMapping(leafMapping);
+					}
+					info.getReplacements().add(r);
 					return true;
 				}
 			}

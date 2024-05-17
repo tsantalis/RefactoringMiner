@@ -24,17 +24,15 @@ import java.util.Map;
 import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.findNameByTree;
 
 /* Created by pourya on 2024-05-16*/
-public class ASTDiffsForMovedDeclarationsGenerator {
+public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
 
-    private final ProjectASTDiff projectASTDiff;
-    private final UMLModelDiff modelDiff;
 
-    public ASTDiffsForMovedDeclarationsGenerator(UMLModelDiff modelDiff, ProjectASTDiff projectASTDiff) {
-        this.modelDiff = modelDiff;
-        this.projectASTDiff = projectASTDiff;
+    public MovedDeclarationGenerator(UMLModelDiff modelDiff, ProjectASTDiff projectASTDiff) {
+        super(modelDiff, projectASTDiff);
     }
 
-    public void createASTDiffsForMovedDeclarations() {
+    @Override
+    public void generate() {
         Map<Pair<String, String>, List<Mapping>> filePairMappings = new LinkedHashMap<>();
         for(ASTDiff diff : projectASTDiff.getDiffSet()) {
             Map<Tree, List<Mapping>> methodDeclarationMappings = new LinkedHashMap<Tree, List<Mapping>>();

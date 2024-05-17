@@ -13,7 +13,8 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.astDiff.ASTDiffsForMovedDeclarationsGenerator;
+import org.refactoringminer.astDiff.MovedASTDiffGenerator;
+import org.refactoringminer.astDiff.MovedDeclarationGenerator;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -34,10 +35,12 @@ public class ProjectASTDiffer
 	private ExtendedMultiMappingStore optimizationMappingStore;
 	private List<Refactoring> modelDiffRefactorings;
 	private final ProjectASTDiff projectASTDiff;
+	private final MovedASTDiffGenerator movedDeclarationGenerator;
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
 		this.projectASTDiff = new ProjectASTDiff(fileContentsBefore, fileContentsAfter);
+		movedDeclarationGenerator = new MovedDeclarationGenerator(modelDiff, projectASTDiff);
 		diff();
 	}
 
@@ -74,9 +77,9 @@ public class ProjectASTDiffer
 		long diff_execution_finished =  System.currentTimeMillis();
 		logger.info("Diff execution: " + (diff_execution_finished - diff_execution_started)/ 1000 + " seconds");
 		computeAllEditScripts();
-		new ASTDiffsForMovedDeclarationsGenerator(modelDiff, projectASTDiff).createASTDiffsForMovedDeclarations();
-	}
+		movedDeclarationGenerator.generate();
 
+	}
 	public static String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
 		if (contextMap == null) return null;
 		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {

@@ -23,6 +23,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<VariableDeclaration> variableDeclarations;
 	private List<AbstractCall> methodInvocations;
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations;
+	private List<LeafExpression> textBlocks;
 	private List<LeafExpression> stringLiterals;
 	private List<LeafExpression> charLiterals;
 	private List<LeafExpression> numberLiterals;
@@ -52,6 +53,7 @@ public class AbstractExpression extends AbstractCodeFragment {
 		this.variableDeclarations = visitor.getVariableDeclarations();
 		this.methodInvocations = visitor.getMethodInvocations();
 		this.anonymousClassDeclarations = visitor.getAnonymousClassDeclarations();
+		this.textBlocks = visitor.getTextBlocks();
 		this.stringLiterals = visitor.getStringLiterals();
 		this.charLiterals = visitor.getCharLiterals();
 		this.numberLiterals = visitor.getNumberLiterals();
@@ -132,6 +134,11 @@ public class AbstractExpression extends AbstractCodeFragment {
 	@Override
 	public List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
+	}
+
+	@Override
+	public List<LeafExpression> getTextBlocks() {
+		return textBlocks;
 	}
 
 	@Override

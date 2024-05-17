@@ -22,6 +22,7 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 	private List<AbstractCall> methodInvocations = new ArrayList<>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
+	private List<LeafExpression> textBlocks = new ArrayList<>();
 	private List<LeafExpression> stringLiterals = new ArrayList<>();
 	private List<LeafExpression> charLiterals = new ArrayList<>();
 	private List<LeafExpression> numberLiterals = new ArrayList<>();
@@ -87,6 +88,10 @@ public class AnonymousClassDeclarationObject implements LocationInfoProvider {
 
 	public List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
+	}
+
+	public List<LeafExpression> getTextBlocks() {
+		return textBlocks;
 	}
 
 	public List<LeafExpression> getStringLiterals() {

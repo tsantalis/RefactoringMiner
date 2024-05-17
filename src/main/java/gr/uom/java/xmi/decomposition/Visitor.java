@@ -52,6 +52,7 @@ import org.eclipse.jdt.core.dom.StringLiteral;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
+import org.eclipse.jdt.core.dom.TextBlock;
 import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeLiteral;
@@ -73,6 +74,7 @@ public class Visitor extends ASTVisitor {
 	private List<AbstractCall> methodInvocations = new ArrayList<>();
 	private List<VariableDeclaration> variableDeclarations = new ArrayList<VariableDeclaration>();
 	private List<AnonymousClassDeclarationObject> anonymousClassDeclarations = new ArrayList<AnonymousClassDeclarationObject>();
+	private List<LeafExpression> textBlocks = new ArrayList<>();
 	private List<LeafExpression> stringLiterals = new ArrayList<>();
 	private List<LeafExpression> charLiterals = new ArrayList<>();
 	private List<LeafExpression> numberLiterals = new ArrayList<>();
@@ -243,6 +245,7 @@ public class Visitor extends ASTVisitor {
 			removeLast(this.methodInvocations, anonymous.getMethodInvocations());
 			removeLast(this.creations, anonymous.getCreations());
 			this.variableDeclarations.removeAll(anonymous.getVariableDeclarations());
+			removeLast(this.textBlocks, anonymous.getTextBlocks());
 			removeLast(this.stringLiterals, anonymous.getStringLiterals());
 			removeLast(this.charLiterals, anonymous.getCharLiterals());
 			removeLast(this.nullLiterals, anonymous.getNullLiterals());
@@ -339,6 +342,16 @@ public class Visitor extends ASTVisitor {
 			current = current.getParent();
 		}
 		return false;
+	}
+
+	public boolean visit(TextBlock node) {
+		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.TEXT_BLOCK, container);
+		textBlocks.add(expression);
+		if(current.getUserObject() != null) {
+			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+			anonymous.getTextBlocks().add(expression);
+		}
+		return super.visit(node);
 	}
 
 	public boolean visit(StringLiteral node) {
@@ -860,6 +873,10 @@ public class Visitor extends ASTVisitor {
 
 	public List<AnonymousClassDeclarationObject> getAnonymousClassDeclarations() {
 		return anonymousClassDeclarations;
+	}
+
+	public List<LeafExpression> getTextBlocks() {
+		return textBlocks;
 	}
 
 	public List<LeafExpression> getStringLiterals() {

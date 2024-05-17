@@ -41,7 +41,8 @@ public class ProjectASTDiffer
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
 		this.projectASTDiff = new ProjectASTDiff(fileContentsBefore, fileContentsAfter);
-		movedDeclarationGenerator = new MovedDeclarationGenerator(modelDiff, projectASTDiff);
+//		movedDeclarationGenerator = new MovedDeclarationGenerator(modelDiff, projectASTDiff);
+		movedDeclarationGenerator = new AllSubTreesMovedASTDiffGenerator(modelDiff, projectASTDiff);
 		diff();
 	}
 

@@ -1661,12 +1661,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		List<AbstractCodeMapping> totalMappings = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		if(mappings > 0 || (delegatesToAnotherRemovedOperation(removedOperation) && addedOperation.getBody() != null && addedOperation.stringRepresentation().size() > 3) || (removedOperation.getName().equals(addedOperation.getName()) && removedOperation.getBody() != null && addedOperation.getBody() != null)) {
+			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
+					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
+					removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					absoluteDifferenceInPosition <= differenceInPosition &&
+					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper);

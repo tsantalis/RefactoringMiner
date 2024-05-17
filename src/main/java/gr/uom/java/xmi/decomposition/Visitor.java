@@ -653,6 +653,7 @@ public class Visitor extends ASTVisitor {
 	private void processArgument(Expression argument) {
 		if(argument instanceof SuperMethodInvocation ||
 				argument instanceof Name ||
+				argument instanceof TextBlock ||
 				argument instanceof StringLiteral ||
 				argument instanceof BooleanLiteral ||
 				argument instanceof NumberLiteral ||

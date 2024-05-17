@@ -257,6 +257,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<LeafExpression> getTextBlocks() {
+		List<LeafExpression> textBlocks = new ArrayList<>();
+		for(AbstractExpression expression : expressionList) {
+			textBlocks.addAll(expression.getTextBlocks());
+		}
+		return textBlocks;
+	}
+
+	@Override
 	public List<LeafExpression> getStringLiterals() {
 		List<LeafExpression> stringLiterals = new ArrayList<>();
 		for(AbstractExpression expression : expressionList) {

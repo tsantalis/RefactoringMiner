@@ -4684,7 +4684,10 @@ public class UMLModelDiff {
 			}
 		}
 		double normalizedEditDistance = mapper.normalizedEditDistance();
-		if(exactLeafMappings == 0 && normalizedEditDistance > 0.24) {
+		boolean zeroNonMapped = mapper.getNonMappedLeavesT1().size() == 0 && mapper.getNonMappedLeavesT2().size() == 0 &&
+				mapper.getNonMappedInnerNodesT1().size() == 0 && mapper.getNonMappedInnerNodesT2().size() == 0 &&
+				removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
+		if(exactLeafMappings == 0 && !zeroNonMapped && normalizedEditDistance > 0.24) {
 			return false;
 		}
 		if(exactLeafMappings == 1 && normalizedEditDistance > 0.51 && (mapper.nonMappedElementsT1() > 0 || mapper.nonMappedElementsT2() > 0)) {

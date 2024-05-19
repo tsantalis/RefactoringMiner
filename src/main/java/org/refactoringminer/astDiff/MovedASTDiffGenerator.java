@@ -9,7 +9,6 @@ import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.actions.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
-import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.*;
 
@@ -28,13 +27,22 @@ public abstract class MovedASTDiffGenerator {
             Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(pair.first, pair.second);
             List<Mapping> mappings = filePairMappings.get(pair);
             if(!mappings.isEmpty()) {
-                Tree leftRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).first);
-                Tree rightRoot = TreeUtilFunctions.getFinalRoot(mappings.get(0).second);
+                Tree leftRoot = treeContextPairs.first.getRoot();
+                Tree rightRoot = treeContextPairs.second.getRoot();
                 ExtendedMultiMappingStore store = new ExtendedMultiMappingStore(leftRoot, rightRoot);
                 for(Mapping m : mappings) {
-                    store.addMappingRecursively(m.first, m.second);
+                    store.addMapping(m.first, m.second); //NOTE: SubClasses must provide all the mappings that are needed for the ASTDiff
                 }
-                ASTDiff diff = new ASTDiff(pair.first, pair.second, treeContextPairs.first, treeContextPairs.second, store, new SimplifiedExtendedChawatheScriptGenerator().computeActions(store, null, null));
+                store.addMapping(leftRoot, rightRoot); //This helps Chawathe to generate the editscript properly, however the mapping is actually incorrect
+                ASTDiff diff = new ASTDiff(
+                        pair.first,
+                        pair.second,
+                        treeContextPairs.first,
+                        treeContextPairs.second,
+                        store,
+                        new SimplifiedExtendedChawatheScriptGenerator().computeActions(store)
+                );
+                store.removeMapping(leftRoot, rightRoot); //Removes the mapping that was added to help Chawathe
                 movedDiffs.add(diff);
             }
         }

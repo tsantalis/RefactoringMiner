@@ -62,3 +62,9 @@ jobs:
         reporter: 'java-junit'
         list-tests: failed
         fail-on-error: true
+    
+    - name: Test Report to Gist
+      uses: gaelgirodon/ci-badges-action@v1
+      with:
+        gist-id: 19fb416d06d1b4d40820e0209540f6c0
+        token: ${{ secrets.GIST_TOKEN }}

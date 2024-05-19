@@ -48,16 +48,6 @@ public abstract class MovedASTDiffGenerator {
         }
         return movedDiffs;
     }
-
-    protected List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
-        List<Mapping> matchingMappings = new ArrayList<Mapping>();
-        for(Mapping mapping : diff.getAllMappings()) {
-            if(mapping.first.equals(left)) {
-                matchingMappings.add(mapping);
-            }
-        }
-        return matchingMappings;
-    }
     private Pair<TreeContext, TreeContext> findTreeContexts(String srcPath, String dstPath) {
         return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(srcPath),
                 modelDiff.getChildModel().getTreeContextMap().get(dstPath));

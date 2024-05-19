@@ -170,4 +170,13 @@ public class MovedDeclarationGenerator extends MovedASTDiffGenerator {
             }
         }
     }
+    private List<Mapping> getMappingForLeft(ASTDiff diff, Tree left) {
+        List<Mapping> matchingMappings = new ArrayList<Mapping>();
+        for(Mapping mapping : diff.getAllMappings()) {
+            if(mapping.first.equals(left)) {
+                matchingMappings.add(mapping);
+            }
+        }
+        return matchingMappings;
+    }
 }

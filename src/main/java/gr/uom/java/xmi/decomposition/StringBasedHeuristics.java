@@ -1754,6 +1754,24 @@ public class StringBasedHeuristics {
 					info.getReplacements().add(r);
 					return true;
 				}
+				else {
+					//identical match if one line is removed
+					for(String line : lines) {
+						if(!line.isBlank()) {
+							String tmp = s.replace(line, "");
+							String tmpFormatted = tmp.replaceAll("\\s+","");
+							if(tmpFormatted.equals(concatenated)) {
+								IntersectionReplacement r = new IntersectionReplacement(s1, s2, ReplacementType.CONCATENATION);
+								for(LeafExpression leaf1 : statement1.getStringLiterals()) {
+									LeafMapping leafMapping = new LeafMapping(leaf1, leaf2, container1, container2);
+									r.addSubExpressionMapping(leafMapping);
+								}
+								info.getReplacements().add(r);
+								return true;
+							}
+						}
+					}
+				}
 			}
 		}
 		return false;

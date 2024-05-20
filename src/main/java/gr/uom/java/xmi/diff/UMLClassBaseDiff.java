@@ -1066,7 +1066,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						UMLOperationBodyMapper bestMapper = findBestMapper(mapperSet);
-						if(bestMapper != null) {
+						if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper)) {
 							removedOperation = bestMapper.getOperation1();
 							UMLOperation addedOperation = bestMapper.getOperation2();
 							addedOperations.remove(addedOperation);
@@ -1285,7 +1285,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(mapperSet.size() > mapperSetSize) {
 								bestMapper = findBestMapper(mapperSet);
 							}
-							if(bestMapper != null) {
+							if(bestMapper != null && !modelDiffContainsConflictingMoveOperationRefactoring(bestMapper)) {
 								UMLOperation removedOperation = bestMapper.getOperation1();
 								addedOperation = bestMapper.getOperation2();
 								if(mapperSet.size() > mapperSetSize) {
@@ -1367,6 +1367,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+	}
+
+	private boolean modelDiffContainsConflictingMoveOperationRefactoring(UMLOperationBodyMapper mapper) {
+		if(modelDiff != null) {
+			return modelDiff.refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(mapper);
+		}
+		return false;
 	}
 
 	private boolean isPerfectMapper(UMLOperationBodyMapper mapper) {

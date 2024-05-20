@@ -4800,6 +4800,19 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameRemovedOperation(UMLOperationBodyMapper mapper) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof MoveOperationRefactoring) {
+				MoveOperationRefactoring moveRefactoring = (MoveOperationRefactoring)refactoring;
+				if(moveRefactoring.getOriginalOperation().equals(mapper.getOperation1()) &&
+						!moveRefactoring.getMovedOperation().equals(mapper.getOperation2())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public boolean refactoringListContainsAnotherMoveRefactoringWithTheSameAddedOperation(UMLOperation addedOperation) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof MoveOperationRefactoring) {

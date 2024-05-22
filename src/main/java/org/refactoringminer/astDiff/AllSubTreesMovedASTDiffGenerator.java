@@ -8,6 +8,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ExtendedOnlyRootsClassifier;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.actions.model.MoveIn;
 import org.refactoringminer.astDiff.actions.model.MoveOut;
 
 import java.util.ArrayList;
@@ -31,14 +32,25 @@ public class AllSubTreesMovedASTDiffGenerator extends MovedASTDiffGenerator {
                 MoveOut moveOut = (MoveOut) treeActionEntry.getValue();
                 String srcPath = diff.getSrcPath();
                 String dstPath = moveOut.getDstFile();
-                Pair<String, String> pair = new Pair<>(srcPath, dstPath);
-                if (!filePairMappings.containsKey(pair)) {
-                    filePairMappings.put(pair, new ArrayList<>());
-                }
-                List<Mapping> target = filePairMappings.get(pair);
-                target.add(new Mapping(moveOut.getNode(), moveOut.getParent()));
+                add(filePairMappings, srcPath, dstPath, moveOut.getNode(), moveOut.getParent());
             }
+            for (Map.Entry<Tree, Action> treeActionEntry : classifier.getDstMoveInTreeMap().entrySet()) {
+                MoveIn moveIn = (MoveIn) treeActionEntry.getValue();
+                String srcPath = moveIn.getSrcFile();
+                String dstPath = diff.getDstPath();
+                add(filePairMappings, srcPath, dstPath, moveIn.getNode(), moveIn.getParent());
+            }
+
         }
         return filePairMappings;
+    }
+
+    private void add(Map<Pair<String, String>, List<Mapping>> filePairMappings, String srcPath, String dstPath, Tree node, Tree parent) {
+        Pair<String, String> pair = new Pair<>(srcPath, dstPath);
+        if (!filePairMappings.containsKey(pair)) {
+            filePairMappings.put(pair, new ArrayList<>());
+        }
+        List<Mapping> target = filePairMappings.get(pair);
+        target.add(new Mapping(node, parent));
     }
 }

@@ -37,6 +37,7 @@ public class ProjectASTDiffer
 	private List<Refactoring> modelDiffRefactorings;
 	private final ProjectASTDiff projectASTDiff;
 	private final MovedASTDiffGenerator movedDeclarationGenerator;
+	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
@@ -175,10 +176,11 @@ public class ProjectASTDiffer
 		Tree dstTree = dstTreeContext.getRoot();
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 
-		String key = classDiff.getOriginalClass().getLocationInfo().getFilePath();
-		if (optimizationDataMap.containsKey(key)) {
-			this.lastStepMappings = optimizationDataMap.get(key).lastStepMappings;
-			this.optimizationMappingStore = optimizationDataMap.get(key).optimizationMappingStore;
+		String srcFilePath = classDiff.getOriginalClass().getLocationInfo().getFilePath();
+		String dstFilePath = classDiff.getNextClass().getLocationInfo().getFilePath();
+		if (optimizationDataMap.containsKey(srcFilePath)) {
+			this.lastStepMappings = optimizationDataMap.get(srcFilePath).lastStepMappings;
+			this.optimizationMappingStore = optimizationDataMap.get(srcFilePath).optimizationMappingStore;
 		}
 		else {
 			this.lastStepMappings = new ArrayList<>();
@@ -205,9 +207,10 @@ public class ProjectASTDiffer
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
 			processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
 		}
-		optimizationDataMap.put(key, new OptimizationData(lastStepMappings, optimizationMappingStore));
-		return new ASTDiff(classDiff.getOriginalClass().getLocationInfo().getFilePath(),
-				classDiff.getNextClass().getLocationInfo().getFilePath(), treeContextPair.first, treeContextPair.second, mappingStore);
+		optimizationDataMap.put(srcFilePath, new OptimizationData(lastStepMappings, optimizationMappingStore));
+		return new ASTDiff(srcFilePath, dstFilePath,
+				treeContextPair.first, treeContextPair.second,
+				mappingStore);
 	}
 
 	private List<Refactoring> getClassDiffRefactorings(UMLClassBaseDiff classDiff) {
@@ -1363,7 +1366,6 @@ public class ProjectASTDiffer
 			mappingStore.addMapping(srcTree,dstTree);
 		}
 	}
-	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
 
 	private static class OptimizationData{
 		List<AbstractCodeMapping> lastStepMappings;

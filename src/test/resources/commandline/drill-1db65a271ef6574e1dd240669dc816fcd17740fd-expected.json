@@ -1374,6 +1374,54 @@
 },
 {
 	"type": "Move Method",
+	"description": "Move Method public getParallelizer(planHasMemory boolean) : QueryParallelizer from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public getParallelizer(planHasMemory boolean) : QueryParallelizer from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 104,
+		"endLine": 108,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getParallelizer(planHasMemory boolean) : QueryParallelizer"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 216,
+		"endLine": 220,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public getParallelizer(planHasMemory boolean) : QueryParallelizer"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public minimumOperatorMemory() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public minimumOperatorMemory() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 118,
+		"endLine": 121,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public minimumOperatorMemory() : long"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 211,
+		"endLine": 214,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public minimumOperatorMemory() : long"
+}]
+},
+{
+	"type": "Move Method",
 	"description": "Move Method public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public queryMemoryPerNode() : long from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
 	"leftSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
@@ -1394,6 +1442,30 @@
 		"codeElementType": "METHOD_DECLARATION",
 		"description": "moved method declaration",
 		"codeElement": "public queryMemoryPerNode() : long"
+}]
+},
+{
+	"type": "Move Method",
+	"description": "Move Method public queueName() : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.QueuedQueryResourceManager to public queueName() : String from class org.apache.drill.exec.work.foreman.rm.DistributedResourceManager.DistributedQueryRM",
+	"leftSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 130,
+		"endLine": 133,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public queueName() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/DistributedResourceManager.java",
+		"startLine": 231,
+		"endLine": 234,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "moved method declaration",
+		"codeElement": "public queueName() : String"
 }]
 },
 {

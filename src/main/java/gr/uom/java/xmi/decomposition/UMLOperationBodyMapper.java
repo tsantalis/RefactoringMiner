@@ -29,6 +29,7 @@ import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
+import gr.uom.java.xmi.diff.ExtractOperationDetection;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
@@ -112,6 +113,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CompositeStatementObjectMapping> ifBecomingElseIf = new HashSet<>();
 	private Set<CompositeStatementObjectMapping> ifAddingElseIf = new HashSet<>();
 	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements = new LinkedHashMap<>();
+	private List<AbstractCall> invocationsInSourceOperationAfterExtraction;
+
+	
+	public List<AbstractCall> getInvocationsInSourceOperationAfterExtraction() {
+		if(invocationsInSourceOperationAfterExtraction == null) {
+			this.invocationsInSourceOperationAfterExtraction = ExtractOperationDetection.getInvocationsInSourceOperationAfterExtraction(this);
+		}
+		return invocationsInSourceOperationAfterExtraction;
+	}
 
 	public boolean isNested() {
 		return nested;
@@ -1991,7 +2001,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	}
 
 	public UMLOperationBodyMapper(UMLOperationBodyMapper operationBodyMapper, UMLOperation addedOperation,
-			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested) throws RefactoringMinerTimedOutException {
+			Map<String, String> parameterToArgumentMap1, Map<String, String> parameterToArgumentMap2, UMLAbstractClassDiff classDiff, AbstractCall operationInvocation, boolean nested, Optional<List<AbstractCodeFragment>> leaves1Sublist) throws RefactoringMinerTimedOutException {
 		this.parentMapper = operationBodyMapper;
 		this.operationInvocation = operationInvocation;
 		this.nested = nested;
@@ -2098,88 +2108,95 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return;
 			}
 			CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
-			List<AbstractCodeFragment> leaves1 = operationBodyMapper.getNonMappedLeavesT1();
-			List<CompositeStatementObject> innerNodes1 = operationBodyMapper.getNonMappedInnerNodesT1();
+			List<AbstractCodeFragment> leaves1 = leaves1Sublist.isPresent() ? leaves1Sublist.get() : operationBodyMapper.getNonMappedLeavesT1();
+			List<CompositeStatementObject> innerNodes1 = leaves1Sublist.isPresent() ? new ArrayList<>() : operationBodyMapper.getNonMappedInnerNodesT1();
 			//adding leaves that were mapped with replacements
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
-			for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT1())) {
-				expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-			}
 			List<AbstractCodeFragment> leaves2 = composite2.getLeaves();
-			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()) ||
-						!mapping.getFragment1().getClass().equals(mapping.getFragment2().getClass()))) {
-					AbstractCodeFragment fragment = mapping.getFragment1();
-					expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-					if(fragment instanceof CompositeStatementObject) {
-						CompositeStatementObject comp = (CompositeStatementObject)fragment;
-						if(!innerNodes1.contains(comp)) {
-							innerNodes1.add(comp);
-							addedInnerNodes1.add(comp);
+			if(leaves1Sublist.isPresent()) {
+				for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(leaves1Sublist.get())) {
+					expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				}
+			}
+			else {
+				for(AbstractCodeFragment nonMappedLeaf1 : new ArrayList<>(operationBodyMapper.getNonMappedLeavesT1())) {
+					expandAnonymousAndLambdas(nonMappedLeaf1, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				}
+				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+					if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()) ||
+							!mapping.getFragment1().getClass().equals(mapping.getFragment2().getClass()))) {
+						AbstractCodeFragment fragment = mapping.getFragment1();
+						expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+						if(fragment instanceof CompositeStatementObject) {
+							CompositeStatementObject comp = (CompositeStatementObject)fragment;
+							if(!innerNodes1.contains(comp)) {
+								innerNodes1.add(comp);
+								addedInnerNodes1.add(comp);
+							}
+							handleBlocks(comp, innerNodes1, addedInnerNodes1);
 						}
-						handleBlocks(comp, innerNodes1, addedInnerNodes1);
+					}
+					else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+						for(AbstractCodeFragment leaf2 : leaves2) {
+							if(mapping.getFragment1().getString().equals(leaf2.getString())) {
+								CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+								if(parent1.getParent() != null && (!operationBodyMapper.alreadyMatched1(parent1) || (parent1.isBlock() && !operationBodyMapper.alreadyMatched1(parent1.getParent())))) {
+									AbstractCodeFragment fragment = mapping.getFragment1();
+									expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+									break;
+								}
+							}
+						}
 					}
 				}
-				else if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-					for(AbstractCodeFragment leaf2 : leaves2) {
-						if(mapping.getFragment1().getString().equals(leaf2.getString())) {
-							CompositeStatementObject parent1 = mapping.getFragment1().getParent();
-							if(parent1.getParent() != null && (!operationBodyMapper.alreadyMatched1(parent1) || (parent1.isBlock() && !operationBodyMapper.alreadyMatched1(parent1.getParent())))) {
+				if(nested && operationBodyMapper.getParentMapper() != null && operationBodyMapper.getParentMapper().getChildMappers().isEmpty()) {
+					for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+						if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+							if(mapping.getFragment1().getString().equals(JAVA.RETURN_NULL)) {
 								AbstractCodeFragment fragment = mapping.getFragment1();
 								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-								break;
 							}
 						}
 					}
-				}
-			}
-			if(nested && operationBodyMapper.getParentMapper() != null && operationBodyMapper.getParentMapper().getChildMappers().isEmpty()) {
-				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-						if(mapping.getFragment1().getString().equals(JAVA.RETURN_NULL)) {
-							AbstractCodeFragment fragment = mapping.getFragment1();
-							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-						}
-					}
-				}
-				for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
-					if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
-						if((mapping.getFragment1().getString().equals(JAVA.RETURN_TRUE) || mapping.getFragment1().getString().equals(JAVA.RETURN_FALSE)) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
-							AbstractCodeFragment fragment = mapping.getFragment1();
-							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
-						}
-					}
-					else if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
-						AbstractCodeFragment fragment = mapping.getFragment1();
-						if(fragment instanceof CompositeStatementObject) {
-							CompositeStatementObject statement = (CompositeStatementObject)fragment;
-							if(!innerNodes1.contains(statement)) {
-								innerNodes1.add(statement);
-								addedInnerNodes1.add(statement);
+					for(AbstractCodeMapping mapping : operationBodyMapper.getParentMapper().getMappings()) {
+						if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+							if((mapping.getFragment1().getString().equals(JAVA.RETURN_TRUE) || mapping.getFragment1().getString().equals(JAVA.RETURN_FALSE)) && addedOperation.getReturnParameter().getType().toString().equals("boolean")) {
+								AbstractCodeFragment fragment = mapping.getFragment1();
+								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, operationBodyMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 							}
 						}
-					}
-				}
-			}
-			for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
-				if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
-					for(AbstractCodeMapping mapping : childMapper.getMappings()) {
-						if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+						else if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
-							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
 							if(fragment instanceof CompositeStatementObject) {
-								CompositeStatementObject comp = (CompositeStatementObject)fragment;
-								if(!innerNodes1.contains(comp)) {
-									innerNodes1.add(comp);
-									addedInnerNodes1.add(comp);
+								CompositeStatementObject statement = (CompositeStatementObject)fragment;
+								if(!innerNodes1.contains(statement)) {
+									innerNodes1.add(statement);
+									addedInnerNodes1.add(statement);
 								}
-								handleBlocks(comp, innerNodes1, addedInnerNodes1);
 							}
 						}
 					}
-					for(AbstractCodeFragment fragment : childMapper.getNonMappedLeavesT1()) {
-						expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+				}
+				for(UMLOperationBodyMapper childMapper : operationBodyMapper.childMappers) {
+					if(childMapper.container1.getClassName().equals(addedOperation.getClassName()) || classDiff instanceof UMLClassMoveDiff) {
+						for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+							if(!returnWithVariableReplacement(mapping) && (!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2()))) {
+								AbstractCodeFragment fragment = mapping.getFragment1();
+								expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+								if(fragment instanceof CompositeStatementObject) {
+									CompositeStatementObject comp = (CompositeStatementObject)fragment;
+									if(!innerNodes1.contains(comp)) {
+										innerNodes1.add(comp);
+										addedInnerNodes1.add(comp);
+									}
+									handleBlocks(comp, innerNodes1, addedInnerNodes1);
+								}
+							}
+						}
+						for(AbstractCodeFragment fragment : childMapper.getNonMappedLeavesT1()) {
+							expandAnonymousAndLambdas(fragment, leaves1, innerNodes1, addedLeaves1, addedInnerNodes1, childMapper.anonymousClassList1(), codeFragmentOperationMap1, container1, false);
+						}
 					}
 				}
 			}
@@ -2206,19 +2223,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			
 			//adding innerNodes that were mapped with replacements
-			for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
-				if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
-					AbstractCodeFragment fragment = mapping.getFragment1();
-					if(fragment instanceof CompositeStatementObject) {
-						CompositeStatementObject statement = (CompositeStatementObject)fragment;
-						if(!innerNodes1.contains(statement)) {
-							innerNodes1.add(statement);
-							addedInnerNodes1.add(statement);
-						}
-					}
-				}
-				else if(mapping instanceof CompositeStatementObjectMapping) {
-					if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() <= 0.01) {
+			if(leaves1Sublist.isEmpty()) {
+				for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+					if(!mapping.getReplacements().isEmpty() || !mapping.getFragment1().equalFragment(mapping.getFragment2())) {
 						AbstractCodeFragment fragment = mapping.getFragment1();
 						if(fragment instanceof CompositeStatementObject) {
 							CompositeStatementObject statement = (CompositeStatementObject)fragment;
@@ -2228,30 +2235,42 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
-					else {
-						//search for leaf mappings being inexact
-						int subsumedLeafMappings = 0;
-						int inExactSubsumedLeafMappings = 0;
-						for(AbstractCodeMapping mapping2 : operationBodyMapper.getMappings()) {
-							if(mapping2.equals(mapping)) {
-								break;
-							}
-							if((mapping.getFragment1().getLocationInfo().subsumes(mapping2.getFragment1().getLocationInfo()) ||
-									mapping.getFragment2().getLocationInfo().subsumes(mapping2.getFragment2().getLocationInfo())) &&
-									!mapping.getFragment1().equals(mapping2.getFragment1()) && !mapping.getFragment2().equals(mapping2.getFragment2())) {
-								subsumedLeafMappings++;
-								if(!mapping2.getReplacements().isEmpty() || !mapping2.getFragment1().equalFragment(mapping2.getFragment2())) {
-									inExactSubsumedLeafMappings++;
-								}
-							}
-						}
-						if(inExactSubsumedLeafMappings == subsumedLeafMappings && subsumedLeafMappings > 0) {
+					else if(mapping instanceof CompositeStatementObjectMapping) {
+						if(((CompositeStatementObjectMapping)mapping).getCompositeChildMatchingScore() <= 0.01) {
 							AbstractCodeFragment fragment = mapping.getFragment1();
 							if(fragment instanceof CompositeStatementObject) {
 								CompositeStatementObject statement = (CompositeStatementObject)fragment;
 								if(!innerNodes1.contains(statement)) {
 									innerNodes1.add(statement);
 									addedInnerNodes1.add(statement);
+								}
+							}
+						}
+						else {
+							//search for leaf mappings being inexact
+							int subsumedLeafMappings = 0;
+							int inExactSubsumedLeafMappings = 0;
+							for(AbstractCodeMapping mapping2 : operationBodyMapper.getMappings()) {
+								if(mapping2.equals(mapping)) {
+									break;
+								}
+								if((mapping.getFragment1().getLocationInfo().subsumes(mapping2.getFragment1().getLocationInfo()) ||
+										mapping.getFragment2().getLocationInfo().subsumes(mapping2.getFragment2().getLocationInfo())) &&
+										!mapping.getFragment1().equals(mapping2.getFragment1()) && !mapping.getFragment2().equals(mapping2.getFragment2())) {
+									subsumedLeafMappings++;
+									if(!mapping2.getReplacements().isEmpty() || !mapping2.getFragment1().equalFragment(mapping2.getFragment2())) {
+										inExactSubsumedLeafMappings++;
+									}
+								}
+							}
+							if(inExactSubsumedLeafMappings == subsumedLeafMappings && subsumedLeafMappings > 0) {
+								AbstractCodeFragment fragment = mapping.getFragment1();
+								if(fragment instanceof CompositeStatementObject) {
+									CompositeStatementObject statement = (CompositeStatementObject)fragment;
+									if(!innerNodes1.contains(statement)) {
+										innerNodes1.add(statement);
+										addedInnerNodes1.add(statement);
+									}
 								}
 							}
 						}

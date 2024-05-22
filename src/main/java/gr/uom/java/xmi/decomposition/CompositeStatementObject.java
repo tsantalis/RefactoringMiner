@@ -575,6 +575,15 @@ public class CompositeStatementObject extends AbstractStatement {
 		return count;
 	}
 
+	public int statementCountIncludingBlocks() {
+		int count = 0;
+		count++;
+		for(AbstractStatement statement : statementList) {
+			count += statement.statementCount();
+		}
+		return count;
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

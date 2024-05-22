@@ -111,6 +111,10 @@ public class OperationBody {
 		return compositeStatement.statementCount();
 	}
 
+	public int statementCountIncludingBlocks() {
+		return compositeStatement.statementCountIncludingBlocks();
+	}
+
 	public CompositeStatementObject getCompositeStatement() {
 		return compositeStatement;
 	}

@@ -4,6 +4,7 @@
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/lnloiaibmonmmpnfibfjjlfcddoppmgd)](https://chrome.google.com/webstore/detail/refactoring-aware-commit/lnloiaibmonmmpnfibfjjlfcddoppmgd)
 [![Tests](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml/badge.svg?branch=master)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
+[![Test Results](https://img.shields.io/endpoint?url=https%3A%2F%2Fgist.githubusercontent.com%2Ftsantalis%2F19fb416d06d1b4d40820e0209540f6c0%2Fraw%2FRefactoringMiner-junit-tests.json)](https://github.com/tsantalis/RefactoringMiner/actions/workflows/gradle.yml)
 
 Table of Contents
 =================

@@ -30,5 +30,6 @@ public abstract class AbstractStatement extends AbstractCodeFragment {
 
     public abstract List<AbstractCodeFragment> getLeaves();
     public abstract int statementCount();
+    public abstract int statementCountIncludingBlocks();
 	public abstract List<String> stringRepresentation();
 }

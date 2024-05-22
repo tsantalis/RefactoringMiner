@@ -579,7 +579,7 @@ public class CompositeStatementObject extends AbstractStatement {
 		int count = 0;
 		count++;
 		for(AbstractStatement statement : statementList) {
-			count += statement.statementCount();
+			count += statement.statementCountIncludingBlocks();
 		}
 		return count;
 	}

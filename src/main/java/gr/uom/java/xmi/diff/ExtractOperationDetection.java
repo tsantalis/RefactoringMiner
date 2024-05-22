@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -427,7 +428,7 @@ public class ExtractOperationDetection {
 			UMLOperation delegateMethod = findDelegateMethod(originalOperation, addedOperation, addedOperationInvocation);
 			return new UMLOperationBodyMapper(mapper,
 					delegateMethod != null ? delegateMethod : addedOperation,
-					new LinkedHashMap<String, String>(), parameterToArgumentMap, classDiff, addedOperationInvocation, nested);
+					new LinkedHashMap<String, String>(), parameterToArgumentMap, classDiff, addedOperationInvocation, nested, Optional.empty());
 		}
 		return null;
 	}

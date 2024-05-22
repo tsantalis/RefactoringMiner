@@ -288,6 +288,11 @@ public class StatementObject extends AbstractStatement {
 		return 1;
 	}
 
+	@Override
+	public int statementCountIncludingBlocks() {
+		return 1;
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

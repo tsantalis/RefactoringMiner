@@ -3603,7 +3603,25 @@ public class UMLModelDiff {
 				}
 			}
 			if(!addedOperationInvocations.isEmpty()) {
-				int addedOperationStatementCount = addedOperation.getBody() != null ? addedOperation.getBody().statementCountIncludingBlocks() : 0;
+				int addedOperationStatementCount = addedOperation.getBody() != null ? addedOperation.getBody().statementCountIncludingBlocks() - 1 : 0;
+				int castingStamentsInAddedOperation = 0;
+				boolean instanceofInAddedOperation = false;
+				if(addedOperation.getBody() != null) {
+					for(AbstractCodeFragment f : addedOperation.getBody().getCompositeStatement().getLeaves()) {
+						if(f.getCastExpressions().size() > 0) {
+							castingStamentsInAddedOperation++;
+						}
+						if(f.getString().contains(" instanceof ")) {
+							instanceofInAddedOperation = true;
+						}
+					}
+					for(AbstractCodeFragment f : addedOperation.getBody().getCompositeStatement().getInnerNodes()) {
+						if(f.getString().contains(" instanceof ")) {
+							instanceofInAddedOperation = true;
+							break;
+						}
+					}
+				}
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
 					String className = mapper.getContainer2().getClassName();
@@ -3611,8 +3629,25 @@ public class UMLModelDiff {
 						processedOperationPairs.add(pair);
 						for(AbstractCodeFragment fragment : new ArrayList<>(mapper.getNonMappedLeavesT1())) {
 							if(fragment.getLambdas().size() > 0 && fragment.getLambdas().get(0).getBody() != null) {
-								int lambdaStatementCount = fragment.getLambdas().get(0).getBody().statementCountIncludingBlocks();
-								if(addedOperationStatementCount == lambdaStatementCount) {
+								int lambdaStatementCount = fragment.getLambdas().get(0).getBody().statementCountIncludingBlocks() - 1;
+								int castingStatements = 0;
+								boolean instanceofInLambda = false;
+								for(AbstractCodeFragment f : fragment.getLambdas().get(0).getBody().getCompositeStatement().getLeaves()) {
+									if(f.getCastExpressions().size() > 0) {
+										castingStatements++;
+									}
+									if(f.getString().contains(" instanceof ")) {
+										instanceofInLambda = true;
+									}
+								}
+								for(AbstractCodeFragment f : fragment.getLambdas().get(0).getBody().getCompositeStatement().getInnerNodes()) {
+									if(f.getString().contains(" instanceof ")) {
+										instanceofInLambda = true;
+										break;
+									}
+								}
+								castingStatements -= castingStamentsInAddedOperation;
+								if(addedOperationStatementCount == lambdaStatementCount || (instanceofInAddedOperation && instanceofInLambda && addedOperationStatementCount == lambdaStatementCount - castingStatements)) {
 									AbstractCall addedOperationInvocation = addedOperationInvocations.get(0);
 									ArrayList<AbstractCodeFragment> subList = new ArrayList<AbstractCodeFragment>();
 									subList.add(fragment);
@@ -3620,7 +3655,7 @@ public class UMLModelDiff {
 											mapper, className, addedOperationInvocation, Optional.of(subList));
 									if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
 											!conflictingExpression(addedOperationInvocation, addedOperation, mapper.getContainer2().variableDeclarationMap()) &&
-											operationBodyMapper.getMappings().size() >= lambdaStatementCount &&
+											operationBodyMapper.getMappings().size() >= lambdaStatementCount - castingStatements &&
 											extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation)) {
 										if(className.equals(addedOperation.getClassName())) {
 											//extract inside moved or renamed class

@@ -4021,7 +4021,7 @@ public class UMLModelDiff {
 			}
 			else if(addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS &&
 					addedClass.getOperationsWithOverrideAnnotation().size() > 0) {
-				addedOperations.addAll(addedClass.getOperationsWithoutOverrideAnnotation());
+				addedOperations.addAll(addedClass.getOperations());
 			}
 		}
 		List<UMLOperation> removedOperations = new ArrayList<UMLOperation>();
@@ -4031,7 +4031,7 @@ public class UMLModelDiff {
 			}
 			else if(addedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS && removedOperations.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS &&
 					removedClass.getOperationsWithOverrideAnnotation().size() > 0) {
-				removedOperations.addAll(removedClass.getOperationsWithoutOverrideAnnotation());
+				removedOperations.addAll(removedClass.getOperations());
 			}
 		}
 		List<UMLOperation> removedOperations1 = getRemovedOperationsInCommonClasses();
@@ -4850,7 +4850,8 @@ public class UMLModelDiff {
 				boolean parameterMatch = oldParameters.equals(newParameters) || oldParameters.containsAll(newParameters) || newParameters.containsAll(oldParameters) || intersection.size() > 0 ||
 						removedOperation.isStatic() || addedOperation.isStatic();
 				return (parameterMatch && oldParameters.size() > 0 && newParameters.size() > 0) ||
-						(parameterMatch && addedOperation.equalReturnParameter(removedOperation) && (oldParameters.size() == 0 || newParameters.size() == 0));
+						(parameterMatch && addedOperation.equalReturnParameter(removedOperation) && (oldParameters.size() == 0 || newParameters.size() == 0)) ||
+						 exactLeafMappings > 1;
 			}
 		}
 		return false;
@@ -4868,6 +4869,32 @@ public class UMLModelDiff {
 				addedOperation.isAbstract() == removedOperation.isAbstract() &&
 				addedOperation.getTypeParameters().equals(removedOperation.getTypeParameters())) {
 			if(addedOperation.getParameters().equals(removedOperation.getParameters())) {
+				UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+				UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
+				if(removedClass != null && addedClass != null) {
+					Set<UMLType> interfacesImplementedByAddedClasses = new LinkedHashSet<UMLType>();
+					interfacesImplementedByAddedClasses.addAll(addedClass.getImplementedInterfaces());
+					if(addedClass.getSuperclass() != null && addedClass.getSuperclass().getClassType().startsWith("Abstract")) {
+						interfacesImplementedByAddedClasses.add(addedClass.getSuperclass());
+					}
+					Set<UMLType> interfacesImplementedByRemovedClasses = new LinkedHashSet<UMLType>();
+					interfacesImplementedByRemovedClasses.addAll(removedClass.getImplementedInterfaces());
+					if(removedClass.getSuperclass() != null && removedClass.getSuperclass().getClassType().startsWith("Abstract")) {
+						interfacesImplementedByRemovedClasses.add(removedClass.getSuperclass());
+					}
+					Set<UMLType> interfaceIntersection = new LinkedHashSet<UMLType>(interfacesImplementedByAddedClasses);
+					interfaceIntersection.retainAll(interfacesImplementedByRemovedClasses);
+					if(interfaceIntersection.size() > 0) {
+						int exactLeafMappings = 0;
+						for(AbstractCodeMapping mapping : mapper.getMappings()) {
+							if(mapping instanceof LeafMapping && mapping.isExact() && !mapping.getFragment1().getString().startsWith(JAVA.RETURN_SPACE)
+									&& !(mapping.getFragment1() instanceof LeafExpression && mapping.getFragment2() instanceof LeafExpression)) {
+								exactLeafMappings++;
+							}
+						}
+						return exactLeafMappings > 1;
+					}
+				}
 				return true;
 			}
 			else {

@@ -31,4 +31,13 @@ public class Helpers {
                 classDiff.getNextClass().getSourceFile()
         );
     }
+
+    public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {
+        if (srcOperationNode == null || dstOperationNode == null) return null;
+        Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType);
+        Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode,searchingType);
+        if (srcModifier != null && dstModifier != null)
+            return new Pair<>(srcModifier, dstModifier);
+        return null;
+    }
 }

@@ -7,8 +7,8 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.SequenceAlgorithms;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import org.refactoringminer.astDiff.actions.ASTDiff;
-import org.refactoringminer.astDiff.actions.ExtendedTreeClassifier;
+import org.refactoringminer.astDiff.models.ASTDiff;
+import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
 import org.refactoringminer.astDiff.actions.model.MultiMove;
 
 import java.io.*;

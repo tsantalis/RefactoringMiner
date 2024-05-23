@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
 /**
  * Detect refactorings in the git history.

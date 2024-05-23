@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.refactoringminer.astDiff.matchers.Constants;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com

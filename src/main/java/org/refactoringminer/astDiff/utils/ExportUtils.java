@@ -1,6 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
-import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.models.ASTDiff;
 
 /* Created by pourya on 2024-04-02*/
 public class ExportUtils {

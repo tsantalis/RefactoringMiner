@@ -1,11 +1,9 @@
 package gui;
 
 import gui.webdiff.WebDiff;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
-import org.refactoringminer.astDiff.utils.MappingExportModel;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 

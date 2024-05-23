@@ -1,7 +1,7 @@
 package org.refactoringminer.astDiff.utils.dataset;
 
 import com.beust.jcommander.IStringConverter;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 

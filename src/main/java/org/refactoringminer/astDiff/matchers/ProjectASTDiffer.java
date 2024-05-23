@@ -1015,15 +1015,15 @@ public class ProjectASTDiffer
 		}
 		if (umlOperationBodyMapper.getOperation1() != null && umlOperationBodyMapper.getOperation2() != null) {
 			if (umlOperationBodyMapper.getOperation1().isStatic() && umlOperationBodyMapper.getOperation2().isStatic())
-				matchModifier(srcOperationNode, dstOperationNode, Constants.STATIC, mappingStore);
+				new SameModifierMatcher(Constants.STATIC).match(srcOperationNode,dstOperationNode,mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isFinal() && umlOperationBodyMapper.getOperation2().isFinal())
-				matchModifier(srcOperationNode, dstOperationNode, Constants.FINAL, mappingStore);
+				new SameModifierMatcher(Constants.FINAL).match(srcOperationNode,dstOperationNode,mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isAbstract() && umlOperationBodyMapper.getOperation2().isAbstract())
-				matchModifier(srcOperationNode, dstOperationNode, Constants.ABSTRACT, mappingStore);
+				new SameModifierMatcher(Constants.ABSTRACT).match(srcOperationNode,dstOperationNode,mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isSynchronized() && umlOperationBodyMapper.getOperation2().isSynchronized())
-				matchModifier(srcOperationNode, dstOperationNode, Constants.SYNCHRONIZED, mappingStore);
+				new SameModifierMatcher(Constants.SYNCHRONIZED).match(srcOperationNode,dstOperationNode,mappingStore);
 			if (umlOperationBodyMapper.getOperation1().isNative() && umlOperationBodyMapper.getOperation2().isNative())
-				matchModifier(srcOperationNode, dstOperationNode, Constants.NATIVE, mappingStore);
+				new SameModifierMatcher(Constants.NATIVE).match(srcOperationNode,dstOperationNode,mappingStore);
 			String v1 = umlOperationBodyMapper.getOperation1().getVisibility().toString();
 			String v2 = umlOperationBodyMapper.getOperation2().getVisibility().toString();
 			Tree tree1 = TreeUtilFunctions.findChildByTypeAndLabel(srcOperationNode, Constants.MODIFIER, v1);
@@ -1040,14 +1040,6 @@ public class ProjectASTDiffer
 		if (srcModifier != null && dstModifier != null)
 			return new Pair<>(srcModifier, dstModifier);
 		return null;
-	}
-	public static void matchModifier(Tree srcTypeDeclaration, Tree dstTypeDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
-		String type = Constants.MODIFIER;
-		Tree srcTree = TreeUtilFunctions.findChildByTypeAndLabel(srcTypeDeclaration,type,modifier);
-		Tree dstTree = TreeUtilFunctions.findChildByTypeAndLabel(dstTypeDeclaration,type,modifier);
-		if (srcTree != null && dstTree != null){
-			mappingStore.addMapping(srcTree,dstTree);
-		}
 	}
 
 	private static class OptimizationData{

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.matchBasedOnType;
-import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.matchModifier;
 
 /* Created by pourya on 2024-05-22*/
 public class ClassDeclarationMatcher implements IExtendedMatcher{
@@ -70,11 +69,11 @@ public class ClassDeclarationMatcher implements IExtendedMatcher{
                 mappingStore.addMapping(matched.first,matched.second);
         }
         if (classDiff.getOriginalClass().isStatic() && classDiff.getNextClass().isStatic())
-            matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.STATIC,mappingStore);
+            new SameModifierMatcher(Constants.STATIC).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         if (classDiff.getOriginalClass().isFinal() && classDiff.getNextClass().isFinal())
-            matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.FINAL,mappingStore);
+            new SameModifierMatcher(Constants.FINAL).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         if (classDiff.getOriginalClass().isAbstract() && classDiff.getNextClass().isAbstract())
-            matchModifier(srcTypeDeclaration,dstTypeDeclaration,Constants.ABSTRACT,mappingStore);
+            new SameModifierMatcher(Constants.ABSTRACT).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo());

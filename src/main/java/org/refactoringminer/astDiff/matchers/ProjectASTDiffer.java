@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.refactoringminer.astDiff.utils.Helpers.findTreeContexts;
+
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
@@ -85,16 +87,7 @@ public class ProjectASTDiffer
 
 
 	}
-	public static String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
-		if (contextMap == null) return null;
-		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {
-			if (stringTreeContextEntry.getValue().getRoot().equals(TreeUtilFunctions.getFinalRoot(t)))
-			{
-				return stringTreeContextEntry.getKey();
-			}
-		}
-		return null;
-	}
+
 	private List<? extends UMLAbstractClassDiff> withCorrectOrder(List<? extends UMLAbstractClassDiff> umlDiffs) {
 		ArrayList<UMLAbstractClassDiff> result = new ArrayList<>(umlDiffs);
 		Set<UMLAbstractClassDiff> seen = new HashSet<>();
@@ -144,7 +137,7 @@ public class ProjectASTDiffer
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
 			ASTDiff append = findAppend(classDiff);
 			boolean decision = (append != null) || mergeFlag;
-			ASTDiff classASTDiff = process(classDiff, findTreeContexts(classDiff), decision);
+			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision);
 			if (append != null)
 				append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
 			else {
@@ -161,10 +154,6 @@ public class ProjectASTDiffer
 				return existing;
 		}
 		return null;
-	}
-	private Pair<TreeContext, TreeContext> findTreeContexts(UMLAbstractClassDiff classDiff) {
-		return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(classDiff.getOriginalClass().getSourceFile()),
-				modelDiff.getChildModel().getTreeContextMap().get(classDiff.getNextClass().getSourceFile()));
 	}
 
 	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){
@@ -254,7 +243,7 @@ public class ProjectASTDiffer
 //			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(lastStepMapping.getFragment2().getLocationInfo().getFilePath())) {
 			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
-				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
+					Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
 				if (srcExp == null || dstExp == null) continue;
 				if (srcExp.isLeaf() && dstExp.isLeaf())
 				{
@@ -296,22 +285,6 @@ public class ProjectASTDiffer
 			}
 		}
 		return true;
-	}
-
-	private static boolean isTestRelated(Tree srcTree) {
-		Tree p1 = TreeUtilFunctions.getParentUntilType(srcTree, Constants.METHOD_DECLARATION);
-		if (p1 == null) return false;
-		for (Tree child : p1.getChildren()) {
-			if (child.getType().name.equals(Constants.MARKER_ANNOTATION))
-			{
-				if (!child.getChildren().isEmpty())
-				{
-					Tree c0 = child.getChild(0);
-					if (c0.getLabel().equals("Test") || c0.getLabel().equals("ParameterizedTest")) return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	private void processEnumConstants(Tree srcTree, Tree dstTree, Set<org.apache.commons.lang3.tuple.Pair<UMLEnumConstant, UMLEnumConstant>> commonEnumConstants, ExtendedMultiMappingStore mappingStore) {
@@ -1113,20 +1086,9 @@ public class ProjectASTDiffer
 	}
 
 	private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {
-		Tree srcField = findFirstByType(srcFieldDeclaration, Constants.MARKER_ANNOTATION);
-		Tree dstField = findFirstByType(dstFieldDeclaration, Constants.MARKER_ANNOTATION);
+		Tree srcField = TreeUtilFunctions.findFirstByType(srcFieldDeclaration, Constants.MARKER_ANNOTATION);
+		Tree dstField = TreeUtilFunctions.findFirstByType(dstFieldDeclaration, Constants.MARKER_ANNOTATION);
 		new LeafMatcher().match(srcField, dstField, mappingStore);
-	}
-
-	private static Tree findFirstByType(Tree srcFieldDeclaration, String typeName) {
-		Tree fieldAnnotation = null;
-		for (Tree child : srcFieldDeclaration.getChildren()) {
-			if (child.getType().name.equals(typeName)) {
-				fieldAnnotation = child;
-				break;
-			}
-		}
-		return fieldAnnotation;
 	}
 
 	private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {

@@ -15,6 +15,8 @@ import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
 import java.util.*;
 
+import static org.refactoringminer.astDiff.utils.Helpers.findNameByTree;
+
 /**
  * An edit script generator based upon Chawathe algorithm supporting multi-mappings.
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -290,16 +292,5 @@ public class ExtendedChawatheScriptGenerator implements ExtendedEditScriptGenera
 		}
 
 		return lcs;
-	}
-
-	public String findNameByTree(Map<String, TreeContext> contextMap, Tree t) {
-		if (contextMap == null) return null;
-		for (Map.Entry<String, TreeContext> stringTreeContextEntry : contextMap.entrySet()) {
-			if (stringTreeContextEntry.getValue().getRoot().equals(TreeUtilFunctions.getFinalRoot(t)))
-			{
-				return stringTreeContextEntry.getKey();
-			}
-		}
-		return null;
 	}
 }

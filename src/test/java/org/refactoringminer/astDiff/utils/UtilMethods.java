@@ -1,6 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
-import org.refactoringminer.astDiff.actions.ASTDiff;
+import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 import java.io.File;

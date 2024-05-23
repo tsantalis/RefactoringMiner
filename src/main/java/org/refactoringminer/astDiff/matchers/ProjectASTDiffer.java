@@ -10,6 +10,7 @@ import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.eclipse.jdt.core.search.FieldDeclarationMatch;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -17,6 +18,7 @@ import org.refactoringminer.astDiff.AllSubTreesMovedASTDiffGenerator;
 import org.refactoringminer.astDiff.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.matchers.atomic.FieldDeclarationMatcher;
 import org.refactoringminer.astDiff.matchers.atomic.ImportMatcher;
 import org.refactoringminer.astDiff.matchers.atomic.JavaDocMatcher;
 import org.refactoringminer.astDiff.matchers.atomic.PackageDeclarationMatcher;
@@ -323,7 +325,7 @@ public class ProjectASTDiffer
 					String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
 					Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
 					Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-					processFieldDeclaration(srcTotalTree, dstTotalTree, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), mappingStore);
+					new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute()).match(srcTotalTree, dstTotalTree, mappingStore);
 				}
 			} else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 				if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
@@ -985,7 +987,7 @@ public class ProjectASTDiffer
 	private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
 		Set<org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
 		for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
-			processFieldDeclaration(srcTree,dstTree,pair.getLeft(),pair.getRight(),mappingStore);
+			new FieldDeclarationMatcher(pair.getLeft(), pair.getRight()).match(srcTree,dstTree,mappingStore);
 		}
 		List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
 		for (UMLAttributeDiff umlAttributeDiff : attributeDiffList) {
@@ -998,7 +1000,7 @@ public class ProjectASTDiffer
 	}
 
 	private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
-		processFieldDeclaration(srcTree,dstTree,umlAttributeDiff.getRemovedAttribute(),umlAttributeDiff.getAddedAttribute(),mappingStore);
+		new FieldDeclarationMatcher(umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute()).match(srcTree,dstTree,mappingStore);
 		if (umlAttributeDiff.getInitializerMapper().isPresent()) {
 			UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
 			processMethod(srcTree, dstTree, umlOperationBodyMapper, mappingStore);
@@ -1006,7 +1008,7 @@ public class ProjectASTDiffer
 	}
 
 	private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
-		processFieldDeclaration(srcTree,dstTree,umlEnumConstantDiff.getRemovedEnumConstant(),umlEnumConstantDiff.getAddedEnumConstant(),mappingStore);
+		new FieldDeclarationMatcher(umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant()).match(srcTree,dstTree,mappingStore);
 		if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
 			UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
 			processAnonymousClassDiff(srcTree, dstTree, anonymousClassDiff, mappingStore);
@@ -1018,110 +1020,6 @@ public class ProjectASTDiffer
 		for (UMLOperationBodyMapper umlOperationBodyMapper : operationBodyMapperList) {
 			processMethod(srcTree, dstTree,umlOperationBodyMapper, mappingStore);
 		}
-	}
-	private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
-
-		Tree srcAttr = TreeUtilFunctions.findByLocationInfo(srcTree, srcUMLAttribute.getLocationInfo());
-		Tree dstAttr = TreeUtilFunctions.findByLocationInfo(dstTree, dstUMLAttribute.getLocationInfo());
-		if (srcAttr == null || dstAttr == null) return;
-		Tree srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.FIELD_DECLARATION);
-		Tree dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.FIELD_DECLARATION);
-		if (srcFieldDeclaration == null) {
-			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.ENUM_CONSTANT_DECLARATION);
-		}
-		if (dstFieldDeclaration == null) {
-			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.ENUM_CONSTANT_DECLARATION);
-		}
-		//handle Record Components (SingleVariableDeclaration)
-		if (srcFieldDeclaration == null) {
-			srcFieldDeclaration = TreeUtilFunctions.getParentUntilType(srcAttr, Constants.RECORD_COMPONENT);
-		}
-		if (dstFieldDeclaration == null) {
-			dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.RECORD_COMPONENT);
-		}
-		//				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
-		if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
-			//IsoStructural can't be a good idea here, i.e. anonymous class
-			mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);
-			return;
-		}
-		if (srcAttr.getMetrics().hash == dstAttr.getMetrics().hash) {
-			mappingStore.addMappingRecursively(srcAttr,dstAttr);
-		}
-
-		mappingStore.addMapping(srcFieldDeclaration,dstFieldDeclaration);
-		matchFieldAllModifiers(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute,dstUMLAttribute,mappingStore);
-		matchFieldAnnotations(srcFieldDeclaration, dstFieldDeclaration, mappingStore);
-		if (srcUMLAttribute.getType().getLocationInfo() == null || dstUMLAttribute.getType().getLocationInfo() == null) {
-			if (srcUMLAttribute instanceof UMLEnumConstant && dstUMLAttribute instanceof UMLEnumConstant) {
-				//JavaDocs are mapped as well.
-				new LeafMatcher().match(srcAttr,dstAttr,mappingStore);
-				return;
-			}
-		}
-		Tree srcType = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getType().getLocationInfo());
-		Tree dstType = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getType().getLocationInfo());
-
-		if (srcType != null && dstType != null && srcType.isIsoStructuralTo(dstType)) mappingStore.addMappingRecursively(srcType,dstType);
-		else {
-			new LeafMatcher().match(srcType,dstType,mappingStore);
-		}
-		Tree srcVarDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLAttribute.getVariableDeclaration().getLocationInfo());
-		Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo());
-		mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
-		new LeafMatcher().match(srcVarDeclaration,dstVarDeclaration,mappingStore);
-		new JavaDocMatcher(srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc())
-				.match(srcTree, dstTree, mappingStore);
-		if (srcVarDeclaration != null && dstVarDeclaration != null)
-			mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
-	}
-
-	private void matchFieldAnnotations(Tree srcFieldDeclaration, Tree dstFieldDeclaration, ExtendedMultiMappingStore mappingStore) {
-		Tree srcField = TreeUtilFunctions.findFirstByType(srcFieldDeclaration, Constants.MARKER_ANNOTATION);
-		Tree dstField = TreeUtilFunctions.findFirstByType(dstFieldDeclaration, Constants.MARKER_ANNOTATION);
-		new LeafMatcher().match(srcField, dstField, mappingStore);
-	}
-
-	private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
-		//Pair<Tree, Tree> attributeAccessModifierPair = findAttributeAccessModifierPair(srcFieldDeclaration, dstFieldDeclaration, srcUMLAttribute, dstUMLAttribute);
-		//if (attributeAccessModifierPair.first != null && attributeAccessModifierPair.second != null)
-		//	mappingStore.addMapping(attributeAccessModifierPair.first, attributeAccessModifierPair.second);
-
-//		if (srcUMLAttribute.getVisibility().equals(dstUMLAttribute.getVisibility()))
-		matchModifiersForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),dstUMLAttribute.getVisibility().toString(),mappingStore);
-		if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);
-		if (srcUMLAttribute.isVolatile() && dstUMLAttribute.isVolatile())
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.VOLATILE,mappingStore);
-		if (srcUMLAttribute.isStatic() && dstUMLAttribute.isStatic())
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.STATIC,mappingStore);
-		if (srcUMLAttribute.isTransient() && dstUMLAttribute.isTransient())
-			matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.TRANSIENT,mappingStore);
-	}
-
-	private void matchModifiersForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String srcModifier, String dstModifier, ExtendedMultiMappingStore mappingStore) {
-		Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, srcModifier);
-		Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, dstModifier);
-		if (srcModifierTree != null && dstModifierTree != null)
-			mappingStore.addMapping(srcModifierTree,dstModifierTree);
-	}
-
-	private void matchModifierForField(Tree srcFieldDeclaration, Tree dstFieldDeclaration, String modifier, ExtendedMultiMappingStore mappingStore) {
-		Tree srcModifierTree = findAttributeModifierByLabel(srcFieldDeclaration, modifier);
-		Tree dstModifierTree = findAttributeModifierByLabel(dstFieldDeclaration, modifier);
-		if (srcModifierTree != null && dstModifierTree != null)
-			mappingStore.addMapping(srcModifierTree,dstModifierTree);
-	}
-	private Tree findAttributeModifierByLabel(Tree anyFieldDeclaration,String label) {
-		if (anyFieldDeclaration.getChildren().size() > 0) {
-			for (Tree child : anyFieldDeclaration.getChildren()) {
-				if (child.getLabel().equals(label))
-					return child;
-				if (child.getType().name.equals(Constants.VARIABLE_DECLARATION_FRAGMENT))
-					break;
-			}
-		}
-		return null;
 	}
 
 	private void processSuperClasses(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {

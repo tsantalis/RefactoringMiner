@@ -271,4 +271,15 @@ public class TreeUtilFunctions {
 		return t1.getType().name.equals(simpleName)
 				&& t2.getType().name.equals(simpleName);
 	}
+
+	public static Tree findFirstByType(Tree srcFieldDeclaration, String typeName) {
+		Tree fieldAnnotation = null;
+		for (Tree child : srcFieldDeclaration.getChildren()) {
+			if (child.getType().name.equals(typeName)) {
+				fieldAnnotation = child;
+				break;
+			}
+		}
+		return fieldAnnotation;
+	}
 }

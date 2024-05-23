@@ -17,6 +17,7 @@ import org.refactoringminer.astDiff.AllSubTreesMovedASTDiffGenerator;
 import org.refactoringminer.astDiff.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.matchers.atomic.ImportMatcher;
 import org.refactoringminer.astDiff.matchers.atomic.PackageDeclarationMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
@@ -177,7 +178,7 @@ public class ProjectASTDiffer
 		boolean isBaseDiff = classDiff instanceof UMLClassBaseDiff;
 		if (isBaseDiff) {
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
-			processImports(srcTree, dstTree, (baseClassDiff).getImportDiffList(), mappingStore);
+			new ImportMatcher(baseClassDiff.getImportDiffList()).match(srcTree, dstTree, mappingStore);
 			processClassDeclarationMapping(srcTree,dstTree, baseClassDiff,mappingStore);
 		}
 		processClassAttributes(srcTree,dstTree,classDiff,mappingStore);
@@ -1142,61 +1143,6 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private void processImports(Tree srcTree, Tree dstTree, UMLImportListDiff importDiffList, ExtendedMultiMappingStore mappingStore) {
-		if (importDiffList == null) return;
-		Set<org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport>> commonImports = importDiffList.getCommonImports();
-		String searchingType = Constants.IMPORT_DECLARATION;
-		if (!commonImports.isEmpty()) {
-			for (org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : commonImports) {
-				Tree srcImportStatement = findImportByTypeAndLabel(srcTree, searchingType, pair.getLeft());
-				Tree dstImportStatement = findImportByTypeAndLabel(dstTree, searchingType, pair.getRight());
-				if (srcImportStatement != null && dstImportStatement != null)
-					mappingStore.addMappingRecursively(srcImportStatement, dstImportStatement);
-			}
-		}
-		//Grouped Imports
-		for (Map.Entry<Set<UMLImport>, UMLImport> setUMLImportEntry : importDiffList.getGroupedImports().entrySet()) {
-			Set<UMLImport> srcImportSet = setUMLImportEntry.getKey();
-			UMLImport dstImport = setUMLImportEntry.getValue();
-			Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstImport);
-			for (UMLImport srcUMLImport : srcImportSet) {
-				Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcUMLImport);
-				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
-			}
-		}
-		//UnGrouped Imports
-		for (Map.Entry<UMLImport, Set<UMLImport>> umlImportSetEntry : importDiffList.getUnGroupedImports().entrySet()) {
-			UMLImport srcImport = umlImportSetEntry.getKey();
-			Set<UMLImport> dstImportSet = umlImportSetEntry.getValue();
-			Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,srcImport);
-			for (UMLImport dstUMLImport : dstImportSet) {
-				Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,dstUMLImport);
-				mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
-			}
-		}
-		//Changed Imports
-		for(org.apache.commons.lang3.tuple.Pair<UMLImport, UMLImport> pair : importDiffList.getChangedImports()) {
-			Tree srcImportStatement = findImportByTypeAndLabel(srcTree,searchingType,pair.getLeft());
-			Tree dstImportStatement = findImportByTypeAndLabel(dstTree,searchingType,pair.getRight());
-			mappingStore.addMappingRecursively(srcImportStatement,dstImportStatement);
-		}
-	}
-
-	private Tree findImportByTypeAndLabel(Tree inputTree, String searchingType, UMLImport label) {
-		for (Tree treeNode: inputTree.getChildren()) {
-			if (treeNode.getType().name.equals(searchingType)) {
-				if (treeNode.getChild(0).getLabel().equals(label.getName()) && treeNode.getPos() == label.getLocationInfo().getStartOffset()) //getChild 0 might be problematic
-					if (label.isOnDemand()) {
-						if (treeNode.getChild(0).getEndPos() + 3 == treeNode.getEndPos()) {
-							return treeNode;
-						}
-					} else {
-						return treeNode;
-					}
-			}
-		}
-		return null;
-	}
 
 	private void processMethodSignature(Tree srcOperationNode, Tree dstOperationNode, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
 		if (srcOperationNode == null || dstOperationNode == null) return;

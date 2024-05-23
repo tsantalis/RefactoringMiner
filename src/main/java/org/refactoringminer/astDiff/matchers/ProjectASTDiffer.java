@@ -18,6 +18,7 @@ import org.refactoringminer.astDiff.MovedASTDiffGenerator;
 import org.refactoringminer.astDiff.actions.ASTDiff;
 import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.atomic.ImportMatcher;
+import org.refactoringminer.astDiff.matchers.atomic.JavaDocMatcher;
 import org.refactoringminer.astDiff.matchers.atomic.PackageDeclarationMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
@@ -372,7 +373,8 @@ public class ProjectASTDiffer
 			dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
 			if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
 			if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
-			processJavaDocs(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc(), mappingStore);
+			new JavaDocMatcher(umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc())
+					.match(srcOperationNode, dstOperationNode, mappingStore);
 			mappingStore.addMapping(srcOperationNode, dstOperationNode);
 		} else {
 			//Static Initializers
@@ -578,20 +580,6 @@ public class ProjectASTDiffer
 		Pair<Tree, Tree> matched = matchBasedOnType(srcStatementNode,dstStatementNode, searchingType);
 		if (matched != null)
 			mappingStore.addMapping(matched.first,matched.second);
-	}
-
-	private void processJavaDocs(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
-		if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
-			Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
-			Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
-			if (srcJavaDocNode == null || dstJavaDocNode == null) return;
-			if (srcUMLJavaDoc.equalText(dstUMLJavaDoc) && srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
-				mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
-			} else {
-				new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
-				mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode);
-			}
-		}
 	}
 
 	private void processOperationDiff(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
@@ -1082,7 +1070,8 @@ public class ProjectASTDiffer
 		Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo());
 		mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
 		new LeafMatcher().match(srcVarDeclaration,dstVarDeclaration,mappingStore);
-		processJavaDocs(srcTree,dstTree,srcUMLAttribute.getJavadoc(),dstUMLAttribute.getJavadoc(),mappingStore);
+		new JavaDocMatcher(srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc())
+				.match(srcTree, dstTree, mappingStore);
 		if (srcVarDeclaration != null && dstVarDeclaration != null)
 			mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
 	}
@@ -1236,7 +1225,8 @@ public class ProjectASTDiffer
 		}
 		processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
 		processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
-		processJavaDocs(srcTypeDeclaration,dstTypeDeclaration,classDiff.getOriginalClass().getJavadoc(),classDiff.getNextClass().getJavadoc(),mappingStore);
+		new JavaDocMatcher(classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc())
+				.match(srcTree, dstTree, mappingStore);
 		processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
 
 	}

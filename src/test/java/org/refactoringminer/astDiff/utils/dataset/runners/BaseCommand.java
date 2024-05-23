@@ -1,16 +1,8 @@
 package org.refactoringminer.astDiff.utils.dataset.runners;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.converters.PathConverter;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.URLHelper;
 import org.refactoringminer.astDiff.utils.dataset.DiffDataSet;
-import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
-
-import java.io.File;
-import java.nio.file.Path;
-
-import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 // Base class for common parameters
 abstract class BaseCommand {

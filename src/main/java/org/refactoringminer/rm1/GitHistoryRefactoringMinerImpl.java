@@ -76,7 +76,7 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringHandler;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.matchers.ProjectASTDiffer;
 import org.refactoringminer.util.GitServiceImpl;
 import org.slf4j.Logger;

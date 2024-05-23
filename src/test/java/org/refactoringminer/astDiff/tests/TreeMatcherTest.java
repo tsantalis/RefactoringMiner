@@ -16,8 +16,8 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
-import org.refactoringminer.astDiff.matchers.LeafMatcher;
+import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 

@@ -1,7 +1,7 @@
 package gui;
 
 import gui.webdiff.WebDiff;
-import org.refactoringminer.astDiff.actions.ProjectASTDiff;
+import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 
 public class RunWithPullRequest {

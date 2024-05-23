@@ -10,7 +10,6 @@ import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.diff.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.eclipse.jdt.core.search.FieldDeclarationMatch;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -573,7 +572,7 @@ public class ProjectASTDiffer
 
 	private void matchBlocks(Tree srcStatementNode, Tree dstStatementNode, ExtendedMultiMappingStore mappingStore) {
 		String searchingType = Constants.BLOCK;
-		Pair<Tree, Tree> matched = matchBasedOnType(srcStatementNode,dstStatementNode, searchingType);
+		Pair<Tree, Tree> matched = findPairOfType(srcStatementNode,dstStatementNode, searchingType);
 		if (matched != null)
 			mappingStore.addMapping(matched.first,matched.second);
 	}
@@ -1009,7 +1008,7 @@ public class ProjectASTDiffer
 		searchingTypes.add(Constants.PRIMITIVE_TYPE);
 		searchingTypes.add(Constants.BLOCK);
 		for (String type : searchingTypes) {
-			Pair<Tree,Tree> matched = matchBasedOnType(srcOperationNode,dstOperationNode,type);
+			Pair<Tree,Tree> matched = findPairOfType(srcOperationNode,dstOperationNode,type);
 			if (matched != null)
 				mappingStore.addMapping(matched.first,matched.second);
 		}
@@ -1033,7 +1032,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	public static Pair<Tree, Tree> matchBasedOnType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {
+	public static Pair<Tree, Tree> findPairOfType(Tree srcOperationNode, Tree dstOperationNode, String searchingType) {
 		if (srcOperationNode == null || dstOperationNode == null) return null;
 		Tree srcModifier = TreeUtilFunctions.findChildByType(srcOperationNode,searchingType);
 		Tree dstModifier = TreeUtilFunctions.findChildByType(dstOperationNode,searchingType);

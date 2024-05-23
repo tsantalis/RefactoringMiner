@@ -15,7 +15,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.matchBasedOnType;
+import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.findPairOfType;
 
 /* Created by pourya on 2024-05-22*/
 public class ClassDeclarationMatcher implements IExtendedMatcher{
@@ -64,7 +64,7 @@ public class ClassDeclarationMatcher implements IExtendedMatcher{
         searchingTypes.add(Constants.SIMPLE_NAME);
         searchingTypes.add(Constants.TYPE_DECLARATION_KIND);
         for (String type : searchingTypes) {
-            Pair<Tree,Tree> matched = matchBasedOnType(srcTypeDeclaration,dstTypeDeclaration,type);
+            Pair<Tree,Tree> matched = findPairOfType(srcTypeDeclaration,dstTypeDeclaration,type);
             if (matched != null)
                 mappingStore.addMapping(matched.first,matched.second);
         }

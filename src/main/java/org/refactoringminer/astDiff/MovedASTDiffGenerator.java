@@ -12,6 +12,8 @@ import org.refactoringminer.astDiff.matchers.ExtendedMultiMappingStore;
 
 import java.util.*;
 
+import static org.refactoringminer.astDiff.utils.Helpers.findTreeContexts;
+
 public abstract class MovedASTDiffGenerator {
     protected final ProjectASTDiff projectASTDiff;
     protected final UMLModelDiff modelDiff;
@@ -24,7 +26,7 @@ public abstract class MovedASTDiffGenerator {
         Map<Pair<String, String>, List<Mapping>> filePairMappings = makeFilePairMappings();
         Set<ASTDiff> movedDiffs = new LinkedHashSet<>();
         for(Pair<String, String> pair : filePairMappings.keySet()) {
-            Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(pair.first, pair.second);
+            Pair<TreeContext, TreeContext> treeContextPairs = findTreeContexts(modelDiff, pair.first, pair.second);
             List<Mapping> mappings = filePairMappings.get(pair);
             if(!mappings.isEmpty()) {
                 Tree leftRoot = treeContextPairs.first.getRoot();
@@ -47,9 +49,5 @@ public abstract class MovedASTDiffGenerator {
             }
         }
         return movedDiffs;
-    }
-    private Pair<TreeContext, TreeContext> findTreeContexts(String srcPath, String dstPath) {
-        return new Pair<>(modelDiff.getParentModel().getTreeContextMap().get(srcPath),
-                modelDiff.getChildModel().getTreeContextMap().get(dstPath));
     }
 }

@@ -18,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.findNameByTree;
+import static org.refactoringminer.astDiff.utils.Helpers.findNameByTree;
 
 /* Created by pourya on 2024-05-16*/
 public class MovedDeclarationGenerator extends MovedASTDiffGenerator {

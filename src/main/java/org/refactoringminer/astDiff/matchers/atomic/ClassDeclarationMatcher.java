@@ -15,7 +15,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.refactoringminer.astDiff.matchers.ProjectASTDiffer.findPairOfType;
+import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
 
 /* Created by pourya on 2024-05-22*/
 public class ClassDeclarationMatcher implements IExtendedMatcher{

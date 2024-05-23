@@ -860,6 +860,12 @@ public class ReplacementAlgorithm {
 								findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 								break;
 							}
+							else if(value1.endsWith(".") && value2.contains(value1.substring(0, value1.length()-1))) {
+								Set<String> set1 = Set.of(stringLiteral1);
+								Set<String> set2 = Set.of(call2.actualString());
+								findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+								break;
+							}
 						}
 					}
 				}

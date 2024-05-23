@@ -4584,9 +4584,7 @@ public class UMLModelDiff {
 						String attributeInitializer = attributeDeclaration.getInitializer().getString();
 						String variableInitializer = v1.getInitializer().getString();
 						if(attributeInitializer.equals(variableInitializer) && attributeDeclaration.equalType(v1) && !initializerContainsTypeLiteral(v1, attributeDeclaration) &&
-								(attribute.getName().equals(v1.getVariableName()) ||
-										attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) ||
-										v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {
+								matchingName(v1, attribute)) {
 							nonMappedStatementsDeclaringSameVariable++;
 							leafIterator1.remove();
 							LeafMapping mapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
@@ -4636,9 +4634,7 @@ public class UMLModelDiff {
 						String attributeInitializer = attributeDeclaration.getInitializer().getString();
 						String variableInitializer = v1.getInitializer().getString();
 						if(attributeInitializer.equals(variableInitializer) && attributeDeclaration.equalType(v1) &&
-								(attribute.getName().equals(v1.getVariableName()) ||
-										attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) ||
-										v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()))) {
+								matchingName(v1, attribute)) {
 							LeafMapping newMapping = new LeafMapping(v1.getInitializer(), attributeDeclaration.getInitializer(),
 									operationBodyMapper.getContainer1(),
 									operationBodyMapper.getContainer2());
@@ -4650,7 +4646,7 @@ public class UMLModelDiff {
 					}
 				}
 			}
-			else if(addedClass != null && s1.getString().contains(JAVA.ASSIGNMENT) && !s1.getString().contains("==") && !s1.getString().contains("!=")) {
+			else if(addedClass != null && s1.getString().contains(JAVA.ASSIGNMENT) && !s1.getString().contains("==") && !s1.getString().contains("!=") && !s1.getString().contains("<=") && !s1.getString().contains(">=")) {
 				for(UMLAttribute attribute : addedClass.getAttributes()) {
 					VariableDeclaration attributeDeclaration = attribute.getVariableDeclaration();
 					if(attributeDeclaration.getInitializer() != null) {
@@ -4704,6 +4700,19 @@ public class UMLModelDiff {
 				(nonMappedElementsT1-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT2/2.0)) ||
 				(nonMappedElementsT2-nonMappedStatementsDeclaringSameVariable-nonMappedLoopsIteratingOverSameVariable <= 0 && mappings > Math.floor(nonMappedElementsT1/2.0)) ||
 				(mappings > Math.floor(nonMappedElementsT2/2.0) && mappings > Math.floor(nonMappedElementsT1/2.0) && identicalJavadoc);
+	}
+
+	private boolean matchingName(VariableDeclaration v1, UMLAttribute attribute) {
+		if(attribute.getName().equals(v1.getVariableName())) {
+			return true;
+		}
+		if(attribute.getName().toLowerCase().contains(v1.getVariableName().toLowerCase()) && v1.getVariableName().length() > 1) {
+			return true;
+		}
+		if(v1.getVariableName().toLowerCase().contains(attribute.getName().toLowerCase()) && attribute.getName().length() > 1) {
+			return true;
+		}
+		return false;
 	}
 
 	private static Set<String> convertToStringSet(List<? extends LeafExpression> expressions) {

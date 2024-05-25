@@ -848,23 +848,39 @@ public class ReplacementAlgorithm {
 		findReplacements(methodInvocations1, stringLiterals2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
 		if(stringLiterals1.size() > 0 && methodInvocationMap2.size() > 0) {
 			for(String stringLiteral1 : stringLiterals1) {
+				List<LeafExpression> leafExpressions1 = statement1.findExpression(stringLiteral1);
 				String value1 = stringLiteral1.substring(1, stringLiteral1.length()-1);
-				for(AbstractCall call2 : statement2.getMethodInvocations()) {
-					String expression = call2.getExpression();
-					if(expression != null && methodInvocations2.contains(call2.actualString())) {
-						if(expression.startsWith("\"") && expression.endsWith("\"")) {
-							String value2 = expression.substring(1, expression.length()-1);
-							if(value1.contains(value2) || value2.contains(value1)) {
-								Set<String> set1 = Set.of(stringLiteral1);
-								Set<String> set2 = Set.of(call2.actualString());
-								findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
-								break;
-							}
-							else if(value1.endsWith(".") && value2.contains(value1.substring(0, value1.length()-1))) {
-								Set<String> set1 = Set.of(stringLiteral1);
-								Set<String> set2 = Set.of(call2.actualString());
-								findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
-								break;
+				if(!value1.isEmpty()) {
+					for(AbstractCall call2 : statement2.getMethodInvocations()) {
+						String expression = call2.getExpression();
+						if(expression != null && methodInvocations2.contains(call2.actualString())) {
+							if(expression.startsWith("\"") && expression.endsWith("\"")) {
+								String value2 = expression.substring(1, expression.length()-1);
+								List<LeafExpression> leafExpressions2 = statement2.findExpression(expression);
+								if(!value2.isEmpty() && (value1.contains(value2) || value2.contains(value1))) {
+									Set<String> set1 = Set.of(stringLiteral1);
+									Set<String> set2 = Set.of(call2.actualString());
+									findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+									if(leafExpressions1.size() == leafExpressions2.size()) {
+										for(int i=0; i<leafExpressions1.size(); i++) {
+											LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+											replacementInfo.addSubExpressionMapping(leafMapping);
+										}
+									}
+									break;
+								}
+								else if(value1.endsWith(".") && value2.contains(value1.substring(0, value1.length()-1))) {
+									Set<String> set1 = Set.of(stringLiteral1);
+									Set<String> set2 = Set.of(call2.actualString());
+									findReplacements(set1, set2, replacementInfo, ReplacementType.METHOD_INVOCATION_REPLACED_WITH_STRING_LITERAL, container1, container2, classDiff);
+									if(leafExpressions1.size() == leafExpressions2.size()) {
+										for(int i=0; i<leafExpressions1.size(); i++) {
+											LeafMapping leafMapping = new LeafMapping(leafExpressions1.get(i), leafExpressions2.get(i), container1, container2);
+											replacementInfo.addSubExpressionMapping(leafMapping);
+										}
+									}
+									break;
+								}
 							}
 						}
 					}

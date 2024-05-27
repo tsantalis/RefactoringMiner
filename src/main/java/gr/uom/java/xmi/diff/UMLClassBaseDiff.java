@@ -2593,6 +2593,27 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		Set<Refactoring> refactoringsToBeAdded = new LinkedHashSet<Refactoring>();
+		for(Refactoring r : refactorings) {
+			if(r instanceof MergeOperationRefactoring) {
+				MergeOperationRefactoring merge = (MergeOperationRefactoring)r;
+				for(UMLOperationBodyMapper mapper : merge.getMappers()) {
+					InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
+					List<UMLOperation> sortedRemovedOperations = detection.getRemovedOperationsSortedByCalls();
+					for(UMLOperation removedOperation : sortedRemovedOperations) {
+						List<InlineOperationRefactoring> refs = detection.check(removedOperation);
+						for(InlineOperationRefactoring refactoring : refs) {
+							refactoringsToBeAdded.add(refactoring);
+							UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+							inlinedOperationMappers.add(operationBodyMapper);
+							mapper.addChildMapper(operationBodyMapper);
+							operationsToBeRemoved.add(removedOperation);
+						}
+					}
+				}
+			}
+		}
+		refactorings.addAll(refactoringsToBeAdded);
 		MappingOptimizer optimizer = new MappingOptimizer(this);
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
 			optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);

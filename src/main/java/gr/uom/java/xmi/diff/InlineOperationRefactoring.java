@@ -260,6 +260,10 @@ public class InlineOperationRefactoring implements Refactoring {
 	public RefactoringType getRefactoringType() {
 		if (!getTargetOperationBeforeInline().getClassName().equals(getInlinedOperation().getClassName()))
 			return RefactoringType.MOVE_AND_INLINE_OPERATION;
+		if (bodyMapper.getClassDiff() != null) {
+			if(!bodyMapper.getClassDiff().getNextClassName().equals(getTargetOperationAfterInline().getClassName()))
+				return RefactoringType.MOVE_AND_INLINE_OPERATION;
+		}
 		return RefactoringType.INLINE_OPERATION;
 	}
 

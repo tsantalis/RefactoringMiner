@@ -30,6 +30,7 @@ function getEditorOptions(text) {
         minimap: {
             enabled: false,
         },
+        wordWrap: 'on' // Enables word wrap
     };
 }
 

@@ -34,6 +34,7 @@ import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
+import org.eclipse.jdt.core.dom.IDocElement;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
@@ -265,10 +266,13 @@ public class UMLModelASTReader {
 			doc = new UMLJavadoc(locationInfo);
 			List<TagElement> tags = javaDoc.tags();
 			for(TagElement tag : tags) {
-				UMLTagElement tagElement = new UMLTagElement(tag.getTagName());
-				List fragments = tag.fragments();
-				for(Object docElement : fragments) {
-					tagElement.addFragment(docElement.toString());
+				LocationInfo tagLocationInfo = generateLocationInfo(cu, sourceFile, tag, CodeElementType.TAG_ELEMENT);
+				UMLTagElement tagElement = new UMLTagElement(tag.getTagName(), tagLocationInfo);
+				List<IDocElement> fragments = tag.fragments();
+				for(IDocElement docElement : fragments) {
+					LocationInfo docElementLocationInfo = generateLocationInfo(cu, sourceFile, (ASTNode)docElement, CodeElementType.DOC_ELEMENT);
+					UMLDocElement umlDocElement = new UMLDocElement(docElement.toString(), docElementLocationInfo);
+					tagElement.addFragment(umlDocElement);
 				}
 				doc.addTag(tagElement);
 			}

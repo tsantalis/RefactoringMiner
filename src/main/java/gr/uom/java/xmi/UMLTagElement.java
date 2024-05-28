@@ -3,16 +3,28 @@ package gr.uom.java.xmi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLTagElement {
+import gr.uom.java.xmi.diff.CodeRange;
+
+public class UMLTagElement implements LocationInfoProvider {
+	private LocationInfo locationInfo;
 	private String tagName;
-	private List<String> fragments;
+	private List<UMLDocElement> fragments;
 	
-	public UMLTagElement(String tagName) {
+	public UMLTagElement(String tagName, LocationInfo locationInfo) {
+		this.locationInfo = locationInfo;
 		this.tagName = tagName;
-		this.fragments = new ArrayList<String>();
+		this.fragments = new ArrayList<UMLDocElement>();
 	}
-	
-	public void addFragment(String fragment) {
+
+	public LocationInfo getLocationInfo() {
+		return locationInfo;
+	}
+
+	public CodeRange codeRange() {
+		return locationInfo.codeRange();
+	}
+
+	public void addFragment(UMLDocElement fragment) {
 		fragments.add(fragment);
 	}
 
@@ -20,13 +32,13 @@ public class UMLTagElement {
 		return tagName;
 	}
 
-	public List<String> getFragments() {
+	public List<UMLDocElement> getFragments() {
 		return fragments;
 	}
 
 	public boolean contains(String s) {
-		for(String fragment : fragments) {
-			if(fragment.contains(s)) {
+		for(UMLDocElement fragment : fragments) {
+			if(fragment.getText().contains(s)) {
 				return true;
 			}
 		}
@@ -34,8 +46,8 @@ public class UMLTagElement {
 	}
 
 	public boolean containsIgnoreCase(String s) {
-		for(String fragment : fragments) {
-			if(fragment.toLowerCase().contains(s.toLowerCase())) {
+		for(UMLDocElement fragment : fragments) {
+			if(fragment.getText().toLowerCase().contains(s.toLowerCase())) {
 				return true;
 			}
 		}

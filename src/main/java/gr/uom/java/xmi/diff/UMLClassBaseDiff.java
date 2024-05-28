@@ -158,6 +158,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(mapper.getContainer1().isConstructor() && mapper.getContainer2().isConstructor()) {
 				constructorMappers.add(mapper);
 			}
+			if(mapper.getContainer1().getName().equals("main") && mapper.getContainer2().getName().equals("main")) {
+				constructorMappers.add(mapper);
+			}
 			if(mapper.getAnonymousClassDiffs().size() > 0 && mapper.nonMappedElementsT1() > 0) {
 				for(UMLAnonymousClassDiff anonymousClassDiff : mapper.getAnonymousClassDiffs()) {
 					for(UMLOperationBodyMapper anonymousMapper : anonymousClassDiff.getOperationBodyMapperList()) {
@@ -235,6 +238,35 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				Set<Refactoring> refactoringsToBeAdded = new LinkedHashSet<Refactoring>();
+				for(Refactoring r : refactorings) {
+					if(r instanceof MergeOperationRefactoring) {
+						MergeOperationRefactoring merge = (MergeOperationRefactoring)r;
+						for(UMLOperationBodyMapper mapper : merge.getMappers()) {
+							if(!mapper.equals(constructorMapper)) {
+								if(mapper.nonMappedElementsT1() > 0) {
+									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, constructorMapper, this);
+									if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
+										MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+										if(!moveCodeMappers.contains(moveCodeMapper))
+											moveCodeMappers.add(moveCodeMapper);
+										refactoringsToBeAdded.add(ref);
+									}
+								}
+								if(mapper.nonMappedElementsT2() > 0) {
+									UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(constructorMapper, mapper, this);
+									if(moveCodeMapper.getExactMatchesWithoutLoggingStatements().size() > 0 && !mappingFoundInExtractedMethod(moveCodeMapper.getMappings())) {
+										MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+										if(!moveCodeMappers.contains(moveCodeMapper))
+											moveCodeMappers.add(moveCodeMapper);
+										refactoringsToBeAdded.add(ref);
+									}
+								}
+							}
+						}
+					}
+				}
+				refactorings.addAll(refactoringsToBeAdded);
 			}
 		}
 		for(UMLOperation removedOperation : removedOperations) {

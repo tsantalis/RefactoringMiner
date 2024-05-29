@@ -1,8 +1,11 @@
 package gui.webdiff;
 
+import java.util.Optional;
+
 public class TreeNodeInfo {
     private final String name;
     private final String fullPath;
+    private Optional<String> srcFilePath = Optional.empty();
     private int id = -1; // NonLeafNode has id = -1;
 
     public String getName() {
@@ -21,7 +24,15 @@ public class TreeNodeInfo {
         this.id = id;
     }
 
-    public TreeNodeInfo(String name, String fullPath) {
+    public void setSrcFilePath(String srcFilePath) {
+    	this.srcFilePath = Optional.of(srcFilePath);
+    }
+
+    public Optional<String> getSrcFilePath() {
+		return srcFilePath;
+	}
+
+	public TreeNodeInfo(String name, String fullPath) {
         this.name = name;
         this.fullPath = fullPath;
     }

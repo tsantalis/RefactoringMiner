@@ -235,8 +235,8 @@ public class MonacoDiffView implements Renderable {
                                 .add("data-bs-toggle", "popover")
                                 .add("data-bs-placement", "bottom")
                                 .add("data-bs-html", "true")
-                                .add("data-bs-content", "<b>q</b> quit<br><b>l</b> list<br>"
-                                        + "<b>t</b> top<br><b>b</b> bottom", false)
+                                .add("data-bs-content", "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"
+                                        + "<b>Alt + t</b> top<br><b>Alt + b</b> bottom <br><b>Alt + w</b> toggle word wrap", false)
                         )
                         .content("Shortcuts")
                     ._div()

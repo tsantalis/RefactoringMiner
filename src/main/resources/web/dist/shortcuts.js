@@ -36,7 +36,7 @@ $(function(){
     let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
       return new bootstrap.Popover(popoverTriggerEl)
     })
-    $("body").keypress(function(event) {
+    $("body").keydown(function(event) {
         if (event.altKey)
         {
             switch (event.code){

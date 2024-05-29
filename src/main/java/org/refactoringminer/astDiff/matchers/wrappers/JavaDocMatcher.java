@@ -36,7 +36,7 @@ public class JavaDocMatcher implements TreeMatcher {
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
             		Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dst = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
-                    if(!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst)) {
+                    if(!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst) || diff.isManyToManyReformat()) {
                     	mappingStore.addMapping(src,dst);
                     }
             	}

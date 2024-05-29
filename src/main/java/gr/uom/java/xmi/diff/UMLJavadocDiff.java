@@ -19,6 +19,7 @@ public class UMLJavadocDiff {
 	private List<UMLTagElement> addedTags;
 	private List<UMLDocElement> deletedDocElements;
 	private List<UMLDocElement> addedDocElements;
+	private boolean manyToManyReformat;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
 		this.commonTags = new LinkedHashSet<Pair<UMLTagElement,UMLTagElement>>();
@@ -128,6 +129,44 @@ public class UMLJavadocDiff {
 		}
 		List<UMLDocElement> deletedToBeDeleted = new ArrayList<UMLDocElement>();
 		List<UMLDocElement> addedToBeDeleted = new ArrayList<UMLDocElement>();
+		if(deletedDocElements.size() == addedDocElements.size()) {
+			for(int i=0; i<deletedDocElements.size(); i++) {
+				UMLDocElement deletedDocElement = deletedDocElements.get(i);
+				UMLDocElement addedDocElement = addedDocElements.get(i);
+				if(deletedDocElement.getText().replaceAll("\\s", "").equals(addedDocElement.getText().replaceAll("\\s", ""))) {
+					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+					commonDocElements.add(pair);
+					deletedToBeDeleted.add(deletedDocElement);
+					addedToBeDeleted.add(addedDocElement);
+				}
+			}
+			deletedDocElements.removeAll(deletedToBeDeleted);
+			addedDocElements.removeAll(addedToBeDeleted);
+		}
+		//check if all deleted docElements match all added docElements
+		StringBuilder deletedSB = new StringBuilder();
+		for(UMLDocElement deletedDocElement : deletedDocElements) {
+			String text = deletedDocElement.getText();
+			deletedSB.append(text);
+		}
+		StringBuilder addedSB = new StringBuilder();
+		for(UMLDocElement addedDocElement : addedDocElements) {
+			String text = addedDocElement.getText();
+			addedSB.append(text);
+		}
+		if(deletedSB.toString().replaceAll("\\s", "").equals(addedSB.toString().replaceAll("\\s", ""))) {
+			//make all pair combinations
+			for(UMLDocElement deletedDocElement : deletedDocElements) {
+				for(UMLDocElement addedDocElement : addedDocElements) {
+					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+					commonDocElements.add(pair);
+				}
+			}
+			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
+				manyToManyReformat = true;
+			}
+			return true;
+		}
 		if(deletedDocElements.size() > addedDocElements.size()) {
 			for(UMLDocElement addedDocElement : addedDocElements) {
 				String text = addedDocElement.getText();
@@ -205,5 +244,9 @@ public class UMLJavadocDiff {
 
 	public List<UMLDocElement> getAddedDocElements() {
 		return addedDocElements;
+	}
+
+	public boolean isManyToManyReformat() {
+		return manyToManyReformat;
 	}
 }

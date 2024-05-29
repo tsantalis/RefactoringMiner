@@ -82,8 +82,8 @@ public class VanillaDiffView implements Renderable {
                                 .add("data-bs-toggle", "popover")
                                 .add("data-bs-placement", "bottom")
                                 .add("data-bs-html", "true")
-                                .add("data-bs-content", "<b>q</b> quit<br><b>l</b> list<br><b>n</b> next<br>"
-                                        + "<b>t</b> top<br><b>b</b> bottom", false)
+                                .add("data-bs-content", "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"
+                                        + "<b>Alt + t</b> top<br><b>Alt + b</b> bottom", false)
                         ).content("Shortcuts")
                     ._div()
                     .div(class_("btn-group"))

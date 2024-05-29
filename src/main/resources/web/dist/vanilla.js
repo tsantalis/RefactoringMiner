@@ -58,11 +58,12 @@ function isSrc(eltId) {
 
 $(function() {
     // highlight
-    $("span.mv.token, span.token.upd").click(function(event) {
+
+    $("span.mv.token, span.token.upd, span.token.non").click(function(event) {
         if ($(this).hasClass("selected")) {
-            $("span.mv.token, span.token.upd").removeClass("selected");
+            $("span.mv.token, span.token.upd, span.token.non").removeClass("selected");
         } else {
-            $("span.mv.token, span.token.upd, span.token.mm").removeClass("selected");
+            $("span.mv.token, span.token.upd, span.token.mm, span.token.non").removeClass("selected");
             var eltId = $(this).attr("id");
             var refEltId = getMappedElement(eltId);
             $("#" + refEltId).addClass("selected");
@@ -70,30 +71,11 @@ $(function() {
             var elmntToView = document.getElementById(refEltId);
             elmntToView.scrollIntoView({ alignToTop : false, behavior: 'smooth'});
 
-            // if (isSrc(eltId))
-            // {
-            //     $("#right").animate({scrollTo: $("#" + refEltId).position().top - 200}, 500)
-            //     console.log("right position")
-            //     console.log($("#" + refEltId).position().top - 200);
-            // }
-            // else
-            // {
-            //     $("#left").animate({scrollTo: $("#" + refEltId).position().top - 200}, 500);
-            //     console.log("left position");
-            //     console.log($("#" + refEltId).position.top - 200);
-            // }
-            // var sel = "#dst";
-            // if (isSrc(refEltId))
-            //     var sel = "#src";
-            // $div = $(sel);
-            // $span = $("#" + refEltId);
-
         }
         event.stopPropagation();
     });
 
     $("span.mm.token").click(function(event) {
-        console.log("asa")
         if ($(this).hasClass("selected")) {
             $("span.mm.token").removeClass("selected");
         } else {
@@ -112,19 +94,6 @@ $(function() {
         $("span.mv.token, span.token.upd").removeClass("selected");
         event.stopPropagation();
     });
-
-//    // tooltip
-//    $("span.token").hover(
-//    	function (event) {
-//    	    console.log("yay")
-//    		$(this).tooltip('show');
-//    		event.stopPropagation();
-//    	},
-//    	function (event) {
-//    		$(this).tooltip('hide');
-//    		event.stopPropagation();
-//    	}
-//    );
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
 
 });

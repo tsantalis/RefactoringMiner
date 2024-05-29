@@ -150,5 +150,7 @@ require(['vs/editor/editor.main'], function() {
                 }
             }
         });
+        window.leftEditor = leftEditor;
+        window.rightEditor = rightEditor;
     });
 });

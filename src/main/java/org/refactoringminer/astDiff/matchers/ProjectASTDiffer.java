@@ -13,6 +13,7 @@ import gr.uom.java.xmi.diff.UMLModelDiff;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
+import org.refactoringminer.astDiff.actions.editscript.SimplifiedExtendedChawatheScriptGenerator;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.moved.AllSubTreesMovedASTDiffGenerator;
@@ -145,9 +146,12 @@ public class ProjectASTDiffer
 				if (append != null)
 					append.getAllMappings().mergeMappings(mappingStore);
 				else {
+					mappingStore.addMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
 					ASTDiff diff = new ASTDiff(srcPath, dstPath,
 							treeContextPair.first, treeContextPair.second,
-							mappingStore);
+							mappingStore,
+							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
+					mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
 					projectASTDiff.addMoveASTDiff(diff);
 				}
 			}

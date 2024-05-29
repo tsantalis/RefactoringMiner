@@ -1,7 +1,12 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
+
+import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLJavadoc;
+import gr.uom.java.xmi.diff.UMLJavadocDiff;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.BasicTreeMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -27,6 +32,14 @@ public class JavaDocMatcher implements TreeMatcher {
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             } else {
                 new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
+                UMLJavadocDiff diff = new UMLJavadocDiff(srcUMLJavaDoc, dstUMLJavaDoc);
+                for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
+            		Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
+                    Tree dst = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
+                    if(!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst)) {
+                    	mappingStore.addMapping(src,dst);
+                    }
+            	}
                 mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode);
             }
         }

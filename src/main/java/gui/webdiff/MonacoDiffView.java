@@ -2,6 +2,7 @@ package gui.webdiff;
 
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.actions.classifier.ExtendedTreeClassifier;
@@ -136,7 +137,6 @@ public class MonacoDiffView implements Renderable {
                     }
                     appendRange(b, t, tag, null);
                 }
-
             }
             b.append("]").append(",");
             b.append("}");
@@ -164,6 +164,8 @@ public class MonacoDiffView implements Renderable {
 
     private String getMappingsJsConfig() {
         if (diff instanceof ASTDiff) {
+            ASTDiff astDiff = (ASTDiff) diff;
+            MappingStore monoMappingStore = astDiff.getAllMappings().getMonoMappingStore();
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("[");
@@ -171,6 +173,15 @@ public class MonacoDiffView implements Renderable {
                 if (c.getMovedSrcs().contains(t) || c.getUpdatedSrcs().contains(t)) {
                     Tree d = ((ASTDiff)diff).getAllMappings().getDsts(t).iterator().next();
                     b.append(String.format("[%s, %s, %s, %s], ", t.getPos(), t.getEndPos(), d.getPos(), d.getEndPos()));
+                }
+                else {
+                    if (monoMappingStore.isSrcMapped(t)) {
+                        b.append(String.format("[%s, %s, %s, %s], ",
+                                t.getPos(),
+                                t.getEndPos(),
+                                monoMappingStore.getDstForSrc(t).getPos(),
+                                monoMappingStore.getDstForSrc(t).getEndPos()));
+                    }
                 }
             }
             b.append("]").append(",");

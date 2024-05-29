@@ -110,7 +110,7 @@ require(['vs/editor/editor.main'], function() {
         leftEditor.onMouseDown((event) => {
             if (event.target.range) {
                 const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
-                    .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
                 if (allDecorations.length >= 1) {
                     let activatedRange = allDecorations[0].range;
                     if (allDecorations.length > 1) {
@@ -121,7 +121,9 @@ require(['vs/editor/editor.main'], function() {
                         }
                     }
                     const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
-                    rightEditor.revealRangeInCenter(mapping[1]);
+                    if (mapping)
+                        if (mapping.length > 1)
+                            rightEditor.revealRangeInCenter(mapping[1]);
                 }
             }
         });
@@ -136,7 +138,7 @@ require(['vs/editor/editor.main'], function() {
         rightEditor.onMouseDown((event) => {
             if (event.target.range) {
                 const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
-                    .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
                 if (allDecorations.length >= 1) {
                     let activatedRange = allDecorations[0].range;
                     if (allDecorations.length > 1) {
@@ -146,7 +148,9 @@ require(['vs/editor/editor.main'], function() {
                         }
                     }
                     const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
-                    leftEditor.revealRangeInCenter(mapping[0]);
+                    if (mapping)
+                        if (mapping.length > 1)
+                            leftEditor.revealRangeInCenter(mapping[0]);
                 }
             }
         });

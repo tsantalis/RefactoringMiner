@@ -71,7 +71,7 @@ public final class VanillaDiffHtmlBuilder {
                     ltags.addTags(t.getPos(), String.format(
                             SRC_MV_SPAN, "token mv", mId++, tooltip(diff.src, t)), t.getEndPos(), END_SPAN);
                 }
-                if (c.getUpdatedSrcs().contains(t)) {
+                else if (c.getUpdatedSrcs().contains(t)) {
                     mappingIds.put(diff.getAllMappings().getDsts(t).iterator().next(), mId);
                     ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     ltags.addTags(t.getPos(), String.format(
@@ -81,12 +81,12 @@ public final class VanillaDiffHtmlBuilder {
                         ltags.addTags(t.getPos() + hunk[0], UPD_SPAN, t.getPos() + hunk[1], END_SPAN);
 
                 }
-                if (c.getDeletedSrcs().contains(t)) {
+                else if (c.getDeletedSrcs().contains(t)) {
                     ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     ltags.addTags(t.getPos(), String.format(
                             ADD_DEL_SPAN, "token del", tooltip(diff.src, t)), t.getEndPos(), END_SPAN);
                 }
-                if (c.getMultiMapSrc().containsKey(t)) {
+                else if (c.getMultiMapSrc().containsKey(t)) {
                     if (!srcMM.contains(t)) {
                         int gid = ((MultiMove) (c.getMultiMapSrc().get(t))).getGroupId();
                         ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
@@ -98,10 +98,18 @@ public final class VanillaDiffHtmlBuilder {
                         srcMM.add(t);
                     }
                 }
-                if (c.getSrcMoveOutTreeMap().containsKey(t)) {
+                else if (c.getSrcMoveOutTreeMap().containsKey(t)) {
                     ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     ltags.addTags(t.getPos(), String.format(
                             MoveOut_SPAN, "token moveOut", c.getSrcMoveOutTreeMap().get(t).toString()), t.getEndPos(), END_SPAN);
+                }
+                else {
+                    if (diff.getAllMappings().isSrcMapped(t)){
+                        mappingIds.put(diff.getAllMappings().getDsts(t).iterator().next(), mId);
+                        ltags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
+                        ltags.addTags(t.getPos(), String.format(
+                                SRC_MV_SPAN, "token non", mId++, tooltip(diff.src, t)), t.getEndPos(), END_SPAN);
+                    }
                 }
             }
             for (Tree t : diff.dst.getRoot().preOrder()) {
@@ -111,7 +119,7 @@ public final class VanillaDiffHtmlBuilder {
                     rtags.addTags(t.getPos(), String.format(
                             DST_MV_SPAN, "token mv", dId, tooltip(diff.dst, t)), t.getEndPos(), END_SPAN);
                 }
-                if (c.getUpdatedDsts().contains(t)) {
+                else if (c.getUpdatedDsts().contains(t)) {
                     int dId = mappingIds.getInt(t);
                     rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     rtags.addTags(t.getPos(), String.format(
@@ -120,12 +128,12 @@ public final class VanillaDiffHtmlBuilder {
                     for (int[] hunk : hunks)
                         rtags.addTags(t.getPos() + hunk[2], UPD_SPAN, t.getPos() + hunk[3], END_SPAN);
                 }
-                if (c.getInsertedDsts().contains(t)) {
+                else if (c.getInsertedDsts().contains(t)) {
                     rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     rtags.addTags(t.getPos(), String.format(
                             ADD_DEL_SPAN, "token add", tooltip(diff.dst, t)), t.getEndPos(), END_SPAN);
                 }
-                if (c.getMultiMapDst().containsKey(t)) {
+                else if (c.getMultiMapDst().containsKey(t)) {
                     if (!dstMM.contains(t)) {
                         int gid = ((MultiMove) (c.getMultiMapDst().get(t))).getGroupId();
                         boolean updated = ((MultiMove) (c.getMultiMapDst().get(t))).isUpdated();
@@ -137,10 +145,19 @@ public final class VanillaDiffHtmlBuilder {
                         dstMM.add(t);
                     }
                 }
-                if (c.getDstMoveInTreeMap().containsKey(t)) {
+                else if (c.getDstMoveInTreeMap().containsKey(t)) {
                     rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
                     rtags.addTags(t.getPos(), String.format(
                             MoveIn_SPAN, "token moveIn", c.getDstMoveInTreeMap().get(t).toString()), t.getEndPos(), END_SPAN);
+                }
+                else {
+                    //no action associated with this subtree
+                    if (diff.getAllMappings().isDstMapped(t)){
+                        int dId = mappingIds.getInt(t);
+                        rtags.addStartTag(t.getPos(), String.format(ID_SPAN, uId++));
+                        rtags.addTags(t.getPos(), String.format(
+                                DST_MV_SPAN, "token non", dId, tooltip(diff.dst, t)), t.getEndPos(), END_SPAN);
+                    }
                 }
             }
         }

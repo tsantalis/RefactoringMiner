@@ -18,28 +18,45 @@
  * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
  */
 
+function toggleWordWrap() {
+    // Toggle word wrap
+    toggleEditor(window.rightEditor);
+    toggleEditor(window.leftEditor);
+    function toggleEditor(editor) {
+        if (editor) {
+            var currentWrapMode = editor.getRawOptions().wordWrap;
+            var newWrapMode = currentWrapMode === 'on' ? 'off' : 'on';
+            editor.updateOptions({wordWrap: newWrapMode});
+        }
+    }
+}
+
 $(function(){
     let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
       return new bootstrap.Popover(popoverTriggerEl)
     })
+    $("body").keypress(function(event) {
+        if (event.altKey)
+        {
+            switch (event.code){
+                case "KeyT":
+                    $('html, body').animate({scrollTop: 0}, 100);
+                    break;
+                case "KeyB":
+                    $("html, body").animate({ scrollTop: $(document).height() }, 100);
+                    break;
+                case "KeyQ":
+                    window.location = "/quit";
+                    break;
+                case "KeyL":
+                    window.location = "/list";
+                    break;
+                case "KeyW":
+                    toggleWordWrap();
+                    break;
+            }
 
-    $("body").keypress(function (event) {
-        switch (event.which) {
-            //TODO: Disable hotkeys (temp)
-
-            // case 116:
-            //     $('html, body').animate({scrollTop: 0}, 100);
-            //     break;
-            // case 98:
-            //     $("html, body").animate({ scrollTop: $(document).height() }, 100);
-            //     break;
-            // case 113:
-            //     window.location = "/quit";
-            //     break;
-            // case 108:
-            //     window.location = "/list";
-            //     break;
         }
     });
 });

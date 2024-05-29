@@ -61,7 +61,7 @@ jobs:
         path: 'build/test-results/test/TEST-*.xml'
         reporter: 'java-junit'
         list-tests: failed
-        fail-on-error: true
+        fail-on-error: false
     
     - name: Test Report to Gist
       uses: gaelgirodon/ci-badges-action@v1

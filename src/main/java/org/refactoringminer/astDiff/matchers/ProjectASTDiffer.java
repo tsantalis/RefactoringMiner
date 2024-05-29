@@ -5,6 +5,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.diff.MoveOperationRefactoring;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -120,14 +121,40 @@ public class ProjectASTDiffer
 	private List<? extends UMLAbstractClassDiff> getExtraDiffs() {
 		List<UMLAbstractClassDiff> extraDiffs = new ArrayList<>();
 		for (Refactoring modelDiffRefactoring : modelDiffRefactorings) {
-			if ((modelDiffRefactoring.getRefactoringType() == RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS))
+			if (modelDiffRefactoring.getRefactoringType() == RefactoringType.REPLACE_ANONYMOUS_WITH_CLASS)
 			{
 				ReplaceAnonymousWithClassRefactoring replaceAnonymousWithClassRefactoring = (ReplaceAnonymousWithClassRefactoring) modelDiffRefactoring;
 				extraDiffs.add(replaceAnonymousWithClassRefactoring.getDiff());
 			}
+			else if(modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_AND_RENAME_OPERATION ||
+					modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_OPERATION)
+			{
+				MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) modelDiffRefactoring;
+				String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
+				String dstPath = moveOperationRefactoring.getMovedOperation().getLocationInfo().getFilePath();
+				Pair<TreeContext, TreeContext> treeContextPair = findTreeContexts(modelDiff, srcPath, dstPath);
+				Tree srcTree = treeContextPair.first.getRoot();
+				Tree dstTree = treeContextPair.second.getRoot();
+				ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
+				optimizationDataMap.putIfAbsent(srcPath,
+						new OptimizationData(new ArrayList<>(),
+						new ExtendedMultiMappingStore(srcTree,dstTree)));
+				optimizationData = optimizationDataMap.get(srcPath);
+				new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper()).match(srcTree, dstTree, mappingStore);
+				ASTDiff append = findAppend(srcPath, dstPath);
+				if (append != null)
+					append.getAllMappings().mergeMappings(mappingStore);
+				else {
+					ASTDiff diff = new ASTDiff(srcPath, dstPath,
+							treeContextPair.first, treeContextPair.second,
+							mappingStore);
+					projectASTDiff.addMoveASTDiff(diff);
+				}
+			}
 		}
 		return extraDiffs;
 	}
+
 	private void computeAllEditScripts() {
 		long editScript_start = System.currentTimeMillis();
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
@@ -151,10 +178,16 @@ public class ProjectASTDiffer
 	}
 
 	private ASTDiff findAppend(UMLAbstractClassDiff classBaseDiff) {
+		String originalSourceFile = classBaseDiff.getOriginalClass().getSourceFile();
+		String nextSourceFile = classBaseDiff.getNextClass().getSourceFile();
+		return findAppend(originalSourceFile, nextSourceFile);
+	}
+
+	private ASTDiff findAppend(String originalSourceFile, String nextSourceFile) {
 		for (ASTDiff existing : projectASTDiff.getDiffSet()) {
-			if (existing.getSrcPath().equals(classBaseDiff.getOriginalClass().getSourceFile()))
+			if (existing.getSrcPath().equals(originalSourceFile))
 				return existing;
-			else if (existing.getDstPath().equals(classBaseDiff.getNextClass().getSourceFile()))
+			else if (existing.getDstPath().equals(nextSourceFile))
 				return existing;
 		}
 		return null;

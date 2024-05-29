@@ -27,10 +27,13 @@ public class TreeViewGenerator {
             int counter = 1;
             for(String token : tokens) {
                 String pathToNode = concatWithSlash(tokens, counter);
-                DefaultMutableTreeNode parent = findNode(pathToNode);
+                DefaultMutableTreeNode parent = findNode(pathToNode, pair.first);
                 TreeNodeInfo parentNodeInfo = (TreeNodeInfo) parent.getUserObject();
                 if(!parentNodeInfo.getName().equals(token)) {
                     TreeNodeInfo nodeInfo = new TreeNodeInfo(token, pathToNode);
+                    if(token.endsWith(".java")) {
+                    	nodeInfo.setSrcFilePath(pair.first);
+                    }
                     DefaultMutableTreeNode newChild = new DefaultMutableTreeNode(nodeInfo);
                     parent.add(newChild);
                 }
@@ -54,7 +57,7 @@ public class TreeViewGenerator {
         return sb.toString();
     }
 
-    private DefaultMutableTreeNode findNode(String pathToNode) {
+    private DefaultMutableTreeNode findNode(String pathToNode, String srcFilePath) {
         String[] tokens = pathToNode.split("/");
         Enumeration<TreeNode> enumeration = root.children();
         int index = 0;
@@ -63,9 +66,15 @@ public class TreeViewGenerator {
             DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode)enumeration.nextElement();
             TreeNodeInfo treeNodeInfo = (TreeNodeInfo) treeNode.getUserObject();
             if(treeNodeInfo.getName().equals(tokens[index])) {
-                lastNode = treeNode;
-                index++;
-                enumeration = treeNode.children();
+            	boolean filePairWithSameDstButDifferentSrc = false;
+            	if(treeNode.isLeaf() && treeNodeInfo.getSrcFilePath().isPresent() && !treeNodeInfo.getSrcFilePath().get().equals(srcFilePath)) {
+            		filePairWithSameDstButDifferentSrc = true;
+            	}
+            	if(!filePairWithSameDstButDifferentSrc) {
+	                lastNode = treeNode;
+	                index++;
+	                enumeration = treeNode.children();
+            	}
             }
         }
         return lastNode != null ? lastNode : root;
@@ -113,7 +122,7 @@ public class TreeViewGenerator {
         if (!treeNode.isLeaf()) return;
         TreeNodeInfo nodeInfo = (TreeNodeInfo) treeNode.getUserObject();
         for (int i = 0; i < diffs.size(); i++) {
-            if (diffs.get(i).getDstPath().equals(nodeInfo.getFullPath())) {
+            if (diffs.get(i).getDstPath().equals(nodeInfo.getFullPath()) && diffs.get(i).getSrcPath().equals(nodeInfo.getSrcFilePath().get())) {
                 nodeInfo.setId(i);
                 break;
             }

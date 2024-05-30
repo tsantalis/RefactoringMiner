@@ -10,7 +10,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.BasicTreeMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
+
+import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.isFromType;
 
 /* Created by pourya on 2024-05-22*/
 public class JavaDocMatcher implements TreeMatcher {
@@ -28,19 +31,35 @@ public class JavaDocMatcher implements TreeMatcher {
             Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
             Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
             if (srcJavaDocNode == null || dstJavaDocNode == null) return;
-            if (srcUMLJavaDoc.equalText(dstUMLJavaDoc) && srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
+            if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
-            } else {
+            }
+            else {
                 new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
+                mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
                 UMLJavadocDiff diff = new UMLJavadocDiff(srcUMLJavaDoc, dstUMLJavaDoc);
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
+                    if (pair.getLeft().getText().equals(pair.getRight().getText())) continue;
             		Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dst = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
-                    if(!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst) || diff.isManyToManyReformat()) {
-                    	mappingStore.addMapping(src,dst);
+                    if (src != null && dst != null) {
+                        if (!mappingStore.isSrcMapped(src) || !mappingStore.isDstMapped(dst) || diff.isManyToManyReformat())
+                        {
+                            Tree srcTxt = null;
+                            Tree dstTxt = null;
+                            if (isFromType(src, Constants.TAG_ELEMENT) && isFromType(dst, Constants.TEXT_ELEMENT)) {
+                                srcTxt = src.getChild(0);
+                                dstTxt = dst;
+                            } else if (isFromType(src, Constants.TEXT_ELEMENT) && isFromType(dst, Constants.TAG_ELEMENT)) {
+                                srcTxt = src;
+                                dstTxt = dst.getChild(0);
+                            }
+                            if (srcTxt != null && dstTxt != null) {
+                                mappingStore.addMapping(srcTxt, dstTxt);
+                            }
+                        }
                     }
-            	}
-                mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode);
+                }
             }
         }
     }

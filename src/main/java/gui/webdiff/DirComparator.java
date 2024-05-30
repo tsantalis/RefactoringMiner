@@ -30,6 +30,7 @@ public class DirComparator {
     public List<Pair<String,String>> getModifiedFilesName() {
         return modifiedFilesName;
     }
+
     public Pair<String,String> getFileContentsPair(int id)
     {
         return new Pair<>(
@@ -64,6 +65,12 @@ public class DirComparator {
         removedFilesName.removeAll(addedFilesName);
         addedFilesName.removeAll(removedBackup);
     }
+
+    public boolean isMoveDiff(int id) {
+    	ASTDiff diff = getASTDiff(id);
+    	return projectASTDiff.getMoveDiffSet().contains(diff);
+    }
+
     public ASTDiff getASTDiff(int id) {
         return diffs.get(id);
     }

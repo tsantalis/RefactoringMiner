@@ -13,14 +13,18 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
-    private final DirComparator comperator;
+    private final DirComparator comparator;
 
-    public DirectoryDiffView(DirComparator comperator) {
-        this.comperator = comperator;
+    public DirectoryDiffView(DirComparator comparator) {
+        this.comparator = comparator;
+    }
+
+    private boolean isMovedCode(TreeNodeInfo info) {
+    	return comparator.isMoveDiff(info.getId());
     }
 
     private boolean isModifiedFile(TreeNodeInfo info) {
-    	ASTDiff astDiff = comperator.getASTDiff(info.getId());
+    	ASTDiff astDiff = comparator.getASTDiff(info.getId());
     	if(astDiff != null && astDiff.getSrcPath() != null)
     		return astDiff.getSrcPath().equals(astDiff.getDstPath());
     	return false;
@@ -43,10 +47,10 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Modified files ")
-                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getModifiedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comparator.getModifiedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new ModifiedFiles(comperator), !comperator.getModifiedFilesName().isEmpty())
+                                .render_if(new ModifiedFiles(comparator), !comparator.getModifiedFilesName().isEmpty())
                             ._div()
                         ._div()
                     ._div()
@@ -56,11 +60,11 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header bg-danger"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Deleted files ")
-                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getRemovedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comparator.getRemovedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new AddedOrDeletedFiles(comperator.getRemovedFilesName()),
-                                        comperator.getRemovedFilesName().size() > 0)
+                                .render_if(new AddedOrDeletedFiles(comparator.getRemovedFilesName()),
+                                        comparator.getRemovedFilesName().size() > 0)
                             ._div()
                         ._div()
                         .div(class_("col"))
@@ -68,11 +72,11 @@ public class DirectoryDiffView implements Renderable {
                                 .div(class_("card-header bg-success"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Added files ")
-                                        .span(class_("badge badge-secondary").style("color:black")).content(comperator.getAddedFilesName().size())
+                                        .span(class_("badge badge-secondary").style("color:black")).content(comparator.getAddedFilesName().size())
                                     ._h4()
                                 ._div()
-                                .render_if(new AddedOrDeletedFiles(comperator.getAddedFilesName()),
-                                        comperator.getAddedFilesName().size() > 0)
+                                .render_if(new AddedOrDeletedFiles(comparator.getAddedFilesName()),
+                                        comparator.getAddedFilesName().size() > 0)
                             ._div()
                         ._div()
                     ._div()
@@ -109,11 +113,27 @@ public class DirectoryDiffView implements Renderable {
                 		iconWidth = 15;
                 		iconHeight = 17;
                 	}
+                	else if(isMovedCode(nodeInfo)) {
+                		iconPath = "dist/file-transfer.svg";
+                		iconWidth = 22;
+                		iconHeight = 28;
+                		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
+                    	if(astDiff != null && astDiff.getSrcPath() != null) {
+                    		String srcName = astDiff.getSrcPath();
+                    		if(astDiff.getSrcPath().contains("/")) {
+                    			srcName = srcName.substring(srcName.lastIndexOf("/") + 1, srcName.length());
+                    		}
+                    		if(!srcName.equals(nodeInfo.getName())) {
+                    			//file is renamed
+                    			description = srcName + " ⇨ " + nodeInfo.getName();
+                    		}
+                    	}
+                	}
                 	else {
                 		iconPath = "dist/icons8-file-move.svg";
                 		iconWidth = 15;
                 		iconHeight = 17;
-                		ASTDiff astDiff = comperator.getASTDiff(nodeInfo.getId());
+                		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                     	if(astDiff != null && astDiff.getSrcPath() != null) {
                     		String srcName = astDiff.getSrcPath();
                     		if(astDiff.getSrcPath().contains("/")) {

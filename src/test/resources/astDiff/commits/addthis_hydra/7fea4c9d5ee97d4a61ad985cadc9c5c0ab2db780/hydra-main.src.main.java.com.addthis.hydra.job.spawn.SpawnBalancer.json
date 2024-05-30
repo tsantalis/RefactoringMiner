@@ -39753,6 +39753,17 @@
   "firstEndPos" : 29811,
   "secondEndPos" : 46245
 }, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Advises Spawn how to reallocate a host, pushing or pulling jobs to balance the number of tasks run by each machine.",
+  "secondLabel" : "machine.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29696,
+  "secondPos" : 46253,
+  "firstEndPos" : 29811,
+  "secondEndPos" : 46261
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -61566,6 +61577,17 @@
   "firstEndPos" : 45875,
   "secondEndPos" : 33750
 }, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Count the number of tasks per host for a single job, then add in a small factor for how heavily weighted each host's disk is",
+  "secondLabel" : "host's disk is",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 45751,
+  "secondPos" : 33758,
+  "firstEndPos" : 45875,
+  "secondEndPos" : 33772
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -80233,6 +80255,17 @@
   "firstEndPos" : 59849,
   "secondEndPos" : 25976
 }, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Is it acceptable to put a replica of this task on this host? (task can't have a live and replica version on host)",
+  "secondLabel" : "host)",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 59736,
+  "secondPos" : 25984,
+  "firstEndPos" : 59849,
+  "secondEndPos" : 25989
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -82938,6 +82971,28 @@
   "secondPos" : 707,
   "firstEndPos" : 61897,
   "secondEndPos" : 762
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 61841,
+  "secondPos" : 711,
+  "firstEndPos" : 61889,
+  "secondEndPos" : 760
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Update aggregate cluster statistics periodically",
+  "secondLabel" : "Update aggregate cluster statistics periodically ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 61841,
+  "secondPos" : 711,
+  "firstEndPos" : 61889,
+  "secondEndPos" : 760
 }, {
   "firstType" : "TYPE_DECLARATION_KIND",
   "secondType" : "TYPE_DECLARATION_KIND",
@@ -91508,6 +91563,28 @@
   "firstEndPos" : 68594,
   "secondEndPos" : 9342
 }, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 68498,
+  "secondPos" : 9251,
+  "firstEndPos" : 68586,
+  "secondEndPos" : 9340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Start a thread that will perform autobalancing in the background if appropriate to do so",
+  "secondLabel" : "Start a thread that will perform autobalancing in the background if appropriate to do so ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68498,
+  "secondPos" : 9251,
+  "firstEndPos" : 68586,
+  "secondEndPos" : 9340
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -95093,6 +95170,17 @@
   "secondPos" : 37558,
   "firstEndPos" : 71133,
   "secondEndPos" : 37662
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "For a particular task with a copy on a failed host, attempt to find a suitable replica; mark it degraded otherwise",
+  "secondLabel" : "otherwise",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 71019,
+  "secondPos" : 37670,
+  "firstEndPos" : 71133,
+  "secondEndPos" : 37679
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",

@@ -142,18 +142,13 @@ public class ProjectASTDiffer
 						new ExtendedMultiMappingStore(srcTree,dstTree)));
 				optimizationData = optimizationDataMap.get(srcPath);
 				new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper()).match(srcTree, dstTree, mappingStore);
-				ASTDiff append = findAppend(srcPath, dstPath);
-				if (append != null)
-					append.getAllMappings().mergeMappings(mappingStore);
-				else {
-					mappingStore.addMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
-					ASTDiff diff = new ASTDiff(srcPath, dstPath,
-							treeContextPair.first, treeContextPair.second,
-							mappingStore,
-							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
-					mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
-					projectASTDiff.addMoveASTDiff(diff);
-				}
+				mappingStore.addMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
+				ASTDiff diff = new ASTDiff(srcPath, dstPath,
+						treeContextPair.first, treeContextPair.second,
+						mappingStore,
+						new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
+				mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
+				projectASTDiff.addMoveASTDiff(diff);
 			}
 		}
 		return extraDiffs;

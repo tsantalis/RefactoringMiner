@@ -76,7 +76,11 @@ public class Constants {
 	public static final String MARKER_ANNOTATION = "MarkerAnnotation";
 
 	public static final String COMPILATION_UNIT = "CompilationUnit";
+
 	public static final String JAVA_DOC = "Javadoc";
+	public static final String TEXT_ELEMENT = "TextElement";
+	public static final String TAG_ELEMENT = "TagElement";
+
 	public static final String SIMPLE_TYPE = "SimpleType";
 	public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
 	public static final String PREFIX_EXPRESSION = "PrefixExpression";

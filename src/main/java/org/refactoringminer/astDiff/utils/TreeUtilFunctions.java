@@ -32,7 +32,7 @@ public class TreeUtilFunctions {
 		if (tree.getPos() > startoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		Tree treeBetweenPositions = getTreeBetweenPositions(tree, startoffset, endoffset);
 		if (treeBetweenPositions == null) return null;
-		if (treeBetweenPositions.getType().name.equals(Constants.METHOD_INVOCATION_ARGUMENTS))
+		if (isFromType(treeBetweenPositions, Constants.METHOD_INVOCATION_ARGUMENTS))
 		{
 			if (treeBetweenPositions.getChildren().size() > 0 )
 			{
@@ -67,7 +67,7 @@ public class TreeUtilFunctions {
 	public static Tree getTreeBetweenPositions(Tree tree, int position, int endPosition,String type) {
 		for (Tree t: tree.preOrder()) {
 			if (t.getPos() >= position && t.getEndPos() <= endPosition)
-				if (t.getType().name.equals(type))
+				if (isFromType(t, type))
 					return t;
 		}
 		return null;
@@ -75,7 +75,7 @@ public class TreeUtilFunctions {
 	public static Tree getTreeBetweenPositionsSecure(Tree tree, int position, int endPosition,String type, String parentType, String label) {
 		for (Tree t: tree.preOrder()) {
 			if (t.getPos() == position && t.getEndPos() == endPosition)
-				if (t.getType().name.equals(type) && t.getLabel().equals(label)) {
+				if (isFromType(t, type) && t.getLabel().equals(label)) {
 					String t_parentType = (t.getParent() != null) ? t.getParent().getType().name : "";
 					if (t_parentType.equals(parentType))
 						return t;
@@ -88,7 +88,7 @@ public class TreeUtilFunctions {
 		if (!tree.getChildren().isEmpty())
 		{
 			for (Tree child: tree.getChildren()) {
-				if (child.getType().name.equals(type))
+				if (isFromType(child, type))
 					return child;
 			}
 		}
@@ -99,7 +99,7 @@ public class TreeUtilFunctions {
 		if (!tree.getChildren().isEmpty())
 		{
 			for (Tree child: tree.getChildren()) {
-				if (child.getType().name.equals(type) && child.getLabel().equals(label))
+				if (isFromType(child, type) && child.getLabel().equals(label))
 					return child;
 			}
 		}
@@ -114,11 +114,11 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree deepCopyWithMapPruning(Tree tree, Map<Tree,Tree> cpyMap) {
-		if (tree.getType().name.equals(Constants.BLOCK))
+		if (isFromType(tree, Constants.BLOCK))
 			if (tree.getChildren().size() != 0) return null;
 		Tree copy = makeDefaultTree(tree);
 		cpyMap.put(copy,tree);
-		if (tree.getType().name.equals(Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;
+		if (isFromType(tree, Constants.ANONYMOUS_CLASS_DECLARATION)) return copy;
 		for (Tree child : tree.getChildren()) {
 			Tree childCopy = deepCopyWithMapPruning(child,cpyMap);
 			if (childCopy != null)
@@ -164,7 +164,7 @@ public class TreeUtilFunctions {
 	}
 
 	public static Tree getParentUntilType(Tree tree, String matchingType) {
-		if (tree.getType().name.equals(matchingType))
+		if (isFromType(tree, matchingType))
 			return tree;
 		if (tree.getParent() != null)
 			return getParentUntilType(tree.getParent(),matchingType);
@@ -222,7 +222,7 @@ public class TreeUtilFunctions {
 	}
 
 	public static boolean isPartOfJavadoc(Tree srcSubTree) {
-		if (srcSubTree.getType().name.equals(Constants.JAVA_DOC))
+		if (isFromType(srcSubTree, Constants.JAVA_DOC))
 			return true;
 		if (srcSubTree.getParent() == null) return false;
 		return isPartOfJavadoc(srcSubTree.getParent());
@@ -233,7 +233,7 @@ public class TreeUtilFunctions {
 		boolean _seen = false;
 		List<Tree> refs = new ArrayList<>();
 		for (Tree tree : inputTree.preOrder()) {
-			if (tree.getType().name.equals(Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
+			if (isFromType(tree, Constants.SIMPLE_NAME) && tree.getLabel().equals(variableName))
 			{
 				refs.add(tree);
 				_seen = true;
@@ -245,7 +245,7 @@ public class TreeUtilFunctions {
 		return hasSameType(t1,t2) && t1.getLabel().equals(t2.getLabel());
 	}
 	public static boolean hasSameType(Tree t1, Tree t2){
-		return t1.getType().name.equals(t2.getType().name);
+		return isFromType(t1, t2.getType().name);
 	}
 	public static boolean isIsomorphicTo(Tree t1, Tree t2) {
 		if (!hasSameTypeAndLabel(t1,t2))
@@ -266,15 +266,19 @@ public class TreeUtilFunctions {
     public static boolean areBothFromThisType(Mapping mapping, String simpleName) {
         return areBothFromThisType(mapping.first,mapping.second, simpleName);
     }
-	public static boolean areBothFromThisType(Tree t1, Tree t2, String simpleName) {
-		return t1.getType().name.equals(simpleName)
-				&& t2.getType().name.equals(simpleName);
+	public static boolean areBothFromThisType(Tree t1, Tree t2, String type) {
+		return isFromType(t1, type)
+				&& isFromType(t2, type);
+	}
+
+	public static boolean isFromType(Tree t1, String type) {
+		return t1.getType().name.equals(type);
 	}
 
 	public static Tree findFirstByType(Tree srcFieldDeclaration, String typeName) {
 		Tree fieldAnnotation = null;
 		for (Tree child : srcFieldDeclaration.getChildren()) {
-			if (child.getType().name.equals(typeName)) {
+			if (isFromType(child, typeName)) {
 				fieldAnnotation = child;
 				break;
 			}

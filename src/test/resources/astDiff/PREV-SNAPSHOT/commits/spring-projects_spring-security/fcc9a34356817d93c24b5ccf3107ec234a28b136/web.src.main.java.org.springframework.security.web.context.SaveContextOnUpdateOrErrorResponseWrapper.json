@@ -188,6 +188,94 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "context and which store the <code>SecurityContext</code> when a",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1024,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "<code>sendError()</code>, <code>sendRedirect</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1091,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1143
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1147,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1226
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "<code>getWriter().close()</code>, or <code>getWriter().flush()</code> happens on the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1230,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "same thread that this ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1318,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : " was created.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1389,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Base class for response wrappers which encapsulate the logic for storing a security context and which store the",
+  "secondLabel" : "See issue SEC-398 and SEC-2005.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1406,
+  "firstEndPos" : 1226,
+  "secondEndPos" : 1437
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "Base class for response wrappers which encapsulate the logic for storing a security",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 937,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1020
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
   "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
   "secondLabel" : "context and which store the <code>SecurityContext</code> when a",
   "firstParentType" : "TagElement",
@@ -195,6 +283,94 @@
   "firstPos" : 1230,
   "secondPos" : 1024,
   "firstEndPos" : 1318,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "<code>sendError()</code>, <code>sendRedirect</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1091,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1143
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1147,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1226
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "<code>getWriter().close()</code>, or <code>getWriter().flush()</code> happens on the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1230,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "same thread that this ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1318,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : " was created.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1389,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>SecurityContext</code> when a <code>sendError()</code>, <code>sendRedirect</code>,",
+  "secondLabel" : "See issue SEC-398 and SEC-2005.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1230,
+  "secondPos" : 1406,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1437
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "Base class for response wrappers which encapsulate the logic for storing a security",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 937,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1020
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "context and which store the <code>SecurityContext</code> when a",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1024,
+  "firstEndPos" : 1438,
   "secondEndPos" : 1087
 }, {
   "firstType" : "TextElement",
@@ -210,6 +386,94 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1147,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1226
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "<code>getWriter().close()</code>, or <code>getWriter().flush()</code> happens on the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1230,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "same thread that this ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1318,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : " was created.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1389,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>, <code>getWriter().close()</code>, or",
+  "secondLabel" : "See issue SEC-398 and SEC-2005.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1322,
+  "secondPos" : 1406,
+  "firstEndPos" : 1438,
+  "secondEndPos" : 1437
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "Base class for response wrappers which encapsulate the logic for storing a security",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 937,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1020
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "context and which store the <code>SecurityContext</code> when a",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1024,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "<code>sendError()</code>, <code>sendRedirect</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1091,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1143
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
   "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
   "secondLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>,",
   "firstParentType" : "TagElement",
@@ -218,6 +482,50 @@
   "secondPos" : 1147,
   "firstEndPos" : 1511,
   "secondEndPos" : 1226
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "<code>getWriter().close()</code>, or <code>getWriter().flush()</code> happens on the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1230,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1314
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "same thread that this ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1318,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : " was created.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1389,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<code>getWriter().flush()</code> happens on the same thread that this",
+  "secondLabel" : "See issue SEC-398 and SEC-2005.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1442,
+  "secondPos" : 1406,
+  "firstEndPos" : 1511,
+  "secondEndPos" : 1437
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -244,6 +552,50 @@
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "Base class for response wrappers which encapsulate the logic for storing a security",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 937,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1020
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "context and which store the <code>SecurityContext</code> when a",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1024,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1087
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "<code>sendError()</code>, <code>sendRedirect</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1091,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1143
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "<code>getOutputStream().close()</code>, <code>getOutputStream().flush()</code>,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1147,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1226
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
   "secondLabel" : "<code>getWriter().close()</code>, or <code>getWriter().flush()</code> happens on the",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
@@ -251,6 +603,39 @@
   "secondPos" : 1230,
   "firstEndPos" : 1609,
   "secondEndPos" : 1314
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "same thread that this ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1318,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1340
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : " was created.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1389,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1402
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " was created. See issue SEC-398 and SEC-2005.",
+  "secondLabel" : "See issue SEC-398 and SEC-2005.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1406,
+  "firstEndPos" : 1609,
+  "secondEndPos" : 1437
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -914,6 +1299,39 @@
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
+  "firstLabel" : "   turns the URL encoding methods into null operations, preventing the use",
+  "secondLabel" : "preventing the use of URL rewriting to add the session identifier as a URL",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2296,
+  "secondPos" : 2128,
+  "firstEndPos" : 2370,
+  "secondEndPos" : 2202
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "   turns the URL encoding methods into null operations, preventing the use",
+  "secondLabel" : "parameter.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2296,
+  "secondPos" : 2210,
+  "firstEndPos" : 2370,
+  "secondEndPos" : 2220
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "of URL rewriting to add the session identifier as a URL parameter.",
+  "secondLabel" : " turns the URL encoding methods into null operations,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2407,
+  "secondPos" : 2067,
+  "firstEndPos" : 2473,
+  "secondEndPos" : 2120
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
   "firstLabel" : "of URL rewriting to add the session identifier as a URL parameter.",
   "secondLabel" : "preventing the use of URL rewriting to add the session identifier as a URL",
   "firstParentType" : "TagElement",
@@ -922,6 +1340,17 @@
   "secondPos" : 2128,
   "firstEndPos" : 2473,
   "secondEndPos" : 2202
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "of URL rewriting to add the session identifier as a URL parameter.",
+  "secondLabel" : "parameter.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2407,
+  "secondPos" : 2210,
+  "firstEndPos" : 2473,
+  "secondEndPos" : 2220
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -1209,6 +1638,39 @@
   "firstEndPos" : 2793,
   "secondEndPos" : 2540
 }, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " when the ",
+  "secondLabel" : "the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2783,
+  "secondPos" : 2548,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 2552
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " when the ",
+  "secondLabel" : " is committed. This can be useful in the event that",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2783,
+  "secondPos" : 2579,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 2630
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " when the ",
+  "secondLabel" : "Async Web Requests are made which may no longer contain the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2783,
+  "secondPos" : 2638,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 2698
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -1234,12 +1696,67 @@
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " is",
+  "secondLabel" : " when",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2820,
+  "secondPos" : 2535,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2540
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " is",
   "secondLabel" : "the ",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 2820,
   "secondPos" : 2548,
   "firstEndPos" : 2823,
+  "secondEndPos" : 2552
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " is",
+  "secondLabel" : " is committed. This can be useful in the event that",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2820,
+  "secondPos" : 2579,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2630
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " is",
+  "secondLabel" : "Async Web Requests are made which may no longer contain the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2820,
+  "secondPos" : 2638,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2698
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "committed. This can be useful in the event that Async Web Requests are",
+  "secondLabel" : " when",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2831,
+  "secondPos" : 2535,
+  "firstEndPos" : 2901,
+  "secondEndPos" : 2540
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "committed. This can be useful in the event that Async Web Requests are",
+  "secondLabel" : "the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2831,
+  "secondPos" : 2548,
+  "firstEndPos" : 2901,
   "secondEndPos" : 2552
 }, {
   "firstType" : "TextElement",
@@ -1251,6 +1768,50 @@
   "firstPos" : 2831,
   "secondPos" : 2579,
   "firstEndPos" : 2901,
+  "secondEndPos" : 2630
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "committed. This can be useful in the event that Async Web Requests are",
+  "secondLabel" : "Async Web Requests are made which may no longer contain the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2831,
+  "secondPos" : 2638,
+  "firstEndPos" : 2901,
+  "secondEndPos" : 2698
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "made which may no longer contain the ",
+  "secondLabel" : " when",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2909,
+  "secondPos" : 2535,
+  "firstEndPos" : 2946,
+  "secondEndPos" : 2540
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "made which may no longer contain the ",
+  "secondLabel" : "the ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2909,
+  "secondPos" : 2548,
+  "firstEndPos" : 2946,
+  "secondEndPos" : 2552
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "made which may no longer contain the ",
+  "secondLabel" : " is committed. This can be useful in the event that",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2909,
+  "secondPos" : 2579,
+  "firstEndPos" : 2946,
   "secondEndPos" : 2630
 }, {
   "firstType" : "TextElement",
@@ -2749,6 +3310,17 @@
   "firstEndPos" : 5184,
   "secondEndPos" : 3267
 }, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 4994,
+  "secondPos" : 3076,
+  "firstEndPos" : 5176,
+  "secondEndPos" : 3259
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "Calls <code>saveContext()</code> with the current contents of the",
@@ -2759,6 +3331,17 @@
   "secondPos" : 3076,
   "firstEndPos" : 5059,
   "secondEndPos" : 3141
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<tt>SecurityContextHolder</tt> as long as",
+  "secondLabel" : "<tt>SecurityContextHolder</tt> as long as ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5067,
+  "secondPos" : 3149,
+  "firstEndPos" : 5108,
+  "secondEndPos" : 3191
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

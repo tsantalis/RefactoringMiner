@@ -47,6 +47,7 @@ public class JavaDocMatcher implements TreeMatcher {
                         {
                             Tree srcTxt = null;
                             Tree dstTxt = null;
+                            boolean matchParents = false;
                             if (isFromType(src, Constants.TAG_ELEMENT) && isFromType(dst, Constants.TEXT_ELEMENT)) {
                                 srcTxt = src.getChild(0);
                                 dstTxt = dst;
@@ -57,9 +58,18 @@ public class JavaDocMatcher implements TreeMatcher {
                             else if (areBothFromThisType(src, dst, Constants.TEXT_ELEMENT)){
                                 srcTxt = src;
                                 dstTxt = dst;
+                                matchParents = true;
                             }
                             if (srcTxt != null && dstTxt != null) {
                                 mappingStore.addMapping(srcTxt, dstTxt);
+                                if (matchParents)
+                                {
+                                    Tree srcTxtParent = srcTxt.getParent();
+                                    Tree dstTxtParent = dstTxt.getParent();
+                                    if (areBothFromThisType(srcTxtParent, dstTxtParent, Constants.TAG_ELEMENT))
+                                        if (!mappingStore.isSrcMapped(srcTxtParent) && !mappingStore.isDstMapped(dstTxtParent))
+                                            mappingStore.addMapping(srcTxtParent, dstTxtParent);
+                                }
                             }
                         }
                     }

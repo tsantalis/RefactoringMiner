@@ -208,6 +208,28 @@
   "firstEndPos" : 1234,
   "secondEndPos" : 1328
 }, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1154,
+  "secondPos" : 1154,
+  "firstEndPos" : 1230,
+  "secondEndPos" : 1324
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "An allocator that allocates a block in the storage dir with most free space.",
+  "secondLabel" : "An allocator that allocates a block in the storage dir with most free space. It always allocates",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1154,
+  "secondPos" : 1154,
+  "firstEndPos" : 1230,
+  "secondEndPos" : 1250
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",

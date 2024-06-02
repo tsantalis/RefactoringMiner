@@ -1473,6 +1473,28 @@
   "firstEndPos" : 2309,
   "secondEndPos" : 2257
 }, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2210,
+  "secondPos" : 2210,
+  "firstEndPos" : 2307,
+  "secondEndPos" : 2255
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Whether we're past the special first call to this.next() from",
+  "secondLabel" : "Whether loadInitialSchema() has been called. ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2210,
+  "secondPos" : 2210,
+  "firstEndPos" : 2271,
+  "secondEndPos" : 2255
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "private",
@@ -3453,6 +3475,17 @@
   "firstEndPos" : 4694,
   "secondEndPos" : 9527
 }, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 4247,
+  "secondPos" : 9324,
+  "firstEndPos" : 4590,
+  "secondEndPos" : 9423
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "Advances this cursor to the next row, if any, or to after the sequence of",
@@ -3463,6 +3496,17 @@
   "secondPos" : 9324,
   "firstEndPos" : 4320,
   "secondEndPos" : 9397
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "rows if no next row.  However, the first call does not advance to the first",
+  "secondLabel" : "rows if no next row.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4326,
+  "secondPos" : 9403,
+  "firstEndPos" : 4401,
+  "secondEndPos" : 9423
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",

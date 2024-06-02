@@ -44,6 +44,7 @@ public class ProjectASTDiffer
 	private final ProjectASTDiff projectASTDiff;
 	private final MovedASTDiffGenerator movedDeclarationGenerator;
 	private final Map<String, OptimizationData> optimizationDataMap = new HashMap<>();
+	private final List<Refactoring> processedMoveRefactorings = new ArrayList<Refactoring>();
 
 	public ProjectASTDiffer(UMLModelDiff modelDiff, Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter) throws RefactoringMinerTimedOutException {
 		this.modelDiff = modelDiff;
@@ -127,8 +128,9 @@ public class ProjectASTDiffer
 				ReplaceAnonymousWithClassRefactoring replaceAnonymousWithClassRefactoring = (ReplaceAnonymousWithClassRefactoring) modelDiffRefactoring;
 				extraDiffs.add(replaceAnonymousWithClassRefactoring.getDiff());
 			}
-			else if(modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_AND_RENAME_OPERATION ||
-					modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_OPERATION)
+			else if((modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_AND_RENAME_OPERATION ||
+					modelDiffRefactoring.getRefactoringType() == RefactoringType.MOVE_OPERATION) &&
+					!processedMoveRefactorings.contains(modelDiffRefactoring))
 			{
 				MoveOperationRefactoring moveOperationRefactoring = (MoveOperationRefactoring) modelDiffRefactoring;
 				String srcPath = moveOperationRefactoring.getOriginalOperation().getLocationInfo().getFilePath();
@@ -142,13 +144,18 @@ public class ProjectASTDiffer
 						new ExtendedMultiMappingStore(srcTree,dstTree)));
 				optimizationData = optimizationDataMap.get(srcPath);
 				new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper()).match(srcTree, dstTree, mappingStore);
-				mappingStore.addMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
-				ASTDiff diff = new ASTDiff(srcPath, dstPath,
-						treeContextPair.first, treeContextPair.second,
-						mappingStore,
-						new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
-				mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
-				projectASTDiff.addMoveASTDiff(diff);
+				ASTDiff append = findAppend(srcPath, dstPath);
+				if (append != null)
+					append.getAllMappings().mergeMappings(mappingStore);
+				else {
+					mappingStore.addMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
+					ASTDiff diff = new ASTDiff(srcPath, dstPath,
+							treeContextPair.first, treeContextPair.second,
+							mappingStore,
+							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
+					mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
+					projectASTDiff.addMoveASTDiff(diff);
+				}
 			}
 		}
 		return extraDiffs;
@@ -219,7 +226,9 @@ public class ProjectASTDiffer
 		new EnumConstantsMatcher(classDiff.getCommonEnumConstants()).match(srcTree,dstTree,mappingStore);
 		for(UMLOperationBodyMapper umlOperationBodyMapper : classDiff.getOperationBodyMapperList())
 			new MethodMatcher(optimizationData, umlOperationBodyMapper).match(srcTree, dstTree, mappingStore);
-		new ModelDiffRefactoringsForClassDiffMatcher(optimizationData, modelDiff, modelDiffRefactorings, classDiff).match(srcTree,dstTree,mappingStore);
+		ModelDiffRefactoringsForClassDiffMatcher modelDiffRefactoringsForClassDiffMatcher = new ModelDiffRefactoringsForClassDiffMatcher(optimizationData, modelDiff, modelDiffRefactorings, classDiff);
+		modelDiffRefactoringsForClassDiffMatcher.match(srcTree,dstTree,mappingStore);
+		processedMoveRefactorings.addAll(modelDiffRefactoringsForClassDiffMatcher.getProcessedMoveRefactorings());
 
 		if (isBaseDiff){
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;

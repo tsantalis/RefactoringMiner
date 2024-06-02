@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
     private final UMLModelDiff modelDiff;
     private final List<Refactoring> modelDiffRefactorings;
     private final UMLAbstractClassDiff classDiff;
+    private final List<Refactoring> processedMoveRefactorings;
 
     //    private final List<Refactoring> modelDiffRefactorings;
     public ModelDiffRefactoringsForClassDiffMatcher(OptimizationData optimizationData, UMLModelDiff modelDiff, List<Refactoring> modelDiffRefactorings, UMLAbstractClassDiff classDiff) {
@@ -26,8 +28,14 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
         this.modelDiff = modelDiff;
         this.modelDiffRefactorings = modelDiffRefactorings; //This is just for performance boost
         this.classDiff = classDiff;
+        this.processedMoveRefactorings = new ArrayList<Refactoring>();
     }
-    @Override
+    
+    public List<Refactoring> getProcessedMoveRefactorings() {
+		return processedMoveRefactorings;
+	}
+
+	@Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processModelDiffRefactorings(classDiff, mappingStore);
         processMovedAttributes(classDiff,mappingStore);
@@ -46,6 +54,7 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
                     new MethodMatcher(optimizationData, moveOperationRefactoring.getBodyMapper()).match(srcTotalTree, dstTotalTree, mappingStore);
+                    this.processedMoveRefactorings.add(moveOperationRefactoring);
                 }
             } else if (refactoring instanceof MoveAttributeRefactoring) {
                 if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
@@ -56,12 +65,14 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
                     new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute()).match(srcTotalTree, dstTotalTree, mappingStore);
+                    this.processedMoveRefactorings.add(moveAttributeRefactoring);
                 }
             } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
                 if (afterRefactoringClasses.contains(classDiff.getNextClass().getName()) ||
                         beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
                     ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
                     findTreeFromMapperAndProcessBodyMapper(extractOperationRefactoring.getBodyMapper(), mappingStore);
+                    this.processedMoveRefactorings.add(extractOperationRefactoring);
                 }
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
@@ -69,6 +80,7 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                         beforeRefactoringClasses.contains(classDiff.getOriginalClass().getName())) {
                     InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
                     findTreeFromMapperAndProcessBodyMapper(inlineOperationRefactoring.getBodyMapper(), mappingStore);
+                    this.processedMoveRefactorings.add(inlineOperationRefactoring);
                 }
             }
 

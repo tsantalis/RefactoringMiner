@@ -7,7 +7,7 @@ import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
-import org.refactoringminer.astDiff.matchers.statement.BasicTreeMatcher;
+import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
@@ -36,7 +36,7 @@ public class JavaDocMatcher implements TreeMatcher {
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             }
             else {
-                new BasicTreeMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
+                new LeafMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
                 mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
                     if (pair.getLeft().getText().equals(pair.getRight().getText())) continue;

@@ -51,7 +51,7 @@ public class CustomBottomUpMatcher implements Matcher {
 					lastChanceMatch(mappings, t, best);
 					boolean checkOperatorOfInfixExpression = checkInfixExpression(mappings, t, best);
 					if (checkOperatorOfInfixExpression)
-					mappings.addMapping(t, best);
+						mappings.addMapping(t, best);
 				}
 			}
 			else if (mappings.isSrcMapped(t) && mappings.hasUnmappedSrcChildren(t)

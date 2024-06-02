@@ -152,7 +152,7 @@ public class ProjectASTDiffer
 					ASTDiff diff = new ASTDiff(srcPath, dstPath,
 							treeContextPair.first, treeContextPair.second,
 							mappingStore,
-							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore));
+							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore, modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap()));
 					mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
 					projectASTDiff.addMoveASTDiff(diff);
 				}

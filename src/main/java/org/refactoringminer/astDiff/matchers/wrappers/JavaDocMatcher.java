@@ -35,7 +35,7 @@ public class JavaDocMatcher implements TreeMatcher {
             if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode) & !diff.isManyToManyReformat()) {
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             }
-            else /*if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0)*/ {
+            else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 new LeafMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
                 mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {

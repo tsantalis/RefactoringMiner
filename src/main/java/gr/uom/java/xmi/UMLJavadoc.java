@@ -22,6 +22,10 @@ public class UMLJavadoc implements LocationInfoProvider {
 		return locationInfo.codeRange();
 	}
 
+	public boolean isEmpty() {
+		return tags.size() == 0;
+	}
+
 	public void addTag(UMLTagElement tag) {
 		tags.add(tag);
 	}

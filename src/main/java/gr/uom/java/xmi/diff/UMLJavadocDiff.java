@@ -127,6 +127,35 @@ public class UMLJavadocDiff {
 				}
 			}
 		}
+		//match doc elements differing only in opening/closing quotes
+		if(deletedDocElements.size() <= addedDocElements.size()) {
+			for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+				for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
+					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
+					if(trimmed1.equals(trimmed2)) {
+						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+						commonDocElements.add(pair);
+						deletedDocElements.remove(deletedDocElement);
+						addedDocElements.remove(addedDocElement);
+					}
+				}
+			}
+		}
+		else {
+			for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+				for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
+					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
+					if(trimmed1.equals(trimmed2)) {
+						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+						commonDocElements.add(pair);
+						deletedDocElements.remove(deletedDocElement);
+						addedDocElements.remove(addedDocElement);
+					}
+				}
+			}
+		}
 		List<UMLDocElement> deletedToBeDeleted = new ArrayList<UMLDocElement>();
 		List<UMLDocElement> addedToBeDeleted = new ArrayList<UMLDocElement>();
 		if(deletedDocElements.size() == addedDocElements.size()) {

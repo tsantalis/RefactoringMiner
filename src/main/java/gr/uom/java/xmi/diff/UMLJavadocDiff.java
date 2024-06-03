@@ -220,6 +220,9 @@ public class UMLJavadocDiff {
 							}
 						}
 					}
+					if(longestSubSequence != null && longestSubSequence.equals(deletedTokenSequence)) {
+						break;
+					}
 				}
 				if(longestSubSequence != null && !longestSubSequence.equals(addedTokenSequence) && !longestSubSequence.equals(deletedTokenSequence)) {
 					//make all pair combinations
@@ -251,6 +254,9 @@ public class UMLJavadocDiff {
 								}
 							}
 						}
+					}
+					if(longestSubSequence != null && longestSubSequence.equals(addedTokenSequence)) {
+						break;
 					}
 				}
 				if(longestSubSequence != null && !longestSubSequence.equals(addedTokenSequence) && !longestSubSequence.equals(deletedTokenSequence)) {

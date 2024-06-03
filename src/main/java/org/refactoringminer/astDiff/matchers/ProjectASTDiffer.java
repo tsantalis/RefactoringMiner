@@ -3,6 +3,8 @@ package org.refactoringminer.astDiff.matchers;
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
+
+import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.MoveOperationRefactoring;
@@ -153,6 +155,13 @@ public class ProjectASTDiffer
 							treeContextPair.first, treeContextPair.second,
 							mappingStore,
 							new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappingStore, modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap()));
+					if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
+						UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
+						if (originalClass != null && originalClass.getJavadoc() != null) {
+							new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc())
+		                    		.match(srcTree, dstTree, mappingStore);
+						}
+					}
 					mappingStore.removeMapping(treeContextPair.first.getRoot(), treeContextPair.second.getRoot());
 					projectASTDiff.addMoveASTDiff(diff);
 				}

@@ -208,7 +208,7 @@ public class UMLJavadocDiff {
 				for(int i=0; i<deletedTokenSequence.size(); i++) {
 					for(int j=i+1; j<deletedTokenSequence.size(); j++) {
 						List<String> subList = deletedTokenSequence.subList(i,j+1);
-						if(subList.size() > 1) {
+						if(subList.size() > 2) {
 							int indexOfSubList = Collections.indexOfSubList(addedTokenSequence, subList);
 							if(indexOfSubList != -1) {
 								if(longestSubSequence == null) {
@@ -240,7 +240,7 @@ public class UMLJavadocDiff {
 				for(int i=0; i<addedTokenSequence.size(); i++) {
 					for(int j=i+1; j<addedTokenSequence.size(); j++) {
 						List<String> subList = addedTokenSequence.subList(i,j+1);
-						if(subList.size() > 1) {
+						if(subList.size() > 2) {
 							int indexOfSubList = Collections.indexOfSubList(deletedTokenSequence, subList);
 							if(indexOfSubList != -1) {
 								if(longestSubSequence == null) {

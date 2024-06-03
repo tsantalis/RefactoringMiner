@@ -20,6 +20,7 @@ import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.AbstractTagElement;
 import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
@@ -38,15 +39,20 @@ import org.eclipse.jdt.core.dom.IDocElement;
 import org.eclipse.jdt.core.dom.IExtendedModifier;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Initializer;
+import org.eclipse.jdt.core.dom.JavaDocRegion;
 import org.eclipse.jdt.core.dom.Javadoc;
+import org.eclipse.jdt.core.dom.MemberRef;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.MethodInvocation;
+import org.eclipse.jdt.core.dom.MethodRef;
 import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.RecordDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 import org.eclipse.jdt.core.dom.TagElement;
+import org.eclipse.jdt.core.dom.TagProperty;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
@@ -265,19 +271,46 @@ public class UMLModelASTReader {
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, javaDoc, CodeElementType.JAVADOC);
 			doc = new UMLJavadoc(locationInfo);
 			List<TagElement> tags = javaDoc.tags();
-			for(TagElement tag : tags) {
-				LocationInfo tagLocationInfo = generateLocationInfo(cu, sourceFile, tag, CodeElementType.TAG_ELEMENT);
-				UMLTagElement tagElement = new UMLTagElement(tag.getTagName(), tagLocationInfo);
-				List<IDocElement> fragments = tag.fragments();
-				for(IDocElement docElement : fragments) {
-					LocationInfo docElementLocationInfo = generateLocationInfo(cu, sourceFile, (ASTNode)docElement, CodeElementType.DOC_ELEMENT);
-					UMLDocElement umlDocElement = new UMLDocElement(docElement.toString(), docElementLocationInfo);
-					tagElement.addFragment(umlDocElement);
-				}
-				doc.addTag(tagElement);
+			for(TagElement parentTag : tags) {
+				LocationInfo tagLocationInfo = generateLocationInfo(cu, sourceFile, parentTag, CodeElementType.TAG_ELEMENT);
+				UMLTagElement parentTagElement = new UMLTagElement(parentTag.getTagName(), tagLocationInfo);
+				processTagFragments(cu, sourceFile, parentTag, parentTagElement);
+				doc.addTag(parentTagElement);
 			}
 		}
 		return doc;
+	}
+
+	private void processTagFragments(CompilationUnit cu, String sourceFile, TagElement parentTag, UMLTagElement parentTagElement) {
+		List<IDocElement> fragments = parentTag.fragments();
+		for(IDocElement docElement : fragments) {
+			LocationInfo docElementLocationInfo = generateLocationInfo(cu, sourceFile, (ASTNode)docElement, CodeElementType.DOC_ELEMENT);
+			if(docElement instanceof TagElement) {
+				TagElement nestedTag = (TagElement)docElement;
+				UMLTagElement nestedTagElement = new UMLTagElement(nestedTag.getTagName(), docElementLocationInfo);
+				processTagFragments(cu, sourceFile, nestedTag, nestedTagElement);
+				parentTagElement.addNestedTag(nestedTagElement);
+			}
+			else if(docElement instanceof JavaDocRegion) {
+				//TODO support JavaDocRegion
+			}
+			else {
+				UMLDocElement umlDocElement = new UMLDocElement(docElement.toString(), docElementLocationInfo);
+				if(docElement instanceof Name) {
+					umlDocElement.setName(true);
+				}
+				else if(docElement instanceof MemberRef) {
+					umlDocElement.setMemberRef(true);
+				}
+				else if(docElement instanceof MethodRef) {
+					umlDocElement.setMethodRef(true);
+				}
+				else if(docElement instanceof TagProperty) {
+					umlDocElement.setTagProperty(true);
+				}
+				parentTagElement.addFragment(umlDocElement);
+			}
+		}
 	}
 
 	private boolean generatedCode(UMLJavadoc javadoc) {

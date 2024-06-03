@@ -9,11 +9,13 @@ public class UMLTagElement implements LocationInfoProvider {
 	private LocationInfo locationInfo;
 	private String tagName;
 	private List<UMLDocElement> fragments;
+	private List<UMLTagElement> nestedTags;
 	
 	public UMLTagElement(String tagName, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
 		this.tagName = tagName;
 		this.fragments = new ArrayList<UMLDocElement>();
+		this.nestedTags = new ArrayList<UMLTagElement>();
 	}
 
 	public LocationInfo getLocationInfo() {
@@ -26,6 +28,10 @@ public class UMLTagElement implements LocationInfoProvider {
 
 	public void addFragment(UMLDocElement fragment) {
 		fragments.add(fragment);
+	}
+
+	public void addNestedTag(UMLTagElement tag) {
+		nestedTags.add(tag);
 	}
 
 	public String getTagName() {
@@ -59,6 +65,7 @@ public class UMLTagElement implements LocationInfoProvider {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((fragments == null) ? 0 : fragments.hashCode());
+		result = prime * result + ((nestedTags == null) ? 0 : nestedTags.hashCode());
 		result = prime * result + ((tagName == null) ? 0 : tagName.hashCode());
 		return result;
 	}
@@ -76,6 +83,11 @@ public class UMLTagElement implements LocationInfoProvider {
 			if (other.fragments != null)
 				return false;
 		} else if (!fragments.equals(other.fragments))
+			return false;
+		if (nestedTags == null) {
+			if (other.nestedTags != null)
+				return false;
+		} else if (!nestedTags.equals(other.nestedTags))
 			return false;
 		if (tagName == null) {
 			if (other.tagName != null)

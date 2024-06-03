@@ -7,6 +7,11 @@ import gr.uom.java.xmi.diff.CodeRange;
 public class UMLDocElement implements LocationInfoProvider {
 	private String text;
 	private LocationInfo locationInfo;
+	private boolean isMemberRef;
+	private boolean isMethodRef;
+	private boolean isName;
+	private boolean isTagProperty;
+
 	public UMLDocElement(String text, LocationInfo locationInfo) {
 		this.text = text;
 		this.locationInfo = locationInfo;
@@ -43,5 +48,41 @@ public class UMLDocElement implements LocationInfoProvider {
 			return false;
 		UMLDocElement other = (UMLDocElement) obj;
 		return Objects.equals(text, other.text);
+	}
+
+	public boolean isCodeReference() {
+		return isMemberRef || isMethodRef || isName || isTagProperty;
+	}
+
+	public boolean isMemberRef() {
+		return isMemberRef;
+	}
+
+	public void setMemberRef(boolean isMemberRef) {
+		this.isMemberRef = isMemberRef;
+	}
+
+	public boolean isMethodRef() {
+		return isMethodRef;
+	}
+
+	public void setMethodRef(boolean isMethodRef) {
+		this.isMethodRef = isMethodRef;
+	}
+
+	public boolean isName() {
+		return isName;
+	}
+
+	public void setName(boolean isName) {
+		this.isName = isName;
+	}
+
+	public boolean isTagProperty() {
+		return isTagProperty;
+	}
+
+	public void setTagProperty(boolean isTagProperty) {
+		this.isTagProperty = isTagProperty;
 	}
 }

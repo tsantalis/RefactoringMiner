@@ -232,6 +232,33 @@ public class UMLJavadocDiff {
 		}
 		deletedDocElements.removeAll(deletedToBeDeleted);
 		addedDocElements.removeAll(addedToBeDeleted);
+		//match doc elements that one contains the other
+		/*
+		if(deletedDocElements.size() <= addedDocElements.size()) {
+			for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+				for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+					if(deletedDocElement.getText().contains(addedDocElement.getText()) || addedDocElement.getText().contains(deletedDocElement.getText())) {
+						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+						commonDocElements.add(pair);
+						deletedDocElements.remove(deletedDocElement);
+						addedDocElements.remove(addedDocElement);
+					}
+				}
+			}
+		}
+		else {
+			for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+				for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+					if(deletedDocElement.getText().contains(addedDocElement.getText()) || addedDocElement.getText().contains(deletedDocElement.getText())) {
+						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+						commonDocElements.add(pair);
+						deletedDocElements.remove(deletedDocElement);
+						addedDocElements.remove(addedDocElement);
+					}
+				}
+			}
+		}
+		*/
 		this.deletedDocElements.addAll(deletedDocElements);
 		this.addedDocElements.addAll(addedDocElements);
 		if(commonDocElements.size() > commonDocElementsBefore) {

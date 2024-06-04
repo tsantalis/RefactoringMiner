@@ -7,7 +7,9 @@ import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 import spark.Spark;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import static spark.Spark.*;
 
@@ -26,9 +28,22 @@ public class WebDiff  {
 
     public void run() throws IOException {
         DirComparator comparator = new DirComparator(projectASTDiff);
+        killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         Spark.awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
+    }
+    public static void killProcessOnPort(int port) {
+        try {
+            Process findPidProcess = Runtime.getRuntime().exec(String.format("lsof -t -i:%d", port));
+            BufferedReader pidReader = new BufferedReader(new InputStreamReader(findPidProcess.getInputStream()));
+            String pid = pidReader.readLine();
+            pidReader.close();
+            if (pid != null && !pid.isEmpty()) {
+                Process killProcess = Runtime.getRuntime().exec(String.format("kill -9 %s", pid));
+                killProcess.waitFor();
+            }
+        } catch (IOException | InterruptedException ignored) { }
     }
 
     public void configureSpark(final DirComparator comperator, int port) {

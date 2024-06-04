@@ -42,6 +42,10 @@ public class UMLTagElement implements LocationInfoProvider {
 		return fragments;
 	}
 
+	public List<UMLTagElement> getNestedTags() {
+		return nestedTags;
+	}
+
 	public boolean contains(String s) {
 		for(UMLDocElement fragment : fragments) {
 			if(fragment.getText().contains(s)) {

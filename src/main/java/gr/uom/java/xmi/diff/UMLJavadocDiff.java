@@ -4,10 +4,8 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -496,6 +494,13 @@ public class UMLJavadocDiff {
 			return true;
 		for(int i=longestSubSequence.size(); i>1; i--) {
 			List<String> subList = longestSubSequence.subList(0,i);
+			int index = Collections.indexOfSubList(list, subList);
+			if(index != -1) {
+				return true;
+			}
+		}
+		for(int i=0; i<longestSubSequence.size(); i++) {
+			List<String> subList = longestSubSequence.subList(i,longestSubSequence.size());
 			int index = Collections.indexOfSubList(list, subList);
 			if(index != -1) {
 				return true;

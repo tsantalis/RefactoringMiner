@@ -35,12 +35,12 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
             Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
             if (srcJavaDocNode == null || dstJavaDocNode == null) return;
             UMLJavadocDiff diff = new UMLJavadocDiff(srcUMLJavaDoc, dstUMLJavaDoc);
+            mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
             if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode) & !diff.isManyToManyReformat()) {
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             }
             else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 new LeafMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
-                mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
                 for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonNestedTags()) {
                     Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());

@@ -12,16 +12,19 @@ public class MenuBar implements Renderable {
     private final String toolName;
     private final int id;
     private final int numOfDiffs;
+    private final String routePath;
+
     private String getNextHRef(){
-        return "/monaco-diff/" + (id + 1) % numOfDiffs;
+        return routePath + (id + 1) % numOfDiffs;
 
     }
     private String getPrevHRef(){
-        return "/monaco-diff/" + (id - 1) % numOfDiffs;
+        return routePath + (id - 1) % numOfDiffs;
     }
 
-    public MenuBar(String toolName, int id, int numOfDiffs) {
+    public MenuBar(String toolName, String routePath, int id, int numOfDiffs) {
         this.toolName = toolName;
+        this.routePath = routePath;
         this.id = id;
         this.numOfDiffs = numOfDiffs;
     }
@@ -46,8 +49,7 @@ public class MenuBar implements Renderable {
                         .add("data-bs-toggle", "popover")
                         .add("data-bs-placement", "bottom")
                         .add("data-bs-html", "true")
-                        .add("data-bs-content", "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"
-                                + "<b>Alt + t</b> top<br><b>Alt + b</b> bottom <br><b>Alt + w</b> toggle word wrap", false)
+                        .add("data-bs-content", getShortcutDescriptions(), false)
                 )
                 .content("Shortcuts")
                 ._div()
@@ -59,5 +61,10 @@ public class MenuBar implements Renderable {
                 ._div()
                 ._div()
                 ._div();
+    }
+
+    public String getShortcutDescriptions() {
+        return "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"
+                + "<b>Alt + t</b> top<br><b>Alt + b</b> bottom <br>";
     }
 }

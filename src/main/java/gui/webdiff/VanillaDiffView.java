@@ -17,8 +17,8 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
     private final VanillaDiffHtmlBuilder rawHtmlDiff;
     private final boolean dump;
 
-    public VanillaDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
-        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs);
+    public VanillaDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
+        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath);
         this.dump =  dump;
         rawHtmlDiff = new VanillaDiffHtmlBuilder(srcFileContent, dstFileContent, diff);
         rawHtmlDiff.produce();
@@ -33,7 +33,7 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new MenuBar(toolName, id, numOfDiffs))
+                        .render(new MenuBar(toolName, routePath, id, numOfDiffs))
                     ._div()
                     .div(class_("row"))
                         .div(class_("col-6"))

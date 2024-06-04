@@ -46,7 +46,7 @@ public class WebDiff  {
         } catch (IOException | InterruptedException ignored) { }
     }
 
-    public void configureSpark(final DirComparator comperator, int port) {
+    public void configureSpark(final DirComparator comparator, int port) {
         port(port);
         staticFiles.location("/web/");
         get("/", (request, response) -> {
@@ -57,12 +57,12 @@ public class WebDiff  {
             return "";
         });
         get("/list", (request, response) -> {
-            Renderable view = new DirectoryDiffView(comperator);
+            Renderable view = new DirectoryDiffView(comparator);
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comperator.getASTDiff(id);
+            ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new VanillaDiffView(toolName, astDiff.getSrcPath(),astDiff.getDstPath(),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
                     projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
@@ -71,25 +71,25 @@ public class WebDiff  {
         });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
-            ASTDiff astDiff = comperator.getASTDiff(id);
+            ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new MonacoDiffView(toolName,astDiff.getSrcPath(),astDiff.getDstPath(),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
                     projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    astDiff, id,false);
+                    astDiff, id,false, comparator.getNumOfDiffs());
             return render(view);
         });
         get("/left/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
 //            String id = (request.params(":id"));
 //            String _id = id.replace("*","/");
-            Pair<String, String> pair = comperator.getFileContentsPair(id);
+            Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.first;
         });
         get("/right/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
 //            String id = (request.params(":id"));
 //            String _id = id.replace("*","/");
-            Pair<String, String> pair = comperator.getFileContentsPair(id);
+            Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.second;
         });
         get("/quit", (request, response) -> {

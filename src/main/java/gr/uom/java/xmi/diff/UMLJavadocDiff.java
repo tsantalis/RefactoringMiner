@@ -420,7 +420,7 @@ public class UMLJavadocDiff {
 	}
 
 	private boolean containsAnySubSequence(List<String> list, List<String> longestSubSequence) {
-		if(Collections.indexOfSubList(longestSubSequence, list) != -1)
+		if(list.size() > 1 && Collections.indexOfSubList(longestSubSequence, list) != -1)
 			return true;
 		for(int i=longestSubSequence.size(); i>1; i--) {
 			List<String> subList = longestSubSequence.subList(0,i);

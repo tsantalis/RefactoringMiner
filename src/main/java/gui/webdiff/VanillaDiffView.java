@@ -13,22 +13,13 @@ import java.nio.charset.Charset;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-public class VanillaDiffView implements Renderable {
-    private VanillaDiffHtmlBuilder rawHtmlDiff;
-    private String toolName;
-    private String srcFileName;
-    private String dstFileName;
-    private int id;
-    private int numOfDiffs;
-    private boolean dump;
+public class VanillaDiffView extends AbstractDiffView implements Renderable {
+    private final VanillaDiffHtmlBuilder rawHtmlDiff;
+    private final boolean dump;
 
-    public VanillaDiffView(String toolName, String srcFileName, String dstFileName, String srcFileContent, String dstFileContent, Diff diff, int id, boolean dump, int numOfDiffs) throws IOException {
-        this.toolName = toolName;
-        this.srcFileName = srcFileName;
-        this.dstFileName = dstFileName;
-        this.dump = dump;
-        this.id = id;
-        this.numOfDiffs = numOfDiffs;
+    public VanillaDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String srcFileContent, String dstFileContent, boolean dump) throws IOException {
+        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs);
+        this.dump =  dump;
         rawHtmlDiff = new VanillaDiffHtmlBuilder(srcFileContent, dstFileContent, diff);
         rawHtmlDiff.produce();
     }

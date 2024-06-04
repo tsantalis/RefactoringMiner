@@ -15,22 +15,9 @@ import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-public class MonacoDiffView implements Renderable {
-    private String toolName;
-    private String srcFileName;
-    private String dstFileName;
-    private int numOfDiffs;
-    private Diff diff;
-
-    private int id;
-
-    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, String srcFileContent, String dstFileContent, Diff diff, int id, boolean dump, int numOfDiffs) {
-        this.toolName = toolName;
-        this.srcFileName = srcFileName;
-        this.dstFileName = dstFileName;
-        this.diff = diff;
-        this.id = id;
-        this.numOfDiffs =  numOfDiffs;
+public class MonacoDiffView extends AbstractDiffView implements Renderable {
+    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs) {
+        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs);
     }
 
     @Override

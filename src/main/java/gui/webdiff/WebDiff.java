@@ -63,19 +63,21 @@ public class WebDiff  {
         get("/vanilla-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
-            Renderable view = new VanillaDiffView(toolName, astDiff.getSrcPath(),astDiff.getDstPath(),
+            Renderable view = new VanillaDiffView(toolName,
+                    astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    astDiff, id, comparator.getNumOfDiffs(),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
                     projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    astDiff, id, false, comparator.getNumOfDiffs());
+                    false);
             return render(view);
         });
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
-            Renderable view = new MonacoDiffView(toolName,astDiff.getSrcPath(),astDiff.getDstPath(),
-                    projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
-                    projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    astDiff, id,false, comparator.getNumOfDiffs());
+            Renderable view = new MonacoDiffView(
+                    toolName,
+                    astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    astDiff, id, comparator.getNumOfDiffs());
             return render(view);
         });
         get("/left/:id", (request, response) -> {

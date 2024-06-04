@@ -279,8 +279,10 @@ public class UMLJavadocDiff {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
 							for(UMLDocElement addedDocElement : addedDocElements) {
 								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
-									Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-									commonDocElements.add(pair);
+									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement)) {
+										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+										commonDocElements.add(pair);
+									}
 								}
 							}
 						}
@@ -318,8 +320,10 @@ public class UMLJavadocDiff {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
 							for(UMLDocElement addedDocElement : addedDocElements) {
 								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
-									Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-									commonDocElements.add(pair);
+									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement)) {
+										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+										commonDocElements.add(pair);
+									}
 								}
 							}
 						}
@@ -404,6 +408,18 @@ public class UMLJavadocDiff {
 		this.addedDocElements.addAll(addedDocElements);
 		if(commonDocElements.size() > commonDocElementsBefore) {
 			return true;
+		}
+		return false;
+	}
+
+	private boolean alreadyMatchedDocElement(UMLDocElement deletedDocElement, UMLDocElement addedDocElement) {
+		for(Pair<UMLDocElement, UMLDocElement> pair : commonDocElements) {
+			if(pair.getLeft() == deletedDocElement) {
+				return true;
+			}
+			if(pair.getRight() == addedDocElement) {
+				return true;
+			}
 		}
 		return false;
 	}

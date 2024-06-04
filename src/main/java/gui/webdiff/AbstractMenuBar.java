@@ -8,11 +8,16 @@ import java.io.IOException;
 import static org.rendersnake.HtmlAttributesFactory.class_;
 
 /* Created by pourya on 2024-06-03*/
-public class MenuBar implements Renderable {
+public abstract class AbstractMenuBar implements Renderable {
     private final String toolName;
     private final int id;
     private final int numOfDiffs;
     private final String routePath;
+    private static final String BACK_BUTTON_TEXT = "Back";
+    private static final String PREV_BUTTON_TEXT = "Prev";
+    private static final String NEXT_BUTTON_TEXT = "Next";
+    private static final String QUIT_BUTTON_TEXT = "Quit";
+
 
     private String getNextHRef(){
         return routePath + (id + 1) % numOfDiffs;
@@ -22,7 +27,7 @@ public class MenuBar implements Renderable {
         return routePath + (id - 1) % numOfDiffs;
     }
 
-    public MenuBar(String toolName, String routePath, int id, int numOfDiffs) {
+    public AbstractMenuBar(String toolName, String routePath, int id, int numOfDiffs) {
         this.toolName = toolName;
         this.routePath = routePath;
         this.id = id;
@@ -40,10 +45,7 @@ public class MenuBar implements Renderable {
                         .add("data-bs-toggle", "popover")
                         .add("data-bs-placement", "bottom")
                         .add("data-bs-html", "true")
-                        .add("data-bs-content", "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
-                                + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
-                                + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
-                                + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>", false)
+                        .add("data-bs-content", getLegendValue(), false)
                 ).content("Legend")
                 .button(class_("btn btn-primary btn-sm").id("shortcuts")
                         .add("data-bs-toggle", "popover")
@@ -54,14 +56,16 @@ public class MenuBar implements Renderable {
                 .content("Shortcuts")
                 ._div()
                 .div(class_("btn-group"))
-                .a(class_("btn btn-default btn-sm btn-primary").href("/list")).content("Back")
-                .a(class_("btn btn-default btn-sm btn-primary").href(getPrevHRef())).content("prev")
-                .a(class_("btn btn-default btn-sm btn-primary").href(getNextHRef())).content("next")
-                .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")
+                .a(class_("btn btn-default btn-sm btn-primary").href("/list")).content(BACK_BUTTON_TEXT)
+                .a(class_("btn btn-default btn-sm btn-primary").href(getPrevHRef())).content(PREV_BUTTON_TEXT)
+                .a(class_("btn btn-default btn-sm btn-primary").href(getNextHRef())).content(NEXT_BUTTON_TEXT)
+                .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content(QUIT_BUTTON_TEXT)
                 ._div()
                 ._div()
                 ._div();
     }
+
+    public abstract String getLegendValue() ;
 
     public String getShortcutDescriptions() {
         return "<b>Alt + q</b> quit<br><b>Alt + l</b> list<br>"

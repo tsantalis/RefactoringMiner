@@ -33,7 +33,15 @@ public class VanillaDiffView extends AbstractDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid"))
                     .div(class_("row"))
-                        .render(new MenuBar(toolName, routePath, id, numOfDiffs))
+                        .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs) {
+                            @Override
+                            public String getLegendValue() {
+                                return "<span class=&quot;del&quot;>&nbsp;&nbsp;</span> deleted<br>"
+                                        + "<span class=&quot;add&quot;>&nbsp;&nbsp;</span> added<br>"
+                                        + "<span class=&quot;mv&quot;>&nbsp;&nbsp;</span> moved<br>"
+                                        + "<span class=&quot;upd&quot;>&nbsp;&nbsp;</span> updated<br>";
+                            }
+                        })
                     ._div()
                     .div(class_("row"))
                         .div(class_("col-6"))

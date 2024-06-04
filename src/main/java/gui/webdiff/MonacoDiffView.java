@@ -29,10 +29,17 @@ public class MonacoDiffView extends AbstractDiffView implements Renderable {
             .body(class_("h-100").style("overflow: hidden;"))
                 .div(class_("container-fluid h-100"))
                     .div(class_("row"))
-                    .render(new MenuBar(toolName, routePath, id, numOfDiffs){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";
+                        }
+                        @Override
+                        public String getLegendValue() {
+                            return "<span class=&quot;deleted&quot;>&nbsp;&nbsp;</span> deleted<br>"
+                                    + "<span class=&quot;inserted&quot;>&nbsp;&nbsp;</span> inserted<br>"
+                                    + "<span class=&quot;moved&quot;>&nbsp;&nbsp;</span> moved<br>"
+                                    + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }
                     })
                     ._div()

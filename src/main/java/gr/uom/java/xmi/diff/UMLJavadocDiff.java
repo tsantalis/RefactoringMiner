@@ -16,9 +16,9 @@ import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLTagElement;
 
 public class UMLJavadocDiff {
-	private Set<Pair<UMLTagElement, UMLTagElement>> commonTags;
-	private Set<Pair<UMLDocElement, UMLDocElement>> commonDocElements;
-	private Set<Pair<UMLTagElement, UMLTagElement>> commonNestedTags;
+	private List<Pair<UMLTagElement, UMLTagElement>> commonTags;
+	private List<Pair<UMLDocElement, UMLDocElement>> commonDocElements;
+	private List<Pair<UMLTagElement, UMLTagElement>> commonNestedTags;
 	private List<UMLTagElement> deletedTags;
 	private List<UMLTagElement> addedTags;
 	private List<UMLTagElement> deletedNestedTags;
@@ -28,9 +28,9 @@ public class UMLJavadocDiff {
 	private boolean manyToManyReformat;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
-		this.commonTags = new LinkedHashSet<Pair<UMLTagElement,UMLTagElement>>();
-		this.commonNestedTags = new LinkedHashSet<Pair<UMLTagElement,UMLTagElement>>();
-		this.commonDocElements = new LinkedHashSet<Pair<UMLDocElement,UMLDocElement>>();
+		this.commonTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonNestedTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonDocElements = new ArrayList<Pair<UMLDocElement,UMLDocElement>>();
 		this.deletedTags = new ArrayList<UMLTagElement>();
 		this.addedTags = new ArrayList<UMLTagElement>();
 		this.deletedNestedTags = new ArrayList<UMLTagElement>();
@@ -486,11 +486,11 @@ public class UMLJavadocDiff {
 		return words;
 	}
 
-	public Set<Pair<UMLTagElement, UMLTagElement>> getCommonTags() {
+	public List<Pair<UMLTagElement, UMLTagElement>> getCommonTags() {
 		return commonTags;
 	}
 
-	public Set<Pair<UMLDocElement, UMLDocElement>> getCommonDocElements() {
+	public List<Pair<UMLDocElement, UMLDocElement>> getCommonDocElements() {
 		return commonDocElements;
 	}
 
@@ -510,7 +510,7 @@ public class UMLJavadocDiff {
 		return addedDocElements;
 	}
 
-	public Set<Pair<UMLTagElement, UMLTagElement>> getCommonNestedTags() {
+	public List<Pair<UMLTagElement, UMLTagElement>> getCommonNestedTags() {
 		return commonNestedTags;
 	}
 

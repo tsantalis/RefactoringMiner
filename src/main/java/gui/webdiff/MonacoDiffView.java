@@ -19,17 +19,18 @@ public class MonacoDiffView implements Renderable {
     private String toolName;
     private String srcFileName;
     private String dstFileName;
-
+    private int numOfDiffs;
     private Diff diff;
 
     private int id;
 
-    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, String srcFileContent, String dstFileContent, Diff diff, int id, boolean dump) {
+    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, String srcFileContent, String dstFileContent, Diff diff, int id, boolean dump, int numOfDiffs) {
         this.toolName = toolName;
         this.srcFileName = srcFileName;
         this.dstFileName = dstFileName;
         this.diff = diff;
         this.id = id;
+        this.numOfDiffs =  numOfDiffs;
     }
 
     @Override
@@ -41,7 +42,7 @@ public class MonacoDiffView implements Renderable {
             .body(class_("h-100").style("overflow: hidden;"))
                 .div(class_("container-fluid h-100"))
                     .div(class_("row"))
-                    .render(new MenuBar(toolName))
+                    .render(new MenuBar(toolName, id, numOfDiffs))
                     ._div()
                     .div(class_("row h-100"))
                         .div(class_("col-6 h-100"))
@@ -220,10 +221,21 @@ public class MonacoDiffView implements Renderable {
     }
 
     private static class MenuBar implements Renderable {
-        private String toolName;
+        private final String toolName;
+        private final int id;
+        private final int numOfDiffs;
+        private String getNextHRef(){
+            return "/monaco-diff/" + (id + 1) % numOfDiffs;
 
-        public MenuBar(String toolName) {
+        }
+        private String getPrevHRef(){
+            return "/monaco-diff/" + (id - 1) % numOfDiffs;
+        }
+
+        public MenuBar(String toolName, int id, int numOfDiffs) {
             this.toolName = toolName;
+            this.id = id;
+            this.numOfDiffs = numOfDiffs;
         }
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
@@ -253,6 +265,8 @@ public class MonacoDiffView implements Renderable {
                     ._div()
                     .div(class_("btn-group"))
                         .a(class_("btn btn-default btn-sm btn-primary").href("/list")).content("Back")
+                        .a(class_("btn btn-default btn-sm btn-primary").href(getPrevHRef())).content("prev")
+                        .a(class_("btn btn-default btn-sm btn-primary").href(getNextHRef())).content("next")
                         .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")
                     ._div()
                 ._div()

@@ -107,24 +107,34 @@ public class UMLJavadocDiff {
 		if(nestedTagsBefore.size() <= nestedTagsAfter.size()) {
 			for(UMLTagElement nestedTagBefore : nestedTagsBefore) {
 				if(nestedTagsAfter.contains(nestedTagBefore)) {
-					int index = nestedTagsAfter.indexOf(nestedTagBefore);
-					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagBefore, nestedTagsAfter.get(index));
-					commonNestedTags.add(pair);
-					processIdenticalTags(nestedTagBefore, nestedTagsAfter.get(index));
-					deletedNestedTags.remove(nestedTagBefore);
-					addedNestedTags.remove(nestedTagBefore);
+					List<Integer> matchingIndices = findAllMatchingIndices(nestedTagsAfter, nestedTagBefore);
+					for(Integer index : matchingIndices) {
+						if(!alreadyMatchedNestedTagElement(nestedTagBefore, nestedTagsAfter.get(index))) {
+							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagBefore, nestedTagsAfter.get(index));
+							commonNestedTags.add(pair);
+							processIdenticalTags(nestedTagBefore, nestedTagsAfter.get(index));
+							deletedNestedTags.remove(nestedTagBefore);
+							addedNestedTags.remove(nestedTagBefore);
+							break;
+						}
+					}
 				}
 			}
 		}
 		else {
 			for(UMLTagElement nestedTagAfter : nestedTagsAfter) {
 				if(nestedTagsBefore.contains(nestedTagAfter)) {
-					int index = nestedTagsBefore.indexOf(nestedTagAfter);
-					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagsBefore.get(index), nestedTagAfter);
-					commonNestedTags.add(pair);
-					processIdenticalTags(nestedTagsBefore.get(index), nestedTagAfter);
-					deletedNestedTags.remove(nestedTagAfter);
-					addedNestedTags.remove(nestedTagAfter);
+					List<Integer> matchingIndices = findAllMatchingIndices(nestedTagsBefore, nestedTagAfter);
+					for(Integer index : matchingIndices) {
+						if(!alreadyMatchedNestedTagElement(nestedTagsBefore.get(index), nestedTagAfter)) {
+							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagsBefore.get(index), nestedTagAfter);
+							commonNestedTags.add(pair);
+							processIdenticalTags(nestedTagsBefore.get(index), nestedTagAfter);
+							deletedNestedTags.remove(nestedTagAfter);
+							addedNestedTags.remove(nestedTagAfter);
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -141,6 +151,17 @@ public class UMLJavadocDiff {
 			Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElementBefore, docElementAfter);
 			commonDocElements.add(pair);
 		}
+	}
+
+	private List<Integer> findAllMatchingIndices(List<UMLTagElement> tags, UMLTagElement docElement) {
+		List<Integer> matchingIndices = new ArrayList<>();
+		for(int i=0; i<tags.size(); i++) {
+			UMLTagElement element = tags.get(i);
+			if(docElement.equals(element)) {
+				matchingIndices.add(i);
+			}
+		}
+		return matchingIndices;
 	}
 
 	private List<Integer> findAllMatchingIndices(List<UMLDocElement> fragments, UMLDocElement docElement) {
@@ -429,6 +450,18 @@ public class UMLJavadocDiff {
 		this.addedDocElements.addAll(addedDocElements);
 		if(commonDocElements.size() > commonDocElementsBefore) {
 			return true;
+		}
+		return false;
+	}
+
+	private boolean alreadyMatchedNestedTagElement(UMLTagElement deletedTagElement, UMLTagElement addedTagElement) {
+		for(Pair<UMLTagElement, UMLTagElement> pair : commonNestedTags) {
+			if(pair.getLeft() == deletedTagElement) {
+				return true;
+			}
+			if(pair.getRight() == addedTagElement) {
+				return true;
+			}
 		}
 		return false;
 	}

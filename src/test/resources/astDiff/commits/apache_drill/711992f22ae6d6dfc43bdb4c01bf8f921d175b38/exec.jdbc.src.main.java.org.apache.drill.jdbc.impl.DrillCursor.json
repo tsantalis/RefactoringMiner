@@ -1473,28 +1473,6 @@
   "firstEndPos" : 2309,
   "secondEndPos" : 2257
 }, {
-  "firstType" : "TagElement",
-  "secondType" : "TagElement",
-  "firstLabel" : "",
-  "secondLabel" : "",
-  "firstParentType" : "Javadoc",
-  "secondParentType" : "Javadoc",
-  "firstPos" : 2210,
-  "secondPos" : 2210,
-  "firstEndPos" : 2307,
-  "secondEndPos" : 2255
-}, {
-  "firstType" : "TextElement",
-  "secondType" : "TextElement",
-  "firstLabel" : "Whether we're past the special first call to this.next() from",
-  "secondLabel" : "Whether loadInitialSchema() has been called. ",
-  "firstParentType" : "TagElement",
-  "secondParentType" : "TagElement",
-  "firstPos" : 2210,
-  "secondPos" : 2210,
-  "firstEndPos" : 2271,
-  "secondEndPos" : 2255
-}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "private",
@@ -1736,6 +1714,17 @@
   "secondPos" : 2517,
   "firstEndPos" : 2620,
   "secondEndPos" : 2579
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "than trying to actually advance to the next record.",
+  "secondLabel" : "record.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2569,
+  "secondPos" : 2585,
+  "firstEndPos" : 2620,
+  "secondEndPos" : 2592
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

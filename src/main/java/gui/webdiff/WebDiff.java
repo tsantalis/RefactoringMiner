@@ -66,6 +66,7 @@ public class WebDiff  {
             Renderable view = new VanillaDiffView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
+                    comparator.isMoveDiff(id),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
                     projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
                     false);
@@ -76,7 +77,8 @@ public class WebDiff  {
             ASTDiff astDiff = comparator.getASTDiff(id);
             Renderable view = new MonacoDiffView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
-                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0]
+                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
+                    comparator.isMoveDiff(id)
             );
             return render(view);
         });

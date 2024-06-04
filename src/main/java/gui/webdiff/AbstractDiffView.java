@@ -12,7 +12,8 @@ public abstract class AbstractDiffView implements Renderable {
     protected final int id;
     protected final int numOfDiffs;
     protected final String routePath;
-    public AbstractDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath) {
+    protected boolean isMovedDiff;
+    public AbstractDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
         this.toolName = toolName;
         this.srcFileName = srcFileName;
         this.dstFileName = dstFileName;
@@ -20,5 +21,6 @@ public abstract class AbstractDiffView implements Renderable {
         this.diff = diff;
         this.id = id;
         this.routePath = routePath;
+        this.isMovedDiff = isMovedDiff;
     }
 }

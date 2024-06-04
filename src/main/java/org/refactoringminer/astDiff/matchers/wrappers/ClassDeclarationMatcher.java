@@ -24,13 +24,17 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
 
     private final UMLClassBaseDiff baseClassDiff;
 
+    public ClassDeclarationMatcher(UMLClassBaseDiff baseClassDiff) {
+        this.baseClassDiff = baseClassDiff;
+    }
+
     public ClassDeclarationMatcher(OptimizationData optimizationData, UMLClassBaseDiff baseClassDiff) {
         super(optimizationData);
         this.baseClassDiff = baseClassDiff;
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processClassDeclarationMapping(srcTree,dstTree,baseClassDiff,mappingStore);
     }
 

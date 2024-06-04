@@ -10,13 +10,17 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher {
     private final UMLAttributeDiff umlAttrDiff;
 
+    public FieldDeclarationByAttrDiffMatcher(UMLAttributeDiff umlAttrDiff) {
+        this.umlAttrDiff = umlAttrDiff;
+    }
+
     public FieldDeclarationByAttrDiffMatcher(OptimizationData optimizationData, UMLAttributeDiff umlAttrDiff) {
         super(optimizationData);
         this.umlAttrDiff = umlAttrDiff;
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processFieldDeclarationByAttrDiff(srcTree, dstTree, umlAttrDiff, mappingStore);
     }
     private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {

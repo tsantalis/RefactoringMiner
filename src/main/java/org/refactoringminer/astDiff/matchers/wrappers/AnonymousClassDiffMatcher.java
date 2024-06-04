@@ -13,13 +13,17 @@ public class AnonymousClassDiffMatcher extends OptimizationAwareMatcher {
 
     private final UMLAnonymousClassDiff anonymousClassDiff;
 
+    public AnonymousClassDiffMatcher(UMLAnonymousClassDiff anonymousClassDiff) {
+        this.anonymousClassDiff = anonymousClassDiff;
+    }
+
     public AnonymousClassDiffMatcher(OptimizationData optimizationData, UMLAnonymousClassDiff anonymousClassDiff) {
         super(optimizationData);
         this.anonymousClassDiff = anonymousClassDiff;
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processAnonymousClassDiff(srcTree, dstTree, anonymousClassDiff, mappingStore);
     }
 

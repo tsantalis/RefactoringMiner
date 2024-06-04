@@ -28,6 +28,11 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
     private final UMLClassBaseDiff baseClassDiff;
     private final List<Refactoring> modelDiffRefactorings;
 
+    public RefactoringMatcher(UMLClassBaseDiff baseClassDiff, List<Refactoring> modelDiffRefactorings) {
+        this.baseClassDiff = baseClassDiff;
+        this.modelDiffRefactorings = modelDiffRefactorings;
+    }
+
     public RefactoringMatcher(OptimizationData optimizationData, List<Refactoring> modelDiffRefactorings, UMLClassBaseDiff baseClassDiff) {
         super(optimizationData);
         this.modelDiffRefactorings = modelDiffRefactorings;
@@ -35,7 +40,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processRefactorings(srcTree,dstTree,getClassDiffRefactorings(baseClassDiff),mappingStore);
     }
 

@@ -17,12 +17,16 @@ import java.util.Set;
 public class ClassAttrMatcher extends OptimizationAwareMatcher {
     private final UMLAbstractClassDiff classDiff;
 
+    public ClassAttrMatcher(UMLAbstractClassDiff classDiff) {
+        this.classDiff = classDiff;
+    }
+
     public ClassAttrMatcher(OptimizationData optimizationData, UMLAbstractClassDiff classDiff) {
         super(optimizationData);
         this.classDiff = classDiff;
     }
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processClassAttributes(srcTree, dstTree, classDiff, mappingStore);
     }
 

@@ -24,9 +24,14 @@ import java.util.Set;
 /* Created by pourya on 2024-05-22*/
 public class BodyMapperMatcher extends OptimizationAwareMatcher {
 
+
     protected final UMLOperationBodyMapper bodyMapper;
     protected final boolean isPartOfExtractedMethod;
 
+    public BodyMapperMatcher(UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractedMethod) {
+        this.bodyMapper = bodyMapper;
+        this.isPartOfExtractedMethod = isPartOfExtractedMethod;
+    }
     public BodyMapperMatcher(OptimizationData optimizationData, UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractedMethod) {
         super(optimizationData);
         this.bodyMapper = bodyMapper;
@@ -34,7 +39,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processBodyMapper(srcTree,dstTree,bodyMapper,mappingStore,isPartOfExtractedMethod);
     }
     private void processBodyMapper(Tree srcTree, Tree dstTree, UMLOperationBodyMapper bodyMapper, ExtendedMultiMappingStore mappingStore, boolean isPartOfExtractedMethod) {

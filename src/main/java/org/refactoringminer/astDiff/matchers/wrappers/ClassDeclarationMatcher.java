@@ -8,6 +8,7 @@ import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.UMLTypeParameter;
 import gr.uom.java.xmi.diff.UMLAnnotationListDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
@@ -19,11 +20,12 @@ import java.util.List;
 import static org.refactoringminer.astDiff.utils.Helpers.findPairOfType;
 
 /* Created by pourya on 2024-05-22*/
-public class ClassDeclarationMatcher implements TreeMatcher {
+public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
 
     private final UMLClassBaseDiff baseClassDiff;
 
-    public ClassDeclarationMatcher(UMLClassBaseDiff baseClassDiff) {
+    public ClassDeclarationMatcher(OptimizationData optimizationData, UMLClassBaseDiff baseClassDiff) {
+        super(optimizationData);
         this.baseClassDiff = baseClassDiff;
     }
 
@@ -83,7 +85,7 @@ public class ClassDeclarationMatcher implements TreeMatcher {
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
-        new JavaDocMatcher(classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc())
+        new JavaDocMatcher(optimizationData, classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc())
                 .match(srcTree, dstTree, mappingStore);
         processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
     }

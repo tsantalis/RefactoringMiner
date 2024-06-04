@@ -29,7 +29,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
     private void processClassAttributes(Tree srcTree, Tree dstTree, UMLAbstractClassDiff classDiff, ExtendedMultiMappingStore mappingStore) {
         Set<Pair<UMLAttribute, UMLAttribute>> pairs = classDiff.getCommonAtrributes();
         for (org.apache.commons.lang3.tuple.Pair<UMLAttribute, UMLAttribute> pair : pairs) {
-            new FieldDeclarationMatcher(pair.getLeft(), pair.getRight()).match(srcTree,dstTree,mappingStore);
+            new FieldDeclarationMatcher(optimizationData, pair.getLeft(), pair.getRight()).match(srcTree,dstTree,mappingStore);
         }
         List<UMLAttributeDiff> attributeDiffList = classDiff.getAttributeDiffList();
         for (UMLAttributeDiff umlAttributeDiff : attributeDiffList) {
@@ -41,7 +41,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
         }
     }
     private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant()).match(srcTree,dstTree,mappingStore);
+        new FieldDeclarationMatcher(optimizationData, umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant()).match(srcTree,dstTree,mappingStore);
         if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
             UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
             new AnonymousClassDiffMatcher(optimizationData, anonymousClassDiff).match(srcTree, dstTree, mappingStore);

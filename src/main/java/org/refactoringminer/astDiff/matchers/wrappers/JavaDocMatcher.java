@@ -4,11 +4,13 @@ import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLJavadoc;
+import gr.uom.java.xmi.UMLTagElement;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
+import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
@@ -16,12 +18,13 @@ import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.areBothFromTh
 import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.isFromType;
 
 /* Created by pourya on 2024-05-22*/
-public class JavaDocMatcher implements TreeMatcher {
+public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatcher {
 
     private final UMLJavadoc srcUMLJavaDoc;
     private final UMLJavadoc dstUMLJavaDoc;
 
-    public JavaDocMatcher(UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
+    public JavaDocMatcher(OptimizationData optimizationData, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
+        super(optimizationData);
         this.srcUMLJavaDoc = srcUMLJavaDoc;
         this.dstUMLJavaDoc = dstUMLJavaDoc;
     }
@@ -38,8 +41,16 @@ public class JavaDocMatcher implements TreeMatcher {
             else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 new LeafMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
                 mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
+                for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonNestedTags()) {
+                    Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
+                    Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
+                    if (srcTag != null && dstTag != null) {
+                        if (!mappingStore.isSrcMapped(srcTag) || !mappingStore.isDstMapped(dstTag) || diff.isManyToManyReformat()) {
+                            optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
+                        }
+                    }
+                }
                 for(Pair<UMLDocElement, UMLDocElement> pair : diff.getCommonDocElements()) {
-                    if (pair.getLeft().getText().equals(pair.getRight().getText())) continue;
             		Tree src = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dst = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
                     if (src != null && dst != null) {
@@ -61,14 +72,14 @@ public class JavaDocMatcher implements TreeMatcher {
                                 matchParents = true;
                             }
                             if (srcTxt != null && dstTxt != null) {
-                                mappingStore.addMapping(srcTxt, dstTxt);
+                                optimizationData.getSubtreeMappings().addMapping(srcTxt, dstTxt);
                                 if (matchParents)
                                 {
                                     Tree srcTxtParent = srcTxt.getParent();
                                     Tree dstTxtParent = dstTxt.getParent();
                                     if (areBothFromThisType(srcTxtParent, dstTxtParent, Constants.TAG_ELEMENT))
                                         if (!mappingStore.isSrcMapped(srcTxtParent) && !mappingStore.isDstMapped(dstTxtParent))
-                                            mappingStore.addMapping(srcTxtParent, dstTxtParent);
+                                            optimizationData.getSubtreeMappings().addMapping(srcTxt, dstTxt);
                                 }
                             }
                         }

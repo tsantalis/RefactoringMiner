@@ -15,6 +15,10 @@ public class DirComparator {
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
 
+    int getNumOfDiffs(){
+        return diffs.size();
+    }
+
     public DefaultMutableTreeNode getCompressedTree() {
         return compressedTree;
     }

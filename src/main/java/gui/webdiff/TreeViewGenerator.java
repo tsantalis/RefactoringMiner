@@ -6,6 +6,7 @@ import com.github.gumtreediff.utils.Pair;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -13,14 +14,20 @@ import java.util.List;
 public class TreeViewGenerator {
     private final DefaultMutableTreeNode root = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
     private final DefaultMutableTreeNode compressedTree = new DefaultMutableTreeNode(new TreeNodeInfo("", ""));
-    private final List<ASTDiff> diffs;
+    private final List<ASTDiff> unorderedDiffs;
+    private final List<ASTDiff> orderedDiffs; //This is populated according to the reordering after compressing the tree
+
+    public List<ASTDiff> getOrderedDiffs() {
+        return orderedDiffs;
+    }
 
     public DefaultMutableTreeNode getCompressedTree() {
         return compressedTree;
     }
 
     public TreeViewGenerator(List<Pair<String,String>> modifiedFilesName, List<ASTDiff> diffs){
-        this.diffs = diffs;
+        this.unorderedDiffs = diffs;
+        this.orderedDiffs = new ArrayList<>();
         for(Pair<String, String> pair : modifiedFilesName) {
             String fileName = pair.second;
             String[] tokens = fileName.split("/");
@@ -121,11 +128,14 @@ public class TreeViewGenerator {
     private void setIdAccordingly(DefaultMutableTreeNode treeNode) {
         if (!treeNode.isLeaf()) return;
         TreeNodeInfo nodeInfo = (TreeNodeInfo) treeNode.getUserObject();
-        for (int i = 0; i < diffs.size(); i++) {
-            if (diffs.get(i).getDstPath().equals(nodeInfo.getFullPath()) && diffs.get(i).getSrcPath().equals(nodeInfo.getSrcFilePath().get())) {
-                nodeInfo.setId(i);
+        for (int i = 0; i < unorderedDiffs.size(); i++) {
+            if (unorderedDiffs.get(i).getDstPath().equals(nodeInfo.getFullPath()) && unorderedDiffs.get(i).getSrcPath().equals(nodeInfo.getSrcFilePath().get())) {
+                //nodeInfo.setId(i);
+                nodeInfo.setId(orderedDiffs.size());
+                orderedDiffs.add(unorderedDiffs.get(i));
                 break;
             }
         }
     }
+
 }

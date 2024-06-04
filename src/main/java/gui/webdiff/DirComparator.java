@@ -8,7 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.*;
 
 public class DirComparator {
-    private final List<ASTDiff> diffs;
+    private List<ASTDiff> diffs;
     private final ProjectASTDiff projectASTDiff;
     private final DefaultMutableTreeNode compressedTree;
     private final List<Pair<String,String>> modifiedFilesName;
@@ -50,7 +50,9 @@ public class DirComparator {
         this.diffs.addAll(projectASTDiff.getMoveDiffSet());
         modifiedFilesName = new ArrayList<>();
         compare();
-        compressedTree = new TreeViewGenerator(getModifiedFilesName(), diffs).getCompressedTree();
+        TreeViewGenerator treeViewGenerator = new TreeViewGenerator(getModifiedFilesName(), diffs);
+        compressedTree = treeViewGenerator.getCompressedTree();
+        this.diffs = treeViewGenerator.getOrderedDiffs();
     }
 
     private void compare() {

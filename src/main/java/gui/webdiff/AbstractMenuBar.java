@@ -26,7 +26,7 @@ public abstract class AbstractMenuBar implements Renderable {
 
     }
     private String getPrevHRef(){
-        return routePath + (id - 1) % numOfDiffs;
+        return routePath + (id - 1 + numOfDiffs) % numOfDiffs;
     }
 
     public AbstractMenuBar(String toolName, String routePath, int id, int numOfDiffs, boolean isMovedDiff) {

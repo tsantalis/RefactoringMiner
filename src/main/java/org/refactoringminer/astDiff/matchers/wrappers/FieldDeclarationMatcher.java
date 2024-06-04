@@ -17,6 +17,11 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
     private final UMLAttribute originalAttribute;
     private final UMLAttribute movedAttribute;
 
+    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+        this.originalAttribute = originalAttribute;
+        this.movedAttribute = movedAttribute;
+    }
+
     public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
         super(optimizationData);
         this.originalAttribute = originalAttribute;
@@ -24,7 +29,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processFieldDeclaration(srcTree, dstTree, originalAttribute, movedAttribute, mappingStore);
     }
     private void processFieldDeclaration(Tree srcTree, Tree dstTree, UMLAttribute srcUMLAttribute,UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {

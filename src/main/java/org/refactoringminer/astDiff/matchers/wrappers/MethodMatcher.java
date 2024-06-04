@@ -20,13 +20,18 @@ import java.util.*;
 /* Created by pourya on 2024-05-22*/
 public class MethodMatcher extends BodyMapperMatcher{
 
+    public MethodMatcher(UMLOperationBodyMapper bodyMapper, boolean isPartOfExtractMethod) {
+        super(bodyMapper, isPartOfExtractMethod);
+    }
+
     public MethodMatcher(OptimizationData optimizationData, UMLOperationBodyMapper bodyMapper) {
         super(optimizationData, bodyMapper, false);
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processMethod(srcTree, dstTree, bodyMapper, mappingStore);
+
     }
 
     private void processMethod(Tree srcTree, Tree dstTree, UMLOperationBodyMapper umlOperationBodyMapper, ExtendedMultiMappingStore mappingStore) {
@@ -68,7 +73,7 @@ public class MethodMatcher extends BodyMapperMatcher{
         }
         if (srcOperationNode != null && dstOperationNode != null) {
             processMethodSignature(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
-            new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, false).match(srcOperationNode, dstOperationNode, mappingStore);
+            new BodyMapperMatcher(optimizationData, umlOperationBodyMapper, isPartOfExtractedMethod).match(srcOperationNode, dstOperationNode, mappingStore);
             processOperationDiff(srcOperationNode, dstOperationNode, umlOperationBodyMapper, mappingStore);
             processMethodParameters(srcOperationNode, dstOperationNode, umlOperationBodyMapper.getMatchedVariables(), mappingStore);
         }

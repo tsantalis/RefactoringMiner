@@ -22,6 +22,13 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
     private final UMLAbstractClassDiff classDiff;
     private final List<Refactoring> processedMoveRefactorings;
 
+    public ModelDiffRefactoringsForClassDiffMatcher(UMLModelDiff modelDiff, List<Refactoring> modelDiffRefactorings, UMLAbstractClassDiff classDiff, List<Refactoring> processedMoveRefactorings) {
+        this.modelDiff = modelDiff;
+        this.modelDiffRefactorings = modelDiffRefactorings;
+        this.classDiff = classDiff;
+        this.processedMoveRefactorings = processedMoveRefactorings;
+    }
+
     //    private final List<Refactoring> modelDiffRefactorings;
     public ModelDiffRefactoringsForClassDiffMatcher(OptimizationData optimizationData, UMLModelDiff modelDiff, List<Refactoring> modelDiffRefactorings, UMLAbstractClassDiff classDiff) {
         super(optimizationData);
@@ -36,7 +43,7 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
 	}
 
 	@Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processModelDiffRefactorings(classDiff, mappingStore);
         processMovedAttributes(classDiff,mappingStore);
     }
@@ -115,15 +122,8 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     classDiff.getNextClass().getLocationInfo().getFilePath().equals(dstAttrPath)) {
                 Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcAttrPath).getRoot();
                 Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstAttrPath).getRoot();
-                processFieldDeclarationByAttrDiff(srcTotalTree,dstTotalTree,umlAttributeDiff,mappingStore);
+                new FieldDeclarationByAttrDiffMatcher(optimizationData, umlAttributeDiff).match(srcTotalTree, dstTotalTree, mappingStore);
             }
-        }
-    }
-    private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute()).match(srcTree,dstTree,mappingStore);
-        if (umlAttributeDiff.getInitializerMapper().isPresent()) {
-            UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
-            new MethodMatcher(optimizationData, umlOperationBodyMapper).match(srcTree, dstTree, mappingStore);
         }
     }
 }

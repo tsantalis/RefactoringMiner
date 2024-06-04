@@ -23,6 +23,11 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
     private final UMLJavadoc srcUMLJavaDoc;
     private final UMLJavadoc dstUMLJavaDoc;
 
+    public JavaDocMatcher(UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
+        this.srcUMLJavaDoc = srcUMLJavaDoc;
+        this.dstUMLJavaDoc = dstUMLJavaDoc;
+    }
+
     public JavaDocMatcher(OptimizationData optimizationData, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
         super(optimizationData);
         this.srcUMLJavaDoc = srcUMLJavaDoc;
@@ -90,7 +95,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
     }
 
     @Override
-    public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
+    public void matchAndUpdateOptimizationStore(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
         processJavaDocs(srcTree,dstTree,srcUMLJavaDoc,dstUMLJavaDoc,mappingStore);
     }
 }

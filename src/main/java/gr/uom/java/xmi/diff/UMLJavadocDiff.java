@@ -143,6 +143,17 @@ public class UMLJavadocDiff {
 		}
 	}
 
+	private List<Integer> findAllMatchingIndices(List<UMLDocElement> fragments, UMLDocElement docElement) {
+		List<Integer> matchingIndices = new ArrayList<>();
+		for(int i=0; i<fragments.size(); i++) {
+			UMLDocElement element = fragments.get(i);
+			if(docElement.equals(element)) {
+				matchingIndices.add(i);
+			}
+		}
+		return matchingIndices;
+	}
+
 	private boolean processModifiedTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
 		int commonDocElementsBefore = commonDocElements.size();
 		List<UMLDocElement> fragmentsBefore = tagBefore.getFragments();
@@ -152,22 +163,32 @@ public class UMLJavadocDiff {
 		if(fragmentsBefore.size() <= fragmentsAfter.size()) {
 			for(UMLDocElement docElement : fragmentsBefore) {
 				if(fragmentsAfter.contains(docElement)) {
-					int index = fragmentsAfter.indexOf(docElement);
-					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
-					commonDocElements.add(pair);
-					deletedDocElements.remove(docElement);
-					addedDocElements.remove(docElement);
+					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsAfter, docElement);
+					for(Integer index : matchingIndices) {
+						if(!alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(docElement, fragmentsAfter.get(index));
+							commonDocElements.add(pair);
+							deletedDocElements.remove(docElement);
+							addedDocElements.remove(docElement);
+							break;
+						}
+					}
 				}
 			}
 		}
 		else {
 			for(UMLDocElement docElement : fragmentsAfter) {
 				if(fragmentsBefore.contains(docElement)) {
-					int index = fragmentsBefore.indexOf(docElement);
-					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), docElement);
-					commonDocElements.add(pair);
-					deletedDocElements.remove(docElement);
-					addedDocElements.remove(docElement);
+					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsBefore, docElement);
+					for(Integer index : matchingIndices) {
+						if(!alreadyMatchedDocElement(fragmentsBefore.get(index), docElement)) {
+							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), docElement);
+							commonDocElements.add(pair);
+							deletedDocElements.remove(docElement);
+							addedDocElements.remove(docElement);
+							break;
+						}
+					}
 				}
 			}
 		}

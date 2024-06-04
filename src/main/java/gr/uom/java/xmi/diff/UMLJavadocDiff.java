@@ -3,8 +3,10 @@ package gr.uom.java.xmi.diff;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,17 +18,23 @@ import gr.uom.java.xmi.UMLTagElement;
 public class UMLJavadocDiff {
 	private Set<Pair<UMLTagElement, UMLTagElement>> commonTags;
 	private Set<Pair<UMLDocElement, UMLDocElement>> commonDocElements;
+	private Set<Pair<UMLTagElement, UMLTagElement>> commonNestedTags;
 	private List<UMLTagElement> deletedTags;
 	private List<UMLTagElement> addedTags;
+	private List<UMLTagElement> deletedNestedTags;
+	private List<UMLTagElement> addedNestedTags;
 	private List<UMLDocElement> deletedDocElements;
 	private List<UMLDocElement> addedDocElements;
 	private boolean manyToManyReformat;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
 		this.commonTags = new LinkedHashSet<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonNestedTags = new LinkedHashSet<Pair<UMLTagElement,UMLTagElement>>();
 		this.commonDocElements = new LinkedHashSet<Pair<UMLDocElement,UMLDocElement>>();
 		this.deletedTags = new ArrayList<UMLTagElement>();
 		this.addedTags = new ArrayList<UMLTagElement>();
+		this.deletedNestedTags = new ArrayList<UMLTagElement>();
+		this.addedNestedTags = new ArrayList<UMLTagElement>();
 		this.deletedDocElements = new ArrayList<UMLDocElement>();
 		this.addedDocElements = new ArrayList<UMLDocElement>();
 		List<UMLTagElement> tagsBefore = javadocBefore.getTags();
@@ -66,6 +74,7 @@ public class UMLJavadocDiff {
 					if(match) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
+						matchNestedTags(tagBefore, tagAfter);
 						break;
 					}
 				}
@@ -78,6 +87,7 @@ public class UMLJavadocDiff {
 					if(match) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
+						matchNestedTags(tagBefore, tagAfter);
 						break;
 					}
 				}
@@ -87,6 +97,39 @@ public class UMLJavadocDiff {
 		addedTags.removeAll(addedToBeDeleted);
 		this.deletedTags.addAll(deletedTags);
 		this.addedTags.addAll(addedTags);
+	}
+
+	private void matchNestedTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
+		List<UMLTagElement> nestedTagsBefore = tagBefore.getNestedTags();
+		List<UMLTagElement> nestedTagsAfter = tagAfter.getNestedTags();
+		List<UMLTagElement> deletedNestedTags = new ArrayList<UMLTagElement>(nestedTagsBefore);
+		List<UMLTagElement> addedNestedTags = new ArrayList<UMLTagElement>(nestedTagsAfter);
+		if(nestedTagsBefore.size() <= nestedTagsAfter.size()) {
+			for(UMLTagElement nestedTagBefore : nestedTagsBefore) {
+				if(nestedTagsAfter.contains(nestedTagBefore)) {
+					int index = nestedTagsAfter.indexOf(nestedTagBefore);
+					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagBefore, nestedTagsAfter.get(index));
+					commonNestedTags.add(pair);
+					processIdenticalTags(nestedTagBefore, nestedTagsAfter.get(index));
+					deletedNestedTags.remove(nestedTagBefore);
+					addedNestedTags.remove(nestedTagBefore);
+				}
+			}
+		}
+		else {
+			for(UMLTagElement nestedTagAfter : nestedTagsAfter) {
+				if(nestedTagsBefore.contains(nestedTagAfter)) {
+					int index = nestedTagsBefore.indexOf(nestedTagAfter);
+					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(nestedTagsBefore.get(index), nestedTagAfter);
+					commonNestedTags.add(pair);
+					processIdenticalTags(nestedTagsBefore.get(index), nestedTagAfter);
+					deletedNestedTags.remove(nestedTagAfter);
+					addedNestedTags.remove(nestedTagAfter);
+				}
+			}
+		}
+		this.deletedNestedTags.addAll(deletedNestedTags);
+		this.addedNestedTags.addAll(addedNestedTags);
 	}
 
 	private void processIdenticalTags(UMLTagElement tagBefore, UMLTagElement tagAfter) {
@@ -176,17 +219,23 @@ public class UMLJavadocDiff {
 		//check if all deleted docElements match all added docElements
 		StringBuilder deletedSB = new StringBuilder();
 		List<String> deletedTokenSequence = new ArrayList<String>();
+		Map<UMLDocElement, List<String>> deletedTokenSequenceMap = new LinkedHashMap<>();
 		for(UMLDocElement deletedDocElement : deletedDocElements) {
 			String text = deletedDocElement.getText();
 			deletedSB.append(text);
-			deletedTokenSequence.addAll(splitToWords(text));
+			List<String> splitToWords = splitToWords(text);
+			deletedTokenSequence.addAll(splitToWords);
+			deletedTokenSequenceMap.put(deletedDocElement, splitToWords);
 		}
 		StringBuilder addedSB = new StringBuilder();
 		List<String> addedTokenSequence = new ArrayList<String>();
+		Map<UMLDocElement, List<String>> addedTokenSequenceMap = new LinkedHashMap<>();
 		for(UMLDocElement addedDocElement : addedDocElements) {
 			String text = addedDocElement.getText();
 			addedSB.append(text);
-			addedTokenSequence.addAll(splitToWords(text));
+			List<String> splitToWords = splitToWords(text);
+			addedTokenSequence.addAll(splitToWords);
+			addedTokenSequenceMap.put(addedDocElement, splitToWords);
 		}
 		if(deletedSB.toString().replaceAll("\\s", "").equals(addedSB.toString().replaceAll("\\s", ""))) {
 			//make all pair combinations
@@ -214,7 +263,7 @@ public class UMLJavadocDiff {
 								if(longestSubSequence == null) {
 									longestSubSequence = subList;
 								}
-								else if(subList.containsAll(longestSubSequence)) {
+								else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
 									longestSubSequence = subList;
 								}
 							}
@@ -224,12 +273,16 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null && !longestSubSequence.equals(addedTokenSequence) && !longestSubSequence.equals(deletedTokenSequence)) {
+				if(longestSubSequence != null) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
-						for(UMLDocElement addedDocElement : addedDocElements) {
-							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-							commonDocElements.add(pair);
+						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
+							for(UMLDocElement addedDocElement : addedDocElements) {
+								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
+									Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+									commonDocElements.add(pair);
+								}
+							}
 						}
 					}
 					if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
@@ -249,7 +302,7 @@ public class UMLJavadocDiff {
 								if(longestSubSequence == null) {
 									longestSubSequence = subList;
 								}
-								else if(subList.containsAll(longestSubSequence)) {
+								else if(subList.containsAll(longestSubSequence) && subList.size() > longestSubSequence.size()) {
 									longestSubSequence = subList;
 								}
 							}
@@ -259,12 +312,16 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null && !longestSubSequence.equals(addedTokenSequence) && !longestSubSequence.equals(deletedTokenSequence)) {
+				if(longestSubSequence != null) {
 					//make all pair combinations
 					for(UMLDocElement deletedDocElement : deletedDocElements) {
-						for(UMLDocElement addedDocElement : addedDocElements) {
-							Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-							commonDocElements.add(pair);
+						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
+							for(UMLDocElement addedDocElement : addedDocElements) {
+								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
+									Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+									commonDocElements.add(pair);
+								}
+							}
 						}
 					}
 					if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
@@ -362,6 +419,19 @@ public class UMLJavadocDiff {
 		return Collections.emptyList();
 	}
 
+	private boolean containsAnySubSequence(List<String> list, List<String> longestSubSequence) {
+		if(Collections.indexOfSubList(longestSubSequence, list) != -1)
+			return true;
+		for(int i=longestSubSequence.size(); i>1; i--) {
+			List<String> subList = longestSubSequence.subList(0,i);
+			int index = Collections.indexOfSubList(list, subList);
+			if(index != -1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private List<String> splitToWords(String sentence) {
 		ArrayList<String> words = new ArrayList<String>();
 		BreakIterator boundary = BreakIterator.getWordInstance();
@@ -399,6 +469,18 @@ public class UMLJavadocDiff {
 
 	public List<UMLDocElement> getAddedDocElements() {
 		return addedDocElements;
+	}
+
+	public Set<Pair<UMLTagElement, UMLTagElement>> getCommonNestedTags() {
+		return commonNestedTags;
+	}
+
+	public List<UMLTagElement> getDeletedNestedTags() {
+		return deletedNestedTags;
+	}
+
+	public List<UMLTagElement> getAddedNestedTags() {
+		return addedNestedTags;
 	}
 
 	public boolean isManyToManyReformat() {

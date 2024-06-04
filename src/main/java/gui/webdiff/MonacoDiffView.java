@@ -16,8 +16,8 @@ import java.io.IOException;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class MonacoDiffView extends AbstractDiffView implements Renderable {
-    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath) {
-        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath);
+    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+        super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MonacoDiffView extends AbstractDiffView implements Renderable {
             .body(class_("h-100").style("overflow: hidden;"))
                 .div(class_("container-fluid h-100"))
                     .div(class_("row"))
-                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs){
+                    .render(new AbstractMenuBar(toolName, routePath, id, numOfDiffs, isMovedDiff){
                         @Override
                         public String getShortcutDescriptions() {
                             return super.getShortcutDescriptions() + "<b>Alt + w</b> toggle word wrap";

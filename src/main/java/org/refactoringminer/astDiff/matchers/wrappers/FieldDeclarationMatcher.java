@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
+import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
@@ -10,13 +11,14 @@ import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 /* Created by pourya on 2024-05-22*/
-public class FieldDeclarationMatcher implements TreeMatcher {
+public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
 
 
     private final UMLAttribute originalAttribute;
     private final UMLAttribute movedAttribute;
 
-    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+        super(optimizationData);
         this.originalAttribute = originalAttribute;
         this.movedAttribute = movedAttribute;
     }
@@ -76,7 +78,7 @@ public class FieldDeclarationMatcher implements TreeMatcher {
         Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo());
         mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
         new LeafMatcher().match(srcVarDeclaration,dstVarDeclaration,mappingStore);
-        new JavaDocMatcher(srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc())
+        new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc())
                 .match(srcTree, dstTree, mappingStore);
         if (srcVarDeclaration != null && dstVarDeclaration != null)
             mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));

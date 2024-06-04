@@ -158,7 +158,7 @@ public class ProjectASTDiffer
 					if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
 						UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
 						if (originalClass != null && originalClass.getJavadoc() != null) {
-							new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc())
+							new JavaDocMatcher(optimizationData, originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc())
 		                    		.match(srcTree, dstTree, mappingStore);
 						}
 					}
@@ -229,7 +229,7 @@ public class ProjectASTDiffer
 		if (isBaseDiff) {
 			UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;
 			new ImportMatcher(baseClassDiff.getImportDiffList()).match(srcTree, dstTree, mappingStore);
-			new ClassDeclarationMatcher(baseClassDiff).match(srcTree, dstTree, mappingStore);
+			new ClassDeclarationMatcher(optimizationData, baseClassDiff).match(srcTree, dstTree, mappingStore);
 		}
 		new ClassAttrMatcher(optimizationData, classDiff).match(srcTree, dstTree, mappingStore);
 		new EnumConstantsMatcher(classDiff.getCommonEnumConstants()).match(srcTree,dstTree,mappingStore);

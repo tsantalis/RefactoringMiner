@@ -37,7 +37,7 @@ public class MethodMatcher extends BodyMapperMatcher{
             dstOperationNode = TreeUtilFunctions.findByLocationInfo(dstTree, umlOperationBodyMapper.getOperation2().getLocationInfo());
             if (srcOperationNode == null || !(srcOperationNode.getType().name.equals(Constants.METHOD_DECLARATION) || srcOperationNode.getType().name.equals(Constants.ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
             if (dstOperationNode == null || !(dstOperationNode.getType().name.equals(Constants.METHOD_DECLARATION) || dstOperationNode.getType().name.equals(Constants.ANNOTATION_TYPE_MEMBER_DECLARATION))) return;
-            new JavaDocMatcher(umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc())
+            new JavaDocMatcher(optimizationData, umlOperationBodyMapper.getOperation1().getJavadoc(), umlOperationBodyMapper.getOperation2().getJavadoc())
                     .match(srcOperationNode, dstOperationNode, mappingStore);
             mappingStore.addMapping(srcOperationNode, dstOperationNode);
         } else {
@@ -59,7 +59,7 @@ public class MethodMatcher extends BodyMapperMatcher{
                         }
                         if (initializer1.getJavadoc() != null && initializer2.getJavadoc() != null) {
                         	//Javadoc
-                        	new JavaDocMatcher(initializer1.getJavadoc(), initializer2.getJavadoc())
+                        	new JavaDocMatcher(optimizationData, initializer1.getJavadoc(), initializer2.getJavadoc())
                         			.match(srcOperationNode, dstOperationNode, mappingStore);
                         }
                     }

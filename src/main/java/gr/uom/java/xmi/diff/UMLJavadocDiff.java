@@ -415,10 +415,12 @@ public class UMLJavadocDiff {
 	private boolean alreadyMatchedDocElement(UMLDocElement deletedDocElement, UMLDocElement addedDocElement) {
 		for(Pair<UMLDocElement, UMLDocElement> pair : commonDocElements) {
 			if(pair.getLeft() == deletedDocElement) {
-				return true;
+				if(pair.getLeft().getText().contains(pair.getRight().getText()) || pair.getRight().getText().contains(pair.getLeft().getText()))
+					return true;
 			}
 			if(pair.getRight() == addedDocElement) {
-				return true;
+				if(pair.getLeft().getText().contains(pair.getRight().getText()) || pair.getRight().getText().contains(pair.getLeft().getText()))
+					return true;
 			}
 		}
 		return false;

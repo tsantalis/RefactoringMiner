@@ -38,6 +38,11 @@ repositories {
 
 test {
     useJUnitPlatform()
+    afterTest { descriptor, result ->
+        if (result.resultType == TestResult.ResultType.FAILURE) {
+            println "\n$descriptor.className [$descriptor.classDisplayName] > $descriptor.name [$descriptor.displayName]: $result.resultType"
+        }
+    }
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     jvmArgs '-Xmx4096M', '-Xms1024M' /* In case of heap-space error*/
     if (project.hasProperty('notoken')) {

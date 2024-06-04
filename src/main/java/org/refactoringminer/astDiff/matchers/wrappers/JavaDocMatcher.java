@@ -79,7 +79,7 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                                     Tree dstTxtParent = dstTxt.getParent();
                                     if (areBothFromThisType(srcTxtParent, dstTxtParent, Constants.TAG_ELEMENT))
                                         if (!mappingStore.isSrcMapped(srcTxtParent) && !mappingStore.isDstMapped(dstTxtParent))
-                                            optimizationData.getSubtreeMappings().addMapping(srcTxt, dstTxt);
+                                            optimizationData.getSubtreeMappings().addMapping(srcTxtParent, dstTxtParent);
                                 }
                             }
                         }

@@ -36,33 +36,17 @@ function getEditorOptions(text) {
 
 function getLanguage() {
     let extension = config.file.split('.').pop().toLowerCase();
-    if (extension == "java")
+    if (extension === "java")
         return "java";
-    else if (extension == "js")
-        return "javascript";
-    else if (extension == "rb")
-        return "ruby";
-    else if (extension == "css")
-        return "css";
-    else if (extension == "py")
-        return "python";
-    else if (extension == "cs")
-        return "csharp";
-    else if (extension == "r")
-        return "r";
-    else if (extension == "php")
-        return "php";
-    else if (extension == "c" || extension == "h" || extension == "cpp")
-        return "cpp";
     else
         return undefined;
 }
 
 function getEditColor(edit) {
-    if (edit == "inserted") return 'green';
-    else if (edit == "deleted") return 'red';
-    else if (edit == "updated") return 'yellow';
-    else if (edit == "moved") return 'blue';
+    if (edit === "inserted") return 'green';
+    else if (edit === "deleted") return 'red';
+    else if (edit === "updated") return 'yellow';
+    else if (edit === "moved") return 'blue';
     else return "black";
 }
 
@@ -84,77 +68,54 @@ function getDecoration(range, pos, endPos) {
 
 require.config({ paths: { 'vs': '/monaco/min/vs' }});
 require(['vs/editor/editor.main'], function() {
-    Promise.all(
-        [
-            fetch(config.left.url)
-                .then(result => result.text())
-                .then(text => monaco.editor.create(document.getElementById('left-container'), getEditorOptions(text))),
-            fetch(config.right.url)
-                .then(result => result.text())
-                .then(text => monaco.editor.create(document.getElementById('right-container'), getEditorOptions(text)))
-        ]
-    ).then(([leftEditor, rightEditor]) => {
-        config.mappings = config.mappings.map(mapping =>
-            [
-                monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),
-                monaco.Range.fromPositions(rightEditor.getModel().getPositionAt(mapping[2]), rightEditor.getModel().getPositionAt(mapping[3])),
-            ]);
+    Promise.all([
+        fetchEditorContent(config.left.url).then(content => createEditor('left-container', content)),
+        fetchEditorContent(config.right.url).then(content => createEditor('right-container', content))
+    ]).then(([leftEditor, rightEditor]) => {
 
-        const leftDecorations = config.left.ranges.map(range => getDecoration(
-             range,
-             leftEditor.getModel().getPositionAt(range.from),
-             leftEditor.getModel().getPositionAt(range.to)
-        ));
-        leftEditor.deltaDecorations([], leftDecorations);
+        setDecorations(leftEditor, config.left.ranges);
+        setDecorations(rightEditor, config.right.ranges);
 
-        leftEditor.onMouseDown((event) => {
-            if (event.target.range) {
-                const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
-                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-                if (allDecorations.length >= 1) {
-                    let activatedRange = allDecorations[0].range;
-                    if (allDecorations.length > 1) {
-                        for (let i = 1; i < allDecorations.length; i = i + 1) {
-                            const candidateRange = allDecorations[i].range;
-                            if (activatedRange.containsRange(candidateRange))
-                                activatedRange = candidateRange;
-                        }
-                    }
-                    const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
-                    if (mapping)
-                        if (mapping.length > 1)
-                            rightEditor.revealRangeInCenter(mapping[1]);
-                }
-            }
-        });
+        handleMouseDown(leftEditor, rightEditor, config.mappings);
+        handleMouseDown(rightEditor, leftEditor, config.mappings);
 
-        const rightDecorations = config.right.ranges.map(range => getDecoration(
-            range,
-            rightEditor.getModel().getPositionAt(range.from),
-            rightEditor.getModel().getPositionAt(range.to)
-        ));
-        rightEditor.deltaDecorations([], rightDecorations);
-
-        rightEditor.onMouseDown((event) => {
-            if (event.target.range) {
-                const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
-                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-                if (allDecorations.length >= 1) {
-                    let activatedRange = allDecorations[0].range;
-                    if (allDecorations.length > 1) {
-                        for (let i = 1; i < allDecorations.length; i = i + 1) {
-                            const candidateRange = allDecorations[i].range;
-                            if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
-                        }
-                    }
-                    const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
-                    if (mapping)
-                        if (mapping.length > 1)
-                            leftEditor.revealRangeInCenter(mapping[0]);
-                }
-            }
-        });
         window.leftEditor = leftEditor;
         window.rightEditor = rightEditor;
     });
 });
+
+function fetchEditorContent(url) {
+    return fetch(url).then(response => response.text());
+}
+function createEditor(containerId, content) {
+    return monaco.editor.create(document.getElementById(containerId), getEditorOptions(content));
+}
+function setDecorations(editor, ranges) {
+    const decorations = ranges.map(range => getDecoration(
+        range,
+        editor.getModel().getPositionAt(range.from),
+        editor.getModel().getPositionAt(range.to)
+    ));
+    editor.deltaDecorations([], decorations);
+}
+function handleMouseDown(editor, targetEditor, mappings) {
+    editor.onMouseDown(event => {
+        if (event.target.range) {
+            const allDecorations = editor.getModel().getDecorationsInRange(event.target.range, editor.id, true);
+            if (allDecorations.length >= 1) {
+                let activatedRange = allDecorations[0].range;
+                for (let i = 1; i < allDecorations.length; i++) {
+                    const candidateRange = allDecorations[i].range;
+                    if (activatedRange.containsRange(candidateRange)) {
+                        activatedRange = candidateRange;
+                    }
+                }
+                const mapping = mappings.find(mapping => mapping[0].equalsRange(activatedRange) || mapping[1].equalsRange(activatedRange));
+                if (mapping) {
+                    const targetRange = mapping[0].equalsRange(activatedRange) ? mapping[1] : mapping[0];
+                    targetEditor.revealRangeInCenter(targetRange);
+                }
+            }
+        }
+    });
+}

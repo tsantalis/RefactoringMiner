@@ -66,7 +66,7 @@ public class WebDiff  {
             Renderable view = new VanillaDiffView(toolName, astDiff.getSrcPath(),astDiff.getDstPath(),
                     projectASTDiff.getFileContentsBefore().get(astDiff.getSrcPath()),
                     projectASTDiff.getFileContentsAfter().get(astDiff.getDstPath()),
-                    astDiff, false);
+                    astDiff, id, false, comparator.getNumOfDiffs());
             return render(view);
         });
         get("/monaco-diff/:id", (request, response) -> {

@@ -1,17 +1,16 @@
 package org.refactoringminer.astDiff.models;
 
+import com.github.gumtreediff.actions.*;
+import com.github.gumtreediff.actions.model.Action;
+import com.github.gumtreediff.matchers.MappingStore;
+import com.github.gumtreediff.tree.Tree;
+import com.github.gumtreediff.tree.TreeContext;
+import org.refactoringminer.astDiff.actions.classifier.ExtendedOnlyRootsClassifier;
+import org.refactoringminer.astDiff.actions.editscript.ExtendedEditScriptGenerator;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import com.github.gumtreediff.actions.*;
-import com.github.gumtreediff.matchers.MappingStore;
-import org.refactoringminer.astDiff.actions.classifier.ExtendedOnlyRootsClassifier;
-import org.refactoringminer.astDiff.actions.editscript.SimplifiedExtendedChawatheScriptGenerator;
-
-import com.github.gumtreediff.actions.model.Action;
-import com.github.gumtreediff.tree.Tree;
-import com.github.gumtreediff.tree.TreeContext;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -71,8 +70,8 @@ public class ASTDiff extends Diff {
 	public void computeVanillaEditScript() {
 		finalizeEditScript(new SimplifiedChawatheScriptGenerator().computeActions(this.getAllMappings().getMonoMappingStore()));
 	}
-	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap) {
-		finalizeEditScript(new SimplifiedExtendedChawatheScriptGenerator().computeActions(mappings,parentContextMap,childContextMap));
+	public void computeEditScript(Map<String, TreeContext> parentContextMap, Map<String, TreeContext> childContextMap, ExtendedEditScriptGenerator extendedEditScriptGenerator) {
+		finalizeEditScript(extendedEditScriptGenerator.computeActions(mappings,parentContextMap,childContextMap));
 	}
 
 	private void finalizeEditScript(EditScript newEditScript) {

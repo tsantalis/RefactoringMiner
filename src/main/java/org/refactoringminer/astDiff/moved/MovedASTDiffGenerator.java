@@ -35,16 +35,13 @@ public abstract class MovedASTDiffGenerator {
                 for(Mapping m : mappings) {
                     store.addMapping(m.first, m.second); //NOTE: SubClasses must provide all the mappings that are needed for the ASTDiff
                 }
-                store.addMapping(leftRoot, rightRoot); //This helps Chawathe to generate the editscript properly, however the mapping is actually incorrect
                 ASTDiff diff = new ASTDiff(
                         pair.first,
                         pair.second,
                         treeContextPairs.first,
                         treeContextPairs.second,
-                        store,
-                        new SimplifiedExtendedChawatheScriptGenerator().computeActions(store)
+                        store
                 );
-                store.removeMapping(leftRoot, rightRoot); //Removes the mapping that was added to help Chawathe
                 movedDiffs.add(diff);
             }
         }

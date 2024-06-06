@@ -467,7 +467,19 @@ public class MappingOptimizer {
 							else if(r instanceof ReplaceConditionalWithTernaryRefactoring) {
 								ReplaceConditionalWithTernaryRefactoring replace = (ReplaceConditionalWithTernaryRefactoring)r;
 								if(mapping.getFragment1().equals(replace.getOriginalConditional()) || mapping.getFragment2().equals(replace.getTernaryConditional())) {
-									refactoringsToBeRemoved.add(r);
+									boolean ternaryCallsExtractedMethod = false;
+									for(UMLOperationBodyMapper childMapper : mapper.getChildMappers()) {
+										List<AbstractCall> calls = mapping.getFragment2().getMethodInvocations();
+										for(AbstractCall call : calls) {
+											if(call.matchesOperation(childMapper.getContainer2(), mapper.getContainer2(), classDiff, mapper.getModelDiff())) {
+												ternaryCallsExtractedMethod = true;
+												break;
+											}
+										}
+									}
+									if(!ternaryCallsExtractedMethod) {
+										refactoringsToBeRemoved.add(r);
+									}
 								}
 							}
 						}

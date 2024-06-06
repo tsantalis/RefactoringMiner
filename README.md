@@ -10,6 +10,7 @@ Table of Contents
 =================
 
    * [General info](#general-info)
+   * [Supported Refactoring Types](#supported-refactoring-types)
    * [Contributors](#contributors)
    * [Current precision and recall](#current-precision-and-recall)
    * [How to build RefactoringMiner](#how-to-build-refactoringminer)
@@ -168,6 +169,130 @@ Currently, it supports the detection of the following refactorings:
 100. Replace Generic With Diamond
 101. Try With Resources
 102. Replace Conditional With Ternary
+
+# Supported Refactoring Types
+
+<details>
+<summary>From Fowler's book (40)</summary>
+
+	1. Extract Method
+	2. Inline Method
+	3. Rename Method
+	4. Move Method
+	5. Move Attribute
+	6. Pull Up Method
+	7. Pull Up Attribute
+	8. Push Down Method
+	9. Push Down Attribute
+	10. Extract Superclass
+	11. Extract Interface
+	12. Move Class
+	13. Rename Class
+	14. Extract and Move Method
+	15. Rename Package
+	16. Move and Rename Class
+	17. Extract Class
+	18. Extract Subclass
+	19. Extract Variable
+	20. Inline Variable
+	21. Parameterize Variable
+ 	22. Extract Attribute
+	23. Move and Rename Method
+	24. Move and Inline Method
+ 	25. Encapsulate Attribute
+	26. Parameterize Attribute
+ 	27. Move Package
+	28. Split Package
+	29. Merge Package
+	30. Localize Parameter
+ 	31. Collapse Hierarchy
+  	32. Merge Class
+	33. Inline Attribute
+ 	34. Split Class
+	35. Split Conditional
+	36. Invert Condition
+	37. Merge Conditional
+	38. Merge Method
+	39. Split Method
+ 	40. Move Code (between methods)
+</details>
+
+<details>
+<summary>API changes (52)</summary>
+
+	1. Rename Variable
+	2. Rename Parameter
+	3. Rename Attribute
+	4. Move and Rename Attribute
+	5. Replace Variable with Attribute
+	6. Replace Attribute (with Attribute)
+	7. Merge Variable
+	8. Merge Parameter
+	9. Merge Attribute
+	10. Split Variable
+	11. Split Parameter
+	12. Split Attribute
+	13. Change Variable Type
+	14. Change Parameter Type
+	15. Change Return Type
+	16. Change Attribute Type
+	17. Add Method Annotation
+	18. Remove Method Annotation
+	19. Modify Method Annotation
+	20. Add Attribute Annotation
+	21. Remove Attribute Annotation
+	22. Modify Attribute Annotation
+	23. Add Class Annotation
+	24. Remove Class Annotation
+	25. Modify Class Annotation
+	26. Add Parameter Annotation
+	27. Remove Parameter Annotation
+	28. Modify Parameter Annotation
+	29. Add Variable Annotation
+	30. Remove Variable Annotation
+	31. Modify Variable Annotation
+	32. Add Parameter
+	33. Remove Parameter
+	34. Reorder Parameter
+	35. Add Thrown Exception Type
+	36. Remove Thrown Exception Type
+	37. Change Thrown Exception Type
+	38. Change Method Access Modifier
+ 	39. Change Attribute Access Modifier
+	40. Replace Attribute with Variable
+	41. Add Method Modifier (final, static, abstract, synchronized)
+	42. Remove Method Modifier (final, static, abstract, synchronized)
+	43. Add Attribute Modifier (final, static, transient, volatile)
+	44. Remove Attribute Modifier (final, static, transient, volatile)
+	45. Add Variable Modifier (final)
+	46. Add Parameter Modifier (final)
+	47. Remove Variable Modifier (final)
+	48. Remove Parameter Modifier (final)
+	49. Change Class Access Modifier
+	50. Add Class Modifier (final, static, abstract)
+	51. Remove Class Modifier (final, static, abstract)
+ 	52. Change Type Declaration Kind (class, interface, enum)
+</details>
+
+<details>
+<summary>Migrations (8)</summary>
+
+	1. Replace Loop with Pipeline
+	2. Replace Anonymous with Lambda
+ 	3. Replace Pipeline with Loop
+  	4. Merge Catch
+   	5. Replace Anonymous with Class
+   	6. Replace Generic With Diamond
+	7. Try With Resources
+	8. Replace Conditional With Ternary
+</details>
+
+<details>
+<summary>Test-specific (2)</summary>
+
+	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
+	2. Assert Throws
+</details>
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs

@@ -164,31 +164,35 @@ public class ProjectASTDiffer
 
 	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
-			ASTDiff append = findAppend(classDiff);
-			boolean decision = (append != null) || mergeFlag;
+			Collection<ASTDiff> appends = findAppends(classDiff);
+			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision);
-			if (append != null)
-				append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
+			if (!appends.isEmpty()) {
+				for (ASTDiff append : appends) {
+					append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
+				}
+			}
 			else {
 				projectASTDiff.addASTDiff(classASTDiff);
 			}
 		}
 	}
 
-	private ASTDiff findAppend(UMLAbstractClassDiff classBaseDiff) {
+	private Collection<ASTDiff> findAppends(UMLAbstractClassDiff classBaseDiff) {
 		String originalSourceFile = classBaseDiff.getOriginalClass().getSourceFile();
 		String nextSourceFile = classBaseDiff.getNextClass().getSourceFile();
-		return findAppend(originalSourceFile, nextSourceFile);
+		return findAppends(originalSourceFile, nextSourceFile);
 	}
 
-	private ASTDiff findAppend(String originalSourceFile, String nextSourceFile) {
+	private Collection<ASTDiff> findAppends(String originalSourceFile, String nextSourceFile) {
+		Collection<ASTDiff> appends = new LinkedHashSet<>();
 		for (ASTDiff existing : projectASTDiff.getDiffSet()) {
 			if (existing.getSrcPath().equals(originalSourceFile))
-				return existing;
+				appends.add(existing);
 			else if (existing.getDstPath().equals(nextSourceFile))
-				return existing;
+				appends.add(existing);
 		}
-		return null;
+		return appends;
 	}
 
 	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){

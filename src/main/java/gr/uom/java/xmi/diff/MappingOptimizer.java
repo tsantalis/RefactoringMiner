@@ -464,6 +464,12 @@ public class MappingOptimizer {
 									refactoringsToBeRemoved.add(r);
 								}
 							}
+							else if(r instanceof ReplaceConditionalWithTernaryRefactoring) {
+								ReplaceConditionalWithTernaryRefactoring replace = (ReplaceConditionalWithTernaryRefactoring)r;
+								if(mapping.getFragment1().equals(replace.getOriginalConditional()) || mapping.getFragment2().equals(replace.getTernaryConditional())) {
+									refactoringsToBeRemoved.add(r);
+								}
+							}
 						}
 						refactoringsAfterPostProcessing.removeAll(refactoringsToBeRemoved);
 						updatedMappers.add(mapper);

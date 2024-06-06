@@ -3464,17 +3464,16 @@ public class StringBasedHeuristics {
 						if(statement1 instanceof AbstractExpression) {
 							CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
 							if(owner != null) {
-								boolean foundInExtractedStatements = false;
-								for(Set<AbstractCodeFragment> set : mapper.getExtractedStatements().values()) {
-									if(set.contains(owner)) {
-										foundInExtractedStatements = true;
-										break;
+								ReplaceConditionalWithTernaryRefactoring replace = new ReplaceConditionalWithTernaryRefactoring(owner, statement2, container1, container2);
+								for(Replacement r : info.getReplacements()) {
+									if(r instanceof IntersectionReplacement) {
+										IntersectionReplacement intersectionReplacent = (IntersectionReplacement)r;
+										for(LeafMapping leafMapping : intersectionReplacent.getSubExpressionMappings()) {
+											replace.addSubExpressionMapping(leafMapping);
+										}
 									}
 								}
-								if(!foundInExtractedStatements) {
-									ReplaceConditionalWithTernaryRefactoring invert = new ReplaceConditionalWithTernaryRefactoring(owner, statement2, container1, container2);
-									refactorings.add(invert);
-								}
+								refactorings.add(replace);
 							}
 						}
 					}

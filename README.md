@@ -167,6 +167,7 @@ Currently, it supports the detection of the following refactorings:
 99. Assert Throws
 100. Replace Generic With Diamond
 101. Try With Resources
+102. Replace Conditional With Ternary
 
 # Contributors
 * [Nikolaos Tsantalis](https://github.com/tsantalis): Core + APIs
@@ -184,11 +185,11 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **May 16, 2024** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
+As of **June 6, 2024** the precision and recall of the tool on an oracle consisting of **546 commits** from **187 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12176  | 20  | 238  | 0.998  | 0.981|
+|**Total**|12206  | 20  | 236  | 0.998  | 0.981|
 |Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
@@ -196,11 +197,11 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|386  |  4  | 21  | 0.990  | 0.948|
 |Inline Method|116  |  0  |  1  | 1.000  | 0.991|
-|Move Method|349  |  3  |  6  | 0.991  | 0.983|
-|Move And Rename Method|120  |  0  |  5  | 1.000  | 0.960|
+|Move Method|350  |  3  |  6  | 0.992  | 0.983|
+|Move And Rename Method|122  |  0  |  3  | 1.000  | 0.976|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1096  |  0  |  4  | 1.000  | 0.996|
-|Move And Rename Class|35  |  0  |  1  | 1.000  | 0.972|
+|Move And Rename Class|36  |  0  |  1  | 1.000  | 0.973|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
 |Pull Up Attribute|139  |  0  |  1  | 1.000  | 0.993|
 |Push Down Attribute|35  |  0  |  0  | 1.000  | 1.000|
@@ -219,7 +220,7 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Inline Variable|102  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|327  |  3  | 11  | 0.991  | 0.967|
-|Rename Parameter|488  |  2  | 26  | 0.996  | 0.949|
+|Rename Parameter|489  |  2  | 26  | 0.996  | 0.950|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -232,9 +233,9 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Parameterize Variable|111  |  0  |  0  | 1.000  | 1.000|
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
-|Change Return Type|429  |  0  | 12  | 1.000  | 0.973|
+|Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|799  |  2  |  7  | 0.998  | 0.991|
-|Change Parameter Type|647  |  1  | 11  | 0.998  | 0.983|
+|Change Parameter Type|651  |  1  | 11  | 0.998  | 0.983|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|331  |  0  |  1  | 1.000  | 0.997|
 |Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
@@ -248,8 +249,8 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|844  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|305  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|849  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|307  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -269,7 +270,7 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|77  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|36  |  0  |  0  | 1.000  | 1.000|
-|Remove Class Modifier|44  |  0  |  0  | 1.000  | 1.000|
+|Remove Class Modifier|45  |  0  |  0  | 1.000  | 1.000|
 |Split Package| 4  |  0  |  0  | 1.000  | 1.000|
 |Merge Package| 2  |  0  |  0  | 1.000  | 1.000|
 |Change Type Declaration Kind| 6  |  0  |  0  | 1.000  | 1.000|
@@ -279,7 +280,7 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Replace Anonymous With Lambda|45  |  0  |  0  | 1.000  | 1.000|
 |Merge Class| 6  |  0  |  0  | 1.000  | 1.000|
 |Split Class| 3  |  0  |  0  | 1.000  | 1.000|
-|Split Conditional|18  |  0  |  0  | 1.000  | 1.000|
+|Split Conditional|19  |  0  |  0  | 1.000  | 1.000|
 |Invert Condition|33  |  0  |  0  | 1.000  | 1.000|
 |Merge Conditional|14  |  0  |  0  | 1.000  | 1.000|
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
@@ -288,6 +289,7 @@ As of **May 16, 2024** the precision and recall of the tool on an oracle consist
 |Move Code|16  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
+|Replace Conditional With Ternary| 8  |  0  |  0  | 1.000  | 1.000|
 
 # How to build RefactoringMiner
 Since release 3.0.0, RefactoringMiner requires **Java 17** or newer and **Gradle 7.4** or newer.
@@ -321,12 +323,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.4</version>
+      <version>3.0.5</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.4'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.5'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>

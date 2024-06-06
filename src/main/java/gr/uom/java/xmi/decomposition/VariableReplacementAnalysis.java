@@ -1007,6 +1007,23 @@ public class VariableReplacementAnalysis {
 					}
 				}
 			}
+			if(mapper.getParentMapper() != null) {
+				for(AbstractCodeFragment fragment1 : mapper.getParentMapper().getNonMappedLeavesT1()) {
+					for(VariableDeclaration declaration1 : fragment1.getVariableDeclarations()) {
+						for(UMLAttribute addedAttribute : addedAttributes) {
+							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
+							if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+								if(variableReferences.size() > 0) {
+									RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+									refactorings.add(refactoring);
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 			for(AbstractCodeFragment fragment2 : mapper.getNonMappedLeavesT2()) {
 				for(VariableDeclaration declaration2 : fragment2.getVariableDeclarations()) {
 					for(UMLAttribute removedAttribute : removedAttributes) {
@@ -1017,6 +1034,23 @@ public class VariableReplacementAnalysis {
 								RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
 								refactorings.add(refactoring);
 								break;
+							}
+						}
+					}
+				}
+			}
+			if(mapper.getParentMapper() != null) {
+				for(AbstractCodeFragment fragment2 : mapper.getParentMapper().getNonMappedLeavesT2()) {
+					for(VariableDeclaration declaration2 : fragment2.getVariableDeclarations()) {
+						for(UMLAttribute removedAttribute : removedAttributes) {
+							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
+							if(declaration1.getVariableName().equals(declaration2.getVariableName()) && declaration1.equalType(declaration2)) {
+								Set<AbstractCodeMapping> variableReferences = VariableReferenceExtractor.findReferences(declaration1, declaration2, mappings, classDiff, modelDiff);
+								if(variableReferences.size() > 0) {
+									RenameVariableRefactoring refactoring = new RenameVariableRefactoring(declaration1, declaration2, operation1, operation2, variableReferences, insideExtractedOrInlinedMethod);
+									refactorings.add(refactoring);
+									break;
+								}
 							}
 						}
 					}

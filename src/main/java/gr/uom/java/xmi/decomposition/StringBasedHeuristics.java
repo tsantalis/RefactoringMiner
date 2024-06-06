@@ -42,6 +42,7 @@ import gr.uom.java.xmi.diff.ExtractVariableRefactoring;
 import gr.uom.java.xmi.diff.InvertConditionRefactoring;
 import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.MergeConditionalRefactoring;
+import gr.uom.java.xmi.diff.ReplaceConditionalWithTernaryRefactoring;
 import gr.uom.java.xmi.diff.SplitConditionalRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
@@ -3457,6 +3458,24 @@ public class StringBasedHeuristics {
 						else {
 							InvertConditionRefactoring invert = new InvertConditionRefactoring(statement1, statement2, container1, container2);
 							refactorings.add(invert);
+						}
+					}
+					if(ternaryConditions) {
+						if(statement1 instanceof AbstractExpression) {
+							CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
+							if(owner != null) {
+								boolean foundInExtractedStatements = false;
+								for(Set<AbstractCodeFragment> set : mapper.getExtractedStatements().values()) {
+									if(set.contains(owner)) {
+										foundInExtractedStatements = true;
+										break;
+									}
+								}
+								if(!foundInExtractedStatements) {
+									ReplaceConditionalWithTernaryRefactoring invert = new ReplaceConditionalWithTernaryRefactoring(owner, statement2, container1, container2);
+									refactorings.add(invert);
+								}
+							}
 						}
 					}
 					return true;

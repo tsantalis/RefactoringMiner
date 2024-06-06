@@ -298,6 +298,65 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								extractedStatements.put(addedOperation, subSet);
 							}
+							else if(list1.containsAll(list2) && list2.size() >= 10) {
+								while(list2.contains("}")) {
+									list2.remove("}");
+								}
+								List<AbstractStatement> allStatements = body1.getCompositeStatement().getAllStatements();
+								Set<AbstractCodeFragment> subSet = new LinkedHashSet<AbstractCodeFragment>();
+								boolean firstFound = false;
+								int index = 0;
+								for(AbstractStatement statement1 : allStatements) {
+									if(!firstFound) {
+										if(statement1 instanceof CompositeStatementObject) {
+											CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+											if(comp1.toStringForStringRepresentation().equals(list2.get(0))) {
+												firstFound = true;
+												subSet.add(statement1);
+												index++;
+											}
+										}
+										else if(statement1.getString().equals(list2.get(0))) {
+											firstFound = true;
+											subSet.add(statement1);
+											index++;
+										}
+									}
+									else if(index < list2.size()) {
+										if(statement1 instanceof CompositeStatementObject) {
+											CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+											if(comp1.toStringForStringRepresentation().equals(list2.get(index))) {
+												subSet.add(statement1);
+												index++;
+											}
+										}
+										else if(statement1.getString().equals(list2.get(index))) {
+											subSet.add(statement1);
+											index++;
+										}
+										else {
+											int tmpIndex = index + 1;
+											//skip statements in extracted method
+											for(int i=tmpIndex; i<list2.size(); i++) {
+												if(statement1 instanceof CompositeStatementObject) {
+													CompositeStatementObject comp1 = (CompositeStatementObject)statement1;
+													if(comp1.toStringForStringRepresentation().equals(list2.get(i))) {
+														subSet.add(statement1);
+														index = i+1;
+														break;
+													}
+												}
+												else if(statement1.getString().equals(list2.get(i))) {
+													subSet.add(statement1);
+													index = i+1;
+													break;
+												}
+											}
+										}
+									}
+								}
+								extractedStatements.put(addedOperation, subSet);
+							}
 						}
 					}
 				}

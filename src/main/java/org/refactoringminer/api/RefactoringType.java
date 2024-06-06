@@ -113,7 +113,8 @@ public enum RefactoringType {
 	PARAMETERIZE_TEST("Parameterize Test", "Parameterize Test (.+) to (.+) in class (.+)"),
 	ASSERT_THROWS("Assert Throws", "Assert Throws (.+) in method (.+) from class (.+)"),
 	TRY_WITH_RESOURCES("Try With Resources", "Try With Resources (.+) in method (.+) from class (.+)"),
-	REPLACE_GENERIC_WITH_DIAMOND("Replace Generic With Diamond", "Replace Generic With Diamond (.+) with (.+) in method (.+) from class (.+)");
+	REPLACE_GENERIC_WITH_DIAMOND("Replace Generic With Diamond", "Replace Generic With Diamond (.+) with (.+) in method (.+) from class (.+)"),
+	REPLACE_CONDITIONAL_WITH_TERNARY("Replace Conditional With Ternary", "Replace Conditional With Ternary (.+) to (.+) in method (.+) from class (.+)"),;
 
 	private String displayName;
 	private Pattern regex;
@@ -220,7 +221,8 @@ public enum RefactoringType {
 		PARAMETERIZE_TEST,
 		ASSERT_THROWS,
 		TRY_WITH_RESOURCES,
-		REPLACE_GENERIC_WITH_DIAMOND
+		REPLACE_GENERIC_WITH_DIAMOND,
+		REPLACE_CONDITIONAL_WITH_TERNARY
 	};
 
 	private RefactoringType(String displayName, String regex, int ... aggregateGroups) {

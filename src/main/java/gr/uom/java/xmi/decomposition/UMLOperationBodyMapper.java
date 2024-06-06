@@ -307,6 +307,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								boolean firstFound = false;
 								int index = 0;
 								for(AbstractStatement statement1 : allStatements) {
+									if(statement1.isLastStatementWithReturn()) {
+										break;
+									}
 									if(!firstFound) {
 										if(statement1 instanceof CompositeStatementObject) {
 											CompositeStatementObject comp1 = (CompositeStatementObject)statement1;

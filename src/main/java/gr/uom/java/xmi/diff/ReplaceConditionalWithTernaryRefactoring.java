@@ -12,12 +12,14 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 
-public class ReplaceConditionalWithTernaryRefactoring implements Refactoring {
+public class ReplaceConditionalWithTernaryRefactoring implements Refactoring, LeafMappingProvider {
 	private AbstractCodeFragment originalConditional;
 	private AbstractCodeFragment ternaryConditional;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private List<LeafMapping> subExpressionMappings;
 	
 	public ReplaceConditionalWithTernaryRefactoring(AbstractCodeFragment originalConditional, AbstractCodeFragment ternaryConditional,
 			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
@@ -25,6 +27,7 @@ public class ReplaceConditionalWithTernaryRefactoring implements Refactoring {
 		this.ternaryConditional = ternaryConditional;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.subExpressionMappings = new ArrayList<LeafMapping>();
 	}
 
 	public AbstractCodeFragment getOriginalConditional() {
@@ -41,6 +44,24 @@ public class ReplaceConditionalWithTernaryRefactoring implements Refactoring {
 
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
+	}
+
+	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
+		boolean alreadyPresent = false; 
+		for(LeafMapping oldLeafMapping : subExpressionMappings) { 
+			if(oldLeafMapping.getFragment1().getLocationInfo().equals(newLeafMapping.getFragment1().getLocationInfo()) && 
+					oldLeafMapping.getFragment2().getLocationInfo().equals(newLeafMapping.getFragment2().getLocationInfo())) { 
+				alreadyPresent = true; 
+				break; 
+			} 
+		} 
+		if(!alreadyPresent) { 
+			subExpressionMappings.add(newLeafMapping); 
+		}
+	}
+
+	public List<LeafMapping> getSubExpressionMappings() {
+		return subExpressionMappings;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 
+import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ReplaceAnonymousWithClassRefactoring;
@@ -227,27 +228,35 @@ public class ProjectASTDiffer
 		}
 		return astDiff;
 	}
-	private static void processOptimization(ASTDiff input, OptimizationData optimizationData) {
+	private void processOptimization(ASTDiff input, OptimizationData optimizationData) {
 		Tree srcTree = input.src.getRoot();
 		Tree dstTree = input.dst.getRoot();
 		ExtendedMultiMappingStore lastStepMappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
 		for (AbstractCodeMapping lastStepMapping : optimizationData.getLastStepMappings()) {
+			if (lastStepMapping.getFragment1().getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.STRING_LITERAL)
+					&& lastStepMapping.getFragment2().getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.STRING_LITERAL))
+			{
+				//Handles all string-literal cases (intra and inter file)
+				Tree srcTotal = modelDiff.getParentModel().getTreeContextMap().get(lastStepMapping.getFragment1().getLocationInfo().getFilePath()).getRoot();
+				Tree dstTotal = modelDiff.getChildModel().getTreeContextMap().get(lastStepMapping.getFragment2().getLocationInfo().getFilePath()).getRoot();
+				Tree srcStringLiteral = TreeUtilFunctions.findByLocationInfo(srcTotal, lastStepMapping.getFragment1().getLocationInfo(), Constants.STRING_LITERAL);
+				Tree dstStringLiteral = TreeUtilFunctions.findByLocationInfo(dstTotal, lastStepMapping.getFragment2().getLocationInfo(), Constants.STRING_LITERAL);
+				if (srcStringLiteral != null && dstStringLiteral != null) {
+					input.getAllMappings().addMapping(srcStringLiteral, dstStringLiteral);
+				}
+				continue;
+			}
 			if (lastStepMapping.getFragment1().getLocationInfo().getFilePath().equals(input.getSrcPath()) && lastStepMapping.getFragment2().getLocationInfo().getFilePath().equals(input.getDstPath())) {
 				Tree srcExp = TreeUtilFunctions.findByLocationInfo(srcTree, lastStepMapping.getFragment1().getLocationInfo());
-					Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
+				Tree dstExp = TreeUtilFunctions.findByLocationInfo(dstTree, lastStepMapping.getFragment2().getLocationInfo());
 				if (srcExp == null || dstExp == null) continue;
-				if (srcExp.isLeaf() && dstExp.isLeaf())
-				{
-					if (srcExp.getType().name.equals(Constants.STRING_LITERAL) &&
-						dstExp.getType().name.equals(Constants.STRING_LITERAL)) {
-						input.getAllMappings().addMapping(srcExp, dstExp);
-						continue;
-					}
-				}
 				if (needToOverride(input, srcExp, dstExp))
 					new LeafMatcher().match(srcExp, dstExp, lastStepMappingStore);
 				else
 					new LeafMatcher().match(srcExp,dstExp,input.getAllMappings());
+			}
+			else {
+				//Inter-file optimizations
 			}
 		}
 		ExtendedMultiMappingStore allMappings = input.getAllMappings();

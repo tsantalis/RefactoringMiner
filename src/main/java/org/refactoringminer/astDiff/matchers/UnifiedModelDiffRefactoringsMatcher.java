@@ -13,9 +13,11 @@ import org.refactoringminer.astDiff.matchers.wrappers.*;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
+import org.refactoringminer.astDiff.utils.Helpers;
 
 import java.util.*;
 
+import static org.refactoringminer.astDiff.utils.Helpers.findAppends;
 import static org.refactoringminer.astDiff.utils.Helpers.findTreeContexts;
 
 /* Created by pourya on 2024-06-04*/
@@ -37,15 +39,6 @@ public class UnifiedModelDiffRefactoringsMatcher {
         this.modelDiff = modelDiff;
         this.modelDiffRefactorings = modelDiffRefactorings;
         process();
-    }
-
-    private static Set<ASTDiff> findDiffWithSrcDstPath(Collection<ASTDiff> diffs, String originalSourceFile, String nextSourceFile) {
-        Set<ASTDiff> result = new LinkedHashSet<>();
-        for (ASTDiff existing : diffs) {
-            if (existing.getSrcPath().equals(originalSourceFile) || existing.getDstPath().equals(nextSourceFile))
-                result.add(existing);
-        }
-        return result;
     }
 
     private void process() {
@@ -103,7 +96,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
     }
 
     private void findDiffsAndApplyMatcher(String srcPath, String dstPath, OptimizationAwareMatcher matcher) {
-        Set<ASTDiff> diffs = findDiffWithSrcDstPath(diffSet, srcPath, dstPath);
+        Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath);
         if (diffs.isEmpty()) {
             //This means that the there is no astDiff associated with the refactoring,
             //It could be a case of move from a deleted file to an added file which neither of them have an equivalent file in the other side.

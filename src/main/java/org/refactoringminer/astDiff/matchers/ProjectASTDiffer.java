@@ -25,12 +25,14 @@ import org.refactoringminer.astDiff.matchers.wrappers.*;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.matchers.vanilla.MissingIdenticalSubtree;
 import org.refactoringminer.astDiff.utils.Constants;
+import org.refactoringminer.astDiff.utils.Helpers;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static org.refactoringminer.astDiff.utils.Helpers.findAppends;
 import static org.refactoringminer.astDiff.utils.Helpers.findTreeContexts;
 
 /**
@@ -164,7 +166,7 @@ public class ProjectASTDiffer
 
 	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
-			Collection<ASTDiff> appends = findAppends(classDiff);
+			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile());
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision);
 			if (!appends.isEmpty()) {
@@ -176,23 +178,6 @@ public class ProjectASTDiffer
 				projectASTDiff.addASTDiff(classASTDiff);
 			}
 		}
-	}
-
-	private Collection<ASTDiff> findAppends(UMLAbstractClassDiff classBaseDiff) {
-		String originalSourceFile = classBaseDiff.getOriginalClass().getSourceFile();
-		String nextSourceFile = classBaseDiff.getNextClass().getSourceFile();
-		return findAppends(originalSourceFile, nextSourceFile);
-	}
-
-	private Collection<ASTDiff> findAppends(String originalSourceFile, String nextSourceFile) {
-		Collection<ASTDiff> appends = new LinkedHashSet<>();
-		for (ASTDiff existing : projectASTDiff.getDiffSet()) {
-			if (existing.getSrcPath().equals(originalSourceFile))
-				appends.add(existing);
-			else if (existing.getDstPath().equals(nextSourceFile))
-				appends.add(existing);
-		}
-		return appends;
 	}
 
 	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){

@@ -376,12 +376,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
 			List<LambdaExpressionObject> nestedLambdas1 = new ArrayList<>();
+			int lambdasWithBody1 = 0;
+			int lambdasWithExpression1 = 0;
 			for(LambdaExpressionObject lambda1 : lambdas1) {
+				if(lambda1.getBody() != null)
+					lambdasWithBody1++;
+				if(lambda1.getExpression() != null)
+					lambdasWithExpression1++;
 				collectNestedLambdaExpressions(lambda1, nestedLambdas1);
 			}
 			List<LambdaExpressionObject> lambdas2 = body2.getAllLambdas();
 			List<LambdaExpressionObject> nestedLambdas2 = new ArrayList<>();
+			int lambdasWithBody2 = 0;
+			int lambdasWithExpression2 = 0;
 			for(LambdaExpressionObject lambda2 : lambdas2) {
+				if(lambda2.getBody() != null)
+					lambdasWithBody2++;
+				if(lambda2.getExpression() != null)
+					lambdasWithExpression2++;
 				collectNestedLambdaExpressions(lambda2, nestedLambdas2);
 			}
 			CompositeStatementObject composite1 = body1.getCompositeStatement();
@@ -481,6 +493,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				for(AbstractCodeFragment streamAPICall : streamAPIStatements1) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, false);
+					}
+				}
+			}
+			if(lambdas1.size() == lambdas2.size() && lambdasWithBody1 != lambdasWithBody2) {
+				for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
+					if(leaf1.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+					}
+				}
+				for(AbstractCodeFragment leaf2 : new ArrayList<>(leaves2)) {
+					if(leaf2.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(leaf2, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
 				}
 			}
@@ -4932,7 +4956,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public boolean alreadyMatched1(AbstractCodeFragment fragment) {
 		if(fragment instanceof AbstractExpression) {
 			for(AbstractCodeMapping mapping : mappings) {
-				if(!(mapping instanceof CompositeStatementObjectMapping) && mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
+				if(!(mapping instanceof CompositeStatementObjectMapping) &&
+						!mapping.getFragment1().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
+						mapping.getFragment1().getLocationInfo().subsumes(fragment.getLocationInfo())) {
 					return true;
 				}
 			}
@@ -4944,7 +4970,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	public boolean alreadyMatched2(AbstractCodeFragment fragment) {
 		if(fragment instanceof AbstractExpression) {
 			for(AbstractCodeMapping mapping : mappings) {
-				if(!(mapping instanceof CompositeStatementObjectMapping) && mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {
+				if(!(mapping instanceof CompositeStatementObjectMapping) &&
+						!mapping.getFragment2().getLambdas().contains(((AbstractExpression) fragment).getLambdaOwner()) &&
+						mapping.getFragment2().getLocationInfo().subsumes(fragment.getLocationInfo())) {
 					return true;
 				}
 			}

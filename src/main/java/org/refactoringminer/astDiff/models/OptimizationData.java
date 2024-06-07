@@ -6,8 +6,8 @@ import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import java.util.List;
 
 public class OptimizationData {
-    private List<AbstractCodeMapping> lastStepMappings;
-    private ExtendedMultiMappingStore subtreeMappings;
+    private final List<AbstractCodeMapping> lastStepMappings;
+    private final ExtendedMultiMappingStore subtreeMappings;
 
     public List<AbstractCodeMapping> getLastStepMappings() {
         return lastStepMappings;

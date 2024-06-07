@@ -394,18 +394,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			innerNodes2.remove(composite2);
 			int totalNodes1 = leaves1.size() + innerNodes1.size();
 			int totalNodes2 = leaves2.size() + innerNodes2.size();
-			boolean assertThrows1 = false;
+			int assertThrows1 = 0;
 			for(AbstractCall call : container1.getAllOperationInvocations()) {
 				if(call.getName().equals("assertThrows")) {
-					assertThrows1 = true;
-					break;
+					assertThrows1++;
 				}
 			}
-			boolean assertThrows2 = false;
+			int assertThrows2 = 0;
 			for(AbstractCall call : container2.getAllOperationInvocations()) {
 				if(call.getName().equals("assertThrows")) {
-					assertThrows2 = true;
-					break;
+					assertThrows2++;
 				}
 			}
 			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
@@ -462,12 +460,12 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
 				}
-				else if (!assertThrows1 && assertThrows2) {
+				else if (assertThrows1 == 0 && assertThrows2 > 0) {
 					handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 				}
 			}
-			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && (lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + 1 ||
-					lambdas2.size() == lambdas1.size() + 1 || (!assertThrows1 && assertThrows2))) {
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && (lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThrows2 ||
+					lambdas2.size() == lambdas1.size() + assertThrows2 || (assertThrows1 == 0 && assertThrows2 > 0))) {
 				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
@@ -949,11 +947,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void handleAssertThrowsLambda(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			List<CompositeStatementObject> innerNodes2, List<LambdaExpressionObject> lambdas2, UMLOperation operation2) {
-		AbstractCodeFragment lambdaFragment = null;
+		Set<AbstractCodeFragment> lambdaFragments = new LinkedHashSet<AbstractCodeFragment>();
 		if(lambdas2.size() == 1) {
 			for(AbstractCodeFragment leaf2 : leaves2) {
 				if(leaf2.getLambdas().size() > 0) {
-					lambdaFragment = leaf2;
+					lambdaFragments.add(leaf2);
 					break;
 				}
 			}
@@ -971,12 +969,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(identicalLeaf1Found) {
 						continue;
 					}
-					lambdaFragment = leaf2;
-					break;
+					lambdaFragments.add(leaf2);
 				}
 			}
 		}
-		if(lambdaFragment != null) {
+		for(AbstractCodeFragment lambdaFragment : lambdaFragments) {
 			expandAnonymousAndLambdas(lambdaFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 		}
 	}
@@ -2908,51 +2905,61 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables = analysis.getAddedVariables();
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
-		boolean assertThrows1 = false;
+		int assertThrows1 = 0;
 		for(AbstractCall call : container1.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
-				assertThrows1 = true;
-				break;
+				assertThrows1++;
 			}
 		}
-		Set<AbstractCodeMapping> assertThrowsMappings = new LinkedHashSet<>();
-		AbstractCall assertThrowsCall = null;
+		Map<String, Set<AbstractCodeMapping>> assertThrowsMappings = new LinkedHashMap<>();
+		List<AbstractCall> assertThrowsCalls = new ArrayList<AbstractCall>();
 		for(AbstractCall call : container2.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
-				assertThrowsCall = call;
+				assertThrowsCalls.add(call);
 				for(AbstractCodeMapping mapping : this.mappings) {
 					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
-						assertThrowsMappings.add(mapping);
+						if(assertThrowsMappings.containsKey(call.actualString())) {
+							assertThrowsMappings.get(call.actualString()).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							mappings.add(mapping);
+							assertThrowsMappings.put(call.actualString(), mappings);
+						}
 					}
 				}
-				break;
 			}
 		}
-		if(!assertThrows1 && assertThrowsCall != null && parentMapper == null && assertThrowsMappings.size() > 0) {
-			AssertThrowsRefactoring ref = new AssertThrowsRefactoring(assertThrowsMappings, assertThrowsCall, container1, container2);
-			refactorings.add(ref);
-			UMLOperation operation1 = getOperation1();
-			UMLOperation operation2 = getOperation2();
-			if(operation1 != null && operation2 != null) {
-				for(UMLAnnotation annotation : operation1.getAnnotations()) {
-					Map<String, AbstractExpression> memberValuePairs = annotation.getMemberValuePairs();
-					if(memberValuePairs.containsKey("expected")) {
-						AbstractExpression expectedException = memberValuePairs.get("expected");
-						for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
-							List<LeafExpression> leafExpressions = fragment2.findExpression(expectedException.getString());
-							if(leafExpressions.size() == 1) {
-								LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
-								ref.addSubExpressionMapping(leafMapping);
-								break;
-							}
-							if(fragment2 instanceof AbstractExpression) {
-								for(AbstractCodeMapping mapping : mappings) {
-									if(mapping instanceof LeafMapping && !mapping.getFragment2().equals(fragment2) && mapping.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
-										leafExpressions = mapping.getFragment2().findExpression(expectedException.getString());
-										if(leafExpressions.size() == 1) {
-											LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
-											ref.addSubExpressionMapping(leafMapping);
-											break;
+		if(assertThrows1 < assertThrowsCalls.size()) {
+			for(AbstractCall assertThrowsCall : assertThrowsCalls) {
+				Set<AbstractCodeMapping> set = assertThrowsMappings.get(assertThrowsCall.actualString());
+				if(set != null && set.size() > 0) {
+					AssertThrowsRefactoring ref = new AssertThrowsRefactoring(set, assertThrowsCall, container1, container2);
+					refactorings.add(ref);
+					UMLOperation operation1 = getOperation1();
+					UMLOperation operation2 = getOperation2();
+					if(operation1 != null && operation2 != null) {
+						for(UMLAnnotation annotation : operation1.getAnnotations()) {
+							Map<String, AbstractExpression> memberValuePairs = annotation.getMemberValuePairs();
+							if(memberValuePairs.containsKey("expected")) {
+								AbstractExpression expectedException = memberValuePairs.get("expected");
+								for(AbstractCodeFragment fragment2 : nonMappedLeavesT2) {
+									List<LeafExpression> leafExpressions = fragment2.findExpression(expectedException.getString());
+									if(leafExpressions.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+										ref.addSubExpressionMapping(leafMapping);
+										break;
+									}
+									if(fragment2 instanceof AbstractExpression) {
+										for(AbstractCodeMapping mapping : mappings) {
+											if(mapping instanceof LeafMapping && !mapping.getFragment2().equals(fragment2) && mapping.getFragment2().getLocationInfo().subsumes(fragment2.getLocationInfo())) {
+												leafExpressions = mapping.getFragment2().findExpression(expectedException.getString());
+												if(leafExpressions.size() == 1) {
+													LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+													ref.addSubExpressionMapping(leafMapping);
+													break;
+												}
+											}
 										}
 									}
 								}

@@ -1739,7 +1739,7 @@ public class ReplacementAlgorithm {
 						}
 					}
 					else if(invocation1.identicalName(assignmentInvocationCoveringTheEntireStatement2) && invocation1.equalArguments(assignmentInvocationCoveringTheEntireStatement2) &&
-							!assignmentInvocationCoveringTheEntireStatement1.arguments().contains(key1) && assignmentInvocationCoveringTheEntireStatement2.getExpression() != null) {
+							(!assignmentInvocationCoveringTheEntireStatement1.arguments().contains(key1) || statement2 instanceof AbstractExpression) && assignmentInvocationCoveringTheEntireStatement2.getExpression() != null) {
 						boolean expressionMatched = false;
 						Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<AbstractCodeFragment>();
 						Map<VariableDeclaration, AbstractCodeFragment> variableDeclarationsInUnmatchedStatements2 = new LinkedHashMap<VariableDeclaration, AbstractCodeFragment>();

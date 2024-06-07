@@ -44,6 +44,7 @@ Table of Contents
 
 # General info
 RefactoringMiner is a library/API written in Java that can detect refactorings applied in the history of a Java project.
+Since version 3.0, RefactoringMiner can also generate Abstract Syntax Tree (AST) diff at commit and pull request level.
 
 Currently, it supports the detection of the following refactorings:
 

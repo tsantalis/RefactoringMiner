@@ -1,4 +1,4 @@
-package org.refactoringminer.astDiff.matchers;
+package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.tree.Tree;
 import com.github.gumtreediff.tree.TreeContext;

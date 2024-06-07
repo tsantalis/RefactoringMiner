@@ -5,7 +5,10 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
+import org.refactoringminer.astDiff.models.ASTDiff;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Map;
 
 /* Created by pourya on 2024-05-22*/
@@ -39,5 +42,16 @@ public class Helpers {
         if (srcModifier != null && dstModifier != null)
             return new Pair<>(srcModifier, dstModifier);
         return null;
+    }
+
+    public static Collection<ASTDiff> findAppends(Collection<ASTDiff> diffs, String originalSourceFile, String nextSourceFile) {
+        Collection<ASTDiff> appends = new LinkedHashSet<>();
+        for (ASTDiff existing : diffs) {
+            if (existing.getSrcPath().equals(originalSourceFile))
+                appends.add(existing);
+            else if (existing.getDstPath().equals(nextSourceFile))
+                appends.add(existing);
+        }
+        return appends;
     }
 }

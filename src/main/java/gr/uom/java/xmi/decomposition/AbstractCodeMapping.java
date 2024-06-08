@@ -10,10 +10,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.Refactoring;
+import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLParameter;
@@ -34,6 +36,7 @@ import gr.uom.java.xmi.diff.InlineVariableRefactoring;
 import gr.uom.java.xmi.diff.LeafMappingProvider;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
+import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 
 public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
@@ -48,6 +51,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 	private int matchingArgumentsWithOperationInvocation;
 	private boolean matchedWithNullReplacements;
+	private Set<UMLAnonymousClassDiff> anonymousClassDiffs = new LinkedHashSet<UMLAnonymousClassDiff>();
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -95,6 +99,10 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public Set<Refactoring> getRefactorings() {
 		return refactorings;
+	}
+
+	public Set<UMLAnonymousClassDiff> getAnonymousClassDiffs() {
+		return anonymousClassDiffs;
 	}
 
 	public boolean containsRefactoringOfType(RefactoringType type) {
@@ -470,7 +478,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	public void temporaryVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod, Set<AbstractCodeMapping> currentMappings) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod, Set<AbstractCodeMapping> currentMappings) throws RefactoringMinerTimedOutException {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			String variableName = declaration.getVariableName();
 			AbstractExpression initializer = declaration.getInitializer();
@@ -543,7 +551,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
 							stringConcatMatch(initializer, before) ||
-							reservedTokenMatch(initializer, replacement, before)) {
+							reservedTokenMatch(initializer, replacement, before) ||
+							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
 						for(LeafExpression subExpression : subExpressions) {
@@ -709,12 +718,48 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		}
 	}
 
+	private boolean anonymousWithMethodSignatureChange(AbstractExpression initializer, String before, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
+		if(initializer.getAnonymousClassDeclarations().size() > 0) {
+			for(AnonymousClassDeclarationObject anonymousDeclaration : initializer.getAnonymousClassDeclarations()) {
+				UMLAnonymousClass anonymousClass = operation1.findAnonymousClass(anonymousDeclaration);
+				if(anonymousClass == null) {
+					anonymousClass = operation2.findAnonymousClass(anonymousDeclaration);
+					//check if operation1 has anonymous with equal signature
+					if(anonymousClass != null) {
+						for(UMLAnonymousClass otherAnonymousClass : operation1.getAnonymousClassList()) {
+							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(otherAnonymousClass, anonymousClass, classDiff, classDiff.getModelDiff());
+							anonymousClassDiff.process();
+							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+							if(matchedOperationMappers.size() > 0) {
+								anonymousClassDiffs.add(anonymousClassDiff);
+								return true;
+							}
+						}
+					}
+				}
+				else {
+					//check if operation2 has anonymous with equal signature
+					for(UMLAnonymousClass otherAnonymousClass : operation2.getAnonymousClassList()) {
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass, otherAnonymousClass, classDiff, classDiff.getModelDiff());
+						anonymousClassDiff.process();
+						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
+						if(matchedOperationMappers.size() > 0) {
+							anonymousClassDiffs.add(anonymousClassDiff);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private boolean isDefaultValue(String argument) {
 		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	public void inlinedVariableAssignment(AbstractCodeFragment statement,
-			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) {
+			List<? extends AbstractCodeFragment> nonMappedLeavesT2, UMLAbstractClassDiff classDiff, boolean insideExtractedOrInlinedMethod) throws RefactoringMinerTimedOutException {
 		for(VariableDeclaration declaration : statement.getVariableDeclarations()) {
 			AbstractExpression initializer = declaration.getInitializer();
 			String variableName = declaration.getVariableName();
@@ -775,7 +820,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							stringConcatMatch(initializer, after) ||
-							reservedTokenMatch(initializer, replacement, after)) {
+							reservedTokenMatch(initializer, replacement, after) ||
+							anonymousWithMethodSignatureChange(initializer, after, classDiff)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 						List<LeafExpression> subExpressions = getFragment2().findExpression(after);
 						for(LeafExpression subExpression : subExpressions) {

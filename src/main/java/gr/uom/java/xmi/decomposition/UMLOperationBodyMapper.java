@@ -1931,7 +1931,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	public void addChildMapper(UMLOperationBodyMapper mapper) {
+	public void addChildMapper(UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
 		this.childMappers.add(mapper);
 		//check for variable extracted in parentMapper, but referenced in childMapper
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
@@ -3115,27 +3115,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private void inlinedVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
+	private void inlinedVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
+			int refactoringCount = mapping.getRefactorings().size();
 			mapping.inlinedVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null);
-			for(Refactoring newRefactoring : mapping.getRefactorings()) {
-				if(!this.refactorings.contains(newRefactoring)) {
-					this.refactorings.add(newRefactoring);
-				}
-				else {
-					for(Refactoring refactoring : this.refactorings) {
-						if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
-							InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
-							Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
-							Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
-							InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
-							oldInlineVariableRefactoring.addReferences(newReferences);
-							oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
-							for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
-								oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+			if(refactoringCount < mapping.getRefactorings().size()) {
+				this.anonymousClassDiffs.addAll(mapping.getAnonymousClassDiffs());
+				for(Refactoring newRefactoring : mapping.getRefactorings()) {
+					if(!this.refactorings.contains(newRefactoring)) {
+						this.refactorings.add(newRefactoring);
+					}
+					else {
+						for(Refactoring refactoring : this.refactorings) {
+							if(refactoring.equals(newRefactoring) && refactoring instanceof InlineVariableRefactoring) {
+								InlineVariableRefactoring newInlineVariableRefactoring = (InlineVariableRefactoring)newRefactoring;
+								Set<AbstractCodeMapping> newReferences = newInlineVariableRefactoring.getReferences();
+								Set<AbstractCodeFragment> newUnmatchedStatementReferences = newInlineVariableRefactoring.getUnmatchedStatementReferences();
+								InlineVariableRefactoring oldInlineVariableRefactoring = (InlineVariableRefactoring)refactoring;
+								oldInlineVariableRefactoring.addReferences(newReferences);
+								oldInlineVariableRefactoring.addUnmatchedStatementReferences(newUnmatchedStatementReferences);
+								for(LeafMapping newLeafMapping : newInlineVariableRefactoring.getSubExpressionMappings()) {
+									oldInlineVariableRefactoring.addSubExpressionMapping(newLeafMapping);
+								}
+								break;
 							}
-							break;
 						}
 					}
 				}
@@ -3143,12 +3147,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private void temporaryVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) {
+	private void temporaryVariableAssignment(AbstractCodeFragment statement, List<AbstractCodeFragment> nonMappedLeavesT2) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeMapping mapping : getMappings()) {
 			int refactoringCount = mapping.getRefactorings().size();
 			mapping.temporaryVariableAssignment(statement, nonMappedLeavesT2, classDiff, parentMapper != null, mappings);
 			if(refactoringCount < mapping.getRefactorings().size()) {
+				this.anonymousClassDiffs.addAll(mapping.getAnonymousClassDiffs());
 				for(Refactoring newRefactoring : mapping.getRefactorings()) {
 					if(!this.refactorings.contains(newRefactoring)) {
 						this.refactorings.add(newRefactoring);

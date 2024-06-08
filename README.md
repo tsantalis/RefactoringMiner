@@ -315,7 +315,7 @@ As of **June 8, 2024** the precision and recall of the tool on an oracle consist
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12261  | 20  | 236  | 0.998  | 0.981|
+|**Total**|12263  | 20  | 236  | 0.998  | 0.981|
 |Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
@@ -341,7 +341,7 @@ As of **June 8, 2024** the precision and recall of the tool on an oracle consist
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|280  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|282  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|102  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|

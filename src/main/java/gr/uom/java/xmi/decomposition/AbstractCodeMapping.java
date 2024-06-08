@@ -520,11 +520,37 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if(after.startsWith(variableName + ".")) {
 					String suffixAfter = after.substring(variableName.length(), after.length());
-					if(before.endsWith(suffixAfter)) {
+					if(before.endsWith(suffixAfter) || before.contains(suffixAfter)) {
 						String prefixBefore = before.substring(0, before.indexOf(suffixAfter));
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixBefore) ||
 									overlappingExtractVariable(initializer, prefixBefore, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> subExpressions = getFragment1().findExpression(prefixBefore);
+								for(LeafExpression subExpression : subExpressions) {
+									LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+								processExtractVariableRefactoring(ref, refactorings);
+								checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+								if(identical()) {
+									identicalWithExtractedVariable = true;
+								}
+								return;
+							}
+						}
+					}
+				}
+				else if(after.startsWith("()" + JAVA.LAMBDA_ARROW + variableName + ".")) {
+					int extraLength = "()".length() + JAVA.LAMBDA_ARROW.length();
+					String suffixAfter = after.substring(extraLength + variableName.length(), after.length());
+					if(before.endsWith(suffixAfter) || before.contains(suffixAfter)) {
+						String prefixBefore = before.substring(0, before.indexOf(suffixAfter));
+						if(prefixBefore.startsWith("()" + JAVA.LAMBDA_ARROW)) {
+							prefixBefore = prefixBefore.substring(extraLength);
+						}
+						if(initializer != null) {
+							if(initializer.toString().equals(prefixBefore)) {
 								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment1().findExpression(prefixBefore);
 								for(LeafExpression subExpression : subExpressions) {
@@ -791,11 +817,36 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if(before.startsWith(variableName + ".")) {
 					String suffixBefore = before.substring(variableName.length(), before.length());
-					if(after.endsWith(suffixBefore)) {
+					if(after.endsWith(suffixBefore) || after.contains(suffixBefore)) {
 						String prefixAfter = after.substring(0, after.indexOf(suffixBefore));
 						if(initializer != null) {
 							if(initializer.toString().equals(prefixAfter) ||
 									overlappingExtractVariable(initializer, prefixAfter, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings)) {
+								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> subExpressions = getFragment2().findExpression(prefixAfter);
+								for(LeafExpression subExpression : subExpressions) {
+									LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+								processInlineVariableRefactoring(ref, refactorings);
+								if(identical()) {
+									identicalWithInlinedVariable = true;
+								}
+								return;
+							}
+						}
+					}
+				}
+				else if(before.startsWith("()" + JAVA.LAMBDA_ARROW + variableName + ".")) {
+					int extraLength = "()".length() + JAVA.LAMBDA_ARROW.length();
+					String suffixBefore = before.substring(extraLength + variableName.length(), before.length());
+					if(after.endsWith(suffixBefore) || after.contains(suffixBefore)) {
+						String prefixAfter = after.substring(0, after.indexOf(suffixBefore));
+						if(prefixAfter.startsWith("()" + JAVA.LAMBDA_ARROW)) {
+							prefixAfter = prefixAfter.substring(extraLength);
+						}
+						if(initializer != null) {
+							if(initializer.toString().equals(prefixAfter)) {
 								InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
 								List<LeafExpression> subExpressions = getFragment2().findExpression(prefixAfter);
 								for(LeafExpression subExpression : subExpressions) {

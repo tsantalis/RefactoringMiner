@@ -200,6 +200,9 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 					matchingExpressions.add(expression.asLeafExpression());
 				locations.add(expression.getLocationInfo());
 			}
+			if(expression.getExpression() != null) {
+				matchingExpressions.addAll(expression.getExpression().findExpression(s));
+			}
 		}
 		for(LeafExpression expression : getArguments()) {
 			if(expression.getString().equals(s)) {

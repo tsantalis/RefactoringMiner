@@ -140,7 +140,7 @@ Currently, it supports the detection of the following refactorings:
 79. Split Package
 80. Merge Package
 81. Localize Parameter
-82. Change Type Declaration Kind (`class`, `interface`, `enum`)
+82. Change Type Declaration Kind (`class`, `interface`, `enum`, `annotation`, `record`)
 83. Collapse Hierarchy
 84. Replace Loop with Pipeline
 85. Replace Anonymous with Lambda
@@ -272,7 +272,7 @@ Currently, it supports the detection of the following refactorings:
 	49. Change Class Access Modifier
 	50. Add Class Modifier (final, static, abstract)
 	51. Remove Class Modifier (final, static, abstract)
- 	52. Change Type Declaration Kind (class, interface, enum)
+ 	52. Change Type Declaration Kind (class, interface, enum, annotation, record)
 </details>
 
 <details>

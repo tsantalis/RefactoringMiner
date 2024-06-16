@@ -2170,8 +2170,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations2) {
 					if(invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations)) {
-						anotherMapperCallsOperation2OfTheBestMapper = true;
-						break;
+						boolean skip = false;
+						for(UMLOperationBodyMapper m : operationBodyMapperList) {
+							if(m.getContainer1().getName().equals(operation2.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
+								List<AbstractCall> invocations1 = m.getContainer1().getAllOperationInvocations();
+								for(AbstractCall inv : invocations1) {
+									if(inv.matchesOperation(bestMapper.getContainer1(), m.getContainer1(), this, modelDiff)) {
+										skip = true;
+									}
+								}
+							}
+						}
+						if(!skip) {
+							anotherMapperCallsOperation2OfTheBestMapper = true;
+							break;
+						}
 					}
 				}
 				VariableDeclarationContainer operation1 = mapper.getContainer1();
@@ -2180,8 +2193,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				for(AbstractCall invocation : operationInvocations1) {
 					if(invocation.matchesOperation(bestMapper.getContainer1(), operation1, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer2(), operation1, this, modelDiff) &&
 							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, addedOperations)) {
-						anotherMapperCallsOperation1OfTheBestMapper = true;
-						break;
+						boolean skip = false;
+						for(UMLOperationBodyMapper m : operationBodyMapperList) {
+							if(m.getContainer2().getName().equals(operation1.getName()) && !m.getContainer1().stringRepresentation().equals(m.getContainer2().stringRepresentation())) {
+								List<AbstractCall> invocations2 = m.getContainer2().getAllOperationInvocations();
+								for(AbstractCall inv : invocations2) {
+									if(inv.matchesOperation(bestMapper.getContainer2(), m.getContainer2(), this, modelDiff)) {
+										skip = true;
+									}
+								}
+							}
+						}
+						if(!skip) {
+							anotherMapperCallsOperation1OfTheBestMapper = true;
+							break;
+						}
 					}
 				}
 				if(anotherMapperCallsOperation2OfTheBestMapper || anotherMapperCallsOperation1OfTheBestMapper) {

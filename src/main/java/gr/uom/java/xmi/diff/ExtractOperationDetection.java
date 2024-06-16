@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLOperation;
@@ -24,6 +25,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
+import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -487,6 +489,24 @@ public class ExtractOperationDetection {
 						}
 					}
 	 			}
+			}
+			for(Refactoring r : mapping.getRefactorings()) {
+				if(r instanceof ExtractVariableRefactoring) {
+					ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+					boolean subsumeFound = false;
+					for(LeafMapping leafMapping : extract.getSubExpressionMappings()) {
+						for(AbstractCodeFragment leaf2 : operationBodyMapper.getNonMappedLeavesT2()) {
+							if(leaf2.getLocationInfo().subsumes(leafMapping.getFragment2().getLocationInfo())) {
+								subsumeFound = true;
+							}
+						}
+					}
+					if(subsumeFound) {
+						nonMappedElementsT2--;
+						mappings++;
+						break;
+					}
+				}
 			}
 		}
 		if(nonMappedElementsT2 == 1) {

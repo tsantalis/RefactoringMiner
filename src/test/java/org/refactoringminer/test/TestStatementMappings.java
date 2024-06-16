@@ -495,7 +495,8 @@ public class TestStatementMappings {
 		"https://github.com/spring-projects/spring-framework.git, 58fbf60d2d5d28d96c351eb539a52bceffac270a, spring-framework-58fbf60d2d5d28d96c351eb539a52bceffac270a.txt",
 		"https://github.com/hibernate/hibernate-orm.git, bf7607e24495af5133165ae6ed6b85feecf59148, hibernate-orm-bf7607e24495af5133165ae6ed6b85feecf59148.txt",
 		"https://github.com/tsantalis/RefactoringMiner.git, 0894f346564f8b31cf836def67e952fb93a6036d, miner-0894f346564f8b31cf836def67e952fb93a6036d.txt",
-		"https://github.com/eclipse-jgit/jgit.git, 7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0, jgit-7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0.txt"
+		"https://github.com/eclipse-jgit/jgit.git, 7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0, jgit-7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0.txt",
+		"https://github.com/jenkinsci/git-client-plugin.git, 6d261108e7471db380146f945bb228b5fc8c44cc, git-client-plugin-6d261108e7471db380146f945bb228b5fc8c44cc.txt"
 	})
 	public void testExtractMethodStatementMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

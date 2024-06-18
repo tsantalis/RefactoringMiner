@@ -151,6 +151,12 @@ function getLinesToFold(model, margin = 5) {
     const linesToKeepVisible = new Set();
 
     decorations.forEach(decoration => {
+        if (config.moved){
+            if (decoration.options.className === "inserted" || decoration.options.className === "deleted")
+            {
+                return;
+            }
+        }
         for (let line = Math.max(1, decoration.range.startLineNumber - margin);
              line <= Math.min(lineCount, decoration.range.endLineNumber + margin);
              line++) {

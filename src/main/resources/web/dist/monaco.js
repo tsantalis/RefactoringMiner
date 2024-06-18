@@ -18,6 +18,7 @@
  * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
  */
 
+let margin = 2;
 function getEditorOptions(text) {
     return {
         value: text,
@@ -46,6 +47,7 @@ function getEditColor(edit) {
     else if (edit === "deleted") return 'red';
     else if (edit === "updated") return 'yellow';
     else if (edit === "moved") return 'blue';
+    else if (edit === "mm" || "mm updOnTop") return 'purple';
     else return "black";
 }
 
@@ -86,6 +88,7 @@ require(['vs/editor/editor.main'], function() {
             leftEditor.getModel().getPositionAt(range.from),
             leftEditor.getModel().getPositionAt(range.to)
         ));
+        leftEditor.getModel().decorations = leftDecorations;
         leftEditor.deltaDecorations([], leftDecorations);
         leftEditor.onMouseDown((event) => {
             if (event.target.range) {
@@ -112,6 +115,7 @@ require(['vs/editor/editor.main'], function() {
             rightEditor.getModel().getPositionAt(range.from),
             rightEditor.getModel().getPositionAt(range.to)
         ));
+        rightEditor.getModel().decorations = rightDecorations;
         rightEditor.deltaDecorations([], rightDecorations);
         rightEditor.onMouseDown((event) => {
             if (event.target.range) {
@@ -132,7 +136,75 @@ require(['vs/editor/editor.main'], function() {
                 }
             }
         });
+        setAllFoldings(leftEditor, rightEditor);
+        leftEditor.getAction('editor.foldAll').run();
+        rightEditor.getAction('editor.foldAll').run();
         window.leftEditor = leftEditor;
         window.rightEditor = rightEditor;
     });
 });
+
+function getLinesToFold(model, margin = 5) {
+
+    decorations = model.decorations;
+    const lineCount = model.getLineCount();
+    const linesToKeepVisible = new Set();
+
+    decorations.forEach(decoration => {
+        for (let line = Math.max(1, decoration.range.startLineNumber - margin);
+             line <= Math.min(lineCount, decoration.range.endLineNumber + margin);
+             line++) {
+            linesToKeepVisible.add(line);
+        }
+    });
+
+    const linesToFold = [];
+    for (let line = 1; line <= lineCount; line++) {
+        if (!linesToKeepVisible.has(line)) {
+            linesToFold.push(line);
+        }
+    }
+    return linesToFold;
+}
+function createFoldingRanges(linesToFold) {
+    // Ensure linesToFold is sorted
+    linesToFold.sort((a, b) => a - b);
+
+    const ranges = [];
+    let start = linesToFold[0];
+    let end = linesToFold[0];
+
+    for (let i = 1; i < linesToFold.length; i++) {
+        if (linesToFold[i] === end + 1) {
+            // Continue the current range
+            end = linesToFold[i];
+        } else {
+            // Push the completed range
+            ranges.push(new monaco.Range(start, 1, end, 1));
+            // Start a new range
+            start = linesToFold[i];
+            end = linesToFold[i];
+        }
+    }
+    // Push the last range
+    ranges.push(new monaco.Range(start, 1, end, 1));
+    return ranges;
+}
+
+function setAllFoldings(leftEditor, rightEditor) {
+    const foldingRangeProvider = {
+        provideFoldingRanges: (model, context, token) => {
+            let rangesToFold = createFoldingRanges(getLinesToFold(model, margin));
+            return rangesToFold.map(range => ({
+                start: range.startLineNumber,
+                end: range.endLineNumber,
+                kind: monaco.languages.FoldingRangeKind.Region,
+            }));
+        },
+    };
+    //Assume both languages are the same
+    var languageId = rightEditor.getModel().getLanguageId();
+    if (!monaco.languages.getLanguages().some(lang => lang.id === languageId && lang.foldingRangeProvider)) {
+        monaco.languages.registerFoldingRangeProvider(languageId, foldingRangeProvider);
+    }
+}

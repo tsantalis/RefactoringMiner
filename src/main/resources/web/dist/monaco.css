@@ -83,6 +83,9 @@ div {
 .tooltip-inner {
 	max-width: none;
 }
+.monaco-editor, .monaco-diff-editor, .monaco-component  {
+	--vscode-editor-foldBackground: #c0ebf8 !important;
+}
 /*.deleted {*/
 /*	background-color: IndianRed;*/
 /*}*/

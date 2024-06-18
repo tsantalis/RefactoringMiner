@@ -54,7 +54,7 @@ public class MonacoDiffView extends AbstractDiffView implements Renderable {
                         ._div()
                     ._div()
                 ._div()
-                .macros().script("config = { file: \"" + srcFileName + "\", left: " + getLeftJsConfig()
+                .macros().script("config = { moved: " + isMovedDiff + ", file: \"" + srcFileName + "\", left: " + getLeftJsConfig()
                                  + ", right: " + getRightJsConfig()
                                  + ", mappings: " + getMappingsJsConfig() + "};")
                 .macros().javascript("/monaco/min/vs/loader.js")

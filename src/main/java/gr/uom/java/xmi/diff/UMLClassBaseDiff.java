@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -81,6 +82,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
 	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
+	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
+	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -90,6 +93,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.addedImplementedInterfaces = new ArrayList<UMLType>();
 		this.removedImplementedInterfaces = new ArrayList<UMLType>();
 		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
+		this.implementedInterfaceBecomesSuperclass = Optional.empty();
+		this.superclassBecomesImplementedInterface = Optional.empty();
 	}
 
 	public UMLClass getOriginalClass() {
@@ -873,6 +878,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return removedImplementedInterfaces;
 	}
 
+	public Optional<Pair<UMLType, UMLType>> getImplementedInterfaceBecomesSuperclass() {
+		return implementedInterfaceBecomesSuperclass;
+	}
+
+	public Optional<Pair<UMLType, UMLType>> getSuperclassBecomesImplementedInterface() {
+		return superclassBecomesImplementedInterface;
+	}
+
 	public boolean containsOperationWithTheSameSignatureInOriginalClass(UMLOperation operation) {
 		for(UMLOperation originalOperation : originalClass.getOperations()) {
 			if(originalOperation.equalSignatureWithIdenticalNameIgnoringChangedTypes(operation))
@@ -964,19 +977,49 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			setSuperclassChanged(true);
 			setOldSuperclass(originalClass.getSuperclass());
 			setNewSuperclass(nextClass.getSuperclass());
+			if(nextClass.getImplementedInterfaces().contains(originalClass.getSuperclass())) {
+				int index = nextClass.getImplementedInterfaces().indexOf(originalClass.getSuperclass());
+				Pair<UMLType, UMLType> pair = Pair.of(originalClass.getSuperclass(), nextClass.getImplementedInterfaces().get(index));
+				superclassBecomesImplementedInterface = Optional.of(pair);
+			}
 		}
 		else if(originalClass.getSuperclass() == null && nextClass.getSuperclass() != null) {
 			setSuperclassChanged(true);
 			setOldSuperclass(originalClass.getSuperclass());
 			setNewSuperclass(nextClass.getSuperclass());
+			if(originalClass.getImplementedInterfaces().contains(nextClass.getSuperclass())) {
+				int index = originalClass.getImplementedInterfaces().indexOf(nextClass.getSuperclass());
+				Pair<UMLType, UMLType> pair = Pair.of(originalClass.getImplementedInterfaces().get(index), nextClass.getSuperclass());
+				implementedInterfaceBecomesSuperclass = Optional.of(pair);
+			}
 		}
 		for(UMLType implementedInterface : originalClass.getImplementedInterfaces()) {
-			if(!nextClass.getImplementedInterfaces().contains(implementedInterface))
-				reportRemovedImplementedInterface(implementedInterface);
+			if(!nextClass.getImplementedInterfaces().contains(implementedInterface)) {
+				boolean skip = false;
+				if(implementedInterfaceBecomesSuperclass.isPresent()) {
+					Pair<UMLType, UMLType> pair = implementedInterfaceBecomesSuperclass.get();
+					if(pair.getLeft().equals(implementedInterface)) {
+						skip = true;
+					}
+				}
+				if(!skip) {
+					reportRemovedImplementedInterface(implementedInterface);
+				}
+			}
 		}
 		for(UMLType implementedInterface : nextClass.getImplementedInterfaces()) {
-			if(!originalClass.getImplementedInterfaces().contains(implementedInterface))
-				reportAddedImplementedInterface(implementedInterface);
+			if(!originalClass.getImplementedInterfaces().contains(implementedInterface)) {
+				boolean skip = false;
+				if(superclassBecomesImplementedInterface.isPresent()) {
+					Pair<UMLType, UMLType> pair = superclassBecomesImplementedInterface.get();
+					if(pair.getRight().equals(implementedInterface)) {
+						skip = true;
+					}
+				}
+				if(!skip) {
+					reportAddedImplementedInterface(implementedInterface);
+				}
+			}
 		}
 	}
 

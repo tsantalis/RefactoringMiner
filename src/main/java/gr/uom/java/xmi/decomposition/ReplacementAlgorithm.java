@@ -2327,6 +2327,12 @@ public class ReplacementAlgorithm {
 			replacementInfo.addReplacement(r);
 			return replacementInfo.getReplacements();
 		}
+		//check if the expression of the method call in the second statement is the right hand side of an assignment in the first statement
+		if(invocationCoveringTheEntireStatement2 != null && variableDeclarations1.toString().equals(variableDeclarations2.toString()) && variableDeclarations1.size() > 0 &&
+				(r = invocationCoveringTheEntireStatement2.makeReplacementForAssignedExpression(replacementInfo.getArgumentizedString1())) != null) {
+			replacementInfo.addReplacement(r);
+			return replacementInfo.getReplacements();
+		}
 		//check if the method call in the second statement is the expression (or sub-expression) of the method invocation in the first statement
 		if(invocationCoveringTheEntireStatement2 != null) {
 			for(String key1 : methodInvocationMap1.keySet()) {

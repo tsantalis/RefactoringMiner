@@ -1094,11 +1094,28 @@ public abstract class AbstractCall extends LeafExpression {
 		return -1;
 	}
 
+	private boolean expressionIsAssigned(String statement) {
+		if(statement.contains(JAVA.ASSIGNMENT) && statement.endsWith(JAVA.STATEMENT_TERMINATION) && expression != null) {
+			if(equalsIgnoringExtraParenthesis(expression, statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public Replacement makeReplacementForAssignedArgument(String statement) {
 		int index = argumentIsAssigned(statement);
 		if(index >= 0 && (arguments().size() == 1 || (statement.contains(" ? ") && statement.contains(" : ")))) {
 			return new Replacement(statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
 					arguments().get(index), ReplacementType.ARGUMENT_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
+		}
+		return null;
+	}
+
+	public Replacement makeReplacementForAssignedExpression(String statement) {
+		if(expressionIsAssigned(statement)) {
+			return new Replacement(statement.substring(statement.indexOf(JAVA.ASSIGNMENT)+1, statement.length()-JAVA.STATEMENT_TERMINATION.length()),
+					expression, ReplacementType.EXPRESSION_REPLACED_WITH_RIGHT_HAND_SIDE_OF_ASSIGNMENT_EXPRESSION);
 		}
 		return null;
 	}

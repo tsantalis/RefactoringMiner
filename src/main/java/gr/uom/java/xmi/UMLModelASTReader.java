@@ -547,7 +547,7 @@ public class UMLModelASTReader {
         		processAnnotationTypeDeclaration(cu, annotationDeclaration, umlClass.getName(), sourceFile, importedTypes, packageDoc, comments);
         	}
 			else if(bodyDeclaration instanceof RecordDeclaration) {
-				RecordDeclaration recordDeclaration = (RecordDeclaration)abstractTypeDeclaration;
+				RecordDeclaration recordDeclaration = (RecordDeclaration)bodyDeclaration;
         		processRecordDeclaration(cu, recordDeclaration, umlClass.getName(), sourceFile, importedTypes, packageDoc, comments);
 			}
 		}

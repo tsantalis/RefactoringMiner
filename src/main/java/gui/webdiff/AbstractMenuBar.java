@@ -14,7 +14,7 @@ public abstract class AbstractMenuBar implements Renderable {
     private final int numOfDiffs;
     private final String routePath;
     private final boolean isMovedDiff;
-    private static final String BACK_BUTTON_TEXT = "Back";
+    private static final String BACK_BUTTON_TEXT = "Overview";
     private static final String PREV_BUTTON_TEXT = "Prev";
     private static final String NEXT_BUTTON_TEXT = "Next";
     private static final String QUIT_BUTTON_TEXT = "Quit";

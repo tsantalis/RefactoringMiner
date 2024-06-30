@@ -86,6 +86,13 @@ div {
 .monaco-editor, .monaco-diff-editor, .monaco-component  {
 	--vscode-editor-foldBackground: #c0ebf8 !important;
 }
+.disabled {
+	pointer-events: none;
+	opacity: 0.3;
+	background-color: #cccccc !important;
+	color: #666666 !important;
+	border-color: #cccccc !important;
+}
 /*.deleted {*/
 /*	background-color: IndianRed;*/
 /*}*/

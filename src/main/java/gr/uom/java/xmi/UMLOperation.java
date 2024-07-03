@@ -1038,6 +1038,13 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return isEquals() || isHashCode() || isToString() || isClone() || isCompareTo();
 	}
 
+	public boolean isMain() {
+		List<UMLType> parameterTypeList = getParameterTypeList();
+		return getName().equals("main") && getReturnParameter().getType().getClassType().equals("void") &&
+				parameterTypeList.size() == 1 && parameterTypeList.get(0).getClassType().equals("String") &&
+				parameterTypeList.get(0).getArrayDimension() == 1;
+	}
+
 	private boolean isEquals() {
 		List<UMLType> parameterTypeList = getParameterTypeList();
 		return getName().equals("equals") && getReturnParameter().getType().getClassType().equals("boolean") &&

@@ -81,6 +81,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		return false;
 	}
 
+	public boolean isMain() {
+		return false;
+	}
+
 	public Optional<UMLAnonymousClass> getAnonymousClassContainer() {
 		return anonymousClassContainer;
 	}

@@ -242,4 +242,9 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	public boolean isRecursive() {
 		return false;
 	}
+
+	@Override
+	public boolean isMain() {
+		return false;
+	}
 }

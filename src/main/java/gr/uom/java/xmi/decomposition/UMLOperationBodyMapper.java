@@ -13,11 +13,14 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnnotation;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.UMLModelASTReader.processBlock;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPICalls;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
+import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
@@ -72,6 +75,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
@@ -114,7 +118,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CompositeStatementObjectMapping> ifAddingElseIf = new HashSet<>();
 	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements = new LinkedHashMap<>();
 	private List<AbstractCall> invocationsInSourceOperationAfterExtraction;
-
+	private Set<Pair<AbstractCodeFragment, UMLComment>> commentedCode = new LinkedHashSet<>();
+	private Set<Pair<UMLComment, AbstractCodeFragment>> unCommentedCode = new LinkedHashSet<>();
 	
 	public List<AbstractCall> getInvocationsInSourceOperationAfterExtraction() {
 		if(invocationsInSourceOperationAfterExtraction == null) {
@@ -936,6 +941,83 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			List<AbstractExpression> leaves2 = new ArrayList<AbstractExpression>();
 			leaves2.add(defaultExpression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
+		}
+		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private void checkUnmatchedStatementsBeingCommented() {
+		List<UMLComment> uniqueComments1 = new ArrayList<UMLComment>();
+		List<UMLComment> uniqueComments2 = new ArrayList<UMLComment>();
+		for(UMLComment comment1 : container1.getComments()) {
+			boolean found = false;
+			for(UMLComment comment2 : container2.getComments()) {
+				if(comment1.getText().equals(comment2.getText())) {
+					found = true;
+					break;
+				}
+			}
+			if(!found) {
+				uniqueComments1.add(comment1);
+			}
+		}
+		for(UMLComment comment2 : container2.getComments()) {
+			boolean found = false;
+			for(UMLComment comment1 : container1.getComments()) {
+				if(comment1.getText().equals(comment2.getText())) {
+					found = true;
+					break;
+				}
+			}
+			if(!found) {
+				uniqueComments2.add(comment2);
+			}
+		}
+		// check if unmatched statements from left side have been commented
+		if(uniqueComments2.size() > 0 && nonMappedLeavesT1.size() > 0) {
+			for(UMLComment comment : uniqueComments2) {
+				String text = comment.getText();
+				if(text.startsWith("//")) {
+					text = text.substring(2);
+				}
+				text = text.trim();
+				ASTNode node = processBlock(text);
+				if(node != null) {
+					String nodeAsString = stringify(node);
+					Set<AbstractCodeFragment> matchingNodes1 = new LinkedHashSet<AbstractCodeFragment>();
+					for(AbstractCodeFragment leaf1 : nonMappedLeavesT1) {
+						if(leaf1.getString().equals(nodeAsString)) {
+							matchingNodes1.add(leaf1);
+						}
+					}
+					if(matchingNodes1.size() == 1) {
+						commentedCode.add(Pair.of(matchingNodes1.iterator().next(), comment));
+					}
+				}
+			}
+		}
+		// check if unmatched statements from right side have been uncommented
+		if(uniqueComments1.size() > 0 && nonMappedLeavesT2.size() > 0) {
+			//List<ASTNode>
+			for(UMLComment comment : uniqueComments1) {
+				String text = comment.getText();
+				if(text.startsWith("//")) {
+					text = text.substring(2);
+				}
+				text = text.trim();
+				ASTNode node = processBlock(text);
+				if(node != null) {
+					String nodeAsString = stringify(node);
+					Set<AbstractCodeFragment> matchingNodes2 = new LinkedHashSet<AbstractCodeFragment>();
+					for(AbstractCodeFragment leaf2 : nonMappedLeavesT2) {
+						if(leaf2.getString().equals(nodeAsString)) {
+							matchingNodes2.add(leaf2);
+						}
+					}
+					if(matchingNodes2.size() == 1) {
+						unCommentedCode.add(Pair.of(comment, matchingNodes2.iterator().next()));
+					}
+				}
+			}
 		}
 	}
 
@@ -2061,6 +2143,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Map<UMLOperation, Set<AbstractCodeFragment>> getExtractedStatements() {
 		return extractedStatements;
+	}
+
+	public Set<Pair<AbstractCodeFragment, UMLComment>> getCommentedCode() {
+		return commentedCode;
+	}
+
+	public Set<Pair<UMLComment, AbstractCodeFragment>> getUnCommentedCode() {
+		return unCommentedCode;
 	}
 
 	private void resetNodes(List<? extends AbstractCodeFragment> nodes) {

@@ -151,11 +151,11 @@ public class DirectoryDiffView implements Renderable {
                 	}
                     ul.tr()
                             //.td().content(nodeInfo.getName())
-                    		.td().a(href("/monaco-diff/" + nodeInfo.getId())).img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + description)._a()._td()
+                    		.td().a(href("/monaco-page/" + nodeInfo.getId())).img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + description)._a()._td()
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))
-                            .a(class_("btn btn-primary btn-sm").href("/monaco-diff/" + nodeInfo.getId())).content("MonacoDiff")
+                            .a(class_("btn btn-primary btn-sm").href("/monaco-page/" + nodeInfo.getId())).content("MonacoDiff")
                             .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeInfo.getId())).content("ClassicDiff")
                             ._div()
                             ._div()

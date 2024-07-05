@@ -96,6 +96,10 @@ public class WebDiff  {
             Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.second;
         });
+        get("/singleView", (request, response) -> {
+            Renderable view = new SinglePageView(comparator);
+            return render(view);
+        });
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";

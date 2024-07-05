@@ -93,6 +93,11 @@ div {
 	color: #666666 !important;
 	border-color: #cccccc !important;
 }
+
+.row>* {
+	padding-right: 0;
+	padding-left: 0;
+}
 /*.deleted {*/
 /*	background-color: IndianRed;*/
 /*}*/

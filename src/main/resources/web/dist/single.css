@@ -1,0 +1,9 @@
+.monaco-panel {
+    overflow-y: auto; /* Enable scrollbar for Monaco panel */
+    height: 100%; /* Ensure it fills the available height */
+}
+
+#accordion {
+    overflow-y: auto; /* Enable scrollbar for accordion */
+    height: 100%; /* Ensure it fills the available height */
+}

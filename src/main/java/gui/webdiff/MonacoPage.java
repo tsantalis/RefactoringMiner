@@ -20,6 +20,7 @@ public class MonacoPage extends AbstractDiffView implements Renderable {
 
     public void setDecorate(boolean decorate) {
         this.decorate = decorate;
+        core.setShowFilenames(decorate);
     }
 
     @Override

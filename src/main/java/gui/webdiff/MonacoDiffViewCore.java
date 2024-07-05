@@ -11,12 +11,17 @@ import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
 
-import static org.rendersnake.HtmlAttributesFactory.class_;
-import static org.rendersnake.HtmlAttributesFactory.id;
+import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
 public class MonacoDiffViewCore {
+
     public MonacoDiffViewCore(Diff diff, int id) {
+        this(diff, id, true);
+    }
+
+    public MonacoDiffViewCore(Diff diff, int id, boolean showFilenames) {
+        this.showFilenames = showFilenames;
         this.diff = diff;
         this.id = id;
         if (diff instanceof ASTDiff){
@@ -25,22 +30,36 @@ public class MonacoDiffViewCore {
         }
     }
 
+    public void setShowFilenames(boolean showFilenames) {
+        this.showFilenames = showFilenames;
+    }
+
+    private boolean showFilenames;
     private final Diff diff;
     private final int id;
     private String srcFileName;
     private String dstFileName;
 
-    void addDiffContainers(HtmlCanvas html) throws IOException {
-        html
-                .div(class_("row h-100"))
-                    .div(class_("col-6 h-100"))
-                    .h6().content(srcFileName)
-                    .div(id("left-container").style("height: calc(100% - 40px); border:1px solid grey;"))._div()
-                    ._div()
-                    .div(class_("col-6 h-100"))
-                    .h6().content(dstFileName)
-                    .div(id("right-container").style("height: calc(100% - 40px); border:1px solid grey;"))._div()
-                    ._div();
+    protected void addDiffContainers(HtmlCanvas html) throws IOException {
+        html.div(class_("row h-100"))
+                .div(class_("col-6 h-100"));
+        int offset = (showFilenames) ? 80 : 0;
+        if (showFilenames) {
+            html.h6(style("word-break: break-all; white-space: normal; overflow-wrap: break-word;"))
+                    .content(srcFileName);
+        }
+
+        html.div(id("left-container").style("height: calc(100% - " + offset +"px); border:1px solid grey;"))._div()
+                ._div()
+                .div(class_("col-6 h-100"));
+
+        if (showFilenames) {
+            html.h6(style("word-break: break-all; white-space: normal; overflow-wrap: break-word;"))
+                    .content(dstFileName);
+        }
+
+        html.div(id("right-container").style("height: calc(100% - " + offset +"px); border:1px solid grey;"))._div()
+                ._div();
     }
 
     String getLeftJsConfig() {
@@ -197,5 +216,9 @@ public class MonacoDiffViewCore {
     private static String tooltip(Tree t) {
         return (t.getParent() != null)
                 ? t.getParent().getType() + "/" + t.getType() + "/" + t.getPos() + "/" +  t.getEndPos() : t.getType().toString() + t.getPos() + t.getEndPos();
+    }
+
+    public String getDiffName() {
+        return srcFileName + " -> " + dstFileName;
     }
 }

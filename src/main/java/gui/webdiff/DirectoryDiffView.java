@@ -14,9 +14,16 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
     protected final DirComparator comparator;
+    private final boolean external;
 
     public DirectoryDiffView(DirComparator comparator) {
         this.comparator = comparator;
+        this.external = false;
+    }
+
+    public DirectoryDiffView(DirComparator comparator, boolean external) {
+        this.comparator = comparator;
+        this.external = external;
     }
 
     protected boolean isMovedCode(TreeNodeInfo info) {
@@ -37,14 +44,16 @@ public class DirectoryDiffView implements Renderable {
         .html(lang("en"))
             .render(new Header())
             .body()
-                .div(class_("container-fluid"))
+                .div(class_("container-fluid").style("padding: 0;"))
                     .div(class_("row"))
                         .render(new MenuBar())
                     ._div()
-                .div(class_("row justify-content-center"))
-                .button(class_("btn btn-primary col-6").style("height: 50px;").onClick("window.location.href='/singleView'"))
-                        .content("Single Page View (Beta)")
-                ._div()
+                .if_(!external)
+                    .div(class_("row justify-content-center"))
+                    .button(class_("btn btn-primary col-6").style("height: 50px;").onClick("window.location.href='/singleView'"))
+                            .content("Single Page View (Beta)")
+                    ._div()
+                ._if()
                 .div(class_("row mt-3 mb-3"))
                         .div(class_("col"))
                             .div(class_("card"))
@@ -58,6 +67,7 @@ public class DirectoryDiffView implements Renderable {
                             ._div()
                         ._div()
                     ._div()
+                    .if_(!external)
                     .div(class_("row mb-3"))
                         .div(class_("col"))
                             .div(class_("card"))
@@ -68,7 +78,7 @@ public class DirectoryDiffView implements Renderable {
                                     ._h4()
                                 ._div()
                                 .render_if(new AddedOrDeletedFiles(comparator.getRemovedFilesName()),
-                                        comparator.getRemovedFilesName().size() > 0)
+                                        !comparator.getRemovedFilesName().isEmpty())
                             ._div()
                         ._div()
                         .div(class_("col"))
@@ -80,10 +90,11 @@ public class DirectoryDiffView implements Renderable {
                                     ._h4()
                                 ._div()
                                 .render_if(new AddedOrDeletedFiles(comparator.getAddedFilesName()),
-                                        comparator.getAddedFilesName().size() > 0)
+                                        !comparator.getAddedFilesName().isEmpty())
                             ._div()
                         ._div()
                     ._div()
+                    ._if()
                 ._div()
             ._body()
         ._html();
@@ -100,7 +111,6 @@ public class DirectoryDiffView implements Renderable {
             if (node == null) {
                 return;
             }
-
             // Start a list item for this node
             HtmlCanvas li = null;
             if (!node.isLeaf())
@@ -150,17 +160,23 @@ public class DirectoryDiffView implements Renderable {
                     	}
                 	}
                     ul.tr()
-                            //.td().content(nodeInfo.getName())
-                    		.td().a(href("/monaco-page/" + nodeInfo.getId())).img(src(iconPath).width(iconWidth).height(iconHeight)).write(" " + description)._a()._td()
+                            .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
+                            .a(href("/monaco-page/" + nodeInfo.getId()))
+                            .img(src(iconPath).width(iconWidth).height(iconHeight))
+                            .write(" " + description)
+                            ._a()
+                            ._td()
+                            .if_(!external)
                             .td()
                             .div(class_("btn-toolbar justify-content-end"))
                             .div(class_("btn-group"))
                             .a(class_("btn btn-primary btn-sm").href("/monaco-page/" + nodeInfo.getId())).content("MonacoDiff")
                             .a(class_("btn btn-primary btn-sm").href("/vanilla-diff/" + nodeInfo.getId())).content("ClassicDiff")
-                            ._div()
-                            ._div()
+                            ._div() // Close btn-group
+                            ._div() // Close btn-toolbar
                             ._td()
-                    ._tr();
+                            ._if()
+                            ._tr();
                 }
                 else {
                     li.summary().content(nodeInfo.getName());
@@ -216,18 +232,22 @@ public class DirectoryDiffView implements Renderable {
 
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
-            HtmlCanvas tbody = html
-            .table(class_("table card-table table-striped table-condensed mb-0"))
-                .tbody();
+            html
+                    .div(class_("row"))
+                    .div(class_("col-md-12"))
+                    .table(class_("table card-table table-striped table-condensed mb-0"))
+                    .tbody();
             for (String filename : files) {
-                tbody
-                    .tr()
+                html
+                        .tr()
                         .td().content(filename)
-                    ._tr();
+                        ._tr();
             }
-            tbody
-                ._tbody()
-            ._table();
+            html
+                    ._tbody()
+                    ._table()
+                    ._div()
+                    ._div();
         }
     }
 

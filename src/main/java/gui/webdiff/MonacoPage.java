@@ -42,17 +42,10 @@ public class MonacoPage extends AbstractDiffView implements Renderable {
                                     + "<span class=&quot;updated&quot;>&nbsp;&nbsp;</span> updated<br>";
                         }
                     })
-                    ._div()
-                    .div(class_("row h-100"))
-                        .div(class_("col-6 h-100"))
-                            .h5().content(srcFileName)
-                            .div(id("left-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
-                        ._div()
-                        .div(class_("col-6 h-100"))
-                            .h5().content(dstFileName)
-                            .div(id("right-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
-                        ._div()
-                    ._div()
+                    ._div();
+        addDiffContainers(html);
+        html
+                ._div()
                 ._div()
                 .macros().script("config = { moved: " + isMovedDiff + ", file: \"" + srcFileName + "\", left: " + getLeftJsConfig()
                                  + ", right: " + getRightJsConfig()
@@ -62,6 +55,17 @@ public class MonacoPage extends AbstractDiffView implements Renderable {
                 .macros().javascript("/dist/shortcuts.js")
             ._body()
         ._html();
+    }
+
+    private void addDiffContainers(HtmlCanvas html) throws IOException {
+        html
+                .div(class_("row h-100"))
+                    .div(class_("col-6 h-100")).h5().content(srcFileName)
+                    .div(id("left-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
+                ._div()
+                    .div(class_("col-6 h-100")).h5().content(dstFileName)
+                    .div(id("right-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
+                ._div();
     }
 
     private String getLeftJsConfig() {

@@ -35,11 +35,11 @@ public class MonacoDiffViewCore {
                 .div(class_("row h-100"))
                     .div(class_("col-6 h-100"))
                     .h6().content(srcFileName)
-                    .div(id("left-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
+                    .div(id("left-container").style("height: calc(100% - 40px); border:1px solid grey;"))._div()
                     ._div()
                     .div(class_("col-6 h-100"))
                     .h6().content(dstFileName)
-                    .div(id("right-container").style("height: calc(100% - 80px); border:1px solid grey;"))._div()
+                    .div(id("right-container").style("height: calc(100% - 40px); border:1px solid grey;"))._div()
                     ._div();
     }
 

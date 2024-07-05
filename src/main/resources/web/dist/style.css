@@ -31,3 +31,10 @@ ul li {
 ul li:last-child {
   border-color : transparent;
 }
+ul
+{
+    padding-inline-start: 1px;
+}
+.row>*{
+    padding-right: 0;
+}

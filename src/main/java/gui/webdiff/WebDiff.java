@@ -57,7 +57,7 @@ public class WebDiff  {
             return "";
         });
         get("/list", (request, response) -> {
-            Renderable view = new DirectoryDiffView(comparator);
+            Renderable view = new DirectoryDiffView(comparator, false);
             return render(view);
         });
         get("/vanilla-diff/:id", (request, response) -> {
@@ -80,6 +80,17 @@ public class WebDiff  {
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id)
             );
+            return render(view);
+        });
+        get("/monaco-diff/:id", (request, response) -> {
+            int id = Integer.parseInt(request.params(":id"));
+            ASTDiff astDiff = comparator.getASTDiff(id);
+            MonacoPage view = new MonacoPage(
+                    toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
+                    astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
+                    comparator.isMoveDiff(id)
+            );
+            view.setDecorate(false);
             return render(view);
         });
         get("/left/:id", (request, response) -> {

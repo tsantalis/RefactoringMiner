@@ -4,13 +4,6 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
-import spark.Response;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -26,15 +19,18 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
         int n = comparator.getNumOfDiffs();
         try {
             html
+                    .head()
+                    .meta(charset("utf8"))
+                    .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
+                    .macros().stylesheet("/dist/single.css")
+                    ._head()
                     .render(DocType.HTML5)
                     .html(lang("en")).render(new Header())
                     .body()
                     .div(class_("container-fluid"))
                     .div(class_("row h-100"))
-                    // DirDiffComperator 1/5 width
                     .div(class_("col-2 bg-light dir-diff"))
-                    .h3().content("DirDiffComperator")
-                    // Content for DirDiffComperator (add your content here)
+                    .render(new DirectoryDiffView(comparator, true))
                     ._div()
                     // Monaco editors 4/5 width
                     .div(class_("col-10 monaco-panel"))
@@ -42,33 +38,27 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
-//                int id = i;
-//                ASTDiff astDiff = comparator.getASTDiff(id);
-//                MonacoDiffView monacoDiffView = new MonacoDiffView(
-//                        "", astDiff.getSrcPath(), astDiff.getDstPath(),
-//                        astDiff, id, comparator.getNumOfDiffs(), "",
-//                        comparator.isMoveDiff(id)
-//                );
-
                 html.div(class_("card"))
-                        .div(class_("card-header").id("heading-" + i))
-                        .h5(class_("mb-0"))
-                        .button(class_("btn btn-link")
-                                .data("toggle", "collapse")
-                                .data("target", "#collapse-" + i)
-//                                .aria("expanded", "false") // Initially false
-//                                .aria("controls", "collapse-" + i)
-                        )
-                        .content("Monaco Editor " + i)
-                        ._h5()
-                        ._div()
+//                        .div(class_("card-header").id("heading-" + i))
+//                        .h5(class_("mb-0"))
+//                        .button(class_("btn btn-link")
+//                                .data("toggle", "collapse")
+//                                .data("target", "#collapse-" + i)
+////                                .aria("expanded", "false") // Initially false
+////                                .aria("controls", "collapse-" + i)
+//                        )
+//                        .content("Monaco Editor " + i)
+//                        ._h5()
+//                        ._div()
                         .div(id("collapse-" + i)
 //                                .class_("collapse")
 //                                .aria("labelledby", "heading-" + i)
                                 .data("parent", "#accordion"))
-                        .div(class_("card-body"))
-                        .iframe(src("/monaco-page/" + i)
-                        .style("width: 100%; height: 500px; border: none;"))
+                        .div(class_("card-body").style("padding: 0;"))
+
+//                        html.render(monacoPage);
+                        .iframe(src("/monaco-diff/" + i)
+                                .style("width: 100%; height: 500px; border: none;"))
                         ._iframe()
                         ._div()
                         ._div()
@@ -80,7 +70,9 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
                     ._div() // Close row div
                     ._div(); // Close container-fluid div
 
-            html._body()
+
+            html.macros().javascript("/dist/single.js")
+                    ._body()
                     ._html();
 
         } catch (Exception e) {
@@ -88,25 +80,5 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
             // Handle exception
         }
 
-    }
-
-    // Method to fetch content from a URL using HttpURLConnection
-    private String fetchContentFromUrl(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-
-        // Read the response into a StringBuilder
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                content.append(line);
-            }
-        } finally {
-            conn.disconnect();
-        }
-
-        return content.toString();
     }
 }

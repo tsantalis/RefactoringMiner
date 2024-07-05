@@ -38,31 +38,29 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
+                MonacoDiffViewCore core = new MonacoDiffViewCore(comparator.getASTDiff(i), i, false);
                 html.div(class_("card"))
-//                        .div(class_("card-header").id("heading-" + i))
-//                        .h5(class_("mb-0"))
-//                        .button(class_("btn btn-link")
-//                                .data("toggle", "collapse")
-//                                .data("target", "#collapse-" + i)
-////                                .aria("expanded", "false") // Initially false
-////                                .aria("controls", "collapse-" + i)
-//                        )
-//                        .content("Monaco Editor " + i)
-//                        ._h5()
-//                        ._div()
-                        .div(id("collapse-" + i)
-//                                .class_("collapse")
-//                                .aria("labelledby", "heading-" + i)
-                                .data("parent", "#accordion"))
-                        .div(class_("card-body").style("padding: 0;"))
+                        .div(class_("card-header").id("heading-" + i)
+//                                .add("aria-expanded", "false")
+//                                .add("aria-controls", "collapse-" + i)
+                        )
+                                .h5(class_("mb-0"))
+                                .a()
+                                        .content(core.getDiffName())
+                                        ._h5()
+                                        ._div()
+                                        .div(id("collapse-" + i)
 
-//                        html.render(monacoPage);
-                        .iframe(src("/monaco-diff/" + i)
-                                .style("width: 100%; height: 500px; border: none;"))
-                        ._iframe()
-                        ._div()
-                        ._div()
-                        ._div();
+                                                .data("parent", "#accordion"))
+                                                .div(class_("card-body").style("padding: 0;"))
+                                                        .iframe(src("/monaco-diff/" + i)
+                                                                .id("monaco-diff-" + i)
+                                                                .style("width: 100%; height: 500px; border: none;"))
+                                        ._iframe()
+                                        ._div()
+                                        ._div()
+                                        ._div();
+
             }
 
             html._div() // Close accordion div

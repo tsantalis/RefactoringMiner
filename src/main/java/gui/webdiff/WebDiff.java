@@ -53,7 +53,7 @@ public class WebDiff  {
 //            if (comparator.isDirMode())
                 response.redirect("/list");
 //            else
-//                response.redirect("/monaco-diff/0");
+//                response.redirect("/monaco-page/0");
             return "";
         });
         get("/list", (request, response) -> {
@@ -72,10 +72,10 @@ public class WebDiff  {
                     false);
             return render(view);
         });
-        get("/monaco-diff/:id", (request, response) -> {
+        get("/monaco-page/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
-            Renderable view = new MonacoDiffView(
+            Renderable view = new MonacoPage(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id)

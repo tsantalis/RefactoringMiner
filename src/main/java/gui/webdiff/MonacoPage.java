@@ -15,8 +15,8 @@ import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-public class MonacoDiffView extends AbstractDiffView implements Renderable {
-    public MonacoDiffView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+public class MonacoPage extends AbstractDiffView implements Renderable {
+    public MonacoPage(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
     }
 

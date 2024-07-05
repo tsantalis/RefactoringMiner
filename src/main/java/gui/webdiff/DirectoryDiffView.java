@@ -13,17 +13,17 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class DirectoryDiffView implements Renderable {
-    private final DirComparator comparator;
+    protected final DirComparator comparator;
 
     public DirectoryDiffView(DirComparator comparator) {
         this.comparator = comparator;
     }
 
-    private boolean isMovedCode(TreeNodeInfo info) {
+    protected boolean isMovedCode(TreeNodeInfo info) {
     	return comparator.isMoveDiff(info.getId());
     }
 
-    private boolean isModifiedFile(TreeNodeInfo info) {
+    protected boolean isModifiedFile(TreeNodeInfo info) {
     	ASTDiff astDiff = comparator.getASTDiff(info.getId());
     	if(astDiff != null && astDiff.getSrcPath() != null)
     		return astDiff.getSrcPath().equals(astDiff.getDstPath());
@@ -41,7 +41,11 @@ public class DirectoryDiffView implements Renderable {
                     .div(class_("row"))
                         .render(new MenuBar())
                     ._div()
-                    .div(class_("row mt-3 mb-3"))
+                .div(class_("row justify-content-center"))
+                .button(class_("btn btn-primary col-6").style("height: 50px;").onClick("window.location.href='/singleView'"))
+                        .content("Single Page View (Beta)")
+                ._div()
+                .div(class_("row mt-3 mb-3"))
                         .div(class_("col"))
                             .div(class_("card"))
                                 .div(class_("card-header"))
@@ -227,7 +231,7 @@ public class DirectoryDiffView implements Renderable {
         }
     }
 
-    private static class Header implements Renderable {
+    static class Header implements Renderable {
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
              html

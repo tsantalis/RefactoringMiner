@@ -46,7 +46,7 @@ public class DirectoryDiffView implements Renderable {
             .body()
                 .div(class_("container-fluid").style("padding: 0;"))
                     .div(class_("row"))
-                        .render(new MenuBar())
+                        .render(new MenuBar(external))
                     ._div()
                 .if_(!external)
                     .div(class_("row justify-content-center"))
@@ -271,13 +271,24 @@ public class DirectoryDiffView implements Renderable {
     }
 
     private static class MenuBar implements Renderable {
+        private final boolean external;
+
+        public MenuBar(boolean external) {
+            this.external = external;
+        }
+
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {
             html
             .div(class_("col"))
                 .div(class_("btn-toolbar justify-content-end"))
-                    .div(class_("btn-group"))
+                    .div(class_("btn-group").style("padding: 5px;"))
+                        .if_(!external)
                         .a(class_("btn btn-default btn-sm btn-danger").href("/quit")).content("Quit")
+                        ._if()
+                        .if_(external)
+                        .a(class_("btn btn-default btn-sm btn-danger").href("/list")).content("Back")
+                        ._if()
                     ._div()
                 ._div()
             ._div();

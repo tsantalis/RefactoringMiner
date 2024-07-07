@@ -53,7 +53,7 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
                         ._h5()
                         ._div()
                         .div(class_("text-end"))
-                        .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Check details")
+                        .a(href("monaco-page/" + i).class_("btn btn-primary btn sm")).content("Details")
                         ._div()
                         ._div()
                         .div(id("collapse-" + i).class_("collapse show").add("aria-labelledby", "heading-" + i))
@@ -62,6 +62,7 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
                                 .id("monaco-diff-" + i)
                                 .style("width: 100%; height: 500px; border: none;"))
                         ._iframe()
+                        ._div()
                         ._div()
                         ._div()
                         ._div();

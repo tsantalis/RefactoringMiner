@@ -8,7 +8,8 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-04*/
 public class SinglePageView extends DirectoryDiffView implements Renderable {
-
+    private final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
+    private final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
     public SinglePageView(DirComparator comparator) {
         super(comparator);
     }
@@ -22,6 +23,7 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
                     .meta(charset("utf8"))
                     .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
                     .macros().stylesheet("/dist/single.css")
+                    .macros().stylesheet(JQ_UI_CSS)
                     ._head()
                     .render(DocType.HTML5)
                     .html(lang("en")).render(new Header())
@@ -68,7 +70,9 @@ public class SinglePageView extends DirectoryDiffView implements Renderable {
                     ._div(); // Close container-fluid div
 
 
-            html.macros().javascript("/dist/single.js")
+            html.
+                    macros().javascript("/dist/single.js")
+                    .macros().javascript(JQ_UI_JS)
                     ._body()
                     ._html();
 

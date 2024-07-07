@@ -161,7 +161,7 @@ public class DirectoryDiffView implements Renderable {
                 	}
                     ul.tr()
                             .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
-                            .a(href("/monaco-page/" + nodeInfo.getId()))
+                            .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
                             .img(src(iconPath).width(iconWidth).height(iconHeight))
                             .write(" " + description)
                             ._a()

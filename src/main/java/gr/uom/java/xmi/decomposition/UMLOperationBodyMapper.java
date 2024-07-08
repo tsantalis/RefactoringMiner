@@ -179,6 +179,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		nonMappedLeavesT2.addAll(leaves2);
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
+		if(mapper1.commentListDiff != null && mapper2.commentListDiff != null) {
+			this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), mapper2.commentListDiff.getAddedComments());
+			checkUnmatchedStatementsBeingCommented();
+		}
 	}
 
 	public UMLOperationBodyMapper(UMLOperation removedOperation, UMLOperationBodyMapper mapper2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
@@ -207,6 +211,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			if(mapper2.commentListDiff != null) {
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), mapper2.commentListDiff.getAddedComments());
+				checkUnmatchedStatementsBeingCommented();
+			}
 		}
 	}
 
@@ -236,6 +244,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			nonMappedLeavesT2.addAll(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
+			if(mapper1.commentListDiff != null) {
+				this.commentListDiff = new UMLCommentListDiff(mapper1.commentListDiff.getDeletedComments(), container2.getComments());
+				checkUnmatchedStatementsBeingCommented();
+			}
 		}
 	}
 
@@ -1205,6 +1217,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(expression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
+		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
+		checkUnmatchedStatementsBeingCommented();
 	}
 
 	public UMLOperationBodyMapper(UMLInitializer initializer1, UMLInitializer initializer2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
@@ -1220,6 +1234,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		CompositeStatementObject composite1 = initializer1.getBody().getCompositeStatement();
 		CompositeStatementObject composite2 = initializer2.getBody().getCompositeStatement();
 		processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments());
+		checkUnmatchedStatementsBeingCommented();
 	}
 
 	protected UMLOperationBodyMapper(LambdaExpressionObject lambda1, LambdaExpressionObject lambda2, UMLOperationBodyMapper parentMapper) throws RefactoringMinerTimedOutException {
@@ -1252,6 +1268,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
 			}
 		}
+		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments());
+		checkUnmatchedStatementsBeingCommented();
 	}
 
 	private void processCompositeStatements(List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2, List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2)
@@ -1990,6 +2008,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), new ArrayList<CompositeStatementObject>());
 			}
 		}
+		this.commentListDiff = new UMLCommentListDiff(anonymousClassOperation.getComments(), lambda2.getComments());
+		checkUnmatchedStatementsBeingCommented();
 	}
 
 	public void addChildMapper(UMLOperationBodyMapper mapper) throws RefactoringMinerTimedOutException {
@@ -2541,6 +2561,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
+			if(parentMapper != null && parentMapper.commentListDiff != null) {
+				this.commentListDiff = new UMLCommentListDiff(parentMapper.commentListDiff.getDeletedComments(), container2.getComments());
+				checkUnmatchedStatementsBeingCommented();
+			}
 		}
 	}
 
@@ -2905,6 +2929,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			for(AbstractCodeFragment statement : getNonMappedLeavesT1()) {
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
+			}
+			if(parentMapper != null && parentMapper.commentListDiff != null) {
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), parentMapper.commentListDiff.getAddedComments());
+				checkUnmatchedStatementsBeingCommented();
 			}
 		}
 	}

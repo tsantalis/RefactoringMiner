@@ -2144,6 +2144,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return extractedStatements;
 	}
 
+	public UMLCommentListDiff getCommentListDiff() {
+		return commentListDiff;
+	}
+
 	public Set<Pair<AbstractCodeFragment, UMLComment>> getCommentedCode() {
 		return commentedCode;
 	}

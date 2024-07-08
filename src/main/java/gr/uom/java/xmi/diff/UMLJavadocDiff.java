@@ -360,7 +360,9 @@ public class UMLJavadocDiff {
 						if(containsAnySubSequence(deletedTokenSequenceMap.get(deletedDocElement), longestSubSequence)) {
 							for(UMLDocElement addedDocElement : addedDocElements) {
 								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
-									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement)) {
+									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement) ||
+											(longestSubSequence.containsAll(deletedTokenSequenceMap.get(deletedDocElement)) &&
+											deletedTokenSequenceMap.get(deletedDocElement).size() > 1)) {
 										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
 										commonDocElements.add(pair);
 									}

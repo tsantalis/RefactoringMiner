@@ -13,6 +13,11 @@ public class UMLComment implements LocationInfoProvider {
 	}
 
 	public String getText() {
+		String text = new String(this.text);
+		if(text.startsWith("//")) {
+			text = text.substring(2);
+		}
+		text = text.trim();
 		return text;
 	}
 

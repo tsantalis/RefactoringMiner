@@ -52,6 +52,7 @@ import gr.uom.java.xmi.diff.SplitVariableRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
+import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
@@ -118,6 +119,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CompositeStatementObjectMapping> ifAddingElseIf = new HashSet<>();
 	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements = new LinkedHashMap<>();
 	private List<AbstractCall> invocationsInSourceOperationAfterExtraction;
+	private UMLCommentListDiff commentListDiff;
 	private Set<Pair<AbstractCodeFragment, UMLComment>> commentedCode = new LinkedHashSet<>();
 	private Set<Pair<UMLComment, AbstractCodeFragment>> unCommentedCode = new LinkedHashSet<>();
 	
@@ -942,36 +944,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(defaultExpression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
+		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments());
 		checkUnmatchedStatementsBeingCommented();
 	}
 
 	private void checkUnmatchedStatementsBeingCommented() {
-		List<UMLComment> uniqueComments1 = new ArrayList<UMLComment>();
-		List<UMLComment> uniqueComments2 = new ArrayList<UMLComment>();
-		for(UMLComment comment1 : container1.getComments()) {
-			boolean found = false;
-			for(UMLComment comment2 : container2.getComments()) {
-				if(comment1.getText().equals(comment2.getText())) {
-					found = true;
-					break;
-				}
-			}
-			if(!found) {
-				uniqueComments1.add(comment1);
-			}
-		}
-		for(UMLComment comment2 : container2.getComments()) {
-			boolean found = false;
-			for(UMLComment comment1 : container1.getComments()) {
-				if(comment1.getText().equals(comment2.getText())) {
-					found = true;
-					break;
-				}
-			}
-			if(!found) {
-				uniqueComments2.add(comment2);
-			}
-		}
+		List<UMLComment> uniqueComments1 = commentListDiff.getDeletedComments();
+		List<UMLComment> uniqueComments2 = commentListDiff.getAddedComments();
 		// check if unmatched statements from left side have been commented
 		if(uniqueComments2.size() > 0 && nonMappedLeavesT1.size() > 0) {
 			for(UMLComment comment : uniqueComments2) {

@@ -5053,7 +5053,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		List<String> commentsWithinStatement1 = new ArrayList<>();
 		for(UMLComment comment1 : comments1) {
 			if(statement.getLocationInfo().subsumes(comment1.getLocationInfo())) {
-				commentsWithinStatement1.add(comment1.getText());
+				commentsWithinStatement1.add(comment1.getFullText());
 			}
 		}
 		return commentsWithinStatement1;

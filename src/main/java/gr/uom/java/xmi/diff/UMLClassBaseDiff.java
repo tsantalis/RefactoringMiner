@@ -1586,7 +1586,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private boolean isCommentedOut(UMLOperation removedOperation) {
 		List<UMLComment> nextClassComments = nextClass.getComments();
 		for(UMLComment nextClassComment : nextClassComments) {
-			String comment = nextClassComment.getText();
+			String comment = nextClassComment.getFullText();
 			boolean commentedOut = false;
 			Scanner scanner = new Scanner(comment);
 			int openCurlyBrackets = 0;

@@ -1,36 +1,49 @@
 package gr.uom.java.xmi;
 
-import gr.uom.java.xmi.LocationInfo.CodeElementType;
-import gr.uom.java.xmi.diff.CodeRange;
+import java.util.Scanner;
 
-public class UMLComment implements LocationInfoProvider {
-	private String text;
-	private LocationInfo locationInfo;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
+
+public class UMLComment extends UMLAbstractDocumentation {
 
 	public UMLComment(String text, LocationInfo locationInfo) {
-		this.text = text;
-		this.locationInfo = locationInfo;
+		super(text, locationInfo);
 	}
 
-	public String getFullText() {
-		return text;
-	}
-
+	@Override
 	public String getText() {
-		String text = new String(this.text);
-		if(text.startsWith("//")) {
-			text = text.substring(2);
+		if(locationInfo.getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
+			String text = new String(this.text);
+			if(text.startsWith("//")) {
+				text = text.substring(2);
+			}
+			text = text.trim();
+			return text;
 		}
-		text = text.trim();
-		return text;
-	}
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
-
-	public CodeRange codeRange() {
-		return locationInfo.codeRange();
+		else {
+			StringBuilder sb = new StringBuilder();
+			Scanner scanner = new Scanner(this.text);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				line = line.trim();
+				if(line.startsWith("/*")) {
+					line = line.substring(2);
+				}
+				if(line.endsWith("*/")) {
+					line = line.substring(0, line.length()-2);
+				}
+				if(line.startsWith("//")) {
+					line = line.substring(2);
+				}
+				if(line.startsWith("*")) {
+					line = line.substring(1);
+				}
+				line = line.trim();
+				sb.append(line).append("\n");
+			}
+			scanner.close();
+			return sb.toString();
+		}
 	}
 
 	public String toString() {

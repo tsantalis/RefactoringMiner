@@ -1595,11 +1595,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			int bodyStartOffset = -1;
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
-				if(line.contains("/*")) {
-					line = line.replace("/*", "");
+				line = line.trim();
+				if(line.startsWith("/*")) {
+					line = line.substring(2);
 				}
-				if(line.contains("//")) {
-					line = line.replace("//", "");
+				if(line.endsWith("*/")) {
+					line = line.substring(0, line.length()-2);
+				}
+				if(line.startsWith("//")) {
+					line = line.substring(2);
+				}
+				if(line.startsWith("*")) {
+					line = line.substring(1);
 				}
 				line = line.trim();
 				if(METHOD_SIGNATURE_PATTERN.matcher(line).matches()) {

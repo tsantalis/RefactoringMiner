@@ -2,24 +2,14 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-import gr.uom.java.xmi.diff.CodeRange;
-
-public class UMLJavadoc implements LocationInfoProvider {
-	private LocationInfo locationInfo;
+public class UMLJavadoc extends UMLAbstractDocumentation {
 	private List<UMLTagElement> tags;
 
-	public UMLJavadoc(LocationInfo locationInfo) {
-		this.locationInfo = locationInfo;
+	public UMLJavadoc(String text, LocationInfo locationInfo) {
+		super(text, locationInfo);
 		this.tags = new ArrayList<UMLTagElement>();
-	}
-
-	public LocationInfo getLocationInfo() {
-		return locationInfo;
-	}
-
-	public CodeRange codeRange() {
-		return locationInfo.codeRange();
 	}
 
 	public boolean isEmpty() {
@@ -45,5 +35,31 @@ public class UMLJavadoc implements LocationInfoProvider {
 
 	public boolean equalText(UMLJavadoc other) {
 		return this.tags.equals(other.tags);
+	}
+
+	@Override
+	public String getText() {
+		StringBuilder sb = new StringBuilder();
+		Scanner scanner = new Scanner(this.text);
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			line = line.trim();
+			if(line.startsWith("/*")) {
+				line = line.substring(2);
+			}
+			if(line.endsWith("*/")) {
+				line = line.substring(0, line.length()-2);
+			}
+			if(line.startsWith("//")) {
+				line = line.substring(2);
+			}
+			if(line.startsWith("*")) {
+				line = line.substring(1);
+			}
+			line = line.trim();
+			sb.append(line).append("\n");
+		}
+		scanner.close();
+		return sb.toString();
 	}
 }

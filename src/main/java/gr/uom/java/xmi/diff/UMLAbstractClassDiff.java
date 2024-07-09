@@ -64,6 +64,7 @@ public abstract class UMLAbstractClassDiff {
 	protected List<Refactoring> refactorings;
 	protected UMLModelDiff modelDiff;
 	private UMLImplementedInterfaceListDiff interfaceListDiff;
+	private UMLCommentListDiff commentListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
 	
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
@@ -85,6 +86,7 @@ public abstract class UMLAbstractClassDiff {
 		this.nextClass = nextClass;
 		this.modelDiff = modelDiff;
 		this.interfaceListDiff = new UMLImplementedInterfaceListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
+		this.commentListDiff = new UMLCommentListDiff(originalClass.getComments(), nextClass.getComments());
 	}
 
 	public List<UMLOperation> getAddedOperations() {
@@ -145,6 +147,10 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
+	}
+
+	public UMLCommentListDiff getCommentListDiff() {
+		return commentListDiff;
 	}
 
 	public UMLImplementedInterfaceListDiff getInterfaceListDiff() {

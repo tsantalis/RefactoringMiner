@@ -53,6 +53,7 @@ import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
+import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
 import gr.uom.java.xmi.diff.UMLParameterDiff;
@@ -119,6 +120,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<CompositeStatementObjectMapping> ifAddingElseIf = new HashSet<>();
 	private Map<UMLOperation, Set<AbstractCodeFragment>> extractedStatements = new LinkedHashMap<>();
 	private List<AbstractCall> invocationsInSourceOperationAfterExtraction;
+	private Optional<UMLJavadocDiff> javadocDiff = Optional.empty();
 	private UMLCommentListDiff commentListDiff;
 	private Set<Pair<AbstractCodeFragment, UMLComment>> commentedCode = new LinkedHashSet<>();
 	private Set<Pair<UMLComment, AbstractCodeFragment>> unCommentedCode = new LinkedHashSet<>();
@@ -956,6 +958,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(defaultExpression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
+		if(operation1.getJavadoc() != null && operation2.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments());
 		checkUnmatchedStatementsBeingCommented();
 	}
@@ -1217,6 +1223,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(expression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
+		if(removedAttribute.getJavadoc() != null && addedAttribute.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(removedAttribute.getJavadoc(), addedAttribute.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
 		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
 		checkUnmatchedStatementsBeingCommented();
 	}
@@ -1234,6 +1244,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		CompositeStatementObject composite1 = initializer1.getBody().getCompositeStatement();
 		CompositeStatementObject composite2 = initializer2.getBody().getCompositeStatement();
 		processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
+		if(initializer1.getJavadoc() != null && initializer2.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(initializer1.getJavadoc(), initializer2.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
 		this.commentListDiff = new UMLCommentListDiff(initializer1.getComments(), initializer2.getComments());
 		checkUnmatchedStatementsBeingCommented();
 	}
@@ -2142,6 +2156,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public Map<UMLOperation, Set<AbstractCodeFragment>> getExtractedStatements() {
 		return extractedStatements;
+	}
+
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return javadocDiff;
 	}
 
 	public UMLCommentListDiff getCommentListDiff() {

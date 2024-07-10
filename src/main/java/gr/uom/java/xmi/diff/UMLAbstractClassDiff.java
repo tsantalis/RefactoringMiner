@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -219,6 +220,8 @@ public abstract class UMLAbstractClassDiff {
 		}
 		return replacements;
 	}
+
+	public abstract Optional<UMLJavadocDiff> getJavadocDiff();
 
 	public abstract void process() throws RefactoringMinerTimedOutException;
 	

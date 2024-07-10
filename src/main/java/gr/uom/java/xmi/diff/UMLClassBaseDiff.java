@@ -84,6 +84,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
 	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
+	private Optional<UMLJavadocDiff> javadocDiff;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -95,6 +96,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		this.consistentMethodInvocationRenamesInModel = findConsistentMethodInvocationRenamesInModelDiff();
 		this.implementedInterfaceBecomesSuperclass = Optional.empty();
 		this.superclassBecomesImplementedInterface = Optional.empty();
+		if(originalClass.getJavadoc() != null && nextClass.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getJavadoc(), nextClass.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
+		else {
+			this.javadocDiff = Optional.empty();
+		}
 	}
 
 	public UMLClass getOriginalClass() {
@@ -103,6 +111,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public UMLClass getNextClass() {
 		return (UMLClass) nextClass;
+	}
+
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return javadocDiff;
 	}
 
 	protected void reportAddedOperation(UMLOperation umlOperation) {

@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
@@ -31,6 +32,11 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 		checkForAttributeChanges();
 		checkForInlinedOperations();
 		checkForExtractedOperations();
+	}
+
+	@Override
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return Optional.empty();
 	}
 
 	public boolean isEmpty() {

@@ -1,5 +1,7 @@
 package gr.uom.java.xmi.diff;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
@@ -27,6 +29,11 @@ public class UMLAnonymousToClassDiff extends UMLAbstractClassDiff {
 	public void process() throws RefactoringMinerTimedOutException {
 		processOperations();
 		processAttributes();
+	}
+
+	@Override
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return Optional.empty();
 	}
 
 	@Override

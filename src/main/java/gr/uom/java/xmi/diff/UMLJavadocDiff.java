@@ -14,6 +14,8 @@ import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLTagElement;
 
 public class UMLJavadocDiff {
+	private UMLJavadoc javadocBefore;
+	private UMLJavadoc javadocAfter;
 	private List<Pair<UMLTagElement, UMLTagElement>> commonTags;
 	private List<Pair<UMLDocElement, UMLDocElement>> commonDocElements;
 	private List<Pair<UMLTagElement, UMLTagElement>> commonNestedTags;
@@ -26,6 +28,8 @@ public class UMLJavadocDiff {
 	private boolean manyToManyReformat;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
+		this.javadocBefore = javadocBefore;
+		this.javadocAfter = javadocAfter;
 		this.commonTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
 		this.commonNestedTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
 		this.commonDocElements = new ArrayList<Pair<UMLDocElement,UMLDocElement>>();
@@ -524,6 +528,14 @@ public class UMLJavadocDiff {
 				words.add(word);
 		}
 		return words;
+	}
+
+	public UMLJavadoc getJavadocBefore() {
+		return javadocBefore;
+	}
+
+	public UMLJavadoc getJavadocAfter() {
+		return javadocAfter;
 	}
 
 	public List<Pair<UMLTagElement, UMLTagElement>> getCommonTags() {

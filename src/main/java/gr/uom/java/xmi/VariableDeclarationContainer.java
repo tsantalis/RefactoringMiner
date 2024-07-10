@@ -84,6 +84,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	List<AbstractCall> getAllCreations();
 	List<String> getAllVariables();
 	List<UMLComment> getComments();
+	UMLJavadoc getJavadoc();
 	String getName();
 	String getElementType();
 	String getClassName();

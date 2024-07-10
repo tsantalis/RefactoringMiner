@@ -28,6 +28,7 @@ import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.LocationInfoProvider;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -416,5 +417,10 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public boolean isMain() {
 		return false;
+	}
+
+	@Override
+	public UMLJavadoc getJavadoc() {
+		return null;
 	}
 }

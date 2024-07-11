@@ -103,6 +103,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.javadocDiff = Optional.empty();
 		}
+		processImports();
 	}
 
 	public UMLClass getOriginalClass() {
@@ -134,7 +135,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	public void process() throws RefactoringMinerTimedOutException {
-		processImports();
 		processInitializers();
 		processModifiers();
 		processTypeParameters();

@@ -570,10 +570,11 @@ public class UMLModelASTReader {
 		if(typeDeclaration.isPackageMemberTypeDeclaration()) {
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
 			for(UMLComment comment : comments) {
-				if(comment.getLocationInfo().getStartLine() == 1) {
+				if(comment.getLocationInfo().before(locationInfo)) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}
+			comments.removeAll(umlClass.getPackageDeclarationComments());
 		}
 		if(typeDeclaration.isInterface()) {
 			umlClass.setInterface(true);

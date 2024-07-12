@@ -224,6 +224,10 @@ public abstract class UMLAbstractClassDiff {
 
 	public abstract Optional<UMLJavadocDiff> getJavadocDiff();
 
+	public abstract Optional<UMLJavadocDiff> getPackageDeclarationJavadocDiff();
+
+	public abstract UMLCommentListDiff getPackageDeclarationCommentListDiff();
+
 	public abstract void process() throws RefactoringMinerTimedOutException;
 	
 	protected abstract void checkForAttributeChanges() throws RefactoringMinerTimedOutException;

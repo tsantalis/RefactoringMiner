@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,15 @@ public class UMLAnonymousClassDiff extends UMLAbstractClassDiff {
 	@Override
 	public Optional<UMLJavadocDiff> getJavadocDiff() {
 		return Optional.empty();
+	}
+
+	@Override
+	public Optional<UMLJavadocDiff> getPackageDeclarationJavadocDiff() {
+		return Optional.empty();
+	}
+
+	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
+		return new UMLCommentListDiff(Collections.emptyList(), Collections.emptyList());
 	}
 
 	public boolean isEmpty() {

@@ -186,14 +186,16 @@ public class UMLModelASTReader {
 		PackageDeclaration packageDeclaration = compilationUnit.getPackage();
 		String packageName = null;
 		UMLJavadoc packageDoc = null;
+		UMLPackage umlPackage = null;
 		if(packageDeclaration != null) {
 			packageName = packageDeclaration.getName().getFullyQualifiedName();
 			packageDoc = generateJavadoc(compilationUnit, sourceFilePath, packageDeclaration.getJavadoc());
+			LocationInfo packageLocationInfo = generateLocationInfo(compilationUnit, sourceFilePath, packageDeclaration, CodeElementType.PACKAGE_DECLARATION);
+			umlPackage = new UMLPackage(packageName, packageLocationInfo);
 		}
 		else {
 			packageName = "";
 		}
-		UMLPackage umlPackage = new UMLPackage(packageName, generateLocationInfo(compilationUnit, sourceFilePath, packageDeclaration, CodeElementType.PACKAGE_DECLARATION));
 		
 		List<ImportDeclaration> imports = compilationUnit.imports();
 		List<UMLImport> importedTypes = new ArrayList<UMLImport>();

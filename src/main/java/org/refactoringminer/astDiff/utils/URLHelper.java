@@ -26,6 +26,10 @@ public class URLHelper{
 
     public static String getCommit(String url) {
         url = removeAdditionalPart(url);
+        if (url.contains("/commits/")) {
+        	int index = nthIndexOf(url,'/',8);
+        	return url.substring(index+1);
+        }
         int index = nthIndexOf(url,'/',6);
         return url.substring(index+1);
     }
@@ -59,6 +63,6 @@ public class URLHelper{
     }
 
     public static boolean isPR(String url) {
-        return url.contains("/pull/");
+        return url.contains("/pull/") && !url.contains("/commits/");
     }
 }

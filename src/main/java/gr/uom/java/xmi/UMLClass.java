@@ -22,6 +22,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean topLevel;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
+    private UMLPackage packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
     
@@ -191,6 +192,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 
 	public List<UMLComment> getPackageDeclarationComments() {
 		return packageDeclarationComments;
+	}
+
+    public UMLPackage getPackageDeclaration() {
+		return packageDeclaration;
+	}
+
+	public void setPackageDeclaration(UMLPackage packageDeclaration) {
+		this.packageDeclaration = packageDeclaration;
 	}
 
     public UMLOperation matchOperation(UMLOperation otherOperation) {

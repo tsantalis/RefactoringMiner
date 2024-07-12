@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 
 public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, Serializable, LocationInfoProvider {
 	private String qualifiedName;
@@ -22,7 +23,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 	private boolean topLevel;
     private List<UMLTypeParameter> typeParameters;
     private UMLJavadoc javadoc;
-    private UMLPackage packageDeclaration;
+    private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
     
@@ -67,6 +68,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
         this.topLevel = topLevel;
         this.typeParameters = new ArrayList<UMLTypeParameter>();
         this.packageDeclarationComments = new ArrayList<UMLComment>();
+        this.packageDeclaration = Optional.empty();
     }
 
     public String getTypeDeclarationKind() {
@@ -194,12 +196,13 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
 		return packageDeclarationComments;
 	}
 
-    public UMLPackage getPackageDeclaration() {
+    public Optional<UMLPackage> getPackageDeclaration() {
 		return packageDeclaration;
 	}
 
 	public void setPackageDeclaration(UMLPackage packageDeclaration) {
-		this.packageDeclaration = packageDeclaration;
+		if(packageDeclaration != null)
+			this.packageDeclaration = Optional.of(packageDeclaration);
 	}
 
     public UMLOperation matchOperation(UMLOperation otherOperation) {

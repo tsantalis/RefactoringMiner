@@ -85,6 +85,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
 	private Optional<UMLJavadocDiff> javadocDiff;
+	private Optional<UMLJavadocDiff> packageDeclarationJavadocDiff;
+	private UMLCommentListDiff packageDeclarationCommentListDiff;
 
 	public UMLClassBaseDiff(UMLClass originalClass, UMLClass nextClass, UMLModelDiff modelDiff) {
 		super(originalClass, nextClass, modelDiff);
@@ -103,6 +105,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		else {
 			this.javadocDiff = Optional.empty();
 		}
+		if(originalClass.getPackageDeclarationJavadoc() != null && nextClass.getPackageDeclarationJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(originalClass.getPackageDeclarationJavadoc(), nextClass.getPackageDeclarationJavadoc());
+			this.packageDeclarationJavadocDiff = Optional.of(diff);
+		}
+		else {
+			this.packageDeclarationJavadocDiff = Optional.empty();
+		}
 		processImports();
 	}
 
@@ -116,6 +125,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	public Optional<UMLJavadocDiff> getJavadocDiff() {
 		return javadocDiff;
+	}
+
+	public Optional<UMLJavadocDiff> getPackageDeclarationJavadocDiff() {
+		return packageDeclarationJavadocDiff;
+	}
+
+	public UMLCommentListDiff getPackageDeclarationCommentListDiff() {
+		if(packageDeclarationCommentListDiff == null)
+			packageDeclarationCommentListDiff = new UMLCommentListDiff(getOriginalClass().getPackageDeclarationComments(), getNextClass().getPackageDeclarationComments());
+		return packageDeclarationCommentListDiff;
 	}
 
 	protected void reportAddedOperation(UMLOperation umlOperation) {

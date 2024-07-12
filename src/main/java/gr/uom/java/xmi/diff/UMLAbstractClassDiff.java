@@ -87,7 +87,6 @@ public abstract class UMLAbstractClassDiff {
 		this.nextClass = nextClass;
 		this.modelDiff = modelDiff;
 		this.interfaceListDiff = new UMLImplementedInterfaceListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
-		this.commentListDiff = new UMLCommentListDiff(originalClass.getComments(), nextClass.getComments());
 	}
 
 	public List<UMLOperation> getAddedOperations() {
@@ -151,6 +150,8 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	public UMLCommentListDiff getCommentListDiff() {
+		if(commentListDiff == null)
+			commentListDiff = new UMLCommentListDiff(originalClass.getComments(), nextClass.getComments());
 		return commentListDiff;
 	}
 

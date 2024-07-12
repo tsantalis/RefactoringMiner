@@ -26,7 +26,7 @@ public class URLHelper{
 
     public static String getCommit(String url) {
         url = removeAdditionalPart(url);
-        if (url.contains("/commits/")) {
+        if (url.contains("/pull/") && url.contains("/commits/")) {
         	int index = nthIndexOf(url,'/',8);
         	return url.substring(index+1);
         }

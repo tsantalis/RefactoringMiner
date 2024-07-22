@@ -108,7 +108,11 @@ public class WebDiff  {
             return pair.second;
         });
         get("/singleView", (request, response) -> {
-            Renderable view = new SinglePageView(comparator);
+            Renderable view = new SinglePageViewWithIFrame(comparator);
+            return render(view);
+        });
+        get("/singleView2", (request, response) -> {
+            Renderable view = new SinglePageViewFromScratch(comparator);
             return render(view);
         });
         get("/quit", (request, response) -> {

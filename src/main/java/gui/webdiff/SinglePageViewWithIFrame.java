@@ -7,10 +7,10 @@ import org.rendersnake.Renderable;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-04*/
-public class SinglePageView extends DirectoryDiffView implements Renderable {
+public class SinglePageViewWithIFrame extends DirectoryDiffView implements Renderable {
     private final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     private final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
-    public SinglePageView(DirComparator comparator) {
+    public SinglePageViewWithIFrame(DirComparator comparator) {
         super(comparator);
     }
 

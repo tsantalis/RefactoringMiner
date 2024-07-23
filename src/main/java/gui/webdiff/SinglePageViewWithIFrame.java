@@ -28,6 +28,7 @@ public class SinglePageViewWithIFrame extends AbstractSinglePageView implements 
     }
     protected HtmlCanvas addJSMacros(HtmlCanvas html) throws IOException {
         return html.
+                macros().javascript("/dist/worker.js").
                 macros().javascript("/dist/single.js")
                 .macros().javascript(JQ_UI_JS);
     }

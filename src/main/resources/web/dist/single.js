@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+
     function resizeAllIframes() {
         $('iframe').each(function() {
             var iframe = this;
@@ -50,5 +51,24 @@ $(document).ready(function() {
                 }); // Adjust the scroll duration as needed
             }
         });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const iframes = document.querySelectorAll('iframe');
+    const workers = [];
+
+    iframes.forEach((iframe, index) => {
+        const worker = new Worker('/path/to/worker.js');
+        workers.push(worker);
+        console.log("test" + index);
+        worker.onmessage = function (e) {
+            const data = e.data;
+            console.log(`Iframe ${data.index}: ${data.result}`);
+            // Post the processed data to the iframe if necessary
+            iframe.contentWindow.postMessage(data.result, '*');
+        };
+
+        worker.postMessage(index);
     });
 });

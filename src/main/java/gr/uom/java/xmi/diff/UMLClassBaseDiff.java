@@ -167,8 +167,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processAttributes();
 		checkForAttributeChanges();
 		checkForInlinedOperations();
-		checkForExtractedOperations();
+		List<UMLOperationBodyMapper> extractedbodyMappers = checkForExtractedOperations();
 		checkForExtractedOperationsWithCallsInOtherMappers();
+		checkForInlinedOperationsToExtractedOperations(extractedbodyMappers);
 		checkForMovedCodeBetweenOperations();
 	}
 
@@ -2525,7 +2526,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(operationInvocation.getName().equals(invocation.getName()) && !argumentIntersection.isEmpty()) {
 					return true;
 				}
-				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.arguments().size()) {
+				else if(argumentIntersection.size() > 0 && argumentIntersection.size() == invocation.arguments().size() &&
+						!operationInvocation.getName().contains(invocation.getName()) && !invocation.getName().contains(operationInvocation.getName())) {
 					return true;
 				}
 			}
@@ -2715,6 +2717,29 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	private void checkForInlinedOperationsToExtractedOperations(List<UMLOperationBodyMapper> extractedBodyMappers) throws RefactoringMinerTimedOutException {
+		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
+		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
+			InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
+			List<UMLOperation> sortedRemovedOperations = detection.getRemovedOperationsSortedByCalls();
+			for(UMLOperation removedOperation : sortedRemovedOperations) {
+				List<InlineOperationRefactoring> refs = detection.check(removedOperation);
+				for(InlineOperationRefactoring refactoring : refs) {
+					refactorings.add(refactoring);
+					UMLOperationBodyMapper operationBodyMapper = refactoring.getBodyMapper();
+					inlinedOperationMappers.add(operationBodyMapper);
+					mapper.addChildMapper(operationBodyMapper);
+					operationsToBeRemoved.add(removedOperation);
+				}
+			}
+		}
+		for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {
+			processMapperRefactorings(operationBodyMapper, refactorings);
+		}
+		removedOperations.removeAll(operationsToBeRemoved);
+	}
+
 	private void checkForInlinedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
@@ -2763,7 +2788,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		removedOperations.removeAll(operationsToBeRemoved);
 	}
 
-	private void checkForExtractedOperationsWithCallsInOtherMappers() throws RefactoringMinerTimedOutException {
+	private List<UMLOperationBodyMapper> checkForExtractedOperationsWithCallsInOtherMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		Set<UMLOperationBodyMapper> parentMappersToBeOptimized = new LinkedHashSet<UMLOperationBodyMapper>();
@@ -2794,9 +2819,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			processMapperRefactorings(operationBodyMapper, refactorings);
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+		return extractedOperationMappers;
 	}
 
-	private void checkForExtractedOperations() throws RefactoringMinerTimedOutException {
+	private List<UMLOperationBodyMapper> checkForExtractedOperations() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> extractedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
 		for(UMLOperationBodyMapper mapper : getOperationBodyMapperList()) {
@@ -2849,6 +2875,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			processMapperRefactorings(operationBodyMapper, refactorings);
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+		return extractedOperationMappers;
 	}
 
 	public boolean isEmpty() {

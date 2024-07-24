@@ -1027,11 +1027,15 @@ public class TestStatementMappings {
 	}
 
 
-	@Test
-	public void testInlinedMethodMovedToExtractedMethod() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/eclipse-jgit/jgit.git, 6658f367682932c0a77061a5aa37c06e480a0c62, jgit-6658f367682932c0a77061a5aa37c06e480a0c62.txt",
+		"https://github.com/eclipse-jgit/jgit.git, 8ac65d33ed7a94f77cb066271669feebf9b882fc, jgit-8ac65d33ed7a94f77cb066271669feebf9b882fc.txt"
+	})
+	public void testInlinedMethodMovedToExtractedMethod(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		miner.detectAtCommitWithGitHubAPI("https://github.com/eclipse/jgit.git", "6658f367682932c0a77061a5aa37c06e480a0c62", new File(REPOS), new RefactoringHandler() {
+		miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS), new RefactoringHandler() {
 			@Override
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
@@ -1062,7 +1066,7 @@ public class TestStatementMappings {
 				}
 			}
 		});
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-6658f367682932c0a77061a5aa37c06e480a0c62.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

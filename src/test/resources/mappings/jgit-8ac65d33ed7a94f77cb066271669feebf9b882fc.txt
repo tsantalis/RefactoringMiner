@@ -21,16 +21,16 @@ line range:1130-1130==line range:1153-1153
 line range:1131-1131==line range:1154-1154
 line range:1093-1093==line range:1111-1111
 line range:1088-1089==line range:1112-1113
-line range:1092-1093==line range:1122-1125
+line range:1104-1107==line range:1122-1125
 line range:1126-1129==line range:1149-1152
 line range:1099-1121==line range:1117-1144
 line range:1110-1120==line range:1128-1143
 line range:1109-1121==line range:1127-1144
 line range:1098-1122==line range:1110-1145
+line range:1104-1107==line range:1122-1125
 line range:1110-1113==line range:1128-1136
 line range:1113-1120==line range:1136-1143
 line range:1098-1122==line range:1110-1145
-line range:1104-1107==line range:1122-1125
 private redoSearchForReuse(otp ObjectToPack) : void -> private writeObjectImpl(out PackOutputStream, otp ObjectToPack) : void
 line range:1163-1163==line range:1130-1130
 line range:1164-1164==line range:1131-1131
@@ -40,6 +40,7 @@ line range:1163-1163==line range:1102-1102
 line range:1164-1164==line range:1103-1103
 line range:1165-1166==line range:1104-1106
 package writeObject(out PackOutputStream, otp ObjectToPack) : void -> package writeObject(out PackOutputStream, otp ObjectToPack) : void
+line range:1092-1093==line range:1088-1089
 package writeObject(out PackOutputStream, otp ObjectToPack) : void -> private writeObjectImpl(out PackOutputStream, otp ObjectToPack) : void
 line range:1089-1089==line range:1113-1113
 line range:1091-1091==line range:1108-1108
@@ -63,13 +64,13 @@ line range:1130-1130==line range:1153-1153
 line range:1131-1131==line range:1154-1154
 line range:1093-1093==line range:1111-1111
 line range:1088-1089==line range:1112-1113
-line range:1092-1093==line range:1122-1125
+line range:1104-1107==line range:1122-1125
 line range:1126-1129==line range:1149-1152
 line range:1099-1121==line range:1117-1144
 line range:1110-1120==line range:1128-1143
 line range:1109-1121==line range:1127-1144
 line range:1098-1122==line range:1110-1145
+line range:1104-1107==line range:1122-1125
 line range:1110-1113==line range:1128-1136
 line range:1113-1120==line range:1136-1143
 line range:1098-1122==line range:1110-1145
-line range:1104-1107==line range:1122-1125

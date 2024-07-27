@@ -247,4 +247,9 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	public boolean isMain() {
 		return false;
 	}
+
+	@Override
+	public List<UMLAnnotation> getAnnotations() {
+		return Collections.emptyList();
+	}
 }

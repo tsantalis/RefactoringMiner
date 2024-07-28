@@ -75,7 +75,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private UMLType newSuperclass;
 	private List<UMLType> addedImplementedInterfaces;
 	private List<UMLType> removedImplementedInterfaces;
-	private UMLAnnotationListDiff annotationListDiff;
 	private UMLImportListDiff importDiffList;
 	private UMLTypeParameterListDiff typeParameterDiffList;
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenamesInModel;
@@ -157,7 +156,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		processInitializers();
 		processModifiers();
 		processTypeParameters();
-		processAnnotations();
 		processEnumConstants();
 		processInheritance();
 		processOperations();
@@ -412,10 +410,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return importDiffList;
 	}
 
-	public UMLAnnotationListDiff getAnnotationListDiff() {
-		return annotationListDiff;
-	}
-
 	public UMLTypeParameterListDiff getTypeParameterDiffList() {
 		return typeParameterDiffList;
 	}
@@ -521,22 +515,6 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				RemoveClassModifierRefactoring refactoring = new RemoveClassModifierRefactoring("static", originalClass, nextClass);
 				refactorings.add(refactoring);
 			}
-		}
-	}
-
-	private void processAnnotations() {
-		this.annotationListDiff = new UMLAnnotationListDiff(originalClass.getAnnotations(), nextClass.getAnnotations());
-		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
-			AddClassAnnotationRefactoring refactoring = new AddClassAnnotationRefactoring(annotation, originalClass, nextClass);
-			refactorings.add(refactoring);
-		}
-		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
-			RemoveClassAnnotationRefactoring refactoring = new RemoveClassAnnotationRefactoring(annotation, originalClass, nextClass);
-			refactorings.add(refactoring);
-		}
-		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
-			ModifyClassAnnotationRefactoring refactoring = new ModifyClassAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalClass, nextClass);
-			refactorings.add(refactoring);
 		}
 	}
 

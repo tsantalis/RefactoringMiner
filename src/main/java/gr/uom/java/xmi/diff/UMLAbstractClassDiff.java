@@ -18,6 +18,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.UMLAbstractClass;
+import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
@@ -64,6 +65,7 @@ public abstract class UMLAbstractClassDiff {
 	private Map<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>> splitMap = new LinkedHashMap<SplitVariableReplacement, Set<CandidateSplitVariableRefactoring>>();
 	protected List<Refactoring> refactorings;
 	protected UMLModelDiff modelDiff;
+	protected UMLAnnotationListDiff annotationListDiff;
 	private UMLImplementedInterfaceListDiff interfaceListDiff;
 	private UMLCommentListDiff commentListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
@@ -87,6 +89,7 @@ public abstract class UMLAbstractClassDiff {
 		this.nextClass = nextClass;
 		this.modelDiff = modelDiff;
 		this.interfaceListDiff = new UMLImplementedInterfaceListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
+		processAnnotations();
 	}
 
 	public List<UMLOperation> getAddedOperations() {
@@ -147,6 +150,26 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
+	}
+
+	protected void processAnnotations() {
+		this.annotationListDiff = new UMLAnnotationListDiff(originalClass.getAnnotations(), nextClass.getAnnotations());
+		for(UMLAnnotation annotation : annotationListDiff.getAddedAnnotations()) {
+			AddClassAnnotationRefactoring refactoring = new AddClassAnnotationRefactoring(annotation, originalClass, nextClass);
+			refactorings.add(refactoring);
+		}
+		for(UMLAnnotation annotation : annotationListDiff.getRemovedAnnotations()) {
+			RemoveClassAnnotationRefactoring refactoring = new RemoveClassAnnotationRefactoring(annotation, originalClass, nextClass);
+			refactorings.add(refactoring);
+		}
+		for(UMLAnnotationDiff annotationDiff : annotationListDiff.getAnnotationDiffs()) {
+			ModifyClassAnnotationRefactoring refactoring = new ModifyClassAnnotationRefactoring(annotationDiff.getRemovedAnnotation(), annotationDiff.getAddedAnnotation(), originalClass, nextClass);
+			refactorings.add(refactoring);
+		}
+	}
+
+	public UMLAnnotationListDiff getAnnotationListDiff() {
+		return annotationListDiff;
 	}
 
 	public UMLCommentListDiff getCommentListDiff() {

@@ -4,8 +4,7 @@ import com.github.gumtreediff.utils.Pair;
 import gui.webdiff.dir.DirComparator;
 import gui.webdiff.dir.DirectoryDiffView;
 import gui.webdiff.viewers.monaco.MonacoView;
-import gui.webdiff.viewers.spv.SinglePageViewFromScratch;
-import gui.webdiff.viewers.spv.SinglePageViewWithIFrame;
+import gui.webdiff.viewers.spv.SinglePageView;
 import gui.webdiff.viewers.vanilla.VanillaDiffView;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
@@ -113,14 +112,7 @@ public class WebDiff  {
             Pair<String, String> pair = comparator.getFileContentsPair(id);
             return pair.second;
         });
-        get("/singleView", (request, response) -> {
-            Renderable view = new SinglePageViewWithIFrame(comparator);
-            return render(view);
-        });
-        get("/singleView2", (request, response) -> {
-            Renderable view = new SinglePageViewFromScratch(comparator);
-            return render(view);
-        });
+        get("/singleView", (request, response) -> render(new SinglePageView(comparator)));
         get("/quit", (request, response) -> {
             System.exit(0);
             return "";

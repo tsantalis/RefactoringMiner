@@ -18,12 +18,11 @@
  * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
  */
 
-let margin = 2;
-function getEditorOptions(text) {
+function getEditorOptions(config, text) {
     return {
         value: text,
         readOnly: true,
-        language: getLanguage(),
+        language: getLanguage(config),
         automaticLayout: true,
         scrollBeyondLastLine: false,
         lineDecorationsWidth: 0,
@@ -35,7 +34,7 @@ function getEditorOptions(text) {
     };
 }
 
-function getLanguage() {
+function getLanguage(config) {
     let extension = config.file.split('.').pop().toLowerCase();
     if (extension === "java")
         return "java";
@@ -66,85 +65,90 @@ function getDecoration(range, pos, endPos) {
         },
     };
 }
-require.config({ paths: { 'vs': '/monaco/min/vs' }});
-require(['vs/editor/editor.main'], function() {
-    Promise.all(
-        [
-            fetch(config.left.url)
-                .then(result => result.text())
-                .then(text => monaco.editor.create(document.getElementById('left-container'), getEditorOptions(text))),
-            fetch(config.right.url)
-                .then(result => result.text())
-                .then(text => monaco.editor.create(document.getElementById('right-container'), getEditorOptions(text)))
-        ]
-    ).then(([leftEditor, rightEditor]) => {
-        config.mappings = config.mappings.map(mapping =>
-            [
-                monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),
-                monaco.Range.fromPositions(rightEditor.getModel().getPositionAt(mapping[2]), rightEditor.getModel().getPositionAt(mapping[3])),
-            ]);
-        const leftDecorations = config.left.ranges.map(range => getDecoration(
-            range,
-            leftEditor.getModel().getPositionAt(range.from),
-            leftEditor.getModel().getPositionAt(range.to)
-        ));
-        leftEditor.getModel().decorations = leftDecorations;
-        leftEditor.deltaDecorations([], leftDecorations);
-        leftEditor.onMouseDown((event) => {
-            if (event.target.range) {
-                const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
-                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-                if (allDecorations.length >= 1) {
-                    let activatedRange = allDecorations[0].range;
-                    if (allDecorations.length > 1) {
-                        for (let i = 1; i < allDecorations.length; i = i + 1) {
-                            const candidateRange = allDecorations[i].range;
-                            if (activatedRange.containsRange(candidateRange))
-                                activatedRange = candidateRange;
-                        }
-                    }
-                    const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
-                    if (mapping)
-                        if (mapping.length > 1)
-                            rightEditor.revealRangeInCenter(mapping[1]);
-                }
-            }
-        });
-        const rightDecorations = config.right.ranges.map(range => getDecoration(
-            range,
-            rightEditor.getModel().getPositionAt(range.from),
-            rightEditor.getModel().getPositionAt(range.to)
-        ));
-        rightEditor.getModel().decorations = rightDecorations;
-        rightEditor.deltaDecorations([], rightDecorations);
-        rightEditor.onMouseDown((event) => {
-            if (event.target.range) {
-                const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
-                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
-                if (allDecorations.length >= 1) {
-                    let activatedRange = allDecorations[0].range;
-                    if (allDecorations.length > 1) {
-                        for (let i = 1; i < allDecorations.length; i = i + 1) {
-                            const candidateRange = allDecorations[i].range;
-                            if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
-                        }
-                    }
-                    const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
-                    if (mapping)
-                        if (mapping.length > 1)
-                            leftEditor.revealRangeInCenter(mapping[0]);
-                }
-            }
-        });
-        setAllFoldings(leftEditor, rightEditor);
-        leftEditor.getAction('editor.foldAll').run();
-        rightEditor.getAction('editor.foldAll').run();
-        window.leftEditor = leftEditor;
-        window.rightEditor = rightEditor;
-    });
-});
 
-function getLinesToFold(model, margin = 5) {
+function monaco(config) {
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs' }});
+    require(['vs/editor/editor.main'], function () {
+        const left_container_id = config.lcid; /*'left-container';*/
+        const right_container_id = config.rcid;/*'right-container';*/
+        Promise.all(
+            [
+                fetch(config.left.url)
+                    .then(result => result.text())
+                    .then(text => monaco.editor.create(document.getElementById(left_container_id), getEditorOptions(config, text))),
+                fetch(config.right.url)
+                    .then(result => result.text())
+                    .then(text => monaco.editor.create(document.getElementById(right_container_id), getEditorOptions(config, text)))
+            ]
+        ).then(([leftEditor, rightEditor]) => {
+            config.mappings = config.mappings.map(mapping =>
+                [
+                    monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),
+                    monaco.Range.fromPositions(rightEditor.getModel().getPositionAt(mapping[2]), rightEditor.getModel().getPositionAt(mapping[3])),
+                ]);
+            const leftDecorations = config.left.ranges.map(range => getDecoration(
+                range,
+                leftEditor.getModel().getPositionAt(range.from),
+                leftEditor.getModel().getPositionAt(range.to)
+            ));
+            leftEditor.getModel().decorations = leftDecorations;
+            leftEditor.deltaDecorations([], leftDecorations);
+            leftEditor.onMouseDown((event) => {
+                if (event.target.range) {
+                    const allDecorations = leftEditor.getModel().getDecorationsInRange(event.target.range, leftEditor.id, true)
+                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                    if (allDecorations.length >= 1) {
+                        let activatedRange = allDecorations[0].range;
+                        if (allDecorations.length > 1) {
+                            for (let i = 1; i < allDecorations.length; i = i + 1) {
+                                const candidateRange = allDecorations[i].range;
+                                if (activatedRange.containsRange(candidateRange))
+                                    activatedRange = candidateRange;
+                            }
+                        }
+                        const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
+                        if (mapping)
+                            if (mapping.length > 1)
+                                rightEditor.revealRangeInCenter(mapping[1]);
+                    }
+                }
+            });
+            const rightDecorations = config.right.ranges.map(range => getDecoration(
+                range,
+                rightEditor.getModel().getPositionAt(range.from),
+                rightEditor.getModel().getPositionAt(range.to)
+            ));
+            rightEditor.getModel().decorations = rightDecorations;
+            rightEditor.deltaDecorations([], rightDecorations);
+            rightEditor.onMouseDown((event) => {
+                if (event.target.range) {
+                    const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
+                    // .filter(decoration => decoration.options.className == "updated" || decoration.options.className == "moved");
+                    if (allDecorations.length >= 1) {
+                        let activatedRange = allDecorations[0].range;
+                        if (allDecorations.length > 1) {
+                            for (let i = 1; i < allDecorations.length; i = i + 1) {
+                                const candidateRange = allDecorations[i].range;
+                                if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
+                            }
+                        }
+                        const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
+                        if (mapping)
+                            if (mapping.length > 1)
+                                leftEditor.revealRangeInCenter(mapping[0]);
+                    }
+                }
+            });
+            setAllFoldings(config, leftEditor, rightEditor);
+            leftEditor.getAction('editor.foldAll').run();
+            rightEditor.getAction('editor.foldAll').run();
+            window.leftEditor = leftEditor;
+            window.rightEditor = rightEditor;
+        });
+    });
+}
+
+function getLinesToFold(config, model, margin = 5) {
 
     decorations = model.decorations;
     const lineCount = model.getLineCount();
@@ -197,10 +201,10 @@ function createFoldingRanges(linesToFold) {
     return ranges;
 }
 
-function setAllFoldings(leftEditor, rightEditor) {
+function setAllFoldings(config, leftEditor, rightEditor) {
     const foldingRangeProvider = {
         provideFoldingRanges: (model, context, token) => {
-            let rangesToFold = createFoldingRanges(getLinesToFold(model, margin));
+            let rangesToFold = createFoldingRanges(getLinesToFold(config, model, 2));
             return rangesToFold.map(range => ({
                 start: range.startLineNumber,
                 end: range.endLineNumber,

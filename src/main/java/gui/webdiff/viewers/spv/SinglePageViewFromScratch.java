@@ -1,11 +1,10 @@
-package gui.webdiff;
+package gui.webdiff.viewers.spv;
 
+import gui.webdiff.dir.DirComparator;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 
 import java.io.IOException;
-
-import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-22*/
 public class SinglePageViewFromScratch extends AbstractSinglePageView implements Renderable {

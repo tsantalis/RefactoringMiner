@@ -1,4 +1,4 @@
-package gui.webdiff;
+package gui.webdiff.viewers;
 
 import com.github.gumtreediff.actions.Diff;
 import org.rendersnake.Renderable;

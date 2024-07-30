@@ -1,5 +1,7 @@
-package gui.webdiff;
+package gui.webdiff.dir;
 
+import gui.webdiff.tree.TreeNodeInfo;
+import gui.webdiff.WebDiff;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;

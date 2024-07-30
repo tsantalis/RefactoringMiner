@@ -1,4 +1,4 @@
-package gui.webdiff;
+package gui.webdiff.tree;
 
 import java.util.Optional;
 

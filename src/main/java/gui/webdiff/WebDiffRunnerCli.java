@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcDiff;
 
 /* Created by pourya on 2024-02-09*/
-public class WebDiffRunner {
+public class WebDiffRunnerCli {
     private static final int timeout = 1000;
     @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR" , order = 0)
     String url;
@@ -92,7 +92,7 @@ To export the mappings/actions, add --export to the end of the command.
         PR,
         DIR,
         CLONED;
-        public static RunMode getRunMode(WebDiffRunner runner) {
+        public static RunMode getRunMode(WebDiffRunnerCli runner) {
             if (runner.url != null)
             {
                 if (URLHelper.isPR(runner.url)) return PR;
@@ -105,7 +105,7 @@ To export the mappings/actions, add --export to the end of the command.
             }
         }
 
-        public ProjectASTDiff getProjectASTDIFF(WebDiffRunner runner) throws Exception {
+        public ProjectASTDiff getProjectASTDIFF(WebDiffRunnerCli runner) throws Exception {
             return switch (this) {
                 case URL -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
                         URLHelper.getRepo(runner.url),

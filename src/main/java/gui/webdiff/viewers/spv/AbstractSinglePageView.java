@@ -1,5 +1,8 @@
-package gui.webdiff;
+package gui.webdiff.viewers.spv;
 
+import gui.webdiff.viewers.monaco.MonacoCore;
+import gui.webdiff.dir.DirComparator;
+import gui.webdiff.dir.DirectoryDiffView;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -7,7 +10,6 @@ import org.rendersnake.Renderable;
 import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
-import static org.rendersnake.HtmlAttributesFactory.src;
 
 /* Created by pourya on 2024-07-22*/
 public abstract class AbstractSinglePageView extends DirectoryDiffView implements Renderable {
@@ -44,7 +46,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
-                MonacoDiffViewCore core = new MonacoDiffViewCore(comparator.getASTDiff(i), i, false);
+                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, false);
                 html.div(class_("card"))
                         .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))
                         .div(class_("d-flex align-items-center justify-content-between"))

@@ -1,6 +1,7 @@
-package gui.webdiff;
+package gui.webdiff.dir;
 
 import com.github.gumtreediff.utils.Pair;
+import gui.webdiff.tree.TreeViewGenerator;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
@@ -15,7 +16,7 @@ public class DirComparator {
     private Set<String> removedFilesName;
     private Set<String> addedFilesName;
 
-    int getNumOfDiffs(){
+    public int getNumOfDiffs(){
         return diffs.size();
     }
 

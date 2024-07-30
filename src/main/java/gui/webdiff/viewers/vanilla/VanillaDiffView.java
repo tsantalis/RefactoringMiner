@@ -1,6 +1,9 @@
-package gui.webdiff;
+package gui.webdiff.viewers.vanilla;
 
 import com.github.gumtreediff.actions.Diff;
+import gui.webdiff.WebDiff;
+import gui.webdiff.rest.AbstractMenuBar;
+import gui.webdiff.viewers.AbstractDiffView;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;

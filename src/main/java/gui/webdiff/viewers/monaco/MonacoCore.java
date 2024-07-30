@@ -15,15 +15,18 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
 public class MonacoCore {
+    private boolean showFilenames;
+    private final Diff diff;
+    private final int id;
+    private final boolean isMoved;
+    private String srcFileName;
+    private String dstFileName;
 
-    public MonacoCore(Diff diff, int id) {
-        this(diff, id, true);
-    }
-
-    public MonacoCore(Diff diff, int id, boolean showFilenames) {
-        this.showFilenames = showFilenames;
+    public MonacoCore(Diff diff, int id, boolean isMovedDiff) {
+        this.showFilenames = true;
         this.diff = diff;
         this.id = id;
+        this.isMoved = isMovedDiff;
         if (diff instanceof ASTDiff){
             this.srcFileName = ((ASTDiff) diff).getSrcPath();
             this.dstFileName = ((ASTDiff) diff).getDstPath();
@@ -33,12 +36,6 @@ public class MonacoCore {
     public void setShowFilenames(boolean showFilenames) {
         this.showFilenames = showFilenames;
     }
-
-    private boolean showFilenames;
-    private final Diff diff;
-    private final int id;
-    private String srcFileName;
-    private String dstFileName;
 
     protected void addDiffContainers(HtmlCanvas html) throws IOException {
         html.div(class_("row h-100"))
@@ -220,5 +217,14 @@ public class MonacoCore {
 
     public String getDiffName() {
         return srcFileName + " -> " + dstFileName;
+    }
+
+    public String makeDiffConfig() {
+        return "{ "
+                + "moved: " + this.isMoved
+                + ", file: \"" + srcFileName + "\""
+                + ", left: " + this.getLeftJsConfig()
+                + ", right: " + this.getRightJsConfig()
+                + ", mappings: " + this.getMappingsJsConfig() + "};";
     }
 }

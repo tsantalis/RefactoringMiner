@@ -1,6 +1,9 @@
-package gui.webdiff;
+package gui.webdiff.viewers.monaco;
 
 import com.github.gumtreediff.actions.Diff;
+import gui.webdiff.WebDiff;
+import gui.webdiff.rest.AbstractMenuBar;
+import gui.webdiff.viewers.AbstractDiffView;
 import org.rendersnake.DocType;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
@@ -9,12 +12,12 @@ import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-public class MonacoPage extends AbstractDiffView implements Renderable {
-    final MonacoDiffViewCore core;
+public class MonacoView extends AbstractDiffView implements Renderable {
+    final MonacoCore core;
 
-    public MonacoPage(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
+    public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoDiffViewCore(diff, id);
+        core = new MonacoCore(diff, id);
     }
     boolean decorate = true;
 

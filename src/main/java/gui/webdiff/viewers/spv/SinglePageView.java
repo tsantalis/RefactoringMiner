@@ -9,28 +9,31 @@ import java.io.IOException;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
-/* Created by pourya on 2024-07-04*/
-public class SinglePageViewWithIFrame extends AbstractSinglePageView implements Renderable {
-    public SinglePageViewWithIFrame(DirComparator comparator) {
+/* Created by pourya on 2024-07-22*/
+public class SinglePageView extends AbstractSinglePageView implements Renderable {
+    public SinglePageView(DirComparator comparator) {
         super(comparator);
     }
+
     protected void makeHead(HtmlCanvas html) throws IOException {
         html.meta(charset("utf8"))
                 .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
+                .macros().javascript("https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.js")
                 .macros().stylesheet("/dist/single.css")
-                .macros().stylesheet(JQ_UI_CSS);
+                .macros().stylesheet("/dist/monaco.css")
+                .macros().stylesheet(JQ_UI_CSS)
+                .macros().javascript("/dist/monaco.js");
+
+
     }
     protected void makeEachDiff(HtmlCanvas html, int i, MonacoCore core) throws IOException {
-        html
-                .iframe(src("/monaco-diff/" + i)
-                        .id("monaco-diff-" + i)
-                        .style("width: 100%; height: 500px; border: none;"))
-                ._iframe();
+        core.addDiffContainers(html);
     }
     protected HtmlCanvas addJSMacros(HtmlCanvas html) throws IOException {
         return html.
                 macros().javascript("/dist/worker.js").
-                macros().javascript("/dist/single.js")
-                .macros().javascript(JQ_UI_JS);
+                macros().javascript("/dist/single.js").
+                macros().javascript(JQ_UI_JS);
     }
+
 }

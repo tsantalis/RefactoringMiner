@@ -37,7 +37,7 @@ public class MonacoCore {
         this.showFilenames = showFilenames;
     }
 
-    protected void addDiffContainers(HtmlCanvas html) throws IOException {
+    public void addDiffContainers(HtmlCanvas html) throws IOException {
         html.div(class_("row h-100"))
                 .div(class_("col-6 h-100"));
         int offset = (showFilenames) ? 80 : 0;
@@ -46,7 +46,8 @@ public class MonacoCore {
                     .content(srcFileName);
         }
 
-        html.div(id("left-container").style("height: calc(100% - " + offset +"px); border:1px solid grey;"))._div()
+        String heightFormula = "height: calc(100% - " + offset + "px);";
+        html.div(id(getLeftContainerId()).style(heightFormula + "border:1px solid grey;"))._div()
                 ._div()
                 .div(class_("col-6 h-100"));
 
@@ -55,8 +56,13 @@ public class MonacoCore {
                     .content(dstFileName);
         }
 
-        html.div(id("right-container").style("height: calc(100% - " + offset +"px); border:1px solid grey;"))._div()
+
+        html.div(id(getRightContainerId()).style(heightFormula + "border:1px solid grey;"))._div()
                 ._div();
+        String code = "monaco(" + makeDiffConfig() + ");";
+        html.macros().script(code); // Pass the config to the main function
+
+
     }
 
     String getLeftJsConfig() {
@@ -224,7 +230,16 @@ public class MonacoCore {
                 + "moved: " + this.isMoved
                 + ", file: \"" + srcFileName + "\""
                 + ", left: " + this.getLeftJsConfig()
+                + ", lcid: \"" + this.getLeftContainerId() + "\""
                 + ", right: " + this.getRightJsConfig()
-                + ", mappings: " + this.getMappingsJsConfig() + "};";
+                + ", rcid: \"" + this.getRightContainerId() + "\""
+                + ", mappings: " + this.getMappingsJsConfig() + "}";
+    }
+
+    private String getLeftContainerId() {
+        return "left-container-" + id;
+    }
+    private String getRightContainerId() {
+        return "right-container-" + id;
     }
 }

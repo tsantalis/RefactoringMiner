@@ -53,13 +53,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     })
                     ._div()._if();
         core.addDiffContainers(html);
-        html
-                ._div()
-                ._div()
-                .macros().script("config = " + core.makeDiffConfig())
-                .macros().javascript("/monaco/min/vs/loader.js")
-                .macros().javascript("/dist/monaco.js")
-                .macros().javascript("/dist/shortcuts.js")
+
+        html._div()._div();
+        html.macros().javascript("/dist/shortcuts.js")
             ._body()
         ._html();
     }
@@ -78,6 +74,8 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .macros().stylesheet("/dist/monaco.css")
                     .macros().javascript(WebDiff.JQUERY_JS_URL)
                     .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
+                    .macros().javascript("/monaco/min/vs/loader.js")
+                    .macros().javascript("/dist/monaco.js")
                 ._head();
         }
     }

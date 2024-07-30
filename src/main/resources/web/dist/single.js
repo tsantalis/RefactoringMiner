@@ -1,26 +1,5 @@
 $(document).ready(function() {
-
-
-    function resizeAllIframes() {
-        $('iframe').each(function() {
-            var iframe = this;
-            $(iframe).on('load', function() {
-                var height = iframe.contentWindow.document.body.scrollHeight;
-                // console.log(height);
-                iframe.style.height = height + 'px';
-            });
-
-        });
-    }
-
-    $('iframe').on('load', function() {
-        resizeAllIframes();
-    });
-
-    $(window).resize(function() {
-        resizeAllIframes();
-    });
-
+    console.log("single loaded");
     // Select all elements with an ID that starts with 'diff_row_'
     $('[id^="diff_row_"]').each(function() {
         // Update the href attribute of each selected element

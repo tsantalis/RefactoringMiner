@@ -1,4 +1,4 @@
-package gui.webdiff;
+package gui.webdiff.viewers.monaco;
 
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;
@@ -14,13 +14,13 @@ import java.io.IOException;
 import static org.rendersnake.HtmlAttributesFactory.*;
 
 /* Created by pourya on 2024-07-05*/
-public class MonacoDiffViewCore {
+public class MonacoCore {
 
-    public MonacoDiffViewCore(Diff diff, int id) {
+    public MonacoCore(Diff diff, int id) {
         this(diff, id, true);
     }
 
-    public MonacoDiffViewCore(Diff diff, int id, boolean showFilenames) {
+    public MonacoCore(Diff diff, int id, boolean showFilenames) {
         this.showFilenames = showFilenames;
         this.diff = diff;
         this.id = id;

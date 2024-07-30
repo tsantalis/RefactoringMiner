@@ -1,4 +1,4 @@
-package gui.webdiff;
+package gui.webdiff.viewers.vanilla;
 
 import com.github.gumtreediff.actions.Diff;
 import com.github.gumtreediff.actions.TreeClassifier;

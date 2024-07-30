@@ -1,6 +1,12 @@
 package gui.webdiff;
 
 import com.github.gumtreediff.utils.Pair;
+import gui.webdiff.dir.DirComparator;
+import gui.webdiff.dir.DirectoryDiffView;
+import gui.webdiff.viewers.monaco.MonacoView;
+import gui.webdiff.viewers.spv.SinglePageViewFromScratch;
+import gui.webdiff.viewers.spv.SinglePageViewWithIFrame;
+import gui.webdiff.viewers.vanilla.VanillaDiffView;
 import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.rendersnake.HtmlCanvas;
@@ -75,7 +81,7 @@ public class WebDiff  {
         get("/monaco-page/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
-            Renderable view = new MonacoPage(
+            Renderable view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id)
@@ -85,7 +91,7 @@ public class WebDiff  {
         get("/monaco-diff/:id", (request, response) -> {
             int id = Integer.parseInt(request.params(":id"));
             ASTDiff astDiff = comparator.getASTDiff(id);
-            MonacoPage view = new MonacoPage(
+            MonacoView view = new MonacoView(
                     toolName, astDiff.getSrcPath(),  astDiff.getDstPath(),
                     astDiff, id, comparator.getNumOfDiffs(), request.pathInfo().split("/")[0],
                     comparator.isMoveDiff(id)

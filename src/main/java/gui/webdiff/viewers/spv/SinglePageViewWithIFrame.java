@@ -1,6 +1,6 @@
-package gui.webdiff;
+package gui.webdiff.viewers.spv;
 
-import org.rendersnake.DocType;
+import gui.webdiff.dir.DirComparator;
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 

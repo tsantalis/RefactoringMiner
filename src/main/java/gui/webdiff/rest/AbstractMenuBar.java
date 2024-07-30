@@ -1,4 +1,4 @@
-package gui.webdiff;
+package gui.webdiff.rest;
 
 import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;

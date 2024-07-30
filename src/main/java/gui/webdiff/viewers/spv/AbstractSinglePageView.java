@@ -46,7 +46,8 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
 
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
-                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, false);
+                MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i));
+                core.setShowFilenames(false);
                 html.div(class_("card"))
                         .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))
                         .div(class_("d-flex align-items-center justify-content-between"))

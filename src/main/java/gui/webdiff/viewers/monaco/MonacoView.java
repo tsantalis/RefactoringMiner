@@ -14,12 +14,13 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 
 public class MonacoView extends AbstractDiffView implements Renderable {
     final MonacoCore core;
+    boolean decorate = true;
+
 
     public MonacoView(String toolName, String srcFileName, String dstFileName, Diff diff, int id, int numOfDiffs, String routePath, boolean isMovedDiff) {
         super(toolName, srcFileName, dstFileName, diff, id, numOfDiffs, routePath, isMovedDiff);
-        core = new MonacoCore(diff, id);
+        core = new MonacoCore(diff, id, isMovedDiff);
     }
-    boolean decorate = true;
 
     public void setDecorate(boolean decorate) {
         this.decorate = decorate;
@@ -55,15 +56,16 @@ public class MonacoView extends AbstractDiffView implements Renderable {
         html
                 ._div()
                 ._div()
-                .macros().script("config = { moved: " + isMovedDiff + ", file: \"" + srcFileName + "\", left: " + core.getLeftJsConfig()
-                                 + ", right: " + core.getRightJsConfig()
-                                 + ", mappings: " + core.getMappingsJsConfig() + "};")
+                .macros().script("config = " + core.makeDiffConfig())
                 .macros().javascript("/monaco/min/vs/loader.js")
                 .macros().javascript("/dist/monaco.js")
                 .macros().javascript("/dist/shortcuts.js")
             ._body()
         ._html();
     }
+
+
+
     private static class Header implements Renderable {
         @Override
         public void renderOn(HtmlCanvas html) throws IOException {

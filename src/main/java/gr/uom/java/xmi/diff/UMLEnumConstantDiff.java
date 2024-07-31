@@ -11,9 +11,10 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
-public class UMLEnumConstantDiff {
+public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 	private UMLEnumConstant removedEnumConstant;
 	private UMLEnumConstant addedEnumConstant;
 	private boolean renamed;
@@ -77,6 +78,14 @@ public class UMLEnumConstantDiff {
 
 	public UMLCommentListDiff getCommentListDiff() {
 		return commentListDiff;
+	}
+
+	public VariableDeclarationContainer getContainer1() {
+		return removedEnumConstant;
+	}
+
+	public VariableDeclarationContainer getContainer2() {
+		return addedEnumConstant;
 	}
 
 	public Optional<UMLAnonymousClassDiff> getAnonymousClassDiff() {

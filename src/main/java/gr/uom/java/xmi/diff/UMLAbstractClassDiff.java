@@ -100,6 +100,14 @@ public abstract class UMLAbstractClassDiff {
 		return removedOperations;
 	}
 
+	public List<UMLEnumConstant> getAddedEnumConstants() {
+		return addedEnumConstants;
+	}
+
+	public List<UMLEnumConstant> getRemovedEnumConstants() {
+		return removedEnumConstants;
+	}
+
 	public List<UMLAttribute> getAddedAttributes() {
 		return addedAttributes;
 	}

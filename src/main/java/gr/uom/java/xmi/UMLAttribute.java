@@ -355,7 +355,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public boolean identicalIncludingAnnotation(UMLAttribute attribute) {
 		AbstractExpression thisInitializer = this.getVariableDeclaration().getInitializer();
 		AbstractExpression otherInitializer = attribute.getVariableDeclaration().getInitializer();
-		boolean equal = this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type) &&
+		//ignore type if it is enum constant
+		boolean equalType = this instanceof UMLEnumConstant && attribute instanceof UMLEnumConstant ? true : this.type.equals(attribute.type);
+		boolean equalQualifiedType = this instanceof UMLEnumConstant && attribute instanceof UMLEnumConstant ? true : this.type.equalsQualified(attribute.type);
+		boolean equal = this.name.equals(attribute.name) && equalType && equalQualifiedType &&
 				this.visibility.equals(attribute.visibility) && this.getAnnotations().equals(attribute.getAnnotations());
 		if(thisInitializer != null && otherInitializer != null) {
 			return equal && thisInitializer.getExpression().equals(otherInitializer.getExpression());

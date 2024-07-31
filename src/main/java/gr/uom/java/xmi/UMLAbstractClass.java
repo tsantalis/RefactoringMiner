@@ -428,11 +428,19 @@ public abstract class UMLAbstractClass {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
 				return originalAttribute;
 		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			if(originalAttribute.equalsIgnoringChangedType(attribute))
+				return originalAttribute;
+		}
 		return null;
 	}
 
 	public UMLAttribute attributeWithTheSameSignature(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.equalsIgnoringChangedVisibility(attribute))
+				return originalAttribute;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
 			if(originalAttribute.equalsIgnoringChangedVisibility(attribute))
 				return originalAttribute;
 		}
@@ -444,11 +452,19 @@ public abstract class UMLAbstractClass {
 			if(originalAttribute.identicalIncludingAnnotation(attribute))
 				return true;
 		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			if(originalAttribute.identicalIncludingAnnotation(attribute))
+				return true;
+		}
 		return false;
 	}
 
 	public boolean containsAttributeWithTheSameNameIgnoringChangedType(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.equalsIgnoringChangedType(attribute))
+				return true;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
 			if(originalAttribute.equalsIgnoringChangedType(attribute))
 				return true;
 		}
@@ -460,11 +476,19 @@ public abstract class UMLAbstractClass {
 			if(originalAttribute.renamedWithIdenticalTypeAndInitializer(attribute))
 				return true;
 		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			if(originalAttribute.renamedWithIdenticalTypeAndInitializer(attribute))
+				return true;
+		}
 		return false;
 	}
 
 	public boolean containsAttributeWithTheSameName(UMLAttribute attribute) {
 		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.getName().equals(attribute.getName()))
+				return true;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
 			if(originalAttribute.getName().equals(attribute.getName()))
 				return true;
 		}
@@ -488,11 +512,29 @@ public abstract class UMLAbstractClass {
 				}
 			}
 		}
+		for(UMLAttribute originalAttribute : enumConstants) {
+			String originalAttributeName = originalAttribute.getName();
+			if(originalAttributeName.contains(pattern.getBefore()) && !pattern.getBefore().isEmpty()) {
+				String originalAttributeNameAfterReplacement = originalAttributeName.replace(pattern.getBefore(), pattern.getAfter());
+				if(originalAttributeNameAfterReplacement.equals(attribute.getName()))
+					return true;
+			}
+			else if(attribute.getName().contains(pattern.getAfter()) && pattern.getBefore().isEmpty()) {
+				String attributeNameAfterReplacement = attribute.getName().replace(pattern.getAfter(), "");
+				if(attributeNameAfterReplacement.equals(originalAttribute.getName())) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
 	public boolean containsAttributeWithName(String attributeName) {
 		for(UMLAttribute originalAttribute : attributes) {
+			if(originalAttribute.getName().equals(attributeName))
+				return true;
+		}
+		for(UMLAttribute originalAttribute : enumConstants) {
 			if(originalAttribute.getName().equals(attributeName))
 				return true;
 		}
@@ -527,6 +569,18 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		for(UMLAttribute attribute : umlClass.attributes) {
+			totalAttributes++;
+			if(this.containsAttributeWithTheSameName(attribute)) {
+				commonAttributes.add(attribute);
+			}
+		}
+		for(UMLAttribute attribute : enumConstants) {
+			totalAttributes++;
+			if(umlClass.containsAttributeWithTheSameName(attribute)) {
+				commonAttributes.add(attribute);
+			}
+		}
+		for(UMLAttribute attribute : umlClass.enumConstants) {
 			totalAttributes++;
 			if(this.containsAttributeWithTheSameName(attribute)) {
 				commonAttributes.add(attribute);
@@ -680,6 +734,28 @@ public abstract class UMLAbstractClass {
 				}
 			}
 		}
+		for(UMLAttribute attribute : enumConstants) {
+			totalAttributes++;
+			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
+					umlClass.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
+					(pattern != null && umlClass.containsAttributeWithTheSameRenamePattern(attribute, pattern.reverse()))) {
+				commonAttributes.add(attribute);
+				if(umlClass.containsIdenticalAttributeIncludingAnnotation(attribute)) {
+					identicalAttributes.add(attribute);
+				}
+			}
+		}
+		for(UMLAttribute attribute : umlClass.enumConstants) {
+			totalAttributes++;
+			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute) ||
+					this.containsRenamedAttributeWithIdenticalTypeAndInitializer(attribute) ||
+					(pattern != null && this.containsAttributeWithTheSameRenamePattern(attribute, pattern))) {
+				commonAttributes.add(attribute);
+				if(this.containsIdenticalAttributeIncludingAnnotation(attribute)) {
+					identicalAttributes.add(attribute);
+				}
+			}
+		}
 		if(this.isTestClass() && umlClass.isTestClass()) {
 			if(commonOperations.size() > Math.floor(totalOperations/2.0) || commonOperations.containsAll(this.operations)) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
@@ -785,6 +861,18 @@ public abstract class UMLAbstractClass {
 			}
 		}
 		for(UMLAttribute attribute : umlClass.attributes) {
+			totalAttributes++;
+			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+				commonAttributes.add(attribute);
+			}
+		}
+		for(UMLAttribute attribute : enumConstants) {
+			totalAttributes++;
+			if(umlClass.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
+				commonAttributes.add(attribute);
+			}
+		}
+		for(UMLAttribute attribute : umlClass.enumConstants) {
 			totalAttributes++;
 			if(this.containsAttributeWithTheSameNameIgnoringChangedType(attribute)) {
 				commonAttributes.add(attribute);

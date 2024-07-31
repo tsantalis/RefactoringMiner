@@ -1223,12 +1223,6 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			leaves2.add(expression2);
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
-		if(removedAttribute.getJavadoc() != null && addedAttribute.getJavadoc() != null) {
-			UMLJavadocDiff diff = new UMLJavadocDiff(removedAttribute.getJavadoc(), addedAttribute.getJavadoc());
-			this.javadocDiff = Optional.of(diff);
-		}
-		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
-		checkUnmatchedStatementsBeingCommented();
 	}
 
 	public UMLOperationBodyMapper(UMLInitializer initializer1, UMLInitializer initializer2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {

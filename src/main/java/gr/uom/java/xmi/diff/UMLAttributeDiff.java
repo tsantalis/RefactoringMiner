@@ -46,6 +46,8 @@ public class UMLAttributeDiff {
 	private UMLOperationBodyMapper mapper;
 	private UMLAbstractClassDiff classDiff;
 	private UMLModelDiff modelDiff;
+	private Optional<UMLJavadocDiff> javadocDiff = Optional.empty();
+	private UMLCommentListDiff commentListDiff;
 
 	public UMLAttributeDiff(UMLAttribute removedAttribute, UMLAttribute addedAttribute, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
@@ -125,6 +127,11 @@ public class UMLAttributeDiff {
 		this.annotationListDiff = new UMLAnnotationListDiff(removedAttribute.getAnnotations(), addedAttribute.getAnnotations());
 		AbstractExpression initializer1 = removedAttribute.getVariableDeclaration().getInitializer();
 		AbstractExpression initializer2 = addedAttribute.getVariableDeclaration().getInitializer();
+		if(removedAttribute.getJavadoc() != null && addedAttribute.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(removedAttribute.getJavadoc(), addedAttribute.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
+		this.commentListDiff = new UMLCommentListDiff(removedAttribute.getComments(), addedAttribute.getComments());
 		if(initializer1 != null && initializer2 != null) {
 			if(!initializer1.getExpression().equals(initializer2.getExpression())) {
 				initializerChanged = true;
@@ -193,6 +200,14 @@ public class UMLAttributeDiff {
 
 	public boolean isQualifiedTypeChanged() {
 		return qualifiedTypeChanged;
+	}
+
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return javadocDiff;
+	}
+
+	public UMLCommentListDiff getCommentListDiff() {
+		return commentListDiff;
 	}
 
 	public Optional<UMLOperationBodyMapper> getInitializerMapper() {

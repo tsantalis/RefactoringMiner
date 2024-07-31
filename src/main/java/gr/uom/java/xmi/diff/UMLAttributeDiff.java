@@ -16,7 +16,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
-import gr.uom.java.xmi.decomposition.AbstractCall;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
@@ -24,10 +24,8 @@ import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
-import gr.uom.java.xmi.decomposition.replacement.Replacement;
-import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
-public class UMLAttributeDiff {
+public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	private UMLAttribute removedAttribute;
 	private UMLAttribute addedAttribute;
 	private boolean visibilityChanged;
@@ -208,6 +206,14 @@ public class UMLAttributeDiff {
 
 	public UMLCommentListDiff getCommentListDiff() {
 		return commentListDiff;
+	}
+
+	public VariableDeclarationContainer getContainer1() {
+		return removedAttribute;
+	}
+
+	public VariableDeclarationContainer getContainer2() {
+		return addedAttribute;
 	}
 
 	public Optional<UMLOperationBodyMapper> getInitializerMapper() {

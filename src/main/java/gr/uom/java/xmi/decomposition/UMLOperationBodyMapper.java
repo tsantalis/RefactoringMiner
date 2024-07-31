@@ -53,6 +53,7 @@ import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassMoveDiff;
 import gr.uom.java.xmi.diff.UMLCommentListDiff;
+import gr.uom.java.xmi.diff.UMLDocumentationDiffProvider;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLOperationDiff;
@@ -83,7 +84,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
-public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper> {
+public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper>, UMLDocumentationDiffProvider {
 	private VariableDeclarationContainer container1;
 	private VariableDeclarationContainer container2;
 	private Set<AbstractCodeMapping> mappings;

@@ -20,6 +20,8 @@ public class UMLEnumConstantDiff {
 	private boolean argumentsChanged;
 	private UMLAnnotationListDiff annotationListDiff;
 	private UMLAnonymousClassDiff anonymousClassDiff;
+	private Optional<UMLJavadocDiff> javadocDiff = Optional.empty();
+	private UMLCommentListDiff commentListDiff;
 	private Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 
 	public UMLEnumConstantDiff(UMLEnumConstant removedEnumConstant, UMLEnumConstant addedEnumConstant, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
@@ -46,6 +48,11 @@ public class UMLEnumConstantDiff {
 				}
 			}
 		}
+		if(removedEnumConstant.getJavadoc() != null && addedEnumConstant.getJavadoc() != null) {
+			UMLJavadocDiff diff = new UMLJavadocDiff(removedEnumConstant.getJavadoc(), addedEnumConstant.getJavadoc());
+			this.javadocDiff = Optional.of(diff);
+		}
+		this.commentListDiff = new UMLCommentListDiff(removedEnumConstant.getComments(), addedEnumConstant.getComments());
 	}
 
 	public UMLEnumConstant getRemovedEnumConstant() {
@@ -62,6 +69,14 @@ public class UMLEnumConstantDiff {
 
 	public boolean isArgumentsChanged() {
 		return argumentsChanged;
+	}
+
+	public Optional<UMLJavadocDiff> getJavadocDiff() {
+		return javadocDiff;
+	}
+
+	public UMLCommentListDiff getCommentListDiff() {
+		return commentListDiff;
 	}
 
 	public Optional<UMLAnonymousClassDiff> getAnonymousClassDiff() {

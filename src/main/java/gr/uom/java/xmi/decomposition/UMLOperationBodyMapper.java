@@ -738,16 +738,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						boolean unmatchedParent = false;
 						while(parent1 != null && parent2 != null) {
 							if(parent1.getParent() == null || parent2.getParent() == null) {
-								if(parent1 instanceof TryStatementObject && parent1.getParent().getParent() == null) {
+								if(parent1 instanceof TryStatementObject) {
 									break;
 								}
-								if(parent2 instanceof TryStatementObject && parent2.getParent().getParent() == null) {
+								if(parent2 instanceof TryStatementObject) {
 									break;
 								}
-								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && parent1.getParent().getParent() == null) {
+								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
 									break;
 								}
-								if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && parent2.getParent().getParent() == null) {
+								if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
 									break;
 								}
 								if(child1.getAnonymousClassDeclarations().size() > 0 && child2.getAnonymousClassDeclarations().size() > 0) {

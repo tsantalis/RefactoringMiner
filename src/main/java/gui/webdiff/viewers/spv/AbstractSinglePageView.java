@@ -17,7 +17,6 @@ import static org.rendersnake.HtmlAttributesFactory.*;
 public abstract class AbstractSinglePageView extends DirectoryDiffView implements Renderable {
     protected final String JQ_UI_CSS = "https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css";
     protected final String JQ_UI_JS = "https://code.jquery.com/ui/1.12.1/jquery-ui.js";
-    protected final List<MonacoCore> cores = new ArrayList<>();
 
     public AbstractSinglePageView(DirComparator comparator) {
         super(comparator);
@@ -27,11 +26,8 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
     public void renderOn(HtmlCanvas html) {
         int n = comparator.getNumOfDiffs();
         try {
-            html
-                    .head();
                     makeHead(html);
-                    html._head()
-                    .render(DocType.HTML5)
+                    html.render(DocType.HTML5)
                     .html(lang("en"))
                     .body()
                     .div(class_("container-fluid"))
@@ -46,7 +42,6 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
             // Generate panels for /monaco-0 to /monaco-n
             for (int i = 0; i < n; i++) {
                 MonacoCore core = new MonacoCore(comparator.getASTDiff(i), i, comparator.isMoveDiff(i));
-                cores.add(core);
                 core.setShowFilenames(false);
                 html.div(class_("card"))
                         .div(class_("card-header").id("heading-" + i).style("padding-right: 0;"))

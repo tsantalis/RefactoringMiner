@@ -52,8 +52,9 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                         }
                     })
                     ._div()._if();
+        html.div(id("diff_panel"));
         core.addDiffContainers(html);
-
+        html._div();
         html._div()._div();
         html.macros().javascript("/dist/shortcuts.js")
             ._body()

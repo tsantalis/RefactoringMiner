@@ -114,6 +114,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
 	private int callsToExtractedMethod = 0;
 	private boolean nested;
+	private boolean lambdaBodyMapper;
 	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
 	private Map<String, String> parameterToArgumentMap2;
@@ -1274,6 +1275,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				addMapping(mapping);
 			}
 			else {
+				this.lambdaBodyMapper = true;
 				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
 			}
 		}
@@ -5307,7 +5309,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						if(parentMapper != null && matchCount > 1) {
+						if(parentMapper != null && !this.lambdaBodyMapper && matchCount > 1) {
 							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet);
 							boolean identicalSwitch = false;
 							if(switchParentEntry != null) {
@@ -5686,7 +5688,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						if(parentMapper != null && matchCount > 1) {
+						if(parentMapper != null && !this.lambdaBodyMapper && matchCount > 1) {
 							Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet);
 							boolean identicalSwitch = false;
 							if(switchParentEntry != null) {

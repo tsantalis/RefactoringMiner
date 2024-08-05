@@ -381,8 +381,13 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public boolean equalsIgnoringChangedType(UMLAttribute attribute) {
 		if(this.name.equals(attribute.name) && this.type.equals(attribute.type) && this.type.equalsQualified(attribute.type))
 			return true;
-		if(!this.type.equals(attribute.type))
-			return this.name.equals(attribute.name);
+		if(!this.type.equals(attribute.type) || !this.type.equalsQualified(attribute.type)) {
+			boolean equalAnnotations = true;
+			if(this instanceof UMLEnumConstant && attribute instanceof UMLEnumConstant) {
+				equalAnnotations = this.getAnnotations().equals(attribute.getAnnotations());
+			}
+			return equalAnnotations && this.name.equals(attribute.name);
+		}
 		return false;
 	}
 

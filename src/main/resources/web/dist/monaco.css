@@ -98,6 +98,11 @@ div {
 	padding-right: 0;
 	padding-left: 0;
 }
+
+#diff_panel {
+	overflow-y: auto;
+	height: 100%;
+}
 /*.deleted {*/
 /*	background-color: IndianRed;*/
 /*}*/

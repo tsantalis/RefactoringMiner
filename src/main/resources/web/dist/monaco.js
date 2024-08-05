@@ -27,6 +27,9 @@ function getEditorOptions(config, text) {
         scrollBeyondLastLine: false,
         lineDecorationsWidth: 0,
         glyphMargin: false,
+        scrollbar: {
+            alwaysConsumeMouseWheel: false
+        },
         minimap: {
             enabled: false,
         },
@@ -71,14 +74,16 @@ function monaco(config) {
     require(['vs/editor/editor.main'], function () {
         const left_container_id = config.lcid; /*'left-container';*/
         const right_container_id = config.rcid;/*'right-container';*/
+        const leftContainer = document.getElementById(left_container_id);
+        const rightContainer = document.getElementById(right_container_id);
         Promise.all(
             [
                 fetch(config.left.url)
                     .then(result => result.text())
-                    .then(text => monaco.editor.create(document.getElementById(left_container_id), getEditorOptions(config, text))),
+                    .then(text => monaco.editor.create(leftContainer, getEditorOptions(config, text))),
                 fetch(config.right.url)
                     .then(result => result.text())
-                    .then(text => monaco.editor.create(document.getElementById(right_container_id), getEditorOptions(config, text)))
+                    .then(text => monaco.editor.create(rightContainer, getEditorOptions(config, text)))
             ]
         ).then(([leftEditor, rightEditor]) => {
             config.mappings = config.mappings.map(mapping =>
@@ -139,9 +144,51 @@ function monaco(config) {
                     }
                 }
             });
+
             setAllFoldings(config, leftEditor, rightEditor);
             leftEditor.getAction('editor.foldAll').run();
             rightEditor.getAction('editor.foldAll').run();
+
+            if (config.spv === true)
+            {
+                const updateEditorsLayout = () => {
+                    const leftHeight = leftEditor.getContentHeight();
+                    const rightHeight = rightEditor.getContentHeight();
+                    const editorHeight = Math.max(leftHeight, rightHeight);
+
+                    leftContainer.style.overflow = 'auto';
+                    rightContainer.style.overflow = 'auto';
+
+                    leftContainer.style.height = `${editorHeight}px`;
+                    rightContainer.style.height = `${editorHeight}px`;
+                    leftEditor.layout();
+                    rightEditor.layout();
+                };
+
+                leftEditor.onDidContentSizeChange(updateEditorsLayout);
+                rightEditor.onDidContentSizeChange(updateEditorsLayout);
+                // updateEditorsLayout(); // Initial adjustment
+
+                const accordion = document.getElementById('accordion');
+                if (accordion != null)
+                    parent_container= accordion;
+                else
+                    parent_container = document.body;
+
+                rightContainer.addEventListener('wheel', (e) => {
+                    e.preventDefault(); // Prevent the default scrolling behavior
+                    // Adjust the scroll position of the monacoPanel
+                    parent_container.scrollTop += e.deltaY;
+                    parent_container.scrollLeft += e.deltaX;
+                });
+                leftContainer.addEventListener('wheel', (e) => {
+                    e.preventDefault(); // Prevent the default scrolling behavior
+                    // Adjust the scroll position of the monacoPanel
+                    parent_container.scrollTop += e.deltaY;
+                    parent_container.scrollLeft += e.deltaX;
+                });
+            }
+
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;
         });

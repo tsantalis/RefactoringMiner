@@ -74,6 +74,8 @@ public class MonacoView extends AbstractDiffView implements Renderable {
                     .macros().stylesheet(WebDiff.BOOTSTRAP_CSS_URL)
                     .macros().stylesheet("/dist/monaco.css")
                     .macros().javascript(WebDiff.JQUERY_JS_URL)
+                    .macros().javascript("https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
+//                    .macros().stylesheet(JQ_UI_CSS)
                     .macros().javascript(WebDiff.BOOTSTRAP_JS_URL)
                     .macros().javascript("/monaco/min/vs/loader.js")
                     .macros().javascript("/dist/monaco.js")

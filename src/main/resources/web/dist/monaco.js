@@ -1,23 +1,3 @@
-/*
- * This file is part of GumTree.
- *
- * GumTree is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * GumTree is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with GumTree.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Copyright 2011-2015 Jean-Rémy Falleri <jr.falleri@gmail.com>
- * Copyright 2011-2015 Floréal Morandat <florealm@gmail.com>
- */
-
 function getEditorOptions(config, text) {
     return {
         value: text,
@@ -70,8 +50,11 @@ function getDecoration(range, pos, endPos) {
 }
 
 function monaco(config) {
-    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs' }});
-    require(['vs/editor/editor.main'], function () {
+    require.config({paths: {'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs'}});
+    require(['vs/editor/editor.main'], initializeEditors);
+
+
+    function initializeEditors() {
         const left_container_id = config.lcid; /*'left-container';*/
         const right_container_id = config.rcid;/*'right-container';*/
         const leftContainer = document.getElementById(left_container_id);
@@ -149,8 +132,7 @@ function monaco(config) {
             leftEditor.getAction('editor.foldAll').run();
             rightEditor.getAction('editor.foldAll').run();
 
-            if (config.spv === true)
-            {
+            if (config.spv === true) {
                 const updateEditorsLayout = () => {
                     const leftHeight = leftEditor.getContentHeight();
                     const rightHeight = rightEditor.getContentHeight();
@@ -167,23 +149,17 @@ function monaco(config) {
 
                 leftEditor.onDidContentSizeChange(updateEditorsLayout);
                 rightEditor.onDidContentSizeChange(updateEditorsLayout);
-                // updateEditorsLayout(); // Initial adjustment
 
                 const accordion = document.getElementById('accordion');
-                if (accordion != null)
-                    parent_container= accordion;
-                else
-                    parent_container = document.body;
+                const parent_container = accordion ? accordion : document.body;
 
                 rightContainer.addEventListener('wheel', (e) => {
-                    e.preventDefault(); // Prevent the default scrolling behavior
-                    // Adjust the scroll position of the monacoPanel
+                    e.preventDefault();
                     parent_container.scrollTop += e.deltaY;
                     parent_container.scrollLeft += e.deltaX;
                 });
                 leftContainer.addEventListener('wheel', (e) => {
-                    e.preventDefault(); // Prevent the default scrolling behavior
-                    // Adjust the scroll position of the monacoPanel
+                    e.preventDefault();
                     parent_container.scrollTop += e.deltaY;
                     parent_container.scrollLeft += e.deltaX;
                 });
@@ -192,7 +168,7 @@ function monaco(config) {
             window.leftEditor = leftEditor;
             window.rightEditor = rightEditor;
         });
-    });
+    }
 }
 
 function getLinesToFold(config, model, margin = 5) {

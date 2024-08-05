@@ -1,3 +1,4 @@
+x = 1;
 $(document).ready(function() {
     console.log("single loaded");
     // Select all elements with an ID that starts with 'diff_row_'
@@ -11,6 +12,7 @@ $(document).ready(function() {
             event.preventDefault(); // Prevent the default anchor behavior
             var targetId = 'heading-' + id.split('_')[2];
             var $target = $('#' + targetId);
+            x = $target
             var targetOffset = $('#' + targetId).offset().top;
             var accordionOffset = $('#accordion').offset().top;
             var scrollTo = targetOffset - accordionOffset + $('#accordion').scrollTop();
@@ -49,5 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         worker.postMessage(index);
+    });
+});
+
+if (typeof $.fn.effect === 'undefined') {
+    console.error('jQuery UI effect method is not loaded.');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('scroll', function(event) {
+        console.log('Scroll event detected!', event);
     });
 });

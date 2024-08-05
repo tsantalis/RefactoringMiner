@@ -15,10 +15,11 @@ public class SinglePageViewWithIFrame extends AbstractSinglePageView implements 
         super(comparator);
     }
     protected void makeHead(HtmlCanvas html) throws IOException {
-        html.meta(charset("utf8"))
+        html.head().meta(charset("utf8"))
                 .meta(name("viewport").content("width=device-width, initial-scale=1.0"))
                 .macros().stylesheet("/dist/single.css")
-                .macros().stylesheet(JQ_UI_CSS);
+                .macros().stylesheet(JQ_UI_CSS)
+            ._head();
     }
     protected void makeEachDiff(HtmlCanvas html, int i, MonacoCore core) throws IOException {
         html
@@ -29,7 +30,6 @@ public class SinglePageViewWithIFrame extends AbstractSinglePageView implements 
     }
     protected HtmlCanvas addJSMacros(HtmlCanvas html) throws IOException {
         return html.
-                macros().javascript("/dist/worker.js").
                 macros().javascript("/dist/single.js")
                 .macros().javascript(JQ_UI_JS);
     }

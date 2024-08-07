@@ -22,6 +22,7 @@ import java.util.Set;
 
 public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, VariableDeclarationProvider, VariableDeclarationContainer {
 	private LocationInfo locationInfo;
+	private LocationInfo fieldDeclarationLocationInfo;
 	private String name;
 	private UMLType type;
 	private Visibility visibility;
@@ -43,6 +44,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		this.type = type;
 		this.anonymousClassList = new ArrayList<UMLAnonymousClass>();
 		this.comments = new ArrayList<UMLComment>();
+	}
+
+	public LocationInfo getFieldDeclarationLocationInfo() {
+		return fieldDeclarationLocationInfo;
+	}
+
+	public void setFieldDeclarationLocationInfo(LocationInfo fieldDeclarationLocationInfo) {
+		this.fieldDeclarationLocationInfo = fieldDeclarationLocationInfo;
 	}
 
 	public LocationInfo getLocationInfo() {

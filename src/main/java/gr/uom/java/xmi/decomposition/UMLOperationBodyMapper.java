@@ -499,8 +499,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 				}
 			}
-			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && (lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThrows2 ||
-					lambdas2.size() == lambdas1.size() + assertThrows2 || (assertThrows1 == 0 && assertThrows2 > 0))) {
+			else if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && assertThrows2 > 0 &&
+					(lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThrows2 ||
+					lambdas2.size() == lambdas1.size() + assertThrows2 || assertThrows1 == 0)) {
 				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);

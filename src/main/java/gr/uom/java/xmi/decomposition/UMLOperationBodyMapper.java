@@ -9399,6 +9399,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						return true;
 					}
 				}
+				else if(fragment instanceof CompositeStatementObject) {
+					CompositeStatementObject comp = (CompositeStatementObject)fragment;
+					for(AbstractExpression exp : comp.getExpressions()) {
+						if(exp.getMethodInvocations().contains(operationInvocation)) {
+							return true;
+						}
+					}
+				}
 			}
 			if(parentMapper != null) {
 				for(UMLOperationBodyMapper childMapper : parentMapper.childMappers) {

@@ -310,7 +310,7 @@ public class MappingOptimizer {
 						indicesToBeRemoved.add(i);
 					}
 				}
-				if(matchingParentMappers(parentMappers) > 1) {
+				if(matchingParentMappers(parentMappers, mappings) > 1) {
 					if(parentMappingFound.contains(true)) {
 						for(int i=0; i<parentMappingFound.size(); i++) {
 							if(parentMappingFound.get(i) == false) {
@@ -404,7 +404,7 @@ public class MappingOptimizer {
 			else {
 				determineIndicesToBeRemoved(nestedMapper, identical, exactMappingsNestedUnderCompositeExcludingBlocks, replacementTypeCount, replacementCoversEntireStatement, extractInlineOverlappingRefactoring, indicesToBeRemoved, editDistances);
 			}
-			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers) == parentMappers.size()) {
+			if(indicesToBeRemoved.isEmpty() && matchingParentMappers(parentMappers, mappings) == parentMappers.size()) {
 				int minimum = nonMappedNodes.get(0);
 				for(int i=1; i<nonMappedNodes.size(); i++) {
 					if(nonMappedNodes.get(i) < minimum) {
@@ -635,11 +635,14 @@ public class MappingOptimizer {
 		return false;
 	}
 
-	private int matchingParentMappers(List<UMLOperationBodyMapper> parentMappers) {
+	private int matchingParentMappers(List<UMLOperationBodyMapper> parentMappers, List<AbstractCodeMapping> mappings) {
 		int matchingParentMappers = 1;
 		for(int i=1; i<parentMappers.size(); i++) {
 			if(parentMappers.get(i) != null && parentMappers.get(i).equals(parentMappers.get(i-1))) {
-				matchingParentMappers++;
+				boolean identicalMapping = mappings.get(i).getFragment1().equals(mappings.get(i-1).getFragment1()) &&
+						mappings.get(i).getFragment2().equals(mappings.get(i-1).getFragment2());
+				if(!identicalMapping)
+					matchingParentMappers++;
 			}
 		}
 		return matchingParentMappers;

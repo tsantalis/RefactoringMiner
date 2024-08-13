@@ -2849,10 +2849,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
 			}
 		}
+		Set<UMLOperationBodyMapper> zeroMappingMappers = new LinkedHashSet<UMLOperationBodyMapper>();
 		for(UMLOperationBodyMapper operationBodyMapper : extractedOperationMappers) {
-			processMapperRefactorings(operationBodyMapper, refactorings);
+			if(operationBodyMapper.getMappings().size() == 0) {
+				operationsToBeRemoved.remove(operationBodyMapper.getContainer2());
+				zeroMappingMappers.add(operationBodyMapper);
+			}
+			else {
+				processMapperRefactorings(operationBodyMapper, refactorings);
+			}
 		}
 		addedOperations.removeAll(operationsToBeRemoved);
+		extractedOperationMappers.removeAll(zeroMappingMappers);
 		return extractedOperationMappers;
 	}
 

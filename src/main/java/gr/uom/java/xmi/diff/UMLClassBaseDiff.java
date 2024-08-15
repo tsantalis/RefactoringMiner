@@ -416,7 +416,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	protected void processInitializers() throws RefactoringMinerTimedOutException {
 		List<UMLInitializer> initializers1 = originalClass.getInitializers();
+		this.removedInitializers.addAll(initializers1);
 		List<UMLInitializer> initializers2 = nextClass.getInitializers();
+		this.addedInitializers.addAll(initializers2);
 		if(initializers1.size() == initializers2.size()) {
 			for(int i=0; i<initializers1.size(); i++) {
 				UMLInitializer initializer1 = initializers1.get(i);
@@ -429,6 +431,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 							isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
 						operationBodyMapperList.add(mapper);
+						this.removedInitializers.remove(initializer1);
+						this.addedInitializers.remove(initializer2);
 					}
 				}
 			}
@@ -445,6 +449,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
 								operationBodyMapperList.add(mapper);
+								this.removedInitializers.remove(initializer1);
+								this.addedInitializers.remove(initializer2);
 							}
 						}
 					}
@@ -463,6 +469,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if((mappings > nonMappedElementsT1 && mappings > nonMappedElementsT2) ||
 									isPartOfMethodExtracted(initializer1, initializer2) || isPartOfMethodInlined(initializer1, initializer2)) {
 								operationBodyMapperList.add(mapper);
+								this.removedInitializers.remove(initializer1);
+								this.addedInitializers.remove(initializer2);
 							}
 						}
 					}

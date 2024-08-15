@@ -22,6 +22,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -42,6 +43,8 @@ import gr.uom.java.xmi.decomposition.replacement.SplitVariableReplacement;
 public abstract class UMLAbstractClassDiff {
 	protected List<UMLOperation> addedOperations;
 	protected List<UMLOperation> removedOperations;
+	protected List<UMLInitializer> addedInitializers;
+	protected List<UMLInitializer> removedInitializers;
 	protected List<UMLAttribute> addedAttributes;
 	protected List<UMLAttribute> removedAttributes;
 	protected List<UMLOperationBodyMapper> operationBodyMapperList;
@@ -73,6 +76,8 @@ public abstract class UMLAbstractClassDiff {
 	public UMLAbstractClassDiff(UMLAbstractClass originalClass, UMLAbstractClass nextClass, UMLModelDiff modelDiff) {
 		this.addedOperations = new ArrayList<UMLOperation>();
 		this.removedOperations = new ArrayList<UMLOperation>();
+		this.addedInitializers = new ArrayList<UMLInitializer>();
+		this.removedInitializers = new ArrayList<UMLInitializer>();
 		this.addedAttributes = new ArrayList<UMLAttribute>();
 		this.removedAttributes = new ArrayList<UMLAttribute>();
 		this.addedEnumConstants = new ArrayList<UMLEnumConstant>();
@@ -98,6 +103,14 @@ public abstract class UMLAbstractClassDiff {
 
 	public List<UMLOperation> getRemovedOperations() {
 		return removedOperations;
+	}
+
+	public List<UMLInitializer> getAddedInitializers() {
+		return addedInitializers;
+	}
+
+	public List<UMLInitializer> getRemovedInitializers() {
+		return removedInitializers;
 	}
 
 	public List<UMLEnumConstant> getAddedEnumConstants() {

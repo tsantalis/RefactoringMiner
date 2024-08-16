@@ -465,6 +465,9 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		private Map<String, String> renamedFilesHint;
 		private Set<String> repositoryDirectoriesBefore;
 		private Set<String> repositoryDirectoriesCurrent;
+		private long commitTime;
+		private long authoredTime;
+		private String commitAuthorName;
 
 		public ChangedFileInfo() {
 			
@@ -488,6 +491,22 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 			this.repositoryDirectoriesCurrent = repositoryDirectoriesCurrent;
 			this.parentCommitId = parentCommitId;
 			this.currentCommitId = currentCommitId;
+		}
+
+		public ChangedFileInfo(String parentCommitId, String currentCommitId,
+				List<String> filesBefore, List<String> filesCurrent,
+				Set<String> repositoryDirectoriesBefore, Set<String> repositoryDirectoriesCurrent, Map<String, String> renamedFilesHint,
+				long commitTime, long authoredTime, String commitAuthorName) {
+			this.filesBefore = filesBefore;
+			this.filesCurrent = filesCurrent;
+			this.renamedFilesHint = renamedFilesHint;
+			this.repositoryDirectoriesBefore = repositoryDirectoriesBefore;
+			this.repositoryDirectoriesCurrent = repositoryDirectoriesCurrent;
+			this.parentCommitId = parentCommitId;
+			this.currentCommitId = currentCommitId;
+			this.commitTime = commitTime;
+			this.authoredTime = authoredTime;
+			this.commitAuthorName = commitAuthorName;
 		}
 
 		public String getParentCommitId() {
@@ -516,6 +535,18 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 
 		public Map<String, String> getRenamedFilesHint() {
 			return renamedFilesHint;
+		}
+
+		public long getCommitTime() {
+			return commitTime;
+		}
+
+		public long getAuthoredTime() {
+			return authoredTime;
+		}
+
+		public String getCommitAuthorName() {
+			return commitAuthorName;
 		}
 	}
 

@@ -108,6 +108,8 @@ function monaco(config) {
             ));
             rightEditor.getModel().decorations = rightDecorations;
             rightEditor.deltaDecorations([], rightDecorations);
+            rightEditor.getModel().moved = config.moved;
+            leftEditor.getModel().moved = config.moved;
             rightEditor.onMouseDown((event) => {
                 if (event.target.range) {
                     const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
@@ -178,7 +180,7 @@ function getLinesToFold(config, model, margin = 5) {
     const linesToKeepVisible = new Set();
 
     decorations.forEach(decoration => {
-        if (config.moved){
+        if (model.moved){
             if (decoration.options.className === "inserted" || decoration.options.className === "deleted")
             {
                 return;

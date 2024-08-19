@@ -252,9 +252,9 @@ public class MonacoCore {
 
     public String makeDiffConfig() {
         boolean spv = !showFilenames;
-        int spvInt = spv ? 1 : 0;
         return "{ "
                 + "moved: " + this.isMoved
+                + ", id: " + id
                 + ", spv: " + spv
                 + ", file: \"" + srcFileName + "\""
                 + ", left: " + this.getLeftJsConfig()

@@ -110,6 +110,8 @@ function monaco(config) {
             rightEditor.deltaDecorations([], rightDecorations);
             rightEditor.getModel().moved = config.moved;
             leftEditor.getModel().moved = config.moved;
+            rightEditor.getModel().id = config.id
+            leftEditor.getModel().id = config.id
             rightEditor.onMouseDown((event) => {
                 if (event.target.range) {
                     const allDecorations = rightEditor.getModel().getDecorationsInRange(event.target.range, rightEditor.id, true)
@@ -229,6 +231,7 @@ function createFoldingRanges(linesToFold) {
 function setAllFoldings(config, leftEditor, rightEditor) {
     const foldingRangeProvider = {
         provideFoldingRanges: (model, context, token) => {
+            if (model.id !== config.id) return;
             let rangesToFold = createFoldingRanges(getLinesToFold(config, model, 2));
             return rangesToFold.map(range => ({
                 start: range.startLineNumber,

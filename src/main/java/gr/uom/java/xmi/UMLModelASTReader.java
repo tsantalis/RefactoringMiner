@@ -272,7 +272,7 @@ public class UMLModelASTReader {
 		UMLJavadoc doc = null;
 		if(javaDoc != null) {
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, javaDoc, CodeElementType.JAVADOC);
-			doc = new UMLJavadoc(javaDoc.toString(), locationInfo);
+			doc = new UMLJavadoc(stringify(javaDoc), locationInfo);
 			List<TagElement> tags = javaDoc.tags();
 			for(TagElement parentTag : tags) {
 				LocationInfo tagLocationInfo = generateLocationInfo(cu, sourceFile, parentTag, CodeElementType.TAG_ELEMENT);

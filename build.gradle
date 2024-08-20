@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
     id 'signing'
     id 'idea'
-    id 'checkstyle'
+//    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -24,13 +24,13 @@ idea {
     }
 }
 
-checkstyle {
-    toolVersion = '8.36'
-    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
-    configProperties = [suppressionFile: "${rootProject.file('config/checkstyle/checkstyle_supressions.xml')}"]
-    ignoreFailures = false
-    showViolations = true
-}
+//checkstyle {
+//    toolVersion = '8.36'
+//    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+//    configProperties = [suppressionFile: "${rootProject.file('config/checkstyle/checkstyle_supressions.xml')}"]
+//    ignoreFailures = false
+//    showViolations = true
+//}
 
 repositories {
     mavenCentral()

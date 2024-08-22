@@ -134,6 +134,53 @@ public class UMLImportListDiff {
 				}
 			}
 		}
+		Set<UMLImport> matchedRemovedOnDemandImports = new LinkedHashSet<>();
+		for(UMLImport removed : removedImports) {
+			if(nameBefore.startsWith(removed.getName()) && removed.isOnDemand()) {
+				matchedRemovedOnDemandImports.add(removed);
+			}
+		}
+		Set<UMLImport> matchedAddedOnDemandImports = new LinkedHashSet<>();
+		for(UMLImport added : addedImports) {
+			if(nameAfter.startsWith(added.getName()) && added.isOnDemand()) {
+				matchedAddedOnDemandImports.add(added);
+			}
+		}
+		if (matchedRemovedOnDemandImports.size() == 1 && matchedAddedOnDemandImports.size() == 1) {
+			UMLImport removed = matchedRemovedOnDemandImports.iterator().next();
+			UMLImport added = matchedAddedOnDemandImports.iterator().next();
+			Pair<UMLImport, UMLImport> pair = Pair.of(removed, added);
+			changedImports.add(pair);
+			removedImports.remove(removed);
+			addedImports.remove(added);
+		}
+		else if(matchedRemovedOnDemandImports.size() == 1 && matchedAddedOnDemandImports.size() == 0 && removedImport == null && addedImport != null) {
+			UMLImport removedOnDemand = matchedRemovedOnDemandImports.iterator().next();
+			if(unGroupedImports.containsKey(removedOnDemand)) {
+				unGroupedImports.get(removedOnDemand).add(addedImport);
+			}
+			else {
+				Set<UMLImport> ungrouped = new LinkedHashSet<UMLImport>();
+				ungrouped.add(addedImport);
+				unGroupedImports.put(removedOnDemand, ungrouped);
+			}
+		}
+		else if(matchedRemovedOnDemandImports.size() == 0 && matchedAddedOnDemandImports.size() == 1 && removedImport != null && addedImport == null) {
+			UMLImport addedOnDemand = matchedAddedOnDemandImports.iterator().next();
+			if(groupedImports.containsValue(addedOnDemand)) {
+				for(Map.Entry<Set<UMLImport>, UMLImport> entry : groupedImports.entrySet()) {
+					if(entry.getValue().equals(addedOnDemand)) {
+						entry.getKey().add(removedImport);
+						break;
+					}
+				}
+			}
+			else {
+				Set<UMLImport> grouped = new LinkedHashSet<UMLImport>();
+				grouped.add(removedImport);
+				groupedImports.put(grouped, addedOnDemand);
+			}
+		}
 	}
 
 	public void findImportChanges(UMLType typeBefore, UMLType typeAfter) {

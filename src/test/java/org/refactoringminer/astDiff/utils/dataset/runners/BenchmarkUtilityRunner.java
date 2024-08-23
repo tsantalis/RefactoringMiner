@@ -5,7 +5,7 @@ import com.beust.jcommander.ParameterException;
 
 import java.util.List;
 
-public class CmdRunner {
+public class BenchmarkUtilityRunner {
     public static void main(String[] args) {
         // Create instances of command classes
         AddCommand addCommand = new AddCommand();

@@ -30,7 +30,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                     html.render(DocType.HTML5)
                     .html(lang("en"))
                     .body()
-                    .div(class_("container-fluid"))
+                    .div(class_("container-fluid").style("padding-left: 0"))
                     .div(class_("row h-100"))
                     .div(class_("col-2 bg-light dir-diff"))
                     .render(new DirectoryDiffView(comparator, true))
@@ -61,7 +61,7 @@ public abstract class AbstractSinglePageView extends DirectoryDiffView implement
                         ._div()
                         ._div()
                         .div(id("collapse-" + i).class_("collapse show").add("aria-labelledby", "heading-" + i))
-                        .div(class_("card-body").style("padding: 0;"));
+                        .div(class_("card-body").style("overflow: hidden; padding: 0;"));
                 makeEachDiff(html, i, core);
                 html
                         ._div()

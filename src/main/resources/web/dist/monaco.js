@@ -8,7 +8,8 @@ function getEditorOptions(config, text) {
         lineDecorationsWidth: 0,
         glyphMargin: false,
         scrollbar: {
-            alwaysConsumeMouseWheel: false
+            alwaysConsumeMouseWheel: false,
+            vertical: config.spv === true ? 'hidden' : 'auto'
         },
         minimap: {
             enabled: false,

@@ -1,4 +1,3 @@
-x = 1;
 $(document).ready(function() {
     // Select all elements with an ID that starts with 'diff_row_'
     $('[id^="diff_row_"]').each(function() {
@@ -11,7 +10,6 @@ $(document).ready(function() {
             event.preventDefault(); // Prevent the default anchor behavior
             var targetId = 'heading-' + id.split('_')[2];
             var $target = $('#' + targetId);
-            x = $target
             var targetOffset = $('#' + targetId).offset().top;
             var accordionOffset = $('#accordion').offset().top;
             var scrollTo = targetOffset - accordionOffset + $('#accordion').scrollTop();

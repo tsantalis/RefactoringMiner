@@ -60,7 +60,7 @@ public class DirectoryDiffView implements Renderable {
                 ._if()
                 .div(class_("row mt-3 mb-3"))
                         .div(class_("col"))
-                            .div(class_("card"))
+                            .div(class_("card").style("padding: 5px"))
                                 .div(class_("card-header"))
                                     .h4(class_("card-title mb-0"))
                                         .write("Modified files ")

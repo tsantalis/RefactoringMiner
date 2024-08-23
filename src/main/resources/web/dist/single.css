@@ -1,10 +1,17 @@
 .monaco-panel {
-    overflow-y: auto; /* Enable scrollbar for Monaco panel */
+    overflow: hidden; /* Disable both vertical and horizontal scrollbars */
+
     height: 100%; /* Ensure it fills the available height */
+}
+.dir-diff{
+    height: 100%;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
 #accordion {
-    overflow-y: auto; /* Enable scrollbar for accordion */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
     height: 100%; /* Ensure it fills the available height */
 }
 

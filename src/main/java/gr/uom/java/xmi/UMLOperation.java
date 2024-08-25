@@ -51,6 +51,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 	private List<UMLModifier> modifiers;
 	private List<UMLComment> comments;
 	private Map<String, Set<VariableDeclaration>> variableDeclarationMap;
+	private String actualSignature;
 	
 	public UMLOperation(String name, LocationInfo locationInfo) {
 		this.locationInfo = locationInfo;
@@ -63,6 +64,14 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
         this.modifiers = new ArrayList<UMLModifier>();
         this.comments = new ArrayList<UMLComment>();
     }
+
+	public String getActualSignature() {
+		return actualSignature;
+	}
+
+	public void setActualSignature(String actualSignature) {
+		this.actualSignature = actualSignature;
+	}
 
 	public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;

@@ -1008,6 +1008,8 @@ public class UMLModelASTReader {
 			umlOperation.setDefault(true);
 		
 		List<IExtendedModifier> extendedModifiers = methodDeclaration.modifiers();
+		boolean firstModifierFound = false;
+		int startSignatureOffset = -1;
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
@@ -1016,10 +1018,17 @@ public class UMLModelASTReader {
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
 				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifier));
+				if(!firstModifierFound) {
+					startSignatureOffset = modifier.getStartPosition();
+					firstModifierFound = true;
+				}
 			}
 		}
 		
 		List<TypeParameter> typeParameters = methodDeclaration.typeParameters();
+		if(startSignatureOffset == -1 && typeParameters.size() > 0) {
+			startSignatureOffset = typeParameters.get(0).getStartPosition();
+		}
 		for(TypeParameter typeParameter : typeParameters) {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName(),
 					generateLocationInfo(cu, sourceFile, typeParameter, CodeElementType.TYPE_PARAMETER));
@@ -1039,9 +1048,15 @@ public class UMLModelASTReader {
 		
 		Type returnType = methodDeclaration.getReturnType2();
 		if(returnType != null) {
+			if(startSignatureOffset == -1) {
+				startSignatureOffset = returnType.getStartPosition();
+			}
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, methodDeclaration.getExtraDimensions());
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
+		}
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = methodDeclaration.getName().getStartPosition();
 		}
 		List<SingleVariableDeclaration> parameters = methodDeclaration.parameters();
 		for(SingleVariableDeclaration parameter : parameters) {
@@ -1062,6 +1077,11 @@ public class UMLModelASTReader {
 			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0);
 			umlOperation.addThrownExceptionType(type);
 		}
+		int endSignatureOffset = methodDeclaration.getBody() != null ?
+				methodDeclaration.getBody().getStartPosition() :
+				methodDeclaration.getStartPosition() + methodDeclaration.getLength();
+		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+		umlOperation.setActualSignature(text);
 		return umlOperation;
 	}
 

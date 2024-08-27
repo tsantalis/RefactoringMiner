@@ -3058,7 +3058,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						if(removedOperation.getAnnotations().equals(addedOperation.getAnnotations()) && removedOperation.hasEmptyBody() && addedOperation.hasEmptyBody()) {
 							UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 							this.addOperationBodyMapper(operationBodyMapper);
-							UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, this);
+							UMLOperationDiff operationSignatureDiff = operationBodyMapper.getOperationSignatureDiff().get();
 							refactorings.addAll(operationSignatureDiff.getRefactorings());
 							if(!removedOperation.getName().equals(addedOperation.getName()) &&
 									!(removedOperation.isConstructor() && addedOperation.isConstructor())) {

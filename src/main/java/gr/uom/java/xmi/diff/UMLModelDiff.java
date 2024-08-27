@@ -2816,8 +2816,18 @@ public class UMLModelDiff {
 						int index2 = classDiff.getNextClass().getOperations().indexOf(addedOperation);
 						if (index1 == index2) {
 							UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
-							if(!classDiff.getOperationBodyMapperList().contains(mapper))
+							if(!classDiff.getOperationBodyMapperList().contains(mapper)) {
 								classDiff.addOperationBodyMapper(mapper);
+								mapper.computeRefactoringsWithinBody();
+								refactorings.addAll(mapper.getRefactoringsAfterPostProcessing());
+								UMLOperationDiff operationSignatureDiff = mapper.getOperationSignatureDiff().get();
+								if(operationSignatureDiff.isOperationRenamed()) {
+									RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
+									refactorings.add(refactoring);
+								}
+								Set<Refactoring> signatureRefactorings = operationSignatureDiff.getRefactorings();
+								refactorings.addAll(signatureRefactorings);
+							}
 						}
 					}
 				}
@@ -3026,7 +3036,7 @@ public class UMLModelDiff {
 							addedOperationsToBeRemoved.add(addedOperation);
 							bodyMapper.computeRefactoringsWithinBody();
 							refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
-							UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, classDiff);
+							UMLOperationDiff operationSignatureDiff = bodyMapper.getOperationSignatureDiff().get();
 							if(operationSignatureDiff.isOperationRenamed()) {
 								RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
 								refactorings.add(refactoring);
@@ -3079,7 +3089,7 @@ public class UMLModelDiff {
 				classDiff.addOperationBodyMapper(bodyMapper);
 				bodyMapper.computeRefactoringsWithinBody();
 				refactorings.addAll(bodyMapper.getRefactoringsAfterPostProcessing());
-				UMLOperationDiff operationSignatureDiff = new UMLOperationDiff(removedOperation, addedOperation, classDiff);
+				UMLOperationDiff operationSignatureDiff = bodyMapper.getOperationSignatureDiff().get();
 				if(operationSignatureDiff.isOperationRenamed()) {
 					RenameOperationRefactoring refactoring = new RenameOperationRefactoring(removedOperation, addedOperation);
 					refactorings.add(refactoring);

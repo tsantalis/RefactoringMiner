@@ -26,6 +26,7 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     private Optional<UMLPackage> packageDeclaration;
     private UMLJavadoc packageDeclarationJavadoc;
     private List<UMLComment> packageDeclarationComments;
+    private String actualSignature;
     
     public UMLClass(String packageName, String name, LocationInfo locationInfo, boolean topLevel, List<UMLImport> importedTypes) {
     	super(packageName, name, locationInfo, importedTypes);
@@ -83,6 +84,14 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	else
     		return "class";
     }
+
+	public String getActualSignature() {
+		return actualSignature;
+	}
+
+	public void setActualSignature(String actualSignature) {
+		this.actualSignature = actualSignature;
+	}
 
     public List<UMLTypeParameter> getTypeParameters() {
 		return typeParameters;

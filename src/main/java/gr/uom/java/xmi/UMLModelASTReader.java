@@ -358,7 +358,7 @@ public class UMLModelASTReader {
 		}
 		umlClass.setRecord(true);
 		
-		processModifiers(cu, sourceFile, recordDeclaration, umlClass);
+		int startSignatureOffset = processModifiers(cu, sourceFile, recordDeclaration, umlClass);
 		
     	List<TypeParameter> typeParameters = recordDeclaration.typeParameters();
 		for(TypeParameter typeParameter : typeParameters) {
@@ -418,6 +418,15 @@ public class UMLModelASTReader {
 			}
     	}
     	
+    	int endSignatureOffset = recordDeclaration.bodyDeclarations().size() > 0 ?
+    			((BodyDeclaration)recordDeclaration.bodyDeclarations().get(0)).getStartPosition() :
+    				recordDeclaration.getStartPosition() + recordDeclaration.getLength();
+    	if(startSignatureOffset != -1) {
+    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+    		if(text.contains("{"))
+    			text = text.substring(0, text.indexOf("{") + 1);
+    		umlClass.setActualSignature(text);
+    	}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -444,7 +453,7 @@ public class UMLModelASTReader {
 		}
 		umlClass.setAnnotation(true);
 		
-		processModifiers(cu, sourceFile, annotationDeclaration, umlClass);
+		int startSignatureOffset = processModifiers(cu, sourceFile, annotationDeclaration, umlClass);
 		
 		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, annotationDeclaration, umlPackage, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments, javaFileContent);
 		
@@ -461,6 +470,15 @@ public class UMLModelASTReader {
 			}
 		}
 		
+		int endSignatureOffset = annotationDeclaration.bodyDeclarations().size() > 0 ?
+    			((BodyDeclaration)annotationDeclaration.bodyDeclarations().get(0)).getStartPosition() :
+    				annotationDeclaration.getStartPosition() + annotationDeclaration.getLength();
+    	if(startSignatureOffset != -1) {
+    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+    		if(text.contains("{"))
+    			text = text.substring(0, text.indexOf("{") + 1);
+    		umlClass.setActualSignature(text);
+    	}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -500,7 +518,7 @@ public class UMLModelASTReader {
 			processEnumConstantDeclaration(cu, enumConstantDeclaration, sourceFile, umlClass, comments, javaFileContent);
 		}
 		
-		processModifiers(cu, sourceFile, enumDeclaration, umlClass);
+    	int startSignatureOffset = processModifiers(cu, sourceFile, enumDeclaration, umlClass);
 		
 		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, enumDeclaration, umlPackage, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments, javaFileContent);
 		
@@ -517,6 +535,15 @@ public class UMLModelASTReader {
 			}
 		}
 		
+		int endSignatureOffset = enumDeclaration.bodyDeclarations().size() > 0 ?
+    			((BodyDeclaration)enumDeclaration.bodyDeclarations().get(0)).getStartPosition() :
+    				enumDeclaration.getStartPosition() + enumDeclaration.getLength();
+    	if(startSignatureOffset != -1) {
+    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+    		if(text.contains("{"))
+    			text = text.substring(0, text.indexOf("{") + 1);
+    		umlClass.setActualSignature(text);
+    	}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -603,7 +630,7 @@ public class UMLModelASTReader {
 			umlClass.setInterface(true);
     	}
     	
-    	processModifiers(cu, sourceFile, typeDeclaration, umlClass);
+    	int startSignatureOffset = processModifiers(cu, sourceFile, typeDeclaration, umlClass);
 		
     	List<TypeParameter> typeParameters = typeDeclaration.typeParameters();
 		for(TypeParameter typeParameter : typeParameters) {
@@ -654,6 +681,15 @@ public class UMLModelASTReader {
 			}
     	}
     	
+    	int endSignatureOffset = typeDeclaration.bodyDeclarations().size() > 0 ?
+    			((BodyDeclaration)typeDeclaration.bodyDeclarations().get(0)).getStartPosition() :
+    			typeDeclaration.getStartPosition() + typeDeclaration.getLength();
+    	if(startSignatureOffset != -1) {
+    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+    		if(text.contains("{"))
+    			text = text.substring(0, text.indexOf("{") + 1);
+    		umlClass.setActualSignature(text);
+    	}
     	this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -847,7 +883,8 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private void processModifiers(CompilationUnit cu, String sourceFile, AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {
+	private int processModifiers(CompilationUnit cu, String sourceFile, AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {
+		int startSignatureOffset = -1;
 		int modifiers = typeDeclaration.getModifiers();
     	if((modifiers & Modifier.ABSTRACT) != 0)
     		umlClass.setAbstract(true);
@@ -874,8 +911,12 @@ public class UMLModelASTReader {
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
 				umlClass.addModifier(new UMLModifier(cu, sourceFile, modifier));
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getStartPosition();
+				}
 			}
 		}
+		return startSignatureOffset;
 	}
 
 	private UMLInitializer processInitializer(CompilationUnit cu, Initializer initializer, String packageName, boolean isInterfaceMethod, String sourceFile, List<UMLComment> comments, String javaFileContent) {
@@ -1008,7 +1049,6 @@ public class UMLModelASTReader {
 			umlOperation.setDefault(true);
 		
 		List<IExtendedModifier> extendedModifiers = methodDeclaration.modifiers();
-		boolean firstModifierFound = false;
 		int startSignatureOffset = -1;
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
@@ -1018,9 +1058,8 @@ public class UMLModelASTReader {
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
 				umlOperation.addModifier(new UMLModifier(cu, sourceFile, modifier));
-				if(!firstModifierFound) {
+				if(startSignatureOffset == -1) {
 					startSignatureOffset = modifier.getStartPosition();
-					firstModifierFound = true;
 				}
 			}
 		}

@@ -2803,6 +2803,26 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		//match any remaining interface methods with changes in signature
+		for(UMLClassDiff classDiff : commonClassDiffList) {
+			if(classDiff.getOriginalClass().isInterface() && classDiff.getNextClass().isInterface()) {
+				List<UMLOperation> removedOperations = classDiff.getRemovedOperations();
+				List<UMLOperation> addedOperations = classDiff.getAddedOperations();
+				if(removedOperations.size() == addedOperations.size()) {
+					for(int i=0; i<removedOperations.size(); i++) {
+						UMLOperation removedOperation = removedOperations.get(i);
+						UMLOperation addedOperation = addedOperations.get(i);
+						int index1 = classDiff.getOriginalClass().getOperations().indexOf(removedOperation);
+						int index2 = classDiff.getNextClass().getOperations().indexOf(addedOperation);
+						if (index1 == index2) {
+							UMLOperationBodyMapper mapper = new UMLOperationBodyMapper(removedOperation, addedOperation, classDiff);
+							if(!classDiff.getOperationBodyMapperList().contains(mapper))
+								classDiff.addOperationBodyMapper(mapper);
+						}
+					}
+				}
+			}
+		}
 		return filterOutDuplicateRefactorings(refactorings);
 	}
 

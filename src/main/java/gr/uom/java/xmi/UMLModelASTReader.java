@@ -1078,7 +1078,7 @@ public class UMLModelASTReader {
 			umlOperation.addThrownExceptionType(type);
 		}
 		int endSignatureOffset = methodDeclaration.getBody() != null ?
-				methodDeclaration.getBody().getStartPosition() :
+				methodDeclaration.getBody().getStartPosition() + 1 :
 				methodDeclaration.getStartPosition() + methodDeclaration.getLength();
 		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
 		umlOperation.setActualSignature(text);

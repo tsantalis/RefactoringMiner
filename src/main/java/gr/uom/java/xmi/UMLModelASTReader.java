@@ -359,7 +359,9 @@ public class UMLModelASTReader {
 		umlClass.setRecord(true);
 		
 		int startSignatureOffset = processModifiers(cu, sourceFile, recordDeclaration, umlClass);
-		
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = recordDeclaration.getName().getStartPosition();
+		}
     	List<TypeParameter> typeParameters = recordDeclaration.typeParameters();
 		for(TypeParameter typeParameter : typeParameters) {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName(),
@@ -421,12 +423,15 @@ public class UMLModelASTReader {
     	int endSignatureOffset = recordDeclaration.bodyDeclarations().size() > 0 ?
     			((BodyDeclaration)recordDeclaration.bodyDeclarations().get(0)).getStartPosition() :
     				recordDeclaration.getStartPosition() + recordDeclaration.getLength();
-    	if(startSignatureOffset != -1) {
-    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
-    		if(text.contains("{"))
-    			text = text.substring(0, text.indexOf("{") + 1);
-    		umlClass.setActualSignature(text);
-    	}
+		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+		if(text.contains("{"))
+			text = text.substring(0, text.indexOf("{") + 1);
+		if(!text.contains("record ")) {
+			umlClass.setActualSignature("record " + text);
+		}
+		else {
+			umlClass.setActualSignature(text);
+		}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -454,7 +459,9 @@ public class UMLModelASTReader {
 		umlClass.setAnnotation(true);
 		
 		int startSignatureOffset = processModifiers(cu, sourceFile, annotationDeclaration, umlClass);
-		
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = annotationDeclaration.getName().getStartPosition();
+		}
 		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, annotationDeclaration, umlPackage, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments, javaFileContent);
 		
 		processAnonymousClassDeclarations(cu, annotationDeclaration, umlPackage, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass, javaFileContent);
@@ -473,12 +480,15 @@ public class UMLModelASTReader {
 		int endSignatureOffset = annotationDeclaration.bodyDeclarations().size() > 0 ?
     			((BodyDeclaration)annotationDeclaration.bodyDeclarations().get(0)).getStartPosition() :
     				annotationDeclaration.getStartPosition() + annotationDeclaration.getLength();
-    	if(startSignatureOffset != -1) {
-    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
-    		if(text.contains("{"))
-    			text = text.substring(0, text.indexOf("{") + 1);
-    		umlClass.setActualSignature(text);
-    	}
+		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+		if(text.contains("{"))
+			text = text.substring(0, text.indexOf("{") + 1);
+		if(!text.contains("@interface ")) {
+			umlClass.setActualSignature("@interface " + text);
+		}
+		else {
+			umlClass.setActualSignature(text);
+		}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -519,7 +529,9 @@ public class UMLModelASTReader {
 		}
 		
     	int startSignatureOffset = processModifiers(cu, sourceFile, enumDeclaration, umlClass);
-		
+    	if(startSignatureOffset == -1) {
+			startSignatureOffset = enumDeclaration.getName().getStartPosition();
+		}
 		Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, enumDeclaration, umlPackage, packageName, sourceFile, importedTypes, umlClass, packageDoc, comments, javaFileContent);
 		
 		processAnonymousClassDeclarations(cu, enumDeclaration, umlPackage, packageName, sourceFile, className, importedTypes, packageDoc, comments, umlClass, javaFileContent);
@@ -538,12 +550,15 @@ public class UMLModelASTReader {
 		int endSignatureOffset = enumDeclaration.bodyDeclarations().size() > 0 ?
     			((BodyDeclaration)enumDeclaration.bodyDeclarations().get(0)).getStartPosition() :
     				enumDeclaration.getStartPosition() + enumDeclaration.getLength();
-    	if(startSignatureOffset != -1) {
-    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
-    		if(text.contains("{"))
-    			text = text.substring(0, text.indexOf("{") + 1);
-    		umlClass.setActualSignature(text);
-    	}
+		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+		if(text.contains("{"))
+			text = text.substring(0, text.indexOf("{") + 1);
+		if(!text.contains("enum ")) {
+			umlClass.setActualSignature("enum " + text);
+		}
+		else {
+			umlClass.setActualSignature(text);
+		}
 		this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}
@@ -631,7 +646,9 @@ public class UMLModelASTReader {
     	}
     	
     	int startSignatureOffset = processModifiers(cu, sourceFile, typeDeclaration, umlClass);
-		
+    	if(startSignatureOffset == -1) {
+			startSignatureOffset = typeDeclaration.getName().getStartPosition();
+		}
     	List<TypeParameter> typeParameters = typeDeclaration.typeParameters();
 		for(TypeParameter typeParameter : typeParameters) {
 			UMLTypeParameter umlTypeParameter = new UMLTypeParameter(typeParameter.getName().getFullyQualifiedName(),
@@ -684,12 +701,20 @@ public class UMLModelASTReader {
     	int endSignatureOffset = typeDeclaration.bodyDeclarations().size() > 0 ?
     			((BodyDeclaration)typeDeclaration.bodyDeclarations().get(0)).getStartPosition() :
     			typeDeclaration.getStartPosition() + typeDeclaration.getLength();
-    	if(startSignatureOffset != -1) {
-    		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
-    		if(text.contains("{"))
-    			text = text.substring(0, text.indexOf("{") + 1);
-    		umlClass.setActualSignature(text);
-    	}
+		String text = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+		if(text.contains("{"))
+			text = text.substring(0, text.indexOf("{") + 1);
+		if(!text.contains("class ") && !text.contains("interface ")) {
+			if(typeDeclaration.isInterface()) {
+				umlClass.setActualSignature("interface " + text);
+			}
+			else {
+				umlClass.setActualSignature("class " + text);
+			}
+		}
+		else {
+			umlClass.setActualSignature(text);
+		}
     	this.getUmlModel().addClass(umlClass);
 		distributeComments(comments, locationInfo, umlClass.getComments());
 	}

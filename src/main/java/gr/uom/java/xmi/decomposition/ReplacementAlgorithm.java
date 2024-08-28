@@ -4703,7 +4703,7 @@ public class ReplacementAlgorithm {
 		if(replacementAdded) {
 			return replacementInfo.getReplacements();
 		}
-		if(lambdaMappers.size() > 0 && lambdaMappers.size() == Math.min(lambdas1.size(), lambdas2.size())) {
+		if(lambdaMappers.size() > 0 && lambdaMappers.size() == lambdas1.size() && lambdaMappers.size() == lambdas2.size()) {
 			return replacementInfo.getReplacements();
 		}
 		return null;

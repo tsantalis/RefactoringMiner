@@ -513,11 +513,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(streamAPICall, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, false);
 					}
 				}
+				for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
+					if(leaf1.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+					}
+				}
 			}
 			else if(streamAPIStatements1.size() > 0 && streamAPIStatements2.size() == 0) {
 				for(AbstractCodeFragment streamAPICall : streamAPIStatements1) {
 					if(streamAPICall.getLambdas().size() > 0) {
 						expandAnonymousAndLambdas(streamAPICall, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, false);
+					}
+				}
+				for(AbstractCodeFragment leaf2 : new ArrayList<>(leaves2)) {
+					if(leaf2.getLambdas().size() > 0) {
+						expandAnonymousAndLambdas(leaf2, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
 				}
 			}

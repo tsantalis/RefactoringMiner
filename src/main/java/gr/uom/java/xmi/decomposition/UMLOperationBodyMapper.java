@@ -1290,6 +1290,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				processCompositeStatements(composite1.getLeaves(), composite2.getLeaves(), composite1.getInnerNodes(), composite2.getInnerNodes());
 			}
 		}
+		else if(lambda1.getExpression() != null && lambda2.getBody() != null) {
+			List<AbstractCodeFragment> leaves1 = new ArrayList<AbstractCodeFragment>();
+			leaves1.add(lambda1.getExpression());
+			CompositeStatementObject composite2 = lambda2.getBody().getCompositeStatement();
+			this.lambdaBodyMapper = true;
+			processCompositeStatements(leaves1, composite2.getLeaves(), Collections.emptyList(), composite2.getInnerNodes());
+		}
+		else if(lambda1.getBody() != null && lambda2.getExpression() != null) {
+			CompositeStatementObject composite1 = lambda1.getBody().getCompositeStatement();
+			List<AbstractCodeFragment> leaves2 = new ArrayList<AbstractCodeFragment>();
+			leaves2.add(lambda2.getExpression());
+			this.lambdaBodyMapper = true;
+			processCompositeStatements(composite1.getLeaves(), leaves2, composite1.getInnerNodes(), Collections.emptyList());
+		}
 		this.commentListDiff = new UMLCommentListDiff(lambda1.getComments(), lambda2.getComments());
 		checkUnmatchedStatementsBeingCommented();
 	}

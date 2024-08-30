@@ -1377,6 +1377,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				collectNestedLambdaExpressions(nestedLambda, nestedLambdas);
 			}
 		}
+		if(parentLambda.getBody() != null) {
+			CompositeStatementObject comp = parentLambda.getBody().getCompositeStatement();
+			for(AbstractCodeFragment fragment : comp.getLeaves()) {
+				nestedLambdas.addAll(fragment.getLambdas());
+				for(LambdaExpressionObject nestedLambda : fragment.getLambdas()) {
+					collectNestedLambdaExpressions(nestedLambda, nestedLambdas);
+				}
+			}
+		}
 	}
 
 	private boolean nestedLambdaExpressionMatch(List<LambdaExpressionObject> lambdas, AbstractCodeFragment lambdaExpression) {
@@ -2689,36 +2698,48 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(!statement.getLambdas().isEmpty()) {
 				for(LambdaExpressionObject lambda : statement.getLambdas()) {
-					if(lambda.getBody() != null) {
-						List<AbstractCodeFragment> lambdaLeaves = lambda.getBody().getCompositeStatement().getLeaves();
-						for(AbstractCodeFragment lambdaLeaf : lambdaLeaves) {
-							if(!leaves.contains(lambdaLeaf)) {
-								leaves.add(lambdaLeaf);
-								addedLeaves.add(lambdaLeaf);
-								map.put(lambdaLeaf, parentOperation);
-							}
-						}
-						List<CompositeStatementObject> lambdaInnerNodes = lambda.getBody().getCompositeStatement().getInnerNodes();
-						for(CompositeStatementObject lambdaInnerNode : lambdaInnerNodes) {
-							if(excludeRootBlock && lambdaInnerNode.equals(lambda.getBody().getCompositeStatement())) {
-								continue;
-							}
-							if(!innerNodes.contains(lambdaInnerNode)) {
-								innerNodes.add(lambdaInnerNode);
-								addedInnerNodes.add(lambdaInnerNode);
-								map.put(lambdaInnerNode, parentOperation);
-							}
-						}
-					}
-					else if(lambda.getExpression() != null) {
-						AbstractCodeFragment lambdaLeaf = lambda.getExpression();
-						if(!leaves.contains(lambdaLeaf)) {
-							leaves.add(lambdaLeaf);
-							addedLeaves.add(lambdaLeaf);
-							map.put(lambdaLeaf, parentOperation);
-						}
+					List<LambdaExpressionObject> nestedLambdas = new ArrayList<LambdaExpressionObject>();
+					collectNestedLambdaExpressions(lambda, nestedLambdas);
+					expandLambda(lambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
+					for(LambdaExpressionObject nestedLambda : nestedLambdas) {
+						expandLambda(nestedLambda, leaves, innerNodes, addedLeaves, addedInnerNodes, map, parentOperation, excludeRootBlock);
 					}
 				}
+			}
+		}
+	}
+
+	private void expandLambda(LambdaExpressionObject lambda, List<AbstractCodeFragment> leaves,
+			List<CompositeStatementObject> innerNodes, Set<AbstractCodeFragment> addedLeaves,
+			Set<CompositeStatementObject> addedInnerNodes, Map<AbstractCodeFragment, VariableDeclarationContainer> map,
+			VariableDeclarationContainer parentOperation, boolean excludeRootBlock) {
+		if(lambda.getBody() != null) {
+			List<AbstractCodeFragment> lambdaLeaves = lambda.getBody().getCompositeStatement().getLeaves();
+			for(AbstractCodeFragment lambdaLeaf : lambdaLeaves) {
+				if(!leaves.contains(lambdaLeaf)) {
+					leaves.add(lambdaLeaf);
+					addedLeaves.add(lambdaLeaf);
+					map.put(lambdaLeaf, parentOperation);
+				}
+			}
+			List<CompositeStatementObject> lambdaInnerNodes = lambda.getBody().getCompositeStatement().getInnerNodes();
+			for(CompositeStatementObject lambdaInnerNode : lambdaInnerNodes) {
+				if(excludeRootBlock && lambdaInnerNode.equals(lambda.getBody().getCompositeStatement())) {
+					continue;
+				}
+				if(!innerNodes.contains(lambdaInnerNode)) {
+					innerNodes.add(lambdaInnerNode);
+					addedInnerNodes.add(lambdaInnerNode);
+					map.put(lambdaInnerNode, parentOperation);
+				}
+			}
+		}
+		else if(lambda.getExpression() != null) {
+			AbstractCodeFragment lambdaLeaf = lambda.getExpression();
+			if(!leaves.contains(lambdaLeaf)) {
+				leaves.add(lambdaLeaf);
+				addedLeaves.add(lambdaLeaf);
+				map.put(lambdaLeaf, parentOperation);
 			}
 		}
 	}

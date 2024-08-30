@@ -59,7 +59,11 @@ public class URLHelper{
     public static int getPullRequestID(String prURL) {
         prURL = removeAdditionalPart(prURL);
         int index = nthIndexOf(prURL,'/',6);
-        return Integer.parseInt(prURL.substring(index+1));
+        String prID = prURL.substring(index+1);
+        if(prID.endsWith("/files")) {
+        	prID = prID.substring(0, prID.length() - "/files".length());
+        }
+		return Integer.parseInt(prID);
     }
 
     public static boolean isPR(String url) {

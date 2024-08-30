@@ -730,6 +730,7 @@ public abstract class UMLAbstractClassDiff {
 	}
 
 	public List<Refactoring> getRefactorings() throws RefactoringMinerTimedOutException {
+		List<Refactoring> originalRefactorings = new ArrayList<Refactoring>(this.refactorings);
 		List<Refactoring> refactorings = new ArrayList<Refactoring>(this.refactorings);
 		if(!originalClass.getTypeDeclarationKind().equals(nextClass.getTypeDeclarationKind())) {
 			boolean anonymousToClass = originalClass.getTypeDeclarationKind().endsWith("class") && nextClass.getTypeDeclarationKind().endsWith("class");
@@ -815,7 +816,7 @@ public abstract class UMLAbstractClassDiff {
 						if((!originalClass.containsAttributeWithName(pattern.getAfter()) || cyclicRename(renameMap, pattern)) &&
 								(!nextClass.containsAttributeWithName(pattern.getBefore()) || cyclicRename(renameMap, pattern)) &&
 								!inconsistentAttributeRename(pattern, aliasedAttributesInOriginalClass, aliasedAttributesInNextClass) &&
-								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings)) {
+								!attributeMerged(a1, a2, refactorings) && !attributeSplit(a1, a2, refactorings) && !attributeWithConflictingRename(a1, a2, originalRefactorings)) {
 							if(a1 instanceof UMLEnumConstant && a2 instanceof UMLEnumConstant) {
 								UMLEnumConstantDiff enumConstantDiff = new UMLEnumConstantDiff((UMLEnumConstant)a1, (UMLEnumConstant)a2, this, modelDiff);
 								if(!enumConstantDiffList.contains(enumConstantDiff)) {
@@ -1235,6 +1236,21 @@ public abstract class UMLAbstractClassDiff {
 			}
 		}
 		return newRefactorings;
+	}
+
+	private boolean attributeWithConflictingRename(UMLAttribute a1, UMLAttribute a2, List<Refactoring> refactorings) {
+		for(Refactoring refactoring : refactorings) {
+			if(refactoring instanceof RenameAttributeRefactoring) {
+				RenameAttributeRefactoring rename = (RenameAttributeRefactoring)refactoring;
+				if(rename.getOriginalAttribute().equals(a1) && !rename.getRenamedAttribute().equals(a2)) {
+					return true;
+				}
+				else if(!rename.getOriginalAttribute().equals(a1) && rename.getRenamedAttribute().equals(a2)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean attributeMerged(UMLAttribute a1, UMLAttribute a2, List<Refactoring> refactorings) {

@@ -753,7 +753,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					//check if operation1 has anonymous with equal signature
 					if(anonymousClass != null) {
 						for(UMLAnonymousClass otherAnonymousClass : operation1.getAnonymousClassList()) {
-							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(otherAnonymousClass, anonymousClass, classDiff, classDiff.getModelDiff());
+							UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(otherAnonymousClass, anonymousClass, classDiff, classDiff != null ? classDiff.getModelDiff() : null);
 							anonymousClassDiff.process();
 							List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 							if(matchedOperationMappers.size() > 0) {
@@ -766,7 +766,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				else {
 					//check if operation2 has anonymous with equal signature
 					for(UMLAnonymousClass otherAnonymousClass : operation2.getAnonymousClassList()) {
-						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass, otherAnonymousClass, classDiff, classDiff.getModelDiff());
+						UMLAnonymousClassDiff anonymousClassDiff = new UMLAnonymousClassDiff(anonymousClass, otherAnonymousClass, classDiff, classDiff != null ? classDiff.getModelDiff() : null);
 						anonymousClassDiff.process();
 						List<UMLOperationBodyMapper> matchedOperationMappers = anonymousClassDiff.getOperationBodyMapperList();
 						if(matchedOperationMappers.size() > 0) {

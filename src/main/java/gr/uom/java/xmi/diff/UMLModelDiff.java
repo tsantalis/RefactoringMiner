@@ -3815,9 +3815,46 @@ public class UMLModelDiff {
 						processedOperationPairs.add(pair);
 						List<AbstractCall> operationInvocations = mapper.getInvocationsInSourceOperationAfterExtraction();
 						List<AbstractCall> addedOperationInvocations = new ArrayList<AbstractCall>();
+						String nonQualifiedAddedOperationClassName = addedOperation.getClassName().contains(".") ?
+								addedOperation.getClassName().substring(addedOperation.getClassName().lastIndexOf(".") + 1) :
+								addedOperation.getClassName();
+						Map<String, Set<VariableDeclaration>> variableDeclarationMap = mapper.getContainer2().variableDeclarationMap();
+						UMLAbstractClass childCallerClass = this.findClassInChildModel(mapper.getContainer2().getClassName());
+						Map<String, VariableDeclaration> childFieldDeclarationMap = childCallerClass != null ? childCallerClass.getFieldDeclarationMap() : null;
 						for(AbstractCall invocation : operationInvocations) {
 							if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), mapper.getClassDiff(), this)) {
 								addedOperationInvocations.add(invocation);
+							}
+							if(addedOperation.getClassName().startsWith(mapper.getContainer2().getClassName() + ".") &&
+									!addedOperation.isConstructor() && !addedOperation.isGetter() && !addedOperation.isSetter()) {
+								boolean match = false;
+								for(String arg : invocation.arguments()) {
+									if(arg.contains("new " + nonQualifiedAddedOperationClassName)) {
+										match = true;
+									}
+									else {
+										if(variableDeclarationMap.containsKey(arg)) {
+											Set<VariableDeclaration> set = variableDeclarationMap.get(arg);
+											for(VariableDeclaration declaration : set) {
+												if(declaration.getType() != null && declaration.getType().getClassType().equals(nonQualifiedAddedOperationClassName)) {
+													match = true;
+													break;
+												}
+											}
+										}
+										else if(childFieldDeclarationMap != null) {
+							    			if(childFieldDeclarationMap.containsKey(arg)) {
+							    				VariableDeclaration declaration = childFieldDeclarationMap.get(arg);
+							    				if(declaration.getType() != null && declaration.getType().getClassType().equals(nonQualifiedAddedOperationClassName)) {
+													match = true;
+												}
+							    			}
+										}
+									}
+								}
+								if(match) {
+									addedOperationInvocations.add(invocation);
+								}
 							}
 						}
 						if(addedOperationInvocations.size() > 0) {

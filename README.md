@@ -311,18 +311,18 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **June 8, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **September 1, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12263  | 20  | 236  | 0.998  | 0.981|
+|**Total**|12266  | 20  | 234  | 0.998  | 0.981|
 |Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
 |Move And Rename Attribute|13  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|387  |  4  | 21  | 0.990  | 0.949|
-|Inline Method|116  |  0  |  1  | 1.000  | 0.991|
+|Inline Method|117  |  0  |  1  | 1.000  | 0.992|
 |Move Method|350  |  3  |  6  | 0.992  | 0.983|
 |Move And Rename Method|122  |  0  |  3  | 1.000  | 0.976|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
@@ -346,7 +346,7 @@ As of **June 8, 2024** the precision and recall of the tool on an oracle consist
 |Inline Variable|102  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|327  |  3  | 11  | 0.991  | 0.967|
-|Rename Parameter|489  |  2  | 26  | 0.996  | 0.950|
+|Rename Parameter|490  |  2  | 25  | 0.996  | 0.951|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -361,7 +361,7 @@ As of **June 8, 2024** the precision and recall of the tool on an oracle consist
 |Parameterize Attribute|24  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
 |Change Variable Type|799  |  2  |  7  | 0.998  | 0.991|
-|Change Parameter Type|651  |  1  | 11  | 0.998  | 0.983|
+|Change Parameter Type|652  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|331  |  0  |  1  | 1.000  | 0.997|
 |Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
@@ -432,7 +432,7 @@ Moreover, all unit tests can be executed in parallel. The more CPU cores, the fa
 The available test suites are:
 * [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the overall precision and recall of RefactoringMiner on the Refactoring Oracle (547 commits)
 * [src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit.java) : Tests the number of True Positives, False Positives and False Negatives, separately for each commit of the Refactoring Oracle (547 commits)
-* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (106 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (109 commits)
 * [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection
 * [src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/astDiff/tests/Defects4JPerfectDiffTest.java): Tests the AST node mapping accuracy of RefactoringMiner on the Defects4J dataset

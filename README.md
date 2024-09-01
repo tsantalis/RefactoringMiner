@@ -643,45 +643,43 @@ If you are using RefactoringMiner in your research, please cite the following pa
 Nikolaos Tsantalis, Matin Mansouri, Laleh Eshkevari, Davood Mazinanian, and Danny Dig, "[Accurate and Efficient Refactoring Detection in Commit History](https://users.encs.concordia.ca/~nikolaos/publications/ICSE_2018.pdf)," *40th International Conference on Software Engineering* (ICSE 2018), Gothenburg, Sweden, May 27 - June 3, 2018.
 
     @inproceedings{Tsantalis:ICSE:2018:RefactoringMiner,
-	author = {Tsantalis, Nikolaos and Mansouri, Matin and Eshkevari, Laleh M. and Mazinanian, Davood and Dig, Danny},
-	title = {Accurate and Efficient Refactoring Detection in Commit History},
-	booktitle = {Proceedings of the 40th International Conference on Software Engineering},
-	series = {ICSE '18},
-	year = {2018},
-	isbn = {978-1-4503-5638-1},
-	location = {Gothenburg, Sweden},
-	pages = {483--494},
-	numpages = {12},
-	url = {http://doi.acm.org/10.1145/3180155.3180206},
-	doi = {10.1145/3180155.3180206},
-	acmid = {3180206},
-	publisher = {ACM},
-	address = {New York, NY, USA},
-	keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
+        author = {Tsantalis, Nikolaos and Mansouri, Matin and Eshkevari, Laleh M. and Mazinanian, Davood and Dig, Danny},
+        title = {Accurate and Efficient Refactoring Detection in Commit History},
+        booktitle = {Proceedings of the 40th International Conference on Software Engineering},
+        series = {ICSE '18},
+        year = {2018},
+        isbn = {978-1-4503-5638-1},
+        location = {Gothenburg, Sweden},
+        pages = {483--494},
+        numpages = {12},
+        url = {http://doi.acm.org/10.1145/3180155.3180206},
+        doi = {10.1145/3180155.3180206},
+        acmid = {3180206},
+        publisher = {ACM},
+        address = {New York, NY, USA},
+        keywords = {Git, Oracle, abstract syntax tree, accuracy, commit, refactoring},
     }
 
 Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https://users.encs.concordia.ca/~nikolaos/publications/TSE_2020.pdf)," *IEEE Transactions on Software Engineering*, vol. 48, no. 3, pp. 930-950, March 2022.
 
     @article{Tsantalis:TSE:2020:RefactoringMiner2.0,
-	author={Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
-	title={RefactoringMiner 2.0},
-	journal={IEEE Transactions on Software Engineering},
-	year={2022},
-	volume={48},
-	number={3},
-	pages={930-950},
-	doi={10.1109/TSE.2020.3007722}
+        author = {Tsantalis, Nikolaos and Ketkar, Ameya and Dig, Danny},
+        title = {RefactoringMiner 2.0},
+        journal = {IEEE Transactions on Software Engineering},
+        year = {2022},
+        volume = {48},
+        number = {3},
+        pages = {930-950},
+        doi = {10.1109/TSE.2020.3007722}
     }
 
-Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://arxiv.org/pdf/2403.05939)," *ACM Transactions on Software Engineering and Methodology*, 2024. (submitted Major revision)
+Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, 2024. (accepted)
 
-    @misc{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,
-      title={A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools}, 
-      author={Pouria Alikhanifard and Nikolaos Tsantalis},
-      year={2024},
-      eprint={2403.05939},
-      archivePrefix={arXiv},
-      primaryClass={cs.SE}
+    @article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,
+        author = {Pouria Alikhanifard and Nikolaos Tsantalis},
+        title = {A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools}, 
+        journal = {ACM Transactions on Software Engineering and Methodology},
+        year = {2024},
     }
 
 ## Talks about RefactoringMiner

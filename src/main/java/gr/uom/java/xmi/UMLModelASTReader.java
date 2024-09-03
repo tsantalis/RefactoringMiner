@@ -1153,7 +1153,7 @@ public class UMLModelASTReader {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFile, javaFileContent);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
 		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, enumConstantDeclaration, javaFileContent);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, enumConstant.getComments());
@@ -1179,7 +1179,7 @@ public class UMLModelASTReader {
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
 			umlAttribute.setFieldDeclarationLocationInfo(generateLocationInfo(cu, sourceFile, fieldDeclaration, CodeElementType.FIELD_DECLARATION));
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment, umlAttribute);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, fragment, umlAttribute, javaFileContent);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
 			umlAttribute.setJavadoc(javadoc);

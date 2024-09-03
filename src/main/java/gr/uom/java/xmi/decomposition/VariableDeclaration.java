@@ -9,6 +9,7 @@ import java.util.Set;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.EnumConstantDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -44,6 +45,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private boolean isFinal;
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
+	private String actualSignature;
 	
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
@@ -105,6 +107,81 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
+	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container, String javaFileContent) {
+		this.annotations = new ArrayList<UMLAnnotation>();
+		this.modifiers = new ArrayList<UMLModifier>();
+		List<IExtendedModifier> extendedModifiers = null;
+		if(fragment.getParent() instanceof VariableDeclarationStatement) {
+			VariableDeclarationStatement parent = (VariableDeclarationStatement)fragment.getParent();
+			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
+		}
+		else if(fragment.getParent() instanceof VariableDeclarationExpression) {
+			VariableDeclarationExpression parent = (VariableDeclarationExpression)fragment.getParent();
+			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
+		}
+		else if(fragment.getParent() instanceof FieldDeclaration) {
+			FieldDeclaration parent = (FieldDeclaration)fragment.getParent();
+			extendedModifiers = parent.modifiers();
+			int modifiers = parent.getModifiers();
+			if((modifiers & Modifier.FINAL) != 0) {
+				this.isFinal = true;
+			}
+		}
+		int startSignatureOffset = -1;
+		if(extendedModifiers != null) {
+			for(IExtendedModifier extendedModifier : extendedModifiers) {
+				if(extendedModifier.isAnnotation()) {
+					Annotation annotation = (Annotation)extendedModifier;
+					this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+				}
+				else if(extendedModifier.isModifier()) {
+					Modifier modifier = (Modifier)extendedModifier;
+					this.modifiers.add(new UMLModifier(cu, filePath, modifier));
+					if(startSignatureOffset == -1) {
+						startSignatureOffset = modifier.getStartPosition();
+					}
+				}
+			}
+		}
+		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
+		this.variableName = fragment.getName().getIdentifier();
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
+		Type astType = extractType(fragment);
+		if(astType != null) {
+			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
+			if(startSignatureOffset == -1) {
+				startSignatureOffset = astType.getStartPosition();
+			}
+		}
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = fragment.getName().getStartPosition();
+		}
+		ASTNode scopeNode = getScopeNode(fragment);
+		int startOffset = 0;
+		if(locationInfo.getCodeElementType().equals(CodeElementType.FIELD_DECLARATION)) {
+			//field declarations have the entire type declaration as scope, regardless of the location they are declared
+			startOffset = scopeNode.getStartPosition();
+		}
+		else {
+			startOffset = fragment.getStartPosition();
+		}
+		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
+		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
+		boolean anonymousClassInitializer = fragment.getInitializer() instanceof ClassInstanceCreation && ((ClassInstanceCreation)fragment.getInitializer()).getAnonymousClassDeclaration() != null;
+		int endSignatureOffset = anonymousClassInitializer ?
+				((ClassInstanceCreation)fragment.getInitializer()).getAnonymousClassDeclaration().getStartPosition() + 1 :
+					fragment.getStartPosition() + fragment.getLength();
+		this.actualSignature = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+	}
+
 	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
@@ -142,7 +219,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment) {
+	public VariableDeclaration(CompilationUnit cu, String filePath, EnumConstantDeclaration fragment, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();
@@ -150,6 +227,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			this.isFinal = true;
 		}
 		this.isEnumConstant = true;
+		int startSignatureOffset = -1;
 		List<IExtendedModifier> extendedModifiers = fragment.modifiers();
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
@@ -159,11 +237,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
 				this.modifiers.add(new UMLModifier(cu, filePath, modifier));
+				if(startSignatureOffset == -1) {
+					startSignatureOffset = modifier.getStartPosition();
+				}
 			}
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, CodeElementType.ENUM_CONSTANT_DECLARATION);
 		this.variableName = fragment.getName().getIdentifier();
 		this.initializer = null;
+		if(startSignatureOffset == -1) {
+			startSignatureOffset = fragment.getName().getStartPosition();
+		}
 		if(fragment.getParent() instanceof EnumDeclaration) {
 			EnumDeclaration enumDeclaration = (EnumDeclaration)fragment.getParent();
 			this.type = UMLType.extractTypeObject(enumDeclaration.getName().getIdentifier());
@@ -172,6 +256,14 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		int startOffset = scopeNode.getStartPosition();
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
+		int endSignatureOffset = fragment.getAnonymousClassDeclaration() != null ?
+				fragment.getAnonymousClassDeclaration().getStartPosition() + 1 :
+				fragment.getStartPosition() + fragment.getLength();
+		this.actualSignature = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
+	}
+
+	public String getActualSignature() {
+		return actualSignature;
 	}
 
 	public LeafExpression asLeafExpression() {

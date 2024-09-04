@@ -246,7 +246,7 @@ public class UMLModelASTReader {
 					String[] lines = textFollowing.split("\\r?\\n|\\r");
 					if(lines.length > 0) {
 						String firstLine = lines[0];
-						if(!firstLine.contains("public") && !firstLine.contains("private") && !firstLine.contains("protected") && !firstLine.contains("@")) {
+						if(!firstLine.contains("public") && !firstLine.contains("private") && !firstLine.contains("protected") && !firstLine.contains("@") && !firstLine.contains("static")) {
 							locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
 						}
 					}

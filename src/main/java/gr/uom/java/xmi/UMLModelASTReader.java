@@ -240,17 +240,8 @@ public class UMLModelASTReader {
 			else if(comment.isBlockComment()) {
 				locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
 			}
-			else if(comment.isDocComment()) {
-				if(comment.getStartPosition() + comment.getLength() + 1 <= javaFileContent.length()) {
-					String textFollowing = javaFileContent.substring(comment.getStartPosition() + comment.getLength() + 1, javaFileContent.length());
-					String[] lines = textFollowing.split("\\r?\\n|\\r");
-					if(lines.length > 0) {
-						String firstLine = lines[0];
-						if(!firstLine.contains("public") && !firstLine.contains("private") && !firstLine.contains("protected") && !firstLine.contains("@") && !firstLine.contains("static")) {
-							locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
-						}
-					}
-				}
+			else if(comment.isDocComment() && comment.getParent() == null) {
+				locationInfo = generateLocationInfo(cu, sourceFile, comment, CodeElementType.BLOCK_COMMENT);
 			}
 			if(locationInfo != null) {
 				int start = comment.getStartPosition();

@@ -1460,13 +1460,24 @@ public class VariableReplacementAnalysis {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement instanceof MergeVariableReplacement) {
 					MergeVariableReplacement merge = (MergeVariableReplacement)replacement;
-					if(mergeMap.containsKey(merge)) {
-						mergeMap.get(merge).add(mapping);
+					Set<String> mergedVariables = merge.getMergedVariables();
+					int mergedVariablesAppearingAsParametersInBothMethods = 0;
+					List<String> parameterNames1 = operation1.getParameterNameList();
+					List<String> parameterNames2 = operation2.getParameterNameList();
+					for(String variable : mergedVariables) {
+						if(parameterNames1.contains(variable) && parameterNames2.contains(variable)) {
+							mergedVariablesAppearingAsParametersInBothMethods++;
+						}
 					}
-					else {
-						Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
-						mappings.add(mapping);
-						mergeMap.put(merge, mappings);
+					if(mergedVariables.size() != mergedVariablesAppearingAsParametersInBothMethods) {
+						if(mergeMap.containsKey(merge)) {
+							mergeMap.get(merge).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							mappings.add(mapping);
+							mergeMap.put(merge, mappings);
+						}
 					}
 				}
 				else if(replacement instanceof VariableReplacementWithMethodInvocation) {

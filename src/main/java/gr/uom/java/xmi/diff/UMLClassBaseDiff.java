@@ -3022,6 +3022,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					this.addOperationBodyMapper(operationBodyMapper);
 				}
+				else if(!typeParameterDiffList.isEmpty() && removedOperation.equalsIgnoringParentClassTypeParameterChange(addedOperation, typeParameterDiffList) &&
+						!differentParameterNames(removedOperation, addedOperation)) {
+					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
+					this.addOperationBodyMapper(operationBodyMapper);
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+				}
 				else if(removedOperation.equalsIgnoringNameCase(addedOperation) && !differentParameterNames(removedOperation, addedOperation)) {
 					UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(removedOperation, addedOperation, this);
 					if(!removedOperation.getName().equals(addedOperation.getName()) &&

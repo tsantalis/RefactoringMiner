@@ -5,6 +5,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AnnotatableType;
 import org.eclipse.jdt.core.dom.Annotation;
@@ -24,6 +25,7 @@ import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 
 public abstract class UMLType implements Serializable, LocationInfoProvider {
 	private LocationInfo locationInfo;
@@ -350,5 +352,35 @@ public abstract class UMLType implements Serializable, LocationInfoProvider {
 
 	public LeafExpression asLeafExpression() {
 		return new LeafExpression(toQualifiedString(), getLocationInfo());
+	}
+
+	public boolean matchWithParentClassTypeParameterChange(UMLType otherType, Set<UMLTypeParameterDiff> set) {
+		if(equalClassType(otherType)) {
+			List<UMLType> thisTypeArguments = getTypeArguments();
+			List<UMLType> otherTypeArguments = otherType.getTypeArguments();
+			int matchingTypeArguments = 0;
+			if(thisTypeArguments.size() == otherTypeArguments.size()) {
+				for(int i=0; i<thisTypeArguments.size(); i++) {
+					UMLType type1 = thisTypeArguments.get(i);
+					UMLType type2 = otherTypeArguments.get(i);
+					if(type1.equals(type2)) {
+						matchingTypeArguments++;
+					}
+					else {
+						for(UMLTypeParameterDiff diff : set) {
+							if(type1.getClassType().equals(diff.getRemovedTypeParameter().getName()) &&
+									type2.getClassType().equals(diff.getAddedTypeParameter().getName())) {
+								matchingTypeArguments++;
+								break;
+							}
+						}
+					}
+				}
+				if(matchingTypeArguments == thisTypeArguments.size()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

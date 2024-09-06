@@ -12,6 +12,8 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
+import gr.uom.java.xmi.diff.UMLTypeParameterListDiff;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 
@@ -714,6 +716,40 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 			if(call.getName().equals(this.getName()) && call.arguments().size() == this.getParametersWithoutReturnType().size()) {
 				return true;
 			}
+		}
+		return false;
+	}
+
+	public boolean equalsIgnoringParentClassTypeParameterChange(UMLOperation operation, UMLTypeParameterListDiff typeParameterListDiff) {
+		if(this.className.equals(operation.className) && this.name.equals(operation.name) &&
+				this.isAbstract == operation.isAbstract && equalTypeParameters(operation)) {
+			Set<UMLTypeParameterDiff> set = typeParameterListDiff.getTypeParameterDiffs();
+			UMLParameter thisReturnParameter = this.getReturnParameter();
+			UMLParameter otherReturnParameter = operation.getReturnParameter();
+			boolean returnTypeMatch = false;
+			if(thisReturnParameter != null && otherReturnParameter != null) {
+				UMLType thisReturnType = thisReturnParameter.getType();
+				UMLType otherReturnType = otherReturnParameter.getType();
+				returnTypeMatch = thisReturnType.matchWithParentClassTypeParameterChange(otherReturnType, set);
+			}
+			else if(thisReturnParameter == null && otherReturnParameter == null) {
+				returnTypeMatch = true;
+			}
+			List<UMLType> thisParameterTypeList = this.getParameterTypeList();
+			List<UMLType> otherParameterTypeList = operation.getParameterTypeList();
+			if(thisParameterTypeList.size() != otherParameterTypeList.size()) {
+				return false;
+			}
+			int matchingParameterTypes = 0;
+			for(int i=0; i<thisParameterTypeList.size(); i++) {
+				UMLType thisParameterType = thisParameterTypeList.get(i);
+				UMLType otherParameterType = otherParameterTypeList.get(i);
+				boolean parameterTypeMatch = thisParameterType.matchWithParentClassTypeParameterChange(otherParameterType, set);
+				if(parameterTypeMatch) {
+					matchingParameterTypes++;
+				}
+			}
+			return returnTypeMatch && matchingParameterTypes == thisParameterTypeList.size();
 		}
 		return false;
 	}

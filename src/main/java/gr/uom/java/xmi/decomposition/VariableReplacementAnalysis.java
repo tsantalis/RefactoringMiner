@@ -499,7 +499,7 @@ public class VariableReplacementAnalysis {
 		}
 		if(classDiff instanceof UMLClassBaseDiff) {
 			UMLTypeParameterListDiff listDiff = ((UMLClassBaseDiff)classDiff).getTypeParameterDiffList();
-			if(removedVariable.getType().matchWithParentClassTypeParameterChange(addedVariable.getType(), listDiff.getTypeParameterDiffs())) {
+			if(listDiff != null && removedVariable.getType().matchWithParentClassTypeParameterChange(addedVariable.getType(), listDiff.getTypeParameterDiffs())) {
 				return true;
 			}
 		}

@@ -1310,13 +1310,24 @@ public class VariableReplacementAnalysis {
 			for(Replacement replacement : mapping.getReplacements()) {
 				if(replacement instanceof SplitVariableReplacement) {
 					SplitVariableReplacement split = (SplitVariableReplacement)replacement;
-					if(splitMap.containsKey(split)) {
-						splitMap.get(split).add(mapping);
+					Set<String> splitVariables = split.getSplitVariables();
+					int splitVariablesAppearingAsParametersInBothMethods = 0;
+					List<String> parameterNames1 = operation1.getParameterNameList();
+					List<String> parameterNames2 = operation2.getParameterNameList();
+					for(String variable : splitVariables) {
+						if(parameterNames1.contains(variable) && parameterNames2.contains(variable)) {
+							splitVariablesAppearingAsParametersInBothMethods++;
+						}
 					}
-					else {
-						Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
-						mappings.add(mapping);
-						splitMap.put(split, mappings);
+					if(splitVariables.size() != splitVariablesAppearingAsParametersInBothMethods) {
+						if(splitMap.containsKey(split)) {
+							splitMap.get(split).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							mappings.add(mapping);
+							splitMap.put(split, mappings);
+						}
 					}
 				}
 				else if(replacement instanceof VariableReplacementWithMethodInvocation) {

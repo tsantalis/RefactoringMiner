@@ -138,6 +138,11 @@ signing {
     sign publishing.publications.mavenJava
 }
 
+task runWithGitHubAPI(type: JavaExec) {
+    main = 'gui.RunWithGitHubAPI'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
 }

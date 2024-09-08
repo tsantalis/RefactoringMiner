@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.jsoup.Jsoup;
 
 import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLJavadoc;
@@ -281,7 +282,35 @@ public class UMLJavadocDiff {
 			addedTokenSequence.addAll(splitToWords);
 			addedTokenSequenceMap.put(addedDocElement, splitToWords);
 		}
+		String deletedWithoutTags = Jsoup.parse(deletedSB.toString()).text();
+		String addedWithoutTags = Jsoup.parse(addedSB.toString()).text();
 		if(deletedSB.toString().replaceAll("\\s", "").equals(addedSB.toString().replaceAll("\\s", ""))) {
+			//make all pair combinations
+			for(UMLDocElement deletedDocElement : deletedDocElements) {
+				for(UMLDocElement addedDocElement : addedDocElements) {
+					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+					commonDocElements.add(pair);
+				}
+			}
+			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
+				manyToManyReformat = true;
+			}
+			return true;
+		}
+		else if(deletedWithoutTags.replaceAll("\\s", "").equals(addedWithoutTags.replaceAll("\\s", ""))) {
+			//make all pair combinations
+			for(UMLDocElement deletedDocElement : deletedDocElements) {
+				for(UMLDocElement addedDocElement : addedDocElements) {
+					Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+					commonDocElements.add(pair);
+				}
+			}
+			if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
+				manyToManyReformat = true;
+			}
+			return true;
+		}
+		else if(normalizedEditDistance(deletedWithoutTags.replaceAll("\\s", ""), addedWithoutTags.replaceAll("\\s", "")) < 0.1) {
 			//make all pair combinations
 			for(UMLDocElement deletedDocElement : deletedDocElements) {
 				for(UMLDocElement addedDocElement : addedDocElements) {
@@ -456,6 +485,12 @@ public class UMLJavadocDiff {
 			return true;
 		}
 		return false;
+	}
+
+	public double normalizedEditDistance(String s1, String s2) {
+		int distance = StringDistance.editDistance(s1, s2);
+		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
+		return normalized;
 	}
 
 	private boolean alreadyMatchedNestedTagElement(UMLTagElement deletedTagElement, UMLTagElement addedTagElement) {

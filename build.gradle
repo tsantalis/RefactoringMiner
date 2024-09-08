@@ -63,6 +63,7 @@ dependencies {
 	implementation 'com.github.gumtreediff:core:3.0.0'
 	implementation 'com.github.gumtreediff:gen.jdt:3.0.0'
     implementation 'org.jcommander:jcommander:1.83'
+    implementation 'org.jsoup:jsoup:1.18.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'

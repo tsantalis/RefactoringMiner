@@ -85,4 +85,8 @@ public class UMLDocElement implements LocationInfoProvider {
 	public void setTagProperty(boolean isTagProperty) {
 		this.isTagProperty = isTagProperty;
 	}
+
+	public boolean isHTMLTag() {
+		return text.startsWith("<") && text.endsWith(">");
+	}
 }

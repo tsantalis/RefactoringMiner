@@ -569,7 +569,7 @@ public class UMLJavadocDiff {
 		return false;
 	}
 
-	public double normalizedEditDistance(String s1, String s2) {
+	private double normalizedEditDistance(String s1, String s2) {
 		int distance = StringDistance.editDistance(s1, s2);
 		double normalized = (double)distance/(double)Math.max(s1.length(), s2.length());
 		return normalized;
@@ -618,14 +618,14 @@ public class UMLJavadocDiff {
 		for(int i=longestSubSequence.size(); i>1; i--) {
 			List<String> subList = longestSubSequence.subList(0,i);
 			int index = Collections.indexOfSubList(list, subList);
-			if(index != -1) {
+			if(index != -1 && (subList.size() > 1 || (subList.size() == 1 && Character.isUpperCase(subList.get(0).charAt(0))))) {
 				return true;
 			}
 		}
 		for(int i=0; i<longestSubSequence.size(); i++) {
 			List<String> subList = longestSubSequence.subList(i,longestSubSequence.size());
 			int index = Collections.indexOfSubList(list, subList);
-			if(index != -1) {
+			if(index != -1 && (subList.size() > 1 || (subList.size() == 1 && Character.isUpperCase(subList.get(0).charAt(0))))) {
 				return true;
 			}
 		}

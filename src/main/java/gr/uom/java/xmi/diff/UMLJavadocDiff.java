@@ -206,8 +206,16 @@ public class UMLJavadocDiff {
 											commonDocElements.add(pair);
 											List<Integer> indices1 = findAllMatchingIndices(deletedDocElements, docElement);
 											List<Integer> indices2 = findAllMatchingIndices(addedDocElements, docElement);
-											deletedDocElements.remove((int)indices1.get(beforeMatchingIndices.indexOf(beforeIndex)-updates));
-											addedDocElements.remove((int)indices2.get(matchingIndices.indexOf(index)-updates));
+											int beforeIndexToRemove = beforeMatchingIndices.indexOf(beforeIndex);
+											if(beforeIndexToRemove >= indices1.size()) {
+												beforeIndexToRemove = beforeIndexToRemove - updates;
+											}
+											deletedDocElements.remove((int)indices1.get(beforeIndexToRemove));
+											int afterIndexToRemove = matchingIndices.indexOf(index);
+											if(afterIndexToRemove >= indices2.size()) {
+												afterIndexToRemove = afterIndexToRemove - updates;
+											}
+											addedDocElements.remove((int)indices2.get(afterIndexToRemove));
 											updates++;
 											break;
 										}
@@ -255,8 +263,16 @@ public class UMLJavadocDiff {
 											commonDocElements.add(pair);
 											List<Integer> indices1 = findAllMatchingIndices(deletedDocElements, docElement);
 											List<Integer> indices2 = findAllMatchingIndices(addedDocElements, docElement);
-											deletedDocElements.remove((int)indices1.get(matchingIndices.indexOf(index)-updates));
-											addedDocElements.remove((int)indices2.get(afterMatchingIndices.indexOf(afterIndex)-updates));
+											int beforeIndexToRemove = matchingIndices.indexOf(index);
+											if(beforeIndexToRemove >= indices1.size()) {
+												beforeIndexToRemove = beforeIndexToRemove - updates;
+											}
+											deletedDocElements.remove((int)indices1.get(beforeIndexToRemove));
+											int afterIndexToRemove = afterMatchingIndices.indexOf(afterIndex);
+											if(afterIndexToRemove >= indices2.size()) {
+												afterIndexToRemove = afterIndexToRemove - updates;
+											}
+											addedDocElements.remove((int)indices2.get(afterIndexToRemove));
 											updates++;
 											break;
 										}

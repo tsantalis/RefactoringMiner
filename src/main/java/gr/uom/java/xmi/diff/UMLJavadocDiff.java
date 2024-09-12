@@ -335,11 +335,30 @@ public class UMLJavadocDiff {
 				}
 			}
 		}
+		if(tagBefore.isParam() && tagAfter.isParam()) {
+			String paramNameBefore = tagBefore.getParamName();
+			String paramNameAfter = tagAfter.getParamName();
+			if(paramNameBefore != null && paramNameAfter != null && !paramNameBefore.equals(paramNameAfter) &&
+					fragmentsBefore.size() > 1 && fragmentsAfter.size() > 1) {
+				Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(1), fragmentsAfter.get(1));
+				if(commonDocElements.contains(pair) && fragmentsBefore.get(0).getText().equals(paramNameBefore) && fragmentsAfter.get(0).getText().equals(paramNameAfter)) {
+					Pair<UMLDocElement, UMLDocElement> variablePair = Pair.of(fragmentsBefore.get(0), fragmentsAfter.get(0));
+					commonDocElements.add(variablePair);
+					deletedDocElements.remove(fragmentsBefore.get(0));
+					addedDocElements.remove(fragmentsAfter.get(0));
+				}
+			}
+		}
+		if(deletedDocElements.size() == 0 || addedDocElements.size() == 0) {
+			this.deletedDocElements.addAll(deletedDocElements);
+			this.addedDocElements.addAll(addedDocElements);
+			return commonDocElements.size() > 0 || fragmentsBefore.isEmpty() || fragmentsAfter.isEmpty();
+		}
 		//match doc elements differing only in opening/closing quotes
 		if(deletedDocElements.size() <= addedDocElements.size()) {
 			for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
+				String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
 				for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
-					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
 					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
 					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
 						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
@@ -352,9 +371,9 @@ public class UMLJavadocDiff {
 		}
 		else {
 			for(UMLDocElement addedDocElement : new ArrayList<>(addedDocElements)) {
+				String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
 				for(UMLDocElement deletedDocElement : new ArrayList<>(deletedDocElements)) {
 					String trimmed1 = deletedDocElement.getText().replaceAll("^\"|\"$", "");
-					String trimmed2 = addedDocElement.getText().replaceAll("^\"|\"$", "");
 					if(trimmed1.equals(trimmed2) || trimmed1.equals(trimmed2 + ".") || trimmed2.equals(trimmed1 + ".")) {
 						Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
 						commonDocElements.add(pair);

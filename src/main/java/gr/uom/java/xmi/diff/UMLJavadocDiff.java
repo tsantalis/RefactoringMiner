@@ -70,6 +70,39 @@ public class UMLJavadocDiff {
 		}
 		List<UMLTagElement> deletedToBeDeleted = new ArrayList<UMLTagElement>();
 		List<UMLTagElement> addedToBeDeleted = new ArrayList<UMLTagElement>();
+		//process first param tags with the same parameter name
+		for(UMLTagElement tagBefore : deletedTags) {
+			for(UMLTagElement tagAfter : addedTags) {
+				if(tagBefore.isParam() && tagAfter.isParam()) {
+					String paramNameBefore = tagBefore.getParamName();
+					String paramNameAfter = tagAfter.getParamName();
+					if(paramNameBefore != null && paramNameAfter != null && paramNameBefore.equals(paramNameAfter)) {
+						boolean match = processModifiedTags(tagBefore, tagAfter);
+						if(match) {
+							deletedToBeDeleted.add(tagBefore);
+							addedToBeDeleted.add(tagAfter);
+							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+							commonTags.add(pair);
+							matchNestedTags(tagBefore, tagAfter);
+							break;
+						}
+					}
+				}
+				else if(tagBefore.isReturn() && tagAfter.isReturn()) {
+					boolean match = processModifiedTags(tagBefore, tagAfter);
+					if(match) {
+						deletedToBeDeleted.add(tagBefore);
+						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
+						matchNestedTags(tagBefore, tagAfter);
+						break;
+					}
+				}
+			}
+		}
+		deletedTags.removeAll(deletedToBeDeleted);
+		addedTags.removeAll(addedToBeDeleted);
 		if(deletedTags.size() <= addedTags.size()) {
 			for(UMLTagElement tagBefore : deletedTags) {
 				for(UMLTagElement tagAfter : addedTags) {
@@ -77,6 +110,8 @@ public class UMLJavadocDiff {
 					if(match) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
 						matchNestedTags(tagBefore, tagAfter);
 						break;
 					}
@@ -90,6 +125,8 @@ public class UMLJavadocDiff {
 					if(match) {
 						deletedToBeDeleted.add(tagBefore);
 						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
 						matchNestedTags(tagBefore, tagAfter);
 						break;
 					}

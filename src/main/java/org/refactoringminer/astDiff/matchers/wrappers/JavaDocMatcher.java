@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
+import com.github.gumtreediff.matchers.CompositeMatchers;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLDocElement;
@@ -8,7 +9,6 @@ import gr.uom.java.xmi.UMLTagElement;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.apache.commons.lang3.tuple.Pair;
 import org.refactoringminer.astDiff.matchers.TreeMatcher;
-import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -45,7 +45,16 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             }
             else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
-                new LeafMatcher().match(srcJavaDocNode,dstJavaDocNode,mappingStore);
+            	mappingStore.add(new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode));
+            	for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {
+                    Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
+                    Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
+                    if (srcTag != null && dstTag != null) {
+                        if (!mappingStore.isSrcMapped(srcTag) || !mappingStore.isDstMapped(dstTag) || diff.isManyToManyReformat()) {
+                            optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
+                        }
+                    }
+                }
                 for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonNestedTags()) {
                     Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());

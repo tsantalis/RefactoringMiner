@@ -18,6 +18,21 @@ public class UMLTagElement implements LocationInfoProvider {
 		this.nestedTags = new ArrayList<UMLTagElement>();
 	}
 
+	public boolean isParam() {
+		return tagName != null && tagName.equals("@param");
+	}
+
+	public boolean isReturn() {
+		return tagName != null && tagName.equals("@return");
+	}
+
+	public String getParamName() {
+		if(isParam() && fragments.size() > 0) {
+			return fragments.get(0).getText();
+		}
+		return null;
+	}
+
 	public LocationInfo getLocationInfo() {
 		return locationInfo;
 	}

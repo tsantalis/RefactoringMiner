@@ -1,6 +1,8 @@
 package org.refactoringminer.astDiff.matchers.wrappers;
 
 import com.github.gumtreediff.matchers.CompositeMatchers;
+import com.github.gumtreediff.matchers.Mapping;
+import com.github.gumtreediff.matchers.MappingStore;
 import com.github.gumtreediff.tree.Tree;
 
 import gr.uom.java.xmi.UMLDocElement;
@@ -45,7 +47,8 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                 mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
             }
             else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
-            	mappingStore.add(new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode));
+                MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);
+                mappingStore.add(gtSimpleMappings);
             	for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {
                     Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
@@ -100,6 +103,22 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                                             optimizationData.getSubtreeMappings().addMapping(srcTxtParent, dstTxtParent);
                                 }
                             }
+                        }
+                    }
+                }
+                for (UMLDocElement deletedDocElement : diff.getDeletedDocElements()) {
+                    Tree srcDocElement = TreeUtilFunctions.findByLocationInfo(srcTree, deletedDocElement.getLocationInfo());
+                    for (Mapping gtSimpleMapping : gtSimpleMappings) {
+                        if (gtSimpleMapping.first.equals(srcDocElement)) {
+                            mappingStore.removeMapping(gtSimpleMapping.first, gtSimpleMapping.second);
+                        }
+                    }
+                }
+                for (UMLDocElement addedDocElements : diff.getAddedDocElements()) {
+                    Tree dstDocElement = TreeUtilFunctions.findByLocationInfo(dstTree, addedDocElements.getLocationInfo());
+                    for (Mapping gtSimpleMapping : gtSimpleMappings) {
+                        if (gtSimpleMapping.second.equals(dstDocElement)) {
+                            mappingStore.removeMapping(gtSimpleMapping.first, gtSimpleMapping.second);
                         }
                     }
                 }

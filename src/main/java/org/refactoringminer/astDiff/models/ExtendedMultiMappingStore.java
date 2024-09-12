@@ -183,6 +183,8 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		return hasDst(dst) && getSrcs(dst) != null && getSrcs(dst).size() > 0;
 	}
 	public void addMappingRecursively(Tree src, Tree dst) {
+		if (!src.getType().equals(dst.getType()) && !src.isLeaf() && !dst.isLeaf())
+			return;
 		addMapping(src, dst);
 		if (src.getChildren() != null)
 			for (int i = 0; i < src.getChildren().size(); i++)

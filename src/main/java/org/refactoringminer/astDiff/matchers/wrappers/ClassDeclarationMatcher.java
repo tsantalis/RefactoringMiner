@@ -90,7 +90,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processInterfaceToSuperclassOrOpposite(classDiff, mappingStore, srcTypeDeclaration, dstTypeDeclaration);
-        new JavaDocMatcher(optimizationData, classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc())
+        new JavaDocMatcher(optimizationData, classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc(), classDiff.getJavadocDiff())
                 .match(srcTree, dstTree, mappingStore);
         processClassAnnotations(srcTypeDeclaration,dstTypeDeclaration,classDiff.getAnnotationListDiff(),mappingStore);
     }

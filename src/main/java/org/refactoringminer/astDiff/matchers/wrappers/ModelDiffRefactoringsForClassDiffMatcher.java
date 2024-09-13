@@ -13,6 +13,7 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /* Created by pourya on 2024-05-22*/
@@ -71,7 +72,10 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
-                    new FieldDeclarationMatcher(optimizationData, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute()).match(srcTotalTree, dstTotalTree, mappingStore);
+                    new FieldDeclarationMatcher(optimizationData, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
+                            Optional.of(new UMLJavadocDiff(moveAttributeRefactoring.getOriginalAttribute().getJavadoc(), moveAttributeRefactoring.getMovedAttribute().getJavadoc())))
+                            //TODO : Replace this with moveAttributeRefactoring.getJavadocDiff() when it is implemented
+                            .match(srcTotalTree, dstTotalTree, mappingStore);
                     this.processedMoveRefactorings.add(moveAttributeRefactoring);
                 }
             } else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {

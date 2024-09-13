@@ -24,7 +24,7 @@ public class FieldDeclarationByAttrDiffMatcher extends OptimizationAwareMatcher 
         processFieldDeclarationByAttrDiff(srcTree, dstTree, umlAttrDiff, mappingStore);
     }
     private void processFieldDeclarationByAttrDiff(Tree srcTree, Tree dstTree, UMLAttributeDiff umlAttributeDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute()).match(srcTree,dstTree,mappingStore);
+        new FieldDeclarationMatcher(optimizationData, umlAttributeDiff.getRemovedAttribute(), umlAttributeDiff.getAddedAttribute(), umlAttributeDiff.getJavadocDiff() ).match(srcTree,dstTree,mappingStore);
         if (umlAttributeDiff.getInitializerMapper().isPresent()) {
             UMLOperationBodyMapper umlOperationBodyMapper = umlAttributeDiff.getInitializerMapper().get();
             new MethodMatcher(optimizationData, umlOperationBodyMapper).match(srcTree, dstTree, mappingStore);

@@ -16,6 +16,8 @@ import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.util.Optional;
+
 import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.areBothFromThisType;
 import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.isFromType;
 
@@ -24,29 +26,43 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
 
     private final UMLJavadoc srcUMLJavaDoc;
     private final UMLJavadoc dstUMLJavaDoc;
+    private final Optional<UMLJavadocDiff> umlJavadocDiff;
 
-    public JavaDocMatcher(UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
+    public JavaDocMatcher(UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, Optional<UMLJavadocDiff> umlJavadocDiff) {
         this.srcUMLJavaDoc = srcUMLJavaDoc;
         this.dstUMLJavaDoc = dstUMLJavaDoc;
+        this.umlJavadocDiff = umlJavadocDiff;
     }
 
-    public JavaDocMatcher(OptimizationData optimizationData, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc) {
+    public JavaDocMatcher(OptimizationData optimizationData, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, Optional<UMLJavadocDiff> umlJavadocDiff) {
         super(optimizationData);
         this.srcUMLJavaDoc = srcUMLJavaDoc;
         this.dstUMLJavaDoc = dstUMLJavaDoc;
+        this.umlJavadocDiff = umlJavadocDiff;
     }
 
     private void processJavaDocs(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
         if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
-            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,srcUMLJavaDoc.getLocationInfo());
-            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLJavaDoc.getLocationInfo());
-            if (srcJavaDocNode == null || dstJavaDocNode == null) return;
-            UMLJavadocDiff diff = new UMLJavadocDiff(srcUMLJavaDoc, dstUMLJavaDoc);
-            mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
-            if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode) & !diff.isManyToManyReformat()) {
-                mappingStore.addMappingRecursively(srcJavaDocNode,dstJavaDocNode);
+            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfoNoLookAhead(srcTree,
+                    umlJavadocDiff.isPresent() ?
+                    umlJavadocDiff.get().getJavadocBefore().getLocationInfo() :
+                    srcUMLJavaDoc.getLocationInfo());
+            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfoNoLookAhead(dstTree,
+                    umlJavadocDiff.isPresent() ?
+                    umlJavadocDiff.get().getJavadocAfter().getLocationInfo() :
+                    dstUMLJavaDoc.getLocationInfo());
+            if (srcJavaDocNode == null || dstJavaDocNode == null)
+                return;
+            if (srcJavaDocNode.isIsoStructuralTo(dstJavaDocNode)) {
+                if (umlJavadocDiff.isPresent() && umlJavadocDiff.get().isManyToManyReformat()) {
+                    mappingStore.addMappingRecursively(srcJavaDocNode, dstJavaDocNode);
+                    return;
+                }
             }
-            else if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
+            if (umlJavadocDiff.isEmpty()) return;
+            mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
+            UMLJavadocDiff diff = umlJavadocDiff.get();
+            if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);
                 mappingStore.add(gtSimpleMappings);
             	for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {

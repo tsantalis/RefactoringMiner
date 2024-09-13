@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
 import org.refactoringminer.astDiff.models.ExtendedMultiMappingStore;
@@ -10,22 +11,27 @@ import org.refactoringminer.astDiff.matchers.TreeMatcher;
 import org.refactoringminer.astDiff.matchers.statement.LeafMatcher;
 import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
+import java.util.Optional;
+
 /* Created by pourya on 2024-05-22*/
 public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements TreeMatcher {
 
 
     private final UMLAttribute originalAttribute;
     private final UMLAttribute movedAttribute;
+    private final Optional<UMLJavadocDiff> umlJavadocDiff;
 
-    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff) {
         this.originalAttribute = originalAttribute;
         this.movedAttribute = movedAttribute;
+        this.umlJavadocDiff = umlJavadocDiff;
     }
 
-    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute) {
+    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff) {
         super(optimizationData);
         this.originalAttribute = originalAttribute;
         this.movedAttribute = movedAttribute;
+        this.umlJavadocDiff = umlJavadocDiff;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         Tree dstVarDeclaration = TreeUtilFunctions.findByLocationInfo(dstTree,dstUMLAttribute.getVariableDeclaration().getLocationInfo());
         mappingStore.addMapping(srcVarDeclaration,dstVarDeclaration);
         new LeafMatcher().match(srcVarDeclaration,dstVarDeclaration,mappingStore);
-        new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc())
+        new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff)
                 .match(srcTree, dstTree, mappingStore);
         if (srcVarDeclaration != null && dstVarDeclaration != null)
             mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));

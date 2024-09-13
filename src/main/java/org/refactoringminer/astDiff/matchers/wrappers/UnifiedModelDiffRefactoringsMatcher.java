@@ -65,7 +65,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 if (moveOperationRefactoring.getOriginalOperation().getJavadoc() == null && moveOperationRefactoring.getMovedOperation().getJavadoc() != null) {
                     UMLClass originalClass = modelDiff.getRemovedClass(moveOperationRefactoring.getOriginalOperation().getClassName());
                     if (originalClass != null && originalClass.getJavadoc() != null) {
-                        findDiffsAndApplyMatcher(srcPath, dstPath, new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc()));
+                        findDiffsAndApplyMatcher(srcPath, dstPath, new JavaDocMatcher(originalClass.getJavadoc(), moveOperationRefactoring.getMovedOperation().getJavadoc(), moveOperationRefactoring.getBodyMapper().getJavadocDiff()));
                     }
                 }
             }
@@ -74,7 +74,7 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
                 String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
                 String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute()));
+                findDiffsAndApplyMatcher(srcPath, dstPath, new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Optional.empty()) /* TODO : Replace with movedAttr.getJavaDocDiff() */ );
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
             {

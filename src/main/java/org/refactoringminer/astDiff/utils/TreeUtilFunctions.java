@@ -27,17 +27,22 @@ public class TreeUtilFunctions {
 	private static FakeTree _instance;
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
-		int startoffset = locationInfo.getStartOffset();
-		int endoffset = locationInfo.getEndOffset();
-		if (tree.getPos() > startoffset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
-		Tree treeBetweenPositions = getTreeBetweenPositions(tree, startoffset, endoffset);
+		int start_offset = locationInfo.getStartOffset();
+		if (tree.getPos() > start_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
+		return findByLocationInfoNoLookAhead(tree, locationInfo);
+	}
+
+	public static Tree findByLocationInfoNoLookAhead(Tree tree, LocationInfo locationInfo) {
+		int start_offset = locationInfo.getStartOffset();
+		int end_offset = locationInfo.getEndOffset();
+		Tree treeBetweenPositions = getTreeBetweenPositions(tree, start_offset, end_offset);
 		if (treeBetweenPositions == null) return null;
 		if (isFromType(treeBetweenPositions, Constants.METHOD_INVOCATION_ARGUMENTS))
 		{
 			if (treeBetweenPositions.getChildren().size() > 0 )
 			{
-				if (treeBetweenPositions.getChild(0).getPos() == startoffset
-						&& treeBetweenPositions.getChild(0).getEndPos() == endoffset)
+				if (treeBetweenPositions.getChild(0).getPos() == start_offset
+						&& treeBetweenPositions.getChild(0).getEndPos() == end_offset)
 					return treeBetweenPositions.getChild(0);
 				else {
 					return treeBetweenPositions;

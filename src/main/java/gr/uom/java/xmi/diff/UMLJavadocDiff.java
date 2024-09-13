@@ -493,6 +493,8 @@ public class UMLJavadocDiff {
 									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement)) {
 										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
 										commonDocElements.add(pair);
+										deletedToBeDeleted.add(deletedDocElement);
+										addedToBeDeleted.add(addedDocElement);
 									}
 								}
 							}
@@ -501,7 +503,6 @@ public class UMLJavadocDiff {
 					if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
 						manyToManyReformat = true;
 					}
-					return true;
 				}
 			}
 			else {
@@ -536,6 +537,8 @@ public class UMLJavadocDiff {
 											deletedTokenSequenceMap.get(deletedDocElement).size() > 1)) {
 										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
 										commonDocElements.add(pair);
+										deletedToBeDeleted.add(deletedDocElement);
+										addedToBeDeleted.add(addedDocElement);
 									}
 								}
 							}
@@ -544,10 +547,11 @@ public class UMLJavadocDiff {
 					if(deletedDocElements.size() >= 1 && addedDocElements.size() >= 1) {
 						manyToManyReformat = true;
 					}
-					return true;
 				}
 			}
 		}
+		deletedDocElements.removeAll(deletedToBeDeleted);
+		addedDocElements.removeAll(addedToBeDeleted);
 		if(deletedDocElements.size() > addedDocElements.size()) {
 			for(UMLDocElement addedDocElement : addedDocElements) {
 				String text = addedDocElement.getText();

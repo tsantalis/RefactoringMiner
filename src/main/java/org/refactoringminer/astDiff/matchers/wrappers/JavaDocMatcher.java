@@ -54,7 +54,10 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
                     if (srcTag != null && dstTag != null) {
                         if (!mappingStore.isSrcMapped(srcTag) || !mappingStore.isDstMapped(dstTag) || diff.isManyToManyReformat()) {
-                            optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
+                            if (srcTag.isIsoStructuralTo(dstTag))
+                                optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
+                            else
+                                optimizationData.getSubtreeMappings().addMapping(srcTag,dstTag);
                         }
                     }
                 }

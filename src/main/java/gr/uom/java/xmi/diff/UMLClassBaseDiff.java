@@ -2719,6 +2719,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(removedOperation);
 					inlinedToExtracted = true;
+					//check if the Javadoc of the inlined method matches the Javadoc of the method calling the extracted one
+					if(removedOperation.getJavadoc() != null && mapper.getParentMapper().getOperation2() != null && mapper.getParentMapper().getOperation2().getJavadoc() != null &&
+							removedOperation.getJavadoc().getText().equals(mapper.getParentMapper().getOperation2().getJavadoc().getText())) {
+						UMLJavadocDiff diff = new UMLJavadocDiff(removedOperation.getJavadoc(), mapper.getParentMapper().getOperation2().getJavadoc());
+						mapper.getParentMapper().updateJavadocDiff(diff);
+					}
+					//check if the Javadoc of the method from which the extracted method was extracted matches the Javadoc of the extracted method
+					if(mapper.getParentMapper().getOperation1() != null && mapper.getParentMapper().getOperation1().getJavadoc() != null &&
+							mapper.getOperation2() != null && mapper.getOperation2().getJavadoc() != null &&
+							mapper.getParentMapper().getOperation1().getJavadoc().getText().equals(mapper.getOperation2().getJavadoc().getText())) {
+						UMLJavadocDiff diff = new UMLJavadocDiff(mapper.getParentMapper().getOperation1().getJavadoc(), mapper.getOperation2().getJavadoc());
+						mapper.updateJavadocDiff(diff);
+					}
 				}
 			}
 		}

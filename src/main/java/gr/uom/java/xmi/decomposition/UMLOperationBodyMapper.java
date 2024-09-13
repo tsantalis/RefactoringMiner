@@ -2189,6 +2189,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return extractedStatements;
 	}
 
+	public void updateJavadocDiff(UMLJavadocDiff diff) {
+		javadocDiff = Optional.of(diff);
+	}
+
 	public Optional<UMLJavadocDiff> getJavadocDiff() {
 		return javadocDiff;
 	}

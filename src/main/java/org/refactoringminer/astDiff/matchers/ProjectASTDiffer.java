@@ -90,6 +90,7 @@ public class ProjectASTDiffer
 
 	private void processAllOptimizations(Map<ASTDiff, OptimizationData> newlyGeneratedDiffMap) {
 		for (ASTDiff diff : projectASTDiff.getDiffSet()) {
+//			optimizationDataMap.get()
 			new ASTDiffMappingOptimizer(optimizationDataMap.get(diff), diff, modelDiff.getParentModel().getTreeContextMap(), modelDiff.getChildModel().getTreeContextMap()).
 					match(diff.src.getRoot(), diff.dst.getRoot(), diff.getAllMappings());
 		}
@@ -161,7 +162,7 @@ public class ProjectASTDiffer
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
 			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile());
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
-			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision);
+			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends);
 			if (!appends.isEmpty()) {
 				for (ASTDiff append : appends) {
 					append.getAllMappings().mergeMappings(classASTDiff.getAllMappings());
@@ -173,7 +174,7 @@ public class ProjectASTDiffer
 		}
 	}
 
-	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair,boolean mergeFlag){
+	private ASTDiff process(UMLAbstractClassDiff classDiff, Pair<TreeContext, TreeContext> treeContextPair, boolean mergeFlag, Collection<ASTDiff> appends){
 		Tree srcTree = treeContextPair.first.getRoot();
 		Tree dstTree = treeContextPair.second.getRoot();
 		ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree,dstTree);
@@ -182,10 +183,26 @@ public class ProjectASTDiffer
 				treeContextPair.first,
 				treeContextPair.second,
 				mappingStore);
-		optimizationDataMap.putIfAbsent(astDiff,
-			new OptimizationData(new ArrayList<>(),
-			new ExtendedMultiMappingStore(srcTree,dstTree)));
+
 		OptimizationData optimizationData = optimizationDataMap.get(astDiff);
+		if (optimizationData == null){
+			if (!mergeFlag) {
+				optimizationDataMap.putIfAbsent(astDiff,
+						new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree)));
+				optimizationData = optimizationDataMap.get(astDiff);
+			}
+			else {
+				try {
+					optimizationData = optimizationDataMap.get(appends.iterator().next());
+				}
+				catch (Exception e)
+				{
+					optimizationDataMap.putIfAbsent(astDiff,
+							new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree, dstTree)));
+					optimizationData = optimizationDataMap.get(astDiff);
+				}
+			}
+		}
 		new ClassDiffMatcher(optimizationData, classDiff, mergeFlag, modelDiffRefactorings).match(srcTree, dstTree, mappingStore);
 		return astDiff;
 	}

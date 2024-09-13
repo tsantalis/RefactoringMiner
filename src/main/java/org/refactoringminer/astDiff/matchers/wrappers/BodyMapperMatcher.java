@@ -59,6 +59,8 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
             else if (abstractCodeMapping instanceof CompositeStatementObjectMapping)
                 processCompositeMapping(srcTree,dstTree,abstractCodeMapping,mappingStore);
         }
+        if (isPartOfExtractedMethod)
+            new JavaDocMatcher(optimizationData, bodyMapper.getOperation1().getJavadoc(), bodyMapper.getOperation2().getJavadoc(), bodyMapper.getJavadocDiff()).match(srcTree,dstTree,mappingStore);
     }
 
     private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {

@@ -2706,6 +2706,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void checkForInlinedOperationsToExtractedOperations(List<UMLOperationBodyMapper> extractedBodyMappers) throws RefactoringMinerTimedOutException {
 		List<UMLOperation> operationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperationBodyMapper> inlinedOperationMappers = new ArrayList<UMLOperationBodyMapper>();
+		boolean inlinedToExtracted = false;
 		for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
 			InlineOperationDetection detection = new InlineOperationDetection(mapper, removedOperations, this, modelDiff);
 			List<UMLOperation> sortedRemovedOperations = detection.getRemovedOperationsSortedByCalls();
@@ -2717,12 +2718,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					inlinedOperationMappers.add(operationBodyMapper);
 					mapper.addChildMapper(operationBodyMapper);
 					operationsToBeRemoved.add(removedOperation);
+					inlinedToExtracted = true;
 				}
 			}
 		}
-		MappingOptimizer optimizer = new MappingOptimizer(this);
-		for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
-			optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+		if(inlinedToExtracted) {
+			MappingOptimizer optimizer = new MappingOptimizer(this);
+			for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
+				optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+			}
 		}
 		for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {
 			processMapperRefactorings(operationBodyMapper, refactorings);

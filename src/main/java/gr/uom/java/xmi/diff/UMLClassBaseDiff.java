@@ -1074,7 +1074,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
 				for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 					UMLOperation addedOperation = addedOperationIterator.next();
-					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) &&
+					if(!containsMapperForOperation1(removedOperation) && !containsMapperForOperation2(addedOperation) && !existingMapperDelegatesToAddedOperation(addedOperation) &&
 							removedOperationBuilderStatementRatio < BUILDER_STATEMENT_RATIO_THRESHOLD && addedOperation.builderStatementRatio() < BUILDER_STATEMENT_RATIO_THRESHOLD) {
 						int maxDifferenceInPosition;
 						if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation()) {
@@ -2720,6 +2720,10 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 		}
+		MappingOptimizer optimizer = new MappingOptimizer(this);
+		for(UMLOperationBodyMapper mapper : extractedBodyMappers) {
+			optimizer.optimizeDuplicateMappingsForInline(mapper, refactorings);
+		}
 		for(UMLOperationBodyMapper operationBodyMapper : inlinedOperationMappers) {
 			processMapperRefactorings(operationBodyMapper, refactorings);
 		}
@@ -3120,6 +3124,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					return true;
 				}
+			}
+		}
+		return false;
+	}
+
+	private boolean existingMapperDelegatesToAddedOperation(UMLOperation addedOperation) {
+		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
+			AbstractCall call = mapper.getContainer2().isDelegate();
+			if(call != null && call.matchesOperation(addedOperation, mapper.getContainer2(), this, modelDiff) &&
+					mapper.getContainer1().isDelegate() == null && mapper.getContainer1().stringRepresentation().size() > 4) {
+				return true;
 			}
 		}
 		return false;

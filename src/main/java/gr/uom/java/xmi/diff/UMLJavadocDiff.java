@@ -190,7 +190,7 @@ public class UMLJavadocDiff {
 						deletedNestedTag.getFragments().size() > 0) {
 					UMLDocElement fragment1 = deletedNestedTag.getFragments().get(0);
 					UMLDocElement fragment2 = addedNestedTag.getFragments().get(0);
-					if(fragment1.getText().startsWith("#") && fragment2.getText().startsWith("#")) {
+					if(fragment1.getText().contains("#") && fragment2.getText().contains("#")) {
 						String text1 = fragment1.getText();
 						if(text1.contains("(")) {
 							text1 = text1.substring(0, text1.indexOf("("));
@@ -199,10 +199,24 @@ public class UMLJavadocDiff {
 						if(text2.contains("(")) {
 							text2 = text2.substring(0, text2.indexOf("("));
 						}
-						if(text1.contains(text2) || text2.contains(text1)) {
+						String memberName1 = text1.substring(text1.indexOf("#"), text1.length());
+						String memberName2 = text2.substring(text2.indexOf("#"), text2.length());
+						if(text1.contains(text2) || text2.contains(text1) || memberName1.equals(memberName2)) {
 							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(deletedNestedTag, addedNestedTag);
 							commonNestedTags.add(pair);
 						}
+					}
+				}
+				else if(deletedNestedTag.getTagName() != null && addedNestedTag.getTagName() != null &&
+						deletedNestedTag.getTagName().equals(addedNestedTag.getTagName()) &&
+						deletedNestedTag.getFragments().size() > 0 && addedNestedTag.getFragments().size() > 0) {
+					UMLDocElement fragment1 = deletedNestedTag.getFragments().get(0);
+					UMLDocElement fragment2 = addedNestedTag.getFragments().get(0);
+					String trimmed1 = fragment1.getText().trim();
+					String trimmed2 = fragment2.getText().trim();
+					if(trimmed1.contains(trimmed2) || trimmed2.contains(trimmed1)) {
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(deletedNestedTag, addedNestedTag);
+						commonNestedTags.add(pair);
 					}
 				}
 			}

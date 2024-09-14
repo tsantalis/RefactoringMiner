@@ -676,10 +676,18 @@ Nikolaos Tsantalis, Ameya Ketkar, and Danny Dig, "[RefactoringMiner 2.0](https:/
 Pouria Alikhanifard and Nikolaos Tsantalis, "[A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools](https://users.encs.concordia.ca/~nikolaos/publications/TOSEM_2024.pdf)," *ACM Transactions on Software Engineering and Methodology*, 2024. (accepted)
 
     @article{Alikhanifard:TOSEM:2024:RefactoringMiner3.0,
-        author = {Pouria Alikhanifard and Nikolaos Tsantalis},
-        title = {A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools}, 
-        journal = {ACM Transactions on Software Engineering and Methodology},
-        year = {2024},
+        author = {Alikhanifard, Pouria and Tsantalis, Nikolaos},
+	title = {A Novel Refactoring and Semantic Aware Abstract Syntax Tree Differencing Tool and a Benchmark for Evaluating the Accuracy of Diff Tools},
+	year = {2024},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	issn = {1049-331X},
+	url = {https://doi.org/10.1145/3696002},
+	doi = {10.1145/3696002},
+	note = {Just Accepted},
+	journal = {ACM Transactions on Software Engineering and Methodology},
+	month = {sep},
+	keywords = {Source code differencing, Abstract Syntax Trees, Benchmark}
     }
 
 ## Talks about RefactoringMiner

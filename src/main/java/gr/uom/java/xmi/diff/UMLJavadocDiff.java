@@ -51,6 +51,7 @@ public class UMLJavadocDiff {
 					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagsAfter.get(index));
 					commonTags.add(pair);
 					processIdenticalTags(tagBefore, tagsAfter.get(index));
+					matchNestedTags(tagBefore, tagsAfter.get(index));
 					deletedTags.remove(tagBefore);
 					addedTags.remove(tagBefore);
 				}
@@ -63,6 +64,7 @@ public class UMLJavadocDiff {
 					Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagsBefore.get(index), tagAfter);
 					commonTags.add(pair);
 					processIdenticalTags(tagsBefore.get(index), tagAfter);
+					matchNestedTags(tagsBefore.get(index), tagAfter);
 					deletedTags.remove(tagAfter);
 					addedTags.remove(tagAfter);
 				}
@@ -173,6 +175,33 @@ public class UMLJavadocDiff {
 							deletedNestedTags.remove(nestedTagAfter);
 							addedNestedTags.remove(nestedTagAfter);
 							break;
+						}
+					}
+				}
+			}
+		}
+		if(deletedNestedTags.size() == addedNestedTags.size()) {
+			for(int i=0; i<deletedNestedTags.size(); i++) {
+				UMLTagElement deletedNestedTag = deletedNestedTags.get(i);
+				UMLTagElement addedNestedTag = addedNestedTags.get(i);
+				if(deletedNestedTag.getTagName() != null && addedNestedTag.getTagName() != null &&
+						deletedNestedTag.getTagName().equals(addedNestedTag.getTagName()) &&
+						deletedNestedTag.getFragments().size() == addedNestedTag.getFragments().size() &&
+						deletedNestedTag.getFragments().size() > 0) {
+					UMLDocElement fragment1 = deletedNestedTag.getFragments().get(0);
+					UMLDocElement fragment2 = addedNestedTag.getFragments().get(0);
+					if(fragment1.getText().startsWith("#") && fragment2.getText().startsWith("#")) {
+						String text1 = fragment1.getText();
+						if(text1.contains("(")) {
+							text1 = text1.substring(0, text1.indexOf("("));
+						}
+						String text2 = fragment2.getText();
+						if(text2.contains("(")) {
+							text2 = text2.substring(0, text2.indexOf("("));
+						}
+						if(text1.contains(text2) || text2.contains(text1)) {
+							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(deletedNestedTag, addedNestedTag);
+							commonNestedTags.add(pair);
 						}
 					}
 				}

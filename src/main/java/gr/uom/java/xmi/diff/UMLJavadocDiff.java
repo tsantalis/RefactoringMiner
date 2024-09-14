@@ -101,6 +101,17 @@ public class UMLJavadocDiff {
 						break;
 					}
 				}
+				else if(tagBefore.isThrows() && tagAfter.isThrows()) {
+					boolean match = processModifiedTags(tagBefore, tagAfter);
+					if(match) {
+						deletedToBeDeleted.add(tagBefore);
+						addedToBeDeleted.add(tagAfter);
+						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+						commonTags.add(pair);
+						matchNestedTags(tagBefore, tagAfter);
+						break;
+					}
+				}
 			}
 		}
 		deletedTags.removeAll(deletedToBeDeleted);

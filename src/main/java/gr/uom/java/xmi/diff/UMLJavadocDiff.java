@@ -214,9 +214,25 @@ public class UMLJavadocDiff {
 					UMLDocElement fragment2 = addedNestedTag.getFragments().get(0);
 					String trimmed1 = fragment1.getText().trim();
 					String trimmed2 = fragment2.getText().trim();
+					StringBuilder concatenated1 = new StringBuilder();
+					for(UMLDocElement f1 : deletedNestedTag.getFragments()) {
+						concatenated1.append(f1.getText().trim());
+					}
+					StringBuilder concatenated2 = new StringBuilder();
+					for(UMLDocElement f2 : addedNestedTag.getFragments()) {
+						concatenated2.append(f2.getText().trim());
+					}
 					if(trimmed1.contains(trimmed2) || trimmed2.contains(trimmed1)) {
 						Pair<UMLTagElement, UMLTagElement> pair = Pair.of(deletedNestedTag, addedNestedTag);
 						commonNestedTags.add(pair);
+					}
+					if(concatenated1.toString().replaceAll("\\s", "").equals(concatenated2.toString().replaceAll("\\s", ""))) {
+						for(UMLDocElement deletedDocElement : deletedNestedTag.getFragments()) {
+							for(UMLDocElement addedDocElement : addedNestedTag.getFragments()) {
+								Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+								commonDocElements.add(pair);
+							}
+						}
 					}
 				}
 			}

@@ -311,18 +311,18 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **September 1, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **September 14, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12266  | 20  | 234  | 0.998  | 0.981|
-|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12262  | 20  | 233  | 0.998  | 0.981|
+|Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
 |Move And Rename Attribute|13  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|387  |  4  | 21  | 0.990  | 0.949|
-|Inline Method|117  |  0  |  1  | 1.000  | 0.992|
+|Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|350  |  3  |  6  | 0.992  | 0.983|
 |Move And Rename Method|122  |  0  |  3  | 1.000  | 0.976|
 |Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
@@ -346,12 +346,12 @@ As of **September 1, 2024** the precision and recall of the tool on an oracle co
 |Inline Variable|102  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
 |Rename Variable|327  |  3  | 11  | 0.991  | 0.967|
-|Rename Parameter|490  |  2  | 25  | 0.996  | 0.951|
+|Rename Parameter|490  |  2  | 24  | 0.996  | 0.953|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
-|Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
+|Merge Variable| 5  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
 |Merge Attribute| 5  |  0  |  0  | 1.000  | 1.000|
-|Split Variable| 3  |  0  |  0  | 1.000  | 1.000|
+|Split Variable| 1  |  0  |  0  | 1.000  | 1.000|
 |Split Parameter| 7  |  0  |  0  | 1.000  | 1.000|
 |Split Attribute| 2  |  0  |  0  | 1.000  | 1.000|
 |Replace Variable With Attribute|123  |  0  |  0  | 1.000  | 1.000|
@@ -375,8 +375,8 @@ As of **September 1, 2024** the precision and recall of the tool on an oracle co
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|849  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|307  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|847  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|306  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|

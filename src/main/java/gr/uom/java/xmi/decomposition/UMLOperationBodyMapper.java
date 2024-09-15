@@ -972,7 +972,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), false);
 		}
 		if(operation1.getJavadoc() != null && operation2.getJavadoc() != null) {
-			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc());
+			UMLJavadocDiff diff = new UMLJavadocDiff(operation1.getJavadoc(), operation2.getJavadoc(), operationSignatureDiff);
 			this.javadocDiff = Optional.of(diff);
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments());

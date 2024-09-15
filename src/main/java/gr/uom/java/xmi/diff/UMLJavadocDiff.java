@@ -27,6 +27,7 @@ public class UMLJavadocDiff {
 	private List<UMLDocElement> deletedDocElements;
 	private List<UMLDocElement> addedDocElements;
 	private boolean manyToManyReformat;
+	private UMLOperationDiff signatureDiff;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
 		this.javadocBefore = javadocBefore;
@@ -40,6 +41,26 @@ public class UMLJavadocDiff {
 		this.addedNestedTags = new ArrayList<UMLTagElement>();
 		this.deletedDocElements = new ArrayList<UMLDocElement>();
 		this.addedDocElements = new ArrayList<UMLDocElement>();
+		process(javadocBefore, javadocAfter);
+	}
+
+	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter, UMLOperationDiff signatureDiff) {
+		this.javadocBefore = javadocBefore;
+		this.javadocAfter = javadocAfter;
+		this.commonTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonNestedTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonDocElements = new ArrayList<Pair<UMLDocElement,UMLDocElement>>();
+		this.deletedTags = new ArrayList<UMLTagElement>();
+		this.addedTags = new ArrayList<UMLTagElement>();
+		this.deletedNestedTags = new ArrayList<UMLTagElement>();
+		this.addedNestedTags = new ArrayList<UMLTagElement>();
+		this.deletedDocElements = new ArrayList<UMLDocElement>();
+		this.addedDocElements = new ArrayList<UMLDocElement>();
+		this.signatureDiff = signatureDiff;
+		process(javadocBefore, javadocAfter);
+	}
+
+	private void process(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
 		List<UMLTagElement> tagsBefore = javadocBefore.getTags();
 		List<UMLTagElement> tagsAfter = javadocAfter.getTags();
 		List<UMLTagElement> deletedTags = new ArrayList<UMLTagElement>(tagsBefore);
@@ -86,6 +107,30 @@ public class UMLJavadocDiff {
 							Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
 							commonTags.add(pair);
 							matchNestedTags(tagBefore, tagAfter);
+							break;
+						}
+					}
+					else if(signatureDiff != null) {
+						boolean matchFound = false;
+						for(UMLParameterDiff diff : signatureDiff.getParameterDiffList()) {
+							if(diff.getRemovedParameter().getName().equals(paramNameBefore) &&
+									diff.getAddedParameter().getName().equals(paramNameAfter)) {
+								//match name
+								matchFound = true;
+								UMLDocElement docElementBefore = tagBefore.getFragments().get(0);
+								UMLDocElement docElementAfter = tagAfter.getFragments().get(0);
+								Pair<UMLDocElement, UMLDocElement> docElementPair = Pair.of(docElementBefore, docElementAfter);
+								commonDocElements.add(docElementPair);
+								processModifiedTags(tagBefore, tagAfter);
+								deletedToBeDeleted.add(tagBefore);
+								addedToBeDeleted.add(tagAfter);
+								Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+								commonTags.add(pair);
+								matchNestedTags(tagBefore, tagAfter);
+								break;
+							}
+						}
+						if(matchFound) {
 							break;
 						}
 					}

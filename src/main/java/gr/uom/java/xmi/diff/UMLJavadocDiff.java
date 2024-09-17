@@ -337,7 +337,6 @@ public class UMLJavadocDiff {
 		List<UMLDocElement> deletedDocElements = new ArrayList<UMLDocElement>(fragmentsBefore);
 		List<UMLDocElement> addedDocElements = new ArrayList<UMLDocElement>(fragmentsAfter);
 		if(fragmentsBefore.size() <= fragmentsAfter.size()) {
-			int updates = 0;
 			for(UMLDocElement docElement : fragmentsBefore) {
 				if(fragmentsAfter.contains(docElement)) {
 					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsAfter, docElement);
@@ -352,7 +351,8 @@ public class UMLJavadocDiff {
 										UMLDocElement after1 = fragmentsBefore.get(beforeIndex+1);
 										UMLDocElement before2 = fragmentsAfter.get(index-1);
 										UMLDocElement after2 = fragmentsAfter.get(index+1);
-										if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(docElement, fragmentsAfter.get(index))) {
+										if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(docElement, fragmentsAfter.get(index)) &&
+												!alreadyMatchedDocElement(fragmentsBefore.get(beforeIndex), docElement)) {
 											matchFound = true;
 											Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(beforeIndex), fragmentsAfter.get(index));
 											commonDocElements.add(pair);
@@ -360,15 +360,14 @@ public class UMLJavadocDiff {
 											List<Integer> indices2 = findAllMatchingIndices(addedDocElements, docElement);
 											int beforeIndexToRemove = beforeMatchingIndices.indexOf(beforeIndex);
 											if(beforeIndexToRemove >= indices1.size()) {
-												beforeIndexToRemove = beforeIndexToRemove - updates;
+												beforeIndexToRemove = indices1.size()-1;
 											}
 											deletedDocElements.remove((int)indices1.get(beforeIndexToRemove));
 											int afterIndexToRemove = matchingIndices.indexOf(index);
 											if(afterIndexToRemove >= indices2.size()) {
-												afterIndexToRemove = afterIndexToRemove - updates;
+												afterIndexToRemove = indices2.size()-1;
 											}
 											addedDocElements.remove((int)indices2.get(afterIndexToRemove));
-											updates++;
 											break;
 										}
 									}
@@ -394,7 +393,6 @@ public class UMLJavadocDiff {
 			}
 		}
 		else {
-			int updates = 0;
 			for(UMLDocElement docElement : fragmentsAfter) {
 				if(fragmentsBefore.contains(docElement)) {
 					List<Integer> matchingIndices = findAllMatchingIndices(fragmentsBefore, docElement);
@@ -409,7 +407,8 @@ public class UMLJavadocDiff {
 										UMLDocElement after1 = fragmentsBefore.get(index+1);
 										UMLDocElement before2 = fragmentsAfter.get(afterIndex-1);
 										UMLDocElement after2 = fragmentsAfter.get(afterIndex+1);
-										if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(fragmentsBefore.get(index), docElement)) {
+										if(before1.equals(before2) && after1.equals(after2) && !alreadyMatchedDocElement(fragmentsBefore.get(index), docElement) &&
+												!alreadyMatchedDocElement(docElement, fragmentsAfter.get(afterIndex))) {
 											matchFound = true;
 											Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), fragmentsAfter.get(afterIndex));
 											commonDocElements.add(pair);
@@ -417,15 +416,46 @@ public class UMLJavadocDiff {
 											List<Integer> indices2 = findAllMatchingIndices(addedDocElements, docElement);
 											int beforeIndexToRemove = matchingIndices.indexOf(index);
 											if(beforeIndexToRemove >= indices1.size()) {
-												beforeIndexToRemove = beforeIndexToRemove - updates;
+												beforeIndexToRemove = indices1.size()-1;
 											}
 											deletedDocElements.remove((int)indices1.get(beforeIndexToRemove));
 											int afterIndexToRemove = afterMatchingIndices.indexOf(afterIndex);
 											if(afterIndexToRemove >= indices2.size()) {
-												afterIndexToRemove = afterIndexToRemove - updates;
+												afterIndexToRemove = indices2.size()-1;
 											}
 											addedDocElements.remove((int)indices2.get(afterIndexToRemove));
-											updates++;
+											break;
+										}
+									}
+								}
+								if(matchFound) {
+									break;
+								}
+								//match HTML tags if the doc elements after them are identical and unique
+								for(Integer afterIndex : afterMatchingIndices) {
+									if(afterIndex > 0 && afterIndex < fragmentsAfter.size()-1) {
+										UMLDocElement after1 = fragmentsBefore.get(index+1);
+										List<Integer> after1MatchingIndices = findAllMatchingIndices(fragmentsBefore, after1);
+										UMLDocElement after2 = fragmentsAfter.get(afterIndex+1);
+										List<Integer> after2MatchingIndices = findAllMatchingIndices(fragmentsAfter, after2);
+										if(after1.equals(after2) && !alreadyMatchedDocElement(fragmentsBefore.get(index), docElement) &&
+												!alreadyMatchedDocElement(docElement, fragmentsAfter.get(afterIndex)) &&
+												after1MatchingIndices.size() == 1 && after2MatchingIndices.size() == 1) {
+											matchFound = true;
+											Pair<UMLDocElement, UMLDocElement> pair = Pair.of(fragmentsBefore.get(index), fragmentsAfter.get(afterIndex));
+											commonDocElements.add(pair);
+											List<Integer> indices1 = findAllMatchingIndices(deletedDocElements, docElement);
+											List<Integer> indices2 = findAllMatchingIndices(addedDocElements, docElement);
+											int beforeIndexToRemove = matchingIndices.indexOf(index);
+											if(beforeIndexToRemove >= indices1.size()) {
+												beforeIndexToRemove = indices1.size()-1;
+											}
+											deletedDocElements.remove((int)indices1.get(beforeIndexToRemove));
+											int afterIndexToRemove = afterMatchingIndices.indexOf(afterIndex);
+											if(afterIndexToRemove >= indices2.size()) {
+												afterIndexToRemove = indices2.size()-1;
+											}
+											addedDocElements.remove((int)indices2.get(afterIndexToRemove));
 											break;
 										}
 									}

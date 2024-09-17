@@ -22,7 +22,6 @@ import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.UMLClassDiff;
-import gr.uom.java.xmi.diff.UMLModelDiff;
 
 public class TestJavadocDiff {
 	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";

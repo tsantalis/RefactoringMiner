@@ -541,7 +541,8 @@ public class UMLOperationDiff {
 				exactMappings++;
 			}
 		}
-		if(removedParameters.isEmpty() || exactMappings > 0) {
+		if(removedParameters.isEmpty() || exactMappings > 0 ||
+				(mappings.size() > 0 && removedOperation.isConstructor() && addedOperation.isConstructor())) {
 			for(UMLParameter umlParameter : addedParameters) {
 				boolean conflictFound = false;
 				for(Refactoring refactoring : this.refactorings) {
@@ -566,7 +567,8 @@ public class UMLOperationDiff {
 				}
 			}
 		}
-		if(addedParameters.isEmpty() || exactMappings > 0) {
+		if(addedParameters.isEmpty() || exactMappings > 0 ||
+				(mappings.size() > 0 && removedOperation.isConstructor() && addedOperation.isConstructor())) {
 			for(UMLParameter umlParameter : removedParameters) {
 				boolean conflictFound = false;
 				for(Refactoring refactoring : this.refactorings) {

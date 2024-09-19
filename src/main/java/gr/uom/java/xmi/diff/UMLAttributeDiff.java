@@ -347,13 +347,14 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	public Set<Refactoring> getRefactorings(Set<CandidateAttributeRefactoring> set) throws RefactoringMinerTimedOutException {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		RenameAttributeRefactoring rename = null;
+		Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList, classDiff, modelDiff);
 		if(isRenamed()) {
-			rename = new RenameAttributeRefactoring(removedAttribute, addedAttribute, set);
+			rename = new RenameAttributeRefactoring(removedAttribute, addedAttribute, set, references);
 			refactorings.add(rename);
 		}
 		if(changeTypeCondition()) {
 			ChangeAttributeTypeRefactoring ref = new ChangeAttributeTypeRefactoring(removedAttribute, addedAttribute,
-					VariableReferenceExtractor.findReferences(removedAttribute.getVariableDeclaration(), addedAttribute.getVariableDeclaration(), operationBodyMapperList, classDiff, modelDiff), this);
+					references, this);
 			refactorings.add(ref);
 			if(rename != null) {
 				ref.addRelatedRefactoring(rename);

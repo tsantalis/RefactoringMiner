@@ -12,11 +12,15 @@ import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.decomposition.VariableReferenceExtractor;
 
 public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 	private UMLEnumConstant removedEnumConstant;
 	private UMLEnumConstant addedEnumConstant;
+	private UMLAbstractClassDiff classDiff;
+	private UMLModelDiff modelDiff;
 	private boolean renamed;
 	private boolean argumentsChanged;
 	private UMLAnnotationListDiff annotationListDiff;
@@ -28,6 +32,8 @@ public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 	public UMLEnumConstantDiff(UMLEnumConstant removedEnumConstant, UMLEnumConstant addedEnumConstant, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) throws RefactoringMinerTimedOutException {
 		this.removedEnumConstant = removedEnumConstant;
 		this.addedEnumConstant = addedEnumConstant;
+		this.classDiff = classDiff;
+		this.modelDiff = modelDiff;
 		if(!removedEnumConstant.getName().equals(addedEnumConstant.getName()))
 			renamed = true;
 		if(!removedEnumConstant.getArguments().equals(addedEnumConstant.getArguments()))
@@ -141,7 +147,8 @@ public class UMLEnumConstantDiff implements UMLDocumentationDiffProvider {
 		Set<Refactoring> refactorings = new LinkedHashSet<Refactoring>();
 		RenameAttributeRefactoring rename = null;
 		if(isRenamed()) {
-			rename = new RenameAttributeRefactoring(removedEnumConstant, addedEnumConstant, set);
+			Set<AbstractCodeMapping> references = VariableReferenceExtractor.findReferences(removedEnumConstant.getVariableDeclaration(), addedEnumConstant.getVariableDeclaration(), classDiff.getOperationBodyMapperList(), classDiff, modelDiff);
+			rename = new RenameAttributeRefactoring(removedEnumConstant, addedEnumConstant, set, references);
 			refactorings.add(rename);
 		}
 		refactorings.addAll(this.refactorings);

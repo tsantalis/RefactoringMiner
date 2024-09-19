@@ -18,16 +18,18 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 	private UMLAttribute originalAttribute;
 	private UMLAttribute renamedAttribute;
 	private Set<CandidateAttributeRefactoring> attributeRenames;
+	private Set<AbstractCodeMapping> attributeReferences;
 	private String classNameBefore;
 	private String classNameAfter;
 
 	public RenameAttributeRefactoring(UMLAttribute originalAttribute, UMLAttribute renamedAttribute,
-			Set<CandidateAttributeRefactoring> attributeRenames) {
+			Set<CandidateAttributeRefactoring> attributeRenames, Set<AbstractCodeMapping> attributeReferences) {
 		this.originalAttribute = originalAttribute;
 		this.renamedAttribute = renamedAttribute;
 		this.classNameBefore = originalAttribute.getClassName();
 		this.classNameAfter = renamedAttribute.getClassName();
 		this.attributeRenames = attributeRenames;
+		this.attributeReferences = attributeReferences;
 		for(CandidateAttributeRefactoring candidate : attributeRenames) {
 			for(AbstractCodeMapping mapping : candidate.getReferences()) {
 				List<LeafExpression> leafExpressions1 = mapping.getFragment1().findExpression(originalAttribute.getName());
@@ -39,6 +41,18 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 						LeafMapping leafMapping = new LeafMapping(leafExpression1, leafExpression2, candidate.getOperationBefore(), candidate.getOperationAfter());
 						mapping.addSubExpressionMapping(leafMapping);
 					}
+				}
+			}
+		}
+		for(AbstractCodeMapping mapping : attributeReferences) {
+			List<LeafExpression> leafExpressions1 = mapping.getFragment1().findExpression(originalAttribute.getName());
+			List<LeafExpression> leafExpressions2 = mapping.getFragment2().findExpression(renamedAttribute.getName());
+			if(leafExpressions1.size() == leafExpressions2.size()) {
+				for(int i=0; i<leafExpressions1.size(); i++) {
+					LeafExpression leafExpression1 = leafExpressions1.get(i);
+					LeafExpression leafExpression2 = leafExpressions2.get(i);
+					LeafMapping leafMapping = new LeafMapping(leafExpression1, leafExpression2, mapping.getOperation1(), mapping.getOperation2());
+					mapping.addSubExpressionMapping(leafMapping);
 				}
 			}
 		}
@@ -57,6 +71,7 @@ public class RenameAttributeRefactoring implements Refactoring, ReferenceBasedRe
 		for(CandidateAttributeRefactoring candidate : attributeRenames) {
 			references.addAll(candidate.getReferences());
 		}
+		references.addAll(attributeReferences);
 		return references;
 	}
 

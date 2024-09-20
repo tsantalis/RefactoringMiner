@@ -311,6 +311,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(typeIntersection2 > 0 && typeIntersection1 == 0 && this.getFragment1().getTypes().size() > 0 && this.getFragment2().getTypes().size() > 0 && identicalTypeIntersection1 == 0 && identicalTypeIntersection2 == 0) {
 					return 1;
 				}
+				boolean nestedUnderCatchBlockOfSameType1 = this.nestedUnderCatchBlockOfSameExceptionType();
+				boolean nestedUnderCatchBlockOfSameType2 = o.nestedUnderCatchBlockOfSameExceptionType();
+				if(nestedUnderCatchBlockOfSameType1 && !nestedUnderCatchBlockOfSameType2) {
+					return -1;
+				}
+				else if(!nestedUnderCatchBlockOfSameType1 && nestedUnderCatchBlockOfSameType2) {
+					return 1;
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {
@@ -1085,5 +1093,20 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		AbstractCall invocation1 = this.getFragment1().invocationCoveringEntireFragment();
 		AbstractCall invocation2 = this.getFragment2().invocationCoveringEntireFragment();
 		return invocation1.callChainIntersection(invocation2);
+	}
+
+	private boolean nestedUnderCatchBlockOfSameExceptionType() {
+		CompositeStatementObject comp1 = getFragment1().getParent();
+		CompositeStatementObject comp2 = getFragment2().getParent();
+		if(comp1 != null && comp2 != null &&
+				comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+				comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
+			List<VariableDeclaration> exceptionDeclarations1 = comp1.getVariableDeclarations();
+			List<VariableDeclaration> exceptionDeclarations2 = comp2.getVariableDeclarations();
+			if(exceptionDeclarations1.toString().equals(exceptionDeclarations2.toString()) && exceptionDeclarations1.size() > 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

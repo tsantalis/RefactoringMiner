@@ -1103,8 +1103,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE)) {
 			List<VariableDeclaration> exceptionDeclarations1 = comp1.getVariableDeclarations();
 			List<VariableDeclaration> exceptionDeclarations2 = comp2.getVariableDeclarations();
-			if(exceptionDeclarations1.toString().equals(exceptionDeclarations2.toString()) && exceptionDeclarations1.size() > 0) {
-				return true;
+			if(exceptionDeclarations1.size() > 0 && exceptionDeclarations2.size() > 0) {
+				VariableDeclaration v1 = exceptionDeclarations1.get(0);
+				VariableDeclaration v2 = exceptionDeclarations2.get(0);
+				if(v1.getType().equals(v2.getType())) {
+					return true;
+				}
 			}
 		}
 		return false;

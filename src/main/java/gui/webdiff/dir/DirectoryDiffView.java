@@ -124,17 +124,19 @@ public class DirectoryDiffView implements Renderable {
             if (node.getUserObject() != null) {
                 TreeNodeInfo nodeInfo = (TreeNodeInfo) node.getUserObject();
                 if (node.isLeaf()) {
-                	String iconPath = null, description = nodeInfo.getName();
+                	String iconPath = null, description = nodeInfo.getName(), title = "";
                 	int iconWidth = 0, iconHeight = 0;
                 	if(isModifiedFile(nodeInfo)) {
                 		iconPath = "dist/icons8-file-edit.svg";
                 		iconWidth = 15;
                 		iconHeight = 17;
+                		title = "modified file";
                 	}
                 	else if(isMovedCode(nodeInfo)) {
                 		iconPath = "dist/file-transfer.svg";
                 		iconWidth = 22;
                 		iconHeight = 28;
+                		title = "moved code between files";
                 		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                     	if(astDiff != null && astDiff.getSrcPath() != null) {
                     		String srcName = astDiff.getSrcPath();
@@ -151,6 +153,7 @@ public class DirectoryDiffView implements Renderable {
                 		iconPath = "dist/icons8-file-move.svg";
                 		iconWidth = 15;
                 		iconHeight = 17;
+                		title = "moved/renamed file";
                 		ASTDiff astDiff = comparator.getASTDiff(nodeInfo.getId());
                     	if(astDiff != null && astDiff.getSrcPath() != null) {
                     		String srcName = astDiff.getSrcPath();
@@ -166,7 +169,7 @@ public class DirectoryDiffView implements Renderable {
                     ul.tr()
                             .td(style("white-space: normal; word-wrap: break-word; word-break: break-all;"))
                             .a(id("diff_row_" + nodeInfo.getId()).href("/monaco-page/" + nodeInfo.getId()))
-                            .img(src(iconPath).width(iconWidth).height(iconHeight))
+                            .img(src(iconPath).width(iconWidth).height(iconHeight).title(title))
                             .write(" " + description)
                             ._a()
                             ._td()

@@ -8438,6 +8438,33 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						nestedCreations2.remove(minIndex);
 					}
 				}
+				else {
+					for(ObjectCreation nestedCreation2 : nestedCreations2) {
+						int[] editDistance = new int[nestedCreations1.size()];
+						int[] argumentIntersections = new int[nestedCreations1.size()];
+						int index = 0;
+						for(ObjectCreation nestedCreation1 : nestedCreations1) {
+							int argumentIntersection = nestedCreation1.argumentIntersection(nestedCreation2).size();
+							argumentIntersections[index] = argumentIntersection;
+							int d = StringDistance.editDistance(nestedCreation1.actualString(), nestedCreation2.actualString());
+							editDistance[index] = d;
+							index++;
+						}
+						int minIndex = 0;
+						int minValue = editDistance[0];
+						int maxArgumentIntersection = argumentIntersections[0];
+						for(int i=0; i<editDistance.length; i++) {
+							if(editDistance[i] < minValue && argumentIntersections[i] > maxArgumentIntersection) {
+								minValue = editDistance[i];
+								maxArgumentIntersection = argumentIntersections[i];
+								minIndex = i;
+							}
+						}
+						LeafMapping newMapping = new LeafMapping(nestedCreations1.get(minIndex).asLeafExpression(), nestedCreation2.asLeafExpression(), container1, container2);
+						mapping.addSubExpressionMapping(newMapping);
+						nestedCreations1.remove(minIndex);
+					}
+				}
 			}
 		}
 		return mapping;

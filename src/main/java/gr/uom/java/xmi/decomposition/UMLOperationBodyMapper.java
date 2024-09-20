@@ -8395,6 +8395,51 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		mapping.setMatchingArgumentsWithOperationInvocation(matchingArguments);
+		if(leaf1.getCreations().size() > 0 && leaf2.getCreations().size() > 0) {
+			ObjectCreation creation1 = (ObjectCreation) leaf1.getCreations().get(0);
+			ObjectCreation creation2 = (ObjectCreation) leaf2.getCreations().get(0);
+			if(creation1.isArray() && creation2.isArray() && creation1.getAnonymousClassDeclaration() != null && creation2.getAnonymousClassDeclaration() != null) {
+				List<ObjectCreation> nestedCreations1 = new ArrayList<ObjectCreation>();
+				for(int i=1; i<leaf1.getCreations().size(); i++) {
+					if(creation1.getLocationInfo().subsumes(leaf1.getCreations().get(i).getLocationInfo())) {
+						nestedCreations1.add((ObjectCreation) leaf1.getCreations().get(i));
+					}
+				}
+				List<ObjectCreation> nestedCreations2 = new ArrayList<ObjectCreation>();
+				for(int i=1; i<leaf2.getCreations().size(); i++) {
+					if(creation2.getLocationInfo().subsumes(leaf2.getCreations().get(i).getLocationInfo())) {
+						nestedCreations2.add((ObjectCreation) leaf2.getCreations().get(i));
+					}
+				}
+				if(nestedCreations1.size() <= nestedCreations2.size()) {
+					for(ObjectCreation nestedCreation1 : nestedCreations1) {
+						int[] editDistance = new int[nestedCreations2.size()];
+						int[] argumentIntersections = new int[nestedCreations2.size()];
+						int index = 0;
+						for(ObjectCreation nestedCreation2 : nestedCreations2) {
+							int argumentIntersection = nestedCreation1.argumentIntersection(nestedCreation2).size();
+							argumentIntersections[index] = argumentIntersection;
+							int d = StringDistance.editDistance(nestedCreation1.actualString(), nestedCreation2.actualString());
+							editDistance[index] = d;
+							index++;
+						}
+						int minIndex = 0;
+						int minValue = editDistance[0];
+						int maxArgumentIntersection = argumentIntersections[0];
+						for(int i=0; i<editDistance.length; i++) {
+							if(editDistance[i] < minValue && argumentIntersections[i] > maxArgumentIntersection) {
+								minValue = editDistance[i];
+								maxArgumentIntersection = argumentIntersections[i];
+								minIndex = i;
+							}
+						}
+						LeafMapping newMapping = new LeafMapping(nestedCreation1.asLeafExpression(), nestedCreations2.get(minIndex).asLeafExpression(), container1, container2);
+						mapping.addSubExpressionMapping(newMapping);
+						nestedCreations2.remove(minIndex);
+					}
+				}
+			}
+		}
 		return mapping;
 	}
 

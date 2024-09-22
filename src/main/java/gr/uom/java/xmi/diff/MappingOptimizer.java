@@ -26,6 +26,7 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.AbstractCall.StatementCoverageType;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
+import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 
 public class MappingOptimizer {
 	private UMLAbstractClassDiff classDiff;
@@ -250,6 +251,20 @@ public class MappingOptimizer {
 						if(stringRepresentation1.get(i).equals(stringRepresentation2.get(i)) &&
 								!stringRepresentation1.get(i).equals(JAVA.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(JAVA.CLOSE_BLOCK)) {
 							identicalStatements++;
+						}
+						else if(comp1.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) && comp2.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE) &&
+								!stringRepresentation1.get(i).equals(JAVA.OPEN_BLOCK) && !stringRepresentation1.get(i).equals(JAVA.CLOSE_BLOCK) &&
+								mapping.containsReplacement(ReplacementType.VARIABLE_NAME) && i > 0) {
+							//tolerate variable renames
+							int editDistance = StringDistance.editDistance(stringRepresentation1.get(i), stringRepresentation2.get(i));
+							for(Replacement r : mapping.getReplacements()) {
+								if(r.getType().equals(ReplacementType.VARIABLE_NAME)) {
+									if(editDistance == r.getBefore().length() && editDistance == r.getAfter().length()) {
+										identicalStatements++;
+										break;
+									}
+								}
+							}
 						}
 					}
 					identicalStatementsForCompositeMappings.add(identicalStatements);
@@ -684,27 +699,42 @@ public class MappingOptimizer {
 				}
 			}
 			else {
-				boolean allReplacementsCoverEntireStatement = false;
-				if(replacementCoversEntireStatement.contains(false)) {
-					for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
-						if(replacementCoversEntireStatement.get(i) == true) {
+				int zeroCount = 0;
+				for(int i=0; i<exactMappingsNestedUnderCompositeExcludingBlocks.size(); i++) {
+					if(exactMappingsNestedUnderCompositeExcludingBlocks.get(i) == 0) {
+						zeroCount++;
+					}
+				}
+				if(zeroCount == 1) {
+					for(int i=0; i<exactMappingsNestedUnderCompositeExcludingBlocks.size(); i++) {
+						if(exactMappingsNestedUnderCompositeExcludingBlocks.get(i) == 0) {
 							indicesToBeRemoved.add(i);
 						}
 					}
 				}
-				else {
-					allReplacementsCoverEntireStatement = true;
-				}
-				if(!allReplacementsCoverEntireStatement) {
-					int minimum = replacementTypeCount.get(0);
-					for(int i=1; i<replacementTypeCount.size(); i++) {
-						if(replacementTypeCount.get(i) < minimum) {
-							minimum = replacementTypeCount.get(i);
+				if(indicesToBeRemoved.isEmpty()) {
+					boolean allReplacementsCoverEntireStatement = false;
+					if(replacementCoversEntireStatement.contains(false)) {
+						for(int i=0; i<replacementCoversEntireStatement.size(); i++) {
+							if(replacementCoversEntireStatement.get(i) == true) {
+								indicesToBeRemoved.add(i);
+							}
 						}
 					}
-					for(int i=0; i<replacementTypeCount.size(); i++) {
-						if(replacementTypeCount.get(i) > minimum && !extractInlineOverlappingRefactoring.get(i) == true) {
-							indicesToBeRemoved.add(i);
+					else {
+						allReplacementsCoverEntireStatement = true;
+					}
+					if(!allReplacementsCoverEntireStatement) {
+						int minimum = replacementTypeCount.get(0);
+						for(int i=1; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) < minimum) {
+								minimum = replacementTypeCount.get(i);
+							}
+						}
+						for(int i=0; i<replacementTypeCount.size(); i++) {
+							if(replacementTypeCount.get(i) > minimum && !extractInlineOverlappingRefactoring.get(i) == true) {
+								indicesToBeRemoved.add(i);
+							}
 						}
 					}
 				}

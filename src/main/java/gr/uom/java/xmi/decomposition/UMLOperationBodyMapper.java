@@ -2555,6 +2555,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								mapping.getFragment1().getVariableDeclarations().toString().equals(mapping.getFragment2().getVariableDeclarations().toString())) {
 							continue;
 						}
+						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME)) {
+							continue;
+						}
 						expression.replaceParametersWithArguments(parameterToArgumentMap1);
 						expressionsT1.add(expression);
 					}
@@ -2959,6 +2962,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					for(AbstractExpression expression : composite.getExpressions()) {
 						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT_PARAMETER_NAME) &&
 								mapping.getFragment1().getVariableDeclarations().toString().equals(mapping.getFragment2().getVariableDeclarations().toString())) {
+							continue;
+						}
+						if(expression.getLocationInfo().getCodeElementType().equals(CodeElementType.CATCH_CLAUSE_EXCEPTION_NAME)) {
 							continue;
 						}
 						expression.replaceParametersWithArguments(parameterToArgumentMap2);

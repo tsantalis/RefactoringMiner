@@ -3463,7 +3463,7 @@ public class StringBasedHeuristics {
 					if(ternaryConditions) {
 						if(statement1 instanceof AbstractExpression) {
 							CompositeStatementObject owner = ((AbstractExpression)statement1).getOwner();
-							if(owner != null) {
+							if(owner != null && owner.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
 								ReplaceConditionalWithTernaryRefactoring replace = new ReplaceConditionalWithTernaryRefactoring(owner, statement2, container1, container2);
 								for(Replacement r : info.getReplacements()) {
 									if(r instanceof IntersectionReplacement) {

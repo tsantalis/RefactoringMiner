@@ -3795,6 +3795,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
+	public boolean involvesConstructors() {
+		return container1.isConstructor() && container2.isConstructor();
+	}
+
 	public boolean involvesTestMethods() {
 		return container1.hasTestAnnotation() && container2.hasTestAnnotation();
 	}

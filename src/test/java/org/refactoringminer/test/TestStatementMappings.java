@@ -1007,7 +1007,8 @@ public class TestStatementMappings {
 		"https://github.com/eclipse/jetty.project.git, c285d6f8bbd839906e8c39d23db2f343be22c6ca, send, true, jetty.project-c285d6f8bbd839906e8c39d23db2f343be22c6ca.txt", // TODO L115-116 should be matched with R127-128
 		"https://github.com/spring-framework.git, b204437cef0976f5af0e1c5290e77e266b306a51, writeWithMessageConverters, true, spring-framework-b204437cef0976f5af0e1c5290e77e266b306a51.txt",
 		"https://github.com/spring-framework.git, 0a42c80c1151380f7f492ec75de5648cfe62d250, processConfigBeanDefinitions, true, spring-framework-0a42c80c1151380f7f492ec75de5648cfe62d250.txt",
-		"https://github.com/javaparser/javaparser.git, de5c17c37f15a1c134f518ed2754974cc4b9aa15, apply, true, javaparser-de5c17c37f15a1c134f518ed2754974cc4b9aa15.txt"
+		"https://github.com/javaparser/javaparser.git, de5c17c37f15a1c134f518ed2754974cc4b9aa15, apply, true, javaparser-de5c17c37f15a1c134f518ed2754974cc4b9aa15.txt",
+		"https://github.com/hibernate/hibernate-orm.git, 8577a68e69d30d9e671024bf3330616000a3ec54, processElementAnnotations, true, hibernate-orm-8577a68e69d30d9e671024bf3330616000a3ec54.txt"
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

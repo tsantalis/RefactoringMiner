@@ -719,11 +719,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processLeaves(expressionsT1, leaves2, parameterToArgumentMap2, false);
 			List<AbstractCodeMapping> mappings = new ArrayList<>(this.mappings);
 			for(int i = numberOfMappings; i < mappings.size(); i++) {
-				if(!isSplitConditionalExpression(mappings.get(i))) {
-					mappings.get(i).temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
+				AbstractCodeMapping m = mappings.get(i);
+				if(!isSplitConditionalExpression(m)) {
+					m.temporaryVariableAssignment(refactorings, leaves2, parentMapper != null);
 				}
 				else {
-					this.mappings.remove(mappings.get(i));
+					this.mappings.remove(m);
+					leaves2.add(m.getFragment2());
 				}
 			}
 			

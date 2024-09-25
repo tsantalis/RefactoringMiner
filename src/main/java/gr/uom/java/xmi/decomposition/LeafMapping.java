@@ -362,6 +362,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						headZeros2++;
 					}
 				}
+				boolean allZerosExceptLast1 = headZeros1 == levelParentEditDistance1.size() - 1 && levelParentEditDistance1.get(levelParentEditDistance1.size() - 1) > 0;
+				boolean allZerosExceptLast2 = headZeros2 == levelParentEditDistance2.size() - 1 && levelParentEditDistance2.get(levelParentEditDistance2.size() - 1) > 0;
 				boolean identicalCompositeChildren1 = this.identicalCompositeChildrenStructure();
 				boolean identicalCompositeChildren2 = o.identicalCompositeChildrenStructure();
 				boolean zeroDistanceWithMoreThanTwoParents1 = nLevelParentEditDistance1 == 0 && levelParentEditDistance1.size() > 2;
@@ -371,6 +373,15 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				else if(!identicalCompositeChildren1 && identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents1) {
 					return 1;
+				}
+				if(identicalCompositeChildren1 && identicalCompositeChildren2 && levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2
+						&& nLevelParentEditDistance1 > 0 && nLevelParentEditDistance2 > 0) {
+					if(allZerosExceptLast1 && !allZerosExceptLast2) {
+						return -1;
+					}
+					else if(!allZerosExceptLast1 && allZerosExceptLast2) {
+						return 1;
+					}
 				}
 				if(levelParentEditDistance1.size() == levelParentEditDistance2.size()) {
 					if(nLevelParentEditDistance1 == 0 && nLevelParentEditDistance2 > 0) { 
@@ -1073,6 +1084,17 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					}
 				}
 				if(count == innerNodes1.size() && count > 0) {
+					return true;
+				}
+			}
+			else if(composites1.size() == composites2.size() && composites1.size() == 0) {
+				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+					parent1 = parent1.getParent(); 
+				}
+				while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
+					parent2 = parent2.getParent(); 
+				}
+				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
 					return true;
 				}
 			}

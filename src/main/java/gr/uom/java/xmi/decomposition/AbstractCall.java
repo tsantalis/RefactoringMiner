@@ -766,6 +766,19 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
+	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call) {
+		if(identicalExpression(call) &&
+				identicalName(call) &&
+				!equalArguments(call) &&
+				arguments().size() != call.arguments().size()) {
+			int argumentIntersectionSize = argumentIntersection(call).size();
+			if(argumentIntersectionSize > 0 || arguments().size() == 0 || call.arguments().size() == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean inlinedStatementBecomesAdditionalArgument(AbstractCall call, Set<Replacement> replacements, List<? extends AbstractCodeFragment> statements) {
 		if(identicalName(call) && this.arguments.size() < call.arguments.size() && this.argumentIntersection(call).size() > 0) {
 			int matchedArguments = 0;

@@ -374,7 +374,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!identicalCompositeChildren1 && identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents1) {
 					return 1;
 				}
-				if(this.identicalCompositeChildrenStructureV2() && o.identicalCompositeChildrenStructureV2() && levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2
+				if(identicalCompositeChildren1 && identicalCompositeChildren2 && levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2
 						&& nLevelParentEditDistance1 > 0 && nLevelParentEditDistance2 > 0) {
 					if(allZerosExceptLast1 && !allZerosExceptLast2) {
 						return -1;
@@ -1087,49 +1087,9 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return true;
 				}
 			}
-		}
-		return false;
-	}
-
-	private boolean identicalCompositeChildrenStructureV2() {
-		CompositeStatementObject parent1 = getFragment1().getParent();
-		CompositeStatementObject parent2 = getFragment2().getParent();
-		if(parent1 != null && parent2 != null) {
-			List<AbstractStatement> statements1 = parent1.getStatements();
-			List<AbstractStatement> statements2 = parent2.getStatements();
-			List<CompositeStatementObject> composites1 = new ArrayList<>();
-			for(AbstractStatement statement1 : statements1) {
-				if(statement1 instanceof CompositeStatementObject) {
-					composites1.add((CompositeStatementObject)statement1);
-				}
-			}
-			List<CompositeStatementObject> composites2 = new ArrayList<>();
-			for(AbstractStatement statement2 : statements2) {
-				if(statement2 instanceof CompositeStatementObject) {
-					composites2.add((CompositeStatementObject)statement2);
-				}
-			}
-			if(composites1.size() == composites2.size() && composites1.size() == 1) {
-				CompositeStatementObject comp1 = composites1.get(0);
-				CompositeStatementObject comp2 = composites2.get(0);
-				List<CompositeStatementObject> innerNodes1 = comp1.getInnerNodes();
-				List<CompositeStatementObject> innerNodes2 = comp2.getInnerNodes();
-				int count = 0;
-				if(innerNodes1.size() == innerNodes2.size()) {
-					for(int i=0; i<innerNodes1.size(); i++) {
-						if(innerNodes1.get(i).getString().equals(innerNodes2.get(i).getString())) {
-							count++;
-						}
-						else {
-							break;
-						}
-					}
-				}
-				if(count == innerNodes1.size() && count > 0) {
-					return true;
-				}
-			}
-			else if(composites1.size() == composites2.size() && composites1.size() == 0) {
+			else if(composites1.size() == composites2.size() && composites1.size() == 0 &&
+					parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+					parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
 					parent1 = parent1.getParent(); 
 				}

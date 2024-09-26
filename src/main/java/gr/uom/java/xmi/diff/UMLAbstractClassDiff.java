@@ -1593,6 +1593,20 @@ public abstract class UMLAbstractClassDiff {
 				}
 			}
 		}
+		if(addedOperation.isGetter()) {
+			for(UMLAttribute attr : addedAttributes) {
+				if(addedOperation.getName().equals(attr.getName()) || addedOperation.getName().toLowerCase().equals(getPrefix + attr.getName().toLowerCase())) {
+					return true;
+				}
+			}
+		}
+		else if(addedOperation.isSetter()) {
+			for(UMLAttribute attr : addedAttributes) {
+				if(addedOperation.getName().toLowerCase().equals(setPrefix + attr.getName().toLowerCase()) || addedOperation.getParameterNameList().get(0).equals(attr.getName())) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

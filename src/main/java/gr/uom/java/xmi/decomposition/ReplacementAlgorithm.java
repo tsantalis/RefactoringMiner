@@ -3585,7 +3585,7 @@ public class ReplacementAlgorithm {
 									count++;
 								}
 							}
-							else {
+							else if(v1.getStatementsInScopeUsingVariable().contains(mapping.getFragment1())) {
 								count++;
 							}
 						}
@@ -3598,7 +3598,7 @@ public class ReplacementAlgorithm {
 									count++;
 								}
 							}
-							else {
+							else /*if(v2.getStatementsInScopeUsingVariable().contains(mapping.getFragment2()))*/ {
 								count++;
 							}
 						}

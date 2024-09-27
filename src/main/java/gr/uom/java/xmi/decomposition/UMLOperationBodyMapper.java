@@ -908,8 +908,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
 									}
-									refactorings.add(ref);
-									leavesToBeRemovedT2.add(statement);
+									if(!refactorings.contains(ref)) {
+										refactorings.add(ref);
+										leavesToBeRemovedT2.add(statement);
+									}
 								}
 							}
 						}
@@ -956,8 +958,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										LeafMapping leafMapping = new LeafMapping(initializer, subExpression, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
 									}
-									refactorings.add(ref);
-									leavesToBeRemovedT1.add(statement);
+									if(!refactorings.contains(ref)) {
+										refactorings.add(ref);
+										leavesToBeRemovedT1.add(statement);
+									}
 								}
 							}
 						}

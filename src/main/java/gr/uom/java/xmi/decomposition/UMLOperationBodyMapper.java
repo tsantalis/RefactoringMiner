@@ -725,7 +725,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				else {
 					this.mappings.remove(m);
-					leaves2.add(m.getFragment2());
+					if(!leaves2.contains(m.getFragment2())) {
+						leaves2.add(m.getFragment2());
+					}
 				}
 			}
 			

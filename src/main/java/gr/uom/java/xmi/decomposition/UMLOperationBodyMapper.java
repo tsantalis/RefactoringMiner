@@ -798,6 +798,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								int indexOfChildInParent2 = parent2.getStatements().indexOf(child2);
 								if(indexOfChildInParent1 != indexOfChildInParent2 &&
 										!isElseBranch(child1, parent1) && !isElseBranch(child2, parent2) &&
+										!elseWithoutBlockBecomingElseWithBlock(parent1, parent2) &&
 										!isTryBlock(child1, parent1) && !isTryBlock(child2, parent2) &&
 										!isFinallyBlock(child1, parent1) && !isFinallyBlock(child2, parent2) &&
 										!ifAddingElseIf(parent1.getParent()) && !ifAddingElseIf(parent2.getParent())) {
@@ -985,6 +986,26 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments());
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private boolean elseWithoutBlockBecomingElseWithBlock(CompositeStatementObject parent1, CompositeStatementObject parent2) {
+		if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			CompositeStatementObject grandParent2 = parent2.getParent();
+			for(AbstractCodeMapping mapping : this.mappings) {
+				if(mapping.getFragment1().equals(parent1) && mapping.getFragment2().equals(grandParent2)) {
+					return true;
+				}
+			}
+		}
+		else if(parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			CompositeStatementObject grandParent1 = parent1.getParent();
+			for(AbstractCodeMapping mapping : this.mappings) {
+				if(mapping.getFragment1().equals(grandParent1) && mapping.getFragment2().equals(parent2)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void checkUnmatchedStatementsBeingCommented() {

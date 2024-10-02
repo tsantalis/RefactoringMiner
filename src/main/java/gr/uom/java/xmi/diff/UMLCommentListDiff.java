@@ -10,6 +10,8 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import gr.uom.java.xmi.UMLComment;
+import gr.uom.java.xmi.UMLCommentGroup;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class UMLCommentListDiff {
 	private List<Pair<UMLComment, UMLComment>> commonComments;
@@ -21,6 +23,30 @@ public class UMLCommentListDiff {
 		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
 		this.deletedComments = new ArrayList<UMLComment>();
 		this.addedComments = new ArrayList<UMLComment>();
+		List<UMLComment> deletedComments = new ArrayList<UMLComment>(commentsBefore);
+		List<UMLComment> addedComments = new ArrayList<UMLComment>(commentsAfter);
+		//check if there exist comment groups, consecutive line comments
+		List<UMLCommentGroup> groupsBefore = createCommentGroups(commentsBefore);
+		List<UMLCommentGroup> groupsAfter = createCommentGroups(commentsAfter);
+		for(UMLCommentGroup groupBefore : groupsBefore) {
+			for(UMLCommentGroup groupAfter : groupsAfter) {
+				if(groupBefore.sameText(groupAfter)) {
+					for(int i=0; i<groupBefore.getGroup().size(); i++) {
+						UMLComment commentBefore = groupBefore.getGroup().get(i);
+						UMLComment commentAfter = groupAfter.getGroup().get(i);
+						Pair<UMLComment, UMLComment> pair = Pair.of(commentBefore, commentAfter);
+						commonComments.add(pair);
+						deletedComments.remove(commentBefore);
+						addedComments.remove(commentAfter);
+					}
+					break;
+				}
+			}
+		}
+		processRemainingComments(deletedComments, addedComments);
+	}
+
+	private void processRemainingComments(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
 		List<UMLComment> deletedComments = new ArrayList<UMLComment>(commentsBefore);
 		List<UMLComment> addedComments = new ArrayList<UMLComment>(commentsAfter);
 		if(commentsBefore.size() <= commentsAfter.size()) {
@@ -52,6 +78,37 @@ public class UMLCommentListDiff {
 			}
 		}
 		processModifiedComments(deletedComments, addedComments);
+	}
+
+	private List<UMLCommentGroup> createCommentGroups(List<UMLComment> commentsBefore) {
+		List<UMLCommentGroup> groups = new ArrayList<UMLCommentGroup>();
+		UMLCommentGroup currentGroup = new UMLCommentGroup();
+		for(int i=0; i<commentsBefore.size(); i++) {
+			UMLComment current = commentsBefore.get(i);
+			if(current.getLocationInfo().getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
+				if(i-1 >= 0) {
+					UMLComment previous = commentsBefore.get(i-1);
+					if(previous.getLocationInfo().getCodeElementType().equals(CodeElementType.LINE_COMMENT)) {
+						if(previous.getLocationInfo().getStartLine() + 1 == current.getLocationInfo().getStartLine()) {
+							//consecutive line comments
+							currentGroup.addComment(current);
+						}
+						else {
+							//make new group
+							groups.add(new UMLCommentGroup(currentGroup.getGroup()));
+							currentGroup = new UMLCommentGroup();
+							currentGroup.addComment(current);
+						}
+					}
+				}
+				else {
+					//this is the first line comment
+					currentGroup.addComment(current);
+				}
+			}
+		}
+		groups.add(currentGroup);
+		return groups;
 	}
 
 	private List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {

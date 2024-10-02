@@ -71,7 +71,7 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import org.refactoringminer.astDiff.visitors.JdtWithCommentsVisitor;
 
 public class UMLModelASTReader {
-	private static final boolean VISIT_JDT_COMMENTS = Boolean.parseBoolean(System.getProperty("rm.jdt.comments", "false"));
+	private static final boolean VISIT_JDT_COMMENTS = Boolean.parseBoolean(System.getProperty("rm.jdt.comments", "true"));
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
 	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private static final String ANTLR_GENERATED = "// $ANTLR";

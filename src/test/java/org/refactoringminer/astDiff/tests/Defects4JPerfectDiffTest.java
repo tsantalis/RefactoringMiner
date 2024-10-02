@@ -27,7 +27,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-public class Defects4JPerfectDiffTest {
+public class Defects4JPerfectDiffTest extends IgnoringCommentsVisitorTest {
     private static final String dir = getDefects4jMappingPath();
     @ParameterizedTest(name= "{index}: {0}")
 //    @JsonFileSource(resources = "/astDiff/defects4j/cases-problematic.json")

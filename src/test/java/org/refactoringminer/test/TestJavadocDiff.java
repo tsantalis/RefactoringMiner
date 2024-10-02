@@ -18,6 +18,7 @@ import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
 
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
@@ -78,6 +79,18 @@ public class TestJavadocDiff {
 		*/
 		UMLClassDiff classDiff = generateClassDiff(url, commitId, new File(REPOS), containerName);
 		javadocInfo(classDiff, actual);
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/junit-team/junit4.git, 7a3e99635d7ffcc4d730f27835eeaeb082003199, org.junit.runners.BlockJUnit4ClassRunner, junit4-7a3e99635d7ffcc4d730f27835eeaeb082003199.txt"
+	})
+	public void testClassCommentMappings(String url, String commitId, String containerName, String testResultFileName) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		UMLClassDiff classDiff = generateClassDiff(url, commitId, new File(REPOS), containerName);
+		commentInfo(classDiff, actual);
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
@@ -144,6 +157,14 @@ public class TestJavadocDiff {
 				String line = mapping.getLeft().getLocationInfo() + "==" + mapping.getRight().getLocationInfo();
 				actual.add(line);
 			}
+		}
+	}
+
+	private void commentInfo(UMLClassDiff classDiff, final List<String> actual) {
+		actual.add(classDiff.getNextClassName());
+		for(Pair<UMLComment, UMLComment> mapping : classDiff.getCommentListDiff().getCommonComments()) {
+			String line = mapping.getLeft().getLocationInfo() + "==" + mapping.getRight().getLocationInfo();
+			actual.add(line);
 		}
 	}
 }

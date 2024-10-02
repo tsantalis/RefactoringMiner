@@ -61,6 +61,7 @@ public class BodyMapperMatcher extends OptimizationAwareMatcher {
         }
         if (isPartOfExtractedMethod)
             new JavaDocMatcher(optimizationData, bodyMapper.getOperation1().getJavadoc(), bodyMapper.getOperation2().getJavadoc(), bodyMapper.getJavadocDiff()).match(srcTree,dstTree,mappingStore);
+        new CommentMatcher(bodyMapper.getCommentListDiff()).match(srcTree,dstTree,mappingStore);
     }
 
     private void processCompositeMapping(Tree srcTree, Tree dstTree, AbstractCodeMapping abstractCodeMapping, ExtendedMultiMappingStore mappingStore) {

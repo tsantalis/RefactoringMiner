@@ -2,7 +2,8 @@ package gr.uom.java.xmi;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import gr.uom.java.xmi.diff.UMLCommentListDiff;
 
 public class UMLCommentGroup {
 	private List<UMLComment> group;
@@ -32,6 +33,16 @@ public class UMLCommentGroup {
 				}
 			}
 			return matches == this.group.size();
+		}
+		return false;
+	}
+
+	public boolean modifiedMatchingText(UMLCommentGroup other) {
+		if(this.group.size() == other.group.size() && this.group.size() > 1) {
+			UMLCommentListDiff diff = new UMLCommentListDiff(this, other);
+			if(diff.getCommonComments().size() == this.group.size()) {
+				return true;
+			}
 		}
 		return false;
 	}

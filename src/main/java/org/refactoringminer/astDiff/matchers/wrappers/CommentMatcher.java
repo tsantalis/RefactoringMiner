@@ -20,11 +20,13 @@ public class CommentMatcher implements TreeMatcher {
 
     @Override
     public void match(Tree srcTree, Tree dstTree, ExtendedMultiMappingStore mappingStore) {
-        for (Pair<UMLComment, UMLComment> commonComment : commentListDiff.getCommonComments()) {
-            Tree srcComment = TreeUtilFunctions.findByLocationInfo(srcTree, commonComment.getLeft().getLocationInfo());
-            Tree dstComment = TreeUtilFunctions.findByLocationInfo(dstTree, commonComment.getRight().getLocationInfo());
-            if (srcComment != null && dstComment != null) {
-                mappingStore.addMapping(srcComment, dstComment);
+        if (commentListDiff.getCommonComments() != null) {
+            for (Pair<UMLComment, UMLComment> commonComment : commentListDiff.getCommonComments()) {
+                Tree srcComment = TreeUtilFunctions.findByLocationInfo(srcTree, commonComment.getLeft().getLocationInfo());
+                Tree dstComment = TreeUtilFunctions.findByLocationInfo(dstTree, commonComment.getRight().getLocationInfo());
+                if (srcComment != null && dstComment != null) {
+                    mappingStore.addMapping(srcComment, dstComment);
+                }
             }
         }
     }

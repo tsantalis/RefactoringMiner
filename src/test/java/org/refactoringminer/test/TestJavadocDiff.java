@@ -95,6 +95,24 @@ public class TestJavadocDiff {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/eclipse-jgit/jgit.git, 1b783d037091266b035e1727db6b6ce7a397ef63, org.eclipse.jgit.storage.pack.PackWriter, searchForDeltas, jgit-1b783d037091266b035e1727db6b6ce7a397ef63.txt"
+	})
+	public void testMethodCommentMappings(String url, String commitId, String className, String containerName, String testResultFileName) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		UMLClassDiff classDiff = generateClassDiff(url, commitId, new File(REPOS), className);
+		classDiff.process();
+		for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+			if(mapper.getContainer1().getName().equals(containerName) && mapper.getContainer2().getName().equals(containerName)) {
+				commentInfo(mapper, actual);
+				//break;
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	private UMLClassDiff generateClassDiff(String cloneURL, String commitId, File rootFolder, String className) throws Exception {
 		Set<String> repositoryDirectoriesBefore = ConcurrentHashMap.newKeySet();
 		Set<String> repositoryDirectoriesCurrent = ConcurrentHashMap.newKeySet();
@@ -147,6 +165,14 @@ public class TestJavadocDiff {
 				String line = mapping.getLeft().getLocationInfo() + "==" + mapping.getRight().getLocationInfo();
 				actual.add(line);
 			}
+		}
+	}
+
+	private void commentInfo(UMLOperationBodyMapper bodyMapper, final List<String> actual) {
+		actual.add(bodyMapper.toString());
+		for(Pair<UMLComment, UMLComment> mapping : bodyMapper.getCommentListDiff().getCommonComments()) {
+			String line = mapping.getLeft().getLocationInfo() + "==" + mapping.getRight().getLocationInfo();
+			actual.add(line);
 		}
 	}
 

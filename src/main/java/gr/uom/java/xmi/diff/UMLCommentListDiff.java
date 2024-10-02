@@ -28,9 +28,30 @@ public class UMLCommentListDiff {
 		//check if there exist comment groups, consecutive line comments
 		List<UMLCommentGroup> groupsBefore = createCommentGroups(commentsBefore);
 		List<UMLCommentGroup> groupsAfter = createCommentGroups(commentsAfter);
+		List<UMLCommentGroup> groupsBeforeToBeRemoved = new ArrayList<UMLCommentGroup>();
+		List<UMLCommentGroup> groupsAfterToBeRemoved = new ArrayList<UMLCommentGroup>();
 		for(UMLCommentGroup groupBefore : groupsBefore) {
 			for(UMLCommentGroup groupAfter : groupsAfter) {
 				if(groupBefore.sameText(groupAfter)) {
+					for(int i=0; i<groupBefore.getGroup().size(); i++) {
+						UMLComment commentBefore = groupBefore.getGroup().get(i);
+						UMLComment commentAfter = groupAfter.getGroup().get(i);
+						Pair<UMLComment, UMLComment> pair = Pair.of(commentBefore, commentAfter);
+						commonComments.add(pair);
+						deletedComments.remove(commentBefore);
+						addedComments.remove(commentAfter);
+					}
+					groupsBeforeToBeRemoved.add(groupBefore);
+					groupsAfterToBeRemoved.add(groupAfter);
+					break;
+				}
+			}
+		}
+		groupsBefore.removeAll(groupsBeforeToBeRemoved);
+		groupsAfter.removeAll(groupsAfterToBeRemoved);
+		for(UMLCommentGroup groupBefore : groupsBefore) {
+			for(UMLCommentGroup groupAfter : groupsAfter) {
+				if(groupBefore.modifiedMatchingText(groupAfter)) {
 					for(int i=0; i<groupBefore.getGroup().size(); i++) {
 						UMLComment commentBefore = groupBefore.getGroup().get(i);
 						UMLComment commentAfter = groupAfter.getGroup().get(i);
@@ -44,6 +65,13 @@ public class UMLCommentListDiff {
 			}
 		}
 		processRemainingComments(deletedComments, addedComments);
+	}
+
+	public UMLCommentListDiff(UMLCommentGroup groupBefore, UMLCommentGroup groupAfter) {
+		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
+		this.deletedComments = new ArrayList<UMLComment>();
+		this.addedComments = new ArrayList<UMLComment>();
+		processRemainingComments(groupBefore.getGroup(), groupAfter.getGroup());
 	}
 
 	private void processRemainingComments(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
@@ -107,7 +135,8 @@ public class UMLCommentListDiff {
 				}
 			}
 		}
-		groups.add(currentGroup);
+		if(!currentGroup.getGroup().isEmpty())
+			groups.add(currentGroup);
 		return groups;
 	}
 

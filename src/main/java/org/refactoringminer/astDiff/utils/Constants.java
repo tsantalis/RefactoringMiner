@@ -88,4 +88,7 @@ public class Constants {
 	public static final String INITIALIZER = "Initializer";
 	public static final String QUALIFIED_NAME = "QualifiedName";
 	public static final String CLASS_INSTANCE_CREATION = "ClassInstanceCreation";
+
+	public static final String LINE_COMMENT = "LineComment";
+	public static final String BLOCK_COMMENT = "BlockComment";
 }

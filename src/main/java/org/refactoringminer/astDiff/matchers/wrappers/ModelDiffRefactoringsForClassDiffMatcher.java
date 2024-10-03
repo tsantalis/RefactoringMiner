@@ -73,7 +73,12 @@ public class ModelDiffRefactoringsForClassDiffMatcher extends OptimizationAwareM
                     Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();
                     Tree dstTotalTree = modelDiff.getChildModel().getTreeContextMap().get(dstPath).getRoot();
                     new FieldDeclarationMatcher(optimizationData, moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
-                            Optional.of(new UMLJavadocDiff(moveAttributeRefactoring.getOriginalAttribute().getJavadoc(), moveAttributeRefactoring.getMovedAttribute().getJavadoc())))
+                    		(moveAttributeRefactoring.getOriginalAttribute().getJavadoc() != null && moveAttributeRefactoring.getMovedAttribute().getJavadoc() != null) ?
+                                    Optional.of(new UMLJavadocDiff(moveAttributeRefactoring.getOriginalAttribute().getJavadoc(), moveAttributeRefactoring.getMovedAttribute().getJavadoc()))
+                                    /* TODO : Replace with movedAttr.getJavaDocDiff() */
+                                    :
+                                    Optional.empty(),
+                            new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments()))
                             //TODO : Replace this with moveAttributeRefactoring.getJavadocDiff() when it is implemented
                             .match(srcTotalTree, dstTotalTree, mappingStore);
                     this.processedMoveRefactorings.add(moveAttributeRefactoring);

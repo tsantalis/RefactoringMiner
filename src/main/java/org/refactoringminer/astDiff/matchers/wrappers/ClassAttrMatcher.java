@@ -36,7 +36,8 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
                         Optional.of(new UMLJavadocDiff(pair.getLeft().getJavadoc(), pair.getRight().getJavadoc()))
                         //TODO: Replace the above line with the pair.getJavaDocDiff() or something along those lines
                         :
-                        Optional.empty()) //Note: UMLJavaDocDiff throws exception if one side is null.
+                        Optional.empty(),
+                        new UMLCommentListDiff(pair.getLeft().getComments(), pair.getRight().getComments())) //Note: UMLJavaDocDiff throws exception if one side is null.
                     // So if one parameter is null, is better to handle it internally and allow the user to pass it
 
                     .match(srcTree, dstTree, mappingStore);
@@ -52,7 +53,7 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
         }
     }
     private void processFieldDeclarationByEnumConstantDiff(Tree srcTree, Tree dstTree, UMLEnumConstantDiff umlEnumConstantDiff, ExtendedMultiMappingStore mappingStore) {
-        new FieldDeclarationMatcher(optimizationData, umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant(), umlEnumConstantDiff.getJavadocDiff()).match(srcTree,dstTree,mappingStore);
+        new FieldDeclarationMatcher(optimizationData, umlEnumConstantDiff.getRemovedEnumConstant(), umlEnumConstantDiff.getAddedEnumConstant(), umlEnumConstantDiff.getJavadocDiff(), umlEnumConstantDiff.getCommentListDiff()).match(srcTree,dstTree,mappingStore);
         if(umlEnumConstantDiff.getAnonymousClassDiff().isPresent()) {
             UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
             new AnonymousClassDiffMatcher(optimizationData, anonymousClassDiff).match(srcTree, dstTree, mappingStore);

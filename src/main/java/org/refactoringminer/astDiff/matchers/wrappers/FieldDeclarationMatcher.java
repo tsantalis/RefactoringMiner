@@ -3,6 +3,7 @@ package org.refactoringminer.astDiff.matchers.wrappers;
 import com.github.gumtreediff.tree.Tree;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLEnumConstant;
+import gr.uom.java.xmi.diff.UMLCommentListDiff;
 import gr.uom.java.xmi.diff.UMLJavadocDiff;
 import org.refactoringminer.astDiff.models.OptimizationData;
 import org.refactoringminer.astDiff.utils.Constants;
@@ -20,18 +21,21 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
     private final UMLAttribute originalAttribute;
     private final UMLAttribute movedAttribute;
     private final Optional<UMLJavadocDiff> umlJavadocDiff;
+    private final UMLCommentListDiff umlCommentListDiff;
 
-    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff) {
+    public FieldDeclarationMatcher(UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff, UMLCommentListDiff umlCommentListDiff) {
         this.originalAttribute = originalAttribute;
         this.movedAttribute = movedAttribute;
         this.umlJavadocDiff = umlJavadocDiff;
+        this.umlCommentListDiff = umlCommentListDiff;
     }
 
-    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff) {
+    public FieldDeclarationMatcher(OptimizationData optimizationData, UMLAttribute originalAttribute, UMLAttribute movedAttribute, Optional<UMLJavadocDiff> umlJavadocDiff, UMLCommentListDiff umlCommentListDiff) {
         super(optimizationData);
         this.originalAttribute = originalAttribute;
         this.movedAttribute = movedAttribute;
         this.umlJavadocDiff = umlJavadocDiff;
+        this.umlCommentListDiff = umlCommentListDiff;
     }
 
     @Override
@@ -59,6 +63,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.RECORD_COMPONENT);
         }
         //				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
+        new CommentMatcher(umlCommentListDiff).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class
             mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);

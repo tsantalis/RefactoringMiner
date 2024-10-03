@@ -74,7 +74,14 @@ public class UnifiedModelDiffRefactoringsMatcher {
                 MoveAttributeRefactoring moveAttributeRefactoring = (MoveAttributeRefactoring) refactoring;
                 String srcPath = moveAttributeRefactoring.getOriginalAttribute().getLocationInfo().getFilePath();
                 String dstPath = moveAttributeRefactoring.getMovedAttribute().getLocationInfo().getFilePath();
-                findDiffsAndApplyMatcher(srcPath, dstPath, new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(), Optional.empty()) /* TODO : Replace with movedAttr.getJavaDocDiff() */ );
+                findDiffsAndApplyMatcher(srcPath, dstPath, 
+                new FieldDeclarationMatcher(moveAttributeRefactoring.getOriginalAttribute(), moveAttributeRefactoring.getMovedAttribute(),
+                		(moveAttributeRefactoring.getOriginalAttribute().getJavadoc() != null && moveAttributeRefactoring.getMovedAttribute().getJavadoc() != null) ?
+                                Optional.of(new UMLJavadocDiff(moveAttributeRefactoring.getOriginalAttribute().getJavadoc(), moveAttributeRefactoring.getMovedAttribute().getJavadoc()))
+                                /* TODO : Replace with movedAttr.getJavaDocDiff() */
+                                :
+                                Optional.empty(),
+                                new UMLCommentListDiff(moveAttributeRefactoring.getOriginalAttribute().getComments(), moveAttributeRefactoring.getMovedAttribute().getComments())));
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
             {

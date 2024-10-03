@@ -25,7 +25,7 @@ public class UMLCommentGroup {
 	}
 
 	public boolean sameText(UMLCommentGroup other) {
-		if(this.group.size() == other.group.size()) {
+		if(this.group.size() == other.group.size() && this.group.size() > 1) {
 			int matches = 0;
 			for(int i=0; i<this.group.size(); i++) {
 				if(this.group.get(i).getText().equals(other.group.get(i).getText())) {

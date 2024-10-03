@@ -74,6 +74,10 @@ public class UMLCommentListDiff {
 				(groupsBeforeSize <= 1 && groupsAfterSize <= 1)) {
 			processRemainingComments(deletedComments, addedComments);
 		}
+		else {
+			this.deletedComments.addAll(deletedComments);
+			this.addedComments.addAll(addedComments);
+		}
 	}
 
 	private boolean allRemainingCommentsBelongToGroups(List<UMLComment> comments, List<UMLCommentGroup> groups) {

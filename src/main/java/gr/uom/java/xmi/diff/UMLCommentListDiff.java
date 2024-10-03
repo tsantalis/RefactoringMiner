@@ -60,11 +60,29 @@ public class UMLCommentListDiff {
 						deletedComments.remove(commentBefore);
 						addedComments.remove(commentAfter);
 					}
+					groupsBeforeToBeRemoved.add(groupBefore);
+					groupsAfterToBeRemoved.add(groupAfter);
 					break;
 				}
 			}
 		}
-		processRemainingComments(deletedComments, addedComments);
+		groupsBefore.removeAll(groupsBeforeToBeRemoved);
+		groupsAfter.removeAll(groupsAfterToBeRemoved);
+		if(!(allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter)))
+			processRemainingComments(deletedComments, addedComments);
+	}
+
+	private boolean allRemainingCommentsBelongToGroups(List<UMLComment> comments, List<UMLCommentGroup> groups) {
+		int matches = 0;
+		for(UMLComment comment : comments) {
+			for(UMLCommentGroup group : groups) {
+				if(group.getGroup().contains(comment) && group.getGroup().size() > 1) {
+					matches++;
+					break;
+				}
+			}
+		}
+		return matches == comments.size();
 	}
 
 	public UMLCommentListDiff(UMLCommentGroup groupBefore, UMLCommentGroup groupAfter) {

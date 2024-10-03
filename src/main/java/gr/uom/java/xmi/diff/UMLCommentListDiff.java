@@ -28,6 +28,8 @@ public class UMLCommentListDiff {
 		//check if there exist comment groups, consecutive line comments
 		List<UMLCommentGroup> groupsBefore = createCommentGroups(commentsBefore);
 		List<UMLCommentGroup> groupsAfter = createCommentGroups(commentsAfter);
+		int groupsBeforeSize = groupsBefore.size();
+		int groupsAfterSize = groupsAfter.size();
 		List<UMLCommentGroup> groupsBeforeToBeRemoved = new ArrayList<UMLCommentGroup>();
 		List<UMLCommentGroup> groupsAfterToBeRemoved = new ArrayList<UMLCommentGroup>();
 		for(UMLCommentGroup groupBefore : groupsBefore) {
@@ -68,8 +70,10 @@ public class UMLCommentListDiff {
 		}
 		groupsBefore.removeAll(groupsBeforeToBeRemoved);
 		groupsAfter.removeAll(groupsAfterToBeRemoved);
-		if(!(allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter)))
+		if(!(allRemainingCommentsBelongToGroups(deletedComments, groupsBefore) && allRemainingCommentsBelongToGroups(addedComments, groupsAfter)) ||
+				(groupsBeforeSize <= 1 && groupsAfterSize <= 1)) {
 			processRemainingComments(deletedComments, addedComments);
+		}
 	}
 
 	private boolean allRemainingCommentsBelongToGroups(List<UMLComment> comments, List<UMLCommentGroup> groups) {

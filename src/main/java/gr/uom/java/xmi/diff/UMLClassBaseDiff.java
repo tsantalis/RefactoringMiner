@@ -2839,6 +2839,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			for(UMLOperation addedOperation : sortedAddedOperations) {
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 				List<ExtractOperationRefactoring> discarded = new ArrayList<>();
+				List<ExtractOperationRefactoring> duplicates = new ArrayList<>();
 				if(refs.size() > 1) {
 					for(ExtractOperationRefactoring refactoring : refs) {
 						Set<AbstractCodeMapping> mappings = refactoring.getBodyMapper().getMappings();
@@ -2855,11 +2856,21 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				for(ExtractOperationRefactoring refactoring : refs) {
+					for(Refactoring r : refactorings) {
+						if(r instanceof ExtractOperationRefactoring) {
+							ExtractOperationRefactoring ex = (ExtractOperationRefactoring)r;
+							if(ex.getBodyMapper().getMappings().equals(refactoring.getBodyMapper().getMappings())) {
+								duplicates.add(refactoring);
+							}
+						}
+					}
+				}
 				if(discarded.equals(refs)) {
 					discarded.clear();
 				}
 				for(ExtractOperationRefactoring refactoring : refs) {
-					if(!discarded.contains(refactoring)) {
+					if(!discarded.contains(refactoring) && !duplicates.contains(refactoring)) {
 						CompositeStatementObject synchronizedBlock = refactoring.extractedFromSynchronizedBlock();
 						if(synchronizedBlock != null) {
 							refactoring.getBodyMapper().getParentMapper().getNonMappedInnerNodesT1().remove(synchronizedBlock);

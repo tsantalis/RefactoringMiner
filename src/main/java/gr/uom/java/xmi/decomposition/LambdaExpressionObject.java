@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
@@ -78,6 +79,21 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			for(VariableDeclaration parameter : parameters) {
 				parameter.addStatementInScope(expression);
 			}
+		}
+	}
+
+	public LambdaExpressionObject(CompilationUnit cu, String filePath, Statement switchCaseBody, VariableDeclarationContainer owner) {
+		this.owner = owner;
+		this.hasParentheses = false;
+		this.asString = switchCaseBody.toString();
+		this.locationInfo = new LocationInfo(cu, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
+		if(switchCaseBody instanceof Block) {
+			this.body = new OperationBody(cu, filePath, (Block)switchCaseBody, this, new ArrayList<>());
+		}
+		else {
+			//TODO find a way to support switch-case with a single statement
+			//this.expression = new AbstractExpression(cu, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this);
+			//this.expression.setLambdaOwner(this);
 		}
 	}
 

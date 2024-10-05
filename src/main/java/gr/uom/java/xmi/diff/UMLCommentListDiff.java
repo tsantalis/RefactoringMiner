@@ -131,6 +131,34 @@ public class UMLCommentListDiff {
 				}
 			}
 		}
+		if(addedComments.isEmpty()) {
+			//check potential multi-mappings
+			for(UMLComment deletedComment : new ArrayList<>(deletedComments)) {
+				for(Pair<UMLComment, UMLComment> pair : commonComments) {
+					if(pair.getLeft().getText().equals(deletedComment.getText()) &&
+							pair.getRight().getText().equals(deletedComment.getText())) {
+						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
+						commonComments.add(newPair);
+						deletedComments.remove(deletedComment);
+						break;
+					}
+				}
+			}
+		}
+		if(deletedComments.isEmpty()) {
+			//check potential multi-mappings
+			for(UMLComment addedComment : new ArrayList<>(addedComments)) {
+				for(Pair<UMLComment, UMLComment> pair : commonComments) {
+					if(pair.getLeft().getText().equals(addedComment.getText()) &&
+							pair.getRight().getText().equals(addedComment.getText())) {
+						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);
+						commonComments.add(newPair);
+						addedComments.remove(addedComment);
+						break;
+					}
+				}
+			}
+		}
 		processModifiedComments(deletedComments, addedComments);
 	}
 

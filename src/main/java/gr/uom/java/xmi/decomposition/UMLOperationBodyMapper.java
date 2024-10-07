@@ -2654,7 +2654,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				List<UMLComment> deletedComments = new ArrayList<UMLComment>();
 				deletedComments.addAll(parentMapper.commentListDiff.getDeletedComments());
 				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
-					deletedComments.addAll(childMapper.commentListDiff.getDeletedComments());
+					if(childMapper.commentListDiff != null)
+						deletedComments.addAll(childMapper.commentListDiff.getDeletedComments());
 				}
 				this.commentListDiff = new UMLCommentListDiff(deletedComments, container2.getComments());
 				checkUnmatchedStatementsBeingCommented();
@@ -3043,7 +3044,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				List<UMLComment> addedComments = new ArrayList<UMLComment>();
 				addedComments.addAll(parentMapper.commentListDiff.getAddedComments());
 				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
-					addedComments.addAll(childMapper.commentListDiff.getAddedComments());
+					if(childMapper.commentListDiff != null)
+						addedComments.addAll(childMapper.commentListDiff.getAddedComments());
 				}
 				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), addedComments);
 				checkUnmatchedStatementsBeingCommented();

@@ -1,0 +1,11 @@
+private handleHttp(conn ServerConnection, ch Channel, msg Object) : void -> protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void
+line range:539-539==line range:525-525
+private handleExpectWebsockets(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void -> protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void
+line range:511-511==line range:549-549
+line range:512-512==line range:550-550
+line range:495-495==line range:533-533
+line range:506-506==line range:544-544
+private handleHttp(conn ServerConnection, ch Channel, msg Object) : void -> protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void
+line range:539-539==line range:525-525
+line range:539-539==line range:575-575
+protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void -> protected doMessageReceived(conn ServerConnection, ctx ChannelHandlerContext, msg Object) : void

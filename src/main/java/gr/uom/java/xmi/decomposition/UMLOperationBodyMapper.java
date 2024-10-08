@@ -2651,13 +2651,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			if(parentMapper != null && parentMapper.commentListDiff != null) {
-				List<UMLComment> deletedComments = new ArrayList<UMLComment>();
-				deletedComments.addAll(parentMapper.commentListDiff.getDeletedComments());
+				AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
+				Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();
+				if(parentMapping != null) {
+					for(UMLComment deletedComment : parentMapper.commentListDiff.getDeletedComments()) {
+						if(parentMapping.getFragment1().getLocationInfo().subsumes(deletedComment.getLocationInfo())) {
+							deletedComments.add(deletedComment);
+						}
+					}
+				}
+				else {
+					deletedComments.addAll(parentMapper.commentListDiff.getDeletedComments());
+				}
 				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 					if(childMapper.commentListDiff != null)
 						deletedComments.addAll(childMapper.commentListDiff.getDeletedComments());
 				}
-				this.commentListDiff = new UMLCommentListDiff(deletedComments, container2.getComments());
+				this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments());
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}
@@ -3041,13 +3051,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				inlinedVariableAssignment(statement, nonMappedLeavesT2);
 			}
 			if(parentMapper != null && parentMapper.commentListDiff != null) {
-				List<UMLComment> addedComments = new ArrayList<UMLComment>();
-				addedComments.addAll(parentMapper.commentListDiff.getAddedComments());
+				AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
+				Set<UMLComment> addedComments = new LinkedHashSet<UMLComment>();
+				if(parentMapping != null) {
+					for(UMLComment addedComment : parentMapper.commentListDiff.getAddedComments()) {
+						if(parentMapping.getFragment2().getLocationInfo().subsumes(addedComment.getLocationInfo())) {
+							addedComments.add(addedComment);
+						}
+					}
+				}
+				else {
+					addedComments.addAll(parentMapper.commentListDiff.getAddedComments());
+				}
 				for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
 					if(childMapper.commentListDiff != null)
 						addedComments.addAll(childMapper.commentListDiff.getAddedComments());
 				}
-				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), addedComments);
+				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments));
 				checkUnmatchedStatementsBeingCommented();
 			}
 		}

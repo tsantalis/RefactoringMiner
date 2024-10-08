@@ -14,6 +14,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl.ChangedFileInfo;
 
@@ -22,6 +23,8 @@ import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLDocElement;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
+import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
+import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 
 public class TestJavadocDiff {
@@ -108,6 +111,47 @@ public class TestJavadocDiff {
 				commentInfo(mapper, actual);
 				//break;
 			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/jOOQ/jOOQ.git, 58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357, org.jooq.tools.Convert.ConvertAll, jOOQ-58a4e74d28073e7c6f15d1f225ac1c2fd9aa4357-comments.txt",
+		"https://github.com/thymeleaf/thymeleaf.git, 378ba37750a9cb1b19a6db434dfa59308f721ea6, org.thymeleaf.templateparser.reader.BlockAwareReader, thymeleaf-378ba37750a9cb1b19a6db434dfa59308f721ea6-comments.txt",
+		"https://github.com/eclipse-vertx/vert.x.git, 32a8c9086040fd6d6fa11a214570ee4f75a4301f, io.vertx.core.http.impl.HttpServerImpl.ServerHandler, vertx-32a8c9086040fd6d6fa11a214570ee4f75a4301f-comments.txt"
+	})
+	public void testMethodCommentMultiMappings(String url, String commitId, String className, String testResultFileName) throws Exception {
+		final List<String> actual = new ArrayList<>();
+		UMLClassDiff classDiff = generateClassDiff(url, commitId, new File(REPOS), className);
+		classDiff.process();
+		List<Refactoring> refactorings = classDiff.getRefactorings();
+		List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+		for (Refactoring ref : refactorings) {
+			if(ref instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+				UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+				if(!bodyMapper.isNested()) {
+					if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+						parentMappers.add(bodyMapper.getParentMapper());
+					}
+				}
+				commentInfo(bodyMapper, actual);
+			}
+			else if(ref instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring ex = (InlineOperationRefactoring)ref;
+				UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+				if(!bodyMapper.isNested()) {
+					if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+						parentMappers.add(bodyMapper.getParentMapper());
+					}
+				}
+				commentInfo(bodyMapper, actual);
+			}
+		}
+		for(UMLOperationBodyMapper parentMapper : parentMappers) {
+			commentInfo(parentMapper, actual);
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));

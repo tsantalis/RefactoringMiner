@@ -177,16 +177,31 @@ public class UMLCommentListDiff {
 						}
 						else {
 							//make new group
-							groups.add(new UMLCommentGroup(currentGroup.getGroup()));
+							if (currentGroup.getGroup().size() > 0) {
+								groups.add(new UMLCommentGroup(currentGroup.getGroup()));
+							}
 							currentGroup = new UMLCommentGroup();
 							currentGroup.addComment(current);
 						}
+					}
+					else {
+						//make new group
+						if (currentGroup.getGroup().size() > 0) {
+							groups.add(new UMLCommentGroup(currentGroup.getGroup()));
+						}
+						currentGroup = new UMLCommentGroup();
+						currentGroup.addComment(current);
 					}
 				}
 				else {
 					//this is the first line comment
 					currentGroup.addComment(current);
 				}
+			}
+			else if (currentGroup.getGroup().size() > 0) {
+				//there is a comment of different type
+				groups.add(new UMLCommentGroup(currentGroup.getGroup()));
+				currentGroup = new UMLCommentGroup();
 			}
 		}
 		if(!currentGroup.getGroup().isEmpty())

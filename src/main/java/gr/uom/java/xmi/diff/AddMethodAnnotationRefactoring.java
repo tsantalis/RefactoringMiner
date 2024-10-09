@@ -86,7 +86,7 @@ public class AddMethodAnnotationRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(annotation);
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
 		return sb.toString();

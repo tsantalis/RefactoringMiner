@@ -88,7 +88,7 @@ public class RenameVariableRefactoring implements Refactoring, ReferenceBasedRef
 		sb.append(renamedVariable);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

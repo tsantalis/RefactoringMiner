@@ -135,7 +135,7 @@ public class ModifyVariableAnnotationRefactoring implements Refactoring {
 		sb.append(variableAfter);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
 		return sb.toString();

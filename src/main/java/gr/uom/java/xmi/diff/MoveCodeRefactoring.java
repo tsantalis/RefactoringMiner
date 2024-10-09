@@ -147,9 +147,9 @@ public class MoveCodeRefactoring implements Refactoring {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
 		sb.append("from ");
-		sb.append(sourceContainer);
+		sb.append(sourceContainer.toQualifiedString());
 		sb.append(" to ");
-		sb.append(targetContainer);
+		sb.append(targetContainer.toQualifiedString());
 		sb.append(" in class ");
 		sb.append(getClassName());
 		return sb.toString();

@@ -107,7 +107,7 @@ public class InlineVariableRefactoring implements Refactoring, ReferenceBasedRef
 		sb.append(variableDeclaration);
 		String elementType = operationBefore.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationBefore);
+		sb.append(operationBefore.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationBefore.getClassName());
 		return sb.toString();

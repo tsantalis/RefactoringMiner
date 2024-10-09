@@ -95,7 +95,7 @@ public class MergeVariableRefactoring implements Refactoring, ReferenceBasedRefa
 		sb.append(newVariable);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

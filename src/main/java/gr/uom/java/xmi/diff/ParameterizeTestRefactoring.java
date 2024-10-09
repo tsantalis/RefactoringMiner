@@ -81,9 +81,9 @@ public class ParameterizeTestRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(removedOperation);
+		sb.append(removedOperation.toQualifiedString());
 		sb.append(" to ");
-		sb.append(parameterizedTestOperation);
+		sb.append(parameterizedTestOperation.toQualifiedString());
 		sb.append(" in class ");
 		sb.append(parameterizedTestOperation.getClassName());
 		return sb.toString();

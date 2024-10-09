@@ -98,9 +98,13 @@ public class SplitOperationRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalMethodBeforeSplit);
+		sb.append(originalMethodBeforeSplit.toQualifiedString());
 		sb.append(" to ");
-		sb.append(getSplitMethods());
+		Set<String> qualifiedNames = new LinkedHashSet<String>();
+		for(VariableDeclarationContainer container : getSplitMethods()) {
+			qualifiedNames.add(container.toQualifiedString());
+		}
+		sb.append(qualifiedNames);
 		sb.append(" in class ").append(classNameAfter);
 		return sb.toString();
 	}

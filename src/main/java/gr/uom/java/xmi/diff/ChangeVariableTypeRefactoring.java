@@ -85,7 +85,7 @@ public class ChangeVariableTypeRefactoring implements Refactoring, ReferenceBase
 		sb.append(qualified ? changedTypeVariable.toQualifiedString() : changedTypeVariable.toString());
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

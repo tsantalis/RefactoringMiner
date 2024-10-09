@@ -14214,78 +14214,6 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragment",
-	"leftSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 5075,
-		"endLine": 5091,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getEndpointUUID() : String"
-}],
-	"rightSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 5075,
-		"endLine": 5091,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "renamed method declaration",
-		"codeElement": "public getAssignedEndpointUUID() : String"
-}]
-},
-{
-	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
-	"leftSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 7137,
-		"endLine": 7153,
-		"startColumn": 7,
-		"endColumn": 8,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getEndpointUUID() : String"
-}],
-	"rightSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 7137,
-		"endLine": 7153,
-		"startColumn": 7,
-		"endColumn": 8,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "renamed method declaration",
-		"codeElement": "public getAssignedEndpointUUID() : String"
-}]
-},
-{
-	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
-	"leftSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 4499,
-		"endLine": 4502,
-		"startColumn": 5,
-		"endColumn": 40,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "original method declaration",
-		"codeElement": "public getEndpointUUID() : String"
-}],
-	"rightSideLocations": [{
-		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
-		"startLine": 4499,
-		"endLine": 4502,
-		"startColumn": 5,
-		"endColumn": 48,
-		"codeElementType": "METHOD_DECLARATION",
-		"description": "renamed method declaration",
-		"codeElement": "public getAssignedEndpointUUID() : String"
-}]
-},
-{
-	"type": "Rename Method",
 	"description": "Rename Method public getEndpointUUID() : String renamed to public getAssignedEndpointUUID() : String in class org.apache.drill.exec.proto.beans.PlanFragment",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/beans/PlanFragment.java",
@@ -14310,7 +14238,79 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragment",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5075,
+		"endLine": 5091,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 5075,
+		"endLine": 5091,
+		"startColumn": 5,
+		"endColumn": 6,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7137,
+		"endLine": 7153,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 7137,
+		"endLine": 7153,
+		"startColumn": 7,
+		"endColumn": 8,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUID() : java.lang.String renamed to public getAssignedEndpointUUID() : java.lang.String in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"leftSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4499,
+		"endLine": 4502,
+		"startColumn": 5,
+		"endColumn": 40,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "original method declaration",
+		"codeElement": "public getEndpointUUID() : String"
+}],
+	"rightSideLocations": [{
+		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
+		"startLine": 4499,
+		"endLine": 4502,
+		"startColumn": 5,
+		"endColumn": 48,
+		"codeElementType": "METHOD_DECLARATION",
+		"description": "renamed method declaration",
+		"codeElement": "public getAssignedEndpointUUID() : String"
+}]
+},
+{
+	"type": "Rename Method",
+	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 5092,
@@ -14334,7 +14334,7 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7154,
@@ -14358,7 +14358,7 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public getEndpointUUIDBytes() : ByteString renamed to public getAssignedEndpointUUIDBytes() : ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
+	"description": "Rename Method public getEndpointUUIDBytes() : com.google.protobuf.ByteString renamed to public getAssignedEndpointUUIDBytes() : com.google.protobuf.ByteString in class org.apache.drill.exec.proto.BitControl.PlanFragmentOrBuilder",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 4503,
@@ -14646,7 +14646,7 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public setEndpointUUID(value String) : Builder renamed to public setAssignedEndpointUUID(value String) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"description": "Rename Method public setEndpointUUID(value java.lang.String) : Builder renamed to public setAssignedEndpointUUID(value java.lang.String) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7170,
@@ -14670,7 +14670,7 @@
 },
 {
 	"type": "Rename Method",
-	"description": "Rename Method public setEndpointUUIDBytes(value ByteString) : Builder renamed to public setAssignedEndpointUUIDBytes(value ByteString) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
+	"description": "Rename Method public setEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder renamed to public setAssignedEndpointUUIDBytes(value com.google.protobuf.ByteString) : Builder in class org.apache.drill.exec.proto.BitControl.PlanFragment.Builder",
 	"leftSideLocations": [{
 		"filePath": "protocol/src/main/java/org/apache/drill/exec/proto/BitControl.java",
 		"startLine": 7192,

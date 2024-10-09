@@ -565,7 +565,7 @@ public class UMLModelDiff {
 						}
 					}
 					MatchResult matchResult = matcher.match(removedClass, addedClass);
-					if(matchResult.isMatch()) {
+					if(matchResult.isMatch() || existingInnerClassMove(removedClass, addedClass)) {
 						if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(classMoveDiff);
@@ -628,7 +628,7 @@ public class UMLModelDiff {
 						}
 					}
 					MatchResult matchResult = matcher.match(removedClass, addedClass);
-					if(matchResult.isMatch()) {
+					if(matchResult.isMatch() || existingInnerClassMove(removedClass, addedClass)) {
 						if(!conflictingMoveOfTopLevelClass(removedClass, addedClass)) {
 							UMLClassMoveDiff classMoveDiff = new UMLClassMoveDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(classMoveDiff);
@@ -682,6 +682,17 @@ public class UMLModelDiff {
 			}
 		}
 		this.classMoveDiffList.removeAll(innerClassMoveDiffList);
+	}
+
+	private boolean existingInnerClassMove(UMLClass removedClass, UMLClass addedClass) {
+		if(removedClass.getNonQualifiedName().equals(addedClass.getNonQualifiedName())) {
+			for(UMLClassMoveDiff diff : classMoveDiffList) {
+				if(diff.getOriginalClassName().startsWith(removedClass.getName() + ".") && diff.getNextClassName().startsWith(addedClass.getName() + ".")) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean conflictingMoveOfTopLevelClass(UMLClass removedClass, UMLClass addedClass) {

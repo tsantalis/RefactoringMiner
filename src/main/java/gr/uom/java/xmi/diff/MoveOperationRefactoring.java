@@ -29,11 +29,11 @@ public class MoveOperationRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(originalOperation);
+		sb.append(originalOperation.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(originalOperation.getClassName());
 		sb.append(" to ");
-		sb.append(movedOperation);
+		sb.append(movedOperation.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(movedOperation.getClassName());
 		return sb.toString();

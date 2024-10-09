@@ -231,10 +231,10 @@ public class InlineOperationRefactoring implements Refactoring {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getName()).append("\t");
-		sb.append(inlinedOperation);
+		sb.append(inlinedOperation.toQualifiedString());
 		if(getRefactoringType().equals(RefactoringType.INLINE_OPERATION)) {
 			sb.append(" inlined to ");
-			sb.append(targetOperationAfterInline);
+			sb.append(targetOperationAfterInline.toQualifiedString());
 			sb.append(" in class ");
 			sb.append(getClassName());
 		}
@@ -244,7 +244,7 @@ public class InlineOperationRefactoring implements Refactoring {
 			sb.append(" to class ");
 			sb.append(getTargetOperationAfterInline().getClassName());
 			sb.append(" & inlined to ");
-			sb.append(getTargetOperationAfterInline());
+			sb.append(getTargetOperationAfterInline().toQualifiedString());
 		}
 		return sb.toString();
 	}

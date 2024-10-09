@@ -107,7 +107,7 @@ public class ReorderParameterRefactoring implements Refactoring {
 		sb.append(" to ");
 		sb.append(parametersAfter);
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

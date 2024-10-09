@@ -131,7 +131,7 @@ public class RemoveVariableModifierRefactoring implements Refactoring {
 		sb.append(variableBefore);
 		String elementType = operationBefore.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationBefore);
+		sb.append(operationBefore.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationBefore.getClassName());
 		return sb.toString();

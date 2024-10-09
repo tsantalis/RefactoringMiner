@@ -81,7 +81,7 @@ public class ReplaceLoopWithPipelineRefactoring implements Refactoring, LeafMapp
 		sb.append(pipeline.contains("\n") ? pipeline.substring(0, pipeline.indexOf("\n")) : pipeline);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
 		return sb.toString();

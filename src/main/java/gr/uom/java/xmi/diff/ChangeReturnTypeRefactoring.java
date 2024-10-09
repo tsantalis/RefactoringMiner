@@ -65,7 +65,7 @@ public class ChangeReturnTypeRefactoring implements Refactoring, ReferenceBasedR
 		sb.append(" to ");
 		sb.append(qualified ? changedType.toQualifiedString() : changedType.toString());
 		sb.append(" in method ");
-		sb.append(qualified ? operationAfter.toQualifiedString() : operationAfter.toString());
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

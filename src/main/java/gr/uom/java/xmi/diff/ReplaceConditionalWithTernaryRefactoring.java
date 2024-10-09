@@ -126,7 +126,7 @@ public class ReplaceConditionalWithTernaryRefactoring implements Refactoring, Le
 		sb.append(newConditional);
 		String elementType = operationAfter.getElementType();
 		sb.append(" in " + elementType + " ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ").append(operationAfter.getClassName());
 		return sb.toString();
 	}

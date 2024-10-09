@@ -97,7 +97,7 @@ public class ModifyMethodAnnotationRefactoring implements Refactoring {
 		sb.append(" to ");
 		sb.append(annotationAfter);
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
 		return sb.toString();

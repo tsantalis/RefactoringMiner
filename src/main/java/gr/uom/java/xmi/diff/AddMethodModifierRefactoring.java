@@ -91,7 +91,7 @@ public class AddMethodModifierRefactoring implements Refactoring {
 		sb.append(getName()).append("\t");
 		sb.append(modifier);
 		sb.append(" in method ");
-		sb.append(operationAfter);
+		sb.append(operationAfter.toQualifiedString());
 		sb.append(" from class ");
 		sb.append(operationAfter.getClassName());
 		return sb.toString();

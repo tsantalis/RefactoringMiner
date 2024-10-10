@@ -7168,9 +7168,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 */
-	private boolean isParentMappingContainingOperationInvocationInMethodBodyScope() {
+	private AbstractCodeFragment statementContainingExtractedOperationInvocation() {
 		if(operationInvocation == null) {
-			return false;
+			return null;
 		}
 		//Extract Method scenario 
 		AbstractCodeFragment statementContainingOperationInvocation = null; 
@@ -7196,12 +7196,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
-		//check if the parent statement is the body of parentMapper.container2
-		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container2.getBody() != null &&
-				statementContainingOperationInvocation.getParent().equals(parentMapper.container2.getBody().getCompositeStatement())) {
-			return true;
+		return statementContainingOperationInvocation;
+	}
+
+	private AbstractCodeFragment statementContainingInlinedOperationInvocation() {
+		if(operationInvocation == null) {
+			return null;
 		}
 		//Inline Method scenario 
+		AbstractCodeFragment statementContainingOperationInvocation = null; 
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) { 
 			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
 				statementContainingOperationInvocation = leaf; 
@@ -7215,12 +7218,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				} 
 			} 
 		}
-		//check if the parent statement is the body of parentMapper.container1
-		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container1.getBody() != null &&
-				statementContainingOperationInvocation.getParent().equals(parentMapper.container1.getBody().getCompositeStatement())) {
-			return true;
-		}
-		return false;
+		return statementContainingOperationInvocation;
 	}
 
 	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
@@ -7992,6 +7990,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(parentMapping != null) {
 						return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= parentMapping.getFragment1().getLocationInfo().getStartLine() &&
 								mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= parentMapping.getFragment1().getLocationInfo().getEndLine();
+					}
+					AbstractCodeFragment statementContainingOperationInvocation = statementContainingExtractedOperationInvocation();
+					if(statementContainingOperationInvocation != null) {
+						AbstractCodeMapping newEndMapping = null;
+						for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+							if(mapping.getFragment2().getLocationInfo().getStartLine() > statementContainingOperationInvocation.getLocationInfo().getStartLine()) {
+								newEndMapping = mapping;
+								break;
+							}
+						}
+						if(newEndMapping != null) {
+							return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
+									mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= newEndMapping.getFragment1().getLocationInfo().getStartLine();
+						}
 					}
 					return mappingToCheck.getFragment1().getLocationInfo().getStartLine() >= startMapping.getFragment1().getLocationInfo().getStartLine() &&
 							mappingToCheck.getFragment1().getLocationInfo().getStartLine() <= endMapping.getFragment1().getLocationInfo().getStartLine();

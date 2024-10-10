@@ -6496,6 +6496,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(r1.getBefore().equals(r2.getBefore()) || r1.getAfter().equals(r2.getAfter())) {
 								matchingReplacements++;
 							}
+							else if(r1 instanceof MethodInvocationReplacement && r2 instanceof MethodInvocationReplacement) {
+								MethodInvocationReplacement mir1 = (MethodInvocationReplacement)r1;
+								MethodInvocationReplacement mir2 = (MethodInvocationReplacement)r2;
+								if((mir1.getInvokedOperationBefore().getName().equals(mir2.getInvokedOperationBefore().getName()) &&
+										mir1.getInvokedOperationBefore().equalArguments(mir2.getInvokedOperationBefore())) ||
+										(mir1.getInvokedOperationAfter().getName().equals(mir2.getInvokedOperationAfter().getName()) &&
+											mir1.getInvokedOperationAfter().equalArguments(mir2.getInvokedOperationAfter()))) {
+									matchingReplacements++;
+								}
+							}
 							counter++;
 						}
 						if(matchingReplacements == replacements.size() || (matchingReplacements > 0 && matchingReplacements == min)) {
@@ -6503,7 +6513,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					boolean matchWithLessReplacements = mappingSet.size() == 1 && replacements.size() < mappingSet.first().getReplacements().size();
-					if(matchingMappings == mappingSet.size() || matchWithLessReplacements) {
+					boolean differentVariableDeclarationNumber = matchingMappings > 0 &&
+							mappingSet.last().getFragment1().getVariableDeclarations().size() != mappingSet.last().getFragment2().getVariableDeclarations().size() &&
+							leaf.getVariableDeclarations().size() == leaf2.getVariableDeclarations().size();
+					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());

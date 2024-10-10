@@ -7162,6 +7162,61 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 */
+	private boolean isParentMappingContainingOperationInvocationInMethodBodyScope() {
+		if(operationInvocation == null) {
+			return false;
+		}
+		//Extract Method scenario 
+		AbstractCodeFragment statementContainingOperationInvocation = null; 
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) { 
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+				statementContainingOperationInvocation = leaf; 
+				break; 
+			} 
+		} 
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) { 
+			if(mapping instanceof LeafMapping) { 
+				if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+					statementContainingOperationInvocation = mapping.getFragment2(); 
+				} 
+			} 
+		}
+		if(nested && parentMapper.getParentMapper() != null) {
+			for(AbstractCodeFragment leaf : parentMapper.getParentMapper().getNonMappedLeavesT2()) { 
+				AbstractCall call = leaf.invocationCoveringEntireFragment();
+				if(call != null && call.matchesOperation(parentMapper.getContainer2(), parentMapper.getParentMapper().getContainer2(), classDiff, modelDiff)) {
+					statementContainingOperationInvocation = leaf; 
+					break; 
+				}
+			}
+		}
+		//check if the parent statement is the body of parentMapper.container2
+		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container2.getBody() != null &&
+				statementContainingOperationInvocation.getParent().equals(parentMapper.container2.getBody().getCompositeStatement())) {
+			return true;
+		}
+		//Inline Method scenario 
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) { 
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+				statementContainingOperationInvocation = leaf; 
+				break; 
+			} 
+		} 
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) { 
+			if(mapping instanceof LeafMapping) { 
+				if(mapping.getFragment1().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+					statementContainingOperationInvocation = mapping.getFragment1(); 
+				} 
+			} 
+		}
+		//check if the parent statement is the body of parentMapper.container1
+		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container1.getBody() != null &&
+				statementContainingOperationInvocation.getParent().equals(parentMapper.container1.getBody().getCompositeStatement())) {
+			return true;
+		}
+		return false;
+	}
+
 	private AbstractCodeMapping findParentMappingContainingOperationInvocation() {
 		if(operationInvocation == null) {
 			return null;
@@ -7216,6 +7271,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					} 
 				}
 			}
+		}
+		//check if the parent statement is the body of parentMapper.container2
+		if(statementContainingOperationInvocation != null && statementContainingOperationInvocation.getParent() != null && container2.getBody() != null &&
+				statementContainingOperationInvocation.getParent().equals(parentMapper.container2.getBody().getCompositeStatement())) {
+			return null;
 		}
 		//Inline Method scenario 
 		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT1()) { 

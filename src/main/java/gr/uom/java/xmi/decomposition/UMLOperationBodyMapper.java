@@ -2654,10 +2654,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 				Set<UMLComment> deletedComments = new LinkedHashSet<UMLComment>();
 				if(parentMapping != null) {
-					for(UMLComment deletedComment : parentMapper.commentListDiff.getDeletedComments()) {
-						if(parentMapping.getFragment1().getLocationInfo().subsumes(deletedComment.getLocationInfo())) {
-							deletedComments.add(deletedComment);
+					boolean containsReturn = false;
+					if(parentMapping.getFragment1() instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)parentMapping.getFragment1();
+						for(AbstractCodeFragment fragment : comp.getLeaves()) {
+							if(fragment.getString().equals(JAVA.RETURN_STATEMENT)) {
+								containsReturn = true;
+								break;
+							}
 						}
+					}
+					if(!containsReturn) {
+						for(UMLComment deletedComment : parentMapper.commentListDiff.getDeletedComments()) {
+							if(parentMapping.getFragment1().getLocationInfo().subsumes(deletedComment.getLocationInfo())) {
+								deletedComments.add(deletedComment);
+							}
+						}
+					}
+					else {
+						deletedComments.addAll(parentMapper.commentListDiff.getDeletedComments());
 					}
 				}
 				else {
@@ -3054,10 +3069,25 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				AbstractCodeMapping parentMapping = findParentMappingContainingOperationInvocation();
 				Set<UMLComment> addedComments = new LinkedHashSet<UMLComment>();
 				if(parentMapping != null) {
-					for(UMLComment addedComment : parentMapper.commentListDiff.getAddedComments()) {
-						if(parentMapping.getFragment2().getLocationInfo().subsumes(addedComment.getLocationInfo())) {
-							addedComments.add(addedComment);
+					boolean containsReturn = false;
+					if(parentMapping.getFragment2() instanceof CompositeStatementObject) {
+						CompositeStatementObject comp = (CompositeStatementObject)parentMapping.getFragment2();
+						for(AbstractCodeFragment fragment : comp.getLeaves()) {
+							if(fragment.getString().equals(JAVA.RETURN_STATEMENT)) {
+								containsReturn = true;
+								break;
+							}
 						}
+					}
+					if(!containsReturn) {
+						for(UMLComment addedComment : parentMapper.commentListDiff.getAddedComments()) {
+							if(parentMapping.getFragment2().getLocationInfo().subsumes(addedComment.getLocationInfo())) {
+								addedComments.add(addedComment);
+							}
+						}
+					}
+					else {
+						addedComments.addAll(parentMapper.commentListDiff.getAddedComments());
 					}
 				}
 				else {

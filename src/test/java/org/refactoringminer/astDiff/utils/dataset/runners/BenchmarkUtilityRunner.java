@@ -7,6 +7,7 @@ import java.util.List;
 
 public class BenchmarkUtilityRunner {
     public static void main(String[] args) {
+        System.setProperty("rm.jdt.comments", "false");
         // Create instances of command classes
         AddCommand addCommand = new AddCommand();
         RemoveCommand removeCommand = new RemoveCommand();

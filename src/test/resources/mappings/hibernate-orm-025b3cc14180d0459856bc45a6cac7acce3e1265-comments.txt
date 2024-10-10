@@ -1,0 +1,27 @@
+public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void -> private makePersistentClass(inheritanceState InheritanceState, superEntity PersistentClass) : PersistentClass
+line range:562-562==line range:776-776
+line range:564-564==line range:778-778
+public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void -> private makeInheritanceJoinColumns(clazzToProcess XClass, mappings ExtendedMappings, inheritanceState InheritanceState, superEntity PersistentClass) : Ejb3JoinColumn[]
+line range:503-503==line range:802-802
+public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void -> private getSuperEntity(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings, inheritanceState InheritanceState) : PersistentClass
+line range:472-472==line range:848-848
+public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void -> private isEntityClassType(clazzToProcess XClass, classType AnnotatedClassType) : boolean
+line range:441-441==line range:860-860
+line range:442-442==line range:861-861
+line range:443-443==line range:862-862
+public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void -> public bindClass(clazzToProcess XClass, inheritanceStatePerClass Map<XClass,InheritanceState>, mappings ExtendedMappings) : void
+line range:430-430==line range:431-431
+line range:434-434==line range:435-435
+line range:486-486==line range:456-456
+line range:600-600==line range:520-520
+line range:663-663==line range:580-580
+line range:677-677==line range:594-594
+line range:684-684==line range:601-601
+line range:701-701==line range:618-618
+line range:704-704==line range:621-621
+line range:714-714==line range:631-631
+line range:719-719==line range:636-636
+line range:780-780==line range:696-696
+line range:790-790==line range:706-706
+line range:850-850==line range:766-766
+line range:853-853==line range:769-769

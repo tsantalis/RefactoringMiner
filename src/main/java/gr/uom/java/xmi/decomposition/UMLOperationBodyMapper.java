@@ -2663,6 +2663,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
+						if(comp.getAllStatements().size() == 1 || (comp.getAllStatements().size() == 2 && comp.getAllStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))) {
+							containsReturn = true;
+						}
 					}
 					if(!containsReturn) {
 						for(UMLComment deletedComment : parentMapper.commentListDiff.getDeletedComments()) {
@@ -3077,6 +3080,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								containsReturn = true;
 								break;
 							}
+						}
+						if(comp.getAllStatements().size() == 1 || (comp.getAllStatements().size() == 2 && comp.getAllStatements().get(0).getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK))) {
+							containsReturn = true;
 						}
 					}
 					if(!containsReturn) {

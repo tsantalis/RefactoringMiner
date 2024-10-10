@@ -1,0 +1,12 @@
+package writeObject(out PackOutputStream, otp ObjectToPack) : void -> private writeObjectImpl(out PackOutputStream, otp ObjectToPack) : void
+line range:1114-1114==line range:1137-1137
+line range:1115-1115==line range:1138-1138
+line range:1124-1124==line range:1147-1147
+line range:1125-1125==line range:1148-1148
+private redoSearchForReuse(otp ObjectToPack) : void -> private writeObjectImpl(out PackOutputStream, otp ObjectToPack) : void
+package writeObject(out PackOutputStream, otp ObjectToPack) : void -> package writeObject(out PackOutputStream, otp ObjectToPack) : void
+package writeObject(out PackOutputStream, otp ObjectToPack) : void -> private writeObjectImpl(out PackOutputStream, otp ObjectToPack) : void
+line range:1114-1114==line range:1137-1137
+line range:1115-1115==line range:1138-1138
+line range:1124-1124==line range:1147-1147
+line range:1125-1125==line range:1148-1148

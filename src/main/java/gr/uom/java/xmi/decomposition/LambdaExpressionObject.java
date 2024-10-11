@@ -417,6 +417,11 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public boolean isSetter() {
+		return false;
+	}
+
+	@Override
 	public boolean isConstructor() {
 		return false;
 	}

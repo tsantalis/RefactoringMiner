@@ -120,6 +120,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
+	public boolean isSetter() {
+		return false;
+	}
+
+	@Override
 	public boolean isConstructor() {
 		return false;
 	}

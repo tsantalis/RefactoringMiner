@@ -99,6 +99,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	boolean isDeclaredInAnonymousClass();
 	Optional<UMLAnonymousClass> getAnonymousClassContainer();
 	boolean isGetter();
+	boolean isSetter();
 	boolean isConstructor();
 	AbstractCall isDelegate();
 	boolean isRecursive();

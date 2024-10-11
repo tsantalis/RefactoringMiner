@@ -320,9 +320,21 @@ public class MappingOptimizer {
 			}
 			Set<Integer> indicesToBeRemoved = new LinkedHashSet<>();
 			if(callsExtractedInlinedMethod.contains(true) && callsExtractedInlinedMethod.contains(false)) {
+				int getterCount = 0;
+				int setterCount = 0;
 				for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
-					if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false)))) {
-						indicesToBeRemoved.add(i);
+					if(callsExtractedInlinedMethod.get(i) == false) { 
+						if(mappers.get(i).getContainer2().isGetter())
+							getterCount++;
+						if(mappers.get(i).getContainer2().isSetter())
+							setterCount++;
+					}
+				}
+				if(getterCount == 0 && setterCount == 0) {
+					for(int i=0; i<callsExtractedInlinedMethod.size(); i++) {
+						if(callsExtractedInlinedMethod.get(i) == true && !callToExtractedInlinedMethodIsArgument(mappings.get(i), mappers.get(callsExtractedInlinedMethod.indexOf(false)))) {
+							indicesToBeRemoved.add(i);
+						}
 					}
 				}
 				if(matchingParentMappers(parentMappers, mappings) > 1) {

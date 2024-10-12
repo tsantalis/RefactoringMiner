@@ -61,6 +61,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -737,8 +738,27 @@ public class Visitor extends ASTVisitor {
 						break;
 					}
 				}
+				boolean qualifierIsLocalVariableInTheSameBlock = false;
+				Block parentBlock = findParentBlock(node);
+				if(!qualifierIsParameter && parentBlock != null) {
+					List<Statement> statements = parentBlock.statements();
+					for(Statement statement : statements) {
+						if(statement instanceof VariableDeclarationStatement) {
+							VariableDeclarationStatement vds = (VariableDeclarationStatement)statement;
+							List<VariableDeclarationFragment> fragments = vds.fragments();
+							for(VariableDeclarationFragment fragment : fragments) {
+								if(fragment.getName().getIdentifier().equals(qualifierIdentifier)) {
+									qualifierIsLocalVariableInTheSameBlock = true;
+									break;
+								}
+							}
+						}
+						if(qualifierIsLocalVariableInTheSameBlock)
+							break;
+					}
+				}
 				boolean qualifierIsField = false;
-				if(!qualifierIsParameter && !parentMethodDeclaration.isConstructor()) {
+				if(!qualifierIsParameter && !qualifierIsLocalVariableInTheSameBlock && !parentMethodDeclaration.isConstructor()) {
 					AbstractTypeDeclaration parentTypeDeclaration = findParentTypeDeclaration(parentMethodDeclaration);
 					if(parentTypeDeclaration != null) {
 						List<BodyDeclaration> bodyDeclarations = parentTypeDeclaration.bodyDeclarations();
@@ -759,7 +779,7 @@ public class Visitor extends ASTVisitor {
 						}
 					}
 				}
-				if(qualifierIsParameter || qualifierIsField || node.getName().getIdentifier().equals("length")) {
+				if(qualifierIsParameter || qualifierIsField || qualifierIsLocalVariableInTheSameBlock || node.getName().getIdentifier().equals("length")) {
 					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 					variables.add(expression);
 					if(current.getUserObject() != null) {
@@ -807,6 +827,17 @@ public class Visitor extends ASTVisitor {
 		while(parent != null) {
 			if(parent instanceof AbstractTypeDeclaration) {
 				return (AbstractTypeDeclaration)parent;
+			}
+			parent = parent.getParent();
+		}
+		return null;
+	}
+
+	private Block findParentBlock(ASTNode node) {
+		ASTNode parent = node.getParent();
+		while(parent != null) {
+			if(parent instanceof Block) {
+				return (Block)parent;
 			}
 			parent = parent.getParent();
 		}

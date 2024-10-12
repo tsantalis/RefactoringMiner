@@ -2052,8 +2052,14 @@ public class VariableReplacementAnalysis {
 				if(replacement.getType().equals(ReplacementType.VARIABLE_NAME) && !returnVariableMapping(mapping, replacement) && !mapping.containsReplacement(ReplacementType.CONCATENATION) &&
 						!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
 						replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
-					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v1 = getVariableDeclaration1(replacement, mapping);
-					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v2 = getVariableDeclaration2(replacement, mapping);
+					String before = new String(replacement.getBefore());
+					String after = new String(replacement.getAfter());
+					if(before.contains(".") && after.contains(".")) {
+						before = before.substring(0, before.indexOf("."));
+						after = after.substring(0, after.indexOf("."));
+					}
+					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v1 = getVariableDeclaration1(before, replacement, mapping);
+					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v2 = getVariableDeclaration2(after, replacement, mapping);
 					if(v1 != null && v2 != null) {
 						VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue());
 						if(map.containsKey(r)) {
@@ -2930,22 +2936,22 @@ public class VariableReplacementAnalysis {
 		return index1 >= 0 && index1 == index2;
 	}
 
-	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration1(Replacement replacement, AbstractCodeMapping mapping) {
+	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration1(String before, Replacement replacement, AbstractCodeMapping mapping) {
 		if(mapping.getReplacements().contains(replacement)) {
-			VariableDeclaration vd = mapping.getFragment1().searchVariableDeclaration(replacement.getBefore());
+			VariableDeclaration vd = mapping.getFragment1().searchVariableDeclaration(before);
 			if(vd != null) {
 				return new SimpleEntry<>(vd, mapping.getOperation1());
 			}
 		}
 		for(VariableDeclaration parameter : operation1.getParameterDeclarationList()) {
-			if(parameter.getVariableName().equals(replacement.getBefore())) {
+			if(parameter.getVariableName().equals(before)) {
 				return new SimpleEntry<>(parameter, operation1);
 			}
 		}
 		if(callSiteOperation != null && !mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//inline method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
-				if(parameter.getVariableName().equals(replacement.getBefore())) {
+				if(parameter.getVariableName().equals(before)) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}
@@ -2953,22 +2959,22 @@ public class VariableReplacementAnalysis {
 		return null;
 	}
 
-	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration2(Replacement replacement, AbstractCodeMapping mapping) {
+	private SimpleEntry<VariableDeclaration, VariableDeclarationContainer> getVariableDeclaration2(String after, Replacement replacement, AbstractCodeMapping mapping) {
 		if(mapping.getReplacements().contains(replacement)) {
-			VariableDeclaration vd = mapping.getFragment2().searchVariableDeclaration(replacement.getAfter());
+			VariableDeclaration vd = mapping.getFragment2().searchVariableDeclaration(after);
 			if(vd != null) {
 				return new SimpleEntry<>(vd, mapping.getOperation2());
 			}
 		}
 		for(VariableDeclaration parameter : operation2.getParameterDeclarationList()) {
-			if(parameter.getVariableName().equals(replacement.getAfter())) {
+			if(parameter.getVariableName().equals(after)) {
 				return new SimpleEntry<>(parameter, operation2);
 			}
 		}
 		if(callSiteOperation != null && mapper.getContainer1().equals(mapper.getParentMapper().getContainer1()) && !mapper.getContainer2().equals(mapper.getParentMapper().getContainer2())) {
 			//extract method scenario
 			for(VariableDeclaration parameter : callSiteOperation.getParameterDeclarationList()) {
-				if(parameter.getVariableName().equals(replacement.getAfter())) {
+				if(parameter.getVariableName().equals(after)) {
 					return new SimpleEntry<>(parameter, callSiteOperation);
 				}
 			}

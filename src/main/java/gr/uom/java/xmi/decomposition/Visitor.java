@@ -9,7 +9,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AbstractTypeDeclaration;
 import org.eclipse.jdt.core.dom.AnonymousClassDeclaration;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.ArrayCreation;
@@ -17,7 +16,6 @@ import org.eclipse.jdt.core.dom.ArrayInitializer;
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.CatchClause;
@@ -26,11 +24,9 @@ import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.ConstructorInvocation;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.LambdaExpression;
 import org.eclipse.jdt.core.dom.MarkerAnnotation;
@@ -61,7 +57,6 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -727,77 +722,11 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
-			String qualifierIdentifier = ((SimpleName)qualifier).getIdentifier();
-			MethodDeclaration parentMethodDeclaration = findParentMethodDeclaration(node);
-			if(parentMethodDeclaration != null) {
-				boolean qualifierIsParameter = false;
-				List<SingleVariableDeclaration> parameters = parentMethodDeclaration.parameters();
-				for(SingleVariableDeclaration parameter : parameters) {
-					if(parameter.getName().getIdentifier().equals(qualifierIdentifier)) {
-						qualifierIsParameter = true;
-						break;
-					}
-				}
-				boolean qualifierIsLocalVariableInTheSameBlock = false;
-				Block parentBlock = findParentBlock(node);
-				if(!qualifierIsParameter && parentBlock != null) {
-					List<Statement> statements = parentBlock.statements();
-					for(Statement statement : statements) {
-						if(statement instanceof VariableDeclarationStatement) {
-							VariableDeclarationStatement vds = (VariableDeclarationStatement)statement;
-							List<VariableDeclarationFragment> fragments = vds.fragments();
-							for(VariableDeclarationFragment fragment : fragments) {
-								if(fragment.getName().getIdentifier().equals(qualifierIdentifier)) {
-									qualifierIsLocalVariableInTheSameBlock = true;
-									break;
-								}
-							}
-						}
-						if(qualifierIsLocalVariableInTheSameBlock)
-							break;
-					}
-				}
-				boolean qualifierIsField = false;
-				if(!qualifierIsParameter && !qualifierIsLocalVariableInTheSameBlock && !parentMethodDeclaration.isConstructor()) {
-					AbstractTypeDeclaration parentTypeDeclaration = findParentTypeDeclaration(parentMethodDeclaration);
-					if(parentTypeDeclaration != null) {
-						List<BodyDeclaration> bodyDeclarations = parentTypeDeclaration.bodyDeclarations();
-						for(BodyDeclaration declaration : bodyDeclarations) {
-							if(declaration instanceof FieldDeclaration) {
-								FieldDeclaration fieldDeclaration = (FieldDeclaration)declaration;
-								List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
-								for(VariableDeclarationFragment fragment : fragments) {
-									if(fragment.getName().getIdentifier().equals(qualifierIdentifier)) {
-										qualifierIsField = true;
-										break;
-									}
-								}
-								if(qualifierIsField) {
-									break;
-								}
-							}
-						}
-					}
-				}
-				if(qualifierIsParameter || qualifierIsField || qualifierIsLocalVariableInTheSameBlock || node.getName().getIdentifier().equals("length")) {
-					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
-					variables.add(expression);
-					if(current.getUserObject() != null) {
-						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(expression);
-					}
-				}
-			}
-			EnhancedForStatement enhancedFor = findParentEnhancedForStatement(node);
-			if(enhancedFor != null) {
-				if(enhancedFor.getParameter().getName().getIdentifier().equals(qualifierIdentifier)) {
-					LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
-					variables.add(expression);
-					if(current.getUserObject() != null) {
-						AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
-						anonymous.getVariables().add(expression);
-					}
-				}
+			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+			variables.add(expression);
+			if(current.getUserObject() != null) {
+				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
+				anonymous.getVariables().add(expression);
 			}
 		}
 		else if(qualifier instanceof QualifiedName && !(node.getParent() instanceof QualifiedName)) {
@@ -809,50 +738,6 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		return super.visit(node);
-	}
-
-	private EnhancedForStatement findParentEnhancedForStatement(ASTNode node) {
-		ASTNode parent = node.getParent();
-		while(parent != null) {
-			if(parent instanceof EnhancedForStatement) {
-				return (EnhancedForStatement)parent;
-			}
-			parent = parent.getParent();
-		}
-		return null;
-	}
-
-	private AbstractTypeDeclaration findParentTypeDeclaration(ASTNode node) {
-		ASTNode parent = node.getParent();
-		while(parent != null) {
-			if(parent instanceof AbstractTypeDeclaration) {
-				return (AbstractTypeDeclaration)parent;
-			}
-			parent = parent.getParent();
-		}
-		return null;
-	}
-
-	private Block findParentBlock(ASTNode node) {
-		ASTNode parent = node.getParent();
-		while(parent != null) {
-			if(parent instanceof Block) {
-				return (Block)parent;
-			}
-			parent = parent.getParent();
-		}
-		return null;
-	}
-
-	private MethodDeclaration findParentMethodDeclaration(ASTNode node) {
-		ASTNode parent = node.getParent();
-		while(parent != null) {
-			if(parent instanceof MethodDeclaration) {
-				return (MethodDeclaration)parent;
-			}
-			parent = parent.getParent();
-		}
-		return null;
 	}
 
 	public boolean visit(CastExpression node) {

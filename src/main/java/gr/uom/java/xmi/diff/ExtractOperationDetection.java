@@ -221,7 +221,7 @@ public class ExtractOperationDetection {
 			callTreeMap.put(root, callTree);
 		}
 		UMLOperationBodyMapper operationBodyMapper = createMapperForExtractedMethod(mapper, mapper.getContainer1(), addedOperation, addedOperationInvocation, false);
-		if(operationBodyMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper)) {
+		if(operationBodyMapper != null && (!containsRefactoringWithIdenticalMappings(refactorings, operationBodyMapper) || parentMapperContainsOperationInvocation(mapper, operationBodyMapper, addedOperationInvocation))) {
 			List<AbstractCodeMapping> additionalExactMatches = new ArrayList<AbstractCodeMapping>();
 			List<CallTreeNode> nodesInBreadthFirstOrder = callTree.getNodesInBreadthFirstOrder();
 			for(int i=1; i<nodesInBreadthFirstOrder.size(); i++) {
@@ -290,6 +290,24 @@ public class ExtractOperationDetection {
 				}
 			}
 		}
+	}
+
+	private boolean parentMapperContainsOperationInvocation(UMLOperationBodyMapper parentMapper, UMLOperationBodyMapper childMapper, AbstractCall addedOperationInvocation) {
+		AbstractCodeMapping callerMapping = null;
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) {
+			if(mapping.getFragment2().getLocationInfo().subsumes(addedOperationInvocation.getLocationInfo())) {
+				callerMapping = mapping;
+				break;
+			}
+		}
+		if(callerMapping != null) {
+			for(AbstractCodeMapping mapping : childMapper.getMappings()) {
+				if(mapping.getFragment1().equals(callerMapping.getFragment1())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private boolean containsRefactoringWithIdenticalMappings(List<ExtractOperationRefactoring> refactorings, UMLOperationBodyMapper mapper) {

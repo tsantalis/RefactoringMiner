@@ -62,6 +62,31 @@ public class MappingOptimizer {
 				}
 			}
 			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers, refactorings);
+			oneToManyMappings = new HashMap<>();
+			oneToManyMappers = new HashMap<>();
+			for(UMLOperationBodyMapper moveCodeMapper : moveCodeMappers) {
+				for(AbstractCodeMapping mapping : moveCodeMapper.getMappings()) {
+					AbstractCodeFragment fragmentContainingExpression = null;
+					if(oneToManyMappings.containsKey(mapping.getFragment1())) {
+						oneToManyMappings.get(mapping.getFragment1()).add(mapping);
+						oneToManyMappers.get(mapping.getFragment1()).add(moveCodeMapper);
+					}
+					else if(mapping.getFragment1() instanceof AbstractExpression &&
+							(fragmentContainingExpression = findFragmentContainingExpression(oneToManyMappings.keySet(), (AbstractExpression)mapping.getFragment1())) != null) {
+						oneToManyMappings.get(fragmentContainingExpression).add(mapping);
+						oneToManyMappers.get(fragmentContainingExpression).add(moveCodeMapper);
+					}
+					else {
+						List<AbstractCodeMapping> mappings = new ArrayList<>();
+						List<UMLOperationBodyMapper> mappers = new ArrayList<>();
+						mappings.add(mapping);
+						mappers.add(moveCodeMapper);
+						oneToManyMappings.put(mapping.getFragment1(), mappings);
+						oneToManyMappers.put(mapping.getFragment1(), mappers);
+					}
+				}
+			}
+			optimizeDuplicateMappings(oneToManyMappings, oneToManyMappers, refactorings);
 		}
 	}
 

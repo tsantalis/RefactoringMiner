@@ -144,6 +144,16 @@ public class ReplacementAlgorithm {
 				else if(s2 != null && !variables1.contains(s2))
 					variablesToBeRemovedFromTheIntersection.add(variable);
 			}
+			if(s1 != null && s2 != null) {
+				if(statement1.getString().endsWith(JAVA.ASSIGNMENT + variable + JAVA.STATEMENT_TERMINATION) &&
+						!statement2.getString().endsWith(JAVA.ASSIGNMENT + variable + JAVA.STATEMENT_TERMINATION)) {
+					variablesToBeRemovedFromTheIntersection.add(variable);
+				}
+				else if(!statement1.getString().endsWith(JAVA.ASSIGNMENT + variable + JAVA.STATEMENT_TERMINATION) &&
+						statement2.getString().endsWith(JAVA.ASSIGNMENT + variable + JAVA.STATEMENT_TERMINATION)) {
+					variablesToBeRemovedFromTheIntersection.add(variable);
+				}
+			}
 			if(invocationCoveringTheEntireStatement1 != null && invocationCoveringTheEntireStatement2 != null &&
 					invocationCoveringTheEntireStatement1.identicalName(invocationCoveringTheEntireStatement2)) {
 				if(!invocationCoveringTheEntireStatement1.arguments().contains(variable) &&

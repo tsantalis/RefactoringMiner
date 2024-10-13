@@ -170,6 +170,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		this.nonMappedInnerNodesT1 = new ArrayList<CompositeStatementObject>();
 		this.nonMappedInnerNodesT2 = new ArrayList<CompositeStatementObject>();
 		List<AbstractCodeFragment> leaves1 = new ArrayList<>(mapper1.getNonMappedLeavesT1());
+		for(AbstractCodeMapping mapping : mapper1.getMappings()) {
+			if(mapping instanceof LeafMapping && !mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				leaves1.add(mapping.getFragment1());
+			}
+			if(mapping instanceof CompositeStatementObjectMapping) {
+				break;
+			}
+		}
 		List<AbstractCodeFragment> leaves2 = new ArrayList<>(mapper2.getNonMappedLeavesT2());
 		List<CompositeStatementObject> innerNodes1 = new ArrayList<>(mapper1.getNonMappedInnerNodesT1());
 		List<CompositeStatementObject> innerNodes2 = new ArrayList<>(mapper2.getNonMappedInnerNodesT2());

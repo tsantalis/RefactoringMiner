@@ -4642,9 +4642,23 @@ public class UMLModelDiff {
 				UMLClass addedClass = getAddedClass(addedOperation.getClassName());
 				if(addedClass != null) {
 					List<UMLOperation> potentiallyMovedOperations = new ArrayList<>();
+					List<UMLOperationBodyMapper> mappersWithUnmatchedStatements = new ArrayList<UMLOperationBodyMapper>();
 					UMLClassBaseDiff removedClassDiff = getUMLClassDiff(removedOperation.getClassName());
+					List<UMLClassDiff> classDiffsWithUnmatchedStatements = new ArrayList<UMLClassDiff>();
 					if(removedClassDiff != null) {
 						potentiallyMovedOperations.addAll(removedClassDiff.getRemovedOperations());
+						for(UMLClassDiff classDiff : getCommonClassDiffList()) {
+							if(removedClassDiff.getOriginalClassName().startsWith(classDiff.getOriginalClassName() + ".")) {
+								for(UMLOperationBodyMapper classDiffMapper : classDiff.getOperationBodyMapperList()) {
+									if(classDiffMapper.getNonMappedLeavesT1().size() > 0 || classDiffMapper.getNonMappedInnerNodesT1().size() > 0) {
+										mappersWithUnmatchedStatements.add(classDiffMapper);
+										if(!classDiffsWithUnmatchedStatements.contains(classDiff)) {
+											classDiffsWithUnmatchedStatements.add(classDiff);
+										}
+									}
+								}
+							}
+						}
 					}
 					else {
 						UMLClass removedClass = getRemovedClass(removedOperation.getClassName());
@@ -4657,6 +4671,21 @@ public class UMLModelDiff {
 					//extracted in the class from which the method is moved before refactoring
 					if(removedClassDiff != null) {
 						checkForExtractedOperationsWithinMovedMethod(firstMapper, potentiallyMovedOperations, removedClassDiff.getNextClass(), firstMapper.getClassDiff());
+					}
+					List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
+					for(UMLOperationBodyMapper mapper : mappersWithUnmatchedStatements) {
+						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, firstMapper, mapper.getClassDiff());
+						if(moveCodeMapper.getMappings().size() > 0) {
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							if(!moveCodeMappers.contains(moveCodeMapper))
+								moveCodeMappers.add(moveCodeMapper);
+							refactorings.add(ref);
+						}
+					}
+					if(classDiffsWithUnmatchedStatements.size() == 1 && moveCodeMappers.size() > 0) {
+						MappingOptimizer optimizer = new MappingOptimizer(classDiffsWithUnmatchedStatements.get(0));
+						moveCodeMappers.addAll(mappersWithUnmatchedStatements);
+						optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, new ArrayList<>(refactorings));
 					}
 				}
 			}

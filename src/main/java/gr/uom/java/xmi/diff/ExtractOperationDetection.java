@@ -300,7 +300,7 @@ public class ExtractOperationDetection {
 				break;
 			}
 		}
-		if(callerMapping != null) {
+		if(callerMapping != null && (childMapper.getContainer2().isGetter() || childMapper.getContainer2().isSetter())) {
 			for(AbstractCodeMapping mapping : childMapper.getMappings()) {
 				if(mapping.getFragment1().equals(callerMapping.getFragment1())) {
 					return true;

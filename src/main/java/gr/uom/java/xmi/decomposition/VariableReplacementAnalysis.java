@@ -2477,7 +2477,7 @@ public class VariableReplacementAnalysis {
 							containsMapping = comp1.contains(mapping.getFragment1()) && comp2.contains(mapping.getFragment2());
 						}
 						if(containsMapping && operation2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {
-							if(bothFragmentsUseVariable(v1, mapping)) {
+							if(bothFragmentsUseVariable(v1, mapping) || bothFragmentsDeclareVariable(v1, mapping)) {
 								VariableDeclaration otherV1 = mapping.getFragment1().getVariableDeclaration(v1.getVariableName());
 								if(otherV1 != null) {
 									VariableScope otherV1Scope = otherV1.getScope();
@@ -2490,7 +2490,7 @@ public class VariableReplacementAnalysis {
 									return true;
 								}
 							}
-							if(bothFragmentsUseVariable(v2, mapping)) {
+							if(bothFragmentsUseVariable(v2, mapping) || bothFragmentsDeclareVariable(v2, mapping)) {
 								VariableDeclaration otherV2 = mapping.getFragment2().getVariableDeclaration(v2.getVariableName());
 								if(otherV2 != null) {
 									VariableScope otherV2Scope = otherV2.getScope();
@@ -2511,17 +2511,21 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
+	private static boolean bothFragmentsDeclareVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
+		return mapping.getFragment1().getVariableDeclaration(v1.getVariableName()) != null && mapping.getFragment2().getVariableDeclaration(v1.getVariableName()) != null;
+	}
+
 	public static boolean bothFragmentsUseVariable(VariableDeclaration v1, AbstractCodeMapping mapping) {
 		boolean containedInFragment1 = false;
 		for(LeafExpression variable : mapping.getFragment1().getVariables()) {
-			if(variable.getString().equals(v1.getVariableName())) {
+			if(variable.getString().equals(v1.getVariableName()) && mapping.getFragment1().getVariableDeclaration(v1.getVariableName()) == null) {
 				containedInFragment1 = true;
 				break;
 			}
 		}
 		boolean containedInFragment2 = false;
 		for(LeafExpression variable : mapping.getFragment2().getVariables()) {
-			if(variable.getString().equals(v1.getVariableName())) {
+			if(variable.getString().equals(v1.getVariableName()) && mapping.getFragment2().getVariableDeclaration(v1.getVariableName()) == null) {
 				containedInFragment2 = true;
 				break;
 			}

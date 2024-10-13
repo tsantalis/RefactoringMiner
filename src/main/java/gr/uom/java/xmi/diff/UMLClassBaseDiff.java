@@ -228,6 +228,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);
+							if(!moveCodeMappers.contains(mapper)) {
+								moveCodeMappers.add(mapper);
+							}
 							refactorings.add(ref);
 						}
 					}
@@ -243,6 +246,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);
+							if(!moveCodeMappers.contains(mapper)) {
+								moveCodeMappers.add(mapper);
+							}
 							refactorings.add(ref);
 						}
 					}

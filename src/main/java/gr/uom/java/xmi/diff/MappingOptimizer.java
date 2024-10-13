@@ -628,7 +628,7 @@ public class MappingOptimizer {
 				}
 			}
 		}
-		if(matches == operationInvocations.size() && !identicalMapping) {
+		if(matches == operationInvocations.size() && matches > 0 && !identicalMapping) {
 			return true;
 		}
 		return false;

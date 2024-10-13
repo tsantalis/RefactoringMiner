@@ -4279,6 +4279,13 @@ public class ReplacementAlgorithm {
 				return true;
 			}
 		}
+		if(statement1.getString().endsWith(JAVA.ASSIGNMENT + candidateReplacement.getBefore() + JAVA.STATEMENT_TERMINATION) &&
+				statement2.getString().endsWith(JAVA.ASSIGNMENT + candidateReplacement.getAfter() + JAVA.STATEMENT_TERMINATION)) {
+			if(statement1.getString().contains("." + candidateReplacement.getAfter() + JAVA.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getAfter() + JAVA.ASSIGNMENT))
+				return true;
+			if(statement1.getString().contains("." + candidateReplacement.getBefore() + JAVA.ASSIGNMENT) && statement2.getString().contains("." + candidateReplacement.getBefore() + JAVA.ASSIGNMENT))
+				return true;
+		}
 		if(statement1.getString().startsWith(candidateReplacement.getBefore() + JAVA.ASSIGNMENT) &&
 				statement2.getString().startsWith(candidateReplacement.getAfter() + JAVA.ASSIGNMENT) &&
 				statement1.getString().endsWith(JAVA.STATEMENT_TERMINATION) && statement2.getString().endsWith(JAVA.STATEMENT_TERMINATION)) {

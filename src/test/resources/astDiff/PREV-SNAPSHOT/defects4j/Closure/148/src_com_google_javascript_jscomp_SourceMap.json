@@ -4010,9 +4010,9 @@
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 4739,
-  "secondPos" : 5384,
+  "secondPos" : 5757,
   "firstEndPos" : 4768,
-  "secondEndPos" : 5416
+  "secondEndPos" : 5795
 }, {
   "firstType" : "Assignment",
   "secondType" : "Assignment",
@@ -4021,20 +4021,20 @@
   "firstParentType" : "ExpressionStatement",
   "secondParentType" : "ExpressionStatement",
   "firstPos" : 4739,
-  "secondPos" : 5384,
+  "secondPos" : 5757,
   "firstEndPos" : 4767,
-  "secondEndPos" : 5415
+  "secondEndPos" : 5794
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "mapping.id",
-  "secondLabel" : "mapping.sourceFile",
+  "secondLabel" : "mapping.startPosition",
   "firstParentType" : "Assignment",
   "secondParentType" : "Assignment",
   "firstPos" : 4739,
-  "secondPos" : 5384,
+  "secondPos" : 5757,
   "firstEndPos" : 4749,
-  "secondEndPos" : 5402
+  "secondEndPos" : 5778
 }, {
   "firstType" : "ASSIGNMENT_OPERATOR",
   "secondType" : "ASSIGNMENT_OPERATOR",
@@ -4043,9 +4043,64 @@
   "firstParentType" : "Assignment",
   "secondParentType" : "Assignment",
   "firstPos" : 4750,
-  "secondPos" : 5403,
+  "secondPos" : 5779,
   "firstEndPos" : 4751,
+  "secondEndPos" : 5780
+}, {
+  "firstType" : "ExpressionStatement",
+  "secondType" : "ExpressionStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4773,
+  "secondPos" : 5384,
+  "firstEndPos" : 4812,
+  "secondEndPos" : 5416
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "Assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 4773,
+  "secondPos" : 5384,
+  "firstEndPos" : 4811,
+  "secondEndPos" : 5415
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "mapping.sourceFile",
+  "secondLabel" : "mapping.sourceFile",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 4773,
+  "secondPos" : 5384,
+  "firstEndPos" : 4791,
+  "secondEndPos" : 5402
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "ASSIGNMENT_OPERATOR",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 4792,
+  "secondPos" : 5403,
+  "firstEndPos" : 4793,
   "secondEndPos" : 5404
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "escapedSourceFile",
+  "secondLabel" : "sourceFile",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 4794,
+  "secondPos" : 5405,
+  "firstEndPos" : 4811,
+  "secondEndPos" : 5415
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14056,6 +14111,50 @@
   "secondPos" : 17771,
   "firstEndPos" : 15530,
   "secondEndPos" : 17787
+}, {
+  "firstType" : "SingleVariableDeclaration",
+  "secondType" : "SingleVariableDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15545,
+  "secondPos" : 17822,
+  "firstEndPos" : 15557,
+  "secondEndPos" : 17831
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Mapping",
+  "secondLabel" : "Mapping",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 15545,
+  "secondPos" : 17822,
+  "firstEndPos" : 15552,
+  "secondEndPos" : 17829
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 15545,
+  "secondPos" : 17822,
+  "firstEndPos" : 15552,
+  "secondEndPos" : 17829
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "next",
+  "secondLabel" : "m",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 15553,
+  "secondPos" : 17830,
+  "firstEndPos" : 15557,
+  "secondEndPos" : 17831
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

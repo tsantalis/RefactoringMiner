@@ -249,6 +249,10 @@ public class UMLModelASTReader {
 				int end = start + comment.getLength();
 				String text = javaFileContent.substring(start, end);
 				UMLComment umlComment = new UMLComment(text, locationInfo);
+				if(comment.isDocComment() && comment.getParent() == null) {
+					Javadoc doc = (Javadoc)comment;
+					umlComment.setJavaDoc(generateJavadoc(cu, sourceFile, doc, javaFileContent));
+				}
 				comments.add(umlComment);
 			}
 		}

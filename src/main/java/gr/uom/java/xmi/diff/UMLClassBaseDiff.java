@@ -35,6 +35,7 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLInitializer;
+import gr.uom.java.xmi.UMLJavadoc;
 import gr.uom.java.xmi.UMLModelASTReader;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -2997,6 +2998,20 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return false;
 	}
 
+	private List<UMLJavadoc> findUnmatchedJavadocsInMethodBodiesBefore() {
+		List<UMLJavadoc> list = new ArrayList<UMLJavadoc>();
+		for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+			if(mapper.getCommentListDiff() != null) {
+				for(UMLComment comment : mapper.getCommentListDiff().getDeletedComments()) {
+					if(comment.getJavaDoc().isPresent()) {
+						list.add(comment.getJavaDoc().get());
+					}
+				}
+			}
+		}
+		return list;
+	}
+
 	protected void createBodyMappers() throws RefactoringMinerTimedOutException {
 		List<UMLOperation> removedOperationsToBeRemoved = new ArrayList<UMLOperation>();
 		List<UMLOperation> addedOperationsToBeRemoved = new ArrayList<UMLOperation>();
@@ -3019,6 +3034,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					boolean matchFound = removedOrAddedOperationWithIdenticalBody(originalOperation, nextOperation, removedOperationsToBeRemoved, addedOperationsToBeRemoved);
 					if(!matchFound) {
 			    		UMLOperationBodyMapper operationBodyMapper = new UMLOperationBodyMapper(originalOperation, nextOperation, this);
+						if(originalOperation.getJavadoc() == null && nextOperation.getJavadoc() != null) {
+							List<UMLJavadoc> list = findUnmatchedJavadocsInMethodBodiesBefore();
+							for(UMLJavadoc doc : list) {
+								if(doc.getText().equals(nextOperation.getJavadoc().getText())) {
+									UMLJavadocDiff diff = new UMLJavadocDiff(doc, nextOperation.getJavadoc());
+									operationBodyMapper.updateJavadocDiff(diff);
+									break;
+								}
+							}
+						}
 			    		this.addOperationBodyMapper(operationBodyMapper);
 					}
 				}

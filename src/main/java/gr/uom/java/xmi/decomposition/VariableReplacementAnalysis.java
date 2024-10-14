@@ -2060,7 +2060,7 @@ public class VariableReplacementAnalysis {
 					}
 					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v1 = getVariableDeclaration1(before, replacement, mapping);
 					SimpleEntry<VariableDeclaration, VariableDeclarationContainer> v2 = getVariableDeclaration2(after, replacement, mapping);
-					if(v1 != null && v2 != null) {
+					if(v1 != null && v2 != null && !v1.getKey().getVariableName().equals(v2.getKey().getVariableName())) {
 						VariableDeclarationReplacement r = new VariableDeclarationReplacement(v1.getKey(), v2.getKey(), v1.getValue(), v2.getValue());
 						if(map.containsKey(r)) {
 							map.get(r).add(mapping);

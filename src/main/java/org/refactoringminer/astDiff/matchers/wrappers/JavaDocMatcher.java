@@ -63,11 +63,11 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
 
     private void processJavaDocs(Tree srcTree, Tree dstTree, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, ExtendedMultiMappingStore mappingStore) {
         if (srcUMLJavaDoc != null && dstUMLJavaDoc != null) {
-            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfoNoLookAhead(srcTree,
+            Tree srcJavaDocNode = TreeUtilFunctions.findByLocationInfo(srcTree,
                     umlJavadocDiff.isPresent() ?
                     umlJavadocDiff.get().getJavadocBefore().getLocationInfo() :
                     srcUMLJavaDoc.getLocationInfo());
-            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfoNoLookAhead(dstTree,
+            Tree dstJavaDocNode = TreeUtilFunctions.findByLocationInfo(dstTree,
                     umlJavadocDiff.isPresent() ?
                     umlJavadocDiff.get().getJavadocAfter().getLocationInfo() :
                     dstUMLJavaDoc.getLocationInfo());

@@ -29,15 +29,35 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
     private final Optional<UMLJavadocDiff> umlJavadocDiff;
 
     public JavaDocMatcher(UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, Optional<UMLJavadocDiff> umlJavadocDiff) {
-        this.srcUMLJavaDoc = srcUMLJavaDoc;
-        this.dstUMLJavaDoc = dstUMLJavaDoc;
+    	if(srcUMLJavaDoc == null && umlJavadocDiff.isPresent()) {
+        	this.srcUMLJavaDoc = umlJavadocDiff.get().getJavadocBefore();
+        }
+        else {
+        	this.srcUMLJavaDoc = srcUMLJavaDoc;
+        }
+        if(dstUMLJavaDoc == null && umlJavadocDiff.isPresent()) {
+        	this.dstUMLJavaDoc = umlJavadocDiff.get().getJavadocAfter();
+        }
+        else {
+        	this.dstUMLJavaDoc = dstUMLJavaDoc;
+        }
         this.umlJavadocDiff = umlJavadocDiff;
     }
 
     public JavaDocMatcher(OptimizationData optimizationData, UMLJavadoc srcUMLJavaDoc, UMLJavadoc dstUMLJavaDoc, Optional<UMLJavadocDiff> umlJavadocDiff) {
         super(optimizationData);
-        this.srcUMLJavaDoc = srcUMLJavaDoc;
-        this.dstUMLJavaDoc = dstUMLJavaDoc;
+        if(srcUMLJavaDoc == null && umlJavadocDiff.isPresent()) {
+        	this.srcUMLJavaDoc = umlJavadocDiff.get().getJavadocBefore();
+        }
+        else {
+        	this.srcUMLJavaDoc = srcUMLJavaDoc;
+        }
+        if(dstUMLJavaDoc == null && umlJavadocDiff.isPresent()) {
+        	this.dstUMLJavaDoc = umlJavadocDiff.get().getJavadocAfter();
+        }
+        else {
+        	this.dstUMLJavaDoc = dstUMLJavaDoc;
+        }
         this.umlJavadocDiff = umlJavadocDiff;
     }
 

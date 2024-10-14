@@ -1,13 +1,26 @@
 package gr.uom.java.xmi;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class UMLComment extends UMLAbstractDocumentation {
 
+	//represents non-attached Javadocs found within method bodies
+	private Optional<UMLJavadoc> javaDoc;
+
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
+		this.javaDoc = Optional.empty();
+	}
+
+	public void setJavaDoc(UMLJavadoc doc) {
+		this.javaDoc = Optional.of(doc);
+	}
+
+	public Optional<UMLJavadoc> getJavaDoc() {
+		return javaDoc;
 	}
 
 	@Override

@@ -366,7 +366,7 @@ public class UMLModelASTReader {
 		}
 		umlClass.setRecord(true);
 		
-		int startSignatureOffset = processModifiers(cu, sourceFile, recordDeclaration, umlClass);
+		int startSignatureOffset = processModifiers(cu, sourceFile, recordDeclaration, umlClass, javaFileContent);
 		if(startSignatureOffset == -1) {
 			startSignatureOffset = recordDeclaration.getName().getStartPosition();
 		}
@@ -376,13 +376,13 @@ public class UMLModelASTReader {
 					generateLocationInfo(cu, sourceFile, typeParameter, CodeElementType.TYPE_PARAMETER));
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0));
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0, javaFileContent));
 			}
 			List<IExtendedModifier> typeParameterExtendedModifiers = typeParameter.modifiers();
 			for(IExtendedModifier extendedModifier : typeParameterExtendedModifiers) {
 				if(extendedModifier.isAnnotation()) {
 					Annotation annotation = (Annotation)extendedModifier;
-					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 				}
 			}
     		umlClass.addTypeParameter(umlTypeParameter);
@@ -390,7 +390,7 @@ public class UMLModelASTReader {
     	
     	List<Type> superInterfaceTypes = recordDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0);
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0, javaFileContent);
     		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
     		umlClass.addImplementedInterface(umlType);
     		getUmlModel().addRealization(umlRealization);
@@ -400,13 +400,13 @@ public class UMLModelASTReader {
     	for(SingleVariableDeclaration recordComponent : recordComponents) {
 			Type parameterType = recordComponent.getType();
 			String parameterName = recordComponent.getName().getFullyQualifiedName();
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, parameterType, recordComponent.getExtraDimensions());
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, parameterType, recordComponent.getExtraDimensions(), javaFileContent);
 			if(recordComponent.isVarargs()) {
 				type.setVarargs();
 			}
 			LocationInfo recordComponentLocationInfo = new LocationInfo(cu, sourceFile, recordComponent, CodeElementType.RECORD_COMPONENT);
 			UMLRecordComponent umlRecordComponent = new UMLRecordComponent(parameterName, type, recordComponentLocationInfo);
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, recordComponent, umlRecordComponent, recordComponent.isVarargs());
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, recordComponent, umlRecordComponent, recordComponent.isVarargs(), javaFileContent);
 			variableDeclaration.setAttribute(true);
 			umlRecordComponent.setVariableDeclaration(variableDeclaration);
 			umlRecordComponent.setClassName(umlClass.getName());
@@ -420,11 +420,11 @@ public class UMLModelASTReader {
     	for(BodyDeclaration declaration : map.keySet()) {
     		if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes(), javaFileContent);
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes(), javaFileContent);
 			}
     	}
     	
@@ -466,7 +466,7 @@ public class UMLModelASTReader {
 		}
 		umlClass.setAnnotation(true);
 		
-		int startSignatureOffset = processModifiers(cu, sourceFile, annotationDeclaration, umlClass);
+		int startSignatureOffset = processModifiers(cu, sourceFile, annotationDeclaration, umlClass, javaFileContent);
 		if(startSignatureOffset == -1) {
 			startSignatureOffset = annotationDeclaration.getName().getStartPosition();
 		}
@@ -477,11 +477,11 @@ public class UMLModelASTReader {
 		for(BodyDeclaration declaration : map.keySet()) {
 			if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes(), javaFileContent);
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes(), javaFileContent);
 			}
 		}
 		
@@ -525,7 +525,7 @@ public class UMLModelASTReader {
 		
 		List<Type> superInterfaceTypes = enumDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0);
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0, javaFileContent);
     		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
     		umlClass.addImplementedInterface(umlType);
     		getUmlModel().addRealization(umlRealization);
@@ -536,7 +536,7 @@ public class UMLModelASTReader {
 			processEnumConstantDeclaration(cu, enumConstantDeclaration, sourceFile, umlClass, comments, javaFileContent);
 		}
 		
-    	int startSignatureOffset = processModifiers(cu, sourceFile, enumDeclaration, umlClass);
+    	int startSignatureOffset = processModifiers(cu, sourceFile, enumDeclaration, umlClass, javaFileContent);
     	if(startSignatureOffset == -1) {
 			startSignatureOffset = enumDeclaration.getName().getStartPosition();
 		}
@@ -547,11 +547,11 @@ public class UMLModelASTReader {
 		for(BodyDeclaration declaration : map.keySet()) {
 			if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes(), javaFileContent);
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes(), javaFileContent);
 			}
 		}
 		
@@ -653,7 +653,7 @@ public class UMLModelASTReader {
 			umlClass.setInterface(true);
     	}
     	
-    	int startSignatureOffset = processModifiers(cu, sourceFile, typeDeclaration, umlClass);
+    	int startSignatureOffset = processModifiers(cu, sourceFile, typeDeclaration, umlClass, javaFileContent);
     	if(startSignatureOffset == -1) {
 			startSignatureOffset = typeDeclaration.getName().getStartPosition();
 		}
@@ -663,13 +663,13 @@ public class UMLModelASTReader {
 					generateLocationInfo(cu, sourceFile, typeParameter, CodeElementType.TYPE_PARAMETER));
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0));
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0, javaFileContent));
 			}
 			List<IExtendedModifier> typeParameterExtendedModifiers = typeParameter.modifiers();
 			for(IExtendedModifier extendedModifier : typeParameterExtendedModifiers) {
 				if(extendedModifier.isAnnotation()) {
 					Annotation annotation = (Annotation)extendedModifier;
-					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 				}
 			}
     		umlClass.addTypeParameter(umlTypeParameter);
@@ -677,7 +677,7 @@ public class UMLModelASTReader {
     	
     	Type superclassType = typeDeclaration.getSuperclassType();
     	if(superclassType != null) {
-    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, superclassType, 0);
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, superclassType, 0, javaFileContent);
     		UMLGeneralization umlGeneralization = new UMLGeneralization(umlClass, umlType.getClassType());
     		umlClass.setSuperclass(umlType);
     		getUmlModel().addGeneralization(umlGeneralization);
@@ -685,7 +685,7 @@ public class UMLModelASTReader {
     	
     	List<Type> superInterfaceTypes = typeDeclaration.superInterfaceTypes();
     	for(Type interfaceType : superInterfaceTypes) {
-    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0);
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFile, interfaceType, 0, javaFileContent);
     		UMLRealization umlRealization = new UMLRealization(umlClass, umlType.getClassType());
     		umlClass.addImplementedInterface(umlType);
     		getUmlModel().addRealization(umlRealization);
@@ -698,11 +698,11 @@ public class UMLModelASTReader {
     	for(BodyDeclaration declaration : map.keySet()) {
     		if(declaration instanceof MethodDeclaration) {
 				UMLOperation operation = (UMLOperation) map.get(declaration);
-				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes());
+				processMethodBody(cu, sourceFile, (MethodDeclaration) declaration, operation, umlClass.getAttributes(), javaFileContent);
 			}
 			else if(declaration instanceof Initializer) {
 				UMLInitializer initializer = (UMLInitializer) map.get(declaration);
-				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes());
+				processInitializerBody(cu, sourceFile, (Initializer) declaration, initializer, umlClass.getAttributes(), javaFileContent);
 			}
     	}
     	
@@ -879,13 +879,13 @@ public class UMLModelASTReader {
 	    				if(bodyDeclaration instanceof MethodDeclaration) {
 	    					MethodDeclaration methodDeclaration = (MethodDeclaration)bodyDeclaration;
 	    					UMLOperation operation = anonymousClass.getOperations().get(i);
-	    					processMethodBody(cu, sourceFile, methodDeclaration, operation, umlClass.getAttributes());
+	    					processMethodBody(cu, sourceFile, methodDeclaration, operation, umlClass.getAttributes(), javaFileContent);
 	    					i++;
 	    				}
 	    				else if(bodyDeclaration instanceof Initializer) {
 	    					Initializer initializer = (Initializer)bodyDeclaration;
 	    					UMLInitializer umlInitializer = anonymousClass.getInitializers().get(j);
-	    					processInitializerBody(cu, sourceFile, initializer, umlInitializer, umlClass.getAttributes());
+	    					processInitializerBody(cu, sourceFile, initializer, umlInitializer, umlClass.getAttributes(), javaFileContent);
 	    					j++;
 	    				}
 	    			}
@@ -894,10 +894,10 @@ public class UMLModelASTReader {
     	}
 	}
 
-	private void processMethodBody(CompilationUnit cu, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation, List<UMLAttribute> attributes) {
+	private void processMethodBody(CompilationUnit cu, String sourceFile, MethodDeclaration methodDeclaration, UMLOperation operation, List<UMLAttribute> attributes, String javaFileContent) {
 		Block block = methodDeclaration.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, operation, attributes);
+			OperationBody body = new OperationBody(cu, sourceFile, block, operation, attributes, javaFileContent);
 			operation.setBody(body);
 		}
 		else {
@@ -905,10 +905,10 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private void processInitializerBody(CompilationUnit cu, String sourceFile, Initializer initializer, UMLInitializer umlInitializer, List<UMLAttribute> attributes) {
+	private void processInitializerBody(CompilationUnit cu, String sourceFile, Initializer initializer, UMLInitializer umlInitializer, List<UMLAttribute> attributes, String javaFileContent) {
 		Block block = initializer.getBody();
 		if(block != null) {
-			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer, attributes);
+			OperationBody body = new OperationBody(cu, sourceFile, block, umlInitializer, attributes, javaFileContent);
 			umlInitializer.setBody(body);
 		}
 		else {
@@ -916,7 +916,7 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private int processModifiers(CompilationUnit cu, String sourceFile, AbstractTypeDeclaration typeDeclaration, UMLClass umlClass) {
+	private int processModifiers(CompilationUnit cu, String sourceFile, AbstractTypeDeclaration typeDeclaration, UMLClass umlClass, String javaFileContent) {
 		int startSignatureOffset = -1;
 		int modifiers = typeDeclaration.getModifiers();
     	if((modifiers & Modifier.ABSTRACT) != 0)
@@ -939,7 +939,7 @@ public class UMLModelASTReader {
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
-				umlClass.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+				umlClass.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 			}
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
@@ -1018,7 +1018,7 @@ public class UMLModelASTReader {
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
-				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 			}
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
@@ -1028,13 +1028,13 @@ public class UMLModelASTReader {
 		
 		Type returnType = annotationTypeMemberDeclatation.getType();
 		if(returnType != null) {
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, 0);
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, 0, javaFileContent);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
 		}
 		
 		if(annotationTypeMemberDeclatation.getDefault() != null) {
-			AbstractExpression defaultExpression = new AbstractExpression(cu, sourceFile, annotationTypeMemberDeclatation.getDefault(), CodeElementType.ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION, umlOperation);
+			AbstractExpression defaultExpression = new AbstractExpression(cu, sourceFile, annotationTypeMemberDeclatation.getDefault(), CodeElementType.ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION, umlOperation, javaFileContent);
 			umlOperation.setDefaultExpression(defaultExpression);
 		}
 		return umlOperation;
@@ -1086,7 +1086,7 @@ public class UMLModelASTReader {
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
-				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+				umlOperation.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 			}
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
@@ -1106,13 +1106,13 @@ public class UMLModelASTReader {
 					generateLocationInfo(cu, sourceFile, typeParameter, CodeElementType.TYPE_PARAMETER));
 			List<Type> typeBounds = typeParameter.typeBounds();
 			for(Type type : typeBounds) {
-				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0));
+				umlTypeParameter.addTypeBound(UMLType.extractTypeObject(cu, sourceFile, type, 0, javaFileContent));
 			}
 			List<IExtendedModifier> typeParameterExtendedModifiers = typeParameter.modifiers();
 			for(IExtendedModifier extendedModifier : typeParameterExtendedModifiers) {
 				if(extendedModifier.isAnnotation()) {
 					Annotation annotation = (Annotation)extendedModifier;
-					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation));
+					umlTypeParameter.addAnnotation(new UMLAnnotation(cu, sourceFile, annotation, javaFileContent));
 				}
 			}
 			umlOperation.addTypeParameter(umlTypeParameter);
@@ -1123,7 +1123,7 @@ public class UMLModelASTReader {
 			if(startSignatureOffset == -1) {
 				startSignatureOffset = returnType.getStartPosition();
 			}
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, methodDeclaration.getExtraDimensions());
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, returnType, methodDeclaration.getExtraDimensions(), javaFileContent);
 			UMLParameter returnParameter = new UMLParameter("return", type, "return", false);
 			umlOperation.addParameter(returnParameter);
 		}
@@ -1134,19 +1134,19 @@ public class UMLModelASTReader {
 		for(SingleVariableDeclaration parameter : parameters) {
 			Type parameterType = parameter.getType();
 			String parameterName = parameter.getName().getFullyQualifiedName();
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, parameterType, parameter.getExtraDimensions());
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, parameterType, parameter.getExtraDimensions(), javaFileContent);
 			if(parameter.isVarargs()) {
 				type.setVarargs();
 			}
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, umlOperation, parameter.isVarargs());
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFile, parameter, umlOperation, parameter.isVarargs(), javaFileContent);
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
 		}
 		List<Type> thrownExceptionTypes = methodDeclaration.thrownExceptionTypes();
 		for(Type thrownExceptionType : thrownExceptionTypes) {
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0);
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, thrownExceptionType, 0, javaFileContent);
 			umlOperation.addThrownExceptionType(type);
 		}
 		int endSignatureOffset = methodDeclaration.getBody() != null ?
@@ -1182,7 +1182,7 @@ public class UMLModelASTReader {
 		Type fieldType = fieldDeclaration.getType();
 		List<VariableDeclarationFragment> fragments = fieldDeclaration.fragments();
 		for(VariableDeclarationFragment fragment : fragments) {
-			UMLType type = UMLType.extractTypeObject(cu, sourceFile, fieldType, fragment.getExtraDimensions());
+			UMLType type = UMLType.extractTypeObject(cu, sourceFile, fieldType, fragment.getExtraDimensions(), javaFileContent);
 			String fieldName = fragment.getName().getFullyQualifiedName();
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);

@@ -46,66 +46,6 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private List<UMLAnnotation> annotations;
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
-	
-	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container) {
-		this.annotations = new ArrayList<UMLAnnotation>();
-		this.modifiers = new ArrayList<UMLModifier>();
-		List<IExtendedModifier> extendedModifiers = null;
-		if(fragment.getParent() instanceof VariableDeclarationStatement) {
-			VariableDeclarationStatement parent = (VariableDeclarationStatement)fragment.getParent();
-			extendedModifiers = parent.modifiers();
-			int modifiers = parent.getModifiers();
-			if((modifiers & Modifier.FINAL) != 0) {
-				this.isFinal = true;
-			}
-		}
-		else if(fragment.getParent() instanceof VariableDeclarationExpression) {
-			VariableDeclarationExpression parent = (VariableDeclarationExpression)fragment.getParent();
-			extendedModifiers = parent.modifiers();
-			int modifiers = parent.getModifiers();
-			if((modifiers & Modifier.FINAL) != 0) {
-				this.isFinal = true;
-			}
-		}
-		else if(fragment.getParent() instanceof FieldDeclaration) {
-			FieldDeclaration parent = (FieldDeclaration)fragment.getParent();
-			extendedModifiers = parent.modifiers();
-			int modifiers = parent.getModifiers();
-			if((modifiers & Modifier.FINAL) != 0) {
-				this.isFinal = true;
-			}
-		}
-		if(extendedModifiers != null) {
-			for(IExtendedModifier extendedModifier : extendedModifiers) {
-				if(extendedModifier.isAnnotation()) {
-					Annotation annotation = (Annotation)extendedModifier;
-					this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
-				}
-				else if(extendedModifier.isModifier()) {
-					Modifier modifier = (Modifier)extendedModifier;
-					this.modifiers.add(new UMLModifier(cu, filePath, modifier));
-				}
-			}
-		}
-		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
-		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
-		Type astType = extractType(fragment);
-		if(astType != null) {
-			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
-		}
-		ASTNode scopeNode = getScopeNode(fragment);
-		int startOffset = 0;
-		if(locationInfo.getCodeElementType().equals(CodeElementType.FIELD_DECLARATION)) {
-			//field declarations have the entire type declaration as scope, regardless of the location they are declared
-			startOffset = scopeNode.getStartPosition();
-		}
-		else {
-			startOffset = fragment.getStartPosition();
-		}
-		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
-		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
-	}
 
 	public VariableDeclaration(CompilationUnit cu, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
@@ -140,7 +80,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			for(IExtendedModifier extendedModifier : extendedModifiers) {
 				if(extendedModifier.isAnnotation()) {
 					Annotation annotation = (Annotation)extendedModifier;
-					this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+					this.annotations.add(new UMLAnnotation(cu, filePath, annotation, javaFileContent));
 				}
 				else if(extendedModifier.isModifier()) {
 					Modifier modifier = (Modifier)extendedModifier;
@@ -153,10 +93,10 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, javaFileContent) : null;
 		Type astType = extractType(fragment);
 		if(astType != null) {
-			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
+			this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions(), javaFileContent);
 			if(startSignatureOffset == -1) {
 				startSignatureOffset = astType.getStartPosition();
 			}
@@ -182,7 +122,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container) {
+	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();
@@ -193,7 +133,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
-				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+				this.annotations.add(new UMLAnnotation(cu, filePath, annotation, javaFileContent));
 			}
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;
@@ -202,17 +142,17 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, javaFileContent) : null;
 		Type astType = extractType(fragment);
-		this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions());
+		this.type = UMLType.extractTypeObject(cu, filePath, astType, fragment.getExtraDimensions(), javaFileContent);
 		int startOffset = fragment.getStartPosition();
 		ASTNode scopeNode = getScopeNode(fragment);
 		int endOffset = scopeNode.getStartPosition() + scopeNode.getLength();
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, boolean varargs) {
-		this(cu, filePath, fragment, container);
+	public VariableDeclaration(CompilationUnit cu, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, boolean varargs, String javaFileContent) {
+		this(cu, filePath, fragment, container, javaFileContent);
 		this.varargsParameter = varargs;
 		if(varargs) {
 			this.type.setVarargs();
@@ -232,7 +172,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		for(IExtendedModifier extendedModifier : extendedModifiers) {
 			if(extendedModifier.isAnnotation()) {
 				Annotation annotation = (Annotation)extendedModifier;
-				this.annotations.add(new UMLAnnotation(cu, filePath, annotation));
+				this.annotations.add(new UMLAnnotation(cu, filePath, annotation, javaFileContent));
 			}
 			else if(extendedModifier.isModifier()) {
 				Modifier modifier = (Modifier)extendedModifier;

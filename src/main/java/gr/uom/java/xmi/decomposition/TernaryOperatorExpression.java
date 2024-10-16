@@ -16,15 +16,15 @@ public class TernaryOperatorExpression extends LeafExpression {
 	private AbstractExpression thenExpression;
 	private AbstractCodeFragment elseExpression;
 
-	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression, VariableDeclarationContainer container) {
+	public TernaryOperatorExpression(CompilationUnit cu, String filePath, ConditionalExpression expression, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, filePath, expression, CodeElementType.TERNARY_OPERATOR, container);
-		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container);
-		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container);
+		this.condition = new AbstractExpression(cu, filePath, expression.getExpression(), CodeElementType.TERNARY_OPERATOR_CONDITION, container, javaFileContent);
+		this.thenExpression = new AbstractExpression(cu, filePath, expression.getThenExpression(), CodeElementType.TERNARY_OPERATOR_THEN_EXPRESSION, container, javaFileContent);
 		if(expression.getElseExpression() instanceof ConditionalExpression) {
-			this.elseExpression = new TernaryOperatorExpression(cu, filePath, (ConditionalExpression)expression.getElseExpression(), container);
+			this.elseExpression = new TernaryOperatorExpression(cu, filePath, (ConditionalExpression)expression.getElseExpression(), container, javaFileContent);
 		}
 		else {
-			this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container);
+			this.elseExpression = new AbstractExpression(cu, filePath, expression.getElseExpression(), CodeElementType.TERNARY_OPERATOR_ELSE_EXPRESSION, container, javaFileContent);
 		}
 	}
 

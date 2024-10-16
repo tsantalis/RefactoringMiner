@@ -49,12 +49,16 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> castExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
+	private String actualSignature;
 	
 	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
 		super();
 		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
 		Visitor visitor = new Visitor(cu, filePath, container, javaFileContent);
 		statement.accept(visitor);
+		int start = statement.getStartPosition();
+		int end = start + statement.getLength();
+		this.actualSignature = javaFileContent.substring(start, end);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
@@ -145,6 +149,10 @@ public class StatementObject extends AbstractStatement {
 		else {
 			this.statement = statementAsString;
 		}
+	}
+
+	public String getActualSignature() {
+		return actualSignature;
 	}
 
 	@Override

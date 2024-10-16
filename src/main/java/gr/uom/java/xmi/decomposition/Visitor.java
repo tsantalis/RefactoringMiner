@@ -95,11 +95,13 @@ public class Visitor extends ASTVisitor {
 	private List<LambdaExpressionObject> lambdas = new ArrayList<LambdaExpressionObject>();
 	private DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 	private DefaultMutableTreeNode current = root;
+	private final String javaFileContent;
 
-	public Visitor(CompilationUnit cu, String filePath, VariableDeclarationContainer container) {
+	public Visitor(CompilationUnit cu, String filePath, VariableDeclarationContainer container, String javaFileContent) {
 		this.cu = cu;
 		this.filePath = filePath;
 		this.container = container;
+		this.javaFileContent = javaFileContent;
 	}
 
 	public boolean visit(ArrayAccess node) {
@@ -133,7 +135,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ConditionalExpression node) {
-		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node, container);
+		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node, container, javaFileContent);
 		ternaryOperatorExpressions.add(ternary);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -169,7 +171,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
+		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container, javaFileContent);
 		creations.add(creation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -179,7 +181,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ArrayCreation node) {
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container);
+		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container, javaFileContent);
 		String nodeAsString = stringify(node);
 		creations.add(creation);
 		if(current.getUserObject() != null) {
@@ -198,7 +200,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(VariableDeclarationFragment node) {
 		if(!(node.getParent() instanceof LambdaExpression)) {
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container, javaFileContent);
 			variableDeclarations.add(variableDeclaration);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -209,7 +211,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(SingleVariableDeclaration node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container, node.isVarargs());
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container, node.isVarargs(), javaFileContent);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -570,7 +572,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(TypeMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node, container);
+		MethodReference reference = new MethodReference(cu, filePath, node, container, javaFileContent);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -662,7 +664,7 @@ public class Visitor extends ASTVisitor {
 				castExpressionInParenthesizedExpression(argument))
 			return;
 		if(argument instanceof ExpressionMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument, container);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -670,7 +672,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(argument instanceof SuperMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (SuperMethodReference)argument, container);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (SuperMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -678,7 +680,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(argument instanceof TypeMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (TypeMethodReference)argument, container);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (TypeMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -760,7 +762,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(LambdaExpression node) {
-		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node, container);
+		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node, container, javaFileContent);
 		lambdas.add(lambda);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -773,7 +775,7 @@ public class Visitor extends ASTVisitor {
 		List<Statement> statements = node.statements();
 		for(Statement statement : statements) {
 			if(statement instanceof Block) {
-				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, statement, container);
+				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, statement, container, javaFileContent);
 				lambdas.add(lambda);
 				if(current.getUserObject() != null) {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

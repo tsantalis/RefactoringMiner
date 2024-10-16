@@ -38,10 +38,10 @@ public class MethodReference extends AbstractCall {
 		}
 	}
 	
-	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference, VariableDeclarationContainer container) {
+	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
-		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0).toQualifiedString();
+		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0, javaFileContent).toQualifiedString();
 		this.arguments = new ArrayList<String>();
 	}
 

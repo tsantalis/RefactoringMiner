@@ -50,10 +50,10 @@ public class StatementObject extends AbstractStatement {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	
-	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container) {
+	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
 		super();
 		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
-		Visitor visitor = new Visitor(cu, filePath, container);
+		Visitor visitor = new Visitor(cu, filePath, container, javaFileContent);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();

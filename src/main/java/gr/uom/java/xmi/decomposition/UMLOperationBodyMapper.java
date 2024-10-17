@@ -4218,7 +4218,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 					if(!mappingSet.isEmpty()) {
 						Set<AbstractCodeMapping> movedInIfElseBranch = movedInIfElseIfBranch(mappingSet);
-						if(movedInIfElseBranch.size() > 1) {
+						if(movedInIfElseBranch.size() > 1 && multiMappingCondition(matchingInnerNodes1, matchingInnerNodes2)) {
 							for(AbstractCodeMapping mapping : movedInIfElseBranch) {
 								addMapping(mapping);
 								innerNodes2.remove(mapping.getFragment2());
@@ -6435,20 +6435,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
-	private boolean multiMappingCondition(List<AbstractCodeFragment> matchingLeaves1, List<AbstractCodeFragment> matchingLeaves2) {
+	private boolean multiMappingCondition(List<? extends AbstractCodeFragment> matchingLeaves1, List<? extends AbstractCodeFragment> matchingLeaves2) {
 		if(matchingLeaves1.size() != matchingLeaves2.size()) {
 			return true;
 		}
 		else {
 			int sameDepth = 0;
+			int depthDiffOfOne = 0;
 			for(int i=0; i<matchingLeaves1.size(); i++) {
 				AbstractCodeFragment fragment1 = matchingLeaves1.get(i);
 				AbstractCodeFragment fragment2 = matchingLeaves2.get(i);
 				if(fragment1.getDepth() == fragment2.getDepth()) {
 					sameDepth++;
 				}
+				else if(Math.abs(fragment1.getDepth() - fragment2.getDepth()) == 1) {
+					depthDiffOfOne++;
+				}
 			}
-			if(sameDepth != matchingLeaves1.size()) {
+			if(sameDepth != matchingLeaves1.size() && depthDiffOfOne != matchingLeaves1.size()) {
 				return true;
 			}
 		}

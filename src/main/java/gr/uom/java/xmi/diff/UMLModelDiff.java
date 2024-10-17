@@ -39,6 +39,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation;
 import gr.uom.java.xmi.decomposition.replacement.VariableReplacementWithMethodInvocation.Direction;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
 
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.BUILDER_STATEMENT_RATIO_THRESHOLD;
@@ -4676,7 +4677,7 @@ public class UMLModelDiff {
 					for(UMLOperationBodyMapper mapper : mappersWithUnmatchedStatements) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, firstMapper, mapper.getClassDiff());
 						if(moveCodeMapper.getMappings().size() > 0) {
-							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper);
+							MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
 							if(!moveCodeMappers.contains(moveCodeMapper))
 								moveCodeMappers.add(moveCodeMapper);
 							refactorings.add(ref);

@@ -16,17 +16,24 @@ import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 
 public class MoveCodeRefactoring implements Refactoring {
+	public enum Type {
+		MOVE_FROM_REMOVED,
+		MOVE_TO_ADDED,
+		MOVE_BETWEEN_EXISTING;
+	}
 	private VariableDeclarationContainer sourceContainer;
 	private VariableDeclarationContainer targetContainer;
 	private UMLOperationBodyMapper bodyMapper;
 	private Set<AbstractCodeFragment> movedCodeFragmentsFromSourceOperation;
 	private Set<AbstractCodeFragment> movedCodeFragmentsToTargetOperation;
+	private Type moveType;
 
 	public MoveCodeRefactoring(VariableDeclarationContainer sourceContainer,
-			VariableDeclarationContainer targetContainer, UMLOperationBodyMapper mapper) {
+			VariableDeclarationContainer targetContainer, UMLOperationBodyMapper mapper, Type moveType) {
 		this.sourceContainer = sourceContainer;
 		this.targetContainer = targetContainer;
 		this.bodyMapper = mapper;
+		this.moveType = moveType;
 		this.movedCodeFragmentsFromSourceOperation = new LinkedHashSet<AbstractCodeFragment>();
 		this.movedCodeFragmentsToTargetOperation = new LinkedHashSet<AbstractCodeFragment>();
 		for(AbstractCodeMapping mapping : mapper.getMappings()) {
@@ -54,6 +61,10 @@ public class MoveCodeRefactoring implements Refactoring {
 
 	public VariableDeclarationContainer getTargetContainer() {
 		return targetContainer;
+	}
+
+	public Type getMoveType() {
+		return moveType;
 	}
 
 	public Set<AbstractCodeMapping> getMappings() {

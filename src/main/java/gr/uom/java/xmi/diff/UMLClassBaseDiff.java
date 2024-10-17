@@ -185,6 +185,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(mapper.getContainer1().getName().equals("setUp") && mapper.getContainer2().getName().equals("setUp")) {
 				setUpMappers.add(mapper);
 			}
+			if(mapper.getContainer1().getName().equals("prepare") && mapper.getContainer2().getName().equals("prepare")) {
+				setUpMappers.add(mapper);
+			}
 			if(mapper.getContainer1().hasTearDownAnnotation() && mapper.getContainer2().hasTearDownAnnotation()) {
 				tearDownMappers.add(mapper);
 			}
@@ -313,7 +316,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		for(UMLOperation removedOperation : removedOperations) {
 			if(removedOperation.hasSetUpAnnotation() || removedOperation.hasTearDownAnnotation() ||
-					removedOperation.getName().equals("setUp") || removedOperation.getName().equals("tearDown")) {
+					removedOperation.getName().equals("setUp") || removedOperation.getName().equals("tearDown") || removedOperation.getName().equals("prepare")) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT2() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(removedOperation, mapper, this);
@@ -342,7 +345,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		for(UMLOperation addedOperation : addedOperations) {
 			if(addedOperation.hasSetUpAnnotation() || addedOperation.hasTearDownAnnotation() ||
-					addedOperation.getName().equals("setUp") || addedOperation.getName().equals("tearDown")) {
+					addedOperation.getName().equals("setUp") || addedOperation.getName().equals("tearDown") || addedOperation.getName().equals("prepare")) {
 				for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 					if(mapper.nonMappedElementsT1() > 0) {
 						UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapper, addedOperation, this);

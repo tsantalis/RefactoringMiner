@@ -2258,6 +2258,24 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testRestructuredStatementMappings22() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/hibernate/hibernate-orm.git", "016a02ff506b715e8217b8577594ac62b3f318ce", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("processElementAnnotations") && mapper.getContainer2().getName().equals("processElementAnnotations")) {
+					mapperInfo(mapper, actual);
+					break;
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-orm-016a02ff506b715e8217b8577594ac62b3f318ce.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testInlinedMethodMovedToExtractedMethod() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

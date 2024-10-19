@@ -1310,10 +1310,15 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
 						if(addedOperation.hasParameterizedTestAnnotation() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
-							List<List<String>> parameterValues = getParameterValues(addedOperation);
+							List<List<String>> parameterValues = getParameterValues(addedOperation, modelDiff);
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
+							Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();
+							boolean internalParameterizeTest = false;
 							for(UMLOperationBodyMapper mapper : mapperSet) {
+								if(mapper.getInternalParameterizeTestMultiMappings().size() > 0) {
+									internalParameterizeTest = true;
+								}
 								Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, mapper.getReplacements());
 								if (matchingTestParameters.isEmpty()) {
 									matchingTestParameters = matchParamsWithRemovedStatements(parameterValues, parameterNames, mapper.getNonMappedLeavesT1());
@@ -1323,7 +1328,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 									if(max > overallMaxMatchingTestParameters) {
 										overallMaxMatchingTestParameters = max;
 									}
-									filteredMapperSet.add(mapper);
+									int sizeBefore = overallMatchingTestParameters.size();
+									overallMatchingTestParameters.putAll(matchingTestParameters);
+									if(internalParameterizeTest) {
+										if(overallMatchingTestParameters.size() > sizeBefore) {
+											filteredMapperSet.add(mapper);
+										}
+									}
+									else {
+										filteredMapperSet.add(mapper);
+									}
 								}
 							}
 							//cluster mappers based on number of mappings and number of total replacements
@@ -1331,11 +1345,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							int maxMappings = -1;
 							int minReplacements = Integer.MAX_VALUE;
 							for(UMLOperationBodyMapper mapper : filteredMapperSet) {
-								int mappings = mapper.getMappings().size();
+								int mappings = mapper.countMappingsForInternalParameterizedTest();
 								if(mappings > maxMappings) {
 									maxMappings = mappings;
 								}
-								int replacements = mapper.getReplacements().size();
+								int replacements = mapper.countReplacementsForInternalParameterizedTest();
 								if(replacements < minReplacements) {
 									minReplacements = replacements;
 								}
@@ -1512,7 +1526,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return mapper.getMappings().size() > 0 && nonMappedLeavesT1 <= 0 && nonMappedLeavesT2 <= 0 && nonMappedInnerNodesT1 == 0 && nonMappedInnerNodesT2 == 0;
 	}
 
-	private List<List<String>> getParameterValues(UMLOperation addedOperation) {
+	public static List<List<String>> getParameterValues(UMLOperation addedOperation, UMLModelDiff modelDiff) {
 		List<List<String>> parameterValues = new ArrayList<>();
 		for(UMLAnnotation annotation : addedOperation.getAnnotations()) {
 			try {
@@ -1545,7 +1559,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return matchingTestParameters;
 	}
 
-	private static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements) {
+	public static Map<Integer, Integer> matchParamsWithReplacements(List<List<String>> testParameters, List<String> parameterNames, Set<Replacement> replacements) {
 		Map<Integer, Integer> matchingTestParameters = new LinkedHashMap<>();
 		for(Replacement r : replacements) {
 			if(parameterNames.contains(r.getAfter())) {

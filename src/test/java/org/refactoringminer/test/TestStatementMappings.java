@@ -962,6 +962,31 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
+	@Test
+	public void testParameterizedTestMappings4() throws Exception {
+		final List<String> actual = new ArrayList<>();
+		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();
+		Map<String, String> fileContentsCurrent = new LinkedHashMap<String, String>();
+		String contentsV1 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FileNameCleanerTest-v1.txt"));
+		String contentsV2 = FileUtils.readFileToString(new File(EXPECTED_PATH + "FileNameCleanerTest-v2.txt"));
+		fileContentsBefore.put("src/test/java/org/jabref/logic/util/FileNameCleanerTest.java", contentsV1);
+		fileContentsCurrent.put("src/test/java/org/jabref/logic/util/FileNameCleanerTest.java", contentsV2);
+		UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsBefore, new LinkedHashSet<String>());
+		UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(fileContentsCurrent, new LinkedHashSet<String>());
+
+		UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+		List<Refactoring> refactorings = modelDiff.getRefactorings();
+		for(Refactoring r : refactorings) {
+			if(r instanceof ParameterizeTestRefactoring) {
+				ParameterizeTestRefactoring parameterizeTest = (ParameterizeTestRefactoring)r;
+				UMLOperationBodyMapper mapper = parameterizeTest.getBodyMapper();
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jabRef-FileNameCleanerTest.txt"));
+		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/apache/camel.git, b57b72d0e85f2340cb2d55be44d2175c0caa7cc1, camel-b57b72d0e85f2340cb2d55be44d2175c0caa7cc1.txt",

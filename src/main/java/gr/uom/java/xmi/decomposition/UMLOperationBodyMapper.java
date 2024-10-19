@@ -20,6 +20,8 @@ import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPICalls;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+import static gr.uom.java.xmi.diff.UMLClassBaseDiff.getParameterValues;
+import static gr.uom.java.xmi.diff.UMLClassBaseDiff.matchParamsWithReplacements;
 
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
@@ -113,6 +115,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private Set<VariableDeclaration> addedVariables;
 	private Set<Pair<VariableDeclaration, VariableDeclaration>> movedVariables;
 	private int callsToExtractedMethod = 0;
+	private List<Set<AbstractCodeMapping>> internalParameterizeTestMultiMappings = new ArrayList<Set<AbstractCodeMapping>>();
 	private boolean nested;
 	private boolean lambdaBodyMapper;
 	private AbstractCall operationInvocation;
@@ -3726,6 +3729,50 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
+	public List<Set<AbstractCodeMapping>> getInternalParameterizeTestMultiMappings() {
+		return internalParameterizeTestMultiMappings;
+	}
+
+	public int countMappingsForInternalParameterizedTest() {
+		if(this.internalParameterizeTestMultiMappings.size() > 0) {
+			int count = 0;
+			Set<AbstractCodeMapping> processedMappings = new LinkedHashSet<AbstractCodeMapping>();
+			for(Set<AbstractCodeMapping> set : internalParameterizeTestMultiMappings) {
+				count++;
+				processedMappings.addAll(set);
+			}
+			for(AbstractCodeMapping mapping : getMappings()) {
+				if(!processedMappings.contains(mapping)) {
+					count++;
+				}
+			}
+			return count;
+		}
+		return getMappings().size();
+	}
+
+	public int countReplacementsForInternalParameterizedTest() {
+		if(this.internalParameterizeTestMultiMappings.size() > 0) {
+			int count = 0;
+			Set<AbstractCodeMapping> processedMappings = new LinkedHashSet<AbstractCodeMapping>();
+			for(Set<AbstractCodeMapping> set : internalParameterizeTestMultiMappings) {
+				int localCount = 0;
+				for(AbstractCodeMapping mapping : set) {
+					localCount += mapping.getReplacements().size();
+				}
+				count += localCount/set.size();
+				processedMappings.addAll(set);
+			}
+			for(AbstractCodeMapping mapping : getMappings()) {
+				if(!processedMappings.contains(mapping)) {
+					count += mapping.getReplacements().size();
+				}
+			}
+			return count;
+		}
+		return getReplacements().size();
+	}
+
 	public Set<Replacement> getReplacementsOfType(ReplacementType type) {
 		Set<Replacement> replacements = new LinkedHashSet<Replacement>();
 		for(AbstractCodeMapping mapping : getMappings()) {
@@ -6247,6 +6294,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									leafIterator2.remove();
 									checkForMatchingMergedVariableDeclaration(leaf2, leaves1, parameterToArgumentMap, equalNumberOfAssertions);
 								}
+								else if(internalParameterizeTest(mappingSet) && mappingSet.size() > 1) {
+									Set<AbstractCodeMapping> multiMappings = new LinkedHashSet<AbstractCodeMapping>();
+									for(AbstractCodeMapping mapping : mappingSet) {
+										multiMappings.add(mapping);
+										addToMappings((LeafMapping) mapping, mappingSet);
+										leaves1.remove(mapping.getFragment1());
+									}
+									this.internalParameterizeTestMultiMappings.add(multiMappings);
+									leafIterator2.remove();
+								}
 								else {
 									if(!duplicateMappingInParentMapper(mappingSet)) {
 										AbstractCodeMapping alreadyMatched = null;
@@ -6329,6 +6386,23 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+	}
+
+	private boolean internalParameterizeTest(Set<LeafMapping> mappingSet) {
+		if(container2.hasParameterizedTestAnnotation() && !container1.hasParameterizedTestAnnotation()) {
+			List<String> parameterNames = container2.getParameterNameList();
+			List<List<String>> parameterValues = getParameterValues((UMLOperation)container2, modelDiff);
+			Set<Replacement> replacements = new LinkedHashSet<Replacement>();
+			for(AbstractCodeMapping mapping : mappingSet) {
+				replacements.addAll(mapping.getReplacements());
+			}
+			Map<Integer, Integer> matchingTestParameters = matchParamsWithReplacements(parameterValues, parameterNames, replacements);
+			int max = matchingTestParameters.isEmpty() ? 0 : Collections.max(matchingTestParameters.values());
+			if(max >= 1) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean nestedDirectlyUnderMethodBody(AbstractCodeMapping mapping) {

@@ -9,16 +9,27 @@ import java.util.List;
 public class CsvUtils {
     public static List<String> extractParametersFromCsv(String s) {
         List<String> parameters = new ArrayList<>();
-        String[] tokens = s.split(",");
-        for (String token : tokens) {
-            String trimmed = token.trim();
-            if (trimmed.startsWith("\"")) {
-                trimmed = trimmed.substring(1, trimmed.length());
-            }
-            if (trimmed.endsWith("\"")) {
-                trimmed = trimmed.substring(0, trimmed.length() - 1);
-            }
-            parameters.add(trimmed);
+        //fix for arguments with single quotes
+        if(s.contains("'")) {
+        	String[] tokens = s.split("'");
+        	for (String token : tokens) {
+        		if(!token.equals("\"") && !token.matches("\s*,\s*")) {
+        			parameters.add(token);
+        		}
+        	}
+        }
+        else {
+            String[] tokens = s.split(",");
+	        for (String token : tokens) {
+	            String trimmed = token.trim();
+	            if (trimmed.startsWith("\"")) {
+	                trimmed = trimmed.substring(1, trimmed.length());
+	            }
+	            if (trimmed.endsWith("\"")) {
+	                trimmed = trimmed.substring(0, trimmed.length() - 1);
+	            }
+	            parameters.add(trimmed);
+	        }
         }
         return parameters;
     }

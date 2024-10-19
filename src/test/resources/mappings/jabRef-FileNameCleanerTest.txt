@@ -1,0 +1,14 @@
+package cleanFileName() : void -> package cleanFileName(expected String, input String) : void
+line range:13-13==line range:21-21
+line range:15-15==line range:21-21
+line range:14-14==line range:21-21
+package cleanCurlyBracesAsWell() : void -> package cleanFileName(expected String, input String) : void
+line range:34-34==line range:21-21
+package cleanDirectoryName() : void -> package cleanDirectoryName(expected String, input String) : void
+line range:20-20==line range:31-31
+line range:21-21==line range:31-31
+line range:22-22==line range:31-31
+package cleanDirectoryNameForWindows() : void -> package cleanDirectoryNameForWindows(expected String, input String) : void
+line range:27-27==line range:41-41
+line range:28-28==line range:41-41
+line range:29-29==line range:41-41

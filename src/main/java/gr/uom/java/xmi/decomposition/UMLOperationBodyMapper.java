@@ -5805,7 +5805,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 						Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> catchBlockMap = null;
-						if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
+							//postpone mapping
+							postponedMappingSets.add(mappingSet);
+						}
+						else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 							LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
 								addToMappings(bestMapping, mappingSet);
@@ -8484,7 +8488,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return false;
 				}
 				if(mappingsWithSameReplacementTypes.size() == mappingSet.size()) {
-					return true;
+					List<VariableScope> scopes = new ArrayList<VariableScope>();
+					for(LeafMapping m : mappingsWithSameReplacementTypes) {
+						scopes.add(m.getFragment2().getVariableDeclarations().get(0).getScope());
+					}
+					int overlaps = 0;
+					for(int i=0; i<scopes.size(); i++) {
+						for(int j=i+1; j<scopes.size(); j++) {
+							if(scopes.get(i).overlaps(scopes.get(j))) {
+								overlaps++;
+							}
+						}
+					}
+					if(overlaps > 0)
+						return true;
 				}
 			}
 		}

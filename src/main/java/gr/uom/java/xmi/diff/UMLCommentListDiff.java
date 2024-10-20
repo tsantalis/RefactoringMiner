@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLCommentGroup;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 
 public class UMLCommentListDiff {
@@ -18,8 +20,19 @@ public class UMLCommentListDiff {
 	private List<UMLComment> deletedComments;
 	private List<UMLComment> addedComments;
 	private boolean manyToManyReformat;
+	private Set<AbstractCodeMapping> mappings;
+
+	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter, Set<AbstractCodeMapping> mappings) {
+		this.mappings = mappings;
+		init(commentsBefore, commentsAfter);
+	}
 
 	public UMLCommentListDiff(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
+		this.mappings = Collections.emptySet();
+		init(commentsBefore, commentsAfter);
+	}
+
+	private void init(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
 		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
 		this.deletedComments = new ArrayList<UMLComment>();
 		this.addedComments = new ArrayList<UMLComment>();
@@ -97,7 +110,23 @@ public class UMLCommentListDiff {
 		this.commonComments = new ArrayList<Pair<UMLComment,UMLComment>>();
 		this.deletedComments = new ArrayList<UMLComment>();
 		this.addedComments = new ArrayList<UMLComment>();
+		this.mappings = Collections.emptySet();
 		processRemainingComments(groupBefore.getGroup(), groupAfter.getGroup());
+	}
+
+	private boolean mappedParent(UMLComment left, UMLComment right) {
+		if(left.getParent() != null && right.getParent() != null) {
+			if(left.getParent().getParent() == null && right.getParent().getParent() == null) {
+				return true;
+			}
+			for(AbstractCodeMapping mapping : mappings) {
+				if(mapping.getFragment1().equals(left.getParent()) &&
+						mapping.getFragment2().equals(right.getParent())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void processRemainingComments(List<UMLComment> commentsBefore, List<UMLComment> commentsAfter) {
@@ -106,8 +135,19 @@ public class UMLCommentListDiff {
 		if(commentsBefore.size() <= commentsAfter.size()) {
 			for(UMLComment comment : commentsBefore) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsAfter, comment);
+				List<Boolean> mappedParent = new ArrayList<Boolean>();
+				if(matchingIndices.size() > 1) {
+					for(Integer index : matchingIndices) {
+						mappedParent.add(mappedParent(comment, commentsAfter.get(index)));
+					}
+				}
+				int i = -1;
 				for(Integer index : matchingIndices) {
+					i++;
 					if(!alreadyMatchedComment(comment, commentsAfter.get(index))) {
+						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
+							continue;
+						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(comment, commentsAfter.get(index));
 						commonComments.add(pair);
 						deletedComments.remove(comment);
@@ -120,8 +160,19 @@ public class UMLCommentListDiff {
 		else {
 			for(UMLComment comment : commentsAfter) {
 				List<Integer> matchingIndices = findAllMatchingIndices(commentsBefore, comment);
+				List<Boolean> mappedParent = new ArrayList<Boolean>();
+				if(matchingIndices.size() > 1) {
+					for(Integer index : matchingIndices) {
+						mappedParent.add(mappedParent(commentsBefore.get(index), comment));
+					}
+				}
+				int i = -1;
 				for(Integer index : matchingIndices) {
+					i++;
 					if(!alreadyMatchedComment(commentsBefore.get(index), comment)) {
+						if(mappedParent.contains(true) && mappedParent.get(i) == false) {
+							continue;
+						}
 						Pair<UMLComment, UMLComment> pair = Pair.of(commentsBefore.get(index), comment);
 						commonComments.add(pair);
 						deletedComments.remove(commentsBefore.get(index));

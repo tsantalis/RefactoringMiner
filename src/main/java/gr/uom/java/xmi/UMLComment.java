@@ -4,11 +4,13 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 
 public class UMLComment extends UMLAbstractDocumentation {
 
 	//represents non-attached Javadocs found within method bodies
 	private Optional<UMLJavadoc> javaDoc;
+	private CompositeStatementObject parent;
 
 	public UMLComment(String text, LocationInfo locationInfo) {
 		super(text, locationInfo);
@@ -21,6 +23,14 @@ public class UMLComment extends UMLAbstractDocumentation {
 
 	public Optional<UMLJavadoc> getJavaDoc() {
 		return javaDoc;
+	}
+
+	public CompositeStatementObject getParent() {
+		return parent;
+	}
+
+	public void setParent(CompositeStatementObject parent) {
+		this.parent = parent;
 	}
 
 	@Override

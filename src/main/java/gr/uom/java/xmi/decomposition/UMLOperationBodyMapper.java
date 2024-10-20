@@ -5805,11 +5805,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(!mappingSet.isEmpty()) {
 						Pair<CompositeStatementObject, CompositeStatementObject> switchParentEntry = null;
 						Map<LeafMapping, Pair<CompositeStatementObject, CompositeStatementObject>> catchBlockMap = null;
-						if(variableDeclarationMappingsWithSameReplacementTypes(mappingSet)) {
-							//postpone mapping
-							postponedMappingSets.add(mappingSet);
-						}
-						else if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
+						if((switchParentEntry = multipleMappingsUnderTheSameSwitch(mappingSet)) != null) {
 							LeafMapping bestMapping = findBestMappingBasedOnMappedSwitchCases(switchParentEntry, mappingSet);
 							if(canBeAdded(bestMapping, parameterToArgumentMap)) {
 								addToMappings(bestMapping, mappingSet);

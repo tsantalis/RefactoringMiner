@@ -42,6 +42,7 @@ import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 
@@ -53,10 +54,12 @@ public class OperationBody {
 	private Set<VariableDeclaration> activeVariableDeclarations;
 	private VariableDeclarationContainer container;
 	private int bodyHashCode;
+	private List<UMLComment> comments;
 	private final String javaFileContent;
 
 	public OperationBody(CompilationUnit cu, String filePath, Block methodBody, VariableDeclarationContainer container, List<UMLAttribute> attributes, String javaFileContent) {
 		this.compositeStatement = new CompositeStatementObject(cu, filePath, methodBody, 0, CodeElementType.BLOCK);
+		this.comments = container.getComments();
 		this.container = container;
 		this.javaFileContent = javaFileContent;
 		this.bodyHashCode = stringify(methodBody).hashCode();
@@ -168,6 +171,20 @@ public class OperationBody {
 	}
 
 	private void processStatement(CompilationUnit cu, String filePath, CompositeStatementObject parent, Statement statement) {
+		for(UMLComment comment : comments) {
+			if(comment.getParent() != null && comment.getParent().equals(parent))
+				continue;
+			if(parent.getLocationInfo().subsumes(comment.getLocationInfo())) {
+				if(comment.getParent() != null) {
+					if(!parent.getLocationInfo().subsumes(comment.getParent().getLocationInfo())) {
+						comment.setParent(parent);
+					}
+				}
+				else {
+					comment.setParent(parent);
+				}
+			}
+		}
 		if(statement instanceof Block) {
 			Block block = (Block)statement;
 			List<Statement> blockStatements = block.statements();

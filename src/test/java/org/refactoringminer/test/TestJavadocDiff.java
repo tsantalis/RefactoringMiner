@@ -100,7 +100,8 @@ public class TestJavadocDiff {
 
 	@ParameterizedTest
 	@CsvSource({
-		"https://github.com/eclipse-jgit/jgit.git, 1b783d037091266b035e1727db6b6ce7a397ef63, org.eclipse.jgit.storage.pack.PackWriter, searchForDeltas, jgit-1b783d037091266b035e1727db6b6ce7a397ef63.txt"
+		"https://github.com/eclipse-jgit/jgit.git, 1b783d037091266b035e1727db6b6ce7a397ef63, org.eclipse.jgit.storage.pack.PackWriter, searchForDeltas, jgit-1b783d037091266b035e1727db6b6ce7a397ef63.txt",
+		"https://github.com/hibernate/hibernate-orm.git, 5329bba1ea724eabf5783c71e5127b8f84ad0fcc, org.hibernate.cfg.AnnotationBinder, bindClass, hibernate-orm-5329bba1ea724eabf5783c71e5127b8f84ad0fcc-comments.txt"
 	})
 	public void testMethodCommentMappings(String url, String commitId, String className, String containerName, String testResultFileName) throws Exception {
 		final List<String> actual = new ArrayList<>();

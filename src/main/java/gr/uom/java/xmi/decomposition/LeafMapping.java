@@ -27,6 +27,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 	private List<Double> levelParentEditDistance;
 	private boolean identicalPreviousStatement;
 	private boolean identicalPreviousAndNextStatement;
+	private boolean identicalNextStatement;
 	private boolean equalNumberOfAssertions;
 	private boolean ifParentWithIdenticalElse;
 	private boolean ifParentWithIdenticalThen;
@@ -125,6 +126,12 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					return -1;
 				}
 				else if(!this.identicalPreviousStatement && o.identicalPreviousStatement) {
+					return 1;
+				}
+				if(this.identicalNextStatement && !o.identicalNextStatement) {
+					return -1;
+				}
+				else if(!this.identicalNextStatement && o.identicalNextStatement) {
 					return 1;
 				}
 				if(this.identicalDepthIndexAndParentType() && !o.identicalDepthIndexAndParentType()) {
@@ -578,6 +585,8 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		CompositeStatementObject thisComp2 = this.getFragment2().getParent();
 		CompositeStatementObject oComp1 = o.getFragment1().getParent();
 		CompositeStatementObject oComp2 = o.getFragment2().getParent();
+		boolean firstStatement1 = thisComp1 != null && this.getFragment1().getIndex() == 0 && oComp1 != null && o.getFragment1().getIndex() == 0;
+		boolean firstStatement2 = thisComp2 != null && this.getFragment2().getIndex() == 0 && oComp2 != null && o.getFragment2().getIndex() == 0;
 		boolean lastStatement1 = thisComp1 != null && this.getFragment1().getIndex() > 0 && this.getFragment1().getIndex() == thisComp1.getStatements().size()-1 &&
 				oComp1 != null && o.getFragment1().getIndex() > 0 && o.getFragment1().getIndex() == oComp1.getStatements().size()-1;
 		boolean lastStatement2 = thisComp2 != null && this.getFragment2().getIndex() > 0 && this.getFragment2().getIndex() == thisComp2.getStatements().size()-1 &&
@@ -698,6 +707,23 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 			else if(sameCall(oPrevious1, oPrevious2)) {
 				o.identicalPreviousStatement = true;
 			}
+		}
+		else if(firstStatement1 && firstStatement2 &&
+				this.getFragment1().getIndex() < thisComp1.getStatements().size()-1 &&
+				this.getFragment2().getIndex() < thisComp2.getStatements().size()-1 &&
+				o.getFragment1().getIndex() < oComp1.getStatements().size()-1 &&
+				o.getFragment2().getIndex() < oComp2.getStatements().size()-1) {
+			AbstractCodeFragment thisNext1 = thisComp1.getStatements().get(this.getFragment1().getIndex()+1);
+			AbstractCodeFragment thisNext2 = thisComp2.getStatements().get(this.getFragment2().getIndex()+1);
+			AbstractCodeFragment oNext1 = oComp1.getStatements().get(o.getFragment1().getIndex()+1);
+			AbstractCodeFragment oNext2 = oComp2.getStatements().get(o.getFragment2().getIndex()+1);
+			
+			boolean thisEqualNext = thisNext1.getString().equals(thisNext2.getString());
+			boolean oEqualNext = oNext1.getString().equals(oNext2.getString());
+			if(thisEqualNext)
+				this.identicalNextStatement = true;
+			if(oEqualNext)
+				o.identicalNextStatement = true;
 		}
 	}
 

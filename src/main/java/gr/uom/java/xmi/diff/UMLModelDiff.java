@@ -11,6 +11,7 @@ import gr.uom.java.xmi.UMLClassMatcher.Rename;
 import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLGeneralization;
 import gr.uom.java.xmi.UMLImport;
+import gr.uom.java.xmi.UMLInitializer;
 import gr.uom.java.xmi.UMLModel;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
@@ -157,6 +158,35 @@ public class UMLModelDiff {
 			}
 		}
 		return null;
+	}
+
+	public List<AbstractCall> findInvocationsInChildModel(UMLOperation operation) {
+		List<AbstractCall> invocations = new ArrayList<AbstractCall>();
+		for(UMLClass umlClass : childModel.getClassList()) {
+			UMLClassBaseDiff classDiff = getUMLClassDiff(umlClass.getName());
+			for(UMLOperation context : umlClass.getOperations()) {
+				for(AbstractCall call : context.getAllOperationInvocations()) {
+					if(call.matchesOperation(operation, context, classDiff, this)) {
+						invocations.add(call);
+					}
+				}
+			}
+			for(UMLInitializer context : umlClass.getInitializers()) {
+				for(AbstractCall call : context.getAllOperationInvocations()) {
+					if(call.matchesOperation(operation, context, classDiff, this)) {
+						invocations.add(call);
+					}
+				}
+			}
+			for(UMLAttribute context : umlClass.getAttributes()) {
+				for(AbstractCall call : context.getAllOperationInvocations()) {
+					if(call.matchesOperation(operation, context, classDiff, this)) {
+						invocations.add(call);
+					}
+				}
+			}
+		}
+		return invocations;
 	}
 
 	public void reportAddedClass(UMLClass umlClass) {

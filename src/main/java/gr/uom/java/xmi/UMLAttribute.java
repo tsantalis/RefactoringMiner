@@ -223,7 +223,14 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 	public List<AbstractCall> getAllOperationInvocations() {
 		AbstractExpression initializer = variableDeclaration.getInitializer();
 		if(initializer != null) {
-			return new ArrayList<>(initializer.getMethodInvocations());
+			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
+			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
+				list.addAll(lambda.getAllOperationInvocations());
+			}
+			for(AnonymousClassDeclarationObject anonymous : initializer.getAnonymousClassDeclarations()) {
+				list.addAll(anonymous.getMethodInvocations());
+			}
+			return list;
 		}
 		return Collections.emptyList();
 	}

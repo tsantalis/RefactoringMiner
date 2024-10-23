@@ -56,9 +56,6 @@ public class StatementObject extends AbstractStatement {
 		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
 		Visitor visitor = new Visitor(cu, filePath, container, javaFileContent);
 		statement.accept(visitor);
-		int start = statement.getStartPosition();
-		int end = start + statement.getLength();
-		this.actualSignature = javaFileContent.substring(start, end);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();
 		this.variableDeclarations = visitor.getVariableDeclarations();
@@ -84,6 +81,15 @@ public class StatementObject extends AbstractStatement {
 		this.castExpressions = visitor.getCastExpressions();
 		this.ternaryOperatorExpressions = visitor.getTernaryOperatorExpressions();
 		this.lambdas = visitor.getLambdas();
+		int start = statement.getStartPosition();
+		int end = start + statement.getLength();
+		if(this.anonymousClassDeclarations.isEmpty()) {
+			this.actualSignature = javaFileContent.substring(start, end);
+		}
+		else {
+			int endOffset = this.anonymousClassDeclarations.get(0).getLocationInfo().getStartOffset() + 1;
+			this.actualSignature = javaFileContent.substring(start, endOffset);
+		}
 		setDepth(depth);
 		String statementAsString = stringify(statement);
 		if(Visitor.METHOD_INVOCATION_PATTERN.matcher(statementAsString).matches()) {

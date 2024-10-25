@@ -1,0 +1,40 @@
+private createChecker(config Configuration, auditListener AuditListener) : Checker -> private runCheckstyle(cliOptions CliOptions) : int
+line range:184-184==line range:231-231
+line range:186-186==line range:235-235
+line range:187-187==line range:236-236
+line range:188-188==line range:237-237
+line range:189-189==line range:238-238
+private loadConfig(format String, props Properties) : Configuration -> private runCheckstyle(cliOptions CliOptions) : int
+line range:261-261==line range:223-224
+private processCommandLine(line CommandLine) : void -> public main(args String...) : void
+line range:117-118==line range:76-77
+line range:124-124==line range:94-94
+line range:116-120==line range:75-97
+line range:116-120==line range:75-78
+line range:123-126==line range:93-95
+private processCommandLine(line CommandLine) : void -> private createListener(format String, outputLocation String) : AuditListener
+line range:137-137==line range:290-290
+line range:138-138==line range:291-291
+line range:143-143==line range:294-294
+line range:151-151==line range:297-297
+line range:152-152==line range:298-298
+line range:142-142==line range:293-293
+line range:150-153==line range:296-299
+private processCommandLine(line CommandLine) : void -> private runCheckstyle(cliOptions CliOptions) : int
+line range:164-164==line range:245-245
+line range:129-132==line range:217-220
+line range:134-134==line range:223-224
+line range:156-156==line range:227-227
+line range:163-163==line range:230-230
+line range:163-163==line range:241-241
+line range:119-119==line range:248-248
+public main(args String...) : void -> public main(args String...) : void
+line range:63-63==line range:68-68
+line range:66-66==line range:101-101
+line range:69-69==line range:103-103
+line range:73-73==line range:114-114
+line range:81-81==line range:117-117
+line range:64-82==line range:70-118
+line range:76-82==line range:111-118
+line range:68-71==line range:99-105
+line range:72-75==line range:106-110

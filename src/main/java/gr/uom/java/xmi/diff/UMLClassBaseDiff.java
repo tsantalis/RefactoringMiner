@@ -83,6 +83,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private Map<MethodInvocationReplacement, UMLOperationBodyMapper> consistentMethodInvocationRenames;
 	private Set<UMLOperationBodyMapper> potentialCodeMoveBetweenSetUpTearDownMethods = new LinkedHashSet<>();
 	private Set<UMLOperationBodyMapper> movedMethodsInDifferentPositionWithinFile = new LinkedHashSet<>();
+	private Set<Pair<UMLOperationBodyMapper, UMLOperationBodyMapper>> calledBy = new LinkedHashSet<>();
 	private Optional<Pair<UMLType, UMLType>> implementedInterfaceBecomesSuperclass;
 	private Optional<Pair<UMLType, UMLType>> superclassBecomesImplementedInterface;
 	private Optional<UMLJavadocDiff> javadocDiff;
@@ -366,6 +367,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				if(!moveCodeMappers.contains(moveCodeMapper))
 					moveCodeMappers.add(moveCodeMapper);
 				refactorings.add(ref);
+			}
+		}
+		for(Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair : calledBy) {
+			UMLOperationBodyMapper called = pair.getLeft();
+			UMLOperationBodyMapper caller = pair.getRight();
+			if(!called.getContainer1().getParameterTypeList().equals(called.getContainer2().getParameterTypeList())) {
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(caller, called, this);
+				if(moveCodeMapper.mappingsWithoutBlocks() > 1 || moveCodeMapper.exactMatches() > 0) {
+					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
+					if(!moveCodeMappers.contains(moveCodeMapper))
+						moveCodeMappers.add(moveCodeMapper);
+					refactorings.add(ref);
+				}
 			}
 		}
 		MappingOptimizer optimizer = new MappingOptimizer(this);
@@ -1180,6 +1194,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
 								RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
 								refactorings.add(rename);
+							}
+							for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+								if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
+									Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
+									calledBy.add(pair);
+								}
 							}
 							this.addOperationBodyMapper(bestMapper);
 							consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();

@@ -25,10 +25,12 @@ import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.InlineOperationRefactoring;
 import gr.uom.java.xmi.diff.MergeOperationRefactoring;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring;
 import gr.uom.java.xmi.diff.ParameterizeTestRefactoring;
 import gr.uom.java.xmi.diff.RenameOperationRefactoring;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
 import gr.uom.java.xmi.diff.UMLClassDiff;
 import gr.uom.java.xmi.diff.UMLEnumConstantDiff;
 import gr.uom.java.xmi.diff.UMLModelDiff;
@@ -2375,6 +2377,58 @@ public class TestStatementMappingsJunit4 {
 			}
 		});
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "jgit-8ac65d33ed7a94f77cb066271669feebf9b882fc.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testMoveCodeStatementMappings() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/checkstyle/checkstyle.git", "1a2c318e22a0b2b22ccc76019217c0892fe2d59b", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof InlineOperationRefactoring) {
+						InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof MoveCodeRefactoring) {
+						MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+				//add main mapper
+				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("com.puppycrawl.tools.checkstyle.Main");
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("main") && mapper.getContainer2().getName().equals("main")) {
+						mapperInfo(mapper, actual);
+						break;
+					}
+				}
+			}
+		});
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "checkstyle-1a2c318e22a0b2b22ccc76019217c0892fe2d59b.txt"));
 		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

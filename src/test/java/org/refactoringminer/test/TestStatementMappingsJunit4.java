@@ -2433,6 +2433,66 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testMoveCodeStatementMappings2() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "3e3b402131a99f01480c57dd82c2e81ad6d9a4ea", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof InlineOperationRefactoring) {
+						InlineOperationRefactoring in = (InlineOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+					else if(ref instanceof MoveCodeRefactoring) {
+						MoveCodeRefactoring in = (MoveCodeRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = in.getBodyMapper();
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+				//add main mapper
+				UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.ClassTestDescriptor");
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("before") && mapper.getContainer2().getName().equals("before")) {
+						mapperInfo(mapper, actual);
+					}
+					if(mapper.getContainer1().getName().equals("after") && mapper.getContainer2().getName().equals("after")) {
+						mapperInfo(mapper, actual);
+					}
+				}
+				classDiff = modelDiff.getUMLClassDiff("org.junit.jupiter.engine.descriptor.MethodTestDescriptor");
+				for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+					if(mapper.getContainer1().getName().equals("execute") && mapper.getContainer2().getName().equals("execute")) {
+						mapperInfo(mapper, actual);
+					}
+				}
+			}
+		});
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-3e3b402131a99f01480c57dd82c2e81ad6d9a4ea.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testLogGuardStatementMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

@@ -378,6 +378,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_EXISTING);
 					if(!moveCodeMappers.contains(moveCodeMapper))
 						moveCodeMappers.add(moveCodeMapper);
+					if(!moveCodeMappers.contains(caller))
+						moveCodeMappers.add(caller);
 					refactorings.add(ref);
 				}
 			}

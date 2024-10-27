@@ -2398,6 +2398,23 @@ public class ReplacementAlgorithm {
 							}
 						}
 					}
+					else if(statement1 instanceof AbstractExpression && invocation1.getName().equals("isPresent") && invocation1.getExpression() != null &&
+							(invocationCoveringTheEntireStatement2.getName().equals("ifPresent") || invocationCoveringTheEntireStatement2.getName().equals("ifPresentOrElse")) &&
+							invocationCoveringTheEntireStatement2.arguments().size() >= 1) {
+						if(invocationCoveringTheEntireStatement2.arguments().get(0).startsWith(invocation1.getExpression() + JAVA.LAMBDA_ARROW)) {
+							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+						else if(invocationCoveringTheEntireStatement2.getExpression() != null && invocationCoveringTheEntireStatement2.getExpression().equals(invocation1.getExpression()) &&
+								invocationCoveringTheEntireStatement2.arguments().get(0).contains(JAVA.LAMBDA_ARROW)) {
+							Replacement replacement = new MethodInvocationReplacement(invocation1.actualString(),
+									invocationCoveringTheEntireStatement2.actualString(), invocation1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+							replacementInfo.addReplacement(replacement);
+							return replacementInfo.getReplacements();
+						}
+					}
 				}
 			}
 		}
@@ -4767,7 +4784,7 @@ public class ReplacementAlgorithm {
 	}
 
 	protected static boolean streamAPIName(String name) {
-		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect") || name.equals("map") || name.equals("removeIf");
+		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect") || name.equals("map") || name.equals("flatMap") || name.equals("removeIf") || name.equals("ifPresent") || name.equals("ifPresentOrElse");
 	}
 
 	protected static List<AbstractCall> streamAPICalls(AbstractCodeFragment leaf) {

@@ -1,0 +1,42 @@
+public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private executeFetchTask(fetcher IdBasedFetcher, field Field, entry BibEntry) : void
+line range:75-75==line range:73-78
+public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private fetchAndMergeEntry(entry BibEntry, field Field) : void
+line range:78-78==line range:67-69
+line range:77-77==line range:68-68
+public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private notifyNoInfo(entry BibEntry) : void
+line range:87-87==line range:93-95
+private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void -> private createMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : MergeEntriesDialog
+line range:109-109==line range:118-118
+line range:110-110==line range:119-119
+line range:111-111==line range:120-120
+line range:112-112==line range:121-121
+private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void -> private processMergedEntry(originalEntry BibEntry, mergedEntry BibEntry, fetcher WebFetcher) : void
+line range:116-116==line range:126-126
+line range:158-158==line range:130-130
+line range:159-159==line range:131-131
+line range:160-160==line range:134-134
+line range:157-163==line range:129-132
+line range:157-161==line range:129-132
+private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void -> private notifyCanceledMerge(entry BibEntry) : void
+line range:165-165==line range:139-139
+public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private handleFetchException(exception Exception, fetcher WebFetcher) : void
+line range:182-182==line range:100-103
+line range:181-181==line range:99-99
+public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private cleanupFetchedEntry(fetchedEntry BibEntry) : BibEntry
+line range:173-173==line range:159-159
+line range:174-174==line range:160-160
+public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> private processFetchedEntryForEntryBasedFetcher(fetchedEntry Optional<BibEntry>, originalEntry BibEntry, fetcher EntryBasedFetcher) : void
+line range:175-175==line range:153-153
+line range:177-177==line range:154-154
+public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> public fetchAndMerge(entry BibEntry, fields List<Field>) : void
+line range:78-101==line range:67-69
+line range:74-105==line range:63-63
+line range:76-104==line range:73-78
+line range:83-88==line range:83-89
+private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void -> private showMergeDialog(originalEntry BibEntry, fetchedEntry BibEntry, fetcher WebFetcher) : void
+line range:113-113==line range:108-109
+line range:113-113==line range:109-109
+line range:115-115==line range:111-114
+public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void -> public fetchAndMerge(entry BibEntry, fetcher EntryBasedFetcher) : void
+line range:170-170==line range:143-143
+line range:170-184==line range:143-146

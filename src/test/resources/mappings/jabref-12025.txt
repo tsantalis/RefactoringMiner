@@ -1,5 +1,6 @@
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private executeFetchTask(fetcher IdBasedFetcher, field Field, entry BibEntry) : void
 line range:75-75==line range:73-78
+line range:79-100==line range:74-77
 public fetchAndMerge(entry BibEntry, fields List<Field>) : void -> private fetchAndMergeEntry(entry BibEntry, field Field) : void
 line range:78-78==line range:67-69
 line range:77-77==line range:68-68

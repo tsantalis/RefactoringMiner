@@ -27,6 +27,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -45,6 +47,7 @@ public class OperationInvocation extends AbstractCall {
     private static Map<String, List<String>> PRIMITIVE_TYPE_WIDENING_MAP;
     private static Map<String, List<String>> PRIMITIVE_TYPE_NARROWING_MAP;
     private static List<String> PRIMITIVE_TYPE_LIST;
+    private static final Pattern LAMBDA_ARROW = Pattern.compile(JAVA.LAMBDA_ARROW);
 
     static {
     	PRIMITIVE_TYPE_LIST = new ArrayList<>(Arrays.asList("byte", "short", "int", "long", "float", "double", "char", "boolean"));
@@ -826,6 +829,34 @@ public class OperationInvocation extends AbstractCall {
 			}
 		}
 		return false;
+	}
+
+	public boolean identicalPipeline(OperationInvocation other) {
+		if(this.expression != null && other.expression != null) {
+			Matcher m1 = LAMBDA_ARROW.matcher(this.expression);
+			Matcher m2 = LAMBDA_ARROW.matcher(other.expression);
+			List<String> lambdaCalls1 = extractLambdaCalls(m1, this.expression);
+			List<String> lambdaCalls2 = extractLambdaCalls(m2, other.expression);
+			if(lambdaCalls1.equals(lambdaCalls2) && lambdaCalls1.size() > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static List<String> extractLambdaCalls(Matcher m, String expression) {
+		List<String> lambdaCalls = new ArrayList<String>();
+		int start1 = 0;
+		while (m.find()) {
+		    int start = m.start();
+		    String subString = expression.substring(start1, start);
+		    if(subString.contains(".")) {
+		    	String s = subString.substring(subString.lastIndexOf("."), subString.length());
+		    	lambdaCalls.add(s);
+		    }
+		    start1 = m.end();
+		}
+		return lambdaCalls;
 	}
 
 	public String subExpressionIsCallToSameMethod() {

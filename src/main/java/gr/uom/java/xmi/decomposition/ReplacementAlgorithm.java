@@ -1900,6 +1900,11 @@ public class ReplacementAlgorithm {
 					return replacementInfo.getReplacements();
 				}
 			}
+			else if(((OperationInvocation)invocationCoveringTheEntireStatement1).identicalPipeline((OperationInvocation)invocationCoveringTheEntireStatement2)) {
+				Replacement replacement = new MethodInvocationReplacement(invocationCoveringTheEntireStatement1.actualString(), invocationCoveringTheEntireStatement2.actualString(), invocationCoveringTheEntireStatement1, invocationCoveringTheEntireStatement2, ReplacementType.METHOD_INVOCATION);
+				replacementInfo.addReplacement(replacement);
+				return replacementInfo.getReplacements();
+			}
 			String expression1 = invocationCoveringTheEntireStatement1.getExpression();
 			String expression2 = invocationCoveringTheEntireStatement2.getExpression();
 			boolean staticVSNonStatic = (expression1 == null && expression2 != null && container1 != null && container1.getClassName().endsWith("." + expression2)) ||

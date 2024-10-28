@@ -281,7 +281,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	@Override
 	public List<AbstractCall> getAllOperationInvocations() {
 		if(expression != null) {
-			return new ArrayList<>(expression.getMethodInvocations());
+			return new ArrayList<>(expression.getAllOperationInvocations());
 		}
 		if(body != null) {
 			return body.getAllOperationInvocations();

@@ -12,6 +12,7 @@ import org.refactoringminer.api.RefactoringType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 
 public class ReplacePipelineWithLoopRefactoring implements Refactoring, LeafMappingProvider {
@@ -20,6 +21,7 @@ public class ReplacePipelineWithLoopRefactoring implements Refactoring, LeafMapp
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
 	private List<LeafMapping> subExpressionMappings;
+	private Set<AbstractCodeMapping> nestedStatementMappings;
 
 	public ReplacePipelineWithLoopRefactoring(Set<AbstractCodeFragment> codeFragmentsBefore,
 			Set<AbstractCodeFragment> codeFragmentsAfter, VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
@@ -28,6 +30,11 @@ public class ReplacePipelineWithLoopRefactoring implements Refactoring, LeafMapp
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.subExpressionMappings = new ArrayList<LeafMapping>();
+		this.nestedStatementMappings = new LinkedHashSet<AbstractCodeMapping>();
+	}
+
+	public void addNestedStatementMapping(AbstractCodeMapping mapping) {
+		nestedStatementMappings.add(mapping);
 	}
 
 	public void addSubExpressionMapping(LeafMapping newLeafMapping) {
@@ -62,6 +69,10 @@ public class ReplacePipelineWithLoopRefactoring implements Refactoring, LeafMapp
 
 	public List<LeafMapping> getSubExpressionMappings() {
 		return subExpressionMappings;
+	}
+
+	public Set<AbstractCodeMapping> getNestedStatementMappings() {
+		return nestedStatementMappings;
 	}
 
 	public String toString() {

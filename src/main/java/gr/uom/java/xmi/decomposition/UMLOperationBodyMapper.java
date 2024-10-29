@@ -1595,6 +1595,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(LeafMapping leafMapping : leafMappings) {
 								ref.addSubExpressionMapping(leafMapping);
 							}
+							for(AbstractCodeMapping m : this.mappings) {
+								if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
+									ref.addNestedStatementMapping(m);
+								}
+							}
 							newMapping.addRefactoring(ref);
 							addToMappings(newMapping, mappingSet);
 							leaves1.remove(newMapping.getFragment1());
@@ -1753,6 +1758,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						ReplacePipelineWithLoopRefactoring ref = new ReplacePipelineWithLoopRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
 						newMapping.addRefactoring(ref);
+						for(AbstractCodeMapping m : this.mappings) {
+							if(composite.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment1().getLocationInfo())) {
+								ref.addNestedStatementMapping(m);
+							}
+						}
 						addToMappings(newMapping, mappingSet);
 						leaves1.remove(newMapping.getFragment1());
 						innerNodeIterator2.remove();
@@ -1924,6 +1934,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							for(LeafMapping leafMapping : leafMappings) {
 								ref.addSubExpressionMapping(leafMapping);
 							}
+							for(AbstractCodeMapping m : this.mappings) {
+								if(composite.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+									ref.addNestedStatementMapping(m);
+								}
+							}
 							newMapping.addRefactoring(ref);
 							addToMappings(newMapping, mappingSet);
 							leaves2.remove(newMapping.getFragment2());
@@ -1990,6 +2005,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 								ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
 								newMapping.addRefactoring(ref);
+								for(AbstractCodeMapping m : this.mappings) {
+									if(composite.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+										ref.addNestedStatementMapping(m);
+									}
+								}
 								addToMappings(newMapping, mappingSet);
 								leaves2.remove(newMapping.getFragment2());
 								innerNodeIterator1.remove();
@@ -2141,19 +2161,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								}
 							}
 						}
-						boolean loopFound = false;
+						AbstractCodeFragment loop = null;
 						for(AbstractCodeFragment fragment : additionallyMatchedStatements1) {
 							if(fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||
 									fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) ||
 									fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
 									fragment.getLocationInfo().getCodeElementType().equals(CodeElementType.DO_STATEMENT)) {
-								loopFound = true;
+								loop = fragment;
 								break;
 							}
 						}
-						if(loopFound) {
+						if(loop != null) {
 							ReplaceLoopWithPipelineRefactoring ref = new ReplaceLoopWithPipelineRefactoring(additionallyMatchedStatements1, additionallyMatchedStatements2, container1, container2);
 							newMapping.addRefactoring(ref);
+							for(AbstractCodeMapping m : this.mappings) {
+								if(loop.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && streamAPICallStatement.getLocationInfo().subsumes(m.getFragment2().getLocationInfo())) {
+									ref.addNestedStatementMapping(m);
+								}
+							}
 						}
 						addToMappings(newMapping, mappingSet);
 						leaves2.remove(newMapping.getFragment2());

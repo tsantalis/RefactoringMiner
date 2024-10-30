@@ -21,18 +21,18 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 	private AbstractExpression value;
 	private Map<String, AbstractExpression> memberValuePairs = new LinkedHashMap<>();
 	
-	public UMLAnnotation(CompilationUnit cu, String filePath, Annotation annotation, String javaFileContent) {
+	public UMLAnnotation(CompilationUnit cu, String sourceFolder, String filePath, Annotation annotation, String javaFileContent) {
 		this.typeName = annotation.getTypeName().getFullyQualifiedName();
-		this.locationInfo = new LocationInfo(cu, filePath, annotation, CodeElementType.ANNOTATION);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
 		if(annotation instanceof SingleMemberAnnotation) {
 			SingleMemberAnnotation singleMemberAnnotation = (SingleMemberAnnotation)annotation;
-			this.value = new AbstractExpression(cu, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, javaFileContent);
+			this.value = new AbstractExpression(cu, sourceFolder, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, javaFileContent);
 		}
 		else if(annotation instanceof NormalAnnotation) {
 			NormalAnnotation normalAnnotation = (NormalAnnotation)annotation;
 			List<MemberValuePair> pairs = normalAnnotation.values();
 			for(MemberValuePair pair : pairs) {
-				AbstractExpression value = new AbstractExpression(cu, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, javaFileContent);
+				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, javaFileContent);
 				memberValuePairs.put(pair.getName().getIdentifier(), value);
 			}
 		}

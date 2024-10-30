@@ -12,8 +12,8 @@ public class TryStatementObject extends CompositeStatementObject {
 	private List<CompositeStatementObject> catchClauses;
 	private CompositeStatementObject finallyClause;
 
-	public TryStatementObject(CompilationUnit cu, String filePath, Statement statement, int depth) {
-		super(cu, filePath, statement, depth, CodeElementType.TRY_STATEMENT);
+	public TryStatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth) {
+		super(cu, sourceFolder, filePath, statement, depth, CodeElementType.TRY_STATEMENT);
 		this.catchClauses = new ArrayList<CompositeStatementObject>();
 	}
 

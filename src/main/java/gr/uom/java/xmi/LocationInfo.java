@@ -9,6 +9,7 @@ import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class LocationInfo {
+	private String sourceFolder;
 	private String filePath;
 	private int startOffset;
 	private int endOffset; 
@@ -19,7 +20,8 @@ public class LocationInfo {
 	private int endColumn;
 	private CodeElementType codeElementType;
 	
-	public LocationInfo(CompilationUnit cu, String filePath, ASTNode node, CodeElementType codeElementType) {
+	public LocationInfo(CompilationUnit cu, String sourceFolder, String filePath, ASTNode node, CodeElementType codeElementType) {
+		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.codeElementType = codeElementType;
 		this.startOffset = node.getStartPosition();
@@ -46,6 +48,10 @@ public class LocationInfo {
 		if(this.endColumn > 0) {
 			this.endColumn += 1;
 		}
+	}
+
+	public String getSourceFolder() {
+		return sourceFolder;
 	}
 
 	public String getFilePath() {

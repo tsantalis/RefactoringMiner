@@ -85,8 +85,8 @@ public class OperationInvocation extends AbstractCall {
         PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
     }
 
-	public OperationInvocation(CompilationUnit cu, String filePath, MethodInvocation invocation, VariableDeclarationContainer container) {
-		super(cu, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, MethodInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -129,8 +129,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperMethodInvocation invocation, VariableDeclarationContainer container) {
-		super(cu, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION, container);
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -142,8 +142,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, SuperConstructorInvocation invocation, VariableDeclarationContainer container) {
-		super(cu, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION, container);
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperConstructorInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION, container);
 		this.methodName = "super";
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
@@ -157,8 +157,8 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String filePath, ConstructorInvocation invocation, VariableDeclarationContainer container) {
-		super(cu, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION, container);
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, ConstructorInvocation invocation, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, invocation, CodeElementType.CONSTRUCTOR_INVOCATION, container);
 		this.methodName = "this";
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();

@@ -66,6 +66,7 @@ public class Visitor extends ASTVisitor {
 	public static final Pattern METHOD_INVOCATION_PATTERN = Pattern.compile("!(\\w|\\.)*@\\w*");
 	public static final Pattern METHOD_SIGNATURE_PATTERN = Pattern.compile("(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])");
 	private CompilationUnit cu;
+	private String sourceFolder;
 	private String filePath;
 	private VariableDeclarationContainer container;
 	private List<LeafExpression> variables = new ArrayList<>();
@@ -97,15 +98,16 @@ public class Visitor extends ASTVisitor {
 	private DefaultMutableTreeNode current = root;
 	private final String javaFileContent;
 
-	public Visitor(CompilationUnit cu, String filePath, VariableDeclarationContainer container, String javaFileContent) {
+	public Visitor(CompilationUnit cu, String sourceFolder, String filePath, VariableDeclarationContainer container, String javaFileContent) {
 		this.cu = cu;
+		this.sourceFolder = sourceFolder;
 		this.filePath = filePath;
 		this.container = container;
 		this.javaFileContent = javaFileContent;
 	}
 
 	public boolean visit(ArrayAccess node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.ARRAY_ACCESS, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.ARRAY_ACCESS, container);
 		arrayAccesses.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -115,7 +117,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(PrefixExpression node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PREFIX_EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.PREFIX_EXPRESSION, container);
 		prefixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -125,7 +127,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(PostfixExpression node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.POSTFIX_EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.POSTFIX_EXPRESSION, container);
 		postfixExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -135,7 +137,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ConditionalExpression node) {
-		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, filePath, node, container, javaFileContent);
+		TernaryOperatorExpression ternary = new TernaryOperatorExpression(cu, sourceFolder, filePath, node, container, javaFileContent);
 		ternaryOperatorExpressions.add(ternary);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -145,7 +147,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(InfixExpression node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.INFIX_EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.INFIX_EXPRESSION, container);
 		infixExpressions.add(expression);
 		infixOperators.add(node.getOperator().toString());
 		if(current.getUserObject() != null) {
@@ -157,7 +159,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(Assignment node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.ASSIGNMENT, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.ASSIGNMENT, container);
 		assignments.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -171,7 +173,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container, javaFileContent);
+		ObjectCreation creation = new ObjectCreation(cu, sourceFolder, filePath, node, container, javaFileContent);
 		creations.add(creation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -181,7 +183,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ArrayCreation node) {
-		ObjectCreation creation = new ObjectCreation(cu, filePath, node, container, javaFileContent);
+		ObjectCreation creation = new ObjectCreation(cu, sourceFolder, filePath, node, container, javaFileContent);
 		String nodeAsString = stringify(node);
 		creations.add(creation);
 		if(current.getUserObject() != null) {
@@ -200,7 +202,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(VariableDeclarationFragment node) {
 		if(!(node.getParent() instanceof LambdaExpression)) {
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container, javaFileContent);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, filePath, node, container, javaFileContent);
 			variableDeclarations.add(variableDeclaration);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -211,7 +213,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(SingleVariableDeclaration node) {
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, filePath, node, container, node.isVarargs(), javaFileContent);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, filePath, node, container, node.isVarargs(), javaFileContent);
 		variableDeclarations.add(variableDeclaration);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -306,7 +308,7 @@ public class Visitor extends ASTVisitor {
 
 	private DefaultMutableTreeNode insertNode(AnonymousClassDeclaration childAnonymous) {
 		Enumeration enumeration = root.postorderEnumeration();
-		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(cu, filePath, childAnonymous);
+		AnonymousClassDeclarationObject anonymousObject = new AnonymousClassDeclarationObject(cu, sourceFolder, filePath, childAnonymous);
 		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(anonymousObject);
 		
 		DefaultMutableTreeNode parentNode = root;
@@ -346,7 +348,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(TextBlock node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.TEXT_BLOCK, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.TEXT_BLOCK, container);
 		textBlocks.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -356,7 +358,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(StringLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.STRING_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.STRING_LITERAL, container);
 		stringLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -366,7 +368,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(CharacterLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CHAR_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.CHAR_LITERAL, container);
 		charLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -376,7 +378,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(NumberLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NUMBER_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.NUMBER_LITERAL, container);
 		numberLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -386,7 +388,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(NullLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.NULL_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.NULL_LITERAL, container);
 		nullLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -396,7 +398,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(BooleanLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.BOOLEAN_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.BOOLEAN_LITERAL, container);
 		booleanLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -406,7 +408,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(TypeLiteral node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.TYPE_LITERAL, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.TYPE_LITERAL, container);
 		typeLiterals.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -417,7 +419,7 @@ public class Visitor extends ASTVisitor {
 
 	public boolean visit(ThisExpression node) {
 		if(!(node.getParent() instanceof FieldAccess)) {
-			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.THIS_EXPRESSION, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.THIS_EXPRESSION, container);
 			thisExpressions.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -430,7 +432,7 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(SimpleName node) {
 		if(node.getParent() instanceof FieldAccess && ((FieldAccess)node.getParent()).getExpression() instanceof ThisExpression) {
 			FieldAccess fieldAccess = (FieldAccess)node.getParent();
-			LeafExpression fieldAccessExpression = new LeafExpression(cu, filePath, fieldAccess, CodeElementType.FIELD_ACCESS, container);
+			LeafExpression fieldAccessExpression = new LeafExpression(cu, sourceFolder, filePath, fieldAccess, CodeElementType.FIELD_ACCESS, container);
 			variables.add(fieldAccessExpression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -472,7 +474,7 @@ public class Visitor extends ASTVisitor {
 			// skip names being part of qualified names
 		}
 		else {
-			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.SIMPLE_NAME, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.SIMPLE_NAME, container);
 			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -542,7 +544,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -552,7 +554,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ExpressionMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node, container);
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -562,7 +564,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(SuperMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node, container);
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -572,7 +574,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(TypeMethodReference node) {
-		MethodReference reference = new MethodReference(cu, filePath, node, container, javaFileContent);
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -614,7 +616,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -628,7 +630,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -642,7 +644,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -664,7 +666,7 @@ public class Visitor extends ASTVisitor {
 				castExpressionInParenthesizedExpression(argument))
 			return;
 		if(argument instanceof ExpressionMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (ExpressionMethodReference)argument, container, javaFileContent);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, (ExpressionMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -672,7 +674,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(argument instanceof SuperMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (SuperMethodReference)argument, container, javaFileContent);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, (SuperMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -680,14 +682,14 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(argument instanceof TypeMethodReference) {
-			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, (TypeMethodReference)argument, container, javaFileContent);
+			LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, (TypeMethodReference)argument, container, javaFileContent);
 			lambdas.add(lambda);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getLambdas().add(lambda);
 			}
 		}
-		LeafExpression expression = new LeafExpression(cu, filePath, argument, CodeElementType.EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, argument, CodeElementType.EXPRESSION, container);
 		this.arguments.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -716,7 +718,7 @@ public class Visitor extends ASTVisitor {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getTypes().add(qualifier.getFullyQualifiedName());
 			}
-			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -724,7 +726,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(qualifier instanceof SimpleName && !(node.getParent() instanceof QualifiedName)) {
-			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.QUALIFIED_NAME, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.QUALIFIED_NAME, container);
 			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -732,7 +734,7 @@ public class Visitor extends ASTVisitor {
 			}
 		}
 		else if(qualifier instanceof QualifiedName && !(node.getParent() instanceof QualifiedName)) {
-			LeafExpression expression = new LeafExpression(cu, filePath, qualifier, CodeElementType.QUALIFIED_NAME, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, qualifier, CodeElementType.QUALIFIED_NAME, container);
 			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -745,14 +747,14 @@ public class Visitor extends ASTVisitor {
 	public boolean visit(CastExpression node) {
 		Expression castExpression = node.getExpression();
 		if(castExpression instanceof SimpleName) {
-			LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CAST_EXPRESSION, container);
+			LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.CAST_EXPRESSION, container);
 			variables.add(expression);
 			if(current.getUserObject() != null) {
 				AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
 				anonymous.getVariables().add(expression);
 			}
 		}
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.CAST_EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.CAST_EXPRESSION, container);
 		castExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -762,7 +764,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(LambdaExpression node) {
-		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, node, container, javaFileContent);
+		LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, node, container, javaFileContent);
 		lambdas.add(lambda);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -775,7 +777,7 @@ public class Visitor extends ASTVisitor {
 		List<Statement> statements = node.statements();
 		for(Statement statement : statements) {
 			if(statement instanceof Block) {
-				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, filePath, statement, container, javaFileContent);
+				LambdaExpressionObject lambda = new LambdaExpressionObject(cu, sourceFolder, filePath, statement, container, javaFileContent);
 				lambdas.add(lambda);
 				if(current.getUserObject() != null) {
 					AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -787,7 +789,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ParenthesizedExpression node) {
-		LeafExpression expression = new LeafExpression(cu, filePath, node, CodeElementType.PARENTHESIZED_EXPRESSION, container);
+		LeafExpression expression = new LeafExpression(cu, sourceFolder, filePath, node, CodeElementType.PARENTHESIZED_EXPRESSION, container);
 		parenthesizedExpressions.add(expression);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

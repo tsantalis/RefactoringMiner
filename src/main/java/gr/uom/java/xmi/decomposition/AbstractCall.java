@@ -36,8 +36,8 @@ public abstract class AbstractCall extends LeafExpression {
 	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal", "log");
 	private static final List<String> logGuardNames = List.of("isDebugEnabled", "isEnabled", "isErrorEnabled", "isFatalEnabled", "isInfoEnabled", "isTraceEnabled", "isWarnEnabled");
 
-	public AbstractCall(CompilationUnit cu, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
-		super(cu, filePath, expression, codeElementType, container);
+	public AbstractCall(CompilationUnit cu, String sourceFolder, String filePath, ASTNode expression, CodeElementType codeElementType, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, expression, codeElementType, container);
 	}
 
 	protected AbstractCall() {

@@ -553,7 +553,7 @@ class TestParameterizeTestRefactoring {
         UMLModel model = new UMLModelASTReader(javaFileContents, Set.of("."), false).getUmlModel();
         ASTNode node = (ASTNode) cu;
         assertNotNull(node);
-        LocationInfo location = new LocationInfo(cu, "TestClass.java", node, LocationInfo.CodeElementType.TYPE_DECLARATION);
+        LocationInfo location = new LocationInfo(cu, "", "TestClass.java", node, LocationInfo.CodeElementType.TYPE_DECLARATION);
         UMLClass aClass = new UMLClass("org.refactoringminer.test", "TestClass", location, true, Collections.emptyList());
         aClass.setVisibility(Visibility.PUBLIC);
         return model;

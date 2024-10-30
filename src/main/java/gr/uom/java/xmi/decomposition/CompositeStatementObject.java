@@ -26,10 +26,10 @@ public class CompositeStatementObject extends AbstractStatement {
 	private Optional<TryStatementObject> tryContainer;
 	private LocationInfo locationInfo;
 
-	public CompositeStatementObject(CompilationUnit cu, String filePath, ASTNode statement, int depth, CodeElementType codeElementType) {
+	public CompositeStatementObject(CompilationUnit cu, String sourceFolder, String filePath, ASTNode statement, int depth, CodeElementType codeElementType) {
 		super();
 		this.setDepth(depth);
-		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
 		this.variableDeclarations = new ArrayList<VariableDeclaration>();

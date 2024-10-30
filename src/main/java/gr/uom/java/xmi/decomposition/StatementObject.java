@@ -51,10 +51,10 @@ public class StatementObject extends AbstractStatement {
 	private List<LambdaExpressionObject> lambdas;
 	private String actualSignature;
 	
-	public StatementObject(CompilationUnit cu, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
+	public StatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
 		super();
-		this.locationInfo = new LocationInfo(cu, filePath, statement, codeElementType);
-		Visitor visitor = new Visitor(cu, filePath, container, javaFileContent);
+		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType);
+		Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, javaFileContent);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();

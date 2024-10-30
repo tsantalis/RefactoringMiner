@@ -24,9 +24,9 @@ public class ObjectCreation extends AbstractCall {
 	private boolean isArray = false;
 	private volatile int hashCode = 0;
 	
-	public ObjectCreation(CompilationUnit cu, String filePath, ClassInstanceCreation creation, VariableDeclarationContainer container, String javaFileContent) {
-		super(cu, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
-		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0, javaFileContent);
+	public ObjectCreation(CompilationUnit cu, String sourceFolder, String filePath, ClassInstanceCreation creation, VariableDeclarationContainer container, String javaFileContent) {
+		super(cu, sourceFolder, filePath, creation, CodeElementType.CLASS_INSTANCE_CREATION, container);
+		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, creation.getType(), 0, javaFileContent);
 		this.numberOfArguments = creation.arguments().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.arguments();
@@ -41,10 +41,10 @@ public class ObjectCreation extends AbstractCall {
 		}
 	}
 
-	public ObjectCreation(CompilationUnit cu, String filePath, ArrayCreation creation, VariableDeclarationContainer container, String javaFileContent) {
-		super(cu, filePath, creation, CodeElementType.ARRAY_CREATION, container);
+	public ObjectCreation(CompilationUnit cu, String sourceFolder, String filePath, ArrayCreation creation, VariableDeclarationContainer container, String javaFileContent) {
+		super(cu, sourceFolder, filePath, creation, CodeElementType.ARRAY_CREATION, container);
 		this.isArray = true;
-		this.type = UMLType.extractTypeObject(cu, filePath, creation.getType(), 0, javaFileContent);
+		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, creation.getType(), 0, javaFileContent);
 		this.numberOfArguments = creation.dimensions().size();
 		this.arguments = new ArrayList<String>();
 		List<Expression> args = creation.dimensions();

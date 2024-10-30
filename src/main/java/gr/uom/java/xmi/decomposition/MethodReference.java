@@ -19,15 +19,15 @@ public class MethodReference extends AbstractCall {
 	private String methodName;
 	private volatile int hashCode = 0;
 	
-	public MethodReference(CompilationUnit cu, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer container) {
-		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
+	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = stringify(reference.getExpression());
 		this.arguments = new ArrayList<String>();
 	}
 	
-	public MethodReference(CompilationUnit cu, String filePath, SuperMethodReference reference, VariableDeclarationContainer container) {
-		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
+	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer container) {
+		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.arguments = new ArrayList<String>();
 		if(reference.getQualifier() != null) {
@@ -38,10 +38,10 @@ public class MethodReference extends AbstractCall {
 		}
 	}
 	
-	public MethodReference(CompilationUnit cu, String filePath, TypeMethodReference reference, VariableDeclarationContainer container, String javaFileContent) {
-		super(cu, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
+	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, TypeMethodReference reference, VariableDeclarationContainer container, String javaFileContent) {
+		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
-		this.expression = UMLType.extractTypeObject(cu, filePath, reference.getType(), 0, javaFileContent).toQualifiedString();
+		this.expression = UMLType.extractTypeObject(cu, sourceFolder, filePath, reference.getType(), 0, javaFileContent).toQualifiedString();
 		this.arguments = new ArrayList<String>();
 	}
 

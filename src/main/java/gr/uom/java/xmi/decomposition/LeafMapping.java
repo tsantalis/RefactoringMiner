@@ -326,6 +326,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(!nestedUnderCatchBlockOfSameType1 && nestedUnderCatchBlockOfSameType2) {
 					return 1;
 				}
+				boolean streamAPIMigration1 = this.streamAPIMigration();
+				boolean streamAPIMigration2 = o.streamAPIMigration();
+				if(streamAPIMigration1 && !streamAPIMigration2) {
+					return -1;
+				}
+				else if(streamAPIMigration2 && !streamAPIMigration1) {
+					return 1;
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {
@@ -513,6 +521,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 								return Integer.valueOf(parentIndexDiff1).compareTo(Integer.valueOf(parentIndexDiff2));
 							}
 						}
+						boolean streamAPIMigration1 = this.streamAPIMigration();
+						boolean streamAPIMigration2 = o.streamAPIMigration();
+						if(streamAPIMigration1 && !streamAPIMigration2) {
+							return -1;
+						}
+						else if(streamAPIMigration2 && !streamAPIMigration1) {
+							return 1;
+						}
 						if(parentEditDistance1 == parentEditDistance2) {
 							computeIdenticalPreviousAndNextStatements(o);
 							if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {
@@ -538,6 +554,61 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
+	}
+
+	private boolean streamAPIMigration() {
+		if(getFragment1() instanceof StatementObject && getFragment2() instanceof AbstractExpression) {
+			AbstractExpression expr2 = (AbstractExpression)getFragment2();
+			VariableDeclarationContainer lambda = expr2.getLambdaOwner();
+			if(lambda != null) {
+				AbstractCodeFragment lambdaStatement2 = null;
+				while(lambda instanceof LambdaExpressionObject &&
+						((LambdaExpressionObject)lambda).getOwner() instanceof LambdaExpressionObject) {
+					lambda = ((LambdaExpressionObject)lambda).getOwner();
+				}
+				if(((LambdaExpressionObject)lambda).getOwner() != null && ((LambdaExpressionObject)lambda).getOwner().getBody() != null) {
+					for(AbstractCodeFragment fragment2 : ((LambdaExpressionObject)lambda).getOwner().getBody().getCompositeStatement().getLeaves()) {
+						if(fragment2.getLambdas().contains(lambda)) {
+							lambdaStatement2 = fragment2;
+							break;
+						}
+					}
+				}
+				CompositeStatementObject parent1 = getFragment1().getParent();
+				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+					parent1 = parent1.getParent();
+				}
+				if(parent1 != null && lambdaStatement2 != null) {
+					for(AbstractExpression expr1 : parent1.getExpressions()) {
+						if(lambdaStatement2.findExpression(expr1.getString()).size() > 0) {
+							return true;
+						}
+						if(expr1.getString().endsWith(".get()")) {
+							String prefix = expr1.getString().substring(0, expr1.getString().length()-6);
+							if(lambdaStatement2.findExpression(prefix).size() > 0) {
+								return true;
+							}
+						}
+						if(expr1.getString().endsWith(".isPresent()")) {
+							String prefix = expr1.getString().substring(0, expr1.getString().length()-12);
+							if(lambdaStatement2.findExpression(prefix).size() > 0) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(getFragment1() instanceof StatementObject && getFragment2() instanceof StatementObject &&
+				getFragment1().getLambdas().size() == 0 && getFragment2().getLambdas().size() > 0 &&
+				getFragment1().getMethodInvocations().size() > 0 && getFragment2().getMethodInvocations().size() > 0) {
+			AbstractCall call1 = getFragment1().getMethodInvocations().get(getFragment1().getMethodInvocations().size()-1);
+			AbstractCall call2 = getFragment2().getMethodInvocations().get(getFragment2().getMethodInvocations().size()-1);
+			if(call1.actualString().equals(call2.actualString())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean underElse() {

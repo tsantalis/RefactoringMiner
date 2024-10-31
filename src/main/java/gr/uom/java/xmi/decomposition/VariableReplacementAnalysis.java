@@ -369,17 +369,15 @@ public class VariableReplacementAnalysis {
 				}
 			}
 		}
-		List<LambdaExpressionObject> lambdas1 = operation1.getAllLambdas();
-		List<LambdaExpressionObject> lambdas2 = operation2.getAllLambdas();
-		if(lambdas1.size() == lambdas2.size()) {
-			for(int i=0; i<lambdas1.size(); i++) {
-				LambdaExpressionObject lambda1 = lambdas1.get(i);
-				LambdaExpressionObject lambda2 = lambdas2.get(i);
-				OperationBody body1 = lambda1.getBody();
-				OperationBody body2 = lambda2.getBody();
-				if(body1 != null && body2 != null) {
-					if(body1.getBodyHashCode() == body2.getBodyHashCode()) {
-						processVariableDeclarationsInIdenticalOperations(body1.getAllVariableDeclarations(), body2.getAllVariableDeclarations());
+		for(AbstractCodeMapping mapping : mappings) {
+			List<LambdaExpressionObject> lambdas1 = mapping.getFragment1().getLambdas();
+			List<LambdaExpressionObject> lambdas2 = mapping.getFragment2().getLambdas();
+			if(lambdas1.size() == lambdas2.size()) {
+				for(int i=0; i<lambdas1.size(); i++) {
+					LambdaExpressionObject lambda1 = lambdas1.get(i);
+					LambdaExpressionObject lambda2 = lambdas2.get(i);
+					if(lambda1.getString().equals(lambda2.getString())) {
+						processVariableDeclarationsInIdenticalOperations(lambda1.getAllVariableDeclarations(), lambda2.getAllVariableDeclarations());
 					}
 				}
 			}

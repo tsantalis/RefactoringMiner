@@ -2735,6 +2735,22 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testStreamAPIMigration() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/javaparser/javaparser.git", "f70eef166e4afd92471079a75ba5828049fca500", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			if(classDiff.getOriginalClassName().equals("com.github.javaparser.ast.visitor.VoidVisitorAdapter"))
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				mapperInfo(mapper, actual);
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "javaparser-f70eef166e4afd92471079a75ba5828049fca500.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testSplitVariableDeclarationStatement() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

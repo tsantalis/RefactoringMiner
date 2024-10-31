@@ -6741,6 +6741,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			throws RefactoringMinerTimedOutException {
 		LeafMapping first = mappingSet.first();
 		AbstractCodeFragment leaf2 = first.getFragment2();
+		if(leaf2 instanceof AbstractExpression) {
+			return;
+		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(!leaf.equals(leaf1)) {
 				int numberOfMappings = mappings.size();

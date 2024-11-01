@@ -25,7 +25,6 @@ public class CompositeStatementObject extends AbstractStatement {
 	private List<VariableDeclaration> variableDeclarations;
 	private Optional<TryStatementObject> tryContainer;
 	private LocationInfo locationInfo;
-	private String actualSignature;
 
 	public CompositeStatementObject(CompilationUnit cu, String sourceFolder, String filePath, ASTNode statement, int depth, CodeElementType codeElementType, String javaFileContent) {
 		super();
@@ -46,10 +45,6 @@ public class CompositeStatementObject extends AbstractStatement {
 			else
 				this.actualSignature = whole;
 		}
-	}
-
-	public String getActualSignature() {
-		return actualSignature;
 	}
 
 	public void addStatement(AbstractStatement statement) {

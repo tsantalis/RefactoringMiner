@@ -49,7 +49,6 @@ public class StatementObject extends AbstractStatement {
 	private List<LeafExpression> castExpressions;
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
-	private String actualSignature;
 	
 	public StatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
 		super();
@@ -155,10 +154,6 @@ public class StatementObject extends AbstractStatement {
 		else {
 			this.statement = statementAsString;
 		}
-	}
-
-	public String getActualSignature() {
-		return actualSignature;
 	}
 
 	@Override

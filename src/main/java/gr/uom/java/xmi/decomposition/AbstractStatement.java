@@ -4,7 +4,12 @@ import java.util.List;
 
 public abstract class AbstractStatement extends AbstractCodeFragment {
 	private CompositeStatementObject parent;
-	
+	protected String actualSignature;
+
+	public String getActualSignature() {
+		return actualSignature;
+	}
+
 	public void setParent(CompositeStatementObject parent) {
     	this.parent = parent;
     }

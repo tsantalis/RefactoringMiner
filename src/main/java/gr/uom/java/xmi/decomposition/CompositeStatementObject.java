@@ -40,8 +40,17 @@ public class CompositeStatementObject extends AbstractStatement {
 			this.actualSignature = whole.substring(0, whole.indexOf("{") + 1);
 		}
 		else {
-			if(whole.contains("\n"))
-				this.actualSignature = whole.substring(0, whole.indexOf("\n"));
+			if(whole.contains("\n")) {
+				String[] lineArray = whole.split("\\r?\\n");
+				int chars = 0;
+				for(String line : lineArray) {
+					chars += line.length();
+					if(line.endsWith(")")) {
+						break;
+					}
+				}
+				this.actualSignature = whole.substring(0, chars);
+			}
 			else
 				this.actualSignature = whole;
 		}

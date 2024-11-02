@@ -594,6 +594,23 @@ public class GitHistoryRefactoringMinerImpl implements GitHistoryRefactoringMine
 		}
 	}
 
+	@Override
+	public GitHub connectToGitHub(String oAuthToken) {
+		if(gitHub == null) {
+			try {
+				gitHub = GitHub.connectUsingOAuth(oAuthToken);
+				if(gitHub.isCredentialValid()) {
+					logger.info("Connected to GitHub with OAuth token");
+				} else {
+					connectToGitHub();
+				}
+			} catch(IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		return gitHub;
+	}
+
 	private GitHub connectToGitHub() {
 		if(gitHub == null) {
 			try {

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import org.eclipse.jgit.lib.Repository;
+import org.kohsuke.github.GitHub;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 
 /**
@@ -12,6 +13,8 @@ import org.refactoringminer.astDiff.models.ProjectASTDiff;
  * 
  */
 public interface GitHistoryRefactoringMiner {
+
+	GitHub connectToGitHub(String oAuthToken);
 
 	/**
 	 * Iterate over each commit of a git repository and detect all refactorings performed in the

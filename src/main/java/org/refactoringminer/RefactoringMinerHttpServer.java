@@ -53,10 +53,14 @@ public class RefactoringMinerHttpServer {
 
 			String gitURL = queryToMap.get("gitURL");
 			String commitId = queryToMap.get("commitId");
+			String oAuthToken = queryToMap.getOrDefault("token", "");
 			int timeout = Integer.parseInt(queryToMap.get("timeout"));
 			List<Refactoring> detectedRefactorings = new ArrayList<Refactoring>();
 
 			GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+			if (!oAuthToken.isEmpty()) {
+				miner.connectToGitHub(oAuthToken);
+			}
 			miner.detectAtCommit(gitURL, commitId, new RefactoringHandler() {
 				@Override
 				public void handle(String commitId, List<Refactoring> refactorings) {

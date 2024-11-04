@@ -102,6 +102,16 @@ div {
 #diff_panel {
 	height: 100%;
 }
+
+.highlighted-range {
+	background-color: orange;
+	opacity: 0.5;
+}
+
+.highlighted-range-inline {
+	background-color: orange;
+	opacity: 0.5;
+}
 /*.deleted {*/
 /*	background-color: IndianRed;*/
 /*}*/

@@ -34,6 +34,93 @@ function getEditColor(edit) {
     else return "black";
 }
 
+function getDecorationNoLeadingWhiteSpace(range, pos, endPos, editor) {
+    const decorations = [];
+    // Helper function to get adjusted column position by skipping leading whitespace
+    function getAdjustedPos(lineNumber, column) {
+        const lineContent = editor.getModel().getLineContent(lineNumber);
+        const trimmedStartColumn = lineContent.search(/\S|$/) + 1;
+        return Math.max(column, trimmedStartColumn);
+    }
+    if (pos.lineNumber === endPos.lineNumber) {
+        // Single-line decoration
+        const adjustedPos = {
+            lineNumber: pos.lineNumber,
+            column: getAdjustedPos(pos.lineNumber, pos.column),
+        };
+        decorations.push({
+            range: new monaco.Range(adjustedPos.lineNumber, adjustedPos.column, endPos.lineNumber, endPos.column),
+            options: {
+                className: range.kind,
+                zIndex: range.index,
+                hoverMessage: {
+                    value: range.tooltip,
+                },
+                overviewRuler: {
+                    color: getEditColor(range.kind),
+                },
+            },
+        });
+    } else {
+        // Multi-line decoration
+        // Decorate the first line
+        const adjustedStartPos = {
+            lineNumber: pos.lineNumber,
+            column: getAdjustedPos(pos.lineNumber, pos.column),
+        };
+        decorations.push({
+            range: new monaco.Range(adjustedStartPos.lineNumber, adjustedStartPos.column, pos.lineNumber, editor.getModel().getLineMaxColumn(pos.lineNumber)),
+            options: {
+                className: range.kind,
+                zIndex: range.index,
+                hoverMessage: {
+                    value: range.tooltip,
+                },
+                overviewRuler: {
+                    color: getEditColor(range.kind),
+                },
+            },
+        });
+        // Decorate each line in between, avoiding leading whitespace
+        for (let line = pos.lineNumber + 1; line < endPos.lineNumber; line++) {
+            const adjustedColumn = getAdjustedPos(line, 1); // Adjust for leading whitespace
+            decorations.push({
+                range: new monaco.Range(line, adjustedColumn, line, editor.getModel().getLineMaxColumn(line)),
+                options: {
+                    className: range.kind,
+                    zIndex: range.index,
+                    hoverMessage: {
+                        value: range.tooltip,
+                    },
+                    overviewRuler: {
+                        color: getEditColor(range.kind),
+                    },
+                },
+            });
+        }
+        // Decorate the last line, skipping leading whitespace
+        const adjustedEndPos = {
+            lineNumber: endPos.lineNumber,
+            column: getAdjustedPos(endPos.lineNumber, 1),
+        };
+        decorations.push({
+            range: new monaco.Range(endPos.lineNumber, adjustedEndPos.column, endPos.lineNumber, endPos.column),
+            options: {
+                className: range.kind,
+                zIndex: range.index,
+                hoverMessage: {
+                    value: range.tooltip,
+                },
+                overviewRuler: {
+                    color: getEditColor(range.kind),
+                },
+            },
+        });
+    }
+    return decorations;
+}
+
+
 function getDecoration(range, pos, endPos) {
     return {
         range: new monaco.Range(pos.lineNumber, pos.column, endPos.lineNumber, endPos.column),
@@ -48,6 +135,62 @@ function getDecoration(range, pos, endPos) {
             },
         },
     };
+}
+
+function onClick(ed, mappingElement, highlightDuration = 1000) {
+    ed.revealRangeInCenter(mappingElement);
+    const decorationId = ed.deltaDecorations([], [
+        {
+            range: mappingElement,
+            options: {
+                className: 'highlighted-range',  // Define this class in your CSS
+                inlineClassName: 'highlighted-range-inline', // For inline styling
+            }
+        }
+    ]);
+    setTimeout(() => {
+        ed.deltaDecorations([decorationId], []);  // Remove the decoration
+    }, highlightDuration);
+}
+
+function onClickHelper(config, index, activatedRange, ed, destIndex) {
+    candidates = config.mappings
+        .filter(mapping =>
+            mapping[index].startColumn <= activatedRange.startColumn
+            && mapping[index].startLineNumber <= activatedRange.startLineNumber
+            && !(mapping[index].endLineNumber === activatedRange.endLineNumber &&
+                mapping[index].endColumn <= activatedRange.endColumn)
+        );
+    //if there are any with the same start line and column, sort them by end line, remove the rest
+    const sameStartCandidates = candidates.filter(candidate =>
+        candidate[index].startLineNumber === activatedRange.startLineNumber &&
+        candidate[index].endLineNumber === activatedRange.endLineNumber
+    );
+
+    // Keep only same-start candidates if there are any, otherwise keep all candidates
+    if (sameStartCandidates.length > 0) {
+        candidates = sameStartCandidates;
+    }
+
+    candidates
+        .sort((a, b) => {
+            if (b[index].startLineNumber !== a[index].startLineNumber) {
+                return b[index].startLineNumber - a[index].startLineNumber;
+            }
+            if (b[index].startColumn !== a[index].startColumn) {
+                return b[index].startColumn - a[index].startColumn;
+            }
+            if (a[index].endLineNumber !== b[index].endLineNumber) {
+                return a[index].endLineNumber - b[index].endLineNumber;
+            }
+            return a[index].endColumn - b[index].endColumn;
+        });
+    const mapping = candidates.length > 0 ? candidates[0] : null;
+    if (mapping) {
+        if (mapping.length > 1) {
+            onClick(ed, mapping[destIndex]);
+        }
+    }
 }
 
 function monaco(config) {
@@ -75,11 +218,14 @@ function monaco(config) {
                     monaco.Range.fromPositions(leftEditor.getModel().getPositionAt(mapping[0]), leftEditor.getModel().getPositionAt(mapping[1])),
                     monaco.Range.fromPositions(rightEditor.getModel().getPositionAt(mapping[2]), rightEditor.getModel().getPositionAt(mapping[3])),
                 ]);
-            const leftDecorations = config.left.ranges.map(range => getDecoration(
+            const leftDecorations = config.left.ranges.
+            map(range => getDecorationNoLeadingWhiteSpace(
                 range,
                 leftEditor.getModel().getPositionAt(range.from),
-                leftEditor.getModel().getPositionAt(range.to)
-            ));
+                leftEditor.getModel().getPositionAt(range.to),
+                leftEditor
+            ))
+                .flat();
             leftEditor.getModel().decorations = leftDecorations;
             leftEditor.deltaDecorations([], leftDecorations);
             leftEditor.onMouseDown((event) => {
@@ -95,18 +241,18 @@ function monaco(config) {
                                     activatedRange = candidateRange;
                             }
                         }
-                        const mapping = config.mappings.find(mapping => mapping[0].equalsRange(activatedRange))
-                        if (mapping)
-                            if (mapping.length > 1)
-                                rightEditor.revealRangeInCenter(mapping[1]);
+                        onClickHelper(config, 0, activatedRange, rightEditor,1);
                     }
                 }
             });
-            const rightDecorations = config.right.ranges.map(range => getDecoration(
+            const rightDecorations = config.right.ranges.map
+            (range => getDecorationNoLeadingWhiteSpace(
                 range,
                 rightEditor.getModel().getPositionAt(range.from),
-                rightEditor.getModel().getPositionAt(range.to)
-            ));
+                rightEditor.getModel().getPositionAt(range.to),
+                rightEditor
+            ))
+                .flat();
             rightEditor.getModel().decorations = rightDecorations;
             rightEditor.deltaDecorations([], rightDecorations);
             rightEditor.getModel().moved = config.moved;
@@ -125,10 +271,7 @@ function monaco(config) {
                                 if (activatedRange.containsRange(candidateRange)) activatedRange = candidateRange;
                             }
                         }
-                        const mapping = config.mappings.find(mapping => mapping[1].equalsRange(activatedRange))
-                        if (mapping)
-                            if (mapping.length > 1)
-                                leftEditor.revealRangeInCenter(mapping[0]);
+                        onClickHelper(config, 1, activatedRange, leftEditor,0);
                     }
                 }
             });

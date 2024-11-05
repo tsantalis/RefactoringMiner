@@ -78,6 +78,32 @@ public class UMLJavadoc extends UMLAbstractDocumentation {
 						return true;
 					}
 				}
+				if(diff.getChildModel().isPartial()) {
+					for(UMLClass childModelClass : diff.getChildModel().getClassList()) {
+						for(UMLImport imp : childModelClass.getImportedTypes()) {
+							String qualifiedName = imp.getName();
+							if(qualifiedName.contains(".")) {
+								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf("."), qualifiedName.length());
+								if(tag.contains(nonQualifiedName)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				if(diff.getParentModel().isPartial()) {
+					for(UMLClass parentModelClass : diff.getParentModel().getClassList()) {
+						for(UMLImport imp : parentModelClass.getImportedTypes()) {
+							String qualifiedName = imp.getName();
+							if(qualifiedName.contains(".")) {
+								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf("."), qualifiedName.length());
+								if(tag.contains(nonQualifiedName)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		return false;

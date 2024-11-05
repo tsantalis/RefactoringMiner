@@ -83,7 +83,7 @@ public class UMLJavadoc extends UMLAbstractDocumentation {
 						for(UMLImport imp : childModelClass.getImportedTypes()) {
 							String qualifiedName = imp.getName();
 							if(qualifiedName.contains(".")) {
-								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf("."), qualifiedName.length());
+								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf(".")+1, qualifiedName.length());
 								if(tag.contains(nonQualifiedName)) {
 									return true;
 								}
@@ -96,7 +96,7 @@ public class UMLJavadoc extends UMLAbstractDocumentation {
 						for(UMLImport imp : parentModelClass.getImportedTypes()) {
 							String qualifiedName = imp.getName();
 							if(qualifiedName.contains(".")) {
-								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf("."), qualifiedName.length());
+								String nonQualifiedName = qualifiedName.substring(qualifiedName.lastIndexOf(".")+1, qualifiedName.length());
 								if(tag.contains(nonQualifiedName)) {
 									return true;
 								}

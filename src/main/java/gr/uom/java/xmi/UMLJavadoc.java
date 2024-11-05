@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import gr.uom.java.xmi.diff.UMLModelDiff;
+
 public class UMLJavadoc extends UMLAbstractDocumentation {
 	private List<UMLTagElement> tags;
 
@@ -61,5 +63,23 @@ public class UMLJavadoc extends UMLAbstractDocumentation {
 		}
 		scanner.close();
 		return sb.toString();
+	}
+
+	public boolean refersToModifiedClass(UMLModelDiff diff) {
+		if(diff != null) {
+			for(UMLTagElement tag : tags) {
+				for(UMLClass childModelClass : diff.getChildModel().getClassList()) {
+					if(tag.contains(childModelClass.getNonQualifiedName())) {
+						return true;
+					}
+				}
+				for(UMLClass parentModelClass : diff.getParentModel().getClassList()) {
+					if(tag.contains(parentModelClass.getNonQualifiedName())) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

@@ -280,7 +280,8 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean isPartOfMethodMovedToAddedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLOperationBodyMapper operationBodyMapper) {
 		if(removedOperations.size() != addedOperations.size()) {
-			if(removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation() && addedOperation.getName().contains(removedOperation.getName())) {
+			if((removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation() && addedOperation.getName().contains(removedOperation.getName())) ||
+					(removedOperation.getJavadoc() != null && removedOperation.getJavadoc().refersToModifiedClass(modelDiff) && addedOperation.getJavadoc() != null && addedOperation.getJavadoc().refersToModifiedClass(modelDiff))) {
 				List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 				List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 				Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(removedOperationInvocations);

@@ -11,6 +11,7 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 
 public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
@@ -18,13 +19,15 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 	private LambdaExpressionObject lambda;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
+	private Set<AbstractCodeMapping> mappings;
 
 	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, LambdaExpressionObject lambda,
-			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter) {
+			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, Set<AbstractCodeMapping> mappings) {
 		this.anonymousClass = anonymousClass;
 		this.lambda = lambda;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
+		this.mappings = mappings;
 	}
 
 	public UMLAnonymousClass getAnonymousClass() {
@@ -41,6 +44,10 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 
 	public VariableDeclarationContainer getOperationAfter() {
 		return operationAfter;
+	}
+
+	public Set<AbstractCodeMapping> getMappings() {
+		return mappings;
 	}
 
 	@Override

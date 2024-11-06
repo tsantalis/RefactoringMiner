@@ -11,20 +11,26 @@ import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LambdaExpressionObject;
 
 public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 	private UMLAnonymousClass anonymousClass;
 	private LambdaExpressionObject lambda;
+	private AbstractCodeFragment anonymousOwner;
+	private AbstractCodeFragment lambdaOwner;
 	private VariableDeclarationContainer operationBefore;
 	private VariableDeclarationContainer operationAfter;
 	private Set<AbstractCodeMapping> mappings;
 
 	public ReplaceAnonymousWithLambdaRefactoring(UMLAnonymousClass anonymousClass, LambdaExpressionObject lambda,
+			AbstractCodeFragment anonymousOwner, AbstractCodeFragment lambdaOwner,
 			VariableDeclarationContainer operationBefore, VariableDeclarationContainer operationAfter, Set<AbstractCodeMapping> mappings) {
 		this.anonymousClass = anonymousClass;
 		this.lambda = lambda;
+		this.anonymousOwner = anonymousOwner;
+		this.lambdaOwner = lambdaOwner;
 		this.operationBefore = operationBefore;
 		this.operationAfter = operationAfter;
 		this.mappings = mappings;
@@ -36,6 +42,14 @@ public class ReplaceAnonymousWithLambdaRefactoring implements Refactoring {
 
 	public LambdaExpressionObject getLambda() {
 		return lambda;
+	}
+
+	public AbstractCodeFragment getAnonymousOwner() {
+		return anonymousOwner;
+	}
+
+	public AbstractCodeFragment getLambdaOwner() {
+		return lambdaOwner;
 	}
 
 	public VariableDeclarationContainer getOperationBefore() {

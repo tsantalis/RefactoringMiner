@@ -4733,7 +4733,7 @@ public class ReplacementAlgorithm {
 								operationBodyMapper.getNonMappedLeavesT1().addAll(mapper.getNonMappedLeavesT1());
 								operationBodyMapper.getNonMappedLeavesT2().addAll(mapper.getNonMappedLeavesT2());
 								if(operationBodyMapper.getContainer1() != null && operationBodyMapper.getContainer2() != null) {
-									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, container1, container2, mapper.getMappings());
+									ReplaceAnonymousWithLambdaRefactoring ref = new ReplaceAnonymousWithLambdaRefactoring(anonymousClass1, lambda2, statement1, statement2, container1, container2, mapper.getMappings());
 									operationBodyMapper.getRefactoringsAfterPostProcessing().add(ref);
 									operationBodyMapper.getRefactoringsAfterPostProcessing().addAll(mapper.getRefactorings());
 								}

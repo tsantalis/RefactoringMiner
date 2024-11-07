@@ -10,6 +10,7 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.rendersnake.HtmlCanvas;
 
 import java.io.IOException;
+import java.util.Set;
 
 import static org.rendersnake.HtmlAttributesFactory.*;
 
@@ -191,7 +192,6 @@ public class MonacoCore {
     String getMappingsJsConfig() {
         if (diff instanceof ASTDiff) {
             ASTDiff astDiff = (ASTDiff) diff;
-            MappingStore monoMappingStore = astDiff.getAllMappings().getMonoMappingStore();
             ExtendedTreeClassifier c = (ExtendedTreeClassifier) diff.createRootNodesClassifier();
             StringBuilder b = new StringBuilder();
             b.append("[");
@@ -201,12 +201,13 @@ public class MonacoCore {
                     b.append(String.format("[%s, %s, %s, %s], ", t.getPos(), t.getEndPos(), d.getPos(), d.getEndPos()));
                 }
                 else {
-                    if (monoMappingStore.isSrcMapped(t)) {
+                    Set<Tree> dsts = astDiff.getAllMappings().getDsts(t);
+                    for (Tree dst : dsts) {
                         b.append(String.format("[%s, %s, %s, %s], ",
                                 t.getPos(),
                                 t.getEndPos(),
-                                monoMappingStore.getDstForSrc(t).getPos(),
-                                monoMappingStore.getDstForSrc(t).getEndPos()));
+                                dst.getPos(),
+                                dst.getEndPos()));
                     }
                 }
             }

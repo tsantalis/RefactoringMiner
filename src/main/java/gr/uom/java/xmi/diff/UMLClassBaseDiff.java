@@ -1086,7 +1086,50 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		return Math.abs(index1-index2);
 	}
 
+	private boolean parameterTypeChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
+		if(removedOperations.size() == addedOperations.size()) {
+			int count = 0;
+			for(int i=0; i<removedOperations.size(); i++) {
+				UMLOperation removedOperation = removedOperations.get(i);
+				UMLOperation addedOperation = addedOperations.get(i);
+				if(removedOperation.getName().equals(addedOperation.getName()) &&
+						removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
+						!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation()) {
+					count++;
+				}
+			}
+			return count == removedOperations.size();
+		}
+		return false;
+	}
+
 	private void checkForOperationSignatureChanges() throws RefactoringMinerTimedOutException {
+		if(parameterTypeChanges(removedOperations, addedOperations)) {
+			this.consistentMethodInvocationRenames = new HashMap<MethodInvocationReplacement, UMLOperationBodyMapper>();
+			Set<VariableDeclarationContainer> removedOperationsToBeRemoved = new LinkedHashSet<>();
+			Set<VariableDeclarationContainer> addedOperationsToBeRemoved = new LinkedHashSet<>();
+			for(int i=0; i<removedOperations.size(); i++) {
+				UMLOperation removedOperation = removedOperations.get(i);
+				UMLOperation addedOperation = addedOperations.get(i);
+				TreeSet<UMLOperationBodyMapper> mapperSet = new TreeSet<UMLOperationBodyMapper>();
+				updateMapperSet(mapperSet, removedOperation, addedOperation, 0);
+				if(!mapperSet.isEmpty()) {
+					UMLOperationBodyMapper bestMapper = mapperSet.first();
+					removedOperationsToBeRemoved.add(removedOperation);
+					addedOperationsToBeRemoved.add(addedOperation);
+					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
+						if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
+							Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
+							calledBy.add(pair);
+						}
+					}
+					this.addOperationBodyMapper(bestMapper);
+				}
+			}
+			removedOperations.removeAll(removedOperationsToBeRemoved);
+			addedOperations.removeAll(addedOperationsToBeRemoved);
+			return;
+		}
 		consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 		int initialNumberOfRemovedOperations = removedOperations.size();
 		int initialNumberOfAddedOperations = addedOperations.size();

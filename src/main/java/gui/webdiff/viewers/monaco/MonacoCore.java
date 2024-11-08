@@ -202,7 +202,9 @@ public class MonacoCore {
                 }
                 else {
                     Set<Tree> dsts = astDiff.getAllMappings().getDsts(t);
+                    if (dsts == null) continue;
                     for (Tree dst : dsts) {
+                        if (dst == null) continue;
                         b.append(String.format("[%s, %s, %s, %s], ",
                                 t.getPos(),
                                 t.getEndPos(),

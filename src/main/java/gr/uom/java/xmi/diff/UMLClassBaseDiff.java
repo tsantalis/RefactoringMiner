@@ -1087,14 +1087,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean parameterTypeChanges(List<UMLOperation> removedOperations, List<UMLOperation> addedOperations) {
-		if(removedOperations.size() == addedOperations.size()) {
+		if(removedOperations.size() == addedOperations.size() && !originalClass.isTestClass() && !nextClass.isTestClass()) {
 			int count = 0;
 			for(int i=0; i<removedOperations.size(); i++) {
 				UMLOperation removedOperation = removedOperations.get(i);
 				UMLOperation addedOperation = addedOperations.get(i);
 				if(removedOperation.getName().equals(addedOperation.getName()) &&
-						removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
-						!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation()) {
+						removedOperation.getParameters().size() == addedOperation.getParameters().size()) {
 					count++;
 				}
 			}

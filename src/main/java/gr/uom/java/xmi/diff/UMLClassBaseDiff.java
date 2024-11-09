@@ -1124,6 +1124,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
+				if(matchingOperations.size() == 0) {
+					for(UMLOperation addedOperation : addedOperations) {
+						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
+								(removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
+								(removedOperation.getParameters().containsAll(addedOperation.getParameters()) || addedOperation.getParameters().containsAll(removedOperation.getParameters())) &&
+								(removedOperation.getParameterNameList().containsAll(addedOperation.getParameterNameList()) || addedOperation.getParameterNameList().containsAll(removedOperation.getParameterNameList())) &&
+								removedOperation.isAbstract() == addedOperation.isAbstract()) {
+							matchingOperations.add(addedOperation);
+						}
+					}
+				}
 				if(matchingOperations.size() == 1) {
 					pairs.add(Pair.of(removedOperation, matchingOperations.get(0)));
 				}
@@ -1141,6 +1153,18 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 								matchingOperations.add(removedOperation);
 						}
 						else {
+							matchingOperations.add(removedOperation);
+						}
+					}
+				}
+				if(matchingOperations.size() == 0) {
+					for(UMLOperation removedOperation : removedOperations) {
+						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
+								(removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
+								(removedOperation.getParameters().containsAll(addedOperation.getParameters()) || addedOperation.getParameters().containsAll(removedOperation.getParameters())) &&
+								(removedOperation.getParameterNameList().containsAll(addedOperation.getParameterNameList()) || addedOperation.getParameterNameList().containsAll(removedOperation.getParameterNameList())) &&
+								removedOperation.isAbstract() == addedOperation.isAbstract()) {
 							matchingOperations.add(removedOperation);
 						}
 					}
@@ -1182,7 +1206,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		}
 		List<Pair<UMLOperation, UMLOperation>> pairs = operationAlignment(removedOperations, addedOperations);
 		if(pairs.size() == Math.min(removedOperations.size(), addedOperations.size())) {
-			this.consistentMethodInvocationRenames = new HashMap<MethodInvocationReplacement, UMLOperationBodyMapper>();
+			consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 			Set<VariableDeclarationContainer> removedOperationsToBeRemoved = new LinkedHashSet<>();
 			Set<VariableDeclarationContainer> addedOperationsToBeRemoved = new LinkedHashSet<>();
 			for(Pair<UMLOperation, UMLOperation> p : pairs) {
@@ -1201,6 +1225,12 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					UMLOperationBodyMapper bestMapper = mapperSet.first();
 					removedOperationsToBeRemoved.add(removedOperation);
 					addedOperationsToBeRemoved.add(addedOperation);
+					if(!removedOperation.getName().equals(addedOperation.getName()) &&
+							!(removedOperation.isConstructor() && addedOperation.isConstructor())) {
+						Set<MethodInvocationReplacement> callReferences = getCallReferences(removedOperation, addedOperation);
+						RenameOperationRefactoring rename = new RenameOperationRefactoring(bestMapper, callReferences);
+						refactorings.add(rename);
+					}
 					for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 						if(containCallToOperation(bestMapper.getContainer1(), mapper.getContainer1()) && containCallToOperation(bestMapper.getContainer2(), mapper.getContainer2())) {
 							Pair<UMLOperationBodyMapper, UMLOperationBodyMapper> pair = Pair.of(bestMapper, mapper);
@@ -1208,6 +1238,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					this.addOperationBodyMapper(bestMapper);
+					consistentMethodInvocationRenames = findConsistentMethodInvocationRenames();
 				}
 			}
 			removedOperations.removeAll(removedOperationsToBeRemoved);

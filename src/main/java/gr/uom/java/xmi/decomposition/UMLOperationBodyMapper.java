@@ -190,8 +190,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		resetNodes(innerNodes1);
 		resetNodes(innerNodes2);
 		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
-		nonMappedLeavesT1.addAll(leaves1);
-		nonMappedLeavesT2.addAll(leaves2);
+		updateNonMappedLeavesT1(leaves1);
+		updateNonMappedLeavesT2(leaves2);
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
 		if(mapper1.commentListDiff != null && mapper2.commentListDiff != null) {
@@ -222,8 +222,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
 			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper2.commentListDiff != null) {
@@ -255,8 +255,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			resetNodes(innerNodes1);
 			resetNodes(innerNodes2);
 			processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), false);
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			if(mapper1.commentListDiff != null) {
@@ -780,7 +780,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								if(child1.getAnonymousClassDeclarations().size() > 0 && child2.getAnonymousClassDeclarations().size() > 0) {
 									break;
 								}
-								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) != parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+								if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) != parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) &&
+										!ifToSwitch(parent1, child2)) {
 									unmatchedParent = true;
 								}
 								break;
@@ -812,7 +813,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										!elseWithoutBlockBecomingElseWithBlock(parent1, parent2) &&
 										!isTryBlock(child1, parent1) && !isTryBlock(child2, parent2) &&
 										!isFinallyBlock(child1, parent1) && !isFinallyBlock(child2, parent2) &&
-										!ifAddingElseIf(parent1.getParent()) && !ifAddingElseIf(parent2.getParent())) {
+										!ifAddingElseIf(parent1.getParent()) && !ifAddingElseIf(parent2.getParent()) &&
+										!ifToSwitch(parent1, parent2)) {
 									boolean additionalVariableDeclarationStatements = false;
 									if(indexOfChildInParent1 > indexOfChildInParent2) {
 										int referencedVariableDeclarationStatements = 0;
@@ -871,13 +873,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								innerNodes1.add((CompositeStatementObject)compositeMapping.getFragment1());
 								innerNodes2.add((CompositeStatementObject)compositeMapping.getFragment2());
 							}
+							mappingHashcodesT1.remove(mapping.getFragment1().hashCode());
+							mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
 						}
 					}
 				}
 			}
 			
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
@@ -997,6 +1001,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		this.commentListDiff = new UMLCommentListDiff(container1.getComments(), container2.getComments(), this.mappings);
 		checkUnmatchedStatementsBeingCommented();
+	}
+
+	private boolean ifToSwitch(AbstractCodeFragment parent1, AbstractCodeFragment parent2) {
+		if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT)) {
+			return true;
+		}
+		else if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.SWITCH_STATEMENT) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT)) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean elseWithoutBlockBecomingElseWithBlock(CompositeStatementObject parent1, CompositeStatementObject parent2) {
@@ -1378,8 +1392,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			processStreamAPIStatements(leaves1, leaves2, streamAPIStatements1, innerNodes2);
 		}
 		
-		nonMappedLeavesT1.addAll(leaves1);
-		nonMappedLeavesT2.addAll(leaves2);
+		updateNonMappedLeavesT1(leaves1);
+		updateNonMappedLeavesT2(leaves2);
 		nonMappedInnerNodesT1.addAll(innerNodes1);
 		nonMappedInnerNodesT2.addAll(innerNodes2);
 		
@@ -2512,8 +2526,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				
 				//compare inner nodes from T1 with inner nodes from T2
 				processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, parameterToArgumentMap2, false);
-				nonMappedLeavesT1.addAll(leaves1);
-				nonMappedLeavesT2.addAll(leaves2);
+				updateNonMappedLeavesT1(leaves1);
+				updateNonMappedLeavesT2(leaves2);
 				nonMappedInnerNodesT1.addAll(innerNodes1);
 				nonMappedInnerNodesT2.addAll(innerNodes2);
 				return;
@@ -2792,8 +2806,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//remove the innerNodes that were mapped with replacement, if they are not mapped again for a second time
 			innerNodes1.removeAll(addedInnerNodes1);
 			innerNodes2.removeAll(addedInnerNodes2);
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
@@ -3210,8 +3224,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			//remove the innerNodes that were mapped with replacement, if they are not mapped again for a second time
 			innerNodes1.removeAll(addedInnerNodes1);
 			innerNodes2.removeAll(addedInnerNodes2);
-			nonMappedLeavesT1.addAll(leaves1);
-			nonMappedLeavesT2.addAll(leaves2);
+			updateNonMappedLeavesT1(leaves1);
+			updateNonMappedLeavesT2(leaves2);
 			nonMappedInnerNodesT1.addAll(innerNodes1);
 			nonMappedInnerNodesT2.addAll(innerNodes2);
 			
@@ -3258,6 +3272,22 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.commentListDiff = new UMLCommentListDiff(container1.getComments(), new ArrayList<>(addedComments), this.mappings);
 				checkUnmatchedStatementsBeingCommented();
+			}
+		}
+	}
+
+	private void updateNonMappedLeavesT1(List<AbstractCodeFragment> leaves1) {
+		for(AbstractCodeFragment leaf : leaves1) {
+			if(!mappingHashcodesT1.contains(leaf.hashCode())) {
+				nonMappedLeavesT1.add(leaf);
+			}
+		}
+	}
+
+	private void updateNonMappedLeavesT2(List<AbstractCodeFragment> leaves2) {
+		for(AbstractCodeFragment leaf : leaves2) {
+			if(!mappingHashcodesT2.contains(leaf.hashCode())) {
+				nonMappedLeavesT2.add(leaf);
 			}
 		}
 	}

@@ -1124,7 +1124,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				if(matchingOperations.size() == 0) {
+				/*if(matchingOperations.size() == 0) {
 					for(UMLOperation addedOperation : addedOperations) {
 						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
 								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
@@ -1135,7 +1135,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							matchingOperations.add(addedOperation);
 						}
 					}
-				}
+				}*/
 				if(matchingOperations.size() == 1) {
 					pairs.add(Pair.of(removedOperation, matchingOperations.get(0)));
 				}
@@ -1157,7 +1157,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				if(matchingOperations.size() == 0) {
+				/*if(matchingOperations.size() == 0) {
 					for(UMLOperation removedOperation : removedOperations) {
 						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
 								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
@@ -1168,7 +1168,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							matchingOperations.add(removedOperation);
 						}
 					}
-				}
+				}*/
 				if(matchingOperations.size() == 1) {
 					pairs.add(Pair.of(matchingOperations.get(0), addedOperation));
 				}

@@ -867,14 +867,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								LeafMapping leafMapping = (LeafMapping)mapping;
 								leaves1.add(leafMapping.getFragment1());
 								leaves2.add(leafMapping.getFragment2());
+								mappingHashcodesT1.remove(mapping.getFragment1().hashCode());
+								mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
 							}
 							else if(mapping instanceof CompositeStatementObjectMapping) {
 								CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)mapping;
 								innerNodes1.add((CompositeStatementObject)compositeMapping.getFragment1());
 								innerNodes2.add((CompositeStatementObject)compositeMapping.getFragment2());
 							}
-							mappingHashcodesT1.remove(mapping.getFragment1().hashCode());
-							mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
 						}
 					}
 				}

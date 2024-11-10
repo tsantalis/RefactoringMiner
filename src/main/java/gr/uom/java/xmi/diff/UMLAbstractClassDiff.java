@@ -432,6 +432,80 @@ public abstract class UMLAbstractClassDiff {
 
 	protected boolean isPartOfMethodMovedFromDeletedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLOperationBodyMapper operationBodyMapper) {
 		if(removedOperations.size() != addedOperations.size()) {
+			if(addedOperation.getName().contains(removedOperation.getName()) || removedOperation.getName().contains(addedOperation.getName())) {
+				List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
+				List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
+				Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
+				movedInvocations.removeAll(removedOperationInvocations);
+				if(movedInvocations.size() > 0) {
+					for(UMLOperation deletedOperation : removedOperations) {
+						if(!deletedOperation.equals(removedOperation)) {
+							Set<AbstractCall> intersection = new LinkedHashSet<AbstractCall>(movedInvocations);
+							intersection.retainAll(deletedOperation.getAllOperationInvocations());
+							for(Iterator<AbstractCall> operationInvocationIterator = intersection.iterator(); operationInvocationIterator.hasNext();) {
+								AbstractCall invocation = operationInvocationIterator.next();
+								boolean lambdaGet = invocation.getName().equals("get") && invocation.arguments().size() == 0;
+								boolean collectionGet = invocation.getName().startsWith("get") && invocation.arguments().size() == 1;
+								if(!lambdaGet && (collectionAPINames.contains(invocation.getName()) || collectionGet)) {
+									operationInvocationIterator.remove();
+								}
+							}
+							List<AbstractCall> unmatchedCalls = new ArrayList<AbstractCall>(movedInvocations);
+							unmatchedCalls.removeAll(deletedOperation.getAllOperationInvocations());
+							if(movedInvocations.containsAll(intersection) && intersection.size() > 0 && intersection.size() >= unmatchedCalls.size()) {
+								for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
+									unmatchedCalls.removeAll(composite.getMethodInvocations());
+								}
+								for(AbstractCodeFragment fragment : operationBodyMapper.getNonMappedLeavesT2()) {
+									unmatchedCalls.removeAll(fragment.getMethodInvocations());
+								}
+								boolean callsDeletedOperation = false;
+								for(AbstractCodeFragment fragment : operationBodyMapper.getNonMappedLeavesT1()) {
+									for(AbstractCall call : fragment.getMethodInvocations()) {
+										if(call.matchesOperation(deletedOperation, operationBodyMapper.getContainer1(), this, modelDiff)) {
+											callsDeletedOperation = true;
+											break;
+										}
+									}
+									if(callsDeletedOperation) {
+										break;
+									}
+								}
+								if(!callsDeletedOperation) {
+									for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT1()) {
+										for(AbstractCall call : composite.getMethodInvocations()) {
+											if(call.matchesOperation(deletedOperation, operationBodyMapper.getContainer1(), this, modelDiff)) {
+												callsDeletedOperation = true;
+												break;
+											}
+										}
+										if(callsDeletedOperation) {
+											break;
+										}
+									}
+								}
+								if(unmatchedCalls.isEmpty() && !callsDeletedOperation) {
+									CandidateMergeMethodRefactoring newCandidate = new CandidateMergeMethodRefactoring();
+									newCandidate.addMergedMethod(removedOperation);
+									newCandidate.addMergedMethod(deletedOperation);
+									newCandidate.setNewMethodAfterMerge(addedOperation);
+									boolean alreadyInCandidates = false;
+									for(CandidateMergeMethodRefactoring oldCandidate : candidateMethodMerges) {
+										if(newCandidate.equals(oldCandidate)) {
+											alreadyInCandidates = true;
+											break;
+										}
+									}
+									if(!alreadyInCandidates) {
+										candidateMethodMerges.add(newCandidate);
+									}
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
 			for(UMLOperationBodyMapper mapper : operationBodyMapperList) {
 				List<AbstractCall> invocationsCalledInOperation1 = mapper.getContainer1().getAllOperationInvocations();
 				List<AbstractCall> invocationsCalledInOperation2 = mapper.getContainer2().getAllOperationInvocations();

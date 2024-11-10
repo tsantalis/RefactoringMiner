@@ -1310,7 +1310,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					boolean matchingMergeCandidateFound = false;
 					boolean matchingSplitCandidateFound = false;
-					if(!firstMapperWithIdenticalMethodName && mapperSet.size() > 1) {
+					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
 							int perfectMappers = 0;
@@ -1455,7 +1455,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					boolean matchingMergeCandidateFound = false;
 					boolean matchingSplitCandidateFound = false;
-					if(!firstMapperWithIdenticalMethodName && mapperSet.size() > 1) {
+					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();
 							int perfectMappers = 0;
@@ -2004,7 +2004,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
-				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper);
+				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);
 				isPartOfMethodMovedToAddedMethod(removedOperation, addedOperation, operationBodyMapper);
 				mapperSet.add(operationBodyMapper);
 			}
@@ -2020,38 +2020,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					mappedElementsMoreThanNonMappedT1(mappings, operationBodyMapper) &&
 					absoluteDifferenceInPosition <= differenceInPosition &&
 					(isPartOfMethodInlined(removedOperation, addedOperation) || isPartOfMethodMovedFromExistingMethod(removedOperation, addedOperation) ||
-							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper))) &&
+							(operationBodyMapper.exactMatches() > 0 && !mapperWithZeroNonMappedStatementsOrIdenticalMethodName && isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet))) &&
 					removedOperation.testMethodCheck(addedOperation)) {
-				//check if a mapper in the mapperSet calls removedOperation
-				boolean callsRemovedOperation = false;
-				for(UMLOperationBodyMapper mapper : mapperSet) {
-					for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
-						for(AbstractCall call : fragment.getMethodInvocations()) {
-							if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
-								callsRemovedOperation = true;
-								break;
-							}
-						}
-						if(callsRemovedOperation) {
-							break;
-						}
-					}
-					if(!callsRemovedOperation) {
-						for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
-							for(AbstractCall call : composite.getMethodInvocations()) {
-								if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
-									callsRemovedOperation = true;
-									break;
-								}
-							}
-							if(callsRemovedOperation) {
-								break;
-							}
-						}
-					}
-				}
-				if(!callsRemovedOperation)
-					mapperSet.add(operationBodyMapper);
+				mapperSet.add(operationBodyMapper);
 			}
 			else {
 				if((removedOperation.hasSetUpAnnotation() || removedOperation.getName().equals("setUp")) && (addedOperation.hasSetUpAnnotation() || addedOperation.getName().equals("setUp"))) {

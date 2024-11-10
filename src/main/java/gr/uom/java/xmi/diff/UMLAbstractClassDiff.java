@@ -430,9 +430,37 @@ public abstract class UMLAbstractClassDiff {
 		return false;
 	}
 
-	protected boolean isPartOfMethodMovedFromDeletedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLOperationBodyMapper operationBodyMapper) {
+	protected boolean isPartOfMethodMovedFromDeletedMethod(VariableDeclarationContainer removedOperation, VariableDeclarationContainer addedOperation, UMLOperationBodyMapper operationBodyMapper, Set<UMLOperationBodyMapper> mapperSet) {
 		if(removedOperations.size() != addedOperations.size()) {
-			if(addedOperation.getName().contains(removedOperation.getName()) || removedOperation.getName().contains(addedOperation.getName())) {
+			if((addedOperation.getName().contains(removedOperation.getName()) || removedOperation.getName().contains(addedOperation.getName())) && !addedOperation.hasParameterizedTestAnnotation()) {
+				//check if a mapper in the mapperSet calls removedOperation
+				boolean callsRemovedOperation = false;
+				for(UMLOperationBodyMapper mapper : mapperSet) {
+					for(AbstractCodeFragment fragment : mapper.getNonMappedLeavesT1()) {
+						for(AbstractCall call : fragment.getMethodInvocations()) {
+							if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
+								callsRemovedOperation = true;
+								break;
+							}
+						}
+						if(callsRemovedOperation) {
+							break;
+						}
+					}
+					if(!callsRemovedOperation) {
+						for(CompositeStatementObject composite : mapper.getNonMappedInnerNodesT1()) {
+							for(AbstractCall call : composite.getMethodInvocations()) {
+								if(call.matchesOperation(removedOperation, mapper.getContainer1(), this, modelDiff)) {
+									callsRemovedOperation = true;
+									break;
+								}
+							}
+							if(callsRemovedOperation) {
+								break;
+							}
+						}
+					}
+				}
 				List<AbstractCall> removedOperationInvocations = removedOperation.getAllOperationInvocations();
 				List<AbstractCall> addedOperationInvocations = addedOperation.getAllOperationInvocations();
 				Set<AbstractCall> movedInvocations = new LinkedHashSet<AbstractCall>(addedOperationInvocations);
@@ -484,7 +512,7 @@ public abstract class UMLAbstractClassDiff {
 										}
 									}
 								}
-								if(unmatchedCalls.isEmpty() && !callsDeletedOperation) {
+								if(unmatchedCalls.isEmpty() && !callsDeletedOperation && !callsRemovedOperation) {
 									CandidateMergeMethodRefactoring newCandidate = new CandidateMergeMethodRefactoring();
 									newCandidate.addMergedMethod(removedOperation);
 									newCandidate.addMergedMethod(deletedOperation);

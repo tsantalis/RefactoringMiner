@@ -21119,6 +21119,204 @@
   "firstEndPos" : 19949,
   "secondEndPos" : 17310
 }, {
+  "firstType" : "MethodDeclaration",
+  "secondType" : "MethodDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 19962,
+  "secondPos" : 16951,
+  "firstEndPos" : 20283,
+  "secondEndPos" : 17317
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "private",
+  "secondLabel" : "private",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 19962,
+  "secondPos" : 16951,
+  "firstEndPos" : 19969,
+  "secondEndPos" : 16958
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "static",
+  "secondLabel" : "static",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 19970,
+  "secondPos" : 16959,
+  "firstEndPos" : 19976,
+  "secondEndPos" : 16965
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "boolean",
+  "secondLabel" : "boolean",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 19977,
+  "secondPos" : 16966,
+  "firstEndPos" : 19984,
+  "secondEndPos" : 16973
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "checkEventTokenLength",
+  "secondLabel" : "checkEventToken",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 19985,
+  "secondPos" : 16974,
+  "firstEndPos" : 20006,
+  "secondEndPos" : 16989
+}, {
+  "firstType" : "SingleVariableDeclaration",
+  "secondType" : "SingleVariableDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 20007,
+  "secondPos" : 16990,
+  "firstEndPos" : 20024,
+  "secondEndPos" : 17007
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 20007,
+  "secondPos" : 16990,
+  "firstEndPos" : 20013,
+  "secondEndPos" : 16996
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 20007,
+  "secondPos" : 16990,
+  "firstEndPos" : 20013,
+  "secondEndPos" : 16996
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "eventToken",
+  "secondLabel" : "eventToken",
+  "firstParentType" : "SingleVariableDeclaration",
+  "secondParentType" : "SingleVariableDeclaration",
+  "firstPos" : 20014,
+  "secondPos" : 16997,
+  "firstEndPos" : 20024,
+  "secondEndPos" : 17007
+}, {
+  "firstType" : "Block",
+  "secondType" : "Block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 20026,
+  "secondPos" : 17009,
+  "firstEndPos" : 20283,
+  "secondEndPos" : 17317
+}, {
+  "firstType" : "IfStatement",
+  "secondType" : "IfStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20036,
+  "secondPos" : 17019,
+  "firstEndPos" : 20096,
+  "secondEndPos" : 17130
+}, {
+  "firstType" : "InfixExpression",
+  "secondType" : "InfixExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 20040,
+  "secondPos" : 17023,
+  "firstEndPos" : 20058,
+  "secondEndPos" : 17041
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "eventToken",
+  "secondLabel" : "eventToken",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20040,
+  "secondPos" : 17023,
+  "firstEndPos" : 20050,
+  "secondEndPos" : 17033
+}, {
+  "firstType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstLabel" : "==",
+  "secondLabel" : "==",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20051,
+  "secondPos" : 17034,
+  "firstEndPos" : 20053,
+  "secondEndPos" : 17036
+}, {
+  "firstType" : "NullLiteral",
+  "secondType" : "NullLiteral",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20054,
+  "secondPos" : 17037,
+  "firstEndPos" : 20058,
+  "secondEndPos" : 17041
+}, {
+  "firstType" : "Block",
+  "secondType" : "Block",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 20060,
+  "secondPos" : 17043,
+  "firstEndPos" : 20096,
+  "secondEndPos" : 17130
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20074,
+  "secondPos" : 17107,
+  "firstEndPos" : 20086,
+  "secondEndPos" : 17120
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "true",
+  "secondLabel" : "false",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 20081,
+  "secondPos" : 17114,
+  "firstEndPos" : 20085,
+  "secondEndPos" : 17119
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -21382,6 +21580,28 @@
   "secondPos" : 17274,
   "firstEndPos" : 20245,
   "secondEndPos" : 17279
+}, {
+  "firstType" : "ReturnStatement",
+  "secondType" : "ReturnStatement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20265,
+  "secondPos" : 17299,
+  "firstEndPos" : 20277,
+  "secondEndPos" : 17311
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "true",
+  "secondLabel" : "true",
+  "firstParentType" : "ReturnStatement",
+  "secondParentType" : "ReturnStatement",
+  "firstPos" : 20272,
+  "secondPos" : 17306,
+  "firstEndPos" : 20276,
+  "secondEndPos" : 17310
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

@@ -1192,7 +1192,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					count++;
 				}
 			}
-			return count > 0;
+			return count >= removedOperationParameterNameList.size()-1;
 		}
 		return false;
 	}

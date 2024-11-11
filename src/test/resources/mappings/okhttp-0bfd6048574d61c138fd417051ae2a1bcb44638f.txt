@@ -1,0 +1,31 @@
+public authenticateProxy(proxy Proxy, response Response) : Request -> public authenticate(route Route, response Response) : Request
+line range:60-60==line range:39-39
+line range:61-61==line range:40-40
+line range:62-62==line range:41-41
+line range:64-64==line range:46-46
+line range:65-65==line range:47-47
+line range:67-67==line range:51-51
+line range:74-74==line range:63-63
+line range:79-79==line range:70-70
+line range:68-71==line range:52-55
+line range:68-71==line range:49-49
+line range:75-77==line range:64-66
+line range:65-65==line range:47-47
+line range:63-78==line range:45-68
+line range:72-72==line range:62-67
+line range:63-78==line range:45-68
+public authenticate(proxy Proxy, response Response) : Request -> public authenticate(route Route, response Response) : Request
+line range:38-38==line range:39-39
+line range:39-39==line range:40-40
+line range:40-40==line range:41-41
+line range:42-42==line range:46-46
+line range:43-43==line range:47-47
+line range:50-50==line range:63-63
+line range:55-55==line range:70-70
+line range:45-47==line range:57-59
+line range:45-47==line range:49-49
+line range:51-53==line range:64-66
+line range:43-43==line range:47-47
+line range:41-54==line range:45-68
+line range:48-48==line range:62-67
+line range:41-54==line range:45-68

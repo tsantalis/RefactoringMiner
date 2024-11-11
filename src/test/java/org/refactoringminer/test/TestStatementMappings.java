@@ -1703,7 +1703,8 @@ public class TestStatementMappings {
 	@ParameterizedTest
 	@CsvSource({
 		"https://github.com/eclipse/jgit.git, 2fbcba41e365752681f635c706d577e605d3336a, jgit-2fbcba41e365752681f635c706d577e605d3336a.txt",
-		"https://github.com/eclipse/jgit.git, f5fe2dca3cb9f57891e1a4b18832fcc158d0c490, jgit-f5fe2dca3cb9f57891e1a4b18832fcc158d0c490.txt"
+		"https://github.com/eclipse/jgit.git, f5fe2dca3cb9f57891e1a4b18832fcc158d0c490, jgit-f5fe2dca3cb9f57891e1a4b18832fcc158d0c490.txt",
+		"https://github.com/square/okhttp.git, 0bfd6048574d61c138fd417051ae2a1bcb44638f, okhttp-0bfd6048574d61c138fd417051ae2a1bcb44638f.txt"
 	})
 	public void testMergeMethod(String cloneURL, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

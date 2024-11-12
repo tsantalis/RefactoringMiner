@@ -8601,6 +8601,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					break;
 				}
 			}
+			else if(r instanceof SplitConditionalRefactoring) {
+				SplitConditionalRefactoring split = (SplitConditionalRefactoring)r;
+				if(split.getOriginalConditional() instanceof CompositeStatementObject) {
+					CompositeStatementObject comp = (CompositeStatementObject)split.getOriginalConditional();
+					if(comp.getExpressions().contains(minStatementMapping.getFragment1()) && minStatementMapping.getFragment2() instanceof StatementObject &&
+							minStatementMapping.getFragment2().getVariableDeclarations().size() > 0) {
+						conflictingMappingFound = true;
+					}
+				}
+			}
 		}
 		if(mappingToBeRemoved != null) {
 			removeMapping(mappingToBeRemoved);

@@ -8136,7 +8136,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
 			}
 			if(ifStatementConditionalExpressions.size() == mappingSet.size()) {
-				return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
+				boolean invalid = false;
+				for(Refactoring r : refactorings) {
+					if(r instanceof ExtractVariableRefactoring) {
+						ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+						if(mappingSet.first().getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+							invalid = true;
+							break;
+						}
+					}
+				}
+				if(!invalid) {
+					return new LinkedHashSet<AbstractCodeMapping>(mappingSet);
+				}
 			}
 		}
 		return Set.of(mappingSet.first());
@@ -8577,6 +8589,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				int oldMappingReplacements = validReplacements(mapping, parameterToArgumentMap);
 				if(newMappingReplacents < oldMappingReplacements) {
 					mappingToBeRemoved = mapping;
+					break;
+				}
+			}
+		}
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+				if(minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
+					conflictingMappingFound = true;
 					break;
 				}
 			}

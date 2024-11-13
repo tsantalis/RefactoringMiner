@@ -2825,7 +2825,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(parentMapping.getFragment1() instanceof CompositeStatementObject) {
 						CompositeStatementObject comp = (CompositeStatementObject)parentMapping.getFragment1();
 						for(AbstractCodeFragment fragment : comp.getLeaves()) {
-							if(fragment.getString().equals(JAVA.RETURN_STATEMENT)) {
+							if(fragment.getString().equals(JAVA.RETURN_STATEMENT) ||
+									fragment.getString().equals(JAVA.RETURN_TRUE) ||
+									fragment.getString().equals(JAVA.RETURN_FALSE) ||
+									fragment.getString().equals(JAVA.RETURN_NULL)) {
 								containsReturn = true;
 								break;
 							}
@@ -2854,6 +2857,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 				this.commentListDiff = new UMLCommentListDiff(new ArrayList<>(deletedComments), container2.getComments(), this.mappings);
 				checkUnmatchedStatementsBeingCommented();
+			}
+			if(parentMapper != null && parentMapper.javadocDiff.isPresent() && addedOperation.getJavadoc() != null) {
+				if(parentMapper.javadocDiff.get().getDeletedTags().size() > 0 || parentMapper.javadocDiff.get().getDeletedDocElements().size() > 0) {
+					UMLJavadocDiff childJavadocDiff = new UMLJavadocDiff(parentMapper.container1.getJavadoc(), addedOperation.getJavadoc());
+					if(childJavadocDiff.getCommonTags().size() > 0 || childJavadocDiff.getCommonDocElements().size() > 0) {
+						this.javadocDiff = Optional.of(childJavadocDiff);
+					}
+				}
 			}
 		}
 	}

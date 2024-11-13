@@ -28,8 +28,25 @@ public class UMLJavadocDiff {
 	private List<UMLDocElement> addedDocElements;
 	private boolean manyToManyReformat;
 	private UMLOperationDiff signatureDiff;
+	private UMLJavadocDiff parentMapperJavadocDiff;
 
 	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
+		this.javadocBefore = javadocBefore;
+		this.javadocAfter = javadocAfter;
+		this.commonTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonNestedTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
+		this.commonDocElements = new ArrayList<Pair<UMLDocElement,UMLDocElement>>();
+		this.deletedTags = new ArrayList<UMLTagElement>();
+		this.addedTags = new ArrayList<UMLTagElement>();
+		this.deletedNestedTags = new ArrayList<UMLTagElement>();
+		this.addedNestedTags = new ArrayList<UMLTagElement>();
+		this.deletedDocElements = new ArrayList<UMLDocElement>();
+		this.addedDocElements = new ArrayList<UMLDocElement>();
+		process(javadocBefore, javadocAfter);
+	}
+
+	public UMLJavadocDiff(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter, UMLJavadocDiff parentMapperJavadocDiff) {
+		this.parentMapperJavadocDiff = parentMapperJavadocDiff;
 		this.javadocBefore = javadocBefore;
 		this.javadocAfter = javadocAfter;
 		this.commonTags = new ArrayList<Pair<UMLTagElement,UMLTagElement>>();
@@ -636,10 +653,21 @@ public class UMLJavadocDiff {
 							for(UMLDocElement addedDocElement : addedDocElements) {
 								if(containsAnySubSequence(addedTokenSequenceMap.get(addedDocElement), longestSubSequence)) {
 									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement)) {
-										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-										commonDocElements.add(pair);
-										deletedToBeDeleted.add(deletedDocElement);
-										addedToBeDeleted.add(addedDocElement);
+										boolean identicalInParentMapper = false;
+										if(parentMapperJavadocDiff != null) {
+											for(Pair<UMLDocElement, UMLDocElement> pair : parentMapperJavadocDiff.getCommonDocElements()) {
+												if(pair.getLeft().equals(deletedDocElement) && pair.getLeft().getText().equals(pair.getRight().getText())) {
+													identicalInParentMapper = true;
+													break;
+												}
+											}
+										}
+										if(!identicalInParentMapper) {
+											Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+											commonDocElements.add(pair);
+											deletedToBeDeleted.add(deletedDocElement);
+											addedToBeDeleted.add(addedDocElement);
+										}
 									}
 								}
 							}
@@ -680,10 +708,21 @@ public class UMLJavadocDiff {
 									if(!alreadyMatchedDocElement(deletedDocElement, addedDocElement) ||
 											(longestSubSequence.containsAll(deletedTokenSequenceMap.get(deletedDocElement)) &&
 											deletedTokenSequenceMap.get(deletedDocElement).size() > 1)) {
-										Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
-										commonDocElements.add(pair);
-										deletedToBeDeleted.add(deletedDocElement);
-										addedToBeDeleted.add(addedDocElement);
+										boolean identicalInParentMapper = false;
+										if(parentMapperJavadocDiff != null) {
+											for(Pair<UMLDocElement, UMLDocElement> pair : parentMapperJavadocDiff.getCommonDocElements()) {
+												if(pair.getLeft().equals(deletedDocElement) && pair.getLeft().getText().equals(pair.getRight().getText())) {
+													identicalInParentMapper = true;
+													break;
+												}
+											}
+										}
+										if(!identicalInParentMapper) {
+											Pair<UMLDocElement, UMLDocElement> pair = Pair.of(deletedDocElement, addedDocElement);
+											commonDocElements.add(pair);
+											deletedToBeDeleted.add(deletedDocElement);
+											addedToBeDeleted.add(addedDocElement);
+										}
 									}
 								}
 							}

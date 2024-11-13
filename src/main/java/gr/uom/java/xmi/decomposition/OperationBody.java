@@ -58,6 +58,7 @@ public class OperationBody {
 
 	public OperationBody(CompilationUnit cu, String sourceFolder, String filePath, Block methodBody, VariableDeclarationContainer container, List<UMLAttribute> attributes, String javaFileContent) {
 		this.compositeStatement = new CompositeStatementObject(cu, sourceFolder, filePath, methodBody, 0, CodeElementType.BLOCK, javaFileContent);
+		this.compositeStatement.setOwner(container);
 		this.comments = container.getComments();
 		this.container = container;
 		this.bodyHashCode = stringify(methodBody).hashCode();

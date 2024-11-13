@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import gr.uom.java.xmi.LocationInfo;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.diff.CodeRange;
 
 public class CompositeStatementObject extends AbstractStatement {
@@ -25,6 +26,8 @@ public class CompositeStatementObject extends AbstractStatement {
 	private List<VariableDeclaration> variableDeclarations;
 	private Optional<TryStatementObject> tryContainer;
 	private LocationInfo locationInfo;
+	//for composites which are roots, owner is the VariableDeclarationContainer
+	private Optional<VariableDeclarationContainer> owner = Optional.empty();
 
 	public CompositeStatementObject(CompilationUnit cu, String sourceFolder, String filePath, ASTNode statement, int depth, CodeElementType codeElementType, String javaFileContent) {
 		super();
@@ -54,6 +57,14 @@ public class CompositeStatementObject extends AbstractStatement {
 			else
 				this.actualSignature = whole;
 		}
+	}
+
+	public void setOwner(VariableDeclarationContainer container) {
+		this.owner = Optional.of(container);
+	}
+
+	public Optional<VariableDeclarationContainer> getOwner() {
+		return owner;
 	}
 
 	public void addStatement(AbstractStatement statement) {
@@ -789,6 +800,10 @@ public class CompositeStatementObject extends AbstractStatement {
 		String statementType = getLocationInfo().getCodeElementType().getName() != null ? getLocationInfo().getCodeElementType().getName() : toString();
 		CompositeStatementObject parent = getParent();
 		if (parent == null) {
+			if(owner.isPresent() && owner.get() instanceof LambdaExpressionObject) {
+				LambdaExpressionObject lambda = (LambdaExpressionObject)owner.get();
+				return lambda.getString();
+			}
 			return statementType;
 		}
 		List<AbstractStatement> sameTypeSibling = parent.getStatements().stream().filter(st -> statementType.equals(st.getLocationInfo().getCodeElementType().getName())).collect(Collectors.toList());

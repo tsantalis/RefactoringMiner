@@ -2860,7 +2860,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			if(parentMapper != null && parentMapper.javadocDiff.isPresent() && addedOperation.getJavadoc() != null) {
 				if(parentMapper.javadocDiff.get().getDeletedTags().size() > 0 || parentMapper.javadocDiff.get().getDeletedDocElements().size() > 0) {
-					UMLJavadocDiff childJavadocDiff = new UMLJavadocDiff(parentMapper.container1.getJavadoc(), addedOperation.getJavadoc());
+					UMLJavadocDiff childJavadocDiff = new UMLJavadocDiff(parentMapper.container1.getJavadoc(), addedOperation.getJavadoc(), parentMapper.javadocDiff.get());
 					if(childJavadocDiff.getCommonTags().size() > 0 || childJavadocDiff.getCommonDocElements().size() > 0) {
 						this.javadocDiff = Optional.of(childJavadocDiff);
 					}

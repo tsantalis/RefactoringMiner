@@ -3460,9 +3460,31 @@
   "firstParentType" : "MethodDeclaration",
   "secondParentType" : "MethodDeclaration",
   "firstPos" : 4238,
+  "secondPos" : 4210,
+  "firstEndPos" : 4694,
+  "secondEndPos" : 4543
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4238,
   "secondPos" : 9315,
   "firstEndPos" : 4694,
   "secondEndPos" : 9527
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 4247,
+  "secondPos" : 4219,
+  "firstEndPos" : 4590,
+  "secondEndPos" : 4439
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -3497,6 +3519,160 @@
   "firstEndPos" : 4401,
   "secondEndPos" : 9423
 }, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "<p>",
+  "secondLabel" : "<p>",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4450,
+  "secondPos" : 4228,
+  "firstEndPos" : 4453,
+  "secondEndPos" : 4231
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Is to be called (once) from ",
+  "secondLabel" : "Is to be called (once) from ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4461,
+  "secondPos" : 4239,
+  "firstEndPos" : 4489,
+  "secondEndPos" : 4267
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4489,
+  "secondPos" : 4305,
+  "firstEndPos" : 4525,
+  "secondEndPos" : 4341
+}, {
+  "firstType" : "MethodRef",
+  "secondType" : "MethodRef",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4496,
+  "secondPos" : 4312,
+  "firstEndPos" : 4524,
+  "secondEndPos" : 4340
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "DrillResultSetImpl",
+  "secondLabel" : "DrillResultSetImpl",
+  "firstParentType" : "MethodRef",
+  "secondParentType" : "MethodRef",
+  "firstPos" : 4496,
+  "secondPos" : 4312,
+  "firstEndPos" : 4514,
+  "secondEndPos" : 4330
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "execute",
+  "secondLabel" : "execute",
+  "firstParentType" : "MethodRef",
+  "secondParentType" : "MethodRef",
+  "firstPos" : 4515,
+  "secondPos" : 4331,
+  "firstEndPos" : 4522,
+  "secondEndPos" : 4338
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : ", and",
+  "secondLabel" : ", and then (repeatedly) from",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4525,
+  "secondPos" : 4341,
+  "firstEndPos" : 4530,
+  "secondEndPos" : 4369
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4548,
+  "secondPos" : 4397,
+  "firstEndPos" : 4579,
+  "secondEndPos" : 4428
+}, {
+  "firstType" : "MethodRef",
+  "secondType" : "MethodRef",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4555,
+  "secondPos" : 4404,
+  "firstEndPos" : 4578,
+  "secondEndPos" : 4427
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "AvaticaResultSet",
+  "secondLabel" : "AvaticaResultSet",
+  "firstParentType" : "MethodRef",
+  "secondParentType" : "MethodRef",
+  "firstPos" : 4555,
+  "secondPos" : 4404,
+  "firstEndPos" : 4571,
+  "secondEndPos" : 4420
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "next",
+  "secondLabel" : "next",
+  "firstParentType" : "MethodRef",
+  "secondParentType" : "MethodRef",
+  "firstPos" : 4572,
+  "secondPos" : 4421,
+  "firstEndPos" : 4576,
+  "secondEndPos" : 4425
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : ".",
+  "secondLabel" : ".",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4579,
+  "secondPos" : 4428,
+  "firstEndPos" : 4580,
+  "secondEndPos" : 4429
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "</p>",
+  "secondLabel" : "</p>",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4586,
+  "secondPos" : 4435,
+  "firstEndPos" : 4590,
+  "secondEndPos" : 4439
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 4601,
+  "secondPos" : 4450,
+  "firstEndPos" : 4688,
+  "secondEndPos" : 4537
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -3515,9 +3691,31 @@
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
   "firstPos" : 4608,
+  "secondPos" : 4457,
+  "firstEndPos" : 4672,
+  "secondEndPos" : 4521
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "  whether cursor is positioned at a row (false when after end of",
+  "secondLabel" : "  whether cursor is positioned at a row (false when after end of",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4608,
   "secondPos" : 9441,
   "firstEndPos" : 4672,
   "secondEndPos" : 9505
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "results)",
+  "secondLabel" : "results)",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4680,
+  "secondPos" : 4529,
+  "firstEndPos" : 4688,
+  "secondEndPos" : 4537
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

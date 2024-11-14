@@ -6925,6 +6925,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 				}
+				else if(parent1 == null && (parent2 == null || parent2.getParent() == null) && (possibleExtractVariable || possibleInlineVariable)) {
+					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf1, leaf, leaves1, leaves2);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf1, leaf, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					if (replacements != null) {
+						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
+						mapping.addReplacements(replacements);
+						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+						extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
+						mappingSet.add(mapping);
+					}
+					else {
+						//removed any nested mappings
+						List<AbstractCodeMapping> orderedMappings = new ArrayList<AbstractCodeMapping>(mappings);
+						for(int i=orderedMappings.size()-1; i>=0; i--) {
+							AbstractCodeMapping m = orderedMappings.get(i);
+							if(leaf1.getLocationInfo().subsumes(m.getFragment1().getLocationInfo()) && leaf.getLocationInfo().subsumes(m.getFragment2().getLocationInfo()) &&
+									replacementInfo.lambdaMapperContainsMapping(m)) {
+								removeMapping(m);
+							}
+							else {
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 	}

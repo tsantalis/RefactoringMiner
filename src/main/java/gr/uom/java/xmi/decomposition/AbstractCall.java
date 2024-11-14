@@ -499,10 +499,36 @@ public abstract class AbstractCall extends LeafExpression {
 			List<UMLOperationBodyMapper> lambdaMappers, boolean matchPairOfRemovedAddedOperationsWithIdenticalBody, boolean argumentsWithVariableDeclarationMapping) {
 		boolean identicalOrReplacedArguments = identicalOrReplacedArguments(call, replacements, lambdaMappers);
 		boolean allArgumentsReplaced = allArgumentsReplaced(call, replacements);
+		boolean nameMatch = false;
+		if(this.arguments.size() > call.arguments.size()) {
+			for(String arg : this.arguments) {
+				String argWithoutQuotes = arg;
+				if(arg.startsWith("\"") && arg.endsWith("\"")) {
+					argWithoutQuotes = arg.substring(1, arg.length()-1);
+				}
+				if(call.getName().equals(this.getName() + argWithoutQuotes)) {
+					nameMatch = true;
+					break;
+				}
+			}
+		}
+		else {
+			for(String arg : call.arguments) {
+				String argWithoutQuotes = arg;
+				if(arg.startsWith("\"") && arg.endsWith("\"")) {
+					argWithoutQuotes = arg.substring(1, arg.length()-1);
+				}
+				if(this.getName().equals(call.getName() + argWithoutQuotes)) {
+					nameMatch = true;
+					break;
+				}
+			}
+		}
 		return ((getExpression() != null && call.getExpression() != null) || matchPairOfRemovedAddedOperationsWithIdenticalBody) &&
 				identicalExpression(call, replacements, parameterToArgumentMap) &&
 				!identicalName(call) &&
-				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced) || argumentsWithVariableDeclarationMapping);
+				(equalArguments(call) || reorderedArguments(call) || (allArgumentsReplaced && compatibleName(call, distance)) || (identicalOrReplacedArguments && !allArgumentsReplaced) || argumentsWithVariableDeclarationMapping ||
+				(nameMatch && argumentIntersection(call).size() > 0));
 	}
 
 	public boolean variableDeclarationInitializersRenamedWithIdenticalArguments(AbstractCall call) {

@@ -73,7 +73,7 @@ public class PurityChecker {
         List<CompositeStatementObject> nonMappedNodesT2ToRemove = new ArrayList<>();
         List<CompositeStatementObject> nonMappedNodesT1ToRemove = new ArrayList<>();
 
-        ReplacementJustificationResult replacementJustificationResult = null;
+        ReplacementJustificationResult replacementJustificationResult = new ReplacementJustificationResult();
 
 
         for (UMLOperationBodyMapper mapper : refactoring.getMappers()) {

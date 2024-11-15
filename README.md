@@ -39,6 +39,7 @@ Table of Contents
       * [With commit fetched directly from GitHub](#with-commit-fetched-directly-from-github)
       * [With the files changed in a GitHub Pull Request](#with-the-files-changed-in-a-github-pull-request)
       * [With two directories](#with-two-directories)
+   * [Purity Checker](#purity-checker)
    * [Location information for the detected refactorings](#location-information-for-the-detected-refactorings)
    * [Statement matching information for the detected refactorings](#statement-matching-information-for-the-detected-refactorings)
 
@@ -834,7 +835,7 @@ miner.detectBetweenTags(repo, "1.0", "1.1", new RefactoringHandler() {
 });
 ```
 
-It is possible to analyze a specifc commit using `detectAtCommit` instead of `detectAll`. The commit
+It is possible to analyze a specific commit using `detectAtCommit` instead of `detectAll`. The commit
 is identified by its SHA key, such as in the example below:
 
 ```java
@@ -1032,6 +1033,47 @@ ProjectASTDiff projectASTDiff = miner.diffAtDirectories(dir1, dir2);
 Set<ASTDiff> diffs = projectASTDiff.getDiffSet();
 // To visualize the diff add the following line
 new WebDiff(projectASTDiff).run();
+```
+# Purity Checker
+To check whether a refactoring detected in a commit is pure (i.e., it does not include overlapping behavior-changing edits) or impure, you can use the following APIs:
+
+```java
+GitService gitService = new GitServiceImpl();
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+
+Repository repo = gitService.cloneIfNotExists(
+    "tmp/refactoring-toy-example",
+    "https://github.com/danilofes/refactoring-toy-example.git");
+
+miner.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new RefactoringHandler() {
+  @Override
+  public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+      PurityCheckResult result = PurityChecker.check(ref, refactorings, modelDiff);
+      System.out.println(result);
+    }
+  }
+});
+```
+To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
+You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
+
+```java
+GitHistoryRefactoringMiner miner = new GitHistoryRefactoringMinerImpl();
+miner.detectAtCommit("https://github.com/danilofes/refactoring-toy-example.git",
+    "36287f7c3b09eff78395267a3ac0d7da067863fd", new RefactoringHandler() {
+  @Override
+  public void handleModelDiff(String commitId, List<Refactoring> refactorings, UMLModelDiff modelDiff) {
+    System.out.println("Refactorings at " + commitId);
+    for (Refactoring ref : refactorings) {
+      System.out.println(ref.toString());
+      PurityCheckResult result = PurityChecker.check(ref, refactorings, modelDiff);
+      System.out.println(result);
+    }
+  }
+}, 10);
 ```
 
 # Location information for the detected refactorings

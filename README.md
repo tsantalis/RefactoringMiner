@@ -1064,6 +1064,7 @@ miner.detectAtCommit(repo, "05c1e773878bbacae64112f70964f4f2f7944398", new Refac
 ```
 
 **With commit fetched directly from GitHub**
+
 To use the following API, please provide a valid OAuth token in the `github-oauth.properties` file.
 You can generate an OAuth token in GitHub `Settings` -> `Developer settings` -> `Personal access tokens`.
 

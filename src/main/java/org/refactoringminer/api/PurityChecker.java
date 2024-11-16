@@ -3401,7 +3401,7 @@ Mapping state for Move Method refactoring purity:
             omitPrimitiveTypeReplacements(replacementsToCheck);
             // for https://github.com/infinispan/infinispan/commit/043030723632627b0908dca6b24dae91d3dfd938 commit - performLocalRehashAwareOperation
             omitReplacementsAccordingSupplierGetPattern(refactoring.getBodyMapper().getMappings(), refactoring.getParameterToArgumentMap(), replacementsToCheck);
-//            omitReturnRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
+            omitReturnRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
 
 
             omitReplacementRegardingInvertCondition(replacementsToCheck, refactoring.getBodyMapper());
@@ -3413,7 +3413,6 @@ Mapping state for Move Method refactoring purity:
             if (replacementsToCheck.isEmpty()) {
                 purityComment += "Tolerable changes in the body" + "\n";
                 return new PurityCheckResult(true, "All replacements have been justified - all mapped", purityComment, mappingState);
-
             }
 
             int sizeAfterTolerable = replacementsToCheck.size();
@@ -4600,7 +4599,7 @@ Mapping state for Move Method refactoring purity:
         if (refactoring instanceof ExtractOperationRefactoring) {
             bodyMapper = ((ExtractOperationRefactoring) (refactoring)).getBodyMapper();
         } else if (refactoring instanceof InlineOperationRefactoring) {
-            bodyMapper = ((InlineOperationRefactoring) (refactoring)).getBodyMapper();;
+            bodyMapper = ((InlineOperationRefactoring) (refactoring)).getBodyMapper();
         }else {
             return;
         }

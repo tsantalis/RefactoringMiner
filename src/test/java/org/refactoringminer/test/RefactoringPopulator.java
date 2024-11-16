@@ -148,7 +148,7 @@ public class RefactoringPopulator {
 	}
 
 	public static void feedRefactoringsInstances(BigInteger refactoringsFlag, int systemsFlag, TestBuilder test)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		if ((systemsFlag & Systems.FSE.getValue()) > 0) {
 			prepareFSERefactorings(test, refactoringsFlag);
@@ -156,7 +156,7 @@ public class RefactoringPopulator {
 	}
 
 	private static void prepareFSERefactorings(TestBuilder test, BigInteger flag)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 		List<Root> roots = getFSERefactorings(flag);
 		
 		for (Root root : roots) {
@@ -200,10 +200,14 @@ public class RefactoringPopulator {
 		return deletedCommits;
 	}
 
-	public static List<Root> getFSERefactorings(BigInteger flag) throws JsonParseException, JsonMappingException, IOException {
+	public static List<Root> getFSERefactorings(BigInteger flag) throws IOException {
+		return getRefactorings(flag, "data.json");
+	}
+
+	public static List<Root> getRefactorings(BigInteger flag, String fileName) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 
-		String jsonFile = EXPECTED_PATH + "data.json";
+		String jsonFile = EXPECTED_PATH + fileName;
 
 		List<Root> roots = mapper.readValue(new File(jsonFile),
 				mapper.getTypeFactory().constructCollectionType(List.class, Root.class));
@@ -325,7 +329,6 @@ public class RefactoringPopulator {
 		public String time;
 		public List<Refactoring> refactorings;
 		public long refDiffExecutionTime;
-
 	}
 
 	public static class Refactoring {
@@ -335,7 +338,7 @@ public class RefactoringPopulator {
 		public String validation;
 		public String detectionTools; 
 		public String validators;
-
+		public Purity purity;
 	}
 
 	public static class Comment {
@@ -345,5 +348,12 @@ public class RefactoringPopulator {
 		public String type;
 		public String reportedCase;
 	}
- 
+
+	public static class Purity {
+		public String purityValue;
+		public String purityValidation;
+		public String purityComment;
+		public String validationComment;
+		public int mappingState;
+	}
 }

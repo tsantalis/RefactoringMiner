@@ -4297,7 +4297,8 @@ Mapping state for Move Method refactoring purity:
 
     private static boolean checkForTheSameDeclarationInTheTargetMethod(InlineOperationRefactoring refactoring, VariableDeclaration variableDeclaration) {
         for (VariableDeclaration variableDeclaration1: refactoring.getTargetOperationAfterInline().getBody().getAllVariableDeclarations()) {
-            if (variableDeclaration.equalVariableDeclarationType(variableDeclaration1) && variableDeclaration.equalQualifiedType(variableDeclaration1) && (variableDeclaration.getInitializer().equalFragment(variableDeclaration1.getInitializer()) || variableDeclaration1.getInitializer() == null )) {
+            if (variableDeclaration.equalVariableDeclarationType(variableDeclaration1) && variableDeclaration.equalQualifiedType(variableDeclaration1) &&
+            		((variableDeclaration.getInitializer() != null && variableDeclaration1.getInitializer() != null && variableDeclaration.getInitializer().equalFragment(variableDeclaration1.getInitializer())) || variableDeclaration1.getInitializer() == null )) {
                 return true;
             }
         }
@@ -4573,26 +4574,6 @@ Mapping state for Move Method refactoring purity:
         }
         replacementsToCheck.removeAll(replacementsToRemove);
     }
-
-//    private static void checkForIfCondition(ExtractOperationRefactoring refactoring, List<AbstractCodeFragment> nonMappedInnerNodesT2) {
-//
-//        List<AbstractCodeFragment> nonMappedInnerNodesToRemove = new ArrayList<>();
-//        List<String> conditionVariables = new ArrayList<>();
-//
-//        for (AbstractCodeFragment abstractCodeFragment : nonMappedInnerNodesT2) {
-//            if (abstractCodeFragment.getLocationInfo().getCodeElementType().equals(LocationInfo.CodeElementType.IF_STATEMENT)) {
-//                for (AbstractExpression expression : ((CompositeStatementObject) abstractCodeFragment).getExpressions()) {
-//                    conditionVariables.addAll(expression.getVariables());
-//                }
-//                if (refactoring.getExtractedOperation().getParameterNameList().containsAll(conditionVariables)) {
-//                    nonMappedInnerNodesToRemove.add(abstractCodeFragment);
-//                }
-//            }
-//        }
-//
-//        nonMappedInnerNodesT2.removeAll(nonMappedInnerNodesToRemove);
-//
-//    }
 
     private static void checkForRemoveParameterOnTopInline(Refactoring refactoring, List<Refactoring> refactorings, Set<Replacement> replacementsToCheck) {
         UMLOperationBodyMapper bodyMapper = null;

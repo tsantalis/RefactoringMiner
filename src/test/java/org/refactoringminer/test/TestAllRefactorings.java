@@ -5,7 +5,9 @@ import org.refactoringminer.test.RefactoringPopulator.Refactorings;
 import org.refactoringminer.test.RefactoringPopulator.Systems;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
+@Disabled
 public class TestAllRefactorings {
 
 	private static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";

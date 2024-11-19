@@ -384,6 +384,66 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testNestedExtractMethodStatementMappings6() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/hibernate/hibernate-orm.git", "a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-orm-a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
+	public void testNestedExtractMethodStatementMappings7() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		miner.detectAtCommitWithGitHubAPI("https://github.com/junit-team/junit5.git", "5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc", new File(REPOS), new RefactoringHandler() {
+			@Override
+			public void handle(String commitId, List<Refactoring> refactorings) {
+				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
+				for (Refactoring ref : refactorings) {
+					if(ref instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
+						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
+						if(!bodyMapper.isNested()) {
+							if(!parentMappers.contains(bodyMapper.getParentMapper())) {
+								parentMappers.add(bodyMapper.getParentMapper());
+							}
+						}
+						mapperInfo(bodyMapper, actual);
+					}
+				}
+				for(UMLOperationBodyMapper parentMapper : parentMappers) {
+					mapperInfo(parentMapper, actual);
+				}
+			}
+		});
+		
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testNestedExtractMethodStatementMappingsWithStreamsMigration() throws Exception {
 		final List<String> actual = new ArrayList<>();
 		Map<String, String> fileContentsBefore = new LinkedHashMap<String, String>();

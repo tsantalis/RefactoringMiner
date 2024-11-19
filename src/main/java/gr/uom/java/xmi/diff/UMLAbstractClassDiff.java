@@ -1477,6 +1477,7 @@ public abstract class UMLAbstractClassDiff {
 					if(attribute != null) {
 						return attribute;
 					}
+					break;
 				}
 			}
 		}
@@ -1502,6 +1503,7 @@ public abstract class UMLAbstractClassDiff {
 					if(attribute != null) {
 						return attribute;
 					}
+					break;
 				}
 			}
 		}

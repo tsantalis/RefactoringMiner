@@ -178,7 +178,9 @@ public class TestStatementMappings {
 			"https://github.com/google/j2objc.git, d05d92de40542e85f9f26712d976e710be82914e, j2objc-d05d92de40542e85f9f26712d976e710be82914e.txt",
 			"https://github.com/facebook/buck.git, 7e104c3ed4b80ec8e9b72356396f879d1067cc40, buck-7e104c3ed4b80ec8e9b72356396f879d1067cc40.txt",
 			"https://github.com/k9mail/k-9.git, 9d44f0e06232661259681d64002dd53c7c43099d, k9mail-9d44f0e06232661259681d64002dd53c7c43099d.txt", // FIX 3472-3472==3541-3541
-			"https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt" // WithIntermediateDelegate
+			"https://github.com/tsantalis/RefactoringMiner.git, 447005f5c62ad6236aad9116e932f13c4d449546, miner-447005f5c62ad6236aad9116e932f13c4d449546.txt", // WithIntermediateDelegate
+			"https://github.com/hibernate/hibernate-orm.git, a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034, hibernate-orm-a1e8d7cb0dcb4bd58fc5d210031bd0fb28196034.txt",
+			"https://github.com/junit-team/junit5.git, 5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc, junit5-5b4c642be9b1d09f9b9cebad7dd55fa40aae78bc.txt"
 	})
 	public void testNestedExtractMethodStatementMappings(String url, String commitId, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

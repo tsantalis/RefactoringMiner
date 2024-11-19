@@ -562,7 +562,13 @@ public class ExtractOperationDetection {
 				exactMatches++;
 			}
 		}
-		return (mappings > 0 || (forNestedMapper && additionalExactMatches.size() > 1)) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
+		int identicalMatches = 0;
+		for(AbstractCodeMapping mapping : additionalExactMatches) {
+			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				identicalMatches++;
+			}
+		}
+		return (mappings > 0 || (forNestedMapper && identicalMatches > 1)) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||

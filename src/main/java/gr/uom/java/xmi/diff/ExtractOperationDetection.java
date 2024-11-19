@@ -231,7 +231,7 @@ public class ExtractOperationDetection {
 				//}
 			}
 			UMLOperation delegateMethod = findDelegateMethod(mapper.getContainer1(), addedOperation, addedOperationInvocation);
-			if(extractMatchCondition(operationBodyMapper, additionalExactMatches)) {
+			if(extractMatchCondition(operationBodyMapper, additionalExactMatches, false)) {
 				ExtractOperationRefactoring extractOperationRefactoring = null;
 				if(delegateMethod == null) {
 					extractOperationRefactoring = new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
@@ -267,7 +267,7 @@ public class ExtractOperationDetection {
 		UMLOperationBodyMapper nestedMapper = createMapperForExtractedMethod(mapper, node.getOriginalOperation(), node.getInvokedOperation(), node.getInvocation(), true);
 		if(nestedMapper != null && !containsRefactoringWithIdenticalMappings(refactorings, nestedMapper)) {
 			additionalExactMatches.addAll(nestedMapper.getExactMatches());
-			if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>()) && (extractMatchCondition(operationBodyMapper, additionalExactMatches) || node.getOriginalOperation().delegatesTo(node.getInvokedOperation(), classDiff, modelDiff) != null)) {
+			if(extractMatchCondition(nestedMapper, new ArrayList<AbstractCodeMapping>(), true) && (extractMatchCondition(operationBodyMapper, additionalExactMatches, true) || node.getOriginalOperation().delegatesTo(node.getInvokedOperation(), classDiff, modelDiff) != null)) {
 				List<AbstractCall> nestedMatchingInvocations = matchingInvocations(node.getInvokedOperation(), node.getOriginalOperation().getAllOperationInvocations(), node.getOriginalOperation());
 				ExtractOperationRefactoring nestedRefactoring = new ExtractOperationRefactoring(nestedMapper, mapper.getContainer2(), nestedMatchingInvocations);
 				refactorings.add(nestedRefactoring);
@@ -453,7 +453,7 @@ public class ExtractOperationDetection {
 		return null;
 	}
 
-	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper, List<AbstractCodeMapping> additionalExactMatches) {
+	private boolean extractMatchCondition(UMLOperationBodyMapper operationBodyMapper, List<AbstractCodeMapping> additionalExactMatches, boolean forNestedMapper) {
 		if(operationBodyMapper.getMappings().size() == 1) {
 			AbstractCodeMapping mapping = operationBodyMapper.getMappings().iterator().next();
 			if(mapping.getFragment1() instanceof AbstractExpression) {
@@ -562,7 +562,7 @@ public class ExtractOperationDetection {
 				exactMatches++;
 			}
 		}
-		return (mappings > 0 || additionalExactMatches.size() > 1) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
+		return (mappings > 0 || (forNestedMapper && additionalExactMatches.size() > 1)) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
 				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||

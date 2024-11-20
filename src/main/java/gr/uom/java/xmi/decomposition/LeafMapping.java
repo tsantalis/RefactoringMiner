@@ -420,6 +420,16 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 							return Double.compare(levelParentEditDistance1.get(0), levelParentEditDistance2.get(0));
 						}
 					}
+					else if(levelParentEditDistance1.size() == 2 && levelParentEditDistance1.get(1).equals(1.0) &&
+							levelParentEditDistance2.size() == 2 && levelParentEditDistance2.get(1).equals(1.0) &&
+							!levelParentEditDistance1.get(0).equals(levelParentEditDistance2.get(0))) {
+						if(levelParentEditDistance1.get(0) < levelParentEditDistance2.get(0) && this.directParentHaveExpressionOverlap()) {
+							return Double.compare(levelParentEditDistance1.get(0), levelParentEditDistance2.get(0));
+						}
+						else if(levelParentEditDistance1.get(0) > levelParentEditDistance2.get(0) && o.directParentHaveExpressionOverlap()) {
+							return Double.compare(levelParentEditDistance1.get(0), levelParentEditDistance2.get(0));
+						}
+					}
 				}
 				if((levelParentEditDistance1.size() != levelParentEditDistance2.size() ||
 						(levelParentEditDistance1.contains(0.0) && !levelParentEditDistance2.contains(0.0)) ||
@@ -992,6 +1002,41 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 				return true;
 			}
+		}
+		return false;
+	}
+
+	private boolean directParentHaveExpressionOverlap() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 == null && parent2 == null) {
+			//method signature is the parent
+			return false;
+		}
+		else if(parent1 == null && parent2 != null) {
+			return false;
+		}
+		else if(parent1 != null && parent2 == null) {
+			return false;
+		}
+		List<AbstractExpression> expressions1 = parent1.getExpressions();
+		List<AbstractExpression> expressions2 = parent2.getExpressions();
+		if(expressions1.size() == expressions2.size()) {
+			int matches = 0;
+			for(int i=0; i<expressions1.size(); i++) {
+				AbstractExpression expr1 = expressions1.get(i);
+				AbstractExpression expr2 = expressions2.get(i);
+				if(expr1.getString().contains(expr2.getString()) || expr2.getString().contains(expr1.getString())) {
+					matches++;
+				}
+			}
+			return matches > 0;
 		}
 		return false;
 	}

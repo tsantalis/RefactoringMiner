@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -373,7 +374,7 @@ public class UMLCommentListDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				if(longestSubSequence != null && nonPunctuationWords(longestSubSequence) > 1) {
 					//make all pair combinations
 					boolean entireSubSequenceMatched = false;
 					for(UMLComment deletedComment : deletedComments) {
@@ -426,7 +427,7 @@ public class UMLCommentListDiff {
 						break;
 					}
 				}
-				if(longestSubSequence != null) {
+				if(longestSubSequence != null && nonPunctuationWords(longestSubSequence) > 1) {
 					//make all pair combinations
 					boolean entireSubSequenceMatched = false;
 					for(UMLComment deletedComment : deletedComments) {
@@ -532,6 +533,16 @@ public class UMLCommentListDiff {
 		}
 		this.deletedComments.addAll(deletedComments);
 		this.addedComments.addAll(addedComments);
+	}
+
+	private int nonPunctuationWords(List<String> longestSubSequence) {
+		int count = 0;
+		for(String str : longestSubSequence) {
+			if(!Pattern.matches("\\p{Punct}", str)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	private boolean alreadyMatchedComment(UMLComment deletedComment, UMLComment addedComment) {

@@ -879,6 +879,45 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					}
 				}
 			}
+			else if(container1.getBodyHashCode() != container2.getBodyHashCode() && !containsCallToExtractedMethod) {
+				for(Iterator<AbstractCodeMapping> mappingIterator = this.mappings.iterator(); mappingIterator.hasNext();) {
+					AbstractCodeMapping mapping = mappingIterator.next();
+					if(mapping.getFragment1().isKeyword() && mapping.getFragment2().isKeyword()) {
+						CompositeStatementObject parent1 = mapping.getFragment1().getParent();
+						int unmatchedParents1 = 0;
+						if(!alreadyMatched1(parent1)) {
+							unmatchedParents1++;
+						}
+						while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+							parent1 = parent1.getParent();
+							if(!alreadyMatched1(parent1)) {
+								unmatchedParents1++;
+							}
+						}
+						CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+						int unmatchedParents2 = 0;
+						if(!alreadyMatched2(parent2)) {
+							unmatchedParents2++;
+						}
+						while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+							parent2 = parent2.getParent();
+							if(!alreadyMatched2(parent2)) {
+								unmatchedParents2++;
+							}
+						}
+						if(unmatchedParents1 > 1 || unmatchedParents2 > 1) {
+							mappingIterator.remove();
+							if(mapping instanceof LeafMapping) {
+								LeafMapping leafMapping = (LeafMapping)mapping;
+								leaves1.add(leafMapping.getFragment1());
+								leaves2.add(leafMapping.getFragment2());
+								mappingHashcodesT1.remove(mapping.getFragment1().hashCode());
+								mappingHashcodesT2.remove(mapping.getFragment2().hashCode());
+							}
+						}
+					}
+				}
+			}
 			
 			updateNonMappedLeavesT1(leaves1);
 			updateNonMappedLeavesT2(leaves2);

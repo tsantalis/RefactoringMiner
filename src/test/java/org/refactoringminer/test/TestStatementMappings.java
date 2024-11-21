@@ -1108,7 +1108,8 @@ public class TestStatementMappings {
 		"https://github.com/javaparser/javaparser.git, de5c17c37f15a1c134f518ed2754974cc4b9aa15, apply, true, javaparser-de5c17c37f15a1c134f518ed2754974cc4b9aa15.txt",
 		"https://github.com/hibernate/hibernate-orm.git, 8577a68e69d30d9e671024bf3330616000a3ec54, processElementAnnotations, true, hibernate-orm-8577a68e69d30d9e671024bf3330616000a3ec54.txt",
 		"https://github.com/checkstyle/checkstyle.git, bf69cf167c9432daabc7b6e4a426fff33650a057, visitToken, true, checkstyle-bf69cf167c9432daabc7b6e4a426fff33650a057.txt",
-		"https://github.com/hibernate/hibernate-orm.git, 016a02ff506b715e8217b8577594ac62b3f318ce, processElementAnnotations, true, hibernate-orm-016a02ff506b715e8217b8577594ac62b3f318ce.txt"
+		"https://github.com/hibernate/hibernate-orm.git, 016a02ff506b715e8217b8577594ac62b3f318ce, processElementAnnotations, true, hibernate-orm-016a02ff506b715e8217b8577594ac62b3f318ce.txt",
+		"https://github.com/javaparser/javaparser.git, acdac6790f4424f8097b3aa6c888e825cac485f9, inferTypes, true, javaparser-acdac6790f4424f8097b3aa6c888e825cac485f9.txt"
 	})
 	public void testRestructuredStatementMappings(String url, String commitId, String containerName, boolean breakOnFirstMatch, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

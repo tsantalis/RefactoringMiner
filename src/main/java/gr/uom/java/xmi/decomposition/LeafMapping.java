@@ -64,6 +64,10 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 	}
 
+	public boolean isKeyword() {
+		return getFragment1().isKeyword() && getFragment2().isKeyword();
+	}
+
 	public boolean hasIdenticalPreviousAndNextStatement() {
 		if(onlyStatementWithinIdenticalComposite()) {
 			return true;
@@ -384,10 +388,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				boolean zeroDistanceWithMoreThanTwoParents1 = nLevelParentEditDistance1 == 0 && levelParentEditDistance1.size() > 2;
 				boolean zeroDistanceWithMoreThanTwoParents2 = nLevelParentEditDistance2 == 0 && levelParentEditDistance2.size() > 2;
 				if(identicalCompositeChildren1 && !identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents2) {
-					return -1;
+					boolean skip = false;
+					if(this.isKeyword() && nLevelParentEditDistance2 == 0)
+						skip = true;
+					if(!skip)
+						return -1;
 				}
 				else if(!identicalCompositeChildren1 && identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents1) {
-					return 1;
+					boolean skip = false;
+					if(o.isKeyword() && nLevelParentEditDistance1 == 0)
+						skip = true;
+					if(!skip)
+						return 1;
 				}
 				if(identicalCompositeChildren1 && identicalCompositeChildren2 && levelParentEditDistance1.size() > 2 && levelParentEditDistance2.size() > 2
 						&& nLevelParentEditDistance1 > 0 && nLevelParentEditDistance2 > 0) {

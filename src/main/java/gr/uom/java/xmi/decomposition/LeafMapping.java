@@ -389,14 +389,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				boolean zeroDistanceWithMoreThanTwoParents2 = nLevelParentEditDistance2 == 0 && levelParentEditDistance2.size() > 2;
 				if(identicalCompositeChildren1 && !identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents2) {
 					boolean skip = false;
-					if(this.isKeyword() && nLevelParentEditDistance2 == 0)
+					if(nLevelParentEditDistance2 == 0 && this.isKeyword())
 						skip = true;
 					if(!skip)
 						return -1;
 				}
 				else if(!identicalCompositeChildren1 && identicalCompositeChildren2 && !zeroDistanceWithMoreThanTwoParents1) {
 					boolean skip = false;
-					if(o.isKeyword() && nLevelParentEditDistance1 == 0)
+					if(nLevelParentEditDistance1 == 0 && o.isKeyword())
 						skip = true;
 					if(!skip)
 						return 1;

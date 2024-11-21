@@ -63,7 +63,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				}
 			}
 		}
-		if(statement1.isKeyword() && statement2.isKeyword()) {
+		if(statement1.isKeyword()) {
 			isKeyword = true;
 		}
 	}

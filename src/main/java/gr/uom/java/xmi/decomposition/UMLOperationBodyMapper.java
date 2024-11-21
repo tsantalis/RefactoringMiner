@@ -283,8 +283,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(classDiff != null) {
 				List<String> list1 = body1.stringRepresentation();
 				for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-					boolean skip = classDiff.getAddedOperations().size() == classDiff.getRemovedOperations().size() && operation1.equalParameters(addedOperation);
-					if(addedOperation.getBody() != null && !skip) {
+					if(addedOperation.getBody() != null) {
 						List<String> list2 = new ArrayList<>(addedOperation.getBody().stringRepresentation());
 						if(list2.size() > 3) {
 							//remove first and last blocks
@@ -5812,7 +5811,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							break;
 						}
 					}
-					if(foundInExtractedStatements) {
+					if(foundInExtractedStatements && !leaf1.isKeyword()) {
 						continue;
 					}
 					boolean allMatchingLeaves1InMethodScope = parents1.size() == 1 && parents1.iterator().next() != null && parents1.iterator().next().getParent() == null;
@@ -6203,7 +6202,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								break;
 							}
 						}
-						if(foundInExtractedStatements) {
+						if(foundInExtractedStatements && !leaf1.isKeyword()) {
 							continue;
 						}
 						if(!alreadyMatched1(leaf1)) {

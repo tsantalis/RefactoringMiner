@@ -283,7 +283,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(classDiff != null) {
 				List<String> list1 = body1.stringRepresentation();
 				for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-					if(addedOperation.getBody() != null && !operation1.equalParameters(addedOperation)) {
+					boolean skip = operation1.equalParameters(addedOperation) && classDiff.getAddedOperations().size() == classDiff.getRemovedOperations().size();
+					if(addedOperation.getBody() != null && !skip) {
 						List<String> list2 = new ArrayList<>(addedOperation.getBody().stringRepresentation());
 						if(list2.size() > 3) {
 							//remove first and last blocks

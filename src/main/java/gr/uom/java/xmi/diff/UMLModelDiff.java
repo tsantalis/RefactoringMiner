@@ -2998,14 +2998,17 @@ public class UMLModelDiff {
 				if(ref instanceof RenameClassRefactoring) {
 					RenameClassRefactoring rename = (RenameClassRefactoring)ref;
 					classDiff.findInterfaceChanges(rename.getOriginalClassName(), rename.getRenamedClassName());
+					classDiff.findPermittedTypeChanges(rename.getOriginalClassName(), rename.getRenamedClassName());
 				}
 				else if(ref instanceof MoveClassRefactoring) {
 					MoveClassRefactoring move = (MoveClassRefactoring)ref;
 					classDiff.findInterfaceChanges(move.getOriginalClassName(), move.getMovedClassName());
+					classDiff.findPermittedTypeChanges(move.getOriginalClassName(), move.getMovedClassName());
 				}
 				else if(ref instanceof MoveAndRenameClassRefactoring) {
 					MoveAndRenameClassRefactoring move = (MoveAndRenameClassRefactoring)ref;
 					classDiff.findInterfaceChanges(move.getOriginalClassName(), move.getMovedClassName());
+					classDiff.findPermittedTypeChanges(move.getOriginalClassName(), move.getMovedClassName());
 				}
 			}
 		}
@@ -3031,20 +3034,25 @@ public class UMLModelDiff {
 	}
 
 	private void detectInterfaceChangesBasedOnTypeChanges(UMLClassBaseDiff classDiff, List<Refactoring> refactorings) {
-		if(classDiff.hasBothAddedAndRemovedInterfaces()) {
+		if(classDiff.hasBothAddedAndRemovedInterfaces() || classDiff.hasBothAddedAndRemovedPermittedTypes()) {
 			for(Refactoring ref : refactorings) {
 				if(ref instanceof ChangeReturnTypeRefactoring) {
 					ChangeReturnTypeRefactoring changeReturnType = (ChangeReturnTypeRefactoring)ref;
 					classDiff.findInterfaceChanges(changeReturnType.getOriginalType(), changeReturnType.getChangedType());
+					classDiff.findPermittedTypeChanges(changeReturnType.getOriginalType(), changeReturnType.getChangedType());
 				}
 				else if(ref instanceof ChangeAttributeTypeRefactoring) {
 					ChangeAttributeTypeRefactoring changeAttributeType = (ChangeAttributeTypeRefactoring)ref;
 					classDiff.findInterfaceChanges(changeAttributeType.getOriginalAttribute().getType(), changeAttributeType.getChangedTypeAttribute().getType());
+					classDiff.findPermittedTypeChanges(changeAttributeType.getOriginalAttribute().getType(), changeAttributeType.getChangedTypeAttribute().getType());
 					if(changeAttributeType.getAttributeDiff().getInitializerMapper().isPresent()) {
 						UMLOperationBodyMapper initializerMapper = changeAttributeType.getAttributeDiff().getInitializerMapper().get();
 						for(Replacement r : initializerMapper.getReplacements()) {
 							if(r.getType().equals(ReplacementType.TYPE)) {
-								classDiff.findInterfaceChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+								UMLType typeBefore = UMLType.extractTypeObject(r.getBefore());
+								UMLType typeAfter = UMLType.extractTypeObject(r.getAfter());
+								classDiff.findInterfaceChanges(typeBefore, typeAfter);
+								classDiff.findPermittedTypeChanges(typeBefore, typeAfter);
 							}
 						}
 					}
@@ -3052,12 +3060,16 @@ public class UMLModelDiff {
 				else if(ref instanceof ChangeVariableTypeRefactoring) {
 					ChangeVariableTypeRefactoring changeVariableType = (ChangeVariableTypeRefactoring)ref;
 					classDiff.findInterfaceChanges(changeVariableType.getOriginalVariable().getType(), changeVariableType.getChangedTypeVariable().getType());
+					classDiff.findPermittedTypeChanges(changeVariableType.getOriginalVariable().getType(), changeVariableType.getChangedTypeVariable().getType());
 				}
 			}
 			Set<Replacement> replacements = classDiff.getReplacementsOfType(ReplacementType.TYPE);
 			for(Replacement r : replacements) {
 				if(r.getType().equals(ReplacementType.TYPE)) {
-					classDiff.findInterfaceChanges(UMLType.extractTypeObject(r.getBefore()), UMLType.extractTypeObject(r.getAfter()));
+					UMLType typeBefore = UMLType.extractTypeObject(r.getBefore());
+					UMLType typeAfter = UMLType.extractTypeObject(r.getAfter());
+					classDiff.findInterfaceChanges(typeBefore, typeAfter);
+					classDiff.findPermittedTypeChanges(typeBefore, typeAfter);
 				}
 			}
 		}

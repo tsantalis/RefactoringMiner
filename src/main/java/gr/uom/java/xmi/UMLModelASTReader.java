@@ -703,6 +703,12 @@ public class UMLModelASTReader {
     		getUmlModel().addRealization(umlRealization);
     	}
     	
+    	List<Type> permittedTypes = typeDeclaration.permittedTypes();
+    	for(Type type : permittedTypes) {
+    		UMLType umlType = UMLType.extractTypeObject(cu, sourceFolder, sourceFile, type, 0, javaFileContent);
+    		umlClass.addPermittedType(umlType);
+    	}
+    	
     	Map<BodyDeclaration, VariableDeclarationContainer> map = processBodyDeclarations(cu, typeDeclaration, umlPackage, packageName, sourceFolder, sourceFile, importedTypes, umlClass, packageDoc, comments, javaFileContent);
     	
     	processAnonymousClassDeclarations(cu, typeDeclaration, umlPackage, packageName, sourceFolder, sourceFile, className, importedTypes, packageDoc, comments, umlClass, javaFileContent);

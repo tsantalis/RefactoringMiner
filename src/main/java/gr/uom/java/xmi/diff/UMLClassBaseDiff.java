@@ -1172,15 +1172,17 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			if(removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
 				return true;
 			}
-			int count = 0;
-			for(int i=0; i<removedOperationParameterNameList.size(); i++) {
-				String removedOperationParameterName = removedOperationParameterNameList.get(i);
-				String addedOperationParameterName = addedOperationParameterNameList.get(i);
-				if(removedOperationParameterName.equals(addedOperationParameterName)) {
-					count++;
+			int found = 0;
+			if(removedOperationParameterNameList.size() == addedOperationParameterNameList.size()) {
+				for(int i=0; i<removedOperationParameterNameList.size(); i++) {
+					String removedOperationParameterName = removedOperationParameterNameList.get(i);
+					int index = addedOperationParameterNameList.indexOf(removedOperationParameterName);
+					if(index != -1) {
+						found++;
+					}
 				}
 			}
-			return count >= removedOperationParameterNameList.size()-1;
+			return found >= removedOperationParameterNameList.size()-1;
 		}
 		if((removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
 				removedOperationParameterNameList.size() == addedOperationParameterNameList.size() &&

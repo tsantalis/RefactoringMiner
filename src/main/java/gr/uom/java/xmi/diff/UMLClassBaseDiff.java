@@ -1122,18 +1122,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				/*if(matchingOperations.size() == 0) {
+				if(matchingOperations.size() == 0) {
 					for(UMLOperation addedOperation : addedOperations) {
-						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
-								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
-								(removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
-								(removedOperation.getParameters().containsAll(addedOperation.getParameters()) || addedOperation.getParameters().containsAll(removedOperation.getParameters())) &&
-								(removedOperation.getParameterNameList().containsAll(addedOperation.getParameterNameList()) || addedOperation.getParameterNameList().containsAll(removedOperation.getParameterNameList())) &&
-								removedOperation.isAbstract() == addedOperation.isAbstract()) {
+						if(matchConditionDifferentNumberOfParameters(removedOperation, addedOperation)) {
 							matchingOperations.add(addedOperation);
 						}
 					}
-				}*/
+				}
 				if(matchingOperations.size() == 1) {
 					pairs.add(Pair.of(removedOperation, matchingOperations.get(0)));
 				}
@@ -1153,18 +1148,13 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 				}
-				/*if(matchingOperations.size() == 0) {
+				if(matchingOperations.size() == 0) {
 					for(UMLOperation removedOperation : removedOperations) {
-						if(!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
-								removedOperation.getParameters().size() > 1 && addedOperation.getParameters().size() > 1 &&
-								(removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
-								(removedOperation.getParameters().containsAll(addedOperation.getParameters()) || addedOperation.getParameters().containsAll(removedOperation.getParameters())) &&
-								(removedOperation.getParameterNameList().containsAll(addedOperation.getParameterNameList()) || addedOperation.getParameterNameList().containsAll(removedOperation.getParameterNameList())) &&
-								removedOperation.isAbstract() == addedOperation.isAbstract()) {
+						if(matchConditionDifferentNumberOfParameters(removedOperation, addedOperation)) {
 							matchingOperations.add(removedOperation);
 						}
 					}
-				}*/
+				}
 				if(matchingOperations.size() == 1) {
 					pairs.add(Pair.of(matchingOperations.get(0), addedOperation));
 				}
@@ -1174,13 +1164,24 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	}
 
 	private boolean matchCondition(UMLOperation removedOperation, UMLOperation addedOperation) {
+		List<String> removedOperationParameterNameList = removedOperation.getParameterNameList();
+		List<String> addedOperationParameterNameList = addedOperation.getParameterNameList();
 		if(removedOperation.getName().equals(addedOperation.getName()) &&
 				removedOperation.getParameters().size() == addedOperation.getParameters().size() &&
 				removedOperation.isAbstract() == addedOperation.isAbstract()) {
-			return true;
+			if(removedOperation.getParameterTypeList().equals(addedOperation.getParameterTypeList())) {
+				return true;
+			}
+			int count = 0;
+			for(int i=0; i<removedOperationParameterNameList.size(); i++) {
+				String removedOperationParameterName = removedOperationParameterNameList.get(i);
+				String addedOperationParameterName = addedOperationParameterNameList.get(i);
+				if(removedOperationParameterName.equals(addedOperationParameterName)) {
+					count++;
+				}
+			}
+			return count >= removedOperationParameterNameList.size()-1;
 		}
-		List<String> removedOperationParameterNameList = removedOperation.getParameterNameList();
-		List<String> addedOperationParameterNameList = addedOperation.getParameterNameList();
 		if((removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
 				removedOperationParameterNameList.size() == addedOperationParameterNameList.size() &&
 				removedOperation.isAbstract() == addedOperation.isAbstract()) {
@@ -1193,6 +1194,55 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 			}
 			return count >= removedOperationParameterNameList.size()-1;
+		}
+		return false;
+	}
+
+	private boolean matchConditionDifferentNumberOfParameters(UMLOperation removedOperation, UMLOperation addedOperation) {
+		if((removedOperation.getName().contains(addedOperation.getName()) || addedOperation.getName().contains(removedOperation.getName())) &&
+				!removedOperation.isConstructor() && !addedOperation.isConstructor() &&
+				removedOperation.getParameters().size() != addedOperation.getParameters().size() &&
+				removedOperation.isAbstract() == addedOperation.isAbstract()) {
+			List<String> removedOperationParameterNameList = removedOperation.getParameterNameList();
+			List<String> addedOperationParameterNameList = addedOperation.getParameterNameList();
+			int notFound = 0;
+			int found = 0;
+			int maxDifference = 0;
+			if(removedOperationParameterNameList.size() < addedOperationParameterNameList.size()) {
+				for(int i=0; i<removedOperationParameterNameList.size(); i++) {
+					String removedOperationParameterName = removedOperationParameterNameList.get(i);
+					int index = addedOperationParameterNameList.indexOf(removedOperationParameterName);
+					if(index != -1) {
+						found++;
+						int difference = Math.abs(i-index);
+						if(difference > maxDifference) {
+							maxDifference = difference;
+						}
+					}
+					else {
+						notFound++;
+					}
+				}
+			}
+			else if(removedOperationParameterNameList.size() > addedOperationParameterNameList.size()) {
+				for(int i=0; i<addedOperationParameterNameList.size(); i++) {
+					String addedOperationParameterName = addedOperationParameterNameList.get(i);
+					int index = removedOperationParameterNameList.indexOf(addedOperationParameterName);
+					if(index != -1) {
+						found++;
+						int difference = Math.abs(i-index);
+						if(difference > maxDifference) {
+							maxDifference = difference;
+						}
+					}
+					else {
+						notFound++;
+					}
+				}
+			}
+			return notFound == 0 &&
+					found == Math.max(removedOperationParameterNameList.size(), addedOperationParameterNameList.size()) - maxDifference &&
+					maxDifference == Math.abs(removedOperationParameterNameList.size() - addedOperationParameterNameList.size());
 		}
 		return false;
 	}

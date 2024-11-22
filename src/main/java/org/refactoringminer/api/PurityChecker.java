@@ -5336,6 +5336,32 @@ Mapping state for Move Method refactoring purity:
             if (replacement.getType().equals(Replacement.ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION)) {
                 numberOfArgumentReplacedWithReturnReplacements++;
             }
+            if (replacement.getType().equals(Replacement.ReplacementType.METHOD_INVOCATION)) {
+            	MethodInvocationReplacement invocationReplacement = (MethodInvocationReplacement) replacement;
+            	AbstractCall before = invocationReplacement.getInvokedOperationBefore();
+            	AbstractCall after = invocationReplacement.getInvokedOperationAfter();
+            	if(after.getName().equals("isEqualTo")) {
+            		if(before.getName().equals("isTrue") || before.getName().equals("isFalse")) {
+            			if(before.getExpression() == null && after.getExpression() == null) {
+            				numberOfArgumentReplacedWithReturnReplacements++;
+            			}
+            			else if(before.getExpression() != null && after.getExpression() != null) {
+            				String expr1 = before.getExpression();
+            				String expr2 = after.getExpression();
+            				for(Replacement r : refactoring.getReplacements()) {
+            					if(expr1.equals(r.getBefore()) && expr2.equals(r.getAfter())) {
+            						numberOfArgumentReplacedWithReturnReplacements++;
+            						break;
+            					}
+            					else if(expr1.contains("(" + r.getBefore() + ")") && expr2.contains("(" + r.getAfter() + ")")) {
+            						numberOfArgumentReplacedWithReturnReplacements++;
+            						break;
+            					}
+            				}
+            			}
+            		}
+            	}
+            }
         }
 
         if (numberOfArgumentReplacedWithReturnReplacements == size1) {

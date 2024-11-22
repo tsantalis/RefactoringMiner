@@ -98,6 +98,10 @@ public class UMLAnonymousClass extends UMLAbstractClass implements Comparable<UM
 		return false;
 	}
 
+	public boolean isSealed() {
+		return false;
+	}
+
 	public Visibility getVisibility() {
 		return Visibility.PRIVATE;
 	}

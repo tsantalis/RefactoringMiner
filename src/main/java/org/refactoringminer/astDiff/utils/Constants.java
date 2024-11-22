@@ -42,6 +42,7 @@ public class Constants {
 	public static final String NATIVE = "native";
 	public static final String FINAL = "final";
 	public static final String STATIC = "static";
+	public static final String SEALED = "sealed";
 	public static final String DEFAULT = "default";
 	public static final String EQUAL_OPERATOR = "=";
 

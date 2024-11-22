@@ -1027,6 +1027,7 @@ public abstract class UMLAbstractClass {
 	public abstract String getTypeDeclarationKind();
 	public abstract boolean isFinal();
 	public abstract boolean isStatic();
+	public abstract boolean isSealed();
 	public abstract boolean isTopLevel();
 	public abstract Visibility getVisibility();
 

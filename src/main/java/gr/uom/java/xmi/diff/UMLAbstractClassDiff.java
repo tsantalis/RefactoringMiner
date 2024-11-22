@@ -69,7 +69,8 @@ public abstract class UMLAbstractClassDiff {
 	protected List<Refactoring> refactorings;
 	protected UMLModelDiff modelDiff;
 	protected UMLAnnotationListDiff annotationListDiff;
-	private UMLImplementedInterfaceListDiff interfaceListDiff;
+	private UMLTypeListDiff interfaceListDiff;
+	private UMLTypeListDiff permittedTypeListDiff;
 	private UMLCommentListDiff commentListDiff;
 	private static final List<String> collectionAPINames = List.of("get", "add", "contains", "put", "putAll", "addAll", "equals");
 	
@@ -93,7 +94,8 @@ public abstract class UMLAbstractClassDiff {
 		this.originalClass = originalClass;
 		this.nextClass = nextClass;
 		this.modelDiff = modelDiff;
-		this.interfaceListDiff = new UMLImplementedInterfaceListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
+		this.interfaceListDiff = new UMLTypeListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
+		this.permittedTypeListDiff = new UMLTypeListDiff(originalClass.getPermittedTypes(), nextClass.getPermittedTypes());
 		processAnnotations();
 	}
 
@@ -199,21 +201,40 @@ public abstract class UMLAbstractClassDiff {
 		return commentListDiff;
 	}
 
-	public UMLImplementedInterfaceListDiff getInterfaceListDiff() {
+	public UMLTypeListDiff getInterfaceListDiff() {
 		return interfaceListDiff;
 	}
 
 	public void findInterfaceChanges(String nameBefore, String nameAfter) {
-		interfaceListDiff.findInterfaceChanges(nameBefore, nameAfter);
+		interfaceListDiff.findTypeChanges(nameBefore, nameAfter);
 	}
 
 	public void findInterfaceChanges(UMLType typeBefore, UMLType typeAfter) {
-		interfaceListDiff.findInterfaceChanges(typeBefore, typeAfter);
+		interfaceListDiff.findTypeChanges(typeBefore, typeAfter);
 	}
 
 	public boolean hasBothAddedAndRemovedInterfaces() {
 		if(interfaceListDiff != null) {
-			return interfaceListDiff.getAddedInterfaces().size() > 0 && interfaceListDiff.getRemovedInterfaces().size() > 0;
+			return interfaceListDiff.getAddedTypes().size() > 0 && interfaceListDiff.getRemovedTypes().size() > 0;
+		}
+		return false;
+	}
+
+	public UMLTypeListDiff getPermittedTypeListDiff() {
+		return permittedTypeListDiff;
+	}
+
+	public void findPermittedTypeChanges(String nameBefore, String nameAfter) {
+		permittedTypeListDiff.findTypeChanges(nameBefore, nameAfter);
+	}
+
+	public void findPermittedTypeChanges(UMLType typeBefore, UMLType typeAfter) {
+		permittedTypeListDiff.findTypeChanges(typeBefore, typeAfter);
+	}
+
+	public boolean hasBothAddedAndRemovedPermittedTypes() {
+		if(permittedTypeListDiff != null) {
+			return permittedTypeListDiff.getAddedTypes().size() > 0 && permittedTypeListDiff.getRemovedTypes().size() > 0;
 		}
 		return false;
 	}

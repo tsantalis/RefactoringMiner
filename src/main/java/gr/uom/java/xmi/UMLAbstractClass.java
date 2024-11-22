@@ -33,6 +33,7 @@ public abstract class UMLAbstractClass {
 	private List<UMLInitializer> initializers;
 	private UMLType superclass;
     private List<UMLType> implementedInterfaces;
+    private List<UMLType> permittedTypes;
     private List<UMLImport> importedTypes;
     private List<UMLAnnotation> annotations;
     private List<UMLModifier> modifiers;
@@ -51,6 +52,7 @@ public abstract class UMLAbstractClass {
         this.operationIdentifierSignatureMap = new LinkedHashMap<>();
         this.superclass = null;
         this.implementedInterfaces = new ArrayList<UMLType>();
+        this.permittedTypes = new ArrayList<UMLType>();
         this.annotations = new ArrayList<UMLAnnotation>();
         this.modifiers = new ArrayList<UMLModifier>();
         this.enumConstants = new ArrayList<UMLEnumConstant>();
@@ -133,6 +135,14 @@ public abstract class UMLAbstractClass {
 
 	public List<UMLType> getImplementedInterfaces() {
 		return implementedInterfaces;
+	}
+
+	public void addPermittedType(UMLType type) {
+		this.permittedTypes.add(type);
+	}
+
+	public List<UMLType> getPermittedTypes() {
+		return permittedTypes;
 	}
 
 	public List<UMLImport> getImportedTypes() {

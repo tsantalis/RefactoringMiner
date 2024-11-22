@@ -89,6 +89,7 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
         }
         processSuperClasses(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processClassImplementedInterfaces(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
+        processClassPermittedTypes(srcTypeDeclaration,dstTypeDeclaration,classDiff,mappingStore);
         processInterfaceToSuperclassOrOpposite(classDiff, mappingStore, srcTypeDeclaration, dstTypeDeclaration);
         new JavaDocMatcher(optimizationData, classDiff.getOriginalClass().getJavadoc(), classDiff.getNextClass().getJavadoc(), classDiff.getJavadocDiff())
                 .match(srcTree, dstTree, mappingStore);
@@ -112,9 +113,16 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
     }
 
     private void processClassImplementedInterfaces(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
-        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getInterfaceListDiff().getCommonInterfaces())
+        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getInterfaceListDiff().getCommonTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
-        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getInterfaceListDiff().getChangedInterfaces())
+        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getInterfaceListDiff().getChangedTypes())
+            processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
+    }
+
+    private void processClassPermittedTypes(Tree srcTree, Tree dstTree, UMLClassBaseDiff classDiff, ExtendedMultiMappingStore mappingStore) {
+        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> commonInterface : classDiff.getPermittedTypeListDiff().getCommonTypes())
+            processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, commonInterface.getLeft(), commonInterface.getRight());
+        for (org.apache.commons.lang3.tuple.Pair<UMLType, UMLType> changedInterface : classDiff.getPermittedTypeListDiff().getChangedTypes())
             processLocationInfoProvidersRecursively(srcTree, dstTree, mappingStore, changedInterface.getLeft(), changedInterface.getRight());
     }
 

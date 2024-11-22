@@ -943,6 +943,8 @@ public class UMLModelASTReader {
     		umlClass.setStatic(true);
     	if((modifiers & Modifier.FINAL) != 0)
     		umlClass.setFinal(true);
+    	if((modifiers & Modifier.SEALED) != 0)
+    		umlClass.setSealed(true);
     	
     	if((modifiers & Modifier.PUBLIC) != 0)
     		umlClass.setVisibility(Visibility.PUBLIC);

@@ -81,6 +81,8 @@ public class ClassDeclarationMatcher extends OptimizationAwareMatcher implements
             new SameModifierMatcher(Constants.FINAL).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
         if (classDiff.getOriginalClass().isAbstract() && classDiff.getNextClass().isAbstract())
             new SameModifierMatcher(Constants.ABSTRACT).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
+        if (classDiff.getOriginalClass().isSealed() && classDiff.getNextClass().isSealed())
+            new SameModifierMatcher(Constants.SEALED).match(srcTypeDeclaration,dstTypeDeclaration,mappingStore);
 
         for (org.apache.commons.lang3.tuple.Pair<UMLTypeParameter, UMLTypeParameter> commonTypeParamSet : classDiff.getTypeParameterDiffList().getCommonTypeParameters()) {
             Tree srcTypeParam = TreeUtilFunctions.findByLocationInfo(srcTypeDeclaration, commonTypeParamSet.getLeft().getLocationInfo());

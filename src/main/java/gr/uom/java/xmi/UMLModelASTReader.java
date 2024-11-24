@@ -758,6 +758,16 @@ public class UMLModelASTReader {
     		String methodNamePath = getMethodNamePath(statement);
     		String fullName = packageName + "." + className + "." + methodNamePath;
     		AbstractTypeDeclaration localTypeDeclaration = statement.getDeclaration();
+    		LocationInfo location = generateLocationInfo(cu, sourceFolder, sourceFile, localTypeDeclaration, CodeElementType.TYPE_DECLARATION);
+    		for(UMLOperation operation : umlClass.getOperations()) {
+    			if(operation.getLocationInfo().subsumes(location)) {
+    				for(UMLComment comment : operation.getComments()) {
+    					if(location.subsumes(comment.getLocationInfo())) {
+    						allComments.add(comment);
+    					}
+    				}
+    			}
+    		}
 			if(localTypeDeclaration instanceof TypeDeclaration) {
         		TypeDeclaration typeDeclaration2 = (TypeDeclaration)localTypeDeclaration;
         		processTypeDeclaration(cu, typeDeclaration2, umlPackage, fullName, sourceFolder, sourceFile, importedTypes, packageDoc, allComments, javaFileContent);

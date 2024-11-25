@@ -507,6 +507,15 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	public Set<UMLClass> getAllAddedClasses(String className) {
+		Set<UMLClass> classes = new LinkedHashSet<UMLClass>();
+		for(UMLClass umlClass : addedClasses) {
+			if(umlClass.getName().equals(className))
+				classes.add(umlClass);
+		}
+		return classes;
+	}
+
 	public UMLClass getAddedClass(String className) {
 		for(UMLClass umlClass : addedClasses) {
 			if(umlClass.getName().equals(className))

@@ -548,7 +548,7 @@ public class TestStatementMappings {
 			public void handle(String commitId, List<Refactoring> refactorings) {
 				List<UMLOperationBodyMapper> parentMappers = new ArrayList<>();
 				for (Refactoring ref : refactorings) {
-					if(ref instanceof ExtractOperationRefactoring) {
+					if(ref instanceof ExtractOperationRefactoring && ref.getRefactoringType().equals(RefactoringType.EXTRACT_OPERATION)) {
 						ExtractOperationRefactoring ex = (ExtractOperationRefactoring)ref;
 						UMLOperationBodyMapper bodyMapper = ex.getBodyMapper();
 						if(!bodyMapper.isNested()) {

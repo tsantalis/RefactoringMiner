@@ -1,6 +1,7 @@
 package gr.uom.java.xmi;
 
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+import static org.eclipse.jdt.core.JavaCore.VERSION_21;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -164,6 +165,7 @@ public class UMLModelASTReader {
 	public static String getMaxRecommendedVersionFromProblems(CompilationUnit compilationUnit) {
 		IProblem[] problems = compilationUnit.getProblems();
 		String result = null;
+		if (problems.length == 0) return null;
 		for (IProblem problem : problems) {
 			String[] arguments = problem.getArguments();
 			if (arguments != null && arguments.length > 1) {
@@ -177,6 +179,7 @@ public class UMLModelASTReader {
 				}
 			}
 		}
+		if (result == null) return VERSION_21;
 		return result;
 	}
 

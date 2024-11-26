@@ -537,7 +537,8 @@ public class TestStatementMappings {
 		"https://github.com/tsantalis/RefactoringMiner.git, 0894f346564f8b31cf836def67e952fb93a6036d, miner-0894f346564f8b31cf836def67e952fb93a6036d.txt",
 		"https://github.com/eclipse-jgit/jgit.git, 7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0, jgit-7ff6eb584cf8b83f83a3b5edf897feb53dbf42c0.txt",
 		"https://github.com/jenkinsci/git-client-plugin.git, 6d261108e7471db380146f945bb228b5fc8c44cc, git-client-plugin-6d261108e7471db380146f945bb228b5fc8c44cc.txt",
-		"https://github.com/javaparser/javaparser.git, 548fb9c5a72776ec009c5f2f92b1a4c480a05030, javaparser-548fb9c5a72776ec009c5f2f92b1a4c480a05030.txt"
+		"https://github.com/javaparser/javaparser.git, 548fb9c5a72776ec009c5f2f92b1a4c480a05030, javaparser-548fb9c5a72776ec009c5f2f92b1a4c480a05030.txt",
+		"https://github.com/apache/ant.git, 52926715b4f4f53da4b63cf660a14f357d7a9b6e, ant-52926715b4f4f53da4b63cf660a14f357d7a9b6e.txt"
 	})
 	public void testExtractMethodStatementMappings(String url, String commit, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();

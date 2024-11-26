@@ -1,0 +1,14 @@
+public findFile(uri String) : FileObject -> private findFile(parsedUri ParsedUri) : FileObject
+line range:58-58==line range:79-79
+line range:62-62==line range:83-83
+line range:63-63==line range:84-84
+line range:67-67==line range:88-88
+line range:59-64==line range:80-85
+line range:60-64==line range:81-85
+public findFile(uri String) : FileObject -> public findFile(baseFile FileObject, uri String) : FileObject
+line range:53-53==line range:62-62
+line range:54-54==line range:63-63
+line range:46-46==line range:55-55
+line range:49-49==line range:58-58
+line range:47-55==line range:56-64
+line range:51-55==line range:60-64

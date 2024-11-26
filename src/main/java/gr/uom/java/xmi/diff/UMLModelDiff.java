@@ -146,6 +146,24 @@ public class UMLModelDiff {
 		return null;
 	}
 
+	public Set<UMLAbstractClass> findClassesInChildModel(String className) {
+		Set<UMLAbstractClass> set = new LinkedHashSet<UMLAbstractClass>();
+		for(UMLClass umlClass : childModel.getClassList()) {
+			if(umlClass.getName().equals(className)) {
+				set.add(umlClass);
+			}
+		}
+		if(!set.isEmpty()) {
+			return set;
+		}
+		for(UMLClass umlClass : childModel.getClassList()) {
+			if(umlClass.getName().endsWith("." + className)) {
+				set.add(umlClass);
+			}
+		}
+		return set;
+	}
+
 	public UMLAbstractClass findClassInChildModel(String className) {
 		for(UMLClass umlClass : childModel.getClassList()) {
 			if(umlClass.getName().equals(className)) {

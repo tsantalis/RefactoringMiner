@@ -1,5 +1,6 @@
 package org.refactoringminer.astDiff.utils;
 
+import com.github.gumtreediff.gen.jdt.JdtVisitor;
 import com.github.gumtreediff.io.TreeIoUtils;
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.DefaultTree;
@@ -17,6 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.ToolFactory;
+import org.eclipse.jdt.core.compiler.IScanner;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import static gr.uom.java.xmi.UMLModelASTReader.getCompilationUnit;
+import static gr.uom.java.xmi.UMLModelASTReader.getMaxRecommendedVersionFromProblems;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
@@ -289,5 +299,22 @@ public class TreeUtilFunctions {
 			}
 		}
 		return fieldAnnotation;
+	}
+	public static Tree getRefactoringMinerParsedTree(String code) {
+		/// XXX this is a poor replica of {@link UMLModelASTReader#processJavaFileContents}
+		/// However, The original one, not easily refactorable due to the for loop in the method,
+		/// and the dependency to the umlModel.
+		char[] charArray = code.toCharArray();
+		IScanner scanner = ToolFactory.createScanner(true, false, false, false);
+		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
+		CompilationUnit compilationUnit = getCompilationUnit(JavaCore.VERSION_14, parser, charArray);
+		String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
+		if (maxRecommendedVersionFromProblems != null)
+			compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray);
+		scanner.setSource(charArray);
+		JdtVisitor visitor = new JdtVisitor(scanner);
+		compilationUnit.accept(visitor);
+		TreeContext treeContext = visitor.getTreeContext();
+		return treeContext.getRoot();
 	}
 }

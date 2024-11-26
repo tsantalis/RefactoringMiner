@@ -148,7 +148,7 @@ public class UMLModelASTReader {
 		}
 	}
 
-	private static CompilationUnit getCompilationUnit(String javaCoreVersion, ASTParser parser, char[] charArray) {
+	public static CompilationUnit getCompilationUnit(String javaCoreVersion, ASTParser parser, char[] charArray) {
 		Map<String, String> options = JavaCore.getOptions();
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, javaCoreVersion);
 		options.put(JavaCore.COMPILER_SOURCE, javaCoreVersion);
@@ -161,7 +161,7 @@ public class UMLModelASTReader {
 		return (CompilationUnit) parser.createAST(null);
 	}
 
-	private static String getMaxRecommendedVersionFromProblems(CompilationUnit compilationUnit) {
+	public static String getMaxRecommendedVersionFromProblems(CompilationUnit compilationUnit) {
 		IProblem[] problems = compilationUnit.getProblems();
 		String result = null;
 		for (IProblem problem : problems) {

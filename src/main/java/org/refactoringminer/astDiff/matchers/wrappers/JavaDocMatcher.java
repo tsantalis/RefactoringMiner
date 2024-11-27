@@ -82,14 +82,15 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
             if (umlJavadocDiff.isEmpty()) return;
             mappingStore.addMapping(srcJavaDocNode,dstJavaDocNode); // Match the entire javadoc subtree node (parent)
             UMLJavadocDiff diff = umlJavadocDiff.get();
-            if(diff.getCommonTags().size() > 0 || diff.getCommonDocElements().size() > 0 || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
+            if(!diff.getCommonTags().isEmpty() || !diff.getCommonDocElements().isEmpty() || srcUMLJavaDoc.isEmpty() || dstUMLJavaDoc.isEmpty()) {
                 MappingStore gtSimpleMappings = new CompositeMatchers.SimpleGumtree().match(srcJavaDocNode, dstJavaDocNode);
                 mappingStore.add(gtSimpleMappings);
             	for (Pair<UMLTagElement, UMLTagElement> pair : diff.getCommonTags()) {
                     Tree srcTag = TreeUtilFunctions.findByLocationInfo(srcTree,pair.getLeft().getLocationInfo());
                     Tree dstTag = TreeUtilFunctions.findByLocationInfo(dstTree,pair.getRight().getLocationInfo());
                     if (srcTag != null && dstTag != null) {
-                        if (!mappingStore.isSrcMapped(srcTag) || !mappingStore.isDstMapped(dstTag) || diff.isManyToManyReformat()) {
+//                        if (!mappingStore.isSrcMapped(srcTag) || !mappingStore.isDstMapped(dstTag) || diff.isManyToManyReformat())
+                        {
                             if (srcTag.isIsoStructuralTo(dstTag))
                                 optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
                             else

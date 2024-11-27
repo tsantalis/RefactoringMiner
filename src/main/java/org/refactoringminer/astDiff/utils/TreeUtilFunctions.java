@@ -1,6 +1,5 @@
 package org.refactoringminer.astDiff.utils;
 
-import com.github.gumtreediff.gen.jdt.JdtVisitor;
 import com.github.gumtreediff.io.TreeIoUtils;
 import com.github.gumtreediff.matchers.Mapping;
 import com.github.gumtreediff.tree.DefaultTree;
@@ -18,15 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.ToolFactory;
-import org.eclipse.jdt.core.compiler.IScanner;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-
-import static gr.uom.java.xmi.UMLModelASTReader.getCompilationUnit;
-import static gr.uom.java.xmi.UMLModelASTReader.getMaxRecommendedVersionFromProblems;
 
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com

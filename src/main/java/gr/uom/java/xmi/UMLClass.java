@@ -110,6 +110,10 @@ public class UMLClass extends UMLAbstractClass implements Comparable<UMLClass>, 
     	typeParameters.add(typeParameter);
     }
 
+    public String getSourceFolder() {
+		return sourceFolder;
+	}
+
     public String getName() {
     	return this.qualifiedName;
     }

@@ -146,22 +146,18 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public Set<UMLAbstractClass> findClassesInChildModel(String className) {
-		Set<UMLAbstractClass> set = new LinkedHashSet<UMLAbstractClass>();
+	public UMLAbstractClass findClassInChildModel(String sourceFolder, String className) {
 		for(UMLClass umlClass : childModel.getClassList()) {
-			if(umlClass.getName().equals(className)) {
-				set.add(umlClass);
+			if(umlClass.getName().equals(className) && umlClass.getSourceFolder().equals(sourceFolder)) {
+				return umlClass;
 			}
 		}
-		if(!set.isEmpty()) {
-			return set;
-		}
 		for(UMLClass umlClass : childModel.getClassList()) {
-			if(umlClass.getName().endsWith("." + className)) {
-				set.add(umlClass);
+			if(umlClass.getName().endsWith("." + className) && umlClass.getSourceFolder().equals(sourceFolder)) {
+				return umlClass;
 			}
 		}
-		return set;
+		return null;
 	}
 
 	public UMLAbstractClass findClassInChildModel(String className) {
@@ -525,13 +521,12 @@ public class UMLModelDiff {
 		return null;
 	}
 
-	public Set<UMLClass> getAllAddedClasses(String className) {
-		Set<UMLClass> classes = new LinkedHashSet<UMLClass>();
+	public UMLClass getAddedClass(String sourceFolder, String className) {
 		for(UMLClass umlClass : addedClasses) {
-			if(umlClass.getName().equals(className))
-				classes.add(umlClass);
+			if(umlClass.getName().equals(className) && umlClass.getSourceFolder().equals(sourceFolder))
+				return umlClass;
 		}
-		return classes;
+		return null;
 	}
 
 	public UMLClass getAddedClass(String className) {

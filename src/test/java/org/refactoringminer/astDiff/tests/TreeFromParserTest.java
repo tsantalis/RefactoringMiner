@@ -3,7 +3,7 @@ package org.refactoringminer.astDiff.tests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.getRefactoringMinerParsedTree;
+import static org.refactoringminer.astDiff.utils.UtilMethods.getRefactoringMinerParsedTree;
 
 /* Created by pourya on 2024-11-26*/
 public class TreeFromParserTest {

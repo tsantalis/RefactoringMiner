@@ -300,21 +300,4 @@ public class TreeUtilFunctions {
 		}
 		return fieldAnnotation;
 	}
-	public static Tree getRefactoringMinerParsedTree(String code) {
-		/// XXX this is a poor replica of {@link UMLModelASTReader#processJavaFileContents}
-		/// However, The original one, not easily refactorable due to the for loop in the method,
-		/// and the dependency to the umlModel.
-		char[] charArray = code.toCharArray();
-		IScanner scanner = ToolFactory.createScanner(true, false, false, false);
-		ASTParser parser = ASTParser.newParser(AST.getJLSLatest());
-		CompilationUnit compilationUnit = getCompilationUnit(JavaCore.VERSION_14, parser, charArray);
-		String maxRecommendedVersionFromProblems = getMaxRecommendedVersionFromProblems(compilationUnit);
-		if (maxRecommendedVersionFromProblems != null)
-			compilationUnit = getCompilationUnit(maxRecommendedVersionFromProblems, parser, charArray);
-		scanner.setSource(charArray);
-		JdtVisitor visitor = new JdtVisitor(scanner);
-		compilationUnit.accept(visitor);
-		TreeContext treeContext = visitor.getTreeContext();
-		return treeContext.getRoot();
-	}
 }

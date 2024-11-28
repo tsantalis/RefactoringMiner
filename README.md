@@ -312,21 +312,21 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **October 14, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **November 28, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12274  | 20  | 232  | 0.998  | 0.981|
-|Extract Method|1006  |  1  | 22  | 0.999  | 0.979|
+|**Total**|12299  | 20  | 232  | 0.998  | 0.981|
+|Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|249  |  2  |  8  | 0.992  | 0.969|
 |Move And Rename Attribute|13  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|387  |  4  | 21  | 0.990  | 0.949|
+|Rename Method|388  |  4  | 21  | 0.990  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|350  |  3  |  6  | 0.992  | 0.983|
-|Move And Rename Method|122  |  0  |  3  | 1.000  | 0.976|
-|Pull Up Method|289  |  0  |  5  | 1.000  | 0.983|
+|Move And Rename Method|124  |  0  |  3  | 1.000  | 0.976|
+|Pull Up Method|288  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1096  |  0  |  4  | 1.000  | 0.996|
 |Move And Rename Class|36  |  0  |  1  | 1.000  | 0.973|
 |Move Source Folder| 3  |  0  |  0  | 1.000  | 1.000|
@@ -346,8 +346,8 @@ As of **October 14, 2024** the precision and recall of the tool on an oracle con
 |Extract Attribute|22  |  0  |  0  | 1.000  | 1.000|
 |Inline Variable|105  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|329  |  3  | 11  | 0.991  | 0.968|
-|Rename Parameter|490  |  2  | 24  | 0.996  | 0.953|
+|Rename Variable|335  |  3  | 11  | 0.991  | 0.968|
+|Rename Parameter|492  |  2  | 24  | 0.996  | 0.953|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -361,8 +361,8 @@ As of **October 14, 2024** the precision and recall of the tool on an oracle con
 |Localize Parameter|26  |  0  |  0  | 1.000  | 1.000|
 |Parameterize Attribute|23  |  0  |  0  | 1.000  | 1.000|
 |Change Return Type|433  |  0  | 12  | 1.000  | 0.973|
-|Change Variable Type|799  |  2  |  7  | 0.998  | 0.991|
-|Change Parameter Type|652  |  1  | 10  | 0.998  | 0.985|
+|Change Variable Type|807  |  2  |  7  | 0.998  | 0.991|
+|Change Parameter Type|653  |  1  | 10  | 0.998  | 0.985|
 |Change Attribute Type|244  |  0  |  8  | 1.000  | 0.968|
 |Add Method Annotation|331  |  0  |  1  | 1.000  | 0.997|
 |Remove Method Annotation|100  |  0  |  0  | 1.000  | 1.000|
@@ -376,8 +376,8 @@ As of **October 14, 2024** the precision and recall of the tool on an oracle con
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|850  |  2  |  1  | 0.998  | 0.999|
-|Remove Parameter|308  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter|849  |  2  |  1  | 0.998  | 0.999|
+|Remove Parameter|311  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|
 |Remove Variable Annotation| 4  |  0  |  0  | 1.000  | 1.000|
@@ -413,7 +413,7 @@ As of **October 14, 2024** the precision and recall of the tool on an oracle con
 |Merge Catch| 2  |  0  |  0  | 1.000  | 1.000|
 |Merge Method| 3  |  0  |  0  | 1.000  | 1.000|
 |Split Method| 5  |  0  |  0  | 1.000  | 1.000|
-|Move Code|16  |  0  |  0  | 1.000  | 1.000|
+|Move Code|19  |  0  |  0  | 1.000  | 1.000|
 |Assert Throws|14  |  0  |  0  | 1.000  | 1.000|
 |Try With Resources| 4  |  0  |  0  | 1.000  | 1.000|
 |Replace Generic With Diamond|77  |  0  |  0  | 1.000  | 1.000|
@@ -430,10 +430,11 @@ You can also work with the project with Eclipse IDE. First, run `./gradlew eclip
 # How to test RefactoringMiner
 As of release 3.0, all RefactoringMiner tests have been migrated to JUnit 5 and do not require any more to clone repositories.
 Moreover, all unit tests can be executed in parallel. The more CPU cores, the faster the test suites will execute.
+You can run `gradle test` to execute all tests.
 The available test suites are:
 * [src/test/java/org/refactoringminer/test/TestAllRefactorings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactorings.java) : Tests the overall precision and recall of RefactoringMiner on the Refactoring Oracle (547 commits)
 * [src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestAllRefactoringsByCommit.java) : Tests the number of True Positives, False Positives and False Negatives, separately for each commit of the Refactoring Oracle (547 commits)
-* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (112 commits)
+* [src/test/java/org/refactoringminer/test/TestStatementMappings](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestStatementMappings.java): Tests the statement mapping accuracy of RefactoringMiner (125 commits)
 * [src/test/java/org/refactoringminer/test/TestJavadocDiff](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestJavadocDiff.java): Tests the comment and Javadoc mapping accuracy of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestCommandLine](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestCommandLine.java): Tests the command-line functionality of RefactoringMiner
 * [src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring](https://github.com/tsantalis/RefactoringMiner/blob/master/src/test/java/org/refactoringminer/test/TestParameterizeTestRefactoring.java): Tests the Parameterize Test Refactoring detection
@@ -452,12 +453,12 @@ In order to use RefactoringMiner as a maven dependency in your project, add the 
     <dependency>
       <groupId>com.github.tsantalis</groupId>
       <artifactId>refactoring-miner</artifactId>
-      <version>3.0.9</version>
+      <version>3.0.10</version>
     </dependency>
 
 **build.gradle**
 
-    implementation 'com.github.tsantalis:refactoring-miner:3.0.9'
+    implementation 'com.github.tsantalis:refactoring-miner:3.0.10'
 
 # How to use RefactoringMiner as a docker image
 <a href="https://hub.docker.com/r/tsantalis/refactoringminer"><img src="https://img.shields.io/badge/dockerhub-images-important.svg?logo=Docker"></a>

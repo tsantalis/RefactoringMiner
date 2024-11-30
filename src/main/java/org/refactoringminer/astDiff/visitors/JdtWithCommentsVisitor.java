@@ -1,6 +1,5 @@
 package org.refactoringminer.astDiff.visitors;
 
-import com.github.gumtreediff.gen.jdt.JdtVisitor;
 import com.github.gumtreediff.tree.Tree;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jdt.core.dom.*;

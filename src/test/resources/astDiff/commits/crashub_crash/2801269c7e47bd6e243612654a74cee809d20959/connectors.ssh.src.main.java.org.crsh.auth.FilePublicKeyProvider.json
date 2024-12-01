@@ -10,6 +10,17 @@
   "firstEndPos" : 2854,
   "secondEndPos" : 3407
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2012 eXo Platform SAS.\n *\n * This is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as\n * published by the Free Software Foundation; either version 2.1 of\n * the License, or (at your option) any later version.\n *\n * This software is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this software; if not, write to the Free\n * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA\n * 02110-1301 USA, or see the FSF site: http://www.fsf.org.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2012 eXo Platform SAS.\n *\n * This is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as\n * published by the Free Software Foundation; either version 2.1 of\n * the License, or (at your option) any later version.\n *\n * This software is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this software; if not, write to the Free\n * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA\n * 02110-1301 USA, or see the FSF site: http://www.fsf.org.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 822,
+  "secondEndPos" : 822
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -373,6 +384,17 @@
   "firstEndPos" : 1434,
   "secondEndPos" : 1536
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1372,
+  "secondPos" : 1474,
+  "firstEndPos" : 1377,
+  "secondEndPos" : 1479
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.apache.sshd.common.keyprovider.FileKeyPairProvider",
@@ -417,6 +439,17 @@
   "firstEndPos" : 1490,
   "secondEndPos" : 1592
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1475,
+  "secondPos" : 1577,
+  "firstEndPos" : 1480,
+  "secondEndPos" : 1582
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "KeyPair",
@@ -450,6 +483,17 @@
   "firstEndPos" : 1514,
   "secondEndPos" : 1616
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1497,
+  "secondPos" : 1599,
+  "firstEndPos" : 1502,
+  "secondEndPos" : 1604
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PublicKey",
@@ -482,6 +526,17 @@
   "secondPos" : 1624,
   "firstEndPos" : 1590,
   "secondEndPos" : 1692
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1522,
+  "secondPos" : 1624,
+  "firstEndPos" : 1529,
+  "secondEndPos" : 1631
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

@@ -4718,6 +4718,17 @@
   "firstEndPos" : 5657,
   "secondEndPos" : 5388
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * show posts with a specific tag (either TAG_FOLLOWED or TAG_PREVIEW)\n     */",
+  "secondLabel" : "/*\n     * show posts with a specific tag (either TAG_FOLLOWED or TAG_PREVIEW)\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5671,
+  "secondPos" : 5402,
+  "firstEndPos" : 5756,
+  "secondEndPos" : 5487
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5410,6 +5421,17 @@
   "secondPos" : 5953,
   "firstEndPos" : 6230,
   "secondEndPos" : 5961
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * show posts in a specific blog\n     */",
+  "secondLabel" : "/*\n     * show posts in a specific blog\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6243,
+  "secondPos" : 5974,
+  "firstEndPos" : 6290,
+  "secondEndPos" : 6021
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -10009,6 +10031,28 @@
   "firstEndPos" : 9870,
   "secondEndPos" : 9601
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// refresh the posts in case the user returned from an activity that",
+  "secondLabel" : "// refresh the posts in case the user returned from an activity that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9884,
+  "secondPos" : 9615,
+  "firstEndPos" : 9952,
+  "secondEndPos" : 9683
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// changed one (or more) of the posts",
+  "secondLabel" : "// changed one (or more) of the posts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9965,
+  "secondPos" : 9696,
+  "firstEndPos" : 10002,
+  "secondEndPos" : 9733
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10042,6 +10086,17 @@
   "firstEndPos" : 10027,
   "secondEndPos" : 9758
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// likewise for tags",
+  "secondLabel" : "// likewise for tags",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10043,
+  "secondPos" : 9774,
+  "firstEndPos" : 10063,
+  "secondEndPos" : 9794
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10074,6 +10129,17 @@
   "secondPos" : 9807,
   "firstEndPos" : 10087,
   "secondEndPos" : 9818
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// auto-update the current tag if it's time",
+  "secondLabel" : "// auto-update the current tag if it's time",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10104,
+  "secondPos" : 9835,
+  "firstEndPos" : 10147,
+  "secondEndPos" : 9878
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11296,6 +11362,17 @@
   "firstEndPos" : 11541,
   "secondEndPos" : 11272
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// list fragment is viewing followed tags, tell it to refresh the list of tags",
+  "secondLabel" : "// list fragment is viewing followed tags, tell it to refresh the list of tags",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11180,
+  "secondPos" : 10911,
+  "firstEndPos" : 11258,
+  "secondEndPos" : 10989
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11328,6 +11405,28 @@
   "secondPos" : 11002,
   "firstEndPos" : 11282,
   "secondEndPos" : 11013
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the current tag if the list fragment is empty - this will happen if",
+  "secondLabel" : "// update the current tag if the list fragment is empty - this will happen if",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11298,
+  "secondPos" : 11029,
+  "firstEndPos" : 11375,
+  "secondEndPos" : 11106
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the tag table was previously empty (ie: first run)",
+  "secondLabel" : "// the tag table was previously empty (ie: first run)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11388,
+  "secondPos" : 11119,
+  "firstEndPos" : 11441,
+  "secondEndPos" : 11172
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11537,6 +11636,17 @@
   "secondPos" : 11387,
   "firstEndPos" : 11929,
   "secondEndPos" : 11660
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// refresh posts if user is viewing \"Blogs I Follow\"",
+  "secondLabel" : "// refresh posts if user is viewing \"Blogs I Follow\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11666,
+  "secondPos" : 11397,
+  "firstEndPos" : 11718,
+  "secondEndPos" : 11449
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14200,6 +14310,17 @@
   "firstEndPos" : 13713,
   "secondEndPos" : 13444
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// bar that appears at top after new posts are loaded",
+  "secondLabel" : "// bar that appears at top after new posts are loaded",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13726,
+  "secondPos" : 13457,
+  "firstEndPos" : 13779,
+  "secondEndPos" : 13510
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14727,6 +14848,17 @@
   "secondPos" : 13830,
   "firstEndPos" : 14111,
   "secondEndPos" : 13842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add the header for tag/blog preview - note that this remains invisible until animated in",
+  "secondLabel" : "// add the header for tag/blog preview",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14150,
+  "secondPos" : 15373,
+  "firstEndPos" : 14241,
+  "secondEndPos" : 15411
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15718,6 +15850,17 @@
   "firstEndPos" : 16193,
   "secondEndPos" : 15303
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove background & elevation - toolbar needs to have same background as the list",
+  "secondLabel" : "// remove background & elevation - toolbar needs to have same background as the list",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14989,
+  "secondPos" : 14099,
+  "firstEndPos" : 15073,
+  "secondEndPos" : 14183
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16113,6 +16256,17 @@
   "secondPos" : 14394,
   "firstEndPos" : 15286,
   "secondEndPos" : 14396
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// enable customizing followed tags/blogs if user is logged in",
+  "secondLabel" : "// enable customizing followed tags/blogs if user is logged in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15302,
+  "secondPos" : 14412,
+  "firstEndPos" : 15364,
+  "secondEndPos" : 14474
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16708,6 +16862,17 @@
   "firstEndPos" : 15924,
   "secondEndPos" : 15034
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create the tag spinner in the toolbar",
+  "secondLabel" : "// create the tag spinner in the toolbar",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15995,
+  "secondPos" : 15105,
+  "firstEndPos" : 16035,
+  "secondEndPos" : 15145
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16982,6 +17147,28 @@
   "secondPos" : 15348,
   "firstEndPos" : 16247,
   "secondEndPos" : 15357
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// view that appears when current tag/blog has no posts - box images in this view are",
+  "secondLabel" : "// view that appears when current tag/blog has no posts - box images in this view are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16269,
+  "secondPos" : 16091,
+  "firstEndPos" : 16354,
+  "secondEndPos" : 16176
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// displayed and animated for tags only",
+  "secondLabel" : "// displayed and animated for tags only",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16363,
+  "secondPos" : 16185,
+  "firstEndPos" : 16402,
+  "secondEndPos" : 16224
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17269,6 +17456,17 @@
   "firstEndPos" : 16593,
   "secondEndPos" : 16415
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// progress bar that appears when loading more posts",
+  "secondLabel" : "// progress bar that appears when loading more posts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16605,
+  "secondPos" : 16427,
+  "firstEndPos" : 16657,
+  "secondEndPos" : 16479
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17488,6 +17686,17 @@
   "secondPos" : 16591,
   "firstEndPos" : 16778,
   "secondEndPos" : 16600
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swipe to refresh setup",
+  "secondLabel" : "// swipe to refresh setup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16790,
+  "secondPos" : 16612,
+  "firstEndPos" : 16815,
+  "secondEndPos" : 16637
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18391,6 +18600,17 @@
   "firstEndPos" : 17936,
   "secondEndPos" : 17758
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make sure swipe-to-refresh progress shows since this is a manual refresh",
+  "secondLabel" : "// make sure swipe-to-refresh progress shows since this is a manual refresh",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17987,
+  "secondPos" : 17809,
+  "firstEndPos" : 18062,
+  "secondEndPos" : 17884
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18786,6 +19006,39 @@
   "secondPos" : 18248,
   "firstEndPos" : 20369,
   "secondEndPos" : 18262
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if adapter didn't already exist, populate it now then update the tag - this",
+  "secondLabel" : "// if adapter didn't already exist, populate it now then update the tag - this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20383,
+  "secondPos" : 18276,
+  "firstEndPos" : 20461,
+  "secondEndPos" : 18354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check is important since without it the adapter would be reset and posts would",
+  "secondLabel" : "// check is important since without it the adapter would be reset and posts would",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20470,
+  "secondPos" : 18363,
+  "firstEndPos" : 20551,
+  "secondEndPos" : 18444
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// be updated every time the user moves between fragments",
+  "secondLabel" : "// be updated every time the user moves between fragments",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20560,
+  "secondPos" : 18453,
+  "firstEndPos" : 20617,
+  "secondEndPos" : 18510
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -19655,6 +19908,17 @@
   "secondPos" : 19225,
   "firstEndPos" : 21418,
   "secondEndPos" : 19231
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * adds a follow button to the activity toolbar for tag/blog preview\n     */",
+  "secondLabel" : "/*\n     * adds a follow button to the activity toolbar for tag/blog preview\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 21440,
+  "secondPos" : 19253,
+  "firstEndPos" : 21523,
+  "secondEndPos" : 19336
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -22417,6 +22681,17 @@
   "firstEndPos" : 23746,
   "secondEndPos" : 21559
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * blocks the blog associated with the passed post and removes all posts in that blog\n     * from the adapter\n     */",
+  "secondLabel" : "/*\n     * blocks the blog associated with the passed post and removes all posts in that blog\n     * from the adapter\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 23760,
+  "secondPos" : 21573,
+  "firstEndPos" : 23884,
+  "secondEndPos" : 21697
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -23220,6 +23495,28 @@
   "firstEndPos" : 24453,
   "secondEndPos" : 22266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// perform call to block this blog - returns list of posts deleted by blocking so",
+  "secondLabel" : "// perform call to block this blog - returns list of posts deleted by blocking so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24508,
+  "secondPos" : 22321,
+  "firstEndPos" : 24589,
+  "secondEndPos" : 22402
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// they can be restored if the user undoes the block",
+  "secondLabel" : "// they can be restored if the user undoes the block",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24598,
+  "secondPos" : 22411,
+  "firstEndPos" : 24650,
+  "secondEndPos" : 22463
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -23440,6 +23737,17 @@
   "firstEndPos" : 24871,
   "secondEndPos" : 22684
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove posts in this blog from the adapter",
+  "secondLabel" : "// remove posts in this blog from the adapter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24883,
+  "secondPos" : 22696,
+  "firstEndPos" : 24928,
+  "secondEndPos" : 22741
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -23527,6 +23835,17 @@
   "secondPos" : 22785,
   "firstEndPos" : 24983,
   "secondEndPos" : 22796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show the undo snackbar enabling the user to undo the block",
+  "secondLabel" : "// show the undo snackbar enabling the user to undo the block",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24995,
+  "secondPos" : 22808,
+  "firstEndPos" : 25056,
+  "secondEndPos" : 22869
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -24099,6 +24418,17 @@
   "secondPos" : 23311,
   "firstEndPos" : 25502,
   "secondEndPos" : 23315
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * enables the tag spinner in the toolbar, used only for posts in followed tags\n     */",
+  "secondLabel" : "/*\n     * enables the tag spinner in the toolbar, used only for posts in followed tags\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25517,
+  "secondPos" : 23330,
+  "firstEndPos" : 25611,
+  "secondEndPos" : 23424
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -26102,6 +26432,17 @@
   "firstEndPos" : 26962,
   "secondEndPos" : 24775
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nop",
+  "secondLabel" : "// nop",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26942,
+  "secondPos" : 24755,
+  "firstEndPos" : 26948,
+  "secondEndPos" : 24761
+}, {
   "firstType" : "ParenthesizedExpression",
   "secondType" : "ParenthesizedExpression",
   "firstLabel" : "",
@@ -26167,6 +26508,17 @@
   "secondPos" : 13934,
   "firstEndPos" : 27285,
   "secondEndPos" : 13965
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * box/pages animation that appears when loading an empty list (only appears for tags)\n     */",
+  "secondLabel" : "/*\n     * box/pages animation that appears when loading an empty list (only appears for tags)\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27299,
+  "secondPos" : 24799,
+  "firstEndPos" : 27400,
+  "secondEndPos" : 24900
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -29435,6 +29787,17 @@
   "firstEndPos" : 29969,
   "secondEndPos" : 27469
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called by post adapter when data has been loaded\n     */",
+  "secondLabel" : "/*\n     * called by post adapter when data has been loaded\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 29993,
+  "secondPos" : 27493,
+  "firstEndPos" : 30059,
+  "secondEndPos" : 27559
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -30359,6 +30722,17 @@
   "firstEndPos" : 30909,
   "secondEndPos" : 28409
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called by post adapter to load older posts when user scrolls to the last post\n     */",
+  "secondLabel" : "/*\n     * called by post adapter to load older posts when user scrolls to the last post\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 30933,
+  "secondPos" : 28433,
+  "firstEndPos" : 31028,
+  "secondEndPos" : 28528
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -30557,6 +30931,17 @@
   "firstEndPos" : 32590,
   "secondEndPos" : 30090
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip if update is already in progress",
+  "secondLabel" : "// skip if update is already in progress",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31220,
+  "secondPos" : 28720,
+  "firstEndPos" : 31260,
+  "secondEndPos" : 28760
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -30611,6 +30996,17 @@
   "secondPos" : 28809,
   "firstEndPos" : 31316,
   "secondEndPos" : 28816
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// request older posts unless we already have the max # to show",
+  "secondLabel" : "// request older posts unless we already have the max # to show",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31344,
+  "secondPos" : 28844,
+  "firstEndPos" : 31407,
+  "secondEndPos" : 28907
 }, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",
@@ -30809,6 +31205,17 @@
   "secondPos" : 29137,
   "firstEndPos" : 31890,
   "secondEndPos" : 29390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// request older posts",
+  "secondLabel" : "// request older posts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31663,
+  "secondPos" : 29163,
+  "firstEndPos" : 31685,
+  "secondEndPos" : 29185
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31546,6 +31953,17 @@
   "secondPos" : 30060,
   "firstEndPos" : 32566,
   "secondEndPos" : 30066
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called by post adapter when user requests to reblog a post\n     */",
+  "secondLabel" : "/*\n     * called by post adapter when user requests to reblog a post\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 32603,
+  "secondPos" : 30103,
+  "firstEndPos" : 32679,
+  "secondEndPos" : 30179
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -34319,6 +34737,39 @@
   "firstEndPos" : 34668,
   "secondEndPos" : 32168
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip if this is already the current tag and the post adapter is already showing it - this",
+  "secondLabel" : "// skip if this is already the current tag and the post adapter is already showing it - this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34688,
+  "secondPos" : 32188,
+  "firstEndPos" : 34780,
+  "secondEndPos" : 32280
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// will happen when the list fragment is restored and the current tag is re-selected in the",
+  "secondLabel" : "// will happen when the list fragment is restored and the current tag is re-selected in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34789,
+  "secondPos" : 32289,
+  "firstEndPos" : 34880,
+  "secondEndPos" : 32380
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// toolbar dropdown",
+  "secondLabel" : "// toolbar dropdown",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34889,
+  "secondPos" : 32389,
+  "firstEndPos" : 34908,
+  "secondEndPos" : 32408
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -34626,6 +35077,17 @@
   "secondPos" : 32645,
   "firstEndPos" : 35157,
   "secondEndPos" : 32657
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remember this as the current tag if viewing followed tag",
+  "secondLabel" : "// remember this as the current tag if viewing followed tag",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 35175,
+  "secondPos" : 32675,
+  "firstEndPos" : 35234,
+  "secondEndPos" : 32734
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -35177,6 +35639,17 @@
   "firstEndPos" : 35669,
   "secondEndPos" : 33169
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update posts in this tag if it's time to do so",
+  "secondLabel" : "// update posts in this tag if it's time to do so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35692,
+  "secondPos" : 33192,
+  "firstEndPos" : 35741,
+  "secondEndPos" : 33241
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -35363,6 +35836,17 @@
   "secondPos" : 33352,
   "firstEndPos" : 35878,
   "secondEndPos" : 33378
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    * when previewing posts with a specific tag, a history of previewed tags is retained so\n    * the user can navigate back through them - this is faster and requires less memory\n    * than creating a new fragment for each previewed tag\n    */",
+  "secondLabel" : "/*\n    * when previewing posts with a specific tag, a history of previewed tags is retained so\n    * the user can navigate back through them - this is faster and requires less memory\n    * than creating a new fragment for each previewed tag\n    */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 35902,
+  "secondPos" : 33402,
+  "firstEndPos" : 36149,
+  "secondEndPos" : 33649
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -36001,6 +36485,17 @@
   "secondPos" : 34129,
   "firstEndPos" : 36633,
   "secondEndPos" : 34133
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * if we're previewing a tag, show the current tag name in the header and update the\n     * follow button to show the correct follow state for the tag\n     */",
+  "secondLabel" : "/*\n     * if we're previewing a tag, show the current tag name in the header and update the\n     * follow button to show the correct follow state for the tag\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 36646,
+  "secondPos" : 34146,
+  "firstEndPos" : 36811,
+  "secondEndPos" : 34311
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -36827,6 +37322,17 @@
   "firstEndPos" : 37322,
   "secondEndPos" : 34822
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * refresh adapter so latest posts appear\n     */",
+  "secondLabel" : "/*\n     * refresh adapter so latest posts appear\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 37337,
+  "secondPos" : 34837,
+  "firstEndPos" : 37393,
+  "secondEndPos" : 34893
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -37024,6 +37530,17 @@
   "secondPos" : 35016,
   "firstEndPos" : 37523,
   "secondEndPos" : 35023
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * tell the adapter to reload a single post - called when user returns from detail, where the\n     * post may have been changed (either by the user, or because it updated)\n     */",
+  "secondLabel" : "/*\n     * tell the adapter to reload a single post - called when user returns from detail, where the\n     * post may have been changed (either by the user, or because it updated)\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 37548,
+  "secondPos" : 35048,
+  "firstEndPos" : 37734,
+  "secondEndPos" : 35234
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -37321,6 +37838,17 @@
   "secondPos" : 35370,
   "firstEndPos" : 37874,
   "secondEndPos" : 35374
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * get posts for the current blog from the server\n     */",
+  "secondLabel" : "/*\n     * get posts for the current blog from the server\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 37898,
+  "secondPos" : 35398,
+  "firstEndPos" : 37962,
+  "secondEndPos" : 35462
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -38829,6 +39357,50 @@
   "firstEndPos" : 39024,
   "secondEndPos" : 36524
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// determine whether to show the \"new posts\" bar - when this is shown, the newly",
+  "secondLabel" : "// determine whether to show the \"new posts\" bar - when this is shown, the newly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39044,
+  "secondPos" : 36544,
+  "firstEndPos" : 39124,
+  "secondEndPos" : 36624
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// downloaded posts aren't displayed until the user taps the bar - only appears",
+  "secondLabel" : "// downloaded posts aren't displayed until the user taps the bar - only appears",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39133,
+  "secondPos" : 36633,
+  "firstEndPos" : 39212,
+  "secondEndPos" : 36712
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// when there are new posts in a followed tag and the user has scrolled the list",
+  "secondLabel" : "// when there are new posts in a followed tag and the user has scrolled the list",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39221,
+  "secondPos" : 36721,
+  "firstEndPos" : 39301,
+  "secondEndPos" : 36801
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// beyond the first post",
+  "secondLabel" : "// beyond the first post",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39310,
+  "secondPos" : 36810,
+  "firstEndPos" : 39334,
+  "secondEndPos" : 36834
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -39599,6 +40171,17 @@
   "firstEndPos" : 39907,
   "secondEndPos" : 37407
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * returns true if the first post is still visible in the RecyclerView - will return\n     * false if the first post is scrolled out of view, or if the list is empty\n     */",
+  "secondLabel" : "/*\n     * returns true if the first post is still visible in the RecyclerView - will return\n     * false if the first post is scrolled out of view, or if the list is empty\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 39931,
+  "secondPos" : 37431,
+  "firstEndPos" : 40110,
+  "secondEndPos" : 37610
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -40280,6 +40863,17 @@
   "secondPos" : 37975,
   "firstEndPos" : 40476,
   "secondEndPos" : 37976
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * get latest posts for this tag from the server\n     */",
+  "secondLabel" : "/*\n     * get latest posts for this tag from the server\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 40490,
+  "secondPos" : 37990,
+  "firstEndPos" : 40553,
+  "secondEndPos" : 38053
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -41293,6 +41887,17 @@
   "firstEndPos" : 41326,
   "secondEndPos" : 38826
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    * show/hide progress bar which appears at the bottom of the activity when loading more posts\n    */",
+  "secondLabel" : "/*\n    * show/hide progress bar which appears at the bottom of the activity when loading more posts\n    */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 41350,
+  "secondPos" : 38850,
+  "firstEndPos" : 41456,
+  "secondEndPos" : 38956
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -42085,6 +42690,17 @@
   "firstEndPos" : 42148,
   "secondEndPos" : 39648
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show/hide progress bar at bottom if these are older posts",
+  "secondLabel" : "// show/hide progress bar at bottom if these are older posts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42033,
+  "secondPos" : 39533,
+  "firstEndPos" : 42093,
+  "secondEndPos" : 39593
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -42217,6 +42833,17 @@
   "firstEndPos" : 42331,
   "secondEndPos" : 39831
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show swipe-to-refresh if update started and no posts are showing",
+  "secondLabel" : "// show swipe-to-refresh if update started and no posts are showing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42208,
+  "secondPos" : 39708,
+  "firstEndPos" : 42275,
+  "secondEndPos" : 39775
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -42327,6 +42954,17 @@
   "firstEndPos" : 42480,
   "secondEndPos" : 39980
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hide swipe-to-refresh progress if update is complete",
+  "secondLabel" : "// hide swipe-to-refresh progress if update is complete",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42368,
+  "secondPos" : 39868,
+  "firstEndPos" : 42423,
+  "secondEndPos" : 39923
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -42436,6 +43074,17 @@
   "secondPos" : 40003,
   "firstEndPos" : 42513,
   "secondEndPos" : 40013
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * bar that appears at the top when new posts have been retrieved\n     */",
+  "secondLabel" : "/*\n     * bar that appears at the top when new posts have been retrieved\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 42526,
+  "secondPos" : 40026,
+  "firstEndPos" : 42606,
+  "secondEndPos" : 40106
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -43999,6 +44648,17 @@
   "firstEndPos" : 43807,
   "secondEndPos" : 41307
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * make sure current tag still exists, reset to default if it doesn't\n     */",
+  "secondLabel" : "/*\n     * make sure current tag still exists, reset to default if it doesn't\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 43821,
+  "secondPos" : 41321,
+  "firstEndPos" : 43905,
+  "secondEndPos" : 41405
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -44384,6 +45044,17 @@
   "firstEndPos" : 44162,
   "secondEndPos" : 41662
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * refresh the list of tags shown in the toolbar spinner\n     */",
+  "secondLabel" : "/*\n     * refresh the list of tags shown in the toolbar spinner\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 44187,
+  "secondPos" : 41687,
+  "firstEndPos" : 44258,
+  "secondEndPos" : 41758
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -44658,6 +45329,17 @@
   "secondPos" : 41942,
   "firstEndPos" : 44453,
   "secondEndPos" : 41953
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called from host activity after user adds/removes tags\n     */",
+  "secondLabel" : "/*\n     * called from host activity after user adds/removes tags\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 44478,
+  "secondPos" : 41978,
+  "firstEndPos" : 44550,
+  "secondEndPos" : 42050
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -45088,6 +45770,17 @@
   "firstEndPos" : 44814,
   "secondEndPos" : 42314
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * are we showing all posts with a specific tag (followed or previewed), or all\n     * posts in a specific blog?\n     */",
+  "secondLabel" : "/*\n     * are we showing all posts with a specific tag (followed or previewed), or all\n     * posts in a specific blog?\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 44838,
+  "secondPos" : 42338,
+  "firstEndPos" : 44965,
+  "secondEndPos" : 42465
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -45252,6 +45945,17 @@
   "secondPos" : 42573,
   "firstEndPos" : 45107,
   "secondEndPos" : 42607
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * toolbar spinner adapter which shows list of tags\n     */",
+  "secondLabel" : "/*\n     * toolbar spinner adapter which shows list of tags\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 45121,
+  "secondPos" : 42621,
+  "firstEndPos" : 45187,
+  "secondEndPos" : 42687
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -46133,6 +46837,17 @@
   "firstEndPos" : 46018,
   "secondEndPos" : 43518
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * make sure the passed tag is the one selected in the spinner\n     */",
+  "secondLabel" : "/*\n     * make sure the passed tag is the one selected in the spinner\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 46032,
+  "secondPos" : 43532,
+  "firstEndPos" : 46109,
+  "secondEndPos" : 43609
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -46770,6 +47485,17 @@
   "secondPos" : 43940,
   "firstEndPos" : 46448,
   "secondEndPos" : 43948
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * used by blog preview - tell the blog info view to show the current blog/feed\n     * if it's not already loaded, then shows/updates posts once the info is loaded\n     */",
+  "secondLabel" : "/*\n     * used by blog preview - tell the blog info view to show the current blog/feed\n     * if it's not already loaded, then shows/updates posts once the info is loaded\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 46472,
+  "secondPos" : 43972,
+  "firstEndPos" : 46650,
+  "secondEndPos" : 44150
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -48234,6 +48960,17 @@
   "firstEndPos" : 48109,
   "secondEndPos" : 45609
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    * user tapped follow button in toolbar to follow/unfollow the current blog\n    */",
+  "secondLabel" : "/*\n    * user tapped follow button in toolbar to follow/unfollow the current blog\n    */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 48147,
+  "secondPos" : 45647,
+  "firstEndPos" : 48235,
+  "secondEndPos" : 45735
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -49587,6 +50324,17 @@
   "firstEndPos" : 49261,
   "secondEndPos" : 46761
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * user tapped follow button in toolbar to follow/unfollow the current tag\n     */",
+  "secondLabel" : "/*\n     * user tapped follow button in toolbar to follow/unfollow the current tag\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 49285,
+  "secondPos" : 46785,
+  "firstEndPos" : 49374,
+  "secondEndPos" : 46874
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -50224,6 +50972,17 @@
   "secondPos" : 47354,
   "firstEndPos" : 49858,
   "secondEndPos" : 47358
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called from adapter when user taps a post\n     */",
+  "secondLabel" : "/*\n     * called from adapter when user taps a post\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 49872,
+  "secondPos" : 47372,
+  "firstEndPos" : 49931,
+  "secondEndPos" : 47431
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -51446,6 +52205,17 @@
   "firstEndPos" : 51308,
   "secondEndPos" : 48808
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called from adapter when user taps a tag on a post\n     */",
+  "secondLabel" : "/*\n     * called from adapter when user taps a tag on a post\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 51322,
+  "secondPos" : 48822,
+  "firstEndPos" : 51390,
+  "secondEndPos" : 48890
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -51842,6 +52612,17 @@
   "firstEndPos" : 51780,
   "secondEndPos" : 49280
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// user is already previewing a tag, so change current tag in existing preview",
+  "secondLabel" : "// user is already previewing a tag, so change current tag in existing preview",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51654,
+  "secondPos" : 49154,
+  "firstEndPos" : 51732,
+  "secondEndPos" : 49232
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -51918,6 +52699,17 @@
   "secondPos" : 49286,
   "firstEndPos" : 51941,
   "secondEndPos" : 49441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// user isn't previewing a tag, so open in tag preview",
+  "secondLabel" : "// user isn't previewing a tag, so open in tag preview",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51800,
+  "secondPos" : 49300,
+  "firstEndPos" : 51854,
+  "secondEndPos" : 49354
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -52017,6 +52809,17 @@
   "secondPos" : 49426,
   "firstEndPos" : 51929,
   "secondEndPos" : 49429
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called when user taps dropdown arrow icon next to a post - shows a popup menu\n     * that enables blocking the blog the post is in\n     */",
+  "secondLabel" : "/*\n     * called when user taps dropdown arrow icon next to a post - shows a popup menu\n     * that enables blocking the blog the post is in\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 51953,
+  "secondPos" : 49453,
+  "firstEndPos" : 52101,
+  "secondEndPos" : 49601
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -53074,6 +53877,17 @@
   "firstEndPos" : 52708,
   "secondEndPos" : 50208
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called from activity to handle reader-related onActivityResult\n     */",
+  "secondLabel" : "/*\n     * called from activity to handle reader-related onActivityResult\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 52723,
+  "secondPos" : 50223,
+  "firstEndPos" : 52803,
+  "secondEndPos" : 50303
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -53282,6 +54096,17 @@
   "secondPos" : 50415,
   "firstEndPos" : 52926,
   "secondEndPos" : 50426
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// user just returned from the tags/subs activity",
+  "secondLabel" : "// user just returned from the tags/subs activity",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 52942,
+  "secondPos" : 50442,
+  "firstEndPos" : 52991,
+  "secondEndPos" : 50491
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -53613,6 +54438,17 @@
   "firstEndPos" : 53286,
   "secondEndPos" : 50786
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reload tags if they were changed, and set the last tag added as the current one",
+  "secondLabel" : "// reload tags if they were changed, and set the last tag added as the current one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53309,
+  "secondPos" : 50809,
+  "firstEndPos" : 53391,
+  "secondEndPos" : 50891
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -53821,6 +54657,17 @@
   "secondPos" : 51080,
   "firstEndPos" : 53592,
   "secondEndPos" : 51092
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// refresh posts if blogs changed and user is viewing \"Blogs I Follow\"",
+  "secondLabel" : "// refresh posts if blogs changed and user is viewing \"Blogs I Follow\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53637,
+  "secondPos" : 51137,
+  "firstEndPos" : 53707,
+  "secondEndPos" : 51207
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -54096,6 +54943,28 @@
   "secondPos" : 51551,
   "firstEndPos" : 54057,
   "secondEndPos" : 51557
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// user just returned from reblogging activity, reload the displayed post if reblogging",
+  "secondLabel" : "// user just returned from reblogging activity, reload the displayed post if reblogging",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 54071,
+  "secondPos" : 51571,
+  "firstEndPos" : 54158,
+  "secondEndPos" : 51658
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// succeeded",
+  "secondLabel" : "// succeeded",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 54171,
+  "secondPos" : 51671,
+  "firstEndPos" : 54183,
+  "secondEndPos" : 51683
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -54635,6 +55504,17 @@
   "secondPos" : 52084,
   "firstEndPos" : 54590,
   "secondEndPos" : 52090
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * purge reader db if it hasn't been done yet, but only if there's an active connection\n     * since we don't want to purge posts that the user would expect to see when offline\n     */",
+  "secondLabel" : "/*\n     * purge reader db if it hasn't been done yet, but only if there's an active connection\n     * since we don't want to purge posts that the user would expect to see when offline\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 54612,
+  "secondPos" : 52112,
+  "firstEndPos" : 54803,
+  "secondEndPos" : 52303
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -55241,6 +56121,17 @@
   "firstEndPos" : 55202,
   "secondEndPos" : 52702
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * initial update performed the first time the user opens the reader\n     */",
+  "secondLabel" : "/*\n     * initial update performed the first time the user opens the reader\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 55228,
+  "secondPos" : 52728,
+  "firstEndPos" : 55311,
+  "secondEndPos" : 52811
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -55571,6 +56462,28 @@
   "firstEndPos" : 55884,
   "secondEndPos" : 53384
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update current user to ensure we have their user_id as well as their latest info",
+  "secondLabel" : "// update current user to ensure we have their user_id as well as their latest info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55546,
+  "secondPos" : 53046,
+  "firstEndPos" : 55629,
+  "secondEndPos" : 53129
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in case they changed their avatar, name, etc. since last time",
+  "secondLabel" : "// in case they changed their avatar, name, etc. since last time",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55642,
+  "secondPos" : 53142,
+  "firstEndPos" : 55706,
+  "secondEndPos" : 53206
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -55790,6 +56703,17 @@
   "secondPos" : 53332,
   "firstEndPos" : 55870,
   "secondEndPos" : 53370
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * start background service to get the latest followed tags and blogs if it's time to do so\n     */",
+  "secondLabel" : "/*\n     * start background service to get the latest followed tags and blogs if it's time to do so\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 55896,
+  "secondPos" : 53396,
+  "firstEndPos" : 56002,
+  "secondEndPos" : 53502
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

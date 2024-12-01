@@ -10,6 +10,17 @@
   "firstEndPos" : 72918,
   "secondEndPos" : 73529
 }, {
+    "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project\n * -----------------------------------------------------------\n * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o\n * -----------------------------------------------------------\n */",
+  "secondLabel" : "/* Android IMSI-Catcher Detector | (c) AIMSICD Privacy Project\n * -----------------------------------------------------------\n * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o\n * -----------------------------------------------------------\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 255,
+  "secondEndPos" : 255
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1242,6 +1253,28 @@
   "firstEndPos" : 3878,
   "secondEndPos" : 3878
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Is this \"pragma user_version;\" ?",
+  "secondLabel" : "// Is this \"pragma user_version;\" ?",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3880,
+  "secondPos" : 3880,
+  "firstEndPos" : 3915,
+  "secondEndPos" : 3915
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: This should be implemented as a SharedPreference...",
+  "secondLabel" : "// TODO: This should be implemented as a SharedPreference...",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3921,
+  "secondPos" : 3921,
+  "firstEndPos" : 3981,
+  "secondEndPos" : 3981
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1329,6 +1362,17 @@
   "secondPos" : 4023,
   "firstEndPos" : 4027,
   "secondEndPos" : 4027
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also back-up DB with one monolithic dump file?",
+  "secondLabel" : "// Also back-up DB with one monolithic dump file?",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4029,
+  "secondPos" : 4029,
+  "firstEndPos" : 4078,
+  "secondEndPos" : 4078
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1693,6 +1737,17 @@
   "firstEndPos" : 4267,
   "secondEndPos" : 4267
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Underscore is no longer required...",
+  "secondLabel" : "// Underscore is no longer required...",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4269,
+  "secondPos" : 4269,
+  "firstEndPos" : 4307,
+  "secondEndPos" : 4307
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1780,6 +1835,17 @@
   "secondPos" : 4355,
   "firstEndPos" : 4369,
   "secondEndPos" : 4369
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_DBI_MEASURE:DBi_measure (volatile)",
+  "secondLabel" : "// TABLE_DBI_MEASURE:DBi_measure (volatile)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4374,
+  "secondPos" : 4374,
+  "firstEndPos" : 4417,
+  "secondEndPos" : 4417
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1869,6 +1935,17 @@
   "firstEndPos" : 4474,
   "secondEndPos" : 4474
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_DBI_BTS:DBi_bts (physical)",
+  "secondLabel" : "// TABLE_DBI_BTS:DBi_bts (physical)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4483,
+  "secondPos" : 4483,
+  "firstEndPos" : 4518,
+  "secondEndPos" : 4518
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1956,6 +2033,17 @@
   "secondPos" : 4565,
   "firstEndPos" : 4577,
   "secondEndPos" : 4577
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_DBE_IMPORT:DBe_import",
+  "secondLabel" : "// TABLE_DBE_IMPORT:DBe_import",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4584,
+  "secondPos" : 4584,
+  "firstEndPos" : 4614,
+  "secondEndPos" : 4614
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2045,6 +2133,17 @@
   "firstEndPos" : 4678,
   "secondEndPos" : 4678
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_DEFAULT_MCC:defaultlocation",
+  "secondLabel" : "// TABLE_DEFAULT_MCC:defaultlocation",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4680,
+  "secondPos" : 4680,
+  "firstEndPos" : 4716,
+  "secondEndPos" : 4716
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2132,6 +2231,39 @@
   "secondPos" : 4763,
   "firstEndPos" : 4774,
   "secondEndPos" : 4774
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_SILENT_SMS:silentsms",
+  "secondLabel" : "// TABLE_SILENT_SMS:silentsms",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4782,
+  "secondPos" : 4782,
+  "firstEndPos" : 4811,
+  "secondEndPos" : 4811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cell tower signal strength collected by the device",
+  "secondLabel" : "// cell tower signal strength collected by the device",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4817,
+  "secondPos" : 4817,
+  "firstEndPos" : 4870,
+  "secondEndPos" : 4870
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ToDo: Remove this table and use \"rx_signal\" in the \"TABLE_DBI_MEASURE:DBi_measure\" table..",
+  "secondLabel" : "// ToDo: Remove this table and use \"rx_signal\" in the \"TABLE_DBI_MEASURE:DBi_measure\" table..",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4875,
+  "secondPos" : 4875,
+  "firstEndPos" : 4968,
+  "secondEndPos" : 4968
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2221,6 +2353,94 @@
   "firstEndPos" : 5027,
   "secondEndPos" : 5027
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TABLE_DBI_MEASURE::DBi_measure:rx_signal",
+  "secondLabel" : "// TABLE_DBI_MEASURE::DBi_measure:rx_signal",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5034,
+  "secondPos" : 5034,
+  "firstEndPos" : 5077,
+  "secondEndPos" : 5077
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Some placeholders for the use of the new tables:",
+  "secondLabel" : "// Some placeholders for the use of the new tables:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5083,
+  "secondPos" : 5083,
+  "firstEndPos" : 5134,
+  "secondEndPos" : 5134
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DBE_IMPORT  = \"DBe_import\";       // External: BTS import table",
+  "secondLabel" : "// private final String TABLE_DBE_IMPORT  = \"DBe_import\";       // External: BTS import table",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5140,
+  "secondPos" : 5140,
+  "firstEndPos" : 5233,
+  "secondEndPos" : 5233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DBE_CAPAB   = \"DBe_capabilities\"; // External: MNO & BTS network capabilities",
+  "secondLabel" : "// private final String TABLE_DBE_CAPAB   = \"DBe_capabilities\"; // External: MNO & BTS network capabilities",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5238,
+  "secondPos" : 5238,
+  "firstEndPos" : 5345,
+  "secondEndPos" : 5345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DBI_BTS     = \"DBi_bts\";          // Internal: (physical) BTS data",
+  "secondLabel" : "// private final String TABLE_DBI_BTS     = \"DBi_bts\";          // Internal: (physical) BTS data",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5350,
+  "secondPos" : 5350,
+  "firstEndPos" : 5446,
+  "secondEndPos" : 5446
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DBI_MEASURE = \"DBi_measure\";      // Internal: (volatile) network measurements",
+  "secondLabel" : "// private final String TABLE_DBI_MEASURE = \"DBi_measure\";      // Internal: (volatile) network measurements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5451,
+  "secondPos" : 5451,
+  "firstEndPos" : 5559,
+  "secondEndPos" : 5559
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DEFAULT_MCC = \"defaultlocation\";  // Default MCC for each country",
+  "secondLabel" : "// private final String TABLE_DEFAULT_MCC = \"defaultlocation\";  // Default MCC for each country",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5564,
+  "secondPos" : 5564,
+  "firstEndPos" : 5659,
+  "secondEndPos" : 5659
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_DET_FLAGS   = \"DetectionFlags\";   // Detection Flag description, settings and scoring table",
+  "secondLabel" : "// private final String TABLE_DET_FLAGS   = \"DetectionFlags\";   // Detection Flag description, settings and scoring table",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5664,
+  "secondPos" : 5664,
+  "firstEndPos" : 5785,
+  "secondEndPos" : 5785
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2308,6 +2528,50 @@
   "secondPos" : 5831,
   "firstEndPos" : 5841,
   "secondEndPos" : 5841
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Detection and general EventLog (persistent)",
+  "secondLabel" : "// Detection and general EventLog (persistent)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5852,
+  "secondPos" : 5852,
+  "firstEndPos" : 5898,
+  "secondEndPos" : 5898
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_SECTORTYPE  = \"SectorType\";       // BTS tower sector configuration (Many CID, same BTS)",
+  "secondLabel" : "// private final String TABLE_SECTORTYPE  = \"SectorType\";       // BTS tower sector configuration (Many CID, same BTS)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5903,
+  "secondPos" : 5903,
+  "firstEndPos" : 6021,
+  "secondEndPos" : 6021
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_SILENTSMS   = \"silentsms\";        // Silent SMS details",
+  "secondLabel" : "// private final String TABLE_SILENTSMS   = \"silentsms\";        // Silent SMS details",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6026,
+  "secondPos" : 6026,
+  "firstEndPos" : 6111,
+  "secondEndPos" : 6111
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// private final String TABLE_CMEASURES   = \"CounterMeasures\";  // Counter Measures thresholds and description",
+  "secondLabel" : "// private final String TABLE_CMEASURES   = \"CounterMeasures\";  // Counter Measures thresholds and description",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6116,
+  "secondPos" : 6116,
+  "firstEndPos" : 6226,
+  "secondEndPos" : 6226
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2694,6 +2958,17 @@
   "firstEndPos" : 6419,
   "secondEndPos" : 6419
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// AS says this is never used. Can we remove it?",
+  "secondLabel" : "// AS says this is never used. Can we remove it?",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6421,
+  "secondPos" : 6421,
+  "firstEndPos" : 6469,
+  "secondEndPos" : 6469
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2825,6 +3100,17 @@
   "secondPos" : 6937,
   "firstEndPos" : 7009,
   "secondEndPos" : 7009
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6937,
+  "secondPos" : 6937,
+  "firstEndPos" : 6943,
+  "secondEndPos" : 6943
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3123,6 +3409,17 @@
   "firstEndPos" : 7161,
   "secondEndPos" : 7161
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/",
+  "secondLabel" : "//e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7163,
+  "secondPos" : 7163,
+  "firstEndPos" : 7223,
+  "secondEndPos" : 7223
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3321,6 +3618,17 @@
   "firstEndPos" : 7697,
   "secondEndPos" : 7697
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Old...",
+  "secondLabel" : "//  Old...",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7315,
+  "secondPos" : 7315,
+  "firstEndPos" : 7325,
+  "secondEndPos" : 7325
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "LOCATION_TABLE",
@@ -3365,6 +3673,50 @@
   "firstEndPos" : 7452,
   "secondEndPos" : 7452
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  New...",
+  "secondLabel" : "//  New...",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7470,
+  "secondPos" : 7470,
+  "firstEndPos" : 7480,
+  "secondEndPos" : 7480
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TABLE_DBE_IMPORT,",
+  "secondLabel" : "//TABLE_DBE_IMPORT,",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7497,
+  "secondPos" : 7497,
+  "firstEndPos" : 7516,
+  "secondEndPos" : 7516
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TABLE_DBI_BTS,",
+  "secondLabel" : "//TABLE_DBI_BTS,",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7533,
+  "secondPos" : 7533,
+  "firstEndPos" : 7549,
+  "secondEndPos" : 7549
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TABLE_DBI_MEASURE,",
+  "secondLabel" : "//TABLE_DBI_MEASURE,",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7566,
+  "secondPos" : 7566,
+  "firstEndPos" : 7586,
+  "secondEndPos" : 7586
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TABLE_EVENTLOG",
@@ -3375,6 +3727,28 @@
   "secondPos" : 7603,
   "firstEndPos" : 7617,
   "secondEndPos" : 7617
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TABLE_SILENTSMS,",
+  "secondLabel" : "//TABLE_SILENTSMS,",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7635,
+  "secondPos" : 7635,
+  "firstEndPos" : 7653,
+  "secondEndPos" : 7653
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TABLE_CMEASURES",
+  "secondLabel" : "//TABLE_CMEASURES",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 7670,
+  "secondPos" : 7670,
+  "firstEndPos" : 7687,
+  "secondEndPos" : 7687
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3683,6 +4057,39 @@
   "secondPos" : 7882,
   "firstEndPos" : 7887,
   "secondEndPos" : 7887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7903,
+  "secondPos" : 7903,
+  "firstEndPos" : 7974,
+  "secondEndPos" : 7974
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      Populate the DB tables  (INSERT)",
+  "secondLabel" : "//      Populate the DB tables  (INSERT)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7979,
+  "secondPos" : 7979,
+  "firstEndPos" : 8019,
+  "secondEndPos" : 8019
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8024,
+  "secondPos" : 8024,
+  "firstEndPos" : 8095,
+  "secondEndPos" : 8095
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4014,6 +4421,17 @@
   "firstEndPos" : 8264,
   "secondEndPos" : 8264
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// address",
+  "secondLabel" : "// address",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8278,
+  "secondPos" : 8278,
+  "firstEndPos" : 8288,
+  "secondEndPos" : 8288
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4156,6 +4574,17 @@
   "secondPos" : 8342,
   "firstEndPos" : 8359,
   "secondEndPos" : 8359
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// display",
+  "secondLabel" : "// display",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8365,
+  "secondPos" : 8365,
+  "firstEndPos" : 8375,
+  "secondEndPos" : 8375
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4300,6 +4729,17 @@
   "firstEndPos" : 8436,
   "secondEndPos" : 8436
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// class",
+  "secondLabel" : "// class",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8452,
+  "secondPos" : 8452,
+  "firstEndPos" : 8460,
+  "secondEndPos" : 8460
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4443,6 +4883,17 @@
   "firstEndPos" : 8530,
   "secondEndPos" : 8530
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SMSC",
+  "secondLabel" : "// SMSC",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8537,
+  "secondPos" : 8537,
+  "firstEndPos" : 8544,
+  "secondEndPos" : 8544
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4585,6 +5036,17 @@
   "secondPos" : 8598,
   "firstEndPos" : 8607,
   "secondEndPos" : 8607
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// message",
+  "secondLabel" : "// message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8621,
+  "secondPos" : 8621,
+  "firstEndPos" : 8631,
+  "secondEndPos" : 8631
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4739,6 +5201,17 @@
   "secondPos" : 8814,
   "firstEndPos" : 8915,
   "secondEndPos" : 8915
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8814,
+  "secondPos" : 8814,
+  "firstEndPos" : 8821,
+  "secondEndPos" : 8821
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5476,6 +5949,17 @@
   "secondPos" : 9589,
   "firstEndPos" : 10854,
   "secondEndPos" : 10854
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Populate Content Values for Insert or Update",
+  "secondLabel" : "//Populate Content Values for Insert or Update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9603,
+  "secondPos" : 9603,
+  "firstEndPos" : 9649,
+  "secondEndPos" : 9649
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7468,6 +7952,17 @@
   "firstEndPos" : 11243,
   "secondEndPos" : 11243
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11061,
+  "secondPos" : 11061,
+  "firstEndPos" : 11068,
+  "secondEndPos" : 11068
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " row id or -1 if error",
@@ -7588,6 +8083,50 @@
   "secondPos" : 11297,
   "firstEndPos" : 12905,
   "secondEndPos" : 12905
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// I think we might need to add an BTS even if Lat/Lon is 0,",
+  "secondLabel" : "// I think we might need to add an BTS even if Lat/Lon is 0,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11308,
+  "secondPos" : 11308,
+  "firstEndPos" : 11368,
+  "secondEndPos" : 11368
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since lat/lon can be 0 if no location have been found. (Can they?)",
+  "secondLabel" : "// since lat/lon can be 0 if no location have been found. (Can they?)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11377,
+  "secondPos" : 11377,
+  "firstEndPos" : 11446,
+  "secondEndPos" : 11446
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// --E:V:A",
+  "secondLabel" : "// --E:V:A",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11455,
+  "secondPos" : 11455,
+  "firstEndPos" : 11465,
+  "secondEndPos" : 11465
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11474,
+  "secondPos" : 11474,
+  "firstEndPos" : 11476,
+  "secondEndPos" : 11476
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7896,6 +8435,17 @@
   "secondPos" : 11575,
   "firstEndPos" : 12881,
   "secondEndPos" : 12881
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate the named DB table columns with the values provided",
+  "secondLabel" : "// Populate the named DB table columns with the values provided",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11589,
+  "secondPos" : 11589,
+  "firstEndPos" : 11652,
+  "secondEndPos" : 11652
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10405,6 +10955,17 @@
   "firstEndPos" : 13744,
   "secondEndPos" : 13744
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13715,
+  "secondPos" : 13715,
+  "firstEndPos" : 13722,
+  "secondEndPos" : 13722
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " row id or -1 if error",
@@ -10702,6 +11263,17 @@
   "firstEndPos" : 14051,
   "secondEndPos" : 14051
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14058,
+  "secondPos" : 14058,
+  "firstEndPos" : 14064,
+  "secondEndPos" : 14064
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
   "firstLabel" : "",
@@ -10768,6 +11340,17 @@
   "firstEndPos" : 14140,
   "secondEndPos" : 14140
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14142,
+  "secondPos" : 14142,
+  "firstEndPos" : 14148,
+  "secondEndPos" : 14148
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
   "firstLabel" : "",
@@ -10811,6 +11394,28 @@
   "secondPos" : 14180,
   "firstEndPos" : 14183,
   "secondEndPos" : 14183
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14189,
+  "secondPos" : 14189,
+  "firstEndPos" : 14195,
+  "secondEndPos" : 14195
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//int rej_cause // new",
+  "secondLabel" : "//int rej_cause // new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14220,
+  "secondPos" : 14220,
+  "firstEndPos" : 14242,
+  "secondEndPos" : 14242
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -11142,6 +11747,17 @@
   "firstEndPos" : 15413,
   "secondEndPos" : 15413
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15384,
+  "secondPos" : 15384,
+  "firstEndPos" : 15391,
+  "secondEndPos" : 15391
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " row id or -1 if error",
@@ -11439,6 +12055,17 @@
   "firstEndPos" : 15719,
   "secondEndPos" : 15719
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15726,
+  "secondPos" : 15726,
+  "firstEndPos" : 15732,
+  "secondEndPos" : 15732
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
   "firstLabel" : "",
@@ -11505,6 +12132,17 @@
   "firstEndPos" : 15808,
   "secondEndPos" : 15808
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15810,
+  "secondPos" : 15810,
+  "firstEndPos" : 15816,
+  "secondEndPos" : 15816
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
   "firstLabel" : "",
@@ -11549,6 +12187,28 @@
   "firstEndPos" : 15851,
   "secondEndPos" : 15851
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15858,
+  "secondPos" : 15858,
+  "firstEndPos" : 15864,
+  "secondEndPos" : 15864
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//int rej_cause // new",
+  "secondLabel" : "//int rej_cause // new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15889,
+  "secondPos" : 15889,
+  "firstEndPos" : 15911,
+  "secondEndPos" : 15911
+}, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
   "firstLabel" : "",
@@ -11592,6 +12252,17 @@
   "secondPos" : 15988,
   "firstEndPos" : 17503,
   "secondEndPos" : 17503
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate the named DB table columns with the values provided",
+  "secondLabel" : "// Populate the named DB table columns with the values provided",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15999,
+  "secondPos" : 15999,
+  "firstEndPos" : 16062,
+  "secondEndPos" : 16062
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12209,6 +12880,17 @@
   "firstEndPos" : 16408,
   "secondEndPos" : 16408
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OCID CellID is of the long form when available",
+  "secondLabel" : "// OCID CellID is of the long form when available",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16411,
+  "secondPos" : 16411,
+  "firstEndPos" : 16460,
+  "secondEndPos" : 16460
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12384,6 +13066,17 @@
   "secondPos" : 16553,
   "firstEndPos" : 16558,
   "secondEndPos" : 16558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16568,
+  "secondPos" : 16568,
+  "firstEndPos" : 16574,
+  "secondEndPos" : 16574
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12561,6 +13254,17 @@
   "firstEndPos" : 16675,
   "secondEndPos" : 16675
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16680,
+  "secondPos" : 16680,
+  "firstEndPos" : 16686,
+  "secondEndPos" : 16686
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12648,6 +13352,39 @@
   "secondPos" : 16727,
   "firstEndPos" : 16730,
   "secondEndPos" : 16730
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16742,
+  "secondPos" : 16742,
+  "firstEndPos" : 16748,
+  "secondEndPos" : 16748
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//cellIDValues.put(\"rej_cause\", rej_cause );   // new",
+  "secondLabel" : "//cellIDValues.put(\"rej_cause\", rej_cause );   // new",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16757,
+  "secondPos" : 16757,
+  "firstEndPos" : 16810,
+  "secondEndPos" : 16810
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ensure we don't save multiple cell-id entries into DB, when re-downloading OCID data.",
+  "secondLabel" : "// Ensure we don't save multiple cell-id entries into DB, when re-downloading OCID data.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16820,
+  "secondPos" : 16820,
+  "firstEndPos" : 16908,
+  "secondEndPos" : 16908
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12747,6 +13484,17 @@
   "secondPos" : 16966,
   "firstEndPos" : 17411,
   "secondEndPos" : 17411
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For performance it is probably better to skip than update? Also if OCID was recently corrupted?",
+  "secondLabel" : "// For performance it is probably better to skip than update? Also if OCID was recently corrupted?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16980,
+  "secondPos" : 16980,
+  "firstEndPos" : 17078,
+  "secondEndPos" : 17078
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12901,6 +13649,28 @@
   "secondPos" : 17189,
   "firstEndPos" : 17190,
   "secondEndPos" : 17190
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Log.v(TAG,  mTAG + \": CID already found in DBe_import! Updating: \" + cellID );",
+  "secondLabel" : "//Log.v(TAG,  mTAG + \": CID already found in DBe_import! Updating: \" + cellID );",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17204,
+  "secondPos" : 17204,
+  "firstEndPos" : 17284,
+  "secondEndPos" : 17284
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//return mDb.update(OPENCELLID_TABLE, cellIDValues, \"CellID=?\", new String[]{Integer.toString(cellID)});",
+  "secondLabel" : "//return mDb.update(OPENCELLID_TABLE, cellIDValues, \"CellID=?\", new String[]{Integer.toString(cellID)});",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17297,
+  "secondPos" : 17297,
+  "firstEndPos" : 17401,
+  "secondEndPos" : 17401
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -13066,6 +13836,17 @@
   "secondPos" : 17608,
   "firstEndPos" : 17687,
   "secondEndPos" : 17687
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17608,
+  "secondPos" : 17608,
+  "firstEndPos" : 17615,
+  "secondEndPos" : 17615
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -13506,6 +14287,17 @@
   "secondPos" : 18107,
   "firstEndPos" : 19120,
   "secondEndPos" : 19120
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Populate Content Values for Insert or Update",
+  "secondLabel" : "//Populate Content Values for Insert or Update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18121,
+  "secondPos" : 18121,
+  "firstEndPos" : 18167,
+  "secondEndPos" : 18167
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14211,6 +15003,39 @@
   "firstEndPos" : 18610,
   "secondEndPos" : 18610
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// has multiple items...",
+  "secondLabel" : "// has multiple items...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18613,
+  "secondPos" : 18613,
+  "firstEndPos" : 18637,
+  "secondEndPos" : 18637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO:    This is a strange check, why are we checking for Lat,Lon,Signal?",
+  "secondLabel" : "// TODO:    This is a strange check, why are we checking for Lat,Lon,Signal?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18651,
+  "secondPos" : 18651,
+  "firstEndPos" : 18727,
+  "secondEndPos" : 18727
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// URGENT:  This need to be thought about...",
+  "secondLabel" : "// URGENT:  This need to be thought about...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18740,
+  "secondPos" : 18740,
+  "firstEndPos" : 18784,
+  "secondEndPos" : 18784
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14728,6 +15553,17 @@
   "firstEndPos" : 19280,
   "secondEndPos" : 19280
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19212,
+  "secondPos" : 19212,
+  "firstEndPos" : 19218,
+  "secondEndPos" : 19218
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "cellId",
@@ -14760,6 +15596,17 @@
   "secondPos" : 19288,
   "firstEndPos" : 19323,
   "secondEndPos" : 19323
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19288,
+  "secondPos" : 19288,
+  "firstEndPos" : 19295,
+  "secondEndPos" : 19295
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -15278,6 +16125,17 @@
   "firstEndPos" : 19783,
   "secondEndPos" : 19783
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19754,
+  "secondPos" : 19754,
+  "firstEndPos" : 19761,
+  "secondEndPos" : 19761
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " row id or -1 if error",
@@ -15321,6 +16179,17 @@
   "secondPos" : 19809,
   "firstEndPos" : 19824,
   "secondEndPos" : 19824
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//long Time,",
+  "secondLabel" : "//long Time,",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 19825,
+  "secondPos" : 19825,
+  "firstEndPos" : 19837,
+  "secondEndPos" : 19837
 }, {
   "firstType" : "SingleVariableDeclaration",
   "secondType" : "SingleVariableDeclaration",
@@ -15608,6 +16477,17 @@
   "firstEndPos" : 20980,
   "secondEndPos" : 20980
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate Content Values for Insert or Update using column names",
+  "secondLabel" : "// Populate Content Values for Insert or Update using column names",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20222,
+  "secondPos" : 20222,
+  "firstEndPos" : 20288,
+  "secondEndPos" : 20288
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15695,6 +16575,17 @@
   "secondPos" : 20333,
   "firstEndPos" : 20346,
   "secondEndPos" : 20346
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//detectionValues.put(\"time\",         Time);",
+  "secondLabel" : "//detectionValues.put(\"time\",         Time);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20358,
+  "secondPos" : 20358,
+  "firstEndPos" : 20402,
+  "secondEndPos" : 20402
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16631,6 +17522,28 @@
   "firstEndPos" : 20971,
   "secondEndPos" : 20971
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ====================================================================\n     *      mDb.query statements (get)        SELECT\n     * ====================================================================\n     *  IMPORTANT!  The SQL queries as presented here are not in the same order\n     *              as in the DB tables themselves, therefore it may be hard\n     *              to easily match the various items when using the Cursors\n     *              as shown below.\n     *\n     *              For example, in the opencellid (DBe_import) table, the items are ordered as:\n     *                 Lat,Lng,Mcc,Mnc,CellID,...\n     *              whereas in the getOpenCellIDData() cursor, they are arranged as:\n     *                 CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples\n     *\n     *              Thus when used in MapViewerOsmDroid.java at loadEntries() and\n     *              loadOpenCellIDMarkers(), the index used there is completely different\n     *              than what could be expected.\n     *\n     *  ISSUES:     [ ] To avoid un-necessary future code obscurity, we should rearrange\n     *                  all Cursor queries to reflect the actual DB table order.\n     *                  Todo: This is a tedious job...\n     *\n     * ====================================================================\n     */",
+  "secondLabel" : "/* ====================================================================\n     *      mDb.query statements (get)        SELECT\n     * ====================================================================\n     *  IMPORTANT!  The SQL queries as presented here are not in the same order\n     *              as in the DB tables themselves, therefore it may be hard\n     *              to easily match the various items when using the Cursors\n     *              as shown below.\n     *\n     *              For example, in the opencellid (DBe_import) table, the items are ordered as:\n     *                 Lat,Lng,Mcc,Mnc,CellID,...\n     *              whereas in the getOpenCellIDData() cursor, they are arranged as:\n     *                 CellID,Lac,Mcc,Mnc,Lat,Lng,AvgSigStr,Samples\n     *\n     *              Thus when used in MapViewerOsmDroid.java at loadEntries() and\n     *              loadOpenCellIDMarkers(), the index used there is completely different\n     *              than what could be expected.\n     *\n     *  ISSUES:     [ ] To avoid un-necessary future code obscurity, we should rearrange\n     *                  all Cursor queries to reflect the actual DB table order.\n     *                  Todo: This is a tedious job...\n     *\n     * ====================================================================\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 20987,
+  "secondPos" : 20987,
+  "firstEndPos" : 22315,
+  "secondEndPos" : 22315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== NEW ============================================================================",
+  "secondLabel" : "// =========== NEW ============================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 22321,
+  "secondPos" : 22321,
+  "firstEndPos" : 22416,
+  "secondEndPos" : 22416
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -17026,6 +17939,17 @@
   "secondPos" : 22705,
   "firstEndPos" : 22709,
   "secondEndPos" : 22709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== OLD ============================================================================",
+  "secondLabel" : "// =========== OLD ============================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 22733,
+  "secondPos" : 22733,
+  "firstEndPos" : 22828,
+  "secondEndPos" : 22828
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -19040,6 +19964,17 @@
   "firstEndPos" : 24930,
   "secondEndPos" : 24930
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avg_range, rej_cause, Type",
+  "secondLabel" : "// avg_range, rej_cause, Type",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 24949,
+  "secondPos" : 24949,
+  "firstEndPos" : 24978,
+  "secondEndPos" : 24978
+}, {
   "firstType" : "NullLiteral",
   "secondType" : "NullLiteral",
   "firstLabel" : "",
@@ -19435,6 +20370,39 @@
   "secondPos" : 25310,
   "firstEndPos" : 25314,
   "secondEndPos" : 25314
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25328,
+  "secondPos" : 25328,
+  "firstEndPos" : 25399,
+  "secondEndPos" : 25399
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      Various DB operations",
+  "secondLabel" : "//      Various DB operations",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25404,
+  "secondPos" : 25404,
+  "firstEndPos" : 25433,
+  "secondEndPos" : 25433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25438,
+  "secondPos" : 25438,
+  "firstEndPos" : 25509,
+  "secondEndPos" : 25509
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -20558,6 +21526,17 @@
   "firstEndPos" : 26601,
   "secondEndPos" : 26601
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Log.v(TAG, mTAG + \": Does CID: \" + cellID + \" exist in DBi_bts? \" + exists);",
+  "secondLabel" : "//Log.v(TAG, mTAG + \": Does CID: \" + cellID + \" exist in DBi_bts? \" + exists);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26611,
+  "secondPos" : 26611,
+  "firstEndPos" : 26689,
+  "secondEndPos" : 26689
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21075,6 +22054,17 @@
   "firstEndPos" : 27134,
   "secondEndPos" : 27134
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Log.v(TAG, mTAG + \": Does CID: \" + cellID + \" exist in DBe_import? \" + exists);",
+  "secondLabel" : "//Log.v(TAG, mTAG + \": Does CID: \" + cellID + \" exist in DBe_import? \" + exists);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27144,
+  "secondPos" : 27144,
+  "firstEndPos" : 27225,
+  "secondEndPos" : 27225
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21559,6 +22549,17 @@
   "firstEndPos" : 28694,
   "secondEndPos" : 28694
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: We only need:  Lac,Lat,Lng,Accuracy,Timestamp",
+  "secondLabel" : "// TODO: We only need:  Lac,Lat,Lng,Accuracy,Timestamp",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 28720,
+  "secondPos" : 28720,
+  "firstEndPos" : 28774,
+  "secondEndPos" : 28774
+}, {
   "firstType" : "ArrayCreation",
   "secondType" : "ArrayCreation",
   "firstLabel" : "",
@@ -21944,6 +22945,17 @@
   "firstEndPos" : 30269,
   "secondEndPos" : 30269
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1=LAC, 8=Accuracy, 11=Time",
+  "secondLabel" : "// 1=LAC, 8=Accuracy, 11=Time",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29097,
+  "secondPos" : 29097,
+  "firstEndPos" : 29126,
+  "secondEndPos" : 29126
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22097,6 +23109,39 @@
   "secondPos" : 29178,
   "firstEndPos" : 30035,
   "secondEndPos" : 30035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Log.i(TAG, \"ALERT: Changing LAC on CID: \" + cell.getCID()",
+  "secondLabel" : "//Log.i(TAG, \"ALERT: Changing LAC on CID: \" + cell.getCID()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29196,
+  "secondPos" : 29196,
+  "firstEndPos" : 29255,
+  "secondEndPos" : 29255
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        + \" Current LAC(DBi): \" + cell.getLAC()",
+  "secondLabel" : "//        + \" Current LAC(DBi): \" + cell.getLAC()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29272,
+  "secondPos" : 29272,
+  "firstEndPos" : 29321,
+  "secondEndPos" : 29321
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        + \" Database LAC(DBe): \" + cursor.getInt(0));",
+  "secondLabel" : "//        + \" Database LAC(DBe): \" + cursor.getInt(0));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29338,
+  "secondPos" : 29338,
+  "firstEndPos" : 29393,
+  "secondEndPos" : 29393
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -22383,6 +23428,28 @@
   "secondPos" : 29588,
   "firstEndPos" : 29589,
   "secondEndPos" : 29589
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Insert detection data into EventLog table",
+  "secondLabel" : "// Insert detection data into EventLog table",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29611,
+  "secondPos" : 29611,
+  "firstEndPos" : 29655,
+  "secondEndPos" : 29655
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Time,LAC,CID,PSC,  gpsd_lat,gpsd_lon,gpsd_accu,  DF_id,DF_desc",
+  "secondLabel" : "// Time,LAC,CID,PSC,  gpsd_lat,gpsd_lon,gpsd_accu,  DF_id,DF_desc",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29672,
+  "secondPos" : 29672,
+  "firstEndPos" : 29737,
+  "secondEndPos" : 29737
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -23506,6 +24573,17 @@
   "firstEndPos" : 30645,
   "secondEndPos" : 30645
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// isSubmitted",
+  "secondLabel" : "// isSubmitted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30648,
+  "secondPos" : 30648,
+  "firstEndPos" : 30662,
+  "secondEndPos" : 30662
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -23681,6 +24759,17 @@
   "secondPos" : 30740,
   "firstEndPos" : 30743,
   "secondEndPos" : 30743
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// isSubmitted",
+  "secondLabel" : "// isSubmitted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30747,
+  "secondPos" : 30747,
+  "firstEndPos" : 30761,
+  "secondEndPos" : 30761
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -24892,6 +25981,17 @@
   "firstEndPos" : 31929,
   "secondEndPos" : 31929
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This removes all but the last row in the \"cellinfo\" table",
+  "secondLabel" : "// This removes all but the last row in the \"cellinfo\" table",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31525,
+  "secondPos" : 31525,
+  "firstEndPos" : 31585,
+  "secondEndPos" : 31585
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25078,6 +26178,17 @@
   "secondPos" : 31722,
   "firstEndPos" : 31741,
   "secondEndPos" : 31741
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This removes all cells with trouble CID numbers (MAX, -1)",
+  "secondLabel" : "// This removes all cells with trouble CID numbers (MAX, -1)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31752,
+  "secondPos" : 31752,
+  "firstEndPos" : 31812,
+  "secondEndPos" : 31812
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25937,6 +27048,17 @@
   "firstEndPos" : 32605,
   "secondEndPos" : 32605
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// open Database",
+  "secondLabel" : "// open Database",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32609,
+  "secondPos" : 32609,
+  "firstEndPos" : 32625,
+  "secondEndPos" : 32625
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26013,6 +27135,17 @@
   "secondPos" : 32649,
   "firstEndPos" : 32667,
   "secondEndPos" : 32667
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get data not submitted yet",
+  "secondLabel" : "// get data not submitted yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32671,
+  "secondPos" : 32671,
+  "firstEndPos" : 32700,
+  "secondEndPos" : 32700
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -26112,6 +27245,17 @@
   "secondPos" : 32735,
   "firstEndPos" : 33882,
   "secondEndPos" : 33882
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check if we have something to upload",
+  "secondLabel" : "// check if we have something to upload",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32737,
+  "secondPos" : 32737,
+  "firstEndPos" : 32776,
+  "secondEndPos" : 32776
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -29644,6 +30788,17 @@
   "firstEndPos" : 35280,
   "secondEndPos" : 35280
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Populate Content Values for Insert or Update",
+  "secondLabel" : "//Populate Content Values for Insert or Update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35296,
+  "secondPos" : 35296,
+  "firstEndPos" : 35342,
+  "secondEndPos" : 35342
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -29918,6 +31073,17 @@
   "secondPos" : 35462,
   "firstEndPos" : 35876,
   "secondEndPos" : 35876
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use named column insert of data ordered in CSV format",
+  "secondLabel" : "// Use named column insert of data ordered in CSV format",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35480,
+  "secondPos" : 35480,
+  "firstEndPos" : 35536,
+  "secondEndPos" : 35536
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31866,6 +33032,61 @@
   "firstEndPos" : 37744,
   "secondEndPos" : 37744
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//FIXME Erase after refactoring.",
+  "secondLabel" : "//FIXME Erase after refactoring.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37762,
+  "secondPos" : 37762,
+  "firstEndPos" : 37794,
+  "secondEndPos" : 37794
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// These three lines below are useless.",
+  "secondLabel" : "// These three lines below are useless.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37811,
+  "secondPos" : 37811,
+  "firstEndPos" : 37850,
+  "secondEndPos" : 37850
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                int count = 0;\n                int csvSize = csvCellID.size(); // This might not work...\n                Log.i(TAG, mTAG + \":updateOpenCellID: OCID CSV size (csvSize): \" + csvSize );\n                */",
+  "secondLabel" : "/*\n                int count = 0;\n                int csvSize = csvCellID.size(); // This might not work...\n                Log.i(TAG, mTAG + \":updateOpenCellID: OCID CSV size (csvSize): \" + csvSize );\n                */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37867,
+  "secondPos" : 37867,
+  "firstEndPos" : 38087,
+  "secondEndPos" : 38087
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//AIMSICD.mProgressBar.setProgress(0);",
+  "secondLabel" : "//AIMSICD.mProgressBar.setProgress(0);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38105,
+  "secondPos" : 38105,
+  "firstEndPos" : 38143,
+  "secondEndPos" : 38143
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//AIMSICD.mProgressBar.setMax(csvSize);",
+  "secondLabel" : "//AIMSICD.mProgressBar.setMax(csvSize);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38160,
+  "secondPos" : 38160,
+  "firstEndPos" : 38199,
+  "secondEndPos" : 38199
+}, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
   "firstLabel" : "",
@@ -32085,6 +33306,17 @@
   "secondPos" : 38298,
   "firstEndPos" : 38302,
   "secondEndPos" : 38302
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//AIMSICD.mProgressBar.setProgress(count++);",
+  "secondLabel" : "//AIMSICD.mProgressBar.setProgress(count++);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38325,
+  "secondPos" : 38325,
+  "firstEndPos" : 38369,
+  "secondEndPos" : 38369
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33516,6 +34748,28 @@
   "firstEndPos" : 39321,
   "secondEndPos" : 39321
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Inserted into the table only unique values CID",
+  "secondLabel" : "// Inserted into the table only unique values CID",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39349,
+  "secondPos" : 39349,
+  "firstEndPos" : 39398,
+  "secondEndPos" : 39398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without opening additional redundant cursor before each insert.",
+  "secondLabel" : "// without opening additional redundant cursor before each insert.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39423,
+  "secondPos" : 39423,
+  "firstEndPos" : 39489,
+  "secondEndPos" : 39489
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -33758,6 +35012,28 @@
   "firstEndPos" : 39622,
   "secondEndPos" : 39622
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Insert details into OpenCellID Database using:  insertOpenCell()",
+  "secondLabel" : "// Insert details into OpenCellID Database using:  insertOpenCell()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39673,
+  "secondPos" : 39673,
+  "firstEndPos" : 39740,
+  "secondEndPos" : 39740
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Beware of negative values of \"range\" and \"samples\"!!",
+  "secondLabel" : "// Beware of negative values of \"range\" and \"samples\"!!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39765,
+  "secondPos" : 39765,
+  "firstEndPos" : 39820,
+  "secondEndPos" : 39820
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33945,6 +35221,17 @@
   "firstEndPos" : 39898,
   "secondEndPos" : 39898
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// gps_lat",
+  "secondLabel" : "// gps_lat",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 39902,
+  "secondPos" : 39902,
+  "firstEndPos" : 39912,
+  "secondEndPos" : 39912
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -34087,6 +35374,17 @@
   "secondPos" : 39989,
   "firstEndPos" : 39990,
   "secondEndPos" : 39990
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// gps_lon",
+  "secondLabel" : "// gps_lon",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 39994,
+  "secondPos" : 39994,
+  "firstEndPos" : 40004,
+  "secondEndPos" : 40004
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -34231,6 +35529,17 @@
   "firstEndPos" : 40080,
   "secondEndPos" : 40080
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// MCC",
+  "secondLabel" : "// MCC",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40086,
+  "secondPos" : 40086,
+  "firstEndPos" : 40092,
+  "secondEndPos" : 40092
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -34373,6 +35682,17 @@
   "secondPos" : 40167,
   "firstEndPos" : 40168,
   "secondEndPos" : 40168
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// MNC",
+  "secondLabel" : "// MNC",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40174,
+  "secondPos" : 40174,
+  "firstEndPos" : 40180,
+  "secondEndPos" : 40180
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -34517,6 +35837,17 @@
   "firstEndPos" : 40256,
   "secondEndPos" : 40256
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// LAC",
+  "secondLabel" : "// LAC",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40262,
+  "secondPos" : 40262,
+  "firstEndPos" : 40268,
+  "secondEndPos" : 40268
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -34659,6 +35990,17 @@
   "secondPos" : 40343,
   "firstEndPos" : 40344,
   "secondEndPos" : 40344
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CID (cellid) ?",
+  "secondLabel" : "// CID (cellid) ?",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40350,
+  "secondPos" : 40350,
+  "firstEndPos" : 40367,
+  "secondEndPos" : 40367
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -34803,6 +36145,17 @@
   "firstEndPos" : 40443,
   "secondEndPos" : 40443
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avg_signal [dBm]",
+  "secondLabel" : "// avg_signal [dBm]",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40449,
+  "secondPos" : 40449,
+  "firstEndPos" : 40468,
+  "secondEndPos" : 40468
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -34945,6 +36298,17 @@
   "secondPos" : 40543,
   "firstEndPos" : 40544,
   "secondEndPos" : 40544
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avg_range [m]",
+  "secondLabel" : "// avg_range [m]",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40550,
+  "secondPos" : 40550,
+  "firstEndPos" : 40566,
+  "secondEndPos" : 40566
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -35089,6 +36453,17 @@
   "firstEndPos" : 40642,
   "secondEndPos" : 40642
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// samples",
+  "secondLabel" : "// samples",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40648,
+  "secondPos" : 40648,
+  "firstEndPos" : 40658,
+  "secondEndPos" : 40658
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -35231,6 +36606,17 @@
   "secondPos" : 40733,
   "firstEndPos" : 40734,
   "secondEndPos" : 40734
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// isGPSexact",
+  "secondLabel" : "// isGPSexact",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40740,
+  "secondPos" : 40740,
+  "firstEndPos" : 40753,
+  "secondEndPos" : 40753
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -35375,6 +36761,17 @@
   "firstEndPos" : 40828,
   "secondEndPos" : 40828
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// RAT",
+  "secondLabel" : "// RAT",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 40836,
+  "secondPos" : 40836,
+  "firstEndPos" : 40842,
+  "secondEndPos" : 40842
+}, {
   "firstType" : "BooleanLiteral",
   "secondType" : "BooleanLiteral",
   "firstLabel" : "false",
@@ -35385,6 +36782,94 @@
   "secondPos" : 40883,
   "firstEndPos" : 40888,
   "secondEndPos" : 40888
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[11]), // --- RNC",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[11]), // --- RNC",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 40929,
+  "secondPos" : 40929,
+  "firstEndPos" : 40981,
+  "secondEndPos" : 40981
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[12]), // --- (cid) ?",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41022,
+  "secondPos" : 41022,
+  "firstEndPos" : 41078,
+  "secondEndPos" : 41078
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[13]), // --- PSC",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[13]), // --- PSC",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41119,
+  "secondPos" : 41119,
+  "firstEndPos" : 41171,
+  "secondEndPos" : 41171
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[14]), // --- TAC",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[14]), // --- TAC",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41212,
+  "secondPos" : 41212,
+  "firstEndPos" : 41264,
+  "secondEndPos" : 41264
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[15]), // --- PCI",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[15]), // --- PCI",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41305,
+  "secondPos" : 41305,
+  "firstEndPos" : 41357,
+  "secondEndPos" : 41357
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[16]), // --- SID",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[16]), // --- SID",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41398,
+  "secondPos" : 41398,
+  "firstEndPos" : 41450,
+  "secondEndPos" : 41450
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[17]), // --- NID",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[17]), // --- NID",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41491,
+  "secondPos" : 41491,
+  "firstEndPos" : 41543,
+  "secondEndPos" : 41543
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(csvCellID.get(i)[18]), // --- BID",
+  "secondLabel" : "//Integer.parseInt(csvCellID.get(i)[18]), // --- BID",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 41584,
+  "secondPos" : 41584,
+  "firstEndPos" : 41636,
+  "secondEndPos" : 41636
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -35748,6 +37233,39 @@
   "secondPos" : 41952,
   "firstEndPos" : 41953,
   "secondEndPos" : 41953
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 41977,
+  "secondPos" : 41977,
+  "firstEndPos" : 42072,
+  "secondEndPos" : 42072
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Database Backup and Restore",
+  "secondLabel" : "// Database Backup and Restore",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 42077,
+  "secondPos" : 42077,
+  "firstEndPos" : 42107,
+  "secondEndPos" : 42107
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 42112,
+  "secondPos" : 42112,
+  "firstEndPos" : 42207,
+  "secondEndPos" : 42207
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -37443,6 +38961,17 @@
   "firstEndPos" : 43665,
   "secondEndPos" : 43665
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Bug here? (10,11,12,13)?",
+  "secondLabel" : "// Bug here? (10,11,12,13)?",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 43711,
+  "secondPos" : 43711,
+  "firstEndPos" : 43738,
+  "secondEndPos" : 43738
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstLabel" : "",
@@ -37597,6 +39126,17 @@
   "firstEndPos" : 43816,
   "secondEndPos" : 43816
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lac",
+  "secondLabel" : "// Lac",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 43823,
+  "secondPos" : 43823,
+  "firstEndPos" : 43829,
+  "secondEndPos" : 43829
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -37739,6 +39279,17 @@
   "secondPos" : 43906,
   "firstEndPos" : 43907,
   "secondEndPos" : 43907
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CellID",
+  "secondLabel" : "// CellID",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 43914,
+  "secondPos" : 43914,
+  "firstEndPos" : 43923,
+  "secondEndPos" : 43923
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -37883,6 +39434,17 @@
   "firstEndPos" : 44001,
   "secondEndPos" : 44001
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Net",
+  "secondLabel" : "// Net",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44008,
+  "secondPos" : 44008,
+  "firstEndPos" : 44014,
+  "secondEndPos" : 44014
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -38025,6 +39587,17 @@
   "secondPos" : 44093,
   "firstEndPos" : 44094,
   "secondEndPos" : 44094
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lat",
+  "secondLabel" : "// Lat",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44099,
+  "secondPos" : 44099,
+  "firstEndPos" : 44105,
+  "secondEndPos" : 44105
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -38169,6 +39742,17 @@
   "firstEndPos" : 44185,
   "secondEndPos" : 44185
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lng",
+  "secondLabel" : "// Lng",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44190,
+  "secondPos" : 44190,
+  "firstEndPos" : 44196,
+  "secondEndPos" : 44196
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -38311,6 +39895,17 @@
   "secondPos" : 44273,
   "firstEndPos" : 44274,
   "secondEndPos" : 44274
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Signal",
+  "secondLabel" : "// Signal",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44281,
+  "secondPos" : 44281,
+  "firstEndPos" : 44290,
+  "secondEndPos" : 44290
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -38455,6 +40050,17 @@
   "firstEndPos" : 44367,
   "secondEndPos" : 44367
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mcc",
+  "secondLabel" : "// Mcc",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44375,
+  "secondPos" : 44375,
+  "firstEndPos" : 44381,
+  "secondEndPos" : 44381
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -38597,6 +40203,17 @@
   "secondPos" : 44457,
   "firstEndPos" : 44458,
   "secondEndPos" : 44458
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mnc",
+  "secondLabel" : "// Mnc",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44466,
+  "secondPos" : 44466,
+  "firstEndPos" : 44472,
+  "secondEndPos" : 44472
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -38741,6 +40358,17 @@
   "firstEndPos" : 44548,
   "secondEndPos" : 44548
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Accuracy (REAL)",
+  "secondLabel" : "// Accuracy (REAL)",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44557,
+  "secondPos" : 44557,
+  "firstEndPos" : 44575,
+  "secondEndPos" : 44575
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -38883,6 +40511,17 @@
   "secondPos" : 44650,
   "firstEndPos" : 44652,
   "secondEndPos" : 44652
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Speed (REAL)",
+  "secondLabel" : "// Speed (REAL)",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44660,
+  "secondPos" : 44660,
+  "firstEndPos" : 44675,
+  "secondEndPos" : 44675
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -39027,6 +40666,17 @@
   "firstEndPos" : 44752,
   "secondEndPos" : 44752
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Direction (REAL)",
+  "secondLabel" : "// Direction (REAL)",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44760,
+  "secondPos" : 44760,
+  "firstEndPos" : 44779,
+  "secondEndPos" : 44779
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -39170,6 +40820,17 @@
   "firstEndPos" : 44856,
   "secondEndPos" : 44856
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NetworkType",
+  "secondLabel" : "// NetworkType",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 44864,
+  "secondPos" : 44864,
+  "firstEndPos" : 44878,
+  "secondEndPos" : 44878
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -39312,6 +40973,39 @@
   "secondPos" : 44951,
   "firstEndPos" : 44953,
   "secondEndPos" : 44953
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ? MeasurementTaken (VARCHAR??)",
+  "secondLabel" : "// ? MeasurementTaken (VARCHAR??)",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 44963,
+  "secondPos" : 44963,
+  "firstEndPos" : 44996,
+  "secondEndPos" : 44996
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.valueOf(records.get(i)[14]));   // ? OCID_SUBMITTED",
+  "secondLabel" : "//Integer.valueOf(records.get(i)[14]));   // ? OCID_SUBMITTED",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 45041,
+  "secondPos" : 45041,
+  "firstEndPos" : 45102,
+  "secondEndPos" : 45102
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ? Timestamp",
+  "secondLabel" : "// ? Timestamp",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 45147,
+  "secondPos" : 45147,
+  "firstEndPos" : 45161,
+  "secondEndPos" : 45161
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
@@ -39533,6 +41227,17 @@
   "firstEndPos" : 45427,
   "secondEndPos" : 45427
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lac",
+  "secondLabel" : "// Lac",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45434,
+  "secondPos" : 45434,
+  "firstEndPos" : 45440,
+  "secondEndPos" : 45440
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -39675,6 +41380,17 @@
   "secondPos" : 45517,
   "firstEndPos" : 45518,
   "secondEndPos" : 45518
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CellID",
+  "secondLabel" : "// CellID",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45525,
+  "secondPos" : 45525,
+  "firstEndPos" : 45534,
+  "secondEndPos" : 45534
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -39819,6 +41535,17 @@
   "firstEndPos" : 45612,
   "secondEndPos" : 45612
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Net",
+  "secondLabel" : "// Net",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45619,
+  "secondPos" : 45619,
+  "firstEndPos" : 45625,
+  "secondEndPos" : 45625
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -39961,6 +41688,17 @@
   "secondPos" : 45704,
   "firstEndPos" : 45705,
   "secondEndPos" : 45705
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lat",
+  "secondLabel" : "// Lat",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45710,
+  "secondPos" : 45710,
+  "firstEndPos" : 45716,
+  "secondEndPos" : 45716
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -40105,6 +41843,17 @@
   "firstEndPos" : 45796,
   "secondEndPos" : 45796
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lng",
+  "secondLabel" : "// Lng",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45801,
+  "secondPos" : 45801,
+  "firstEndPos" : 45807,
+  "secondEndPos" : 45807
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -40247,6 +41996,17 @@
   "secondPos" : 45884,
   "firstEndPos" : 45885,
   "secondEndPos" : 45885
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Signal",
+  "secondLabel" : "// Signal",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 45892,
+  "secondPos" : 45892,
+  "firstEndPos" : 45901,
+  "secondEndPos" : 45901
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -40391,6 +42151,17 @@
   "firstEndPos" : 45977,
   "secondEndPos" : 45977
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Connection",
+  "secondLabel" : "// Connection",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 45986,
+  "secondPos" : 45986,
+  "firstEndPos" : 45999,
+  "secondEndPos" : 45999
+}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -40456,6 +42227,17 @@
   "secondPos" : 46174,
   "firstEndPos" : 46188,
   "secondEndPos" : 46188
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not sure about the naming of these, need CHECK!",
+  "secondLabel" : "// not sure about the naming of these, need CHECK!",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 46234,
+  "secondPos" : 46234,
+  "firstEndPos" : 46284,
+  "secondEndPos" : 46284
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -40611,6 +42393,17 @@
   "firstEndPos" : 46364,
   "secondEndPos" : 46364
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lat",
+  "secondLabel" : "// lat",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46369,
+  "secondPos" : 46369,
+  "firstEndPos" : 46375,
+  "secondEndPos" : 46375
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -40753,6 +42546,17 @@
   "secondPos" : 46454,
   "firstEndPos" : 46455,
   "secondEndPos" : 46455
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lng",
+  "secondLabel" : "// lng",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46460,
+  "secondPos" : 46460,
+  "firstEndPos" : 46466,
+  "secondEndPos" : 46466
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -40897,6 +42701,17 @@
   "firstEndPos" : 46544,
   "secondEndPos" : 46544
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// mcc",
+  "secondLabel" : "// mcc",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46551,
+  "secondPos" : 46551,
+  "firstEndPos" : 46557,
+  "secondEndPos" : 46557
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -41039,6 +42854,17 @@
   "secondPos" : 46634,
   "firstEndPos" : 46635,
   "secondEndPos" : 46635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// mnc",
+  "secondLabel" : "// mnc",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46642,
+  "secondPos" : 46642,
+  "firstEndPos" : 46648,
+  "secondEndPos" : 46648
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -41183,6 +43009,17 @@
   "firstEndPos" : 46726,
   "secondEndPos" : 46726
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lac",
+  "secondLabel" : "// lac",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46733,
+  "secondPos" : 46733,
+  "firstEndPos" : 46739,
+  "secondEndPos" : 46739
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -41325,6 +43162,17 @@
   "secondPos" : 46816,
   "firstEndPos" : 46817,
   "secondEndPos" : 46817
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cid",
+  "secondLabel" : "// cid",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46824,
+  "secondPos" : 46824,
+  "firstEndPos" : 46830,
+  "secondEndPos" : 46830
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -41469,6 +43317,17 @@
   "firstEndPos" : 46908,
   "secondEndPos" : 46908
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avg_sig..",
+  "secondLabel" : "// avg_sig..",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 46915,
+  "secondPos" : 46915,
+  "firstEndPos" : 46927,
+  "secondEndPos" : 46927
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -41611,6 +43470,17 @@
   "secondPos" : 47004,
   "firstEndPos" : 47005,
   "secondEndPos" : 47005
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ); range",
+  "secondLabel" : "// ); range",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 47012,
+  "secondPos" : 47012,
+  "firstEndPos" : 47023,
+  "secondEndPos" : 47023
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -41755,6 +43625,17 @@
   "firstEndPos" : 47101,
   "secondEndPos" : 47101
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new  samples",
+  "secondLabel" : "// new  samples",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 47108,
+  "secondPos" : 47108,
+  "firstEndPos" : 47123,
+  "secondEndPos" : 47123
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -41898,6 +43779,17 @@
   "firstEndPos" : 47202,
   "secondEndPos" : 47202
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new  isGPSexact",
+  "secondLabel" : "// new  isGPSexact",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 47208,
+  "secondPos" : 47208,
+  "firstEndPos" : 47226,
+  "secondEndPos" : 47226
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -42040,6 +43932,28 @@
   "secondPos" : 47301,
   "firstEndPos" : 47303,
   "secondEndPos" : 47303
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new  RAT",
+  "secondLabel" : "// new  RAT",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 47311,
+  "secondPos" : 47311,
+  "firstEndPos" : 47322,
+  "secondEndPos" : 47322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Integer.parseInt(records.get(i)[12]),   // new  rej_cause",
+  "secondLabel" : "//Integer.parseInt(records.get(i)[12]),   // new  rej_cause",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 47367,
+  "secondPos" : 47367,
+  "firstEndPos" : 47426,
+  "secondEndPos" : 47426
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
@@ -44010,6 +45924,17 @@
   "firstEndPos" : 50024,
   "secondEndPos" : 50024
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if (!dir.exists()) { dir.mkdirs(); }",
+  "secondLabel" : "//if (!dir.exists()) { dir.mkdirs(); }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50035,
+  "secondPos" : 50035,
+  "firstEndPos" : 50073,
+  "secondEndPos" : 50073
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -44120,6 +46045,17 @@
   "firstEndPos" : 50129,
   "secondEndPos" : 50129
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Bad coding?",
+  "secondLabel" : "//Bad coding?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50140,
+  "secondPos" : 50140,
+  "firstEndPos" : 50153,
+  "secondEndPos" : 50153
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -44185,6 +46121,17 @@
   "secondPos" : 50178,
   "firstEndPos" : 50221,
   "secondEndPos" : 50221
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Context.getFilesDir().getPath(\"com.SecUpwN.AIMSICD/databases\"); ????",
+  "secondLabel" : "//Context.getFilesDir().getPath(\"com.SecUpwN.AIMSICD/databases\"); ????",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50231,
+  "secondPos" : 50231,
+  "firstEndPos" : 50301,
+  "secondEndPos" : 50301
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -44505,6 +46452,17 @@
   "firstEndPos" : 50530,
   "secondEndPos" : 50530
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We need SU here and cd...",
+  "secondLabel" : "// We need SU here and cd...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50545,
+  "secondPos" : 50545,
+  "firstEndPos" : 50573,
+  "secondEndPos" : 50573
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -44581,6 +46539,28 @@
   "secondPos" : 50612,
   "firstEndPos" : 50622,
   "secondEndPos" : 50622
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//CMDProcessor.runSuCommand(execString).getStdout(); // Need import!",
+  "secondLabel" : "//CMDProcessor.runSuCommand(execString).getStdout(); // Need import!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50637,
+  "secondPos" : 50637,
+  "firstEndPos" : 50705,
+  "secondEndPos" : 50705
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Process process = Runtime.getRuntime().exec(execString);",
+  "secondLabel" : "//Process process = Runtime.getRuntime().exec(execString);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50718,
+  "secondPos" : 50718,
+  "firstEndPos" : 50776,
+  "secondEndPos" : 50776
 }, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
@@ -44999,6 +46979,17 @@
   "secondPos" : 51304,
   "firstEndPos" : 51345,
   "secondEndPos" : 51345
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 51304,
+  "secondPos" : 51304,
+  "firstEndPos" : 51311,
+  "secondEndPos" : 51311
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -45594,6 +47585,17 @@
   "firstEndPos" : 52043,
   "secondEndPos" : 52043
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 51986,
+  "secondPos" : 51986,
+  "firstEndPos" : 51992,
+  "secondEndPos" : 51992
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "tableName",
@@ -46077,6 +48079,17 @@
   "secondPos" : 52227,
   "firstEndPos" : 52233,
   "secondEndPos" : 52233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We should probably add some more error handling here.",
+  "secondLabel" : "// We should probably add some more error handling here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52240,
+  "secondPos" : 52240,
+  "firstEndPos" : 52296,
+  "secondEndPos" : 52296
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -48399,6 +50412,39 @@
   "firstEndPos" : 53474,
   "secondEndPos" : 53474
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 53489,
+  "secondPos" : 53489,
+  "firstEndPos" : 53560,
+  "secondEndPos" : 53560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      Cleanup and filtering of DB tables",
+  "secondLabel" : "//      Cleanup and filtering of DB tables",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 53565,
+  "secondPos" : 53565,
+  "firstEndPos" : 53607,
+  "secondEndPos" : 53607
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ====================================================================",
+  "secondLabel" : "// ====================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 53612,
+  "secondPos" : 53612,
+  "firstEndPos" : 53683,
+  "secondEndPos" : 53683
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -48762,6 +50808,17 @@
   "firstEndPos" : 55637,
   "secondEndPos" : 55637
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//public void checkDBe( String tf_settings, int min_gps_precision ) {",
+  "secondLabel" : "//public void checkDBe( String tf_settings, int min_gps_precision ) {",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 55650,
+  "secondPos" : 55650,
+  "firstEndPos" : 55719,
+  "secondEndPos" : 55719
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -48805,6 +50862,17 @@
   "secondPos" : 55747,
   "firstEndPos" : 58868,
   "secondEndPos" : 58868
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We hard-code these for now, but should be in the settings eventually",
+  "secondLabel" : "// We hard-code these for now, but should be in the settings eventually",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55757,
+  "secondPos" : 55757,
+  "firstEndPos" : 55828,
+  "secondEndPos" : 55828
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -48861,6 +50929,17 @@
   "firstEndPos" : 55855,
   "secondEndPos" : 55855
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [days] Minimum acceptable number of days since \"time_first\" seen.",
+  "secondLabel" : "// [days] Minimum acceptable number of days since \"time_first\" seen.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55865,
+  "secondPos" : 55865,
+  "firstEndPos" : 55933,
+  "secondEndPos" : 55933
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -48916,6 +50995,17 @@
   "firstEndPos" : 55966,
   "secondEndPos" : 55966
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [m]    Minimum acceptable GPS accuracy in meters.",
+  "secondLabel" : "// [m]    Minimum acceptable GPS accuracy in meters.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55970,
+  "secondPos" : 55970,
+  "firstEndPos" : 56022,
+  "secondEndPos" : 56022
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -48970,6 +51060,50 @@
   "secondPos" : 56039,
   "firstEndPos" : 56043,
   "secondEndPos" : 56043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SQL Query string",
+  "secondLabel" : "// SQL Query string",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56060,
+  "secondPos" : 56060,
+  "firstEndPos" : 56079,
+  "secondEndPos" : 56079
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56089,
+  "secondPos" : 56089,
+  "firstEndPos" : 56152,
+  "secondEndPos" : 56152
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//===  DELETE bad cells from BTS data",
+  "secondLabel" : "//===  DELETE bad cells from BTS data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56161,
+  "secondPos" : 56161,
+  "firstEndPos" : 56198,
+  "secondEndPos" : 56198
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56207,
+  "secondPos" : 56207,
+  "firstEndPos" : 56270,
+  "secondEndPos" : 56270
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49091,6 +51225,17 @@
   "secondPos" : 56298,
   "firstEndPos" : 56373,
   "secondEndPos" : 56373
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== samples ===========",
+  "secondLabel" : "// =========== samples ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56385,
+  "secondPos" : 56385,
+  "firstEndPos" : 56419,
+  "secondEndPos" : 56419
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49268,6 +51413,61 @@
   "firstEndPos" : 56517,
   "secondEndPos" : 56517
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== range (DBe_import::avg_range) ===========",
+  "secondLabel" : "// =========== range (DBe_import::avg_range) ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56529,
+  "secondPos" : 56529,
+  "firstEndPos" : 56585,
+  "secondEndPos" : 56585
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: OCID data marks many good BTS with a negative range so we can't use this yet.",
+  "secondLabel" : "// TODO: OCID data marks many good BTS with a negative range so we can't use this yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56594,
+  "secondPos" : 56594,
+  "firstEndPos" : 56680,
+  "secondEndPos" : 56680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE Range < 1\";",
+  "secondLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE Range < 1\";",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56689,
+  "secondPos" : 56689,
+  "firstEndPos" : 56753,
+  "secondEndPos" : 56753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//mDb.rawQuery(sqlq, null);",
+  "secondLabel" : "//mDb.rawQuery(sqlq, null);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56762,
+  "secondPos" : 56762,
+  "firstEndPos" : 56789,
+  "secondEndPos" : 56789
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== LAC ===========",
+  "secondLabel" : "// =========== LAC ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56799,
+  "secondPos" : 56799,
+  "firstEndPos" : 56829,
+  "secondEndPos" : 56829
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -49443,6 +51643,28 @@
   "secondPos" : 56919,
   "firstEndPos" : 56923,
   "secondEndPos" : 56923
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We should delete cells with CDMA (4) LAC not in [1,65534] but we can simplify this to:",
+  "secondLabel" : "// We should delete cells with CDMA (4) LAC not in [1,65534] but we can simplify this to:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56935,
+  "secondPos" : 56935,
+  "firstEndPos" : 57024,
+  "secondEndPos" : 57024
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Delete ANY cells with a LAC not in [1,65534]",
+  "secondLabel" : "// Delete ANY cells with a LAC not in [1,65534]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57033,
+  "secondPos" : 57033,
+  "firstEndPos" : 57080,
+  "secondEndPos" : 57080
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49620,6 +51842,50 @@
   "firstEndPos" : 57178,
   "secondEndPos" : 57178
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]",
+  "secondLabel" : "// Delete cells with GSM/UMTS/LTE (1/2/3/13 ??) (or all others?) LAC not in [1,65533]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57189,
+  "secondPos" : 57189,
+  "firstEndPos" : 57274,
+  "secondEndPos" : 57274
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE Lac > 65533 AND Type!='CDMA'\";",
+  "secondLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE Lac > 65533 AND Type!='CDMA'\";",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57283,
+  "secondPos" : 57283,
+  "firstEndPos" : 57366,
+  "secondEndPos" : 57366
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//mDb.rawQuery(sqlq, null);",
+  "secondLabel" : "//mDb.rawQuery(sqlq, null);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57375,
+  "secondPos" : 57375,
+  "firstEndPos" : 57402,
+  "secondEndPos" : 57402
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== CID ===========",
+  "secondLabel" : "// =========== CID ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57412,
+  "secondPos" : 57412,
+  "firstEndPos" : 57442,
+  "secondEndPos" : 57442
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -49795,6 +52061,39 @@
   "secondPos" : 57535,
   "firstEndPos" : 57539,
   "secondEndPos" : 57539
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but",
+  "secondLabel" : "// We should delete cells with UMTS/LTE (3,13) CID not in [1,268435455] (0xFFF FFFF) but",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57551,
+  "secondPos" : 57551,
+  "firstEndPos" : 57639,
+  "secondEndPos" : 57639
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we can simplify this to:",
+  "secondLabel" : "// we can simplify this to:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57648,
+  "secondPos" : 57648,
+  "firstEndPos" : 57675,
+  "secondEndPos" : 57675
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Delete ANY cells with a CID not in [1,268435455]",
+  "secondLabel" : "// Delete ANY cells with a CID not in [1,268435455]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57684,
+  "secondPos" : 57684,
+  "firstEndPos" : 57735,
+  "secondEndPos" : 57735
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49972,6 +52271,39 @@
   "firstEndPos" : 57840,
   "secondEndPos" : 57840
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]",
+  "secondLabel" : "// Delete cells with GSM/CDMA (1-3,4) CID not in [1,65534]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57851,
+  "secondPos" : 57851,
+  "firstEndPos" : 57909,
+  "secondEndPos" : 57909
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE CellID > 65534 AND (Net!=3 OR Net!=13)\";",
+  "secondLabel" : "//sqlq = \"DELETE FROM \" + OPENCELLID_TABLE + \" WHERE CellID > 65534 AND (Net!=3 OR Net!=13)\";",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57918,
+  "secondPos" : 57918,
+  "firstEndPos" : 58011,
+  "secondEndPos" : 58011
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//mDb.rawQuery(sqlq, null);",
+  "secondLabel" : "//mDb.rawQuery(sqlq, null);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58020,
+  "secondPos" : 58020,
+  "firstEndPos" : 58047,
+  "secondEndPos" : 58047
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -50092,6 +52424,149 @@
   "secondPos" : 58075,
   "firstEndPos" : 58150,
   "secondEndPos" : 58150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58162,
+  "secondPos" : 58162,
+  "firstEndPos" : 58225,
+  "secondEndPos" : 58225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//===  UPDATE \"rej_cause\" in BTS data (DBe_import)",
+  "secondLabel" : "//===  UPDATE \"rej_cause\" in BTS data (DBe_import)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58234,
+  "secondPos" : 58234,
+  "firstEndPos" : 58284,
+  "secondEndPos" : 58284
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58293,
+  "secondPos" : 58293,
+  "firstEndPos" : 58356,
+  "secondEndPos" : 58356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== isGPSexact ===========",
+  "secondLabel" : "// =========== isGPSexact ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58366,
+  "secondPos" : 58366,
+  "firstEndPos" : 58403,
+  "secondEndPos" : 58403
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE!!  OCID present \"changeable\"=1 ==> isGPSexact (until we get new import!)",
+  "secondLabel" : "// NOTE!!  OCID present \"changeable\"=1 ==> isGPSexact (until we get new import!)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58412,
+  "secondPos" : 58412,
+  "firstEndPos" : 58492,
+  "secondEndPos" : 58492
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// UPADTE opencellid SET rej_cause = rej_cause + 3 WHERE isGPSexact=1;",
+  "secondLabel" : "// UPADTE opencellid SET rej_cause = rej_cause + 3 WHERE isGPSexact=1;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58501,
+  "secondPos" : 58501,
+  "firstEndPos" : 58571,
+  "secondEndPos" : 58571
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== avg_range ===========",
+  "secondLabel" : "// =========== avg_range ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58581,
+  "secondPos" : 58581,
+  "firstEndPos" : 58617,
+  "secondEndPos" : 58617
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"UPDATE opencellid SET rej_cause = rej_cause + 3 WHERE avg_range < \" + min_gps_precision;",
+  "secondLabel" : "// \"UPDATE opencellid SET rej_cause = rej_cause + 3 WHERE avg_range < \" + min_gps_precision;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58626,
+  "secondPos" : 58626,
+  "firstEndPos" : 58718,
+  "secondEndPos" : 58718
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =========== time_first ===========",
+  "secondLabel" : "// =========== time_first ===========",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58728,
+  "secondPos" : 58728,
+  "firstEndPos" : 58765,
+  "secondEndPos" : 58765
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"UPDATE opencellid SET rej_cause = rej_cause + 1 WHERE time_first < \" + tf_settings;",
+  "secondLabel" : "// \"UPDATE opencellid SET rej_cause = rej_cause + 1 WHERE time_first < \" + tf_settings;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58774,
+  "secondPos" : 58774,
+  "firstEndPos" : 58861,
+  "secondEndPos" : 58861
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =======================================================================================",
+  "secondLabel" : "// =======================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 58876,
+  "secondPos" : 58876,
+  "firstEndPos" : 58966,
+  "secondEndPos" : 58966
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      Signal Strengths Table",
+  "secondLabel" : "//      Signal Strengths Table",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 58971,
+  "secondPos" : 58971,
+  "firstEndPos" : 59001,
+  "secondEndPos" : 59001
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// =======================================================================================",
+  "secondLabel" : "// =======================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 59006,
+  "secondPos" : 59006,
+  "firstEndPos" : 59096,
+  "secondEndPos" : 59096
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -52480,6 +54955,39 @@
   "firstEndPos" : 60404,
   "secondEndPos" : 60404
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 60420,
+  "secondPos" : 60420,
+  "firstEndPos" : 60515,
+  "secondEndPos" : 60515
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CREATE all tables",
+  "secondLabel" : "// CREATE all tables",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 60520,
+  "secondPos" : 60520,
+  "firstEndPos" : 60540,
+  "secondEndPos" : 60540
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 60545,
+  "secondPos" : 60545,
+  "firstEndPos" : 60640,
+  "secondEndPos" : 60640
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -52799,6 +55307,17 @@
   "firstEndPos" : 61362,
   "secondEndPos" : 61362
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create aimsicd.db table structure ",
+  "secondLabel" : "// Create aimsicd.db table structure ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 61385,
+  "secondPos" : 61384,
+  "firstEndPos" : 61422,
+  "secondEndPos" : 61421
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -52919,6 +55438,105 @@
   "secondPos" : 61494,
   "firstEndPos" : 71128,
   "secondEndPos" : 62271
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61510,
+  "secondPos" : 61509,
+  "firstEndPos" : 61573,
+  "secondEndPos" : 61572
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  OLD tables",
+  "secondLabel" : "//  OLD tables",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61586,
+  "secondPos" : 61585,
+  "firstEndPos" : 61600,
+  "secondEndPos" : 61599
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61613,
+  "secondPos" : 61612,
+  "firstEndPos" : 61676,
+  "secondEndPos" : 61675
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 61690,
+  "secondPos" : 64058,
+  "firstEndPos" : 61953,
+  "secondEndPos" : 64297
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 61710,
+  "secondPos" : 64074,
+  "firstEndPos" : 61937,
+  "secondEndPos" : 64285
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      CELL_SIGNAL_TABLE",
+  "secondLabel" : "Table:      CELL_SIGNAL_TABLE",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 61710,
+  "secondPos" : 64074,
+  "firstEndPos" : 61739,
+  "secondEndPos" : 64103
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       Cell Signal Measurements",
+  "secondLabel" : "What:       Cell Signal Measurements",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 61756,
+  "secondPos" : 64116,
+  "firstEndPos" : 61792,
+  "secondEndPos" : 64152
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,cellID,signal,timestamp",
+  "secondLabel" : "Columns:    _id,cellID,signal,timestamp",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 61809,
+  "secondPos" : 64165,
+  "firstEndPos" : 61848,
+  "secondEndPos" : 64204
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO:     move table into column \"DBi_measure::rx_signal\"",
+  "secondLabel" : "TODO:     move table into column \"DBi_measure::rx_signal\"",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 61880,
+  "secondPos" : 64228,
+  "firstEndPos" : 61937,
+  "secondEndPos" : 64285
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -53327,6 +55945,72 @@
   "firstEndPos" : 62422,
   "secondEndPos" : 64837
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 62438,
+  "secondPos" : 64859,
+  "firstEndPos" : 62696,
+  "secondEndPos" : 65093
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 62458,
+  "secondPos" : 64875,
+  "firstEndPos" : 62680,
+  "secondEndPos" : 65081
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      SILENT_SMS_TABLE",
+  "secondLabel" : "Table:      SILENT_SMS_TABLE",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62458,
+  "secondPos" : 64875,
+  "firstEndPos" : 62486,
+  "secondEndPos" : 64903
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       Silent Sms Database",
+  "secondLabel" : "What:       Silent Sms Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62503,
+  "secondPos" : 64916,
+  "firstEndPos" : 62534,
+  "secondEndPos" : 64947
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,Address,Display,Class,ServiceCtr,Message,Timestamp",
+  "secondLabel" : "Columns:    _id,Address,Display,Class,ServiceCtr,Message,Timestamp",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62551,
+  "secondPos" : 64960,
+  "firstEndPos" : 62617,
+  "secondEndPos" : 65026
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO: rename to TABLE_SILENTSMS",
+  "secondLabel" : "TODO: rename to TABLE_SILENTSMS",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62649,
+  "secondPos" : 65050,
+  "firstEndPos" : 62680,
+  "secondEndPos" : 65081
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -53602,6 +56286,17 @@
   "firstEndPos" : 63214,
   "secondEndPos" : 65680
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate the Silent SMS table with a dummy entry",
+  "secondLabel" : "// Populate the Silent SMS table with a dummy entry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 63230,
+  "secondPos" : 65696,
+  "firstEndPos" : 63281,
+  "secondEndPos" : 65747
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -53843,6 +56538,72 @@
   "secondPos" : 66106,
   "firstEndPos" : 63647,
   "secondEndPos" : 66113
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 63664,
+  "secondPos" : 66135,
+  "firstEndPos" : 63945,
+  "secondEndPos" : 66392
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 63684,
+  "secondPos" : 66151,
+  "firstEndPos" : 63929,
+  "secondEndPos" : 66380
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      LOCATION_TABLE",
+  "secondLabel" : "Table:      LOCATION_TABLE",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63684,
+  "secondPos" : 66151,
+  "firstEndPos" : 63710,
+  "secondEndPos" : 66177
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       Location Tracking Database",
+  "secondLabel" : "What:       Location Tracking Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63727,
+  "secondPos" : 66190,
+  "firstEndPos" : 63765,
+  "secondEndPos" : 66228
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp",
+  "secondLabel" : "Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Connection,Timestamp",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63782,
+  "secondPos" : 66241,
+  "firstEndPos" : 63848,
+  "secondEndPos" : 66307
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO: rename to TABLE_DBI_MEASURE (\"DBi_measure\")",
+  "secondLabel" : "TODO: rename to TABLE_DBI_MEASURE (\"DBi_measure\")",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63880,
+  "secondPos" : 66331,
+  "firstEndPos" : 63929,
+  "secondEndPos" : 66380
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -54129,6 +56890,72 @@
   "secondPos" : 67000,
   "firstEndPos" : 64504,
   "secondEndPos" : 67019
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 64520,
+  "secondPos" : 67041,
+  "firstEndPos" : 64862,
+  "secondEndPos" : 67359
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 64540,
+  "secondPos" : 67057,
+  "firstEndPos" : 64846,
+  "secondEndPos" : 67347
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      CELL_TABLE",
+  "secondLabel" : "Table:      CELL_TABLE",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 64540,
+  "secondPos" : 67057,
+  "firstEndPos" : 64562,
+  "secondEndPos" : 67079
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       Cell Information Tracking Database",
+  "secondLabel" : "What:       Cell Information Tracking Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 64579,
+  "secondPos" : 67092,
+  "firstEndPos" : 64625,
+  "secondEndPos" : 67138
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Mcc,Mnc,Accuracy,Speed,Direction,NetworkType,MeasurementTaken,OCID_SUBMITTED,Timestamp",
+  "secondLabel" : "Columns:    _id,Lac,CellID,Net,Lat,Lng,Signal,Mcc,Mnc,Accuracy,Speed,Direction,NetworkType,MeasurementTaken,OCID_SUBMITTED,Timestamp",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 64642,
+  "secondPos" : 67151,
+  "firstEndPos" : 64774,
+  "secondEndPos" : 67283
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO: rename to TABLE_DBI_BTS (\"DBi_bts\")",
+  "secondLabel" : "TODO: rename to TABLE_DBI_BTS (\"DBi_bts\")",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 64805,
+  "secondPos" : 67306,
+  "firstEndPos" : 64846,
+  "secondEndPos" : 67347
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -54504,6 +57331,193 @@
   "firstEndPos" : 65749,
   "secondEndPos" : 68310
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 65766,
+  "secondPos" : 68332,
+  "firstEndPos" : 66807,
+  "secondEndPos" : 69293
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 65786,
+  "secondPos" : 68348,
+  "firstEndPos" : 66791,
+  "secondEndPos" : 69281
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      OPENCELLID_TABLE",
+  "secondLabel" : "Table:      OPENCELLID_TABLE",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 65786,
+  "secondPos" : 68348,
+  "firstEndPos" : 65814,
+  "secondEndPos" : 68376
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       OpenCellID Cell Information Database",
+  "secondLabel" : "What:       OpenCellID Cell Information Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 65831,
+  "secondPos" : 68389,
+  "firstEndPos" : 65879,
+  "secondEndPos" : 68437
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,Lat,Lng,Mcc,Mnc,Lac,CellID,AvgSigStr,Samples,Timestamp",
+  "secondLabel" : "Columns:    _id,Lat,Lng,Mcc,Mnc,Lac,CellID,AvgSigStr,Samples,Timestamp",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 65896,
+  "secondPos" : 68450,
+  "firstEndPos" : 65966,
+  "secondEndPos" : 68520
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Additional items (CSV):",
+  "secondLabel" : "Additional items (CSV):",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 65998,
+  "secondPos" : 68544,
+  "firstEndPos" : 66021,
+  "secondEndPos" : 68567
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid",
+  "secondLabel" : "lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio,rnc,cid,psc,tac,pci,sid,nid,bid",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66050,
+  "secondPos" : 68592,
+  "firstEndPos" : 66161,
+  "secondEndPos" : 68703
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "We need:",
+  "secondLabel" : "We need:",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66178,
+  "secondPos" : 68716,
+  "firstEndPos" : 66186,
+  "secondEndPos" : 68724
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio",
+  "secondLabel" : "lat,lon,mcc,mnc,lac,cellid,averageSignalStrength,range,samples,changeable,radio",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66215,
+  "secondPos" : 68749,
+  "firstEndPos" : 66294,
+  "secondEndPos" : 68828
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Dependencies:",
+  "secondLabel" : "Dependencies:",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66326,
+  "secondPos" : 68852,
+  "firstEndPos" : 66339,
+  "secondEndPos" : 68865
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "updateOpenCellID",
+  "secondLabel" : "updateOpenCellID",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66368,
+  "secondPos" : 68890,
+  "firstEndPos" : 66384,
+  "secondEndPos" : 68906
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "+ \"backup\"",
+  "secondLabel" : "+ \"backup\"",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66413,
+  "secondPos" : 68931,
+  "firstEndPos" : 66423,
+  "secondEndPos" : 68941
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "ChengeLog:",
+  "secondLabel" : "ChengeLog:",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66455,
+  "secondPos" : 68965,
+  "firstEndPos" : 66465,
+  "secondEndPos" : 68975
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "2015-01-29  E:V:A   Added:  CSV: range, changeable, radio  as:",
+  "secondLabel" : "2015-01-29  E:V:A   Added:  CSV: range, changeable, radio  as:",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66490,
+  "secondPos" : 68996,
+  "firstEndPos" : 66552,
+  "secondEndPos" : 69058
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "DBe: avg_range, isGPSexact, Type.",
+  "secondLabel" : "DBe: avg_range, isGPSexact, Type.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66605,
+  "secondPos" : 69107,
+  "firstEndPos" : 66638,
+  "secondEndPos" : 69140
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO:    (1) rename to TABLE_DBE_IMPORT (\"DBe_import\".)",
+  "secondLabel" : "TODO:    (1) rename to TABLE_DBE_IMPORT (\"DBe_import\".)",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66669,
+  "secondPos" : 69163,
+  "firstEndPos" : 66724,
+  "secondEndPos" : 69218
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "TODO:    (2) add more items from CSV file to table.",
+  "secondLabel" : "TODO:    (2) add more items from CSV file to table.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66740,
+  "secondPos" : 69230,
+  "firstEndPos" : 66791,
+  "secondEndPos" : 69281
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -54724,6 +57738,17 @@
   "firstEndPos" : 67309,
   "secondEndPos" : 69865
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 67316,
+  "secondPos" : 69872,
+  "firstEndPos" : 67322,
+  "secondEndPos" : 69878
+}, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
   "firstLabel" : "\"Samples INTEGER, \"",
@@ -54746,6 +57771,17 @@
   "firstEndPos" : 67407,
   "secondEndPos" : 69963
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 67413,
+  "secondPos" : 69969,
+  "firstEndPos" : 67419,
+  "secondEndPos" : 69975
+}, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
   "firstLabel" : "\"Type TEXT, \"",
@@ -54757,6 +57793,28 @@
   "firstEndPos" : 67453,
   "secondEndPos" : 70009
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new",
+  "secondLabel" : "// new",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 67468,
+  "secondPos" : 70024,
+  "firstEndPos" : 67474,
+  "secondEndPos" : 70030
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\"rej_cause INTEGER\"        // new",
+  "secondLabel" : "//\"rej_cause INTEGER\"        // new",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 67495,
+  "secondPos" : 70051,
+  "firstEndPos" : 67530,
+  "secondEndPos" : 70086
+}, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
   "firstLabel" : "\"Timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP\"",
@@ -54767,6 +57825,17 @@
   "secondPos" : 70107,
   "firstEndPos" : 67607,
   "secondEndPos" : 70163
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\"Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp, \" +",
+  "secondLabel" : "//\"Timestamp TIMESTAMP NOT NULL DEFAULT current_timestamp, \" +",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 67630,
+  "secondPos" : 70186,
+  "firstEndPos" : 67692,
+  "secondEndPos" : 70248
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
@@ -54855,6 +57924,61 @@
   "secondPos" : 70304,
   "firstEndPos" : 67774,
   "secondEndPos" : 70330
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 67790,
+  "secondPos" : 70352,
+  "firstEndPos" : 67957,
+  "secondEndPos" : 70503
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 67810,
+  "secondPos" : 70368,
+  "firstEndPos" : 67941,
+  "secondEndPos" : 70491
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      TABLE_DEFAULT_MCC",
+  "secondLabel" : "Table:      TABLE_DEFAULT_MCC",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 67810,
+  "secondPos" : 70368,
+  "firstEndPos" : 67839,
+  "secondEndPos" : 70397
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       MCC Location Database",
+  "secondLabel" : "What:       MCC Location Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 67856,
+  "secondPos" : 70410,
+  "firstEndPos" : 67889,
+  "secondEndPos" : 70443
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    _id,Country,Mcc,Lat,Lng",
+  "secondLabel" : "Columns:    _id,Country,Mcc,Lat,Lng",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 67906,
+  "secondPos" : 70456,
+  "firstEndPos" : 67941,
+  "secondEndPos" : 70491
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -55108,6 +58232,116 @@
   "secondPos" : 70945,
   "firstEndPos" : 68356,
   "secondEndPos" : 70972
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68372,
+  "secondPos" : 61950,
+  "firstEndPos" : 68435,
+  "secondEndPos" : 62013
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  NEW tables",
+  "secondLabel" : "//  NEW tables",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68448,
+  "secondPos" : 62026,
+  "firstEndPos" : 68462,
+  "secondEndPos" : 62040
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================",
+  "secondLabel" : "//=============================================================",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68475,
+  "secondPos" : 62053,
+  "firstEndPos" : 68538,
+  "secondEndPos" : 62116
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 68552,
+  "secondPos" : 70994,
+  "firstEndPos" : 68759,
+  "secondEndPos" : 71185
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 68572,
+  "secondPos" : 71010,
+  "firstEndPos" : 68743,
+  "secondEndPos" : 71173
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Table:      TABLE_EVENTLOG (EventLog)",
+  "secondLabel" : "Table:      TABLE_EVENTLOG (EventLog)",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68572,
+  "secondPos" : 71010,
+  "firstEndPos" : 68609,
+  "secondEndPos" : 71047
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "What:       Event Log Database",
+  "secondLabel" : "What:       Event Log Database",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68626,
+  "secondPos" : 71060,
+  "firstEndPos" : 68656,
+  "secondEndPos" : 71090
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Columns:    time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc",
+  "secondLabel" : "Columns:    time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68673,
+  "secondPos" : 71103,
+  "firstEndPos" : 68743,
+  "secondEndPos" : 71173
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*String TABLE_EVENTLOG_CREATE =\n            \"CREATE TABLE EventLog  (\" +\n                    \"_id            INTEGER PRIMARY KEY AUTOINCREMENT,\" + \n                    \"time     \t\tTEXT NOT NULL,\"  +\n                    \"LAC           \tINTEGER NOT NULL,\" +\n                    \"CID           \tINTEGER NOT NULL,\" +\n                    \"PSC           \tINTEGER,\" +\n                    \"gpsd_lat      \tREAL,\" +\n                    \"gpsd_lon      \tREAL,\" +\n                    \"gpsd_accu     \tINTEGER,\" +\n                    \"DF_id         \tINTEGER,\" +\n                    \"DF_desc\t    TEXT\" +\n            \");\";\n            database.execSQL(TABLE_EVENTLOG_CREATE);\n            */",
+  "secondLabel" : "/*String TABLE_EVENTLOG_CREATE =\n            \"CREATE TABLE EventLog  (\" +\n                    \"_id            INTEGER PRIMARY KEY AUTOINCREMENT,\" +\n                    \"time     \t\tTEXT NOT NULL,\"  +\n                    \"LAC           \tINTEGER NOT NULL,\" +\n                    \"CID           \tINTEGER NOT NULL,\" +\n                    \"PSC           \tINTEGER,\" +\n                    \"gpsd_lat      \tREAL,\" +\n                    \"gpsd_lon      \tREAL,\" +\n                    \"gpsd_accu     \tINTEGER,\" +\n                    \"DF_id         \tINTEGER,\" +\n                    \"DF_desc\t    TEXT\" +\n            \");\";\n            database.execSQL(TABLE_EVENTLOG_CREATE);\n            */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68772,
+  "secondPos" : 71267,
+  "firstEndPos" : 69446,
+  "secondEndPos" : 71940
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Implementation of he3556",
+  "secondLabel" : "// Implementation of he3556",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 69459,
+  "secondPos" : 71953,
+  "firstEndPos" : 69486,
+  "secondEndPos" : 71980
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -55427,6 +58661,39 @@
   "secondPos" : 72664,
   "firstEndPos" : 70191,
   "secondEndPos" : 72685
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate the EventLog table with a dummy entry",
+  "secondLabel" : "// Populate the EventLog table with a dummy entry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 70207,
+  "secondPos" : 72701,
+  "firstEndPos" : 70256,
+  "secondEndPos" : 72750
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc",
+  "secondLabel" : "// time,LAC,CID,PSC,gpsd_lat,gpsd_lon,gpsd_accu,DF_id,DF_desc",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 70269,
+  "secondPos" : 72763,
+  "firstEndPos" : 70330,
+  "secondEndPos" : 72824
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//insertDetection(1234,1,543210,111,1.1,2.2,3.3,2,\"CellID not found in OCID Database\");",
+  "secondLabel" : "//insertDetection(1234,1,543210,111,1.1,2.2,3.3,2,\"CellID not found in OCID Database\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 70343,
+  "secondPos" : 72837,
+  "firstEndPos" : 70430,
+  "secondEndPos" : 72924
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -55780,6 +59047,17 @@
   "firstEndPos" : 71014,
   "secondEndPos" : 73508
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Re-populate the default MCC location table",
+  "secondLabel" : "// Re-populate the default MCC location table",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 71030,
+  "secondPos" : 62173,
+  "firstEndPos" : 71075,
+  "secondEndPos" : 62218
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -55834,6 +59112,61 @@
   "secondPos" : 62250,
   "firstEndPos" : 71115,
   "secondEndPos" : 62258
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 71139,
+  "secondPos" : 62281,
+  "firstEndPos" : 71234,
+  "secondEndPos" : 62376
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DROP all tables",
+  "secondLabel" : "// DROP all tables",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 71243,
+  "secondPos" : 62385,
+  "firstEndPos" : 71261,
+  "secondEndPos" : 62403
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//=============================================================================================",
+  "secondLabel" : "//=============================================================================================",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 71270,
+  "secondPos" : 62412,
+  "firstEndPos" : 71365,
+  "secondEndPos" : 62507
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This function drops all tables when SQLIte version has been upped,",
+  "secondLabel" : "// This function drops all tables when SQLIte version has been upped,",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 71375,
+  "secondPos" : 62517,
+  "firstEndPos" : 71444,
+  "secondEndPos" : 62586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and then calls the table create process.",
+  "secondLabel" : "// and then calls the table create process.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 71453,
+  "secondPos" : 62595,
+  "firstEndPos" : 71496,
+  "secondEndPos" : 62638
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -56847,6 +60180,72 @@
   "firstEndPos" : 72158,
   "secondEndPos" : 63300
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBE_IMPORT);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBE_IMPORT);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72174,
+  "secondPos" : 63316,
+  "firstEndPos" : 72233,
+  "secondEndPos" : 63375
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBE_CAPAB);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBE_CAPAB);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72246,
+  "secondPos" : 63388,
+  "firstEndPos" : 72304,
+  "secondEndPos" : 63446
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBI_BTS);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBI_BTS);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72317,
+  "secondPos" : 63459,
+  "firstEndPos" : 72373,
+  "secondEndPos" : 63515
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBI_MEASURE);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DBI_MEASURE);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72386,
+  "secondPos" : 63528,
+  "firstEndPos" : 72446,
+  "secondEndPos" : 63588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DEFAULT_MCC);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DEFAULT_MCC);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72459,
+  "secondPos" : 63601,
+  "firstEndPos" : 72519,
+  "secondEndPos" : 63661
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DET_FLAGS);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_DET_FLAGS);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72532,
+  "secondPos" : 63674,
+  "firstEndPos" : 72590,
+  "secondEndPos" : 63732
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -56956,6 +60355,39 @@
   "secondPos" : 63782,
   "firstEndPos" : 72654,
   "secondEndPos" : 63796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_SECTORTYPE);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_SECTORTYPE);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72669,
+  "secondPos" : 63811,
+  "firstEndPos" : 72728,
+  "secondEndPos" : 63870
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_SILENTSMS);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_SILENTSMS);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72741,
+  "secondPos" : 63883,
+  "firstEndPos" : 72799,
+  "secondEndPos" : 63941
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_CMEASURES);",
+  "secondLabel" : "// \tdb.execSQL(\"DROP TABLE IF EXISTS \" + TABLE_CMEASURES);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72812,
+  "secondPos" : 63954,
+  "firstEndPos" : 72870,
+  "secondEndPos" : 64012
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

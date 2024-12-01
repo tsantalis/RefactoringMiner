@@ -10,6 +10,17 @@
   "firstEndPos" : 20050,
   "secondEndPos" : 20169
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2012-2014 eBay Software Foundation and selendroid committers.\n * \n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n * in compliance with the License. You may obtain a copy of the License at\n * \n * http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2012-2014 eBay Software Foundation and selendroid committers.\n * \n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n * in compliance with the License. You may obtain a copy of the License at\n * \n * http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 632,
+  "secondEndPos" : 632
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1913,6 +1924,17 @@
   "firstEndPos" : 2942,
   "secondEndPos" : 2942
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2927,
+  "secondPos" : 2927,
+  "firstEndPos" : 2932,
+  "secondEndPos" : 2932
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IDevice",
@@ -1956,6 +1978,17 @@
   "secondPos" : 3080,
   "firstEndPos" : 3093,
   "secondEndPos" : 3093
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3080,
+  "secondPos" : 3080,
+  "firstEndPos" : 3086,
+  "secondEndPos" : 3086
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2177,6 +2210,17 @@
   "firstEndPos" : 3288,
   "secondEndPos" : 3288
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3273,
+  "secondPos" : 3273,
+  "firstEndPos" : 3278,
+  "secondEndPos" : 3278
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IDevice",
@@ -2209,6 +2253,17 @@
   "secondPos" : 3356,
   "firstEndPos" : 3369,
   "secondEndPos" : 3369
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3356,
+  "secondPos" : 3356,
+  "firstEndPos" : 3362,
+  "secondEndPos" : 3362
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4729,6 +4784,17 @@
   "firstEndPos" : 5254,
   "secondEndPos" : 5254
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Reinstall if already installed, Install otherwise",
+  "secondLabel" : "// Reinstall if already installed, Install otherwise",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4752,
+  "secondPos" : 4752,
+  "firstEndPos" : 4804,
+  "secondEndPos" : 4804
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5047,6 +5113,17 @@
   "secondPos" : 4962,
   "firstEndPos" : 5049,
   "secondEndPos" : 5049
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// give it a second to recover from the install",
+  "secondLabel" : "// give it a second to recover from the install",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4970,
+  "secondPos" : 4970,
+  "firstEndPos" : 5017,
+  "secondEndPos" : 5017
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6268,6 +6345,17 @@
   "secondPos" : 5688,
   "firstEndPos" : 5782,
   "secondEndPos" : 5782
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// give it a second to recover from the activity start",
+  "secondLabel" : "// give it a second to recover from the activity start",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5696,
+  "secondPos" : 5696,
+  "firstEndPos" : 5750,
+  "secondEndPos" : 5750
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7654,6 +7742,17 @@
   "secondPos" : 6575,
   "firstEndPos" : 6664,
   "secondEndPos" : 6664
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// give it a second to recover from the uninstall",
+  "secondLabel" : "// give it a second to recover from the uninstall",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6583,
+  "secondPos" : 6583,
+  "firstEndPos" : 6632,
+  "secondEndPos" : 6632
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9051,6 +9150,17 @@
   "secondPos" : 7457,
   "firstEndPos" : 7495,
   "secondEndPos" : 7495
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not set",
+  "secondLabel" : "// Not set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7465,
+  "secondPos" : 7465,
+  "firstEndPos" : 7475,
+  "secondEndPos" : 7475
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -11648,6 +11758,17 @@
   "firstEndPos" : 9601,
   "secondEndPos" : 9601
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Try again, waiting for instrumentation to finish. This way we'll get more error output.",
+  "secondLabel" : "// Try again, waiting for instrumentation to finish. This way we'll get more error output.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8899,
+  "secondPos" : 8899,
+  "firstEndPos" : 8989,
+  "secondEndPos" : 8989
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -12494,6 +12615,17 @@
   "secondPos" : 9622,
   "firstEndPos" : 9727,
   "secondEndPos" : 9727
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can't get detailed results",
+  "secondLabel" : "// Can't get detailed results",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9632,
+  "secondPos" : 9632,
+  "firstEndPos" : 9661,
+  "secondEndPos" : 9661
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -20217,6 +20349,17 @@
   "firstEndPos" : 14547,
   "secondEndPos" : 14547
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if screen size is not requested, just ignore it",
+  "secondLabel" : "// if screen size is not requested, just ignore it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13977,
+  "secondPos" : 13977,
+  "firstEndPos" : 14027,
+  "secondEndPos" : 14027
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -23231,6 +23374,17 @@
   "firstEndPos" : 15646,
   "secondEndPos" : 15646
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// device/adb not available?",
+  "secondLabel" : "// device/adb not available?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15662,
+  "secondPos" : 15662,
+  "firstEndPos" : 15690,
+  "secondEndPos" : 15690
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -25277,6 +25431,17 @@
   "firstEndPos" : 16784,
   "secondEndPos" : 16904
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore",
+  "secondLabel" : "// ignore",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16767,
+  "secondPos" : 16887,
+  "firstEndPos" : 16776,
+  "secondEndPos" : 16896
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -25375,6 +25540,17 @@
   "secondPos" : 17110,
   "firstEndPos" : 17050,
   "secondEndPos" : 17169
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16991,
+  "secondPos" : 17110,
+  "firstEndPos" : 16997,
+  "secondEndPos" : 17116
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -25628,6 +25804,17 @@
   "secondPos" : 17289,
   "firstEndPos" : 17175,
   "secondEndPos" : 17294
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to wait a beat for the UI to respond",
+  "secondLabel" : "// need to wait a beat for the UI to respond",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17183,
+  "secondPos" : 17302,
+  "firstEndPos" : 17227,
+  "secondEndPos" : 17346
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25915,6 +26102,17 @@
   "firstEndPos" : 17372,
   "secondEndPos" : 17491
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to wait a beat for the UI to respond",
+  "secondLabel" : "// need to wait a beat for the UI to respond",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17380,
+  "secondPos" : 17499,
+  "firstEndPos" : 17424,
+  "secondEndPos" : 17543
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26167,6 +26365,17 @@
   "secondPos" : 17658,
   "firstEndPos" : 17542,
   "secondEndPos" : 17661
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make sure it's backup again",
+  "secondLabel" : "// make sure it's backup again",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17549,
+  "secondPos" : 17668,
+  "firstEndPos" : 17579,
+  "secondEndPos" : 17698
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -27257,6 +27466,17 @@
   "firstEndPos" : 18196,
   "secondEndPos" : 18315
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@inheritdoc",
+  "secondLabel" : "@inheritdoc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18183,
+  "secondPos" : 18302,
+  "firstEndPos" : 18194,
+  "secondEndPos" : 18313
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ",
@@ -27421,6 +27641,17 @@
   "secondPos" : 18415,
   "firstEndPos" : 18304,
   "secondEndPos" : 18423
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The \"test\" utility doesn't exist on all devices so we'll check the output of ls.",
+  "secondLabel" : "// The \"test\" utility doesn't exist on all devices so we'll check the output of ls.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18313,
+  "secondPos" : 18432,
+  "firstEndPos" : 18396,
+  "secondEndPos" : 18515
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27663,6 +27894,17 @@
   "secondPos" : 18638,
   "firstEndPos" : 18522,
   "secondEndPos" : 18641
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure it ends with '/' so we're listing directory contents.",
+  "secondLabel" : "// Make sure it ends with '/' so we're listing directory contents.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18525,
+  "secondPos" : 18644,
+  "firstEndPos" : 18591,
+  "secondEndPos" : 18710
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -28114,6 +28356,17 @@
   "secondPos" : 18996,
   "firstEndPos" : 18890,
   "secondEndPos" : 19009
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@inheritDoc",
+  "secondLabel" : "@inheritDoc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18877,
+  "secondPos" : 18996,
+  "firstEndPos" : 18888,
+  "secondEndPos" : 19007
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

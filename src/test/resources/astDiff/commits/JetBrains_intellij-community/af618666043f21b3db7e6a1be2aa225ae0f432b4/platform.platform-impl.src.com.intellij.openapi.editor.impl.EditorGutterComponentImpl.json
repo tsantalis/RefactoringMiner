@@ -10,6 +10,28 @@
   "firstEndPos" : 62237,
   "secondEndPos" : 62474
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Created by IntelliJ IDEA.\n * User: max\n * Date: Jun 6, 2002\n * Time: 8:37:03 PM\n * To change template for new class use\n * Code Style | Class Templates options (Tools | IDE Options).\n */",
+  "secondLabel" : "/*\n * Created by IntelliJ IDEA.\n * User: max\n * Date: Jun 6, 2002\n * Time: 8:37:03 PM\n * To change template for new class use\n * Code Style | Class Templates options (Tools | IDE Options).\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 602,
+  "secondPos" : 602,
+  "firstEndPos" : 794,
+  "secondEndPos" : 794
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -15949,6 +15971,105 @@
   "firstEndPos" : 12901,
   "secondEndPos" : 12901
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See IDEA-59553 for rationale on why this feature is disabled",
+  "secondLabel" : "// See IDEA-59553 for rationale on why this feature is disabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12910,
+  "secondPos" : 12910,
+  "firstEndPos" : 12973,
+  "secondEndPos" : 12973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if (isLineNumbersShown()) {",
+  "secondLabel" : "//if (isLineNumbersShown()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12978,
+  "secondPos" : 12978,
+  "firstEndPos" : 13007,
+  "secondEndPos" : 13007
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  if (e.getX() >= getLineNumberAreaOffset() && getLineNumberAreaOffset() + getLineNumberAreaWidth() >= e.getX()) {",
+  "secondLabel" : "//  if (e.getX() >= getLineNumberAreaOffset() && getLineNumberAreaOffset() + getLineNumberAreaWidth() >= e.getX()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13012,
+  "secondPos" : 13012,
+  "firstEndPos" : 13128,
+  "secondEndPos" : 13128
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    queue.blockNextEvents(e);",
+  "secondLabel" : "//    queue.blockNextEvents(e);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13133,
+  "secondPos" : 13133,
+  "firstEndPos" : 13164,
+  "secondEndPos" : 13164
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    myEditor.getSettings().setLineNumbersShown(false);",
+  "secondLabel" : "//    myEditor.getSettings().setLineNumbersShown(false);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13169,
+  "secondPos" : 13169,
+  "firstEndPos" : 13225,
+  "secondEndPos" : 13225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    e.consume();",
+  "secondLabel" : "//    e.consume();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13230,
+  "secondPos" : 13230,
+  "firstEndPos" : 13248,
+  "secondEndPos" : 13248
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    return;",
+  "secondLabel" : "//    return;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13253,
+  "secondPos" : 13253,
+  "firstEndPos" : 13266,
+  "secondEndPos" : 13266
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  }",
+  "secondLabel" : "//  }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13271,
+  "secondPos" : 13271,
+  "firstEndPos" : 13276,
+  "secondEndPos" : 13276
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//}",
+  "secondLabel" : "//}",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13281,
+  "secondPos" : 13281,
+  "firstEndPos" : 13284,
+  "secondEndPos" : 13284
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -30414,6 +30535,17 @@
   "firstEndPos" : 21122,
   "secondEndPos" : 21122
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we limit highlighters to process to between line starting at startOffset and line ending at endOffset",
+  "secondLabel" : "// we limit highlighters to process to between line starting at startOffset and line ending at endOffset",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21129,
+  "secondPos" : 21129,
+  "firstEndPos" : 21233,
+  "secondEndPos" : 21233
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -40908,6 +41040,17 @@
   "firstEndPos" : 27623,
   "secondEndPos" : 27623
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't allow more than 5 icons per line",
+  "secondLabel" : "// Don't allow more than 5 icons per line",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27537,
+  "secondPos" : 27537,
+  "firstEndPos" : 27578,
+  "secondEndPos" : 27578
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -47640,6 +47783,17 @@
   "firstEndPos" : 31682,
   "secondEndPos" : 31682
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// top edge of the last line of the highlighted area",
+  "secondLabel" : "// top edge of the last line of the highlighted area",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31689,
+  "secondPos" : 31689,
+  "firstEndPos" : 31741,
+  "secondEndPos" : 31741
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -47826,6 +47980,17 @@
   "secondPos" : 31829,
   "firstEndPos" : 31830,
   "secondEndPos" : 31830
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// => add one line height to make height correct (bottom edge of the highlighted area)",
+  "secondLabel" : "// => add one line height to make height correct (bottom edge of the highlighted area)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31836,
+  "secondPos" : 31836,
+  "firstEndPos" : 31922,
+  "secondEndPos" : 31922
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -48101,6 +48266,17 @@
   "secondPos" : 32058,
   "firstEndPos" : 32238,
   "secondEndPos" : 32238
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but if the highlighter ends with the end of line, its line number is the next line, but that line should not be highlighted",
+  "secondLabel" : "// but if the highlighter ends with the end of line, its line number is the next line, but that line should not be highlighted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32066,
+  "secondPos" : 32066,
+  "firstEndPos" : 32192,
+  "secondEndPos" : 32192
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -50961,6 +51137,17 @@
   "secondPos" : 33655,
   "firstEndPos" : 33656,
   "secondEndPos" : 33656
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because of 2px LineMarkerRenderers",
+  "secondLabel" : "// because of 2px LineMarkerRenderers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33658,
+  "secondPos" : 33658,
+  "firstEndPos" : 33695,
+  "secondEndPos" : 33695
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -63887,6 +64074,17 @@
   "firstEndPos" : 40580,
   "secondEndPos" : 40580
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Minus",
+  "secondLabel" : "//Minus",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40590,
+  "secondPos" : 40590,
+  "firstEndPos" : 40597,
+  "secondEndPos" : 40597
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -66064,6 +66262,17 @@
   "secondPos" : 41775,
   "firstEndPos" : 41776,
   "secondEndPos" : 41776
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Draw plus",
+  "secondLabel" : "// Draw plus",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41783,
+  "secondPos" : 41783,
+  "firstEndPos" : 41795,
+  "secondEndPos" : 41795
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -93576,6 +93785,17 @@
   "firstEndPos" : 58148,
   "secondEndPos" : 58385
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if (line >= myEditor.getDocument().getLineCount()) return;",
+  "secondLabel" : "//if (line >= myEditor.getDocument().getLineCount()) return;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58157,
+  "secondPos" : 58394,
+  "firstEndPos" : 58217,
+  "secondEndPos" : 58454
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -99339,6 +99559,17 @@
   "secondPos" : 61814,
   "firstEndPos" : 61584,
   "secondEndPos" : 61821
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not check y to extend the area where users could click",
+  "secondLabel" : "// Do not check y to extend the area where users could click",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61597,
+  "secondPos" : 61834,
+  "firstEndPos" : 61657,
+  "secondEndPos" : 61894
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

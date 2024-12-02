@@ -10,6 +10,17 @@
   "firstEndPos" : 20850,
   "secondEndPos" : 21284
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2010 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2010 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -857,6 +868,17 @@
   "firstEndPos" : 1675,
   "secondEndPos" : 1675
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1639,
+  "secondPos" : 1639,
+  "firstEndPos" : 1644,
+  "secondEndPos" : 1644
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -1076,6 +1098,17 @@
   "secondPos" : 2056,
   "firstEndPos" : 2094,
   "secondEndPos" : 2094
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2056,
+  "secondPos" : 2056,
+  "firstEndPos" : 2061,
+  "secondEndPos" : 2061
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -3442,6 +3475,17 @@
   "firstEndPos" : 3918,
   "secondEndPos" : 4352
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Even though we may have a UMS host connected, we the SD card\n         * may not be in a state for export.\n         */",
+  "secondLabel" : "/*\n         * Even though we may have a UMS host connected, we the SD card\n         * may not be in a state for export.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3928,
+  "secondPos" : 4362,
+  "firstEndPos" : 4059,
+  "secondEndPos" : 4493
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3947,6 +3991,17 @@
   "secondPos" : 4804,
   "firstEndPos" : 4504,
   "secondEndPos" : 4938
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * No card or card being checked = don't display\n             */",
+  "secondLabel" : "/*\n             * No card or card being checked = don't display\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4384,
+  "secondPos" : 4818,
+  "firstEndPos" : 4463,
+  "secondEndPos" : 4897
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5279,6 +5334,17 @@
   "firstEndPos" : 5983,
   "secondEndPos" : 6417
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage is now shared. Modify the UMS notification\n             * for stopping UMS.\n             */",
+  "secondLabel" : "/*\n             * Storage is now shared. Modify the UMS notification\n             * for stopping UMS.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5423,
+  "secondPos" : 5857,
+  "firstEndPos" : 5540,
+  "secondEndPos" : 5974
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5829,6 +5895,17 @@
   "firstEndPos" : 6702,
   "secondEndPos" : 7136
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage is now checking. Update media notification and disable\n             * UMS notification.\n             */",
+  "secondLabel" : "/*\n             * Storage is now checking. Update media notification and disable\n             * UMS notification.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6052,
+  "secondPos" : 6486,
+  "firstEndPos" : 6181,
+  "secondEndPos" : 6615
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6148,6 +6225,17 @@
   "firstEndPos" : 7058,
   "secondEndPos" : 7492
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage is now mounted. Dismiss any media notifications,\n             * and enable UMS notification if connected.\n             */",
+  "secondLabel" : "/*\n             * Storage is now mounted. Dismiss any media notifications,\n             * and enable UMS notification if connected.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6770,
+  "secondPos" : 7204,
+  "firstEndPos" : 6917,
+  "secondEndPos" : 7351
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6401,6 +6489,17 @@
   "firstEndPos" : 9455,
   "secondEndPos" : 9889
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage is now unmounted. We may have been unmounted\n             * because the user is enabling/disabling UMS, in which case we don't\n             * want to display the 'safe to unmount' notification.\n             */",
+  "secondLabel" : "/*\n             * Storage is now unmounted. We may have been unmounted\n             * because the user is enabling/disabling UMS, in which case we don't\n             * want to display the 'safe to unmount' notification.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7128,
+  "secondPos" : 7562,
+  "firstEndPos" : 7363,
+  "secondEndPos" : 7797
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6577,6 +6676,17 @@
   "firstEndPos" : 7864,
   "secondEndPos" : 8298
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                     * The unmount was due to UMS being enabled. Dismiss any\n                     * media notifications, and enable UMS notification if connected\n                     */",
+  "secondLabel" : "/*\n                     * The unmount was due to UMS being enabled. Dismiss any\n                     * media notifications, and enable UMS notification if connected\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7511,
+  "secondPos" : 7945,
+  "firstEndPos" : 7699,
+  "secondEndPos" : 8133
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6752,6 +6862,17 @@
   "secondPos" : 8304,
   "firstEndPos" : 9094,
   "secondEndPos" : 9528
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                     * Show safe to unmount media notification, and enable UMS\n                     * notification if connected.\n                     */",
+  "secondLabel" : "/*\n                     * Show safe to unmount media notification, and enable UMS\n                     * notification if connected.\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7892,
+  "secondPos" : 8326,
+  "firstEndPos" : 8047,
+  "secondEndPos" : 8481
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7006,6 +7127,28 @@
   "firstEndPos" : 9007,
   "secondEndPos" : 9441
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This device does not have removable storage, so",
+  "secondLabel" : "// This device does not have removable storage, so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8786,
+  "secondPos" : 9220,
+  "firstEndPos" : 8836,
+  "secondEndPos" : 9270
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// don't tell the user they can remove it.",
+  "secondLabel" : "// don't tell the user they can remove it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8861,
+  "secondPos" : 9295,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 9337
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7181,6 +7324,17 @@
   "secondPos" : 9548,
   "firstEndPos" : 9445,
   "secondEndPos" : 9879
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                 * The unmount was due to UMS being enabled. Dismiss any\n                 * media notifications, and disable the UMS notification\n                 */",
+  "secondLabel" : "/*\n                 * The unmount was due to UMS being enabled. Dismiss any\n                 * media notifications, and disable the UMS notification\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9132,
+  "secondPos" : 9566,
+  "firstEndPos" : 9300,
+  "secondEndPos" : 9734
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7435,6 +7589,17 @@
   "firstEndPos" : 10573,
   "secondEndPos" : 11007
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage has no filesystem. Show blank media notification,\n             * and enable UMS notification if connected.\n             */",
+  "secondLabel" : "/*\n             * Storage has no filesystem. Show blank media notification,\n             * and enable UMS notification if connected.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9520,
+  "secondPos" : 9954,
+  "firstEndPos" : 9668,
+  "secondEndPos" : 10102
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7632,6 +7797,17 @@
   "secondPos" : 10183,
   "firstEndPos" : 9801,
   "secondEndPos" : 10235
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// send the volume's path through to the formatting activity",
+  "secondLabel" : "// send the volume's path through to the formatting activity",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9822,
+  "secondPos" : 10256,
+  "firstEndPos" : 9882,
+  "secondEndPos" : 10316
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8194,6 +8370,17 @@
   "firstEndPos" : 11721,
   "secondEndPos" : 12155
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage is corrupt. Show corrupt media notification,\n             * and enable UMS notification if connected.\n             */",
+  "secondLabel" : "/*\n             * Storage is corrupt. Show corrupt media notification,\n             * and enable UMS notification if connected.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10645,
+  "secondPos" : 11079,
+  "firstEndPos" : 10788,
+  "secondEndPos" : 11222
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8391,6 +8578,17 @@
   "secondPos" : 11303,
   "firstEndPos" : 10921,
   "secondEndPos" : 11355
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// send the volume's path through to the formatting activity",
+  "secondLabel" : "// send the volume's path through to the formatting activity",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10942,
+  "secondPos" : 11376,
+  "firstEndPos" : 11002,
+  "secondEndPos" : 11436
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8953,6 +9151,17 @@
   "firstEndPos" : 12538,
   "secondEndPos" : 12972
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage has been removed. Show nomedia media notification,\n             * and disable UMS notification if the removed storage is the primary storage.\n             */",
+  "secondLabel" : "/*\n             * Storage has been removed. Show nomedia media notification,\n             * and disable UMS notification if the removed storage is the primary storage.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11789,
+  "secondPos" : 12223,
+  "firstEndPos" : 11972,
+  "secondEndPos" : 12406
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9326,6 +9535,17 @@
   "secondPos" : 13030,
   "firstEndPos" : 13372,
   "secondEndPos" : 13806
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Storage has been removed unsafely. Show bad removal media notification,\n             * and disable UMS notification if the removed storage is the primary storage.\n             */",
+  "secondLabel" : "/*\n             * Storage has been removed unsafely. Show bad removal media notification,\n             * and disable UMS notification if the removed storage is the primary storage.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12610,
+  "secondPos" : 13044,
+  "firstEndPos" : 12806,
+  "secondEndPos" : 13240
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10866,6 +11086,17 @@
   "secondPos" : 14919,
   "firstEndPos" : 17859,
   "secondEndPos" : 18293
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// force to show UsbSettings screen to select usb mode if property is true",
+  "secondLabel" : "// force to show UsbSettings screen to select usb mode if property is true",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14495,
+  "secondPos" : 14929,
+  "firstEndPos" : 14569,
+  "secondEndPos" : 15003
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13540,6 +13771,105 @@
   "firstEndPos" : 17514,
   "secondEndPos" : 17948
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pop up a full-screen alert to coach the user through enabling UMS. The average",
+  "secondLabel" : "// Pop up a full-screen alert to coach the user through enabling UMS. The average",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16752,
+  "secondPos" : 17186,
+  "firstEndPos" : 16833,
+  "secondEndPos" : 17267
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// user has attached the device to USB either to charge the phone (in which case",
+  "secondLabel" : "// user has attached the device to USB either to charge the phone (in which case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16850,
+  "secondPos" : 17284,
+  "firstEndPos" : 16930,
+  "secondEndPos" : 17364
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is harmless) or transfer files, and in the latter case this alert saves",
+  "secondLabel" : "// this is harmless) or transfer files, and in the latter case this alert saves",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16947,
+  "secondPos" : 17381,
+  "firstEndPos" : 17026,
+  "secondEndPos" : 17460
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// several steps (as well as subtly indicates that you shouldn't mix UMS with other",
+  "secondLabel" : "// several steps (as well as subtly indicates that you shouldn't mix UMS with other",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17043,
+  "secondPos" : 17477,
+  "firstEndPos" : 17126,
+  "secondEndPos" : 17560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// activities on the device).",
+  "secondLabel" : "// activities on the device).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17143,
+  "secondPos" : 17577,
+  "firstEndPos" : 17172,
+  "secondEndPos" : 17606
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17189,
+  "secondPos" : 17623,
+  "firstEndPos" : 17191,
+  "secondEndPos" : 17625
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If ADB is enabled, however, we suppress this dialog (under the assumption that a",
+  "secondLabel" : "// If ADB is enabled, however, we suppress this dialog (under the assumption that a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17208,
+  "secondPos" : 17642,
+  "firstEndPos" : 17291,
+  "secondEndPos" : 17725
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// developer (a) knows how to enable UMS, and (b) is probably using USB to install",
+  "secondLabel" : "// developer (a) knows how to enable UMS, and (b) is probably using USB to install",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17308,
+  "secondPos" : 17742,
+  "firstEndPos" : 17390,
+  "secondEndPos" : 17824
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// builds or use adb commands.",
+  "secondLabel" : "// builds or use adb commands.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17407,
+  "secondPos" : 17841,
+  "firstEndPos" : 17437,
+  "secondEndPos" : 17871
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14980,6 +15310,17 @@
   "secondPos" : 19255,
   "firstEndPos" : 19082,
   "secondEndPos" : 19516
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Dismiss the previous notification - we're about to\n             * re-use it.\n             */",
+  "secondLabel" : "/*\n             * Dismiss the previous notification - we're about to\n             * re-use it.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18835,
+  "secondPos" : 19269,
+  "firstEndPos" : 18945,
+  "secondEndPos" : 19379
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

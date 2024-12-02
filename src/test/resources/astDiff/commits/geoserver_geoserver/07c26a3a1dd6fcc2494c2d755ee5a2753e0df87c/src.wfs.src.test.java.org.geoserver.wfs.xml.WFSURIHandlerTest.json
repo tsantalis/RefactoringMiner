@@ -10,6 +10,17 @@
   "firstEndPos" : 6372,
   "secondEndPos" : 6412
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* (c) 2014 - 2015 Open Source Geospatial Foundation - all rights reserved\n * (c) 2001 - 2013 OpenPlans\n * This code is licensed under the GPL 2.0 license, available at the root\n * application directory.\n */",
+  "secondLabel" : "/* (c) 2014 - 2015 Open Source Geospatial Foundation - all rights reserved\n * (c) 2001 - 2013 OpenPlans\n * This code is licensed under the GPL 2.0 license, available at the root\n * application directory.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 207,
+  "secondEndPos" : 207
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1121,6 +1132,17 @@
   "firstEndPos" : 1545,
   "secondEndPos" : 1585
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppress the network interface interrogation so it doesn't interfere with other tests",
+  "secondLabel" : "// Suppress the network interface interrogation so it doesn't interfere with other tests",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1566,
+  "secondPos" : 1606,
+  "firstEndPos" : 1654,
+  "secondEndPos" : 1694
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2220,6 +2242,17 @@
   "secondPos" : 2299,
   "firstEndPos" : 2314,
   "secondEndPos" : 2354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Was unable to mock NetworkInterfaces",
+  "secondLabel" : "// Was unable to mock NetworkInterfaces",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2269,
+  "secondPos" : 2309,
+  "firstEndPos" : 2308,
+  "secondEndPos" : 2348
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

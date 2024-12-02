@@ -10,6 +10,17 @@
   "firstEndPos" : 1330,
   "secondEndPos" : 1334
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* (c) 2014 - 2015 Open Source Geospatial Foundation - all rights reserved\n * (c) 2001 - 2013 OpenPlans\n * This code is licensed under the GPL 2.0 license, available at the root\n * application directory.\n */",
+  "secondLabel" : "/* (c) 2014 - 2015 Open Source Geospatial Foundation - all rights reserved\n * (c) 2001 - 2013 OpenPlans\n * This code is licensed under the GPL 2.0 license, available at the root\n * application directory.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 207,
+  "secondEndPos" : 207
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -108,6 +119,17 @@
   "secondPos" : 364,
   "firstEndPos" : 397,
   "secondEndPos" : 394
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 367,
+  "secondPos" : 364,
+  "firstEndPos" : 374,
+  "secondEndPos" : 371
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

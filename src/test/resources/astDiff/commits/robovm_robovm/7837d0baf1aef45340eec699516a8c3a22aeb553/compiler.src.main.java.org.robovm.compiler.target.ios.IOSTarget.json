@@ -10,6 +10,17 @@
   "firstEndPos" : 40816,
   "secondEndPos" : 40903
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2012 RoboVM AB\n *\n * This program is free software; you can redistribute it and/or\n * modify it under the terms of the GNU General Public License\n * as published by the Free Software Foundation; either version 2\n * of the License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2012 RoboVM AB\n *\n * This program is free software; you can redistribute it and/or\n * modify it under the terms of the GNU General Public License\n * as published by the Free Software Foundation; either version 2\n * of the License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/gpl-2.0.html>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 699,
+  "secondEndPos" : 699
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1274,6 +1285,17 @@
   "secondPos" : 2885,
   "firstEndPos" : 2899,
   "secondEndPos" : 2899
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2885,
+  "secondPos" : 2885,
+  "firstEndPos" : 2892,
+  "secondEndPos" : 2892
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3948,6 +3970,17 @@
   "firstEndPos" : 4561,
   "secondEndPos" : 4561
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4546,
+  "secondPos" : 4546,
+  "firstEndPos" : 4551,
+  "secondEndPos" : 4551
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IDevice",
@@ -3992,6 +4025,17 @@
   "firstEndPos" : 4632,
   "secondEndPos" : 4632
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4620,
+  "secondPos" : 4620,
+  "firstEndPos" : 4625,
+  "secondEndPos" : 4625
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " null",
@@ -4024,6 +4068,17 @@
   "secondPos" : 4640,
   "firstEndPos" : 4673,
   "secondEndPos" : 4673
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4640,
+  "secondPos" : 4640,
+  "firstEndPos" : 4645,
+  "secondEndPos" : 4645
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -13254,6 +13309,39 @@
   "firstEndPos" : 12605,
   "secondEndPos" : 12605
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Always link against UIKit or else it will not be initialized properly",
+  "secondLabel" : "// Always link against UIKit or else it will not be initialized properly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10490,
+  "secondPos" : 10490,
+  "firstEndPos" : 10562,
+  "secondEndPos" : 10562
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// causing problems with UIAlertView and maybe other classes on iOS 7",
+  "secondLabel" : "// causing problems with UIAlertView and maybe other classes on iOS 7",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10571,
+  "secondPos" : 10571,
+  "firstEndPos" : 10640,
+  "secondEndPos" : 10640
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (#195)",
+  "secondLabel" : "// (#195)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10649,
+  "secondPos" : 10649,
+  "firstEndPos" : 10658,
+  "secondEndPos" : 10658
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14904,6 +14992,61 @@
   "firstEndPos" : 12091,
   "secondEndPos" : 12091
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// On iOS 7 and higher the linker will default to link against",
+  "secondLabel" : "// On iOS 7 and higher the linker will default to link against",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11675,
+  "secondPos" : 11675,
+  "firstEndPos" : 11737,
+  "secondEndPos" : 11737
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// libc++ which is needed for C++11 support. We need the older",
+  "secondLabel" : "// libc++ which is needed for C++11 support. We need the older",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11750,
+  "secondPos" : 11750,
+  "firstEndPos" : 11812,
+  "secondEndPos" : 11812
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// libstdc++ as our native libs are compiled against it and need to",
+  "secondLabel" : "// libstdc++ as our native libs are compiled against it and need to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11825,
+  "secondPos" : 11825,
+  "firstEndPos" : 11892,
+  "secondEndPos" : 11892
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// work on iOS 6. If an app needs C++11 support the user will need",
+  "secondLabel" : "// work on iOS 6. If an app needs C++11 support the user will need",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11905,
+  "secondPos" : 11905,
+  "firstEndPos" : 11971,
+  "secondEndPos" : 11971
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to link against /usr/lib/libc++.dylib explicitly.",
+  "secondLabel" : "// to link against /usr/lib/libc++.dylib explicitly.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11984,
+  "secondPos" : 11984,
+  "firstEndPos" : 12036,
+  "secondEndPos" : 12036
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15200,6 +15343,17 @@
   "secondPos" : 12158,
   "firstEndPos" : 12173,
   "secondEndPos" : 12173
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// specify dynamic library loading path",
+  "secondLabel" : "// specify dynamic library loading path",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12195,
+  "secondPos" : 12195,
+  "firstEndPos" : 12234,
+  "secondEndPos" : 12234
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16224,6 +16378,28 @@
   "firstEndPos" : 14116,
   "secondEndPos" : 14174
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only strip if this is not a debug build, otherwise",
+  "secondLabel" : "// only strip if this is not a debug build, otherwise",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12821,
+  "secondPos" : 12821,
+  "firstEndPos" : 12874,
+  "secondEndPos" : 12874
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// LLDB can't resolve the DWARF info",
+  "secondLabel" : "// LLDB can't resolve the DWARF info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12887,
+  "secondPos" : 12887,
+  "firstEndPos" : 12923,
+  "secondEndPos" : 12923
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16730,6 +16906,17 @@
   "firstEndPos" : 14106,
   "secondEndPos" : 14164
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Copy the provisioning profile",
+  "secondLabel" : "// Copy the provisioning profile",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13378,
+  "secondPos" : 13378,
+  "firstEndPos" : 13410,
+  "secondEndPos" : 13410
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17026,6 +17213,50 @@
   "secondPos" : 13716,
   "firstEndPos" : 13668,
   "secondEndPos" : 13726
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For some odd reason there needs to be a symbolic link in the",
+  "secondLabel" : "// For some odd reason there needs to be a symbolic link in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13687,
+  "secondPos" : 13745,
+  "firstEndPos" : 13750,
+  "secondEndPos" : 13808
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// root of",
+  "secondLabel" : "// root of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13767,
+  "secondPos" : 13825,
+  "firstEndPos" : 13777,
+  "secondEndPos" : 13835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the app bundle named CodeResources pointing at",
+  "secondLabel" : "// the app bundle named CodeResources pointing at",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13794,
+  "secondPos" : 13852,
+  "firstEndPos" : 13843,
+  "secondEndPos" : 13901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// _CodeSignature/CodeResources",
+  "secondLabel" : "// _CodeSignature/CodeResources",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13860,
+  "secondPos" : 13918,
+  "firstEndPos" : 13891,
+  "secondEndPos" : 13949
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18754,6 +18985,17 @@
   "firstEndPos" : 15208,
   "secondEndPos" : 15266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sign dynamic frameworks first",
+  "secondLabel" : "// sign dynamic frameworks first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15227,
+  "secondPos" : 15558,
+  "firstEndPos" : 15259,
+  "secondEndPos" : 15590
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -18995,6 +19237,17 @@
   "secondPos" : 15719,
   "firstEndPos" : 16118,
   "secondEndPos" : 16345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sign swift rt libs",
+  "secondLabel" : "// Sign swift rt libs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15426,
+  "secondPos" : 15733,
+  "firstEndPos" : 15447,
+  "secondEndPos" : 15754
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -19336,6 +19589,17 @@
   "secondPos" : 15965,
   "firstEndPos" : 15682,
   "secondEndPos" : 15973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sign embedded frameworks",
+  "secondLabel" : "// sign embedded frameworks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15754,
+  "secondPos" : 16021,
+  "firstEndPos" : 15781,
+  "secondEndPos" : 16048
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -19743,6 +20007,17 @@
   "secondPos" : 16292,
   "firstEndPos" : 16050,
   "secondEndPos" : 16301
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sign the app",
+  "secondLabel" : "// sign the app",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16135,
+  "secondPos" : 15331,
+  "firstEndPos" : 16150,
+  "secondEndPos" : 15346
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -29171,6 +29446,17 @@
   "firstEndPos" : 21848,
   "secondEndPos" : 21935
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use the exported_symbols file created for the first slice.",
+  "secondLabel" : "// Use the exported_symbols file created for the first slice.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21869,
+  "secondPos" : 21956,
+  "firstEndPos" : 21930,
+  "secondEndPos" : 22017
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -37619,6 +37905,28 @@
   "firstEndPos" : 26720,
   "secondEndPos" : 26807
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Validation fails without DTXcode and DTXcodeBuild. Try to read",
+  "secondLabel" : "// Validation fails without DTXcode and DTXcodeBuild. Try to read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26738,
+  "secondPos" : 26825,
+  "firstEndPos" : 26803,
+  "secondEndPos" : 26890
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// them from the installed Xcode.",
+  "secondLabel" : "// them from the installed Xcode.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26816,
+  "secondPos" : 26903,
+  "firstEndPos" : 26849,
+  "secondEndPos" : 26936
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -39566,6 +39874,17 @@
   "firstEndPos" : 28320,
   "secondEndPos" : 28407
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fake Xcode 6.1.1 values if the above fails.",
+  "secondLabel" : "// Fake Xcode 6.1.1 values if the above fails.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28351,
+  "secondPos" : 28438,
+  "firstEndPos" : 28397,
+  "secondEndPos" : 28484
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -41347,6 +41666,50 @@
   "secondPos" : 29556,
   "firstEndPos" : 30615,
   "secondEndPos" : 30702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SUPPORTED_DEVICE_FAMILIES is either a NSString of comma",
+  "secondLabel" : "// SUPPORTED_DEVICE_FAMILIES is either a NSString of comma",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29487,
+  "secondPos" : 29574,
+  "firstEndPos" : 29545,
+  "secondEndPos" : 29632
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// separated numbers",
+  "secondLabel" : "// separated numbers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29562,
+  "secondPos" : 29649,
+  "firstEndPos" : 29582,
+  "secondEndPos" : 29669
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// or an NSArray with NSStrings. UIDeviceFamily values should be",
+  "secondLabel" : "// or an NSArray with NSStrings. UIDeviceFamily values should be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29599,
+  "secondPos" : 29686,
+  "firstEndPos" : 29663,
+  "secondEndPos" : 29750
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NSNumbers.",
+  "secondLabel" : "// NSNumbers.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29680,
+  "secondPos" : 29767,
+  "firstEndPos" : 29693,
+  "secondEndPos" : 29780
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -44604,6 +44967,17 @@
   "firstEndPos" : 32089,
   "secondEndPos" : 32176
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is required",
+  "secondLabel" : "// This is required",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32011,
+  "secondPos" : 32098,
+  "firstEndPos" : 32030,
+  "secondEndPos" : 32117
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -44746,6 +45120,17 @@
   "secondPos" : 32205,
   "firstEndPos" : 32122,
   "secondEndPos" : 32209
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Make sure CFBundleShortVersionString and CFBundleVersion are at the\n         * top of the Info.plist file to avoid the \"Could not hardlink copy\"\n         * problem when launching on the simulator. com.dd.plist maintains the\n         * insertion order of keys so we rebuild the dictionary here and make\n         * sure those two keys are inserted first. See #771.\n         */",
+  "secondLabel" : "/*\n         * Make sure CFBundleShortVersionString and CFBundleVersion are at the\n         * top of the Info.plist file to avoid the \"Could not hardlink copy\"\n         * problem when launching on the simulator. com.dd.plist maintains the\n         * insertion order of keys so we rebuild the dictionary here and make\n         * sure those two keys are inserted first. See #771.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32134,
+  "secondPos" : 32221,
+  "firstEndPos" : 32522,
+  "secondEndPos" : 32609
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -50830,6 +51215,17 @@
   "firstEndPos" : 36470,
   "secondEndPos" : 36557
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36372,
+  "secondPos" : 36459,
+  "firstEndPos" : 36377,
+  "secondEndPos" : 36464
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ~/Library/Developer/Xcode/",
@@ -51996,6 +52392,28 @@
   "firstEndPos" : 37344,
   "secondEndPos" : 37431
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No need to copy the whole .app folder. Just the exe",
+  "secondLabel" : "// No need to copy the whole .app folder. Just the exe",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37148,
+  "secondPos" : 37235,
+  "firstEndPos" : 37202,
+  "secondEndPos" : 37289
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is enough to make symbolication happy.",
+  "secondLabel" : "// is enough to make symbolication happy.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37215,
+  "secondPos" : 37302,
+  "firstEndPos" : 37256,
+  "secondEndPos" : 37343
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -52853,6 +53271,17 @@
   "secondPos" : 37953,
   "firstEndPos" : 37876,
   "secondEndPos" : 37963
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now do some cleanup and delete all but the 3 most recent dirs",
+  "secondLabel" : "// Now do some cleanup and delete all but the 3 most recent dirs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37900,
+  "secondPos" : 37987,
+  "firstEndPos" : 37964,
+  "secondEndPos" : 38051
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

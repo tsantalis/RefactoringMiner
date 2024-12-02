@@ -956,6 +956,17 @@
   "firstEndPos" : 2256,
   "secondEndPos" : 2230
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//~--- classes ----------------------------------------------------------------",
+  "secondLabel" : "//~--- classes ----------------------------------------------------------------",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 2259,
+  "secondPos" : 2233,
+  "firstEndPos" : 2338,
+  "secondEndPos" : 2312
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -988,6 +999,17 @@
   "secondPos" : 2323,
   "firstEndPos" : 2369,
   "secondEndPos" : 2343
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2349,
+  "secondPos" : 2323,
+  "firstEndPos" : 2356,
+  "secondEndPos" : 2330
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1439,6 +1461,17 @@
   "secondPos" : 2593,
   "firstEndPos" : 2623,
   "secondEndPos" : 2597
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//~--- methods --------------------------------------------------------",
+  "secondLabel" : "//~--- methods --------------------------------------------------------",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2627,
+  "secondPos" : 2601,
+  "firstEndPos" : 2698,
+  "secondEndPos" : 2672
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2517,6 +2550,17 @@
   "secondPos" : 3243,
   "firstEndPos" : 3279,
   "secondEndPos" : 3253
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create & add schema information",
+  "secondLabel" : "// create & add schema information",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3288,
+  "secondPos" : 3262,
+  "firstEndPos" : 3322,
+  "secondEndPos" : 3296
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7028,6 +7072,17 @@
   "firstEndPos" : 5666,
   "secondEndPos" : 5640
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// list property sets for all views",
+  "secondLabel" : "// list property sets for all views",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5676,
+  "secondPos" : 5650,
+  "firstEndPos" : 5711,
+  "secondEndPos" : 5685
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8314,6 +8369,17 @@
   "secondPos" : 6366,
   "firstEndPos" : 6396,
   "secondEndPos" : 6370
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//~--- get methods ----------------------------------------------------",
+  "secondLabel" : "//~--- get methods ----------------------------------------------------",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6403,
+  "secondPos" : 6377,
+  "firstEndPos" : 6474,
+  "secondEndPos" : 6448
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -15255,6 +15321,17 @@
   "secondPos" : 10479,
   "firstEndPos" : 10295,
   "secondEndPos" : 10486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if (declaringClass != null && (\"org.structr.dynamic\".equals(declaringClass.getPackage().getName()))) {",
+  "secondLabel" : "//if (declaringClass != null && (\"org.structr.dynamic\".equals(declaringClass.getPackage().getName()))) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10309,
+  "secondPos" : 10500,
+  "firstEndPos" : 10413,
+  "secondEndPos" : 10604
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

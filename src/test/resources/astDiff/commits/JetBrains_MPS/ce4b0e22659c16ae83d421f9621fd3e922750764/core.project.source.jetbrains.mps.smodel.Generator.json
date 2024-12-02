@@ -10,6 +10,17 @@
   "firstEndPos" : 10094,
   "secondEndPos" : 10154
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2003-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2003-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1538,6 +1549,17 @@
   "secondPos" : 2652,
   "firstEndPos" : 2660,
   "secondEndPos" : 2660
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//models will be named like xxx.modelName, where xxx is a part of newName before sharp symbol",
+  "secondLabel" : "//models will be named like xxx.modelName, where xxx is a part of newName before sharp symbol",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2663,
+  "secondPos" : 2663,
+  "firstEndPos" : 2756,
+  "secondEndPos" : 2756
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -4509,6 +4531,17 @@
   "firstEndPos" : 4747,
   "secondEndPos" : 4807
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4615,
+  "secondPos" : 4675,
+  "firstEndPos" : 4622,
+  "secondEndPos" : 4682
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " <code>true</code> if templates for this generator should be generated into Java code instead of being interpreted at runtime",
@@ -5356,6 +5389,17 @@
   "firstEndPos" : 5244,
   "secondEndPos" : 5304
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// generator sees its source language",
+  "secondLabel" : "// generator sees its source language",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5253,
+  "secondPos" : 5313,
+  "firstEndPos" : 5290,
+  "secondEndPos" : 5350
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5785,6 +5829,17 @@
   "firstEndPos" : 5557,
   "secondEndPos" : 5617
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// generator sees all dependent generators as non-reexport",
+  "secondLabel" : "// generator sees all dependent generators as non-reexport",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5572,
+  "secondPos" : 5632,
+  "firstEndPos" : 5630,
+  "secondEndPos" : 5690
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -5872,6 +5927,50 @@
   "secondPos" : 5762,
   "firstEndPos" : 6148,
   "secondEndPos" : 6208
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// XXX not sure it's right to resolve modules through global repository if this module is not attached anywhere",
+  "secondLabel" : "// XXX not sure it's right to resolve modules through global repository if this module is not attached anywhere",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5710,
+  "secondPos" : 5770,
+  "firstEndPos" : 5821,
+  "secondEndPos" : 5881
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// FIXME all referenced generators are of 'extends' dependency at the moment",
+  "secondLabel" : "// FIXME all referenced generators are of 'extends' dependency at the moment",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5828,
+  "secondPos" : 5888,
+  "firstEndPos" : 5904,
+  "secondEndPos" : 5964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but this might need a change once we store extended generators as a regular SDependency",
+  "secondLabel" : "// but this might need a change once we store extended generators as a regular SDependency",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5911,
+  "secondPos" : 5971,
+  "firstEndPos" : 6001,
+  "secondEndPos" : 6061
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// instead of hacky getReferencedGeneratorUIDs",
+  "secondLabel" : "// instead of hacky getReferencedGeneratorUIDs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6008,
+  "secondPos" : 6068,
+  "firstEndPos" : 6054,
+  "secondEndPos" : 6114
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6291,6 +6390,17 @@
   "firstEndPos" : 6631,
   "secondEndPos" : 6691
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6334,
+  "secondPos" : 6394,
+  "firstEndPos" : 6345,
+  "secondEndPos" : 6405
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Vague name (at the moment, these are extended generators), unclear resolution scope (global at the moment).",
@@ -6312,6 +6422,17 @@
   "secondPos" : 6519,
   "firstEndPos" : 6493,
   "secondEndPos" : 6553
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6459,
+  "secondPos" : 6519,
+  "firstEndPos" : 6464,
+  "secondEndPos" : 6524
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -6367,6 +6488,17 @@
   "secondPos" : 6654,
   "firstEndPos" : 6631,
   "secondEndPos" : 6691
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6594,
+  "secondPos" : 6654,
+  "firstEndPos" : 6599,
+  "secondEndPos" : 6659
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -8292,6 +8424,17 @@
   "secondPos" : 8149,
   "firstEndPos" : 8115,
   "secondEndPos" : 8175
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8089,
+  "secondPos" : 8149,
+  "firstEndPos" : 8095,
+  "secondEndPos" : 8155
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

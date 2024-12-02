@@ -439,6 +439,17 @@
   "firstEndPos" : 749,
   "secondEndPos" : 749
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 719,
+  "secondPos" : 719,
+  "firstEndPos" : 726,
+  "secondEndPos" : 726
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Konstantin Kolosovsky.",
@@ -449,6 +460,17 @@
   "secondPos" : 726,
   "firstEndPos" : 749,
   "secondEndPos" : 749
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: Probably make command immutable and use CommandBuilder for updates.",
+  "secondLabel" : "// TODO: Probably make command immutable and use CommandBuilder for updates.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 754,
+  "secondPos" : 754,
+  "firstEndPos" : 830,
+  "secondEndPos" : 830
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -6620,6 +6642,28 @@
   "secondPos" : 4172,
   "firstEndPos" : 4159,
   "secondEndPos" : 4185
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: used only to ensure authentication info is not logged to file. Remove when command execution model is refactored",
+  "secondLabel" : "// TODO: used only to ensure authentication info is not logged to file. Remove when command execution model is refactored",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4168,
+  "secondPos" : 4194,
+  "firstEndPos" : 4289,
+  "secondEndPos" : 4315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: - so we could determine if parameter should be logged by the parameter itself.",
+  "secondLabel" : "// TODO: - so we could determine if parameter should be logged by the parameter itself.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4292,
+  "secondPos" : 4318,
+  "firstEndPos" : 4379,
+  "secondEndPos" : 4405
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

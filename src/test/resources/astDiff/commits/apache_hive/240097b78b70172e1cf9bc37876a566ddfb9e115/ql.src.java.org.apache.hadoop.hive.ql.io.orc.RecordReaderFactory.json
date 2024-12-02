@@ -4344,6 +4344,28 @@
   "firstEndPos" : 4360,
   "secondEndPos" : 4516
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check type promotion. ORC can only support type promotions for integer types",
+  "secondLabel" : "// check type promotion. ORC can only support type promotions for integer types",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4369,
+  "secondPos" : 4525,
+  "firstEndPos" : 4448,
+  "secondEndPos" : 4604
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// short -> int -> bigint as same integer readers are used for the above types.",
+  "secondLabel" : "// short -> int -> bigint as same integer readers are used for the above types.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4455,
+  "secondPos" : 4611,
+  "firstEndPos" : 4534,
+  "secondEndPos" : 4690
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5367,6 +5389,17 @@
   "firstEndPos" : 5231,
   "secondEndPos" : 5387
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// type promotion possible, converting SHORT to INT/LONG requested type",
+  "secondLabel" : "// type promotion possible, converting SHORT to INT/LONG requested type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5017,
+  "secondPos" : 5173,
+  "firstEndPos" : 5088,
+  "secondEndPos" : 5244
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6026,6 +6059,17 @@
   "secondPos" : 5591,
   "firstEndPos" : 5659,
   "secondEndPos" : 5815
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// type promotion possible, converting INT to LONG requested type",
+  "secondLabel" : "// type promotion possible, converting INT to LONG requested type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5451,
+  "secondPos" : 5607,
+  "firstEndPos" : 5516,
+  "secondEndPos" : 5672
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7742,6 +7786,28 @@
   "secondPos" : 6753,
   "firstEndPos" : 6611,
   "secondEndPos" : 6767
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Column types from conf includes virtual and partition columns at the end. We consider only",
+  "secondLabel" : "// Column types from conf includes virtual and partition columns at the end. We consider only",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6619,
+  "secondPos" : 6775,
+  "firstEndPos" : 6712,
+  "secondEndPos" : 6868
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the actual columns in the file.",
+  "secondLabel" : "// the actual columns in the file.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6717,
+  "secondPos" : 6873,
+  "firstEndPos" : 6751,
+  "secondEndPos" : 6907
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10284,6 +10350,28 @@
   "firstEndPos" : 8337,
   "secondEndPos" : 8493
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The char length needs to be written to file and should be available",
+  "secondLabel" : "// The char length needs to be written to file and should be available",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8351,
+  "secondPos" : 8507,
+  "firstEndPos" : 8421,
+  "secondEndPos" : 8577
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// from the object inspector",
+  "secondLabel" : "// from the object inspector",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8434,
+  "secondPos" : 8590,
+  "firstEndPos" : 8462,
+  "secondEndPos" : 8618
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10679,6 +10767,28 @@
   "secondPos" : 8891,
   "firstEndPos" : 8742,
   "secondEndPos" : 8898
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The varchar length needs to be written to file and should be available",
+  "secondLabel" : "// The varchar length needs to be written to file and should be available",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8756,
+  "secondPos" : 8912,
+  "firstEndPos" : 8829,
+  "secondEndPos" : 8985
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// from the object inspector",
+  "secondLabel" : "// from the object inspector",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8842,
+  "secondPos" : 8998,
+  "firstEndPos" : 8870,
+  "secondEndPos" : 9026
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

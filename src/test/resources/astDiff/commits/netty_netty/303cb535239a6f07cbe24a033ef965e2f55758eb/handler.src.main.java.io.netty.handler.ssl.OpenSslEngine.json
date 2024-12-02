@@ -10,6 +10,17 @@
   "firstEndPos" : 55761,
   "secondEndPos" : 55711
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2014 The Netty Project\n *\n * The Netty Project licenses this file to you under the Apache License,\n * version 2.0 (the \"License\"); you may not use this file except in compliance\n * with the License. You may obtain a copy of the License at:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2014 The Netty Project\n *\n * The Netty Project licenses this file to you under the Apache License,\n * version 2.0 (the \"License\"); you may not use this file except in compliance\n * with the License. You may obtain a copy of the License at:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 634,
+  "secondEndPos" : 634
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -922,6 +933,17 @@
   "secondPos" : 2255,
   "firstEndPos" : 2272,
   "secondEndPos" : 2272
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2255,
+  "secondPos" : 2255,
+  "firstEndPos" : 2260,
+  "secondEndPos" : 2260
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2672,6 +2694,17 @@
   "firstEndPos" : 3743,
   "secondEndPos" : 3743
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2^14",
+  "secondLabel" : "// 2^14",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3745,
+  "secondPos" : 3745,
+  "firstEndPos" : 3752,
+  "secondEndPos" : 3752
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2913,6 +2946,17 @@
   "secondPos" : 3912,
   "firstEndPos" : 3916,
   "secondEndPos" : 3916
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Protocols",
+  "secondLabel" : "// Protocols",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3923,
+  "secondPos" : 3923,
+  "firstEndPos" : 3935,
+  "secondEndPos" : 3935
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3947,6 +3991,17 @@
   "secondPos" : 4655,
   "firstEndPos" : 4674,
   "secondEndPos" : 4674
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Header (5) + Data (2^14) + Compression (1024) + Encryption (1024) + MAC (20) + Padding (256)",
+  "secondLabel" : "// Header (5) + Data (2^14) + Compression (1024) + Encryption (1024) + MAC (20) + Padding (256)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4683,
+  "secondPos" : 4683,
+  "firstEndPos" : 4778,
+  "secondEndPos" : 4778
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -5499,6 +5554,17 @@
   "firstEndPos" : 5847,
   "secondEndPos" : 5847
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OpenSSL state",
+  "secondLabel" : "// OpenSSL state",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5855,
+  "secondPos" : 5855,
+  "firstEndPos" : 5871,
+  "secondEndPos" : 5871
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -5906,6 +5972,28 @@
   "firstEndPos" : 6240,
   "secondEndPos" : 6240
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use an invalid cipherSuite until the handshake is completed",
+  "secondLabel" : "// Use an invalid cipherSuite until the handshake is completed",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6247,
+  "secondPos" : 6247,
+  "firstEndPos" : 6309,
+  "secondEndPos" : 6309
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html#getSession()",
+  "secondLabel" : "// See http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html#getSession()",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6314,
+  "secondPos" : 6314,
+  "firstEndPos" : 6403,
+  "secondEndPos" : 6403
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6059,6 +6147,17 @@
   "secondPos" : 6468,
   "firstEndPos" : 6487,
   "secondEndPos" : 6487
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We store this outside of the SslSession so we not need to create an instance during verifyCertificates(...)",
+  "secondLabel" : "// We store this outside of the SslSession so we not need to create an instance during verifyCertificates(...)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6494,
+  "secondPos" : 6494,
+  "firstEndPos" : 6604,
+  "secondEndPos" : 6604
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -6324,6 +6423,17 @@
   "firstEndPos" : 6781,
   "secondEndPos" : 6781
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Store as object as AlgorithmConstraints only exists since java 7.",
+  "secondLabel" : "// Store as object as AlgorithmConstraints only exists since java 7.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6787,
+  "secondPos" : 6787,
+  "firstEndPos" : 6855,
+  "secondEndPos" : 6855
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6400,6 +6510,17 @@
   "secondPos" : 6884,
   "firstEndPos" : 6904,
   "secondEndPos" : 6904
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SSL Engine status variables",
+  "secondLabel" : "// SSL Engine status variables",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6911,
+  "secondPos" : 6911,
+  "firstEndPos" : 6941,
+  "secondEndPos" : 6941
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -7116,6 +7237,28 @@
   "firstEndPos" : 7406,
   "secondEndPos" : 7406
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is package-private as we set it from OpenSslContext if an exception is thrown during",
+  "secondLabel" : "// This is package-private as we set it from OpenSslContext if an exception is thrown during",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7415,
+  "secondPos" : 7415,
+  "firstEndPos" : 7507,
+  "secondEndPos" : 7507
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the verification step.",
+  "secondLabel" : "// the verification step.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7512,
+  "secondPos" : 7512,
+  "firstEndPos" : 7537,
+  "secondEndPos" : 7537
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -7226,6 +7369,17 @@
   "firstEndPos" : 7684,
   "secondEndPos" : 7684
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7637,
+  "secondPos" : 7637,
+  "firstEndPos" : 7643,
+  "secondEndPos" : 7643
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sslCtx",
@@ -7258,6 +7412,17 @@
   "secondPos" : 7662,
   "firstEndPos" : 7677,
   "secondEndPos" : 7677
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7662,
+  "secondPos" : 7662,
+  "firstEndPos" : 7667,
+  "secondEndPos" : 7667
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7292,6 +7457,17 @@
   "firstEndPos" : 7766,
   "secondEndPos" : 7766
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7692,
+  "secondPos" : 7692,
+  "firstEndPos" : 7698,
+  "secondEndPos" : 7698
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "alloc",
@@ -7324,6 +7500,17 @@
   "secondPos" : 7709,
   "firstEndPos" : 7733,
   "secondEndPos" : 7733
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7709,
+  "secondPos" : 7709,
+  "firstEndPos" : 7714,
+  "secondEndPos" : 7714
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7699,6 +7886,17 @@
   "firstEndPos" : 8164,
   "secondEndPos" : 8164
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8117,
+  "secondPos" : 8117,
+  "firstEndPos" : 8123,
+  "secondEndPos" : 8123
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sslCtx",
@@ -7731,6 +7929,17 @@
   "secondPos" : 8142,
   "firstEndPos" : 8157,
   "secondEndPos" : 8157
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8142,
+  "secondPos" : 8142,
+  "firstEndPos" : 8147,
+  "secondEndPos" : 8147
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7765,6 +7974,17 @@
   "firstEndPos" : 8246,
   "secondEndPos" : 8246
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8172,
+  "secondPos" : 8172,
+  "firstEndPos" : 8178,
+  "secondEndPos" : 8178
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "alloc",
@@ -7797,6 +8017,17 @@
   "secondPos" : 8189,
   "firstEndPos" : 8213,
   "secondEndPos" : 8213
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8189,
+  "secondPos" : 8189,
+  "firstEndPos" : 8194,
+  "secondEndPos" : 8194
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7831,6 +8062,17 @@
   "firstEndPos" : 8337,
   "secondEndPos" : 8337
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8254,
+  "secondPos" : 8254,
+  "firstEndPos" : 8260,
+  "secondEndPos" : 8260
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "clientMode",
@@ -7863,6 +8105,17 @@
   "secondPos" : 8272,
   "firstEndPos" : 8284,
   "secondEndPos" : 8284
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8272,
+  "secondPos" : 8272,
+  "firstEndPos" : 8277,
+  "secondEndPos" : 8277
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7897,6 +8150,17 @@
   "firstEndPos" : 8327,
   "secondEndPos" : 8327
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8314,
+  "secondPos" : 8314,
+  "firstEndPos" : 8319,
+  "secondEndPos" : 8319
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " false",
@@ -7929,6 +8193,17 @@
   "secondPos" : 8345,
   "firstEndPos" : 8435,
   "secondEndPos" : 8435
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8345,
+  "secondPos" : 8345,
+  "firstEndPos" : 8351,
+  "secondEndPos" : 8351
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7963,6 +8238,17 @@
   "firstEndPos" : 8400,
   "secondEndPos" : 8400
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8371,
+  "secondPos" : 8371,
+  "firstEndPos" : 8376,
+  "secondEndPos" : 8376
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "OpenSslSessionContext",
@@ -7995,6 +8281,17 @@
   "secondPos" : 8406,
   "firstEndPos" : 8423,
   "secondEndPos" : 8423
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8406,
+  "secondPos" : 8406,
+  "firstEndPos" : 8411,
+  "secondEndPos" : 8411
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -9998,6 +10295,17 @@
   "firstEndPos" : 9912,
   "secondEndPos" : 9912
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handshake started we are able to return the session.",
+  "secondLabel" : "// handshake started we are able to return the session.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9819,
+  "secondPos" : 9819,
+  "firstEndPos" : 9874,
+  "secondEndPos" : 9874
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -10019,6 +10327,17 @@
   "secondPos" : 9894,
   "firstEndPos" : 9901,
   "secondEndPos" : 9901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As stated by the javadocs of getHandshakeSession() we should return null if the handshake not started yet.",
+  "secondLabel" : "// As stated by the javadocs of getHandshakeSession() we should return null if the handshake not started yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9921,
+  "secondPos" : 9921,
+  "firstEndPos" : 10030,
+  "secondEndPos" : 10030
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -10097,6 +10416,17 @@
   "firstEndPos" : 10112,
   "secondEndPos" : 10112
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10101,
+  "secondPos" : 10101,
+  "firstEndPos" : 10106,
+  "secondEndPos" : 10106
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " SSL",
@@ -10129,6 +10459,17 @@
   "secondPos" : 10129,
   "firstEndPos" : 10150,
   "secondEndPos" : 10150
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10129,
+  "secondPos" : 10129,
+  "firstEndPos" : 10134,
+  "secondEndPos" : 10134
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -10174,6 +10515,17 @@
   "firstEndPos" : 10219,
   "secondEndPos" : 10219
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10200,
+  "secondPos" : 10200,
+  "firstEndPos" : 10205,
+  "secondEndPos" : 10205
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -10217,6 +10569,17 @@
   "secondPos" : 10223,
   "firstEndPos" : 10240,
   "secondEndPos" : 10240
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10223,
+  "secondPos" : 10223,
+  "firstEndPos" : 10228,
+  "secondEndPos" : 10228
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -10272,6 +10635,17 @@
   "secondPos" : 10280,
   "firstEndPos" : 10289,
   "secondEndPos" : 10289
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10280,
+  "secondPos" : 10280,
+  "firstEndPos" : 10285,
+  "secondEndPos" : 10285
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -10899,6 +11273,17 @@
   "secondPos" : 10666,
   "firstEndPos" : 10667,
   "secondEndPos" : 10667
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// internal errors can cause shutdown without marking the engine closed",
+  "secondLabel" : "// internal errors can cause shutdown without marking the engine closed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10682,
+  "secondPos" : 10682,
+  "firstEndPos" : 10753,
+  "secondEndPos" : 10753
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -19458,6 +19843,17 @@
   "firstEndPos" : 20090,
   "secondEndPos" : 20090
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check to make sure the engine has not been closed",
+  "secondLabel" : "// Check to make sure the engine has not been closed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15771,
+  "secondPos" : 15771,
+  "firstEndPos" : 15823,
+  "secondEndPos" : 15823
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -19545,6 +19941,17 @@
   "secondPos" : 15873,
   "firstEndPos" : 15895,
   "secondEndPos" : 15895
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw required runtime exceptions",
+  "secondLabel" : "// Throw required runtime exceptions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15916,
+  "secondPos" : 15916,
+  "firstEndPos" : 15952,
+  "secondEndPos" : 15952
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -20206,6 +20613,17 @@
   "firstEndPos" : 16537,
   "secondEndPos" : 16537
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Prepare OpenSSL to work in server mode and receive handshake",
+  "secondLabel" : "// Prepare OpenSSL to work in server mode and receive handshake",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16560,
+  "secondPos" : 16560,
+  "firstEndPos" : 16623,
+  "secondEndPos" : 16623
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -20304,6 +20722,28 @@
   "secondPos" : 16665,
   "firstEndPos" : 16689,
   "secondEndPos" : 16689
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In handshake or close_notify stages, check if call to wrap was made",
+  "secondLabel" : "// In handshake or close_notify stages, check if call to wrap was made",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16712,
+  "secondPos" : 16712,
+  "firstEndPos" : 16782,
+  "secondEndPos" : 16782
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without regard to the handshake status.",
+  "secondLabel" : "// without regard to the handshake status.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16791,
+  "secondPos" : 16791,
+  "firstEndPos" : 16833,
+  "secondEndPos" : 16833
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -20679,6 +21119,17 @@
   "firstEndPos" : 17203,
   "secondEndPos" : 17203
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for pending data in the network BIO",
+  "secondLabel" : "// Check for pending data in the network BIO",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17214,
+  "secondPos" : 17214,
+  "firstEndPos" : 17258,
+  "secondEndPos" : 17258
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -20854,6 +21305,17 @@
   "secondPos" : 17350,
   "firstEndPos" : 18287,
   "secondEndPos" : 18287
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we have enough room in dst to write encrypted data?",
+  "secondLabel" : "// Do we have enough room in dst to write encrypted data?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17364,
+  "secondPos" : 17364,
+  "firstEndPos" : 17421,
+  "secondEndPos" : 17421
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -21097,6 +21559,17 @@
   "firstEndPos" : 17600,
   "secondEndPos" : 17600
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Write the pending data from the network BIO into the dst buffer",
+  "secondLabel" : "// Write the pending data from the network BIO into the dst buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17630,
+  "secondPos" : 17630,
+  "firstEndPos" : 17696,
+  "secondEndPos" : 17696
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -21339,6 +21812,39 @@
   "firstEndPos" : 17860,
   "secondEndPos" : 17860
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If isOuboundDone is set, then the data from the network BIO",
+  "secondLabel" : "// If isOuboundDone is set, then the data from the network BIO",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17890,
+  "secondPos" : 17890,
+  "firstEndPos" : 17952,
+  "secondEndPos" : 17952
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// was the close_notify message -- we are not required to wait",
+  "secondLabel" : "// was the close_notify message -- we are not required to wait",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17965,
+  "secondPos" : 17965,
+  "firstEndPos" : 18027,
+  "secondEndPos" : 18027
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for the receipt the peer's close_notify message -- shutdown.",
+  "secondLabel" : "// for the receipt the peer's close_notify message -- shutdown.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18040,
+  "secondPos" : 18040,
+  "firstEndPos" : 18103,
+  "secondEndPos" : 18103
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -21514,6 +22020,17 @@
   "secondPos" : 18262,
   "firstEndPos" : 18275,
   "secondEndPos" : 18275
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There was no pending data in the network BIO -- encrypt any application data",
+  "secondLabel" : "// There was no pending data in the network BIO -- encrypt any application data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18297,
+  "secondPos" : 18297,
+  "firstEndPos" : 18376,
+  "secondEndPos" : 18376
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -22142,6 +22659,17 @@
   "firstEndPos" : 19968,
   "secondEndPos" : 19968
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Write plaintext application data to the SSL engine",
+  "secondLabel" : "// Write plaintext application data to the SSL engine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18727,
+  "secondPos" : 18727,
+  "firstEndPos" : 18780,
+  "secondEndPos" : 18780
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -22373,6 +22901,17 @@
   "firstEndPos" : 18949,
   "secondEndPos" : 18949
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check to see if the engine wrote data into the network BIO",
+  "secondLabel" : "// Check to see if the engine wrote data into the network BIO",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18987,
+  "secondPos" : 18987,
+  "firstEndPos" : 19048,
+  "secondEndPos" : 19048
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22548,6 +23087,17 @@
   "secondPos" : 19156,
   "firstEndPos" : 19954,
   "secondEndPos" : 19954
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we have enough room in dst to write encrypted data?",
+  "secondLabel" : "// Do we have enough room in dst to write encrypted data?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19178,
+  "secondPos" : 19178,
+  "firstEndPos" : 19235,
+  "secondEndPos" : 19235
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -22801,6 +23351,17 @@
   "secondPos" : 19473,
   "firstEndPos" : 19486,
   "secondEndPos" : 19486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Write the pending data from the network BIO into the dst buffer",
+  "secondLabel" : "// Write the pending data from the network BIO into the dst buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19532,
+  "secondPos" : 19532,
+  "firstEndPos" : 19598,
+  "secondEndPos" : 19598
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -24276,6 +24837,17 @@
   "firstEndPos" : 27629,
   "secondEndPos" : 27629
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check to make sure the engine has not been closed",
+  "secondLabel" : "// Check to make sure the engine has not been closed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20820,
+  "secondPos" : 20820,
+  "firstEndPos" : 20872,
+  "secondEndPos" : 20872
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -24363,6 +24935,17 @@
   "secondPos" : 20922,
   "firstEndPos" : 20944,
   "secondEndPos" : 20944
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw requried runtime exceptions",
+  "secondLabel" : "// Throw requried runtime exceptions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20965,
+  "secondPos" : 20965,
+  "firstEndPos" : 21001,
+  "secondEndPos" : 21001
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -25981,6 +26564,17 @@
   "firstEndPos" : 22279,
   "secondEndPos" : 22279
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Prepare OpenSSL to work in server mode and receive handshake",
+  "secondLabel" : "// Prepare OpenSSL to work in server mode and receive handshake",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22302,
+  "secondPos" : 22302,
+  "firstEndPos" : 22365,
+  "secondEndPos" : 22365
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26079,6 +26673,28 @@
   "secondPos" : 22407,
   "firstEndPos" : 22431,
   "secondEndPos" : 22431
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In handshake or close_notify stages, check if call to unwrap was made",
+  "secondLabel" : "// In handshake or close_notify stages, check if call to unwrap was made",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22454,
+  "secondPos" : 22454,
+  "firstEndPos" : 22526,
+  "secondEndPos" : 22526
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without regard to the handshake status.",
+  "secondLabel" : "// without regard to the handshake status.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22535,
+  "secondPos" : 22535,
+  "firstEndPos" : 22577,
+  "secondEndPos" : 22577
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27004,6 +27620,17 @@
   "firstEndPos" : 23220,
   "secondEndPos" : 23220
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// protect against protocol overflow attack vector",
+  "secondLabel" : "// protect against protocol overflow attack vector",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23243,
+  "secondPos" : 23243,
+  "firstEndPos" : 23293,
+  "secondEndPos" : 23293
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -27289,6 +27916,17 @@
   "secondPos" : 23487,
   "firstEndPos" : 23513,
   "secondEndPos" : 23513
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Write encrypted data to network BIO",
+  "secondLabel" : "// Write encrypted data to network BIO",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23534,
+  "secondPos" : 23534,
+  "firstEndPos" : 23572,
+  "secondEndPos" : 23572
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -28522,6 +29160,39 @@
   "firstEndPos" : 24516,
   "secondEndPos" : 24516
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// priming read",
+  "secondLabel" : "// priming read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24519,
+  "secondPos" : 24519,
+  "firstEndPos" : 24534,
+  "secondEndPos" : 24534
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check if SSL_read returned <= 0. In this case we need to check the error and see if it was something",
+  "secondLabel" : "// check if SSL_read returned <= 0. In this case we need to check the error and see if it was something",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24548,
+  "secondPos" : 24548,
+  "firstEndPos" : 24651,
+  "secondEndPos" : 24651
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fatal.",
+  "secondLabel" : "// fatal.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24664,
+  "secondPos" : 24664,
+  "firstEndPos" : 24673,
+  "secondEndPos" : 24673
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -28587,6 +29258,17 @@
   "secondPos" : 24718,
   "firstEndPos" : 25490,
   "secondEndPos" : 25490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for OpenSSL errors caused by the priming read",
+  "secondLabel" : "// Check for OpenSSL errors caused by the priming read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24736,
+  "secondPos" : 24736,
+  "firstEndPos" : 24790,
+  "secondEndPos" : 24790
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29094,6 +29776,17 @@
   "firstEndPos" : 25211,
   "secondEndPos" : 25211
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There was an internal error -- shutdown",
+  "secondLabel" : "// There was an internal error -- shutdown",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25257,
+  "secondPos" : 25257,
+  "firstEndPos" : 25299,
+  "secondEndPos" : 25299
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29270,6 +29963,17 @@
   "firstEndPos" : 25708,
   "secondEndPos" : 25708
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Reset to 0 as -1 is used to signal that nothing was written and no priming read needs to be done",
+  "secondLabel" : "// Reset to 0 as -1 is used to signal that nothing was written and no priming read needs to be done",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25568,
+  "secondPos" : 25568,
+  "firstEndPos" : 25667,
+  "secondEndPos" : 25667
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29324,6 +30028,39 @@
   "secondPos" : 25696,
   "firstEndPos" : 25697,
   "secondEndPos" : 25697
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There won't be any application data until we're done handshaking",
+  "secondLabel" : "// There won't be any application data until we're done handshaking",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25718,
+  "secondPos" : 25718,
+  "firstEndPos" : 25785,
+  "secondEndPos" : 25785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25794,
+  "secondPos" : 25794,
+  "firstEndPos" : 25796,
+  "secondEndPos" : 25796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We first check handshakeFinished to eliminate the overhead of extra JNI call if possible.",
+  "secondLabel" : "// We first check handshakeFinished to eliminate the overhead of extra JNI call if possible.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25805,
+  "secondPos" : 25805,
+  "firstEndPos" : 25897,
+  "secondEndPos" : 25897
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29721,6 +30458,17 @@
   "firstEndPos" : 27220,
   "secondEndPos" : 27220
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we have enough room in dsts to write decrypted data?",
+  "secondLabel" : "// Do we have enough room in dsts to write decrypted data?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26085,
+  "secondPos" : 26085,
+  "firstEndPos" : 26143,
+  "secondEndPos" : 26143
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -29885,6 +30633,17 @@
   "secondPos" : 26280,
   "firstEndPos" : 26281,
   "secondEndPos" : 26281
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Write decrypted data to dsts buffers",
+  "secondLabel" : "// Write decrypted data to dsts buffers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26311,
+  "secondPos" : 26311,
+  "firstEndPos" : 26350,
+  "secondEndPos" : 26350
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -30942,6 +31701,17 @@
   "firstEndPos" : 27177,
   "secondEndPos" : 27177
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check to see if we received a close_notify message from the peer",
+  "secondLabel" : "// Check to see if we received a close_notify message from the peer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27230,
+  "secondPos" : 27230,
+  "firstEndPos" : 27297,
+  "secondEndPos" : 27297
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -31623,6 +32393,28 @@
   "secondPos" : 27792,
   "firstEndPos" : 28073,
   "secondEndPos" : 28073
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: In future versions me may also want to send a fatal_alert to the client and so notify it",
+  "secondLabel" : "// TODO: In future versions me may also want to send a fatal_alert to the client and so notify it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27806,
+  "secondPos" : 27806,
+  "firstEndPos" : 27903,
+  "secondEndPos" : 27903
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that the renegotiation failed.",
+  "secondLabel" : "// that the renegotiation failed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27916,
+  "secondPos" : 27916,
+  "firstEndPos" : 27949,
+  "secondEndPos" : 27949
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -32657,6 +33449,28 @@
   "secondPos" : 28564,
   "firstEndPos" : 28740,
   "secondEndPos" : 28740
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Currently, we do not delegate SSL computation tasks",
+  "secondLabel" : "// Currently, we do not delegate SSL computation tasks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28574,
+  "secondPos" : 28574,
+  "firstEndPos" : 28628,
+  "secondEndPos" : 28628
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: in the future, possibly create tasks to do encrypt / decrypt async",
+  "secondLabel" : "// TODO: in the future, possibly create tasks to do encrypt / decrypt async",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28637,
+  "secondPos" : 28637,
+  "firstEndPos" : 28712,
+  "secondEndPos" : 28712
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -33977,6 +34791,17 @@
   "secondPos" : 29705,
   "firstEndPos" : 29795,
   "secondEndPos" : 29795
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// engine closing before initial handshake",
+  "secondLabel" : "// engine closing before initial handshake",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29719,
+  "secondPos" : 29719,
+  "firstEndPos" : 29761,
+  "secondEndPos" : 29761
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -37905,6 +38730,17 @@
   "firstEndPos" : 32415,
   "secondEndPos" : 32415
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Seems like there is no way to explict disable SSLv2Hello in openssl so it is always enabled",
+  "secondLabel" : "// Seems like there is no way to explict disable SSLv2Hello in openssl so it is always enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32428,
+  "secondPos" : 32428,
+  "firstEndPos" : 32522,
+  "secondEndPos" : 32522
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -39687,6 +40523,17 @@
   "firstEndPos" : 33587,
   "secondEndPos" : 33587
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is correct from the API docs",
+  "secondLabel" : "// This is correct from the API docs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33491,
+  "secondPos" : 33491,
+  "firstEndPos" : 33527,
+  "secondEndPos" : 33527
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -41105,6 +41952,17 @@
   "secondPos" : 34442,
   "firstEndPos" : 35133,
   "secondEndPos" : 35133
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Enable all and then disable what we not want",
+  "secondLabel" : "// Enable all and then disable what we not want",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34460,
+  "secondPos" : 34460,
+  "firstEndPos" : 34507,
+  "secondEndPos" : 34507
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -42569,6 +43427,61 @@
   "firstEndPos" : 35681,
   "secondEndPos" : 35681
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A user did not start handshake by calling this method by him/herself,",
+  "secondLabel" : "// A user did not start handshake by calling this method by him/herself,",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 35699,
+  "secondPos" : 35699,
+  "firstEndPos" : 35771,
+  "secondEndPos" : 35771
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but handshake has been started already by wrap() or unwrap() implicitly.",
+  "secondLabel" : "// but handshake has been started already by wrap() or unwrap() implicitly.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 35788,
+  "secondPos" : 35788,
+  "firstEndPos" : 35863,
+  "secondEndPos" : 35863
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Because it's the user's first time to call this method, it is unfair to",
+  "secondLabel" : "// Because it's the user's first time to call this method, it is unfair to",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 35880,
+  "secondPos" : 35880,
+  "firstEndPos" : 35954,
+  "secondEndPos" : 35954
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// raise an exception.  From the user's standpoint, he or she never asked",
+  "secondLabel" : "// raise an exception.  From the user's standpoint, he or she never asked",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 35971,
+  "secondPos" : 35971,
+  "firstEndPos" : 36044,
+  "secondEndPos" : 36044
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for renegotiation.",
+  "secondLabel" : "// for renegotiation.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 36061,
+  "secondPos" : 36061,
+  "firstEndPos" : 36082,
+  "secondEndPos" : 36082
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -42623,6 +43536,17 @@
   "secondPos" : 36111,
   "firstEndPos" : 36112,
   "secondEndPos" : 36112
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Next time this method is invoked by the user, we should raise an exception.",
+  "secondLabel" : "// Next time this method is invoked by the user, we should raise an exception.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 36114,
+  "secondPos" : 36114,
+  "firstEndPos" : 36192,
+  "secondEndPos" : 36192
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
@@ -43339,6 +44263,17 @@
   "firstEndPos" : 37328,
   "secondEndPos" : 37328
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for OpenSSL errors caused by the handshake",
+  "secondLabel" : "// Check for OpenSSL errors caused by the handshake",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36740,
+  "secondPos" : 36740,
+  "firstEndPos" : 36791,
+  "secondEndPos" : 36791
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -43823,6 +44758,17 @@
   "firstEndPos" : 37106,
   "secondEndPos" : 37106
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There was an internal error -- shutdown",
+  "secondLabel" : "// There was an internal error -- shutdown",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37144,
+  "secondPos" : 37144,
+  "firstEndPos" : 37186,
+  "secondEndPos" : 37186
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -43954,6 +44900,28 @@
   "secondPos" : 37334,
   "firstEndPos" : 37583,
   "secondEndPos" : 37583
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if SSL_do_handshake returns > 0 it means the handshake was finished. This means we can update",
+  "secondLabel" : "// if SSL_do_handshake returns > 0 it means the handshake was finished. This means we can update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37348,
+  "secondPos" : 37348,
+  "firstEndPos" : 37444,
+  "secondEndPos" : 37444
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handshakeFinished directly and so eliminate uncessary calls to SSL.isInInit(...)",
+  "secondLabel" : "// handshakeFinished directly and so eliminate uncessary calls to SSL.isInInit(...)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37457,
+  "secondPos" : 37457,
+  "firstEndPos" : 37540,
+  "secondEndPos" : 37540
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -44790,6 +45758,28 @@
   "secondPos" : 38116,
   "firstEndPos" : 38122,
   "secondEndPos" : 38122
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We always need to check for applicationProtocol == null as the remote peer may not support",
+  "secondLabel" : "// We always need to check for applicationProtocol == null as the remote peer may not support",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 38135,
+  "secondPos" : 38135,
+  "firstEndPos" : 38228,
+  "secondEndPos" : 38228
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the TLS extension or may have returned an empty selection.",
+  "secondLabel" : "// the TLS extension or may have returned an empty selection.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 38241,
+  "secondPos" : 38241,
+  "firstEndPos" : 38302,
+  "secondEndPos" : 38302
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -47695,6 +48685,17 @@
   "firstEndPos" : 40916,
   "secondEndPos" : 40916
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if we are in the initial handshake phase",
+  "secondLabel" : "// Check if we are in the initial handshake phase",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40937,
+  "secondPos" : 40937,
+  "firstEndPos" : 40986,
+  "secondEndPos" : 40986
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -47749,6 +48750,17 @@
   "secondPos" : 41019,
   "firstEndPos" : 41563,
   "secondEndPos" : 41563
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There is pending data in the network BIO -- call wrap",
+  "secondLabel" : "// There is pending data in the network BIO -- call wrap",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41033,
+  "secondPos" : 41033,
+  "firstEndPos" : 41089,
+  "secondEndPos" : 41089
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -47893,6 +48905,28 @@
   "firstEndPos" : 41187,
   "secondEndPos" : 41187
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No pending data to be sent to the peer",
+  "secondLabel" : "// No pending data to be sent to the peer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41216,
+  "secondPos" : 41216,
+  "firstEndPos" : 41257,
+  "secondEndPos" : 41257
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check to see if we have finished handshaking",
+  "secondLabel" : "// Check to see if we have finished handshaking",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41270,
+  "secondPos" : 41270,
+  "firstEndPos" : 41317,
+  "secondEndPos" : 41317
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -48036,6 +49070,28 @@
   "firstEndPos" : 41391,
   "secondEndPos" : 41391
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No pending data and still handshaking",
+  "secondLabel" : "// No pending data and still handshaking",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41420,
+  "secondPos" : 41420,
+  "firstEndPos" : 41460,
+  "secondEndPos" : 41460
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Must be waiting on the peer to send more data",
+  "secondLabel" : "// Must be waiting on the peer to send more data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41473,
+  "secondPos" : 41473,
+  "firstEndPos" : 41521,
+  "secondEndPos" : 41521
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -48057,6 +49113,17 @@
   "secondPos" : 41541,
   "firstEndPos" : 41552,
   "secondEndPos" : 41552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if we are in the shutdown phase",
+  "secondLabel" : "// Check if we are in the shutdown phase",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41573,
+  "secondPos" : 41573,
+  "firstEndPos" : 41613,
+  "secondEndPos" : 41613
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -48090,6 +49157,17 @@
   "secondPos" : 41640,
   "firstEndPos" : 41920,
   "secondEndPos" : 41920
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Waiting to send the close_notify message",
+  "secondLabel" : "// Waiting to send the close_notify message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41654,
+  "secondPos" : 41654,
+  "firstEndPos" : 41697,
+  "secondEndPos" : 41697
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -48233,6 +49311,17 @@
   "secondPos" : 41786,
   "firstEndPos" : 41795,
   "secondEndPos" : 41795
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Must be waiting to receive the close_notify message",
+  "secondLabel" : "// Must be waiting to receive the close_notify message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41824,
+  "secondPos" : 41824,
+  "firstEndPos" : 41878,
+  "secondEndPos" : 41878
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -48805,6 +49894,17 @@
   "secondPos" : 42411,
   "firstEndPos" : 42439,
   "secondEndPos" : 42439
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42411,
+  "secondPos" : 42411,
+  "firstEndPos" : 42416,
+  "secondEndPos" : 42416
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -50764,6 +51864,17 @@
   "firstEndPos" : 43985,
   "secondEndPos" : 43985
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No need to issue any JNI calls if the mode is the same",
+  "secondLabel" : "// No need to issue any JNI calls if the mode is the same",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43890,
+  "secondPos" : 43890,
+  "firstEndPos" : 43947,
+  "secondEndPos" : 43947
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -52590,6 +53701,17 @@
   "firstEndPos" : 45684,
   "secondEndPos" : 45684
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Call shutdown as the user may have created the OpenSslEngine and not used it at all.",
+  "secondLabel" : "// Call shutdown as the user may have created the OpenSslEngine and not used it at all.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45696,
+  "secondPos" : 45696,
+  "firstEndPos" : 45783,
+  "secondEndPos" : 45783
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -52722,6 +53844,17 @@
   "firstEndPos" : 45900,
   "secondEndPos" : 45900
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SSLSession implementation seems to not need to be thread-safe so no need for volatile etc.",
+  "secondLabel" : "// SSLSession implementation seems to not need to be thread-safe so no need for volatile etc.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 45911,
+  "secondPos" : 45911,
+  "firstEndPos" : 46004,
+  "secondEndPos" : 46004
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -52809,6 +53942,17 @@
   "secondPos" : 46039,
   "firstEndPos" : 46052,
   "secondEndPos" : 46052
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lazy init for memory reasons",
+  "secondLabel" : "// lazy init for memory reasons",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 46063,
+  "secondPos" : 46063,
+  "firstEndPos" : 46094,
+  "secondEndPos" : 46094
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -53393,6 +54537,17 @@
   "firstEndPos" : 46426,
   "secondEndPos" : 46426
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We don't cache that to keep memory usage to a minimum.",
+  "secondLabel" : "// We don't cache that to keep memory usage to a minimum.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46472,
+  "secondPos" : 46472,
+  "firstEndPos" : 46529,
+  "secondEndPos" : 46529
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -53458,6 +54613,17 @@
   "secondPos" : 46558,
   "firstEndPos" : 46756,
   "secondEndPos" : 46756
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The id should never be null, if it was null then the SESSION itself was not valid.",
+  "secondLabel" : "// The id should never be null, if it was null then the SESSION itself was not valid.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46576,
+  "secondPos" : 46576,
+  "firstEndPos" : 46661,
+  "secondEndPos" : 46661
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -53833,6 +54999,17 @@
   "firstEndPos" : 47226,
   "secondEndPos" : 47226
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We need ot multiple by 1000 as openssl uses seconds and we need milli-seconds.",
+  "secondLabel" : "// We need ot multiple by 1000 as openssl uses seconds and we need milli-seconds.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47074,
+  "secondPos" : 47074,
+  "firstEndPos" : 47155,
+  "secondEndPos" : 47155
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -54042,6 +55219,17 @@
   "firstEndPos" : 47434,
   "secondEndPos" : 47434
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: Add proper implementation",
+  "secondLabel" : "// TODO: Add proper implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47352,
+  "secondPos" : 47352,
+  "firstEndPos" : 47386,
+  "secondEndPos" : 47386
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -54151,6 +55339,17 @@
   "secondPos" : 47487,
   "firstEndPos" : 47518,
   "secondEndPos" : 47518
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOOP",
+  "secondLabel" : "// NOOP",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47501,
+  "secondPos" : 47501,
+  "firstEndPos" : 47508,
+  "secondEndPos" : 47508
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -54866,6 +56065,17 @@
   "secondPos" : 47978,
   "firstEndPos" : 48131,
   "secondEndPos" : 48131
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use size of 2 to keep the memory overhead small",
+  "secondLabel" : "// Use size of 2 to keep the memory overhead small",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47996,
+  "secondPos" : 47996,
+  "firstEndPos" : 48046,
+  "secondEndPos" : 48046
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -57672,6 +58882,17 @@
   "firstEndPos" : 50396,
   "secondEndPos" : 50396
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these are lazy created to reduce memory overhead",
+  "secondLabel" : "// these are lazy created to reduce memory overhead",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 49778,
+  "secondPos" : 49778,
+  "firstEndPos" : 49829,
+  "secondEndPos" : 49829
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -58442,6 +59663,17 @@
   "firstEndPos" : 50565,
   "secondEndPos" : 50565
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: Find out how to get these",
+  "secondLabel" : "// TODO: Find out how to get these",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50482,
+  "secondPos" : 50482,
+  "firstEndPos" : 50516,
+  "secondEndPos" : 50516
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -58595,6 +59827,17 @@
   "secondPos" : 50678,
   "firstEndPos" : 51979,
   "secondEndPos" : 51979
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these are lazy created to reduce memory overhead",
+  "secondLabel" : "// these are lazy created to reduce memory overhead",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50692,
+  "secondPos" : 50692,
+  "firstEndPos" : 50743,
+  "secondEndPos" : 50743
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -63061,6 +64304,50 @@
   "secondPos" : 54400,
   "firstEndPos" : 54853,
   "secondEndPos" : 54803
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if used on the server side SSL_get_peer_cert_chain(...) will not include the remote peer certificate.",
+  "secondLabel" : "// if used on the server side SSL_get_peer_cert_chain(...) will not include the remote peer certificate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54468,
+  "secondPos" : 54418,
+  "firstEndPos" : 54572,
+  "secondEndPos" : 54522
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We use SSL_get_peer_certificate to get it in this case and add it to our array later.",
+  "secondLabel" : "// We use SSL_get_peer_certificate to get it in this case and add it to our array later.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54589,
+  "secondPos" : 54539,
+  "firstEndPos" : 54677,
+  "secondEndPos" : 54627
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54694,
+  "secondPos" : 54644,
+  "firstEndPos" : 54696,
+  "secondEndPos" : 54646
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See https://www.openssl.org/docs/ssl/SSL_get_peer_cert_chain.html",
+  "secondLabel" : "// See https://www.openssl.org/docs/ssl/SSL_get_peer_cert_chain.html",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54713,
+  "secondPos" : 54663,
+  "firstEndPos" : 54781,
+  "secondEndPos" : 54731
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

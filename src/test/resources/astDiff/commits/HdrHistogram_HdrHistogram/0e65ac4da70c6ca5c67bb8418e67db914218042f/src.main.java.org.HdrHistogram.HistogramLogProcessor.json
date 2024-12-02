@@ -76,6 +76,17 @@
   "firstEndPos" : 170,
   "secondEndPos" : 170
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 154,
+  "secondPos" : 154,
+  "firstEndPos" : 161,
+  "secondEndPos" : 161
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Gil Tene",
@@ -252,6 +263,17 @@
   "firstEndPos" : 404,
   "secondEndPos" : 404
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 358,
+  "secondPos" : 358,
+  "firstEndPos" : 363,
+  "secondEndPos" : 363
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.HdrHistogram.HistogramLogProcessor",
@@ -406,6 +428,17 @@
   "firstEndPos" : 974,
   "secondEndPos" : 974
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 953,
+  "secondPos" : 953,
+  "firstEndPos" : 958,
+  "secondEndPos" : 958
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " -i <filename>",
@@ -472,6 +505,17 @@
   "firstEndPos" : 1117,
   "secondEndPos" : 1117
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1100,
+  "secondPos" : 1100,
+  "firstEndPos" : 1105,
+  "secondEndPos" : 1105
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " <logfile>",
@@ -527,6 +571,17 @@
   "firstEndPos" : 1248,
   "secondEndPos" : 1248
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1231,
+  "secondPos" : 1231,
+  "firstEndPos" : 1236,
+  "secondEndPos" : 1236
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " <logfile>",
@@ -559,6 +614,17 @@
   "secondPos" : 1253,
   "firstEndPos" : 1275,
   "secondEndPos" : 1275
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1253,
+  "secondPos" : 1253,
+  "firstEndPos" : 1258,
+  "secondEndPos" : 1258
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1670,6 +1736,17 @@
   "secondPos" : 2609,
   "firstEndPos" : 2618,
   "secondEndPos" : 2618
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default to msec units for output.",
+  "secondLabel" : "// default to msec units for output.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2620,
+  "secondPos" : 2620,
+  "firstEndPos" : 2656,
+  "secondEndPos" : 2656
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8359,6 +8436,17 @@
   "firstEndPos" : 9605,
   "secondEndPos" : 10139
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Shape the accumulated histogram like the histograms in the log file (but clear their contents):",
+  "secondLabel" : "// Shape the accumulated histogram like the histograms in the log file (but clear their contents):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8947,
+  "secondPos" : 9481,
+  "firstEndPos" : 9045,
+  "secondEndPos" : 9579
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10768,6 +10856,17 @@
   "firstEndPos" : 11717,
   "secondEndPos" : 12251
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// values recorded during the last reporting interval",
+  "secondLabel" : "// values recorded during the last reporting interval",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 11754,
+  "secondPos" : 12288,
+  "firstEndPos" : 11807,
+  "secondEndPos" : 12341
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -11262,6 +11361,17 @@
   "secondPos" : 12771,
   "firstEndPos" : 12264,
   "secondEndPos" : 12798
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// values recorded from the beginning until now",
+  "secondLabel" : "// values recorded from the beginning until now",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 12298,
+  "secondPos" : 12832,
+  "firstEndPos" : 12345,
+  "secondEndPos" : 12879
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -12143,6 +12253,17 @@
   "firstEndPos" : 13343,
   "secondEndPos" : 13877
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// values recorded during the last reporting interval",
+  "secondLabel" : "// values recorded during the last reporting interval",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 13380,
+  "secondPos" : 13914,
+  "firstEndPos" : 13433,
+  "secondEndPos" : 13967
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -12637,6 +12758,17 @@
   "secondPos" : 14373,
   "firstEndPos" : 13866,
   "secondEndPos" : 14400
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// values recorded from the beginning until now",
+  "secondLabel" : "// values recorded from the beginning until now",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 13900,
+  "secondPos" : 14434,
+  "firstEndPos" : 13947,
+  "secondEndPos" : 14481
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -14024,6 +14156,28 @@
   "firstEndPos" : 16060,
   "secondEndPos" : 16033
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If there were no histograms in the log file, we still need an empty histogram for the",
+  "secondLabel" : "// If there were no histograms in the log file, we still need an empty histogram for the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15787,
+  "secondPos" : 15760,
+  "firstEndPos" : 15875,
+  "secondEndPos" : 15848
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// one line output (shape/range doesn't matter because it is empty):",
+  "secondLabel" : "// one line output (shape/range doesn't matter because it is empty):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15896,
+  "secondPos" : 15869,
+  "firstEndPos" : 15964,
+  "secondEndPos" : 15937
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14475,6 +14629,17 @@
   "firstEndPos" : 16547,
   "secondEndPos" : 16520
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16501,
+  "secondPos" : 16474,
+  "firstEndPos" : 16506,
+  "secondEndPos" : 16479
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "org.HdrHistogram.HistogramLogProcessor",
@@ -14640,6 +14805,17 @@
   "firstEndPos" : 17491,
   "secondEndPos" : 17464
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17457,
+  "secondPos" : 17430,
+  "firstEndPos" : 17463,
+  "secondEndPos" : 17436
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "args",
@@ -14672,6 +14848,17 @@
   "secondPos" : 17472,
   "firstEndPos" : 17565,
   "secondEndPos" : 17538
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17499,
+  "secondPos" : 17472,
+  "firstEndPos" : 17506,
+  "secondEndPos" : 17479
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -15299,6 +15486,17 @@
   "secondPos" : 17993,
   "firstEndPos" : 18054,
   "secondEndPos" : 18027
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18020,
+  "secondPos" : 17993,
+  "firstEndPos" : 18026,
+  "secondEndPos" : 17999
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

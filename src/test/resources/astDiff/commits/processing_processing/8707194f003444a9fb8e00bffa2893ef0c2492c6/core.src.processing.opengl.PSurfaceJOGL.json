@@ -98,6 +98,17 @@
   "firstEndPos" : 122,
   "secondEndPos" : 122
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//import java.awt.Dimension;",
+  "secondLabel" : "//import java.awt.Dimension;",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 124,
+  "secondPos" : 124,
+  "firstEndPos" : 152,
+  "secondEndPos" : 152
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -119,6 +130,17 @@
   "secondPos" : 160,
   "firstEndPos" : 174,
   "secondEndPos" : 174
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//import java.awt.Frame;",
+  "secondLabel" : "//import java.awt.Frame;",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 176,
+  "secondPos" : 176,
+  "firstEndPos" : 200,
+  "secondEndPos" : 200
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -537,6 +559,28 @@
   "secondPos" : 916,
   "firstEndPos" : 948,
   "secondEndPos" : 948
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//import com.jogamp.newt.event.WindowAdapter;",
+  "secondLabel" : "//import com.jogamp.newt.event.WindowAdapter;",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 950,
+  "secondPos" : 950,
+  "firstEndPos" : 995,
+  "secondEndPos" : 995
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//import com.jogamp.newt.event.WindowEvent;",
+  "secondLabel" : "//import com.jogamp.newt.event.WindowEvent;",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 996,
+  "secondPos" : 996,
+  "firstEndPos" : 1039,
+  "secondEndPos" : 1039
 }, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
@@ -3178,6 +3222,17 @@
   "firstEndPos" : 2456,
   "secondEndPos" : 2522
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      canvas.setBackground(new Color(pg.backgroundColor, true));",
+  "secondLabel" : "//      canvas.setBackground(new Color(pg.backgroundColor, true));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2461,
+  "secondPos" : 2527,
+  "firstEndPos" : 2527,
+  "secondEndPos" : 2593
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3353,6 +3408,17 @@
   "secondPos" : 2679,
   "firstEndPos" : 2916,
   "secondEndPos" : 2953
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*, int backgroundColor,\n                        int deviceIndex, boolean fullScreen,\n                        boolean spanDisplays) {*/",
+  "secondLabel" : "/*, int backgroundColor,\n                        int deviceIndex, boolean fullScreen,\n                        boolean spanDisplays) {*/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2614,
+  "secondPos" : 2680,
+  "firstEndPos" : 2749,
+  "secondEndPos" : 2815
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5675,6 +5741,50 @@
   "firstEndPos" : 4079,
   "secondEndPos" : 4116
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          System.out.println(\"Monitor \" + monitor.getId() + \" ************\");",
+  "secondLabel" : "//          System.out.println(\"Monitor \" + monitor.getId() + \" ************\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3773,
+  "secondPos" : 3810,
+  "firstEndPos" : 3852,
+  "secondEndPos" : 3889
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          System.out.println(monitor.toString());",
+  "secondLabel" : "//          System.out.println(monitor.toString());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3853,
+  "secondPos" : 3890,
+  "firstEndPos" : 3904,
+  "secondEndPos" : 3941
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          System.out.println(monitor.getViewportInWindowUnits());",
+  "secondLabel" : "//          System.out.println(monitor.getViewportInWindowUnits());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3905,
+  "secondPos" : 3942,
+  "firstEndPos" : 3972,
+  "secondEndPos" : 4009
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          System.out.println(monitor.getViewport());",
+  "secondLabel" : "//          System.out.println(monitor.getViewport());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3973,
+  "secondPos" : 4010,
+  "firstEndPos" : 4027,
+  "secondEndPos" : 4064
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5806,6 +5916,17 @@
   "secondPos" : 4152,
   "firstEndPos" : 4495,
   "secondEndPos" : 4532
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Didn't find a matching monitor, try using less stringent id check",
+  "secondLabel" : "// Didn't find a matching monitor, try using less stringent id check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4125,
+  "secondPos" : 4162,
+  "firstEndPos" : 4193,
+  "secondEndPos" : 4230
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -6741,6 +6862,17 @@
   "secondPos" : 4638,
   "firstEndPos" : 6162,
   "secondEndPos" : 6199
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  System.out.println(\"*******************************\");",
+  "secondLabel" : "//  System.out.println(\"*******************************\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4603,
+  "secondPos" : 4640,
+  "firstEndPos" : 4661,
+  "secondEndPos" : 4698
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8315,6 +8447,17 @@
   "firstEndPos" : 5614,
   "secondEndPos" : 5651
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Setting up the desired capabilities;",
+  "secondLabel" : "// Setting up the desired capabilities;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5628,
+  "secondPos" : 5665,
+  "firstEndPos" : 5667,
+  "secondEndPos" : 5704
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8644,6 +8787,28 @@
   "secondPos" : 5882,
   "firstEndPos" : 5871,
   "secondEndPos" : 5908
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  caps.setPBuffer(false);",
+  "secondLabel" : "//  caps.setPBuffer(false);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5875,
+  "secondPos" : 5912,
+  "firstEndPos" : 5902,
+  "secondEndPos" : 5939
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  caps.setFBO(false);",
+  "secondLabel" : "//  caps.setFBO(false);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5903,
+  "secondPos" : 5940,
+  "firstEndPos" : 5926,
+  "secondEndPos" : 5963
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9601,6 +9766,17 @@
   "secondPos" : 6446,
   "firstEndPos" : 6826,
   "secondEndPos" : 6863
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if -1, use the default device",
+  "secondLabel" : "// if -1, use the default device",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6412,
+  "secondPos" : 6449,
+  "firstEndPos" : 6444,
+  "secondEndPos" : 6481
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10889,6 +11065,28 @@
   "firstEndPos" : 7166,
   "secondEndPos" : 7203
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the displayWidth/Height variables inside PApplet, so that they're",
+  "secondLabel" : "// Set the displayWidth/Height variables inside PApplet, so that they're",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7176,
+  "secondPos" : 7213,
+  "firstEndPos" : 7248,
+  "secondEndPos" : 7285
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// usable and can even be returned by the sketchWidth()/Height() methods.",
+  "secondLabel" : "// usable and can even be returned by the sketchWidth()/Height() methods.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7253,
+  "secondPos" : 7290,
+  "firstEndPos" : 7326,
+  "secondEndPos" : 7363
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11262,6 +11460,28 @@
   "secondPos" : 7570,
   "firstEndPos" : 7549,
   "secondEndPos" : 7586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sketch has already requested to be the same as the screen's",
+  "secondLabel" : "// Sketch has already requested to be the same as the screen's",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7557,
+  "secondPos" : 7594,
+  "firstEndPos" : 7619,
+  "secondEndPos" : 7656
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// width and height, so let's roll with full screen mode.",
+  "secondLabel" : "// width and height, so let's roll with full screen mode.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7624,
+  "secondPos" : 7661,
+  "firstEndPos" : 7681,
+  "secondEndPos" : 7718
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11813,6 +12033,17 @@
   "firstEndPos" : 8197,
   "secondEndPos" : 8234
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Retina",
+  "secondLabel" : "// Retina",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8020,
+  "secondPos" : 8057,
+  "firstEndPos" : 8029,
+  "secondEndPos" : 8066
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11944,6 +12175,17 @@
   "secondPos" : 8240,
   "firstEndPos" : 8392,
   "secondEndPos" : 8429
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Non-retina",
+  "secondLabel" : "// Non-retina",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8211,
+  "secondPos" : 8248,
+  "firstEndPos" : 8224,
+  "secondEndPos" : 8261
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -13683,6 +13925,17 @@
   "firstEndPos" : 10817,
   "secondEndPos" : 10881
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  System.err.println(\"1. create animator\");",
+  "secondLabel" : "//  System.err.println(\"1. create animator\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9379,
+  "secondPos" : 9443,
+  "firstEndPos" : 9424,
+  "secondEndPos" : 9488
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14221,6 +14474,17 @@
   "secondPos" : 9899,
   "firstEndPos" : 9983,
   "secondEndPos" : 10047
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.println(\"Caught exception: \" + cause.getMessage());",
+  "secondLabel" : "//        System.err.println(\"Caught exception: \" + cause.getMessage());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9837,
+  "secondPos" : 9901,
+  "firstEndPos" : 9909,
+  "secondEndPos" : 9973
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14783,6 +15047,17 @@
   "firstEndPos" : 10243,
   "secondEndPos" : 10307
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.println(\"Caught exception: \" + drawException.getMessage());",
+  "secondLabel" : "//        System.err.println(\"Caught exception: \" + drawException.getMessage());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10259,
+  "secondPos" : 10323,
+  "firstEndPos" : 10339,
+  "secondEndPos" : 10403
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15013,6 +15288,28 @@
   "secondPos" : 10545,
   "firstEndPos" : 10592,
   "secondEndPos" : 10656
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            System.out.println(\"caught ThreadDeath\");",
+  "secondLabel" : "//            System.out.println(\"caught ThreadDeath\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10483,
+  "secondPos" : 10547,
+  "firstEndPos" : 10538,
+  "secondEndPos" : 10602
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            throw (ThreadDeath)cause;",
+  "secondLabel" : "//            throw (ThreadDeath)cause;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10539,
+  "secondPos" : 10603,
+  "firstEndPos" : 10578,
+  "secondEndPos" : 10642
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15707,6 +16004,39 @@
   "firstEndPos" : 11099,
   "secondEndPos" : 11163
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO Auto-generated method stub",
+  "secondLabel" : "// TODO Auto-generated method stub",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11060,
+  "secondPos" : 11124,
+  "firstEndPos" : 11094,
+  "secondEndPos" : 11158
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can't use frame.setLocationRelativeTo(null) because it sends the",
+  "secondLabel" : "// Can't use frame.setLocationRelativeTo(null) because it sends the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11141,
+  "secondPos" : 12960,
+  "firstEndPos" : 11208,
+  "secondEndPos" : 13027
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// frame to the main display, which undermines the --display setting.",
+  "secondLabel" : "// frame to the main display, which undermines the --display setting.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11213,
+  "secondPos" : 13034,
+  "firstEndPos" : 11282,
+  "secondEndPos" : 13103
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15949,6 +16279,83 @@
   "firstEndPos" : 11413,
   "secondEndPos" : 13238
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"just center on the screen at \" + sketchX + screenRect.x + (screenRect.width - sketchWidth) / 2 + \", \" +",
+  "secondLabel" : "//      System.err.println(\"just center on the screen at \" + sketchX + screenRect.x + (screenRect.width - sketchWidth) / 2 + \", \" +",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11417,
+  "secondPos" : 13242,
+  "firstEndPos" : 11546,
+  "secondEndPos" : 13373
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                                         sketchY + screenRect.y + (screenRect.height - sketchHeight) / 2);",
+  "secondLabel" : "//                                                           sketchY + screenRect.y + (screenRect.height - sketchHeight) / 2);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11547,
+  "secondPos" : 13374,
+  "firstEndPos" : 11671,
+  "secondEndPos" : 13500
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11672,
+  "secondPos" : 13503,
+  "firstEndPos" : 11674,
+  "secondEndPos" : 13505
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"  Display starts at \" +  sketchX + \", \" + sketchY);",
+  "secondLabel" : "//      System.err.println(\"  Display starts at \" +  sketchX + \", \" + sketchY);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11675,
+  "secondPos" : 13506,
+  "firstEndPos" : 11752,
+  "secondEndPos" : 13585
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"  Screen rect pos: \" +  screenRect.x + \", \" + screenRect.y);",
+  "secondLabel" : "//      System.err.println(\"  Screen rect pos: \" +  screenRect.x + \", \" + screenRect.y);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11753,
+  "secondPos" : 13586,
+  "firstEndPos" : 11839,
+  "secondEndPos" : 13674
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"  Screen rect w/h: \" +  screenRect.width + \", \" + screenRect.height);",
+  "secondLabel" : "//      System.err.println(\"  Screen rect w/h: \" +  screenRect.width + \", \" + screenRect.height);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11840,
+  "secondPos" : 13675,
+  "firstEndPos" : 11935,
+  "secondEndPos" : 13772
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"  Sketch w/h: \" +  sketchWidth + \", \" + sketchHeight);",
+  "secondLabel" : "//      System.err.println(\"  Sketch w/h: \" +  sketchWidth + \", \" + sketchHeight);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11936,
+  "secondPos" : 13773,
+  "firstEndPos" : 12016,
+  "secondEndPos" : 13855
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sketchWidth",
@@ -15970,6 +16377,50 @@
   "secondPos" : 14169,
   "firstEndPos" : 12067,
   "secondEndPos" : 14181
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    if (graphics.is2X()) {",
+  "secondLabel" : "//      if (graphics.is2X()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12069,
+  "secondPos" : 13916,
+  "firstEndPos" : 12097,
+  "secondEndPos" : 13946
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      w /= 2;",
+  "secondLabel" : "//        w /= 2;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12098,
+  "secondPos" : 13947,
+  "firstEndPos" : 12113,
+  "secondEndPos" : 13964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      h /= 2;",
+  "secondLabel" : "//        h /= 2;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12114,
+  "secondPos" : 13965,
+  "firstEndPos" : 12129,
+  "secondEndPos" : 13982
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//      }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12130,
+  "secondPos" : 13983,
+  "firstEndPos" : 12137,
+  "secondEndPos" : 13992
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16465,6 +16916,39 @@
   "secondPos" : 11287,
   "firstEndPos" : 14520,
   "secondEndPos" : 14690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    Dimension dim = new Dimension(sketchWidth, sketchHeight);",
+  "secondLabel" : "//    Dimension dim = new Dimension(sketchWidth, sketchHeight);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12393,
+  "secondPos" : 11289,
+  "firstEndPos" : 12456,
+  "secondEndPos" : 11352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    int contentW = Math.max(sketchWidth, MIN_WINDOW_WIDTH);",
+  "secondLabel" : "//    int contentW = Math.max(sketchWidth, MIN_WINDOW_WIDTH);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12457,
+  "secondPos" : 11353,
+  "firstEndPos" : 12518,
+  "secondEndPos" : 11414
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    int contentH = Math.max(sketchHeight, MIN_WINDOW_HEIGHT);",
+  "secondLabel" : "//    int contentH = Math.max(sketchHeight, MIN_WINDOW_HEIGHT);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12519,
+  "secondPos" : 11415,
+  "firstEndPos" : 12582,
+  "secondEndPos" : 11478
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17280,6 +17764,17 @@
   "firstEndPos" : 13026,
   "secondEndPos" : 11922
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"place window at \" + location[0] + \", \" + location[1]);",
+  "secondLabel" : "//      System.err.println(\"place window at \" + location[0] + \", \" + location[1]);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12877,
+  "secondPos" : 11773,
+  "firstEndPos" : 12959,
+  "secondEndPos" : 11855
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17477,6 +17972,17 @@
   "secondPos" : 11956,
   "firstEndPos" : 14024,
   "secondEndPos" : 12920
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"place window at editor location \" + editorLocation[0] + \", \" + editorLocation[1]);",
+  "secondLabel" : "//      System.err.println(\"place window at editor location \" + editorLocation[0] + \", \" + editorLocation[1]);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13062,
+  "secondPos" : 11958,
+  "firstEndPos" : 13172,
+  "secondEndPos" : 12068
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17764,6 +18270,17 @@
   "firstEndPos" : 13411,
   "secondEndPos" : 12307
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if it fits to the left of the window",
+  "secondLabel" : "// if it fits to the left of the window",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13301,
+  "secondPos" : 12197,
+  "firstEndPos" : 13340,
+  "secondEndPos" : 12236
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17895,6 +18412,50 @@
   "secondPos" : 12313,
   "firstEndPos" : 14018,
   "secondEndPos" : 12914
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doesn't fit",
+  "secondLabel" : "// doesn't fit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13420,
+  "secondPos" : 12316,
+  "firstEndPos" : 13434,
+  "secondEndPos" : 12330
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if it fits inside the editor window,",
+  "secondLabel" : "// if it fits inside the editor window,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13443,
+  "secondPos" : 12339,
+  "firstEndPos" : 13482,
+  "secondEndPos" : 12378
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// offset slightly from upper lefthand corner",
+  "secondLabel" : "// offset slightly from upper lefthand corner",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13491,
+  "secondPos" : 12387,
+  "firstEndPos" : 13536,
+  "secondEndPos" : 12432
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so that it's plunked inside the text area",
+  "secondLabel" : "// so that it's plunked inside the text area",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13545,
+  "secondPos" : 12441,
+  "firstEndPos" : 13589,
+  "secondEndPos" : 12485
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18402,6 +18963,17 @@
   "firstEndPos" : 13952,
   "secondEndPos" : 12848
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise center on screen",
+  "secondLabel" : "// otherwise center on screen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13806,
+  "secondPos" : 12702,
+  "firstEndPos" : 13835,
+  "secondEndPos" : 12731
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18765,6 +19337,17 @@
   "firstEndPos" : 14089,
   "secondEndPos" : 14195
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// just center on screen",
+  "secondLabel" : "// just center on screen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14033,
+  "secondPos" : 12929,
+  "firstEndPos" : 14057,
+  "secondEndPos" : 12953
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -18941,6 +19524,28 @@
   "firstEndPos" : 14361,
   "secondEndPos" : 14467
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Windows actually allows you to place frames where they can't be",
+  "secondLabel" : "// Windows actually allows you to place frames where they can't be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14161,
+  "secondPos" : 14267,
+  "firstEndPos" : 14227,
+  "secondEndPos" : 14333
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// closed. Awesome. http://dev.processing.org/bugs/show_bug.cgi?id=1508",
+  "secondLabel" : "// closed. Awesome. http://dev.processing.org/bugs/show_bug.cgi?id=1508",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14234,
+  "secondPos" : 14340,
+  "firstEndPos" : 14305,
+  "secondEndPos" : 14411
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19029,6 +19634,39 @@
   "firstEndPos" : 14353,
   "secondEndPos" : 14459
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    canvas.setBounds((contentW - sketchWidth)/2,",
+  "secondLabel" : "//    canvas.setBounds((contentW - sketchWidth)/2,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14363,
+  "secondPos" : 14533,
+  "firstEndPos" : 14413,
+  "secondEndPos" : 14583
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                     (contentH - sketchHeight)/2,",
+  "secondLabel" : "//                     (contentH - sketchHeight)/2,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14414,
+  "secondPos" : 14584,
+  "firstEndPos" : 14465,
+  "secondEndPos" : 14635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                     sketchWidth, sketchHeight);",
+  "secondLabel" : "//                     sketchWidth, sketchHeight);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14466,
+  "secondPos" : 14636,
+  "firstEndPos" : 14516,
+  "secondEndPos" : 14686
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -19116,6 +19754,39 @@
   "secondPos" : 14735,
   "firstEndPos" : 15170,
   "secondEndPos" : 15404
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    if (presentMode) {",
+  "secondLabel" : "//    if (presentMode) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14567,
+  "secondPos" : 14738,
+  "firstEndPos" : 14591,
+  "secondEndPos" : 14762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"Present mode\");",
+  "secondLabel" : "//      System.err.println(\"Present mode\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14592,
+  "secondPos" : 14763,
+  "firstEndPos" : 14635,
+  "secondEndPos" : 14806
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    System.err.println(\"WILL USE FBO\");",
+  "secondLabel" : "//    System.err.println(\"WILL USE FBO\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14636,
+  "secondPos" : 14807,
+  "firstEndPos" : 14677,
+  "secondEndPos" : 14848
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -19887,6 +20558,17 @@
   "firstEndPos" : 15080,
   "secondEndPos" : 15251
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    window.setTopLevelPosition(0, 0);",
+  "secondLabel" : "//    window.setTopLevelPosition(0, 0);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15083,
+  "secondPos" : 15254,
+  "firstEndPos" : 15122,
+  "secondEndPos" : 15293
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19963,6 +20645,17 @@
   "secondPos" : 15319,
   "firstEndPos" : 15152,
   "secondEndPos" : 15323
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15159,
+  "secondPos" : 15393,
+  "firstEndPos" : 15166,
+  "secondEndPos" : 15400
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -20821,6 +21514,17 @@
   "secondPos" : 15780,
   "firstEndPos" : 15591,
   "secondEndPos" : 15825
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO Auto-generated method stub",
+  "secondLabel" : "// TODO Auto-generated method stub",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15552,
+  "secondPos" : 15786,
+  "firstEndPos" : 15586,
+  "secondEndPos" : 15820
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -22054,6 +22758,28 @@
   "firstEndPos" : 16582,
   "secondEndPos" : 17162
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    if (animator.isAnimating()) {",
+  "secondLabel" : "//    if (animator.isAnimating()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16591,
+  "secondPos" : 17171,
+  "firstEndPos" : 16626,
+  "secondEndPos" : 17206
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"3. set size\");",
+  "secondLabel" : "//      System.err.println(\"3. set size\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16627,
+  "secondPos" : 17207,
+  "firstEndPos" : 16669,
+  "secondEndPos" : 17249
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22108,6 +22834,28 @@
   "secondPos" : 17275,
   "firstEndPos" : 16910,
   "secondEndPos" : 17490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        sketch.width = width;",
+  "secondLabel" : "//        sketch.width = width;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16697,
+  "secondPos" : 17277,
+  "firstEndPos" : 16728,
+  "secondEndPos" : 17308
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        sketch.height = height;",
+  "secondLabel" : "//        sketch.height = height;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16729,
+  "secondPos" : 17309,
+  "firstEndPos" : 16762,
+  "secondEndPos" : 17342
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -22395,6 +23143,17 @@
   "firstEndPos" : 16900,
   "secondEndPos" : 17480
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16913,
+  "secondPos" : 17493,
+  "firstEndPos" : 16920,
+  "secondEndPos" : 17500
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -22515,6 +23274,28 @@
   "secondPos" : 17564,
   "firstEndPos" : 17217,
   "secondEndPos" : 17797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Even if the graphics are retina, the user might have moved the window",
+  "secondLabel" : "// Even if the graphics are retina, the user might have moved the window",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16992,
+  "secondPos" : 17572,
+  "firstEndPos" : 17064,
+  "secondEndPos" : 17644
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// into a non-retina monitor, so we need to check",
+  "secondLabel" : "// into a non-retina monitor, so we need to check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17071,
+  "secondPos" : 17651,
+  "firstEndPos" : 17120,
+  "secondEndPos" : 17700
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -24628,6 +25409,17 @@
   "firstEndPos" : 18303,
   "secondEndPos" : 18883
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.out.println(\" - \" + sketch.frameCount);",
+  "secondLabel" : "//      System.out.println(\" - \" + sketch.frameCount);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18306,
+  "secondPos" : 18886,
+  "firstEndPos" : 18360,
+  "secondEndPos" : 18940
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -24847,6 +25639,17 @@
   "secondPos" : 19069,
   "firstEndPos" : 18616,
   "secondEndPos" : 19196
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.out.println(\"exit\");",
+  "secondLabel" : "//        System.out.println(\"exit\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18491,
+  "secondPos" : 19071,
+  "firstEndPos" : 18528,
+  "secondEndPos" : 19108
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25112,6 +25915,28 @@
   "firstEndPos" : 18847,
   "secondEndPos" : 19427
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      pgl.getGL(drawable);",
+  "secondLabel" : "//      pgl.getGL(drawable);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18674,
+  "secondPos" : 19254,
+  "firstEndPos" : 18702,
+  "secondEndPos" : 19282
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.out.println(\"dispose\");",
+  "secondLabel" : "//      System.out.println(\"dispose\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18703,
+  "secondPos" : 19283,
+  "firstEndPos" : 18741,
+  "secondEndPos" : 19321
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25166,6 +25991,39 @@
   "secondPos" : 19335,
   "firstEndPos" : 18762,
   "secondEndPos" : 19342
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      if (sketch.exitCalled()) {",
+  "secondLabel" : "//      if (sketch.exitCalled()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18766,
+  "secondPos" : 19346,
+  "firstEndPos" : 18800,
+  "secondEndPos" : 19380
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        sketch.exitActual();",
+  "secondLabel" : "//        sketch.exitActual();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18801,
+  "secondPos" : 19381,
+  "firstEndPos" : 18831,
+  "secondEndPos" : 19411
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      }",
+  "secondLabel" : "//      }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18832,
+  "secondPos" : 19412,
+  "firstEndPos" : 18841,
+  "secondEndPos" : 19421
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -25265,6 +26123,17 @@
   "secondPos" : 19474,
   "firstEndPos" : 19341,
   "secondEndPos" : 19921
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"2. init drawable\");",
+  "secondLabel" : "//      System.err.println(\"2. init drawable\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18896,
+  "secondPos" : 19476,
+  "firstEndPos" : 18943,
+  "secondEndPos" : 19523
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25474,6 +26343,17 @@
   "secondPos" : 19590,
   "firstEndPos" : 19015,
   "secondEndPos" : 19595
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      setSize(sketchWidth, sketchHeight);",
+  "secondLabel" : "//      setSize(sketchWidth, sketchHeight);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19019,
+  "secondPos" : 19599,
+  "firstEndPos" : 19062,
+  "secondEndPos" : 19642
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -26432,6 +27312,17 @@
   "firstEndPos" : 20323,
   "secondEndPos" : 20903
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      final float[] valReqSurfacePixelScale = window.getRequestedSurfaceScale(new float[2]);",
+  "secondLabel" : "//      final float[] valReqSurfacePixelScale = window.getRequestedSurfaceScale(new float[2]);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19423,
+  "secondPos" : 20003,
+  "firstEndPos" : 19517,
+  "secondEndPos" : 20097
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26509,6 +27400,72 @@
   "firstEndPos" : 19571,
   "secondEndPos" : 20151
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      final float[] nativeSurfacePixelScale = window.getMaximumSurfaceScale(new float[2]);",
+  "secondLabel" : "//      final float[] nativeSurfacePixelScale = window.getMaximumSurfaceScale(new float[2]);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19574,
+  "secondPos" : 20154,
+  "firstEndPos" : 19666,
+  "secondEndPos" : 20246
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"[set PixelScale post]: \"+",
+  "secondLabel" : "//      System.err.println(\"[set PixelScale post]: \"+",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19667,
+  "secondPos" : 20247,
+  "firstEndPos" : 19720,
+  "secondEndPos" : 20300
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                         valReqSurfacePixelScale[0]+\"x\"+valReqSurfacePixelScale[1]+\" (val) -> \"+",
+  "secondLabel" : "//                         valReqSurfacePixelScale[0]+\"x\"+valReqSurfacePixelScale[1]+\" (val) -> \"+",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19721,
+  "secondPos" : 20301,
+  "firstEndPos" : 19819,
+  "secondEndPos" : 20399
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                         hasSurfacePixelScale[0]+\"x\"+hasSurfacePixelScale[1]+\" (has), \"+",
+  "secondLabel" : "//                         hasSurfacePixelScale[0]+\"x\"+hasSurfacePixelScale[1]+\" (has), \"+",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19820,
+  "secondPos" : 20400,
+  "firstEndPos" : 19910,
+  "secondEndPos" : 20490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                         nativeSurfacePixelScale[0]+\"x\"+nativeSurfacePixelScale[1]+\" (native)\");",
+  "secondLabel" : "//                         nativeSurfacePixelScale[0]+\"x\"+nativeSurfacePixelScale[1]+\" (native)\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19911,
+  "secondPos" : 20491,
+  "firstEndPos" : 20009,
+  "secondEndPos" : 20589
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.out.println(\"reshape: \" + w + \", \" + h);",
+  "secondLabel" : "//      System.out.println(\"reshape: \" + w + \", \" + h);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20014,
+  "secondPos" : 20594,
+  "firstEndPos" : 20069,
+  "secondEndPos" : 20649
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26585,6 +27542,61 @@
   "secondPos" : 20666,
   "firstEndPos" : 20094,
   "secondEndPos" : 20674
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      if (!graphics.is2X() && 1 < hasSurfacePixelScale[0]) {",
+  "secondLabel" : "//      if (!graphics.is2X() && 1 < hasSurfacePixelScale[0]) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20097,
+  "secondPos" : 20677,
+  "firstEndPos" : 20159,
+  "secondEndPos" : 20739
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        setSize(w/2, h/2);",
+  "secondLabel" : "//        setSize(w/2, h/2);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20160,
+  "secondPos" : 20740,
+  "firstEndPos" : 20188,
+  "secondEndPos" : 20768
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      } else {",
+  "secondLabel" : "//      } else {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20189,
+  "secondPos" : 20769,
+  "firstEndPos" : 20205,
+  "secondEndPos" : 20785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        setSize(w, h);",
+  "secondLabel" : "//        setSize(w, h);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20206,
+  "secondPos" : 20786,
+  "firstEndPos" : 20230,
+  "secondEndPos" : 20810
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      }",
+  "secondLabel" : "//      }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20231,
+  "secondPos" : 20811,
+  "firstEndPos" : 20240,
+  "secondEndPos" : 20820
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -27070,6 +28082,28 @@
   "firstEndPos" : 20645,
   "secondEndPos" : 21225
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      pg.parent.focusGained(null);",
+  "secondLabel" : "//      pg.parent.focusGained(null);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20561,
+  "secondPos" : 21141,
+  "firstEndPos" : 20597,
+  "secondEndPos" : 21177
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"gain focus\");",
+  "secondLabel" : "//      System.err.println(\"gain focus\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20598,
+  "secondPos" : 21178,
+  "firstEndPos" : 20639,
+  "secondEndPos" : 21219
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -27191,6 +28225,28 @@
   "firstEndPos" : 20817,
   "secondEndPos" : 21397
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      pg.parent.focusLost(null);",
+  "secondLabel" : "//      pg.parent.focusLost(null);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20735,
+  "secondPos" : 21315,
+  "firstEndPos" : 20769,
+  "secondEndPos" : 21349
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"lost focus\");",
+  "secondLabel" : "//      System.err.println(\"lost focus\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20770,
+  "secondPos" : 21350,
+  "firstEndPos" : 20811,
+  "secondEndPos" : 21391
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -27311,6 +28367,17 @@
   "secondPos" : 21489,
   "firstEndPos" : 21038,
   "secondEndPos" : 21618
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"bye\");",
+  "secondLabel" : "//      System.err.println(\"bye\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20911,
+  "secondPos" : 21491,
+  "firstEndPos" : 20945,
+  "secondEndPos" : 21525
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -27971,6 +29038,72 @@
   "secondPos" : 21989,
   "firstEndPos" : 21650,
   "secondEndPos" : 22230
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(\"resized\");",
+  "secondLabel" : "//      System.err.println(\"resized\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21411,
+  "secondPos" : 21991,
+  "firstEndPos" : 21449,
+  "secondEndPos" : 22029
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.err.println(window.hasFocus());",
+  "secondLabel" : "//      System.err.println(window.hasFocus());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21450,
+  "secondPos" : 22030,
+  "firstEndPos" : 21496,
+  "secondEndPos" : 22076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      window.removeMouseListener(mouseListener);",
+  "secondLabel" : "//      window.removeMouseListener(mouseListener);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21497,
+  "secondPos" : 22077,
+  "firstEndPos" : 21547,
+  "secondEndPos" : 22127
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      mouseListener = new NEWTMouseListener();",
+  "secondLabel" : "//      mouseListener = new NEWTMouseListener();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21548,
+  "secondPos" : 22128,
+  "firstEndPos" : 21596,
+  "secondEndPos" : 22176
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      window.addMouseListener(mouseListener);",
+  "secondLabel" : "//      window.addMouseListener(mouseListener);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21597,
+  "secondPos" : 22177,
+  "firstEndPos" : 21644,
+  "secondEndPos" : 22224
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NEWT mouse listener",
+  "secondLabel" : "// NEWT mouse listener",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 21659,
+  "secondPos" : 22239,
+  "firstEndPos" : 21681,
+  "secondEndPos" : 22261
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -29336,6 +30469,17 @@
   "firstEndPos" : 22779,
   "secondEndPos" : 23359
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.out.println(\"enter\");",
+  "secondLabel" : "//      System.out.println(\"enter\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22692,
+  "secondPos" : 23272,
+  "firstEndPos" : 22728,
+  "secondEndPos" : 23308
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29523,6 +30667,17 @@
   "firstEndPos" : 22945,
   "secondEndPos" : 23525
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      System.out.println(\"exit\");",
+  "secondLabel" : "//      System.out.println(\"exit\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22860,
+  "secondPos" : 23440,
+  "firstEndPos" : 22895,
+  "secondEndPos" : 23475
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29588,6 +30743,17 @@
   "secondPos" : 23502,
   "firstEndPos" : 22937,
   "secondEndPos" : 23517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NEWT key listener",
+  "secondLabel" : "// NEWT key listener",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 22953,
+  "secondPos" : 23533,
+  "firstEndPos" : 22973,
+  "secondEndPos" : 23553
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -31238,6 +32404,17 @@
   "secondPos" : 24801,
   "firstEndPos" : 24370,
   "secondEndPos" : 24950
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if (nativeEvent.isPopupTrigger()) {",
+  "secondLabel" : "//if (nativeEvent.isPopupTrigger()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24229,
+  "secondPos" : 24809,
+  "firstEndPos" : 24266,
+  "secondEndPos" : 24846
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33010,6 +34187,72 @@
   "firstEndPos" : 25353,
   "secondEndPos" : 25933
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.println(\"clicked on exit button\");",
+  "secondLabel" : "//        System.err.println(\"clicked on exit button\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25073,
+  "secondPos" : 25653,
+  "firstEndPos" : 25128,
+  "secondEndPos" : 25708
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      if (externalMessages) {",
+  "secondLabel" : "//      if (externalMessages) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25129,
+  "secondPos" : 25709,
+  "firstEndPos" : 25160,
+  "secondEndPos" : 25740
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.println(PApplet.EXTERNAL_QUIT);",
+  "secondLabel" : "//        System.err.println(PApplet.EXTERNAL_QUIT);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25161,
+  "secondPos" : 25741,
+  "firstEndPos" : 25213,
+  "secondEndPos" : 25793
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.flush();  // important",
+  "secondLabel" : "//        System.err.flush();  // important",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25214,
+  "secondPos" : 25794,
+  "firstEndPos" : 25257,
+  "secondEndPos" : 25837
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      }",
+  "secondLabel" : "//      }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25258,
+  "secondPos" : 25838,
+  "firstEndPos" : 25267,
+  "secondEndPos" : 25847
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        animator.stop();",
+  "secondLabel" : "//        animator.stop();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25268,
+  "secondPos" : 25848,
+  "firstEndPos" : 25294,
+  "secondEndPos" : 25874
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33064,6 +34307,17 @@
   "secondPos" : 25890,
   "firstEndPos" : 25314,
   "secondEndPos" : 25894
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        window.destroy();",
+  "secondLabel" : "//        window.destroy();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25318,
+  "secondPos" : 25898,
+  "firstEndPos" : 25345,
+  "secondEndPos" : 25925
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33339,6 +34593,50 @@
   "secondPos" : 26014,
   "firstEndPos" : 25441,
   "secondEndPos" : 26021
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    if (!graphics.is2X() && 1 < hasSurfacePixelScale[0]) {",
+  "secondLabel" : "//    if (!graphics.is2X() && 1 < hasSurfacePixelScale[0]) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25457,
+  "secondPos" : 26037,
+  "firstEndPos" : 25517,
+  "secondEndPos" : 26097
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      x /= 2;",
+  "secondLabel" : "//      x /= 2;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25518,
+  "secondPos" : 26098,
+  "firstEndPos" : 25533,
+  "secondEndPos" : 26113
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      y /= 2;",
+  "secondLabel" : "//      y /= 2;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25534,
+  "secondPos" : 26114,
+  "firstEndPos" : 25549,
+  "secondEndPos" : 26129
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25550,
+  "secondPos" : 26130,
+  "firstEndPos" : 25557,
+  "secondEndPos" : 26137
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -34737,6 +36035,83 @@
   "firstEndPos" : 26579,
   "secondEndPos" : 27159
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From http://jogamp.org/deployment/v2.1.0/javadoc/jogl/javadoc/com/jogamp/newt/event/KeyEvent.html",
+  "secondLabel" : "// From http://jogamp.org/deployment/v2.1.0/javadoc/jogl/javadoc/com/jogamp/newt/event/KeyEvent.html",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26594,
+  "secondPos" : 27174,
+  "firstEndPos" : 26694,
+  "secondEndPos" : 27274
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public final short getKeySymbol()",
+  "secondLabel" : "// public final short getKeySymbol()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26699,
+  "secondPos" : 27279,
+  "firstEndPos" : 26735,
+  "secondEndPos" : 27315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Returns the virtual key symbol reflecting the current keyboard layout.",
+  "secondLabel" : "// Returns the virtual key symbol reflecting the current keyboard layout.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26740,
+  "secondPos" : 27320,
+  "firstEndPos" : 26813,
+  "secondEndPos" : 27393
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public final short getKeyCode()",
+  "secondLabel" : "// public final short getKeyCode()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26818,
+  "secondPos" : 27398,
+  "firstEndPos" : 26852,
+  "secondEndPos" : 27432
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Returns the virtual key code using a fixed mapping to the US keyboard layout.",
+  "secondLabel" : "// Returns the virtual key code using a fixed mapping to the US keyboard layout.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26857,
+  "secondPos" : 27437,
+  "firstEndPos" : 26937,
+  "secondEndPos" : 27517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In contrast to key symbol, key code uses a fixed US keyboard layout and therefore is keyboard layout independent.",
+  "secondLabel" : "// In contrast to key symbol, key code uses a fixed US keyboard layout and therefore is keyboard layout independent.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26942,
+  "secondPos" : 27522,
+  "firstEndPos" : 27058,
+  "secondEndPos" : 27638
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// E.g. virtual key code VK_Y denotes the same physical key regardless whether keyboard layout QWERTY or QWERTZ is active. The key symbol of the former is VK_Y, where the latter produces VK_Y.",
+  "secondLabel" : "// E.g. virtual key code VK_Y denotes the same physical key regardless whether keyboard layout QWERTY or QWERTZ is active. The key symbol of the former is VK_Y, where the latter produces VK_Y.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27063,
+  "secondPos" : 27643,
+  "firstEndPos" : 27255,
+  "secondEndPos" : 27835
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -35616,6 +36991,50 @@
   "secondPos" : 28569,
   "firstEndPos" : 28030,
   "secondEndPos" : 28610
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Why do we need this mapping?",
+  "secondLabel" : "// Why do we need this mapping?",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28039,
+  "secondPos" : 28619,
+  "firstEndPos" : 28070,
+  "secondEndPos" : 28650
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Relevant discussion and links here:",
+  "secondLabel" : "// Relevant discussion and links here:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28073,
+  "secondPos" : 28653,
+  "firstEndPos" : 28111,
+  "secondEndPos" : 28691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// http://forum.jogamp.org/Newt-wrong-keycode-for-key-td4033690.html#a4033697",
+  "secondLabel" : "// http://forum.jogamp.org/Newt-wrong-keycode-for-key-td4033690.html#a4033697",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28114,
+  "secondPos" : 28694,
+  "firstEndPos" : 28191,
+  "secondEndPos" : 28771
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (I don't think this is a complete solution).",
+  "secondLabel" : "// (I don't think this is a complete solution).",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28194,
+  "secondPos" : 28774,
+  "firstEndPos" : 28241,
+  "secondEndPos" : 28821
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -36992,6 +38411,17 @@
   "firstEndPos" : 29516,
   "secondEndPos" : 30096
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+  "secondLabel" : "// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 29525,
+  "secondPos" : 30105,
+  "firstEndPos" : 29601,
+  "secondEndPos" : 30181
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -37519,6 +38949,138 @@
   "secondPos" : 30452,
   "firstEndPos" : 29884,
   "secondEndPos" : 30464
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    BufferedImage jimg = (BufferedImage)image.getNative();",
+  "secondLabel" : "//    BufferedImage jimg = (BufferedImage)image.getNative();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29889,
+  "secondPos" : 30469,
+  "firstEndPos" : 29949,
+  "secondEndPos" : 30529
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    IntBuffer buf = IntBuffer.wrap(jimg.getRGB(0, 0, jimg.getWidth(), jimg.getHeight(),",
+  "secondLabel" : "//    IntBuffer buf = IntBuffer.wrap(jimg.getRGB(0, 0, jimg.getWidth(), jimg.getHeight(),",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29950,
+  "secondPos" : 30530,
+  "firstEndPos" : 30039,
+  "secondEndPos" : 30619
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                               null, 0, jimg.getWidth()));",
+  "secondLabel" : "//                                               null, 0, jimg.getWidth()));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30040,
+  "secondPos" : 30620,
+  "firstEndPos" : 30116,
+  "secondEndPos" : 30696
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30117,
+  "secondPos" : 30697,
+  "firstEndPos" : 30119,
+  "secondEndPos" : 30699
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    final PixelRectangle pixelrect = new PixelRectangle.GenericPixelRect(srcFmt, new Dimension(width, height),",
+  "secondLabel" : "//    final PixelRectangle pixelrect = new PixelRectangle.GenericPixelRect(srcFmt, new Dimension(width, height),",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30120,
+  "secondPos" : 30700,
+  "firstEndPos" : 30232,
+  "secondEndPos" : 30812
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        srcStrideBytes, srcIsGLOriented, srcPixels);",
+  "secondLabel" : "//        srcStrideBytes, srcIsGLOriented, srcPixels);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30233,
+  "secondPos" : 30813,
+  "firstEndPos" : 30287,
+  "secondEndPos" : 30867
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30288,
+  "secondPos" : 30868,
+  "firstEndPos" : 30290,
+  "secondEndPos" : 30870
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    PointerIcon pi = disp.createPointerIcon(PixelRectangle pixelrect,",
+  "secondLabel" : "//    PointerIcon pi = disp.createPointerIcon(PixelRectangle pixelrect,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30291,
+  "secondPos" : 30871,
+  "firstEndPos" : 30362,
+  "secondEndPos" : 30942
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                            hotspotX,",
+  "secondLabel" : "//                                            hotspotX,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30363,
+  "secondPos" : 30943,
+  "firstEndPos" : 30418,
+  "secondEndPos" : 30998
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                            hotspotY);",
+  "secondLabel" : "//                                            hotspotY);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30419,
+  "secondPos" : 30999,
+  "firstEndPos" : 30475,
+  "secondEndPos" : 31055
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30476,
+  "secondPos" : 31056,
+  "firstEndPos" : 30478,
+  "secondEndPos" : 31058
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    window.setPointerIcon(pi);",
+  "secondLabel" : "//    window.setPointerIcon(pi);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30479,
+  "secondPos" : 31059,
+  "firstEndPos" : 30511,
+  "secondEndPos" : 31091
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

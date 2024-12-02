@@ -461,6 +461,17 @@
   "firstEndPos" : 693,
   "secondEndPos" : 710
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// index is visible to user number of task from 1 to task number",
+  "secondLabel" : "// index is visible to user number of task from 1 to task number",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 698,
+  "secondPos" : 715,
+  "firstEndPos" : 762,
+  "secondEndPos" : 779
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1439,6 +1450,17 @@
   "secondPos" : 1201,
   "firstEndPos" : 1226,
   "secondEndPos" : 1243
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1184,
+  "secondPos" : 1201,
+  "firstEndPos" : 1190,
+  "secondEndPos" : 1207
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

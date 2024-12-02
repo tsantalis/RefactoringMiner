@@ -10,6 +10,17 @@
   "firstEndPos" : 24418,
   "secondEndPos" : 25170
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2011 JBoss Inc\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2011 JBoss Inc\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 593,
+  "secondEndPos" : 593
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2628,6 +2639,28 @@
   "firstEndPos" : 3816,
   "secondEndPos" : 3955
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use the App scoped EntityManager if the user has provided it, and it is open.",
+  "secondLabel" : "// Use the App scoped EntityManager if the user has provided it, and it is open.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3828,
+  "secondPos" : 3967,
+  "firstEndPos" : 3908,
+  "secondEndPos" : 4047
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - open the entity manager before the transaction begins. ",
+  "secondLabel" : "// - open the entity manager before the transaction begins. ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3917,
+  "secondPos" : 4056,
+  "firstEndPos" : 3977,
+  "secondEndPos" : 4116
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3596,6 +3629,17 @@
   "firstEndPos" : 4808,
   "secondEndPos" : 4947
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the session id to be the same as the session info id",
+  "secondLabel" : "// update the session id to be the same as the session info id",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4831,
+  "secondPos" : 4970,
+  "firstEndPos" : 4893,
+  "secondEndPos" : 5032
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4013,6 +4057,17 @@
   "secondPos" : 5242,
   "firstEndPos" : 5114,
   "secondEndPos" : 5253
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create session but bypass command service",
+  "secondLabel" : "// create session but bypass command service",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5127,
+  "secondPos" : 5266,
+  "firstEndPos" : 5171,
+  "secondEndPos" : 5310
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6302,6 +6357,17 @@
   "firstEndPos" : 7065,
   "secondEndPos" : 7204
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Open the entity manager before the transaction begins. ",
+  "secondLabel" : "// Open the entity manager before the transaction begins. ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7078,
+  "secondPos" : 7217,
+  "firstEndPos" : 7136,
+  "secondEndPos" : 7275
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6917,6 +6983,28 @@
   "secondPos" : 7846,
   "firstEndPos" : 8006,
   "secondEndPos" : 8145
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not rollback transaction otherwise it will mark it as aborted",
+  "secondLabel" : "// do not rollback transaction otherwise it will mark it as aborted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7721,
+  "secondPos" : 7860,
+  "firstEndPos" : 7788,
+  "secondEndPos" : 7927
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// making the whole operation to fail  if not transaction owner",
+  "secondLabel" : "// making the whole operation to fail  if not transaction owner",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7801,
+  "secondPos" : 7940,
+  "firstEndPos" : 7864,
+  "secondEndPos" : 8003
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7776,6 +7864,17 @@
   "firstEndPos" : 8730,
   "secondEndPos" : 8869
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nothing to initialise",
+  "secondLabel" : "// nothing to initialise",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8743,
+  "secondPos" : 8882,
+  "firstEndPos" : 8767,
+  "secondEndPos" : 8906
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7874,6 +7973,17 @@
   "secondPos" : 8963,
   "firstEndPos" : 9005,
   "secondEndPos" : 9144
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if locking is active, this will also lock the (found) SessionInfo instance",
+  "secondLabel" : "// if locking is active, this will also lock the (found) SessionInfo instance",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8838,
+  "secondPos" : 8977,
+  "firstEndPos" : 8915,
+  "secondEndPos" : 9054
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8413,6 +8523,17 @@
   "secondPos" : 9518,
   "firstEndPos" : 9965,
   "secondEndPos" : 10104
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this should only happen when this class is first constructed",
+  "secondLabel" : "// this should only happen when this class is first constructed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9393,
+  "secondPos" : 9532,
+  "firstEndPos" : 9456,
+  "secondEndPos" : 9595
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9008,6 +9129,17 @@
   "firstEndPos" : 10044,
   "secondEndPos" : 10183
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if this.ksession is null, it'll create a new one, else it'll use the existing one",
+  "secondLabel" : "// if this.ksession is null, it'll create a new one, else it'll use the existing one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10056,
+  "secondPos" : 10195,
+  "firstEndPos" : 10140,
+  "secondEndPos" : 10279
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9359,6 +9491,39 @@
   "secondPos" : 10459,
   "firstEndPos" : 10328,
   "secondEndPos" : 10467
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The CommandService for the TimerJobFactoryManager must be set before any timer jobs are scheduled.",
+  "secondLabel" : "// The CommandService for the TimerJobFactoryManager must be set before any timer jobs are scheduled.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10340,
+  "secondPos" : 10479,
+  "firstEndPos" : 10441,
+  "secondEndPos" : 10580
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, if overdue jobs are scheduled (and then run before the .commandService field can be set),",
+  "secondLabel" : "// Otherwise, if overdue jobs are scheduled (and then run before the .commandService field can be set),",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10450,
+  "secondPos" : 10589,
+  "firstEndPos" : 10553,
+  "secondEndPos" : 10692
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  they will retrieve a null commandService (instead of a reference to this) and fail.",
+  "secondLabel" : "//  they will retrieve a null commandService (instead of a reference to this) and fail.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10562,
+  "secondPos" : 10701,
+  "firstEndPos" : 10649,
+  "secondEndPos" : 10788
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9722,6 +9887,17 @@
   "secondPos" : 11114,
   "firstEndPos" : 10979,
   "secondEndPos" : 11118
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the session id to be the same as the session info id",
+  "secondLabel" : "// update the session id to be the same as the session info id",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11002,
+  "secondPos" : 11141,
+  "firstEndPos" : 11064,
+  "secondEndPos" : 11203
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10107,6 +10283,17 @@
   "secondPos" : 11399,
   "firstEndPos" : 11728,
   "secondEndPos" : 11867
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this should only happen when this class is first constructed",
+  "secondLabel" : "// this should only happen when this class is first constructed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11274,
+  "secondPos" : 11413,
+  "firstEndPos" : 11337,
+  "secondEndPos" : 11476
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12484,6 +12671,17 @@
   "firstEndPos" : 14408,
   "secondEndPos" : 14758
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//fall back for drools5-legacy spring module",
+  "secondLabel" : "//fall back for drools5-legacy spring module",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13063,
+  "secondPos" : 13413,
+  "firstEndPos" : 13107,
+  "secondEndPos" : 13457
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13220,6 +13418,17 @@
   "secondPos" : 14070,
   "firstEndPos" : 13723,
   "secondEndPos" : 14073
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// configure spring for JPA and local transactions",
+  "secondLabel" : "// configure spring for JPA and local transactions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13752,
+  "secondPos" : 14102,
+  "firstEndPos" : 13802,
+  "secondEndPos" : 14152
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15684,6 +15893,17 @@
   "secondPos" : 16429,
   "firstEndPos" : 16083,
   "secondEndPos" : 16433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Try to find from the ancestors",
+  "secondLabel" : "// Try to find from the ancestors",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16103,
+  "secondPos" : 16453,
+  "firstEndPos" : 16136,
+  "secondEndPos" : 16486
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -20833,6 +21053,17 @@
   "firstEndPos" : 19974,
   "secondEndPos" : 20450
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// clean up cached process and work item instances",
+  "secondLabel" : "// clean up cached process and work item instances",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19988,
+  "secondPos" : 20464,
+  "firstEndPos" : 20038,
+  "secondEndPos" : 20514
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -21481,6 +21712,17 @@
   "secondPos" : 21122,
   "firstEndPos" : 20681,
   "secondEndPos" : 21157
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not used",
+  "secondLabel" : "// not used",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20660,
+  "secondPos" : 21136,
+  "firstEndPos" : 20671,
+  "secondEndPos" : 21147
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -23660,6 +23902,17 @@
   "firstEndPos" : 22216,
   "secondEndPos" : 22968
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Open the entity manager before the transaction begins.",
+  "secondLabel" : "// Open the entity manager before the transaction begins.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22245,
+  "secondPos" : 22997,
+  "firstEndPos" : 22302,
+  "secondEndPos" : 23054
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -24913,6 +25166,28 @@
   "secondPos" : 24233,
   "firstEndPos" : 23702,
   "secondEndPos" : 24454
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Batch execution requires the extra logic in",
+  "secondLabel" : "// Batch execution requires the extra logic in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23503,
+  "secondPos" : 24255,
+  "firstEndPos" : 23549,
+  "secondEndPos" : 24301
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  StatefulSessionKnowledgeImpl.execute(Context,Command);",
+  "secondLabel" : "//  StatefulSessionKnowledgeImpl.execute(Context,Command);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23570,
+  "secondPos" : 24322,
+  "firstEndPos" : 23628,
+  "secondEndPos" : 24380
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

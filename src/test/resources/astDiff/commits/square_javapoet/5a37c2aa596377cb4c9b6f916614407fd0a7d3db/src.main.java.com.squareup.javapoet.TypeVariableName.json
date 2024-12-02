@@ -10,6 +10,17 @@
   "firstEndPos" : 5032,
   "secondEndPos" : 5595
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2015 Square, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2015 Square, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 595,
+  "secondEndPos" : 595
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -790,6 +801,17 @@
   "secondPos" : 1430,
   "firstEndPos" : 1790,
   "secondEndPos" : 1844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Strip java.lang.Object from bounds if it is present.",
+  "secondLabel" : "// Strip java.lang.Object from bounds if it is present.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1382,
+  "secondPos" : 1436,
+  "firstEndPos" : 1437,
+  "secondEndPos" : 1491
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2496,6 +2518,17 @@
   "firstEndPos" : 2234,
   "secondEndPos" : 2288
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2222,
+  "secondPos" : 2276,
+  "firstEndPos" : 2227,
+  "secondEndPos" : 2281
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " name",
@@ -2718,6 +2751,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "TypeName",
+  "secondLabel" : "TypeName",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 2357,
+  "secondPos" : 2411,
+  "firstEndPos" : 2365,
+  "secondEndPos" : 2419
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 2357,
+  "secondPos" : 2411,
+  "firstEndPos" : 2365,
+  "secondEndPos" : 2419
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "emptyList",
   "secondLabel" : "emptyList",
   "firstParentType" : "MethodInvocation",
@@ -2782,6 +2837,17 @@
   "firstEndPos" : 2431,
   "secondEndPos" : 2485
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2419,
+  "secondPos" : 2473,
+  "firstEndPos" : 2424,
+  "secondEndPos" : 2478
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " name",
@@ -2814,6 +2880,17 @@
   "secondPos" : 2491,
   "firstEndPos" : 2451,
   "secondEndPos" : 2505
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2437,
+  "secondPos" : 2491,
+  "firstEndPos" : 2442,
+  "secondEndPos" : 2496
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3189,6 +3266,17 @@
   "firstEndPos" : 2641,
   "secondEndPos" : 2695
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2629,
+  "secondPos" : 2683,
+  "firstEndPos" : 2634,
+  "secondEndPos" : 2688
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " name",
@@ -3221,6 +3309,17 @@
   "secondPos" : 2701,
   "firstEndPos" : 2661,
   "secondEndPos" : 2715
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2647,
+  "secondPos" : 2701,
+  "firstEndPos" : 2652,
+  "secondEndPos" : 2706
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3595,6 +3694,17 @@
   "secondPos" : 2897,
   "firstEndPos" : 2857,
   "secondEndPos" : 2911
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2843,
+  "secondPos" : 2897,
+  "firstEndPos" : 2848,
+  "secondEndPos" : 2902
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4498,6 +4608,17 @@
   "firstEndPos" : 3410,
   "secondEndPos" : 3464
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3390,
+  "secondPos" : 3444,
+  "firstEndPos" : 3395,
+  "secondEndPos" : 3449
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " typeVariable",
@@ -4553,6 +4674,17 @@
   "firstEndPos" : 3570,
   "secondEndPos" : 3624
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3550,
+  "secondPos" : 3604,
+  "firstEndPos" : 3555,
+  "secondEndPos" : 3609
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TypeVariable",
@@ -4607,6 +4739,17 @@
   "secondPos" : 3691,
   "firstEndPos" : 3648,
   "secondEndPos" : 3702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Gross things in support of Java 7 and Java 8.",
+  "secondLabel" : "// Gross things in support of Java 7 and Java 8.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3650,
+  "secondPos" : 3704,
+  "firstEndPos" : 3698,
+  "secondEndPos" : 3752
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -4860,6 +5003,17 @@
   "secondPos" : 3915,
   "firstEndPos" : 3874,
   "secondEndPos" : 3928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// On Java 8, unwrap an intersection type into its component bounds.",
+  "secondLabel" : "// On Java 8, unwrap an intersection type into its component bounds.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3883,
+  "secondPos" : 3937,
+  "firstEndPos" : 3951,
+  "secondEndPos" : 4005
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5465,6 +5619,17 @@
   "secondPos" : 4286,
   "firstEndPos" : 4233,
   "secondEndPos" : 4287
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// On Java 7, intersection types exist but without explicit API. Use a (clumsy) heuristic.",
+  "secondLabel" : "// On Java 7, intersection types exist but without explicit API. Use a (clumsy) heuristic.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4255,
+  "secondPos" : 4309,
+  "firstEndPos" : 4345,
+  "secondEndPos" : 4399
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6345,6 +6510,17 @@
   "secondPos" : 5429,
   "firstEndPos" : 4878,
   "secondEndPos" : 5441
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4866,
+  "secondPos" : 5429,
+  "firstEndPos" : 4871,
+  "secondEndPos" : 5434
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

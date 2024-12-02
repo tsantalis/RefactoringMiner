@@ -1616,6 +1616,17 @@
   "firstEndPos" : 2140,
   "secondEndPos" : 2140
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//this prefix indicates that course can be opened by educational plugin",
+  "secondLabel" : "//this prefix indicates that course can be opened by educational plugin",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2145,
+  "secondPos" : 2145,
+  "firstEndPos" : 2216,
+  "secondEndPos" : 2216
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -10042,6 +10053,17 @@
   "firstEndPos" : 6462,
   "secondEndPos" : 7038
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: get from stepic",
+  "secondLabel" : "// TODO: get from stepic",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6466,
+  "secondPos" : 7042,
+  "firstEndPos" : 6490,
+  "secondEndPos" : 7066
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -13341,6 +13363,17 @@
   "secondPos" : 8610,
   "firstEndPos" : 8042,
   "secondEndPos" : 8618
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: it looks like we don't need taskFiles as map anymore",
+  "secondLabel" : "// TODO: it looks like we don't need taskFiles as map anymore",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8052,
+  "secondPos" : 8628,
+  "firstEndPos" : 8113,
+  "secondEndPos" : 8689
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -19886,6 +19919,17 @@
   "secondPos" : 11904,
   "firstEndPos" : 11333,
   "secondEndPos" : 11909
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//HERE",
+  "secondLabel" : "//HERE",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11336,
+  "secondPos" : 11912,
+  "firstEndPos" : 11342,
+  "secondEndPos" : 11918
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

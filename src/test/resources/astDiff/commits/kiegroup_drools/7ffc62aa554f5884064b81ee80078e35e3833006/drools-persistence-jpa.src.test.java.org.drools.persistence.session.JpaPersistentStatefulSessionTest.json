@@ -10,6 +10,17 @@
   "firstEndPos" : 19585,
   "secondEndPos" : 21715
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2011 Red Hat Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2011 Red Hat Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 596,
+  "secondEndPos" : 596
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -10053,6 +10064,17 @@
   "firstEndPos" : 8442,
   "secondEndPos" : 8028
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// insert and commit",
+  "secondLabel" : "// insert and commit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8456,
+  "secondPos" : 8042,
+  "firstEndPos" : 8476,
+  "secondEndPos" : 8062
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10625,6 +10647,17 @@
   "firstEndPos" : 8770,
   "secondEndPos" : 8356
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// insert and rollback",
+  "secondLabel" : "// insert and rollback",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8783,
+  "secondPos" : 8369,
+  "firstEndPos" : 8805,
+  "secondEndPos" : 8391
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10976,6 +11009,17 @@
   "secondPos" : 8544,
   "firstEndPos" : 8966,
   "secondEndPos" : 8552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check we rolled back the state changes from the 3rd insert",
+  "secondLabel" : "// check we rolled back the state changes from the 3rd insert",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8979,
+  "secondPos" : 8565,
+  "firstEndPos" : 9040,
+  "secondEndPos" : 8626
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11406,6 +11450,17 @@
   "firstEndPos" : 9262,
   "secondEndPos" : 8848
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// insert and commit",
+  "secondLabel" : "// insert and commit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9277,
+  "secondPos" : 8863,
+  "firstEndPos" : 9297,
+  "secondEndPos" : 8883
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11834,6 +11889,17 @@
   "secondPos" : 9066,
   "firstEndPos" : 9486,
   "secondEndPos" : 9072
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// rollback again, this is testing that we can do consecutive rollbacks and commits without issue",
+  "secondLabel" : "// rollback again, this is testing that we can do consecutive rollbacks and commits without issue",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9499,
+  "secondPos" : 9085,
+  "firstEndPos" : 9596,
+  "secondEndPos" : 9182
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12417,6 +12483,17 @@
   "secondPos" : 9464,
   "firstEndPos" : 9882,
   "secondEndPos" : 9468
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// now load the ksession",
+  "secondLabel" : "// now load the ksession",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9905,
+  "secondPos" : 9491,
+  "firstEndPos" : 9929,
+  "secondEndPos" : 9515
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20019,6 +20096,17 @@
   "firstEndPos" : 14948,
   "secondEndPos" : 17078
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// JBRULES-3155",
+  "secondLabel" : "// JBRULES-3155",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14233,
+  "secondPos" : 16363,
+  "firstEndPos" : 14248,
+  "secondEndPos" : 16378
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -25761,6 +25849,17 @@
   "firstEndPos" : 19582,
   "secondEndPos" : 21712
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DROOLS-376",
+  "secondLabel" : "// DROOLS-376",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18000,
+  "secondPos" : 20130,
+  "firstEndPos" : 18013,
+  "secondEndPos" : 20143
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28026,6 +28125,17 @@
   "secondPos" : 21565,
   "firstEndPos" : 19442,
   "secondEndPos" : 21572
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should not fail here",
+  "secondLabel" : "// Should not fail here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19455,
+  "secondPos" : 21585,
+  "firstEndPos" : 19478,
+  "secondEndPos" : 21608
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

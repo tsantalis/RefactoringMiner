@@ -10,6 +10,17 @@
   "firstEndPos" : 5462,
   "secondEndPos" : 14660
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 610,
+  "secondEndPos" : 610
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -152,6 +163,17 @@
   "secondPos" : 852,
   "firstEndPos" : 867,
   "secondEndPos" : 914
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 805,
+  "secondPos" : 852,
+  "firstEndPos" : 812,
+  "secondEndPos" : 859
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2760,6 +2782,17 @@
   "firstEndPos" : 3643,
   "secondEndPos" : 3100
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request indicates a term that is greater than the current term then",
+  "secondLabel" : "// If the request indicates a term that is greater than the current term then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2482,
+  "secondPos" : 1939,
+  "firstEndPos" : 2559,
+  "secondEndPos" : 2016
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -2968,6 +3001,17 @@
   "secondPos" : 11759,
   "firstEndPos" : 2568,
   "secondEndPos" : 11766
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "secondLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2564,
+  "secondPos" : 2021,
+  "firstEndPos" : 2642,
+  "secondEndPos" : 2099
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4234,6 +4278,17 @@
   "firstEndPos" : 2881,
   "secondEndPos" : 12079
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request term is less than the current term then immediately",
+  "secondLabel" : "// If the request term is less than the current term then immediately",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2876,
+  "secondPos" : 2333,
+  "firstEndPos" : 2945,
+  "secondEndPos" : 2402
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "withError",
@@ -4277,6 +4332,17 @@
   "secondPos" : 12141,
   "firstEndPos" : 2948,
   "secondEndPos" : 12146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reply false and return our current term. The leader will receive",
+  "secondLabel" : "// reply false and return our current term. The leader will receive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2950,
+  "secondPos" : 2407,
+  "firstEndPos" : 3017,
+  "secondEndPos" : 2474
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -4453,6 +4519,17 @@
   "secondPos" : 12214,
   "firstEndPos" : 3025,
   "secondEndPos" : 12223
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the updated term and step down.",
+  "secondLabel" : "// the updated term and step down.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3022,
+  "secondPos" : 2479,
+  "firstEndPos" : 3056,
+  "secondEndPos" : 2513
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11032,6 +11109,17 @@
   "firstEndPos" : 4848,
   "secondEndPos" : 14046
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the previous entry term doesn't match the local previous term then reject the request.",
+  "secondLabel" : "// If the previous entry term doesn't match the local previous term then reject the request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4824,
+  "secondPos" : 4281,
+  "firstEndPos" : 4916,
+  "secondEndPos" : 4373
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "build",
@@ -13628,6 +13716,28 @@
   "firstEndPos" : 8299,
   "secondEndPos" : 7756
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the log contains entries after the request's previous log index",
+  "secondLabel" : "// If the log contains entries after the request's previous log index",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5728,
+  "secondPos" : 5185,
+  "firstEndPos" : 5797,
+  "secondEndPos" : 5254
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then remove those entries to be replaced by the request entries.",
+  "secondLabel" : "// then remove those entries to be replaced by the request entries.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5802,
+  "secondPos" : 5259,
+  "firstEndPos" : 5869,
+  "secondEndPos" : 5326
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -13749,6 +13859,17 @@
   "firstEndPos" : 7828,
   "secondEndPos" : 7285
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Iterate through request entries and append them to the log.",
+  "secondLabel" : "// Iterate through request entries and append them to the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5917,
+  "secondPos" : 5374,
+  "firstEndPos" : 5979,
+  "secondEndPos" : 5436
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -13858,6 +13979,39 @@
   "secondPos" : 5481,
   "firstEndPos" : 7822,
   "secondEndPos" : 7279
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Replicated snapshot entries are *always* immediately logged and applied to the state machine",
+  "secondLabel" : "// Replicated snapshot entries are *always* immediately logged and applied to the state machine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6034,
+  "secondPos" : 5491,
+  "firstEndPos" : 6129,
+  "secondEndPos" : 5586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since snapshots are only taken of committed state machine state. This will cause all previous",
+  "secondLabel" : "// since snapshots are only taken of committed state machine state. This will cause all previous",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6138,
+  "secondPos" : 5595,
+  "firstEndPos" : 6234,
+  "secondEndPos" : 5691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entries to be removed from the log.",
+  "secondLabel" : "// entries to be removed from the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6243,
+  "secondPos" : 5700,
+  "firstEndPos" : 6281,
+  "secondEndPos" : 5738
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14012,6 +14166,17 @@
   "secondPos" : 5801,
   "firstEndPos" : 7471,
   "secondEndPos" : 6928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Compare the term of the received entry with the matching entry in the log.",
+  "secondLabel" : "// Compare the term of the received entry with the matching entry in the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6356,
+  "secondPos" : 5813,
+  "firstEndPos" : 6433,
+  "secondEndPos" : 5890
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14397,6 +14562,28 @@
   "secondPos" : 6043,
   "firstEndPos" : 7194,
   "secondEndPos" : 6651
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We found an invalid entry in the log. Remove the invalid entry and append the new entry.",
+  "secondLabel" : "// We found an invalid entry in the log. Remove the invalid entry and append the new entry.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6602,
+  "secondPos" : 6059,
+  "firstEndPos" : 6693,
+  "secondEndPos" : 6150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "secondLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6708,
+  "secondPos" : 6165,
+  "firstEndPos" : 6794,
+  "secondEndPos" : 6251
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15663,6 +15850,17 @@
   "firstEndPos" : 7814,
   "secondEndPos" : 7271
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "secondLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7489,
+  "secondPos" : 6946,
+  "firstEndPos" : 7575,
+  "secondEndPos" : 7032
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16212,6 +16410,17 @@
   "secondPos" : 7249,
   "firstEndPos" : 7800,
   "secondEndPos" : 7257
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we've made it this far, apply commits and send a successful response.",
+  "secondLabel" : "// If we've made it this far, apply commits and send a successful response.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7834,
+  "secondPos" : 7291,
+  "firstEndPos" : 7909,
+  "secondEndPos" : 7366
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17235,6 +17444,72 @@
   "secondPos" : 7917,
   "firstEndPos" : 10976,
   "secondEndPos" : 10433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the synced commit index is greater than the local commit index then",
+  "secondLabel" : "// If the synced commit index is greater than the local commit index then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8466,
+  "secondPos" : 7923,
+  "firstEndPos" : 8539,
+  "secondEndPos" : 7996
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// apply commits to the local state machine.",
+  "secondLabel" : "// apply commits to the local state machine.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8544,
+  "secondPos" : 8001,
+  "firstEndPos" : 8588,
+  "secondEndPos" : 8045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also, it's possible that one of the previous write applications failed",
+  "secondLabel" : "// Also, it's possible that one of the previous write applications failed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8593,
+  "secondPos" : 8050,
+  "firstEndPos" : 8666,
+  "secondEndPos" : 8123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// due to asynchronous communication errors, so alternatively check if the",
+  "secondLabel" : "// due to asynchronous communication errors, so alternatively check if the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8671,
+  "secondPos" : 8128,
+  "firstEndPos" : 8745,
+  "secondEndPos" : 8202
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// local commit index is greater than last applied. If all the state machine",
+  "secondLabel" : "// local commit index is greater than last applied. If all the state machine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8750,
+  "secondPos" : 8207,
+  "firstEndPos" : 8826,
+  "secondEndPos" : 8283
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// commands have not yet been applied then we want to re-attempt to apply them.",
+  "secondLabel" : "// commands have not yet been applied then we want to re-attempt to apply them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8831,
+  "secondPos" : 8288,
+  "firstEndPos" : 8910,
+  "secondEndPos" : 8367
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -18292,6 +18567,17 @@
   "firstEndPos" : 9335,
   "secondEndPos" : 8792
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update the local commit index with min(request commit, last log // index)",
+  "secondLabel" : "// Update the local commit index with min(request commit, last log // index)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9347,
+  "secondPos" : 8804,
+  "firstEndPos" : 9423,
+  "secondEndPos" : 8880
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -18721,6 +19007,28 @@
   "firstEndPos" : 9651,
   "secondEndPos" : 9108
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the updated commit index indicates that commits remain to be",
+  "secondLabel" : "// If the updated commit index indicates that commits remain to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9666,
+  "secondPos" : 9123,
+  "firstEndPos" : 9732,
+  "secondEndPos" : 9189
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// applied to the state machine, iterate entries and apply them.",
+  "secondLabel" : "// applied to the state machine, iterate entries and apply them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9743,
+  "secondPos" : 9200,
+  "firstEndPos" : 9807,
+  "secondEndPos" : 9264
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -18819,6 +19127,28 @@
   "secondPos" : 9327,
   "firstEndPos" : 10840,
   "secondEndPos" : 10297
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Starting after the last applied entry, iterate through new entries",
+  "secondLabel" : "// Starting after the last applied entry, iterate through new entries",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9884,
+  "secondPos" : 9341,
+  "firstEndPos" : 9953,
+  "secondEndPos" : 9410
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and apply them to the state machine up to the commit index.",
+  "secondLabel" : "// and apply them to the state machine up to the commit index.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9966,
+  "secondPos" : 9423,
+  "firstEndPos" : 10028,
+  "secondEndPos" : 9485
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

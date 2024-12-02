@@ -10,6 +10,17 @@
   "firstEndPos" : 19451,
   "secondEndPos" : 14978
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2012-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2012-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1253,6 +1264,17 @@
   "firstEndPos" : 3618,
   "secondEndPos" : 3671
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3587,
+  "secondPos" : 3640,
+  "firstEndPos" : 3592,
+  "secondEndPos" : 3645
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "WebMvcAutoConfiguration",
@@ -1286,6 +1308,17 @@
   "firstEndPos" : 3646,
   "secondEndPos" : 3699
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3626,
+  "secondPos" : 3679,
+  "firstEndPos" : 3633,
+  "secondEndPos" : 3686
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Phillip Webb",
@@ -1308,6 +1341,17 @@
   "firstEndPos" : 3667,
   "secondEndPos" : 3720
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3650,
+  "secondPos" : 3703,
+  "firstEndPos" : 3657,
+  "secondEndPos" : 3710
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dave Syer",
@@ -1329,6 +1373,17 @@
   "secondPos" : 3724,
   "firstEndPos" : 3693,
   "secondEndPos" : 3746
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3671,
+  "secondPos" : 3724,
+  "firstEndPos" : 3678,
+  "secondEndPos" : 3731
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9778,6 +9833,17 @@
   "firstEndPos" : 8590,
   "secondEndPos" : 13104
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// mock request and set user preferred locale",
+  "secondLabel" : "// mock request and set user preferred locale",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8596,
+  "secondPos" : 6492,
+  "firstEndPos" : 8641,
+  "secondEndPos" : 6537
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10404,6 +10470,17 @@
   "secondPos" : 6848,
   "firstEndPos" : 8971,
   "secondEndPos" : 6867
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test locale resolver uses fixed locale and not user preferred locale",
+  "secondLabel" : "// test locale resolver uses fixed locale and not user preferred locale",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8983,
+  "secondPos" : 6879,
+  "firstEndPos" : 9054,
+  "secondEndPos" : 6950
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11405,6 +11482,17 @@
   "secondPos" : 7233,
   "firstEndPos" : 9603,
   "secondEndPos" : 7239
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// formatting cs should use simple toString()",
+  "secondLabel" : "// formatting cs should use simple toString()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9609,
+  "secondPos" : 7245,
+  "firstEndPos" : 9654,
+  "secondEndPos" : 7290
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

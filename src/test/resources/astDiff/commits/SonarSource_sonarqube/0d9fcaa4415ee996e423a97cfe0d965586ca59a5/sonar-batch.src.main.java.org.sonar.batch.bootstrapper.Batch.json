@@ -10,6 +10,17 @@
   "firstEndPos" : 5476,
   "secondEndPos" : 5667
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * SonarQube, open source software quality management tool.\n * Copyright (C) 2008-2014 SonarSource\n * mailto:contact AT sonarsource DOT com\n *\n * SonarQube is free software; you can redistribute it and/or\n * modify it under the terms of the GNU Lesser General Public\n * License as published by the Free Software Foundation; either\n * version 3 of the License, or (at your option) any later version.\n *\n * SonarQube is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with this program; if not, write to the Free Software Foundation,\n * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n */",
+  "secondLabel" : "/*\n * SonarQube, open source software quality management tool.\n * Copyright (C) 2008-2014 SonarSource\n * mailto:contact AT sonarsource DOT com\n *\n * SonarQube is free software; you can redistribute it and/or\n * modify it under the terms of the GNU Lesser General Public\n * License as published by the Free Software Foundation; either\n * version 3 of the License, or (at your option) any later version.\n *\n * SonarQube is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with this program; if not, write to the Free Software Foundation,\n * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 883,
+  "secondEndPos" : 883
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -240,6 +251,17 @@
   "secondPos" : 1222,
   "firstEndPos" : 1233,
   "secondEndPos" : 1233
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1222,
+  "secondPos" : 1222,
+  "firstEndPos" : 1228,
+  "secondEndPos" : 1228
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1770,6 +1792,17 @@
   "firstEndPos" : 2283,
   "secondEndPos" : 2283
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2189,
+  "secondPos" : 2189,
+  "firstEndPos" : 2200,
+  "secondEndPos" : 2200
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " since 4.4 use ",
@@ -1791,6 +1824,17 @@
   "secondPos" : 2215,
   "firstEndPos" : 2231,
   "secondEndPos" : 2231
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2215,
+  "secondPos" : 2215,
+  "firstEndPos" : 2220,
+  "secondEndPos" : 2220
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -1835,6 +1879,17 @@
   "secondPos" : 2233,
   "firstEndPos" : 2258,
   "secondEndPos" : 2258
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2233,
+  "secondPos" : 2233,
+  "firstEndPos" : 2238,
+  "secondEndPos" : 2238
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -1912,6 +1967,17 @@
   "secondPos" : 2268,
   "firstEndPos" : 2283,
   "secondEndPos" : 2283
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2268,
+  "secondPos" : 2268,
+  "firstEndPos" : 2273,
+  "secondEndPos" : 2273
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -2198,6 +2264,17 @@
   "secondPos" : 2555,
   "firstEndPos" : 2464,
   "secondEndPos" : 2565
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2454,
+  "secondPos" : 2555,
+  "firstEndPos" : 2460,
+  "secondEndPos" : 2561
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2705,6 +2782,17 @@
   "firstEndPos" : 2819,
   "secondEndPos" : 2920
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2809,
+  "secondPos" : 2910,
+  "firstEndPos" : 2815,
+  "secondEndPos" : 2916
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 4.4",
@@ -3188,6 +3276,17 @@
   "secondPos" : 3238,
   "firstEndPos" : 3147,
   "secondEndPos" : 3248
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3137,
+  "secondPos" : 3238,
+  "firstEndPos" : 3143,
+  "secondEndPos" : 3244
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5103,6 +5202,17 @@
   "firstEndPos" : 4294,
   "secondEndPos" : 4485
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4232,
+  "secondPos" : 4423,
+  "firstEndPos" : 4243,
+  "secondEndPos" : 4434
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " since 3.7 use ",
@@ -5124,6 +5234,17 @@
   "secondPos" : 4449,
   "firstEndPos" : 4294,
   "secondEndPos" : 4485
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4258,
+  "secondPos" : 4449,
+  "firstEndPos" : 4263,
+  "secondEndPos" : 4454
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",

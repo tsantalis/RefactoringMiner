@@ -6522,6 +6522,17 @@
   "firstEndPos" : 8214,
   "secondEndPos" : 8214
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO lets disable by default until its working :)",
+  "secondLabel" : "// TODO lets disable by default until its working :)",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 8227,
+  "secondPos" : 8227,
+  "firstEndPos" : 8279,
+  "secondEndPos" : 8279
+}, {
   "firstType" : "NormalAnnotation",
   "secondType" : "NormalAnnotation",
   "firstLabel" : "",
@@ -8688,6 +8699,28 @@
   "secondPos" : 10660,
   "firstEndPos" : 10721,
   "secondEndPos" : 10721
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO for now lets default to not creating headless services as it barfs when used with kubernetes...",
+  "secondLabel" : "// TODO for now lets default to not creating headless services as it barfs when used with kubernetes...",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 10734,
+  "secondPos" : 10734,
+  "firstEndPos" : 10837,
+  "secondEndPos" : 10837
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//@Parameter(property = \"fabric8.service.headless\", defaultValue = \"true\")",
+  "secondLabel" : "//@Parameter(property = \"fabric8.service.headless\", defaultValue = \"true\")",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 10842,
+  "secondPos" : 10842,
+  "firstEndPos" : 10916,
+  "secondEndPos" : 10916
 }, {
   "firstType" : "NormalAnnotation",
   "secondType" : "NormalAnnotation",
@@ -18160,6 +18193,17 @@
   "firstEndPos" : 19467,
   "secondEndPos" : 19467
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets combine json files together",
+  "secondLabel" : "// lets combine json files together",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18799,
+  "secondPos" : 18799,
+  "firstEndPos" : 18834,
+  "secondEndPos" : 18834
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21944,6 +21988,17 @@
   "firstEndPos" : 21375,
   "secondEndPos" : 21375
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21346,
+  "secondPos" : 21346,
+  "firstEndPos" : 21351,
+  "secondEndPos" : 21351
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ReplicationController",
@@ -21976,6 +22031,17 @@
   "secondPos" : 21381,
   "firstEndPos" : 21405,
   "secondEndPos" : 21405
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21381,
+  "secondPos" : 21381,
+  "firstEndPos" : 21386,
+  "secondEndPos" : 21386
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -27334,6 +27400,17 @@
   "firstEndPos" : 29105,
   "secondEndPos" : 29162
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO populate properties, project etc.",
+  "secondLabel" : "// TODO populate properties, project etc.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25102,
+  "secondPos" : 25102,
+  "firstEndPos" : 25143,
+  "secondEndPos" : 25143
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27773,6 +27850,17 @@
   "secondPos" : 25344,
   "firstEndPos" : 25440,
   "secondEndPos" : 25440
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets add a default label",
+  "secondLabel" : "// lets add a default label",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25358,
+  "secondPos" : 25358,
+  "firstEndPos" : 25385,
+  "secondEndPos" : 25385
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -29687,6 +29775,17 @@
   "secondPos" : 26966,
   "firstEndPos" : 26937,
   "secondEndPos" : 26994
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we actually want to generate a service manifest?",
+  "secondLabel" : "// Do we actually want to generate a service manifest?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26950,
+  "secondPos" : 27007,
+  "firstEndPos" : 27004,
+  "secondEndPos" : 27061
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33538,6 +33637,17 @@
   "firstEndPos" : 30550,
   "secondEndPos" : 30607
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we want summary before description",
+  "secondLabel" : "// we want summary before description",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29492,
+  "secondPos" : 29549,
+  "firstEndPos" : 29529,
+  "secondEndPos" : 29586
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -35946,6 +36056,17 @@
   "secondPos" : 31229,
   "firstEndPos" : 31184,
   "secondEndPos" : 31241
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets find the icon file...",
+  "secondLabel" : "// lets find the icon file...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31212,
+  "secondPos" : 31269,
+  "firstEndPos" : 31241,
+  "secondEndPos" : 31298
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -43570,6 +43691,17 @@
   "firstEndPos" : 36968,
   "secondEndPos" : 37168
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO pullPolicy = \"PullAlways\";",
+  "secondLabel" : "// TODO pullPolicy = \"PullAlways\";",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36858,
+  "secondPos" : 37058,
+  "firstEndPos" : 36892,
+  "secondEndPos" : 37092
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -43800,6 +43932,17 @@
   "secondPos" : 37336,
   "firstEndPos" : 37992,
   "secondEndPos" : 38192
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets generate it from the docker user and the camelCase artifactId",
+  "secondLabel" : "// lets generate it from the docker user and the camelCase artifactId",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37150,
+  "secondPos" : 37350,
+  "firstEndPos" : 37219,
+  "secondEndPos" : 37419
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -45791,6 +45934,17 @@
   "secondPos" : 38800,
   "firstEndPos" : 38767,
   "secondEndPos" : 38967
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets populate default values",
+  "secondLabel" : "// lets populate default values",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38614,
+  "secondPos" : 38814,
+  "firstEndPos" : 38645,
+  "secondEndPos" : 38845
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -48838,6 +48992,17 @@
   "secondPos" : 40731,
   "firstEndPos" : 40541,
   "secondEndPos" : 40741
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the container port isn't set, lets try default that using defaults",
+  "secondLabel" : "// if the container port isn't set, lets try default that using defaults",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40565,
+  "secondPos" : 40765,
+  "firstEndPos" : 40637,
+  "secondEndPos" : 40837
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -65141,6 +65306,17 @@
   "firstEndPos" : 51568,
   "secondEndPos" : 51768
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets append the prefix",
+  "secondLabel" : "// lets append the prefix",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51588,
+  "secondPos" : 51788,
+  "firstEndPos" : 51613,
+  "secondEndPos" : 51813
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -68616,6 +68792,17 @@
   "secondPos" : 53978,
   "firstEndPos" : 53786,
   "secondEndPos" : 53986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//If neither value nor from has been specified read the value inline.",
+  "secondLabel" : "//If neither value nor from has been specified read the value inline.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53814,
+  "secondPos" : 54014,
+  "firstEndPos" : 53883,
+  "secondEndPos" : 54083
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

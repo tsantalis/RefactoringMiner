@@ -417,6 +417,17 @@
   "firstEndPos" : 728,
   "secondEndPos" : 728
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 698,
+  "secondPos" : 698,
+  "firstEndPos" : 705,
+  "secondEndPos" : 705
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Konstantin Kolosovsky.",
@@ -516,6 +527,17 @@
   "firstEndPos" : 856,
   "secondEndPos" : 856
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 839,
+  "secondPos" : 839,
+  "firstEndPos" : 845,
+  "secondEndPos" : 845
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "parameters",
@@ -538,6 +560,17 @@
   "firstEndPos" : 878,
   "secondEndPos" : 878
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 862,
+  "secondPos" : 862,
+  "firstEndPos" : 868,
+  "secondEndPos" : 868
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "condition",
@@ -559,6 +592,17 @@
   "secondPos" : 884,
   "firstEndPos" : 896,
   "secondEndPos" : 896
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 884,
+  "secondPos" : 884,
+  "firstEndPos" : 890,
+  "secondEndPos" : 890
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3111,6 +3155,17 @@
   "secondPos" : 2292,
   "firstEndPos" : 2241,
   "secondEndPos" : 2393
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add '@' to correctly handle paths that contain '@' symbol",
+  "secondLabel" : "// add '@' to correctly handle paths that contain '@' symbol",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2148,
+  "secondPos" : 2300,
+  "firstEndPos" : 2208,
+  "secondEndPos" : 2360
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10218,6 +10273,17 @@
   "firstEndPos" : 5558,
   "secondEndPos" : 5701
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5547,
+  "secondPos" : 5690,
+  "firstEndPos" : 5553,
+  "secondEndPos" : 5696
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "type",
@@ -10228,6 +10294,17 @@
   "secondPos" : 5697,
   "firstEndPos" : 5558,
   "secondEndPos" : 5701
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5564,
+  "secondPos" : 5707,
+  "firstEndPos" : 5571,
+  "secondEndPos" : 5714
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",

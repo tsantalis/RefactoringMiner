@@ -3805,6 +3805,28 @@
   "firstEndPos" : 3744,
   "secondEndPos" : 3744
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This records how many rows have been inserted or deleted.  It is separate from insertedRows",
+  "secondLabel" : "// This records how many rows have been inserted or deleted.  It is separate from insertedRows",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3748,
+  "secondPos" : 3748,
+  "firstEndPos" : 3842,
+  "secondEndPos" : 3842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because that is monotonically increasing to give new unique row ids.",
+  "secondLabel" : "// because that is monotonically increasing to give new unique row ids.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3845,
+  "secondPos" : 3845,
+  "firstEndPos" : 3916,
+  "secondEndPos" : 3916
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4058,6 +4080,17 @@
   "firstEndPos" : 4060,
   "secondEndPos" : 4060
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// field to look for the record identifier in",
+  "secondLabel" : "// field to look for the record identifier in",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4062,
+  "secondPos" : 4062,
+  "firstEndPos" : 4107,
+  "secondEndPos" : 4107
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4134,6 +4167,17 @@
   "secondPos" : 4143,
   "firstEndPos" : 4147,
   "secondEndPos" : 4147
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// field inside recId to look for row id in",
+  "secondLabel" : "// field inside recId to look for row id in",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4149,
+  "secondPos" : 4149,
+  "firstEndPos" : 4192,
+  "secondEndPos" : 4192
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4212,6 +4256,17 @@
   "firstEndPos" : 4238,
   "secondEndPos" : 4238
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// field inside recId to look for original txn in",
+  "secondLabel" : "// field inside recId to look for original txn in",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4241,
+  "secondPos" : 4241,
+  "firstEndPos" : 4290,
+  "secondEndPos" : 4290
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4277,6 +4332,17 @@
   "secondPos" : 4323,
   "firstEndPos" : 4335,
   "secondEndPos" : 4335
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OI for the original row",
+  "secondLabel" : "// OI for the original row",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4337,
+  "secondPos" : 4337,
+  "firstEndPos" : 4363,
+  "secondEndPos" : 4363
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4344,6 +4410,17 @@
   "firstEndPos" : 4410,
   "secondEndPos" : 4410
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OI for the record identifier struct",
+  "secondLabel" : "// OI for the record identifier struct",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4412,
+  "secondPos" : 4412,
+  "firstEndPos" : 4450,
+  "secondEndPos" : 4450
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4410,6 +4487,17 @@
   "firstEndPos" : 4495,
   "secondEndPos" : 4495
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OI for the long row id inside the recordIdentifier",
+  "secondLabel" : "// OI for the long row id inside the recordIdentifier",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4497,
+  "secondPos" : 4497,
+  "firstEndPos" : 4550,
+  "secondEndPos" : 4550
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4475,6 +4563,28 @@
   "secondPos" : 4581,
   "firstEndPos" : 4597,
   "secondEndPos" : 4597
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// OI for the original txn inside the record",
+  "secondLabel" : "// OI for the original txn inside the record",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4599,
+  "secondPos" : 4599,
+  "firstEndPos" : 4643,
+  "secondEndPos" : 4643
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// identifer",
+  "secondLabel" : "// identifer",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4646,
+  "secondPos" : 4646,
+  "firstEndPos" : 4658,
+  "secondEndPos" : 4658
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -4684,6 +4794,17 @@
   "secondPos" : 4758,
   "firstEndPos" : 4782,
   "secondEndPos" : 4782
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nothing",
+  "secondLabel" : "// nothing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4766,
+  "secondPos" : 4766,
+  "firstEndPos" : 4776,
+  "secondEndPos" : 4776
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -8326,6 +8447,17 @@
   "firstEndPos" : 6813,
   "secondEndPos" : 6813
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6767,
+  "secondPos" : 6767,
+  "firstEndPos" : 6773,
+  "secondEndPos" : 6773
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "rowInspector",
@@ -8358,6 +8490,17 @@
   "secondPos" : 6819,
   "firstEndPos" : 6867,
   "secondEndPos" : 6867
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6819,
+  "secondPos" : 6819,
+  "firstEndPos" : 6826,
+  "secondEndPos" : 6826
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -13738,6 +13881,17 @@
   "firstEndPos" : 10167,
   "secondEndPos" : 9987
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10154,
+  "secondPos" : 9974,
+  "firstEndPos" : 10159,
+  "secondEndPos" : 9979
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " rowId",
@@ -13771,6 +13925,17 @@
   "firstEndPos" : 10277,
   "secondEndPos" : 10097
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10215,
+  "secondPos" : 10035,
+  "firstEndPos" : 10222,
+  "secondEndPos" : 10042
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " largest rowId created by previous statements (maybe 0)",
@@ -13792,6 +13957,17 @@
   "secondPos" : 10103,
   "firstEndPos" : 10302,
   "secondEndPos" : 10122
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10283,
+  "secondPos" : 10103,
+  "firstEndPos" : 10290,
+  "secondEndPos" : 10110
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13869,6 +14045,17 @@
   "secondPos" : 10190,
   "firstEndPos" : 11570,
   "secondEndPos" : 11390
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    * 1. need to know bucket we are writing to\n    * 2. need to know which delta dir it's in\n    * Then,\n    * 1. find the same bucket file in previous delta dir for this txn\n    * 2. read the footer and get AcidStats which has insert count\n     * 2.1 if AcidStats.inserts>0 done\n     *  else go to previous delta file\n     *  For example, consider insert/update/insert case...*/",
+  "secondLabel" : "/*\n    * 1. need to know bucket we are writing to\n    * 2. need to know which delta dir it's in\n    * Then,\n    * 1. find the same bucket file in previous delta dir for this txn\n    * 2. read the footer and get AcidStats which has insert count\n     * 2.1 if AcidStats.inserts>0 done\n     *  else go to previous delta file\n     *  For example, consider insert/update/insert case...*/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10376,
+  "secondPos" : 10196,
+  "firstEndPos" : 10758,
+  "secondEndPos" : 10578
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13990,6 +14177,17 @@
   "secondPos" : 10632,
   "firstEndPos" : 10813,
   "secondEndPos" : 10633
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//there is only 1 statement in this transaction (so far)",
+  "secondLabel" : "//there is only 1 statement in this transaction (so far)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10814,
+  "secondPos" : 10634,
+  "firstEndPos" : 10870,
+  "secondEndPos" : 10690
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -14805,6 +15003,17 @@
   "firstEndPos" : 11253,
   "secondEndPos" : 11073
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//no close() on Reader?!",
+  "secondLabel" : "//no close() on Reader?!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11265,
+  "secondPos" : 11085,
+  "firstEndPos" : 11289,
+  "secondEndPos" : 11109
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14992,6 +15201,28 @@
   "firstEndPos" : 11408,
   "secondEndPos" : 11228
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if we got here, we looked at all delta files in this txn, prior to current statement and didn't ",
+  "secondLabel" : "//if we got here, we looked at all delta files in this txn, prior to current statement and didn't ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11428,
+  "secondPos" : 11248,
+  "firstEndPos" : 11526,
+  "secondEndPos" : 11346
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//find any inserts...",
+  "secondLabel" : "//find any inserts...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11531,
+  "secondPos" : 11351,
+  "firstEndPos" : 11552,
+  "secondEndPos" : 11372
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -15013,6 +15244,28 @@
   "secondPos" : 11384,
   "firstEndPos" : 11565,
   "secondEndPos" : 11385
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Find the record identifier column (if there) and return a possibly new ObjectInspector that",
+  "secondLabel" : "// Find the record identifier column (if there) and return a possibly new ObjectInspector that",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11573,
+  "secondPos" : 11393,
+  "firstEndPos" : 11667,
+  "secondEndPos" : 11487
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// will strain out the record id for the underlying writer.",
+  "secondLabel" : "// will strain out the record id for the underlying writer.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11670,
+  "secondPos" : 11490,
+  "firstEndPos" : 11729,
+  "secondEndPos" : 11549
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -15926,6 +16179,28 @@
   "secondPos" : 12181,
   "firstEndPos" : 12382,
   "secondEndPos" : 12202
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Go by position, not field name, as field names aren't guaranteed.  The order of fields",
+  "secondLabel" : "// Go by position, not field name, as field names aren't guaranteed.  The order of fields",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12392,
+  "secondPos" : 12212,
+  "firstEndPos" : 12481,
+  "secondEndPos" : 12301
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in RecordIdentifier is transactionId, bucketId, rowId",
+  "secondLabel" : "// in RecordIdentifier is transactionId, bucketId, rowId",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12488,
+  "secondPos" : 12308,
+  "firstEndPos" : 12544,
+  "secondEndPos" : 12364
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16949,6 +17224,28 @@
   "secondPos" : 12918,
   "firstEndPos" : 13116,
   "secondEndPos" : 12936
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this is an insert, originalTransaction should be set to this transaction.  If not,",
+  "secondLabel" : "// If this is an insert, originalTransaction should be set to this transaction.  If not,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13123,
+  "secondPos" : 12943,
+  "firstEndPos" : 13211,
+  "secondEndPos" : 13031
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it will be reset by the following if anyway.",
+  "secondLabel" : "// it will be reset by the following if anyway.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13216,
+  "secondPos" : 13036,
+  "firstEndPos" : 13263,
+  "secondEndPos" : 13083
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18677,6 +18974,28 @@
   "firstEndPos" : 14227,
   "secondEndPos" : 14047
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//this method is almost no-op in hcatalog.streaming case since statementId == 0 is",
+  "secondLabel" : "//this method is almost no-op in hcatalog.streaming case since statementId == 0 is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14235,
+  "secondPos" : 14055,
+  "firstEndPos" : 14317,
+  "secondEndPos" : 14137
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//always true in that case",
+  "secondLabel" : "//always true in that case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14324,
+  "secondPos" : 14144,
+  "firstEndPos" : 14350,
+  "secondEndPos" : 14170
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19963,6 +20282,39 @@
   "secondPos" : 14900,
   "firstEndPos" : 15597,
   "secondEndPos" : 15417
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We only support flushes on files with multiple transactions, because",
+  "secondLabel" : "// We only support flushes on files with multiple transactions, because",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15086,
+  "secondPos" : 14906,
+  "firstEndPos" : 15157,
+  "secondEndPos" : 14977
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// flushes create significant overhead in HDFS. Record updaters with a",
+  "secondLabel" : "// flushes create significant overhead in HDFS. Record updaters with a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15162,
+  "secondPos" : 14982,
+  "firstEndPos" : 15232,
+  "secondEndPos" : 15052
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// single transaction should be closed rather than flushed.",
+  "secondLabel" : "// single transaction should be closed rather than flushed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15237,
+  "secondPos" : 15057,
+  "firstEndPos" : 15296,
+  "secondEndPos" : 15116
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21360,6 +21712,28 @@
   "secondPos" : 15880,
   "firstEndPos" : 16073,
   "secondEndPos" : 15893
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't worry about setting raw data size diff.  I have no idea how to calculate that",
+  "secondLabel" : "// Don't worry about setting raw data size diff.  I have no idea how to calculate that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16080,
+  "secondPos" : 15900,
+  "firstEndPos" : 16166,
+  "secondEndPos" : 15986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without finding the row we are updating or deleting, which would be a mess.",
+  "secondLabel" : "// without finding the row we are updating or deleting, which would be a mess.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16171,
+  "secondPos" : 15991,
+  "firstEndPos" : 16249,
+  "secondEndPos" : 16069
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -23615,6 +23989,17 @@
   "secondPos" : 17158,
   "firstEndPos" : 17361,
   "secondEndPos" : 17181
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17338,
+  "secondPos" : 17158,
+  "firstEndPos" : 17343,
+  "secondEndPos" : 17163
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -28763,6 +29148,28 @@
   "secondPos" : 20401,
   "firstEndPos" : 20828,
   "secondEndPos" : 20648
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For performance don't check that that the fieldRef isn't recId everytime,",
+  "secondLabel" : "// For performance don't check that that the fieldRef isn't recId everytime,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20589,
+  "secondPos" : 20409,
+  "firstEndPos" : 20665,
+  "secondEndPos" : 20485
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// just assume that the caller used getAllStructFieldRefs and thus doesn't have that fieldRef",
+  "secondLabel" : "// just assume that the caller used getAllStructFieldRefs and thus doesn't have that fieldRef",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20672,
+  "secondPos" : 20492,
+  "firstEndPos" : 20765,
+  "secondEndPos" : 20585
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 14638,
   "secondEndPos" : 15125
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Manages data for blog settings",
+  "secondLabel" : "//Manages data for blog settings",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 32,
+  "secondEndPos" : 32
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -16378,6 +16389,28 @@
   "firstEndPos" : 10364,
   "secondEndPos" : 10364
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: it's ugly to compare json strings, we have to normalize both strings before",
+  "secondLabel" : "// TODO: it's ugly to compare json strings, we have to normalize both strings before",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10402,
+  "secondPos" : 10402,
+  "firstEndPos" : 10486,
+  "secondEndPos" : 10486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// comparison or compare JSON objects after parsing",
+  "secondLabel" : "// comparison or compare JSON objects after parsing",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10491,
+  "secondPos" : 10491,
+  "firstEndPos" : 10542,
+  "secondEndPos" : 10542
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -17873,6 +17906,17 @@
   "secondPos" : 11483,
   "firstEndPos" : 11484,
   "secondEndPos" : 11484
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Try to guess the URL of the dashboard if blogOptions is null (blog not added to the app), or WP version is < 3.6",
+  "secondLabel" : "// Try to guess the URL of the dashboard if blogOptions is null (blog not added to the app), or WP version is < 3.6",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11520,
+  "secondPos" : 11520,
+  "firstEndPos" : 11635,
+  "secondEndPos" : 11635
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -20789,6 +20833,17 @@
   "firstEndPos" : 13477,
   "secondEndPos" : 13477
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13413,
+  "secondPos" : 13413,
+  "firstEndPos" : 13420,
+  "secondEndPos" : 13420
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " WP.com blogId string, potentially null for Jetpack sites",
@@ -22185,6 +22240,17 @@
   "secondPos" : 14773,
   "firstEndPos" : 14313,
   "secondEndPos" : 14784
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Possible matches are \"i0.wp.com\", \"i1.wp.com\" & \"i2.wp.com\" -> https://developer.wordpress.com/docs/photon/",
+  "secondLabel" : "// Possible matches are \"i0.wp.com\", \"i1.wp.com\" & \"i2.wp.com\" -> https://developer.wordpress.com/docs/photon/",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14326,
+  "secondPos" : 14797,
+  "firstEndPos" : 14436,
+  "secondEndPos" : 14907
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

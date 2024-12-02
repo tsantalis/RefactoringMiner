@@ -10,6 +10,17 @@
   "firstEndPos" : 4602,
   "secondEndPos" : 4662
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2013 MovingBlocks\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2013 MovingBlocks\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 596,
+  "secondEndPos" : 596
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -548,6 +559,17 @@
   "secondPos" : 1828,
   "firstEndPos" : 1845,
   "secondEndPos" : 1845
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1828,
+  "secondPos" : 1828,
+  "firstEndPos" : 1835,
+  "secondEndPos" : 1835
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1241,6 +1263,17 @@
   "secondPos" : 2298,
   "firstEndPos" : 4524,
   "secondEndPos" : 4584
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: These shouldn't be done here, nor so strongly tied to the world renderer",
+  "secondLabel" : "// TODO: These shouldn't be done here, nor so strongly tied to the world renderer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2309,
+  "secondPos" : 2309,
+  "firstEndPos" : 2390,
+  "secondEndPos" : 2390
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2837,6 +2870,17 @@
   "firstEndPos" : 3499,
   "secondEndPos" : 3559
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Init. a new world",
+  "secondLabel" : "// Init. a new world",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3511,
+  "secondPos" : 3571,
+  "firstEndPos" : 3531,
+  "secondEndPos" : 3591
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3991,6 +4035,17 @@
   "secondPos" : 4303,
   "firstEndPos" : 4256,
   "secondEndPos" : 4316
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: These shouldn't be done here, nor so strongly tied to the world renderer",
+  "secondLabel" : "// TODO: These shouldn't be done here, nor so strongly tied to the world renderer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4267,
+  "secondPos" : 4327,
+  "firstEndPos" : 4348,
+  "secondEndPos" : 4408
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

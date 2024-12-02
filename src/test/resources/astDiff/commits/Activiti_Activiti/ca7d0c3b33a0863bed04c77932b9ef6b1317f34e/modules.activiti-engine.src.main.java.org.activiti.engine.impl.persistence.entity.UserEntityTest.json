@@ -153,6 +153,17 @@
   "firstEndPos" : 242,
   "secondEndPos" : 299
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 218,
+  "secondPos" : 275,
+  "firstEndPos" : 225,
+  "secondEndPos" : 282
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Arkadiy Gornovoy",
@@ -471,6 +482,17 @@
   "secondPos" : 513,
   "firstEndPos" : 460,
   "secondEndPos" : 517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// even though parameters were null, picture object is not null",
+  "secondLabel" : "// even though parameters were null, picture object is not null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 467,
+  "secondPos" : 524,
+  "firstEndPos" : 530,
+  "secondEndPos" : 587
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -3035,6 +3035,17 @@
   "firstEndPos" : 3451,
   "secondEndPos" : 4057
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Of course this will eventually need to be shared between multiple AnalystWorker threads.",
+  "secondLabel" : "// Of course this will eventually need to be shared between multiple AnalystWorker threads.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3621,
+  "secondPos" : 4072,
+  "firstEndPos" : 3712,
+  "secondEndPos" : 4163
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3090,6 +3101,17 @@
   "firstEndPos" : 3756,
   "secondEndPos" : 4207
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Of course this will eventually need to be shared between multiple AnalystWorker threads.",
+  "secondLabel" : "// Of course this will eventually need to be shared between multiple AnalystWorker threads.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3763,
+  "secondPos" : 4214,
+  "firstEndPos" : 3854,
+  "secondEndPos" : 4305
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3144,6 +3166,17 @@
   "secondPos" : 4328,
   "firstEndPos" : 3894,
   "secondEndPos" : 4345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Clients for communicating with Amazon web services",
+  "secondLabel" : "// Clients for communicating with Amazon web services",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3901,
+  "secondPos" : 4352,
+  "firstEndPos" : 3954,
+  "secondEndPos" : 4405
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3331,6 +3364,17 @@
   "secondPos" : 4473,
   "firstEndPos" : 4043,
   "secondEndPos" : 4494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Region awsRegion = Region.getRegion(Regions.EU_CENTRAL_1);",
+  "secondLabel" : "// Region awsRegion = Region.getRegion(Regions.EU_CENTRAL_1);",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4050,
+  "secondPos" : 4501,
+  "firstEndPos" : 4111,
+  "secondEndPos" : 4562
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4014,6 +4058,28 @@
   "firstEndPos" : 8072,
   "secondEndPos" : 7950
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parse the configuration",
+  "secondLabel" : "// parse the configuration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4931,
+  "secondPos" : 4809,
+  "firstEndPos" : 4957,
+  "secondEndPos" : 4835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set up the stats store",
+  "secondLabel" : "// set up the stats store",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4966,
+  "secondPos" : 4844,
+  "firstEndPos" : 4991,
+  "secondEndPos" : 4869
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4299,6 +4365,17 @@
   "secondPos" : 5027,
   "firstEndPos" : 5159,
   "secondEndPos" : 5037
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a stats store that does nothing.",
+  "secondLabel" : "// a stats store that does nothing.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5187,
+  "secondPos" : 5065,
+  "firstEndPos" : 5222,
+  "secondEndPos" : 5100
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5069,6 +5146,50 @@
   "secondPos" : 5482,
   "firstEndPos" : 5608,
   "secondEndPos" : 5486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set the initial graph affinity of this worker (if it is not in the config file it will be",
+  "secondLabel" : "// set the initial graph affinity of this worker (if it is not in the config file it will be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5630,
+  "secondPos" : 5508,
+  "firstEndPos" : 5722,
+  "secondEndPos" : 5600
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set to null, i.e. no graph affinity)",
+  "secondLabel" : "// set to null, i.e. no graph affinity)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5731,
+  "secondPos" : 5609,
+  "firstEndPos" : 5770,
+  "secondEndPos" : 5648
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we don't actually build the graph now; this is just a hint to the broker as to what",
+  "secondLabel" : "// we don't actually build the graph now; this is just a hint to the broker as to what",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5779,
+  "secondPos" : 5657,
+  "firstEndPos" : 5865,
+  "secondEndPos" : 5743
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// graph this machine was intended to analyze.",
+  "secondLabel" : "// graph this machine was intended to analyze.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5874,
+  "secondPos" : 5752,
+  "firstEndPos" : 5920,
+  "secondEndPos" : 5798
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5884,6 +6005,17 @@
   "firstEndPos" : 6357,
   "secondEndPos" : 6235
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Consider shutting this worker down once per hour, starting 55 minutes after it started up.",
+  "secondLabel" : "// Consider shutting this worker down once per hour, starting 55 minutes after it started up.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6368,
+  "secondPos" : 6246,
+  "firstEndPos" : 6461,
+  "secondEndPos" : 6339
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6104,6 +6236,50 @@
   "firstEndPos" : 6572,
   "secondEndPos" : 6450
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When creating the S3 and SQS clients use the default credentials chain.",
+  "secondLabel" : "// When creating the S3 and SQS clients use the default credentials chain.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6583,
+  "secondPos" : 6461,
+  "firstEndPos" : 6657,
+  "secondEndPos" : 6535
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This will check environment variables and ~/.aws/credentials first, then fall back on",
+  "secondLabel" : "// This will check environment variables and ~/.aws/credentials first, then fall back on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6666,
+  "secondPos" : 6544,
+  "firstEndPos" : 6754,
+  "secondEndPos" : 6632
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the auto-assigned IAM role if this code is running on an EC2 instance.",
+  "secondLabel" : "// the auto-assigned IAM role if this code is running on an EC2 instance.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6763,
+  "secondPos" : 6641,
+  "firstEndPos" : 6836,
+  "secondEndPos" : 6714
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-roles.html",
+  "secondLabel" : "// http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-roles.html",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6845,
+  "secondPos" : 6723,
+  "firstEndPos" : 6930,
+  "secondEndPos" : 6808
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6257,6 +6433,17 @@
   "secondPos" : 6865,
   "firstEndPos" : 6996,
   "secondEndPos" : 6874
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* The ObjectMapper (de)serializes JSON. */",
+  "secondLabel" : "/* The ObjectMapper (de)serializes JSON. */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7008,
+  "secondPos" : 6886,
+  "firstEndPos" : 7051,
+  "secondEndPos" : 6929
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6599,6 +6786,28 @@
   "firstEndPos" : 7340,
   "secondEndPos" : 7218
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore JSON fields that don't match target type",
+  "secondLabel" : "// ignore JSON fields that don't match target type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7343,
+  "secondPos" : 7221,
+  "firstEndPos" : 7393,
+  "secondEndPos" : 7271
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Tell Jackson how to (de)serialize AgencyAndIds, which appear as map keys in routing requests. */",
+  "secondLabel" : "/* Tell Jackson how to (de)serialize AgencyAndIds, which appear as map keys in routing requests. */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7403,
+  "secondPos" : 7281,
+  "firstEndPos" : 7502,
+  "secondEndPos" : 7380
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6708,6 +6917,17 @@
   "secondPos" : 7439,
   "firstEndPos" : 7571,
   "secondEndPos" : 7449
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* serialize/deserialize qualified mode sets */",
+  "secondLabel" : "/* serialize/deserialize qualified mode sets */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7585,
+  "secondPos" : 7463,
+  "firstEndPos" : 7632,
+  "secondEndPos" : 7510
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6819,6 +7039,17 @@
   "firstEndPos" : 7706,
   "secondEndPos" : 7584
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* serialize/deserialize Joda dates */",
+  "secondLabel" : "/* serialize/deserialize Joda dates */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7720,
+  "secondPos" : 7598,
+  "firstEndPos" : 7758,
+  "secondEndPos" : 7636
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6928,6 +7159,17 @@
   "secondPos" : 7697,
   "firstEndPos" : 7829,
   "secondEndPos" : 7707
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* serialize/deserialize traversemodesets */",
+  "secondLabel" : "/* serialize/deserialize traversemodesets */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7843,
+  "secondPos" : 7721,
+  "firstEndPos" : 7887,
+  "secondEndPos" : 7765
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7281,6 +7523,17 @@
   "firstEndPos" : 9497,
   "secondEndPos" : 9375
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Loop forever, attempting to fetch some messages from a queue and process them.",
+  "secondLabel" : "// Loop forever, attempting to fetch some messages from a queue and process them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8120,
+  "secondPos" : 7998,
+  "firstEndPos" : 8201,
+  "secondEndPos" : 8079
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7368,6 +7621,17 @@
   "secondPos" : 8131,
   "firstEndPos" : 9491,
   "secondEndPos" : 9369
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Consider shutting down if enough time has passed",
+  "secondLabel" : "// Consider shutting down if enough time has passed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8267,
+  "secondPos" : 8145,
+  "firstEndPos" : 8318,
+  "secondEndPos" : 8196
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8204,6 +8468,28 @@
   "secondPos" : 8845,
   "firstEndPos" : 8973,
   "secondEndPos" : 8851
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Long-poll (wait a few seconds for messages to become available)",
+  "secondLabel" : "// Long-poll (wait a few seconds for messages to become available)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8988,
+  "secondPos" : 8866,
+  "firstEndPos" : 9054,
+  "secondEndPos" : 8932
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO internal blocking queue feeding work threads, polls whenever queue.size() < nProcessors",
+  "secondLabel" : "// TODO internal blocking queue feeding work threads, polls whenever queue.size() < nProcessors",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9067,
+  "secondPos" : 8945,
+  "firstEndPos" : 9162,
+  "secondEndPos" : 9040
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9580,6 +9866,39 @@
   "firstEndPos" : 10137,
   "secondEndPos" : 10015
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get the graph object for the ID given in the request, fetching inputs and building as needed.",
+  "secondLabel" : "// Get the graph object for the ID given in the request, fetching inputs and building as needed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10154,
+  "secondPos" : 10032,
+  "firstEndPos" : 10250,
+  "secondEndPos" : 10128
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// All requests handled together are for the same graph, and this call is synchronized so the graph will",
+  "secondLabel" : "// All requests handled together are for the same graph, and this call is synchronized so the graph will",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10263,
+  "secondPos" : 10141,
+  "firstEndPos" : 10367,
+  "secondEndPos" : 10245
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only be built once.",
+  "secondLabel" : "// only be built once.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10380,
+  "secondPos" : 10258,
+  "firstEndPos" : 10402,
+  "secondEndPos" : 10280
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9755,6 +10074,17 @@
   "secondPos" : 10383,
   "firstEndPos" : 10527,
   "secondEndPos" : 10405
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Record graphId so we \"stick\" to this same graph on subsequent polls",
+  "secondLabel" : "// Record graphId so we \"stick\" to this same graph on subsequent polls",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10529,
+  "secondPos" : 10407,
+  "firstEndPos" : 10599,
+  "secondEndPos" : 10477
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10085,6 +10415,17 @@
   "secondPos" : 10682,
   "firstEndPos" : 10808,
   "secondEndPos" : 10686
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This result envelope will hold the result of the profile or single-time one-to-many search.",
+  "secondLabel" : "// This result envelope will hold the result of the profile or single-time one-to-many search.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10825,
+  "secondPos" : 10703,
+  "firstEndPos" : 10919,
+  "secondEndPos" : 10797
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10603,6 +10944,28 @@
   "firstEndPos" : 12493,
   "secondEndPos" : 12371
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A pointset was specified, calculate travel times to the points in the pointset.",
+  "secondLabel" : "// A pointset was specified, calculate travel times to the points in the pointset.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11398,
+  "secondPos" : 11276,
+  "firstEndPos" : 11480,
+  "secondEndPos" : 11358
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fetch the set of points we will use as destinations for this one-to-many search",
+  "secondLabel" : "// Fetch the set of points we will use as destinations for this one-to-many search",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11501,
+  "secondPos" : 11379,
+  "firstEndPos" : 11583,
+  "secondEndPos" : 11461
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10723,6 +11086,17 @@
   "secondPos" : 11524,
   "firstEndPos" : 11682,
   "secondEndPos" : 11560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO this breaks if graph has been rebuilt",
+  "secondLabel" : "// TODO this breaks if graph has been rebuilt",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11705,
+  "secondPos" : 11583,
+  "firstEndPos" : 11750,
+  "secondEndPos" : 11628
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10954,6 +11328,17 @@
   "secondPos" : 11836,
   "firstEndPos" : 11967,
   "secondEndPos" : 11845
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no reason to cache single-point RaptorWorkerData",
+  "secondLabel" : "// no reason to cache single-point RaptorWorkerData",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11991,
+  "secondPos" : 11869,
+  "firstEndPos" : 12042,
+  "secondEndPos" : 11920
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12341,6 +12726,17 @@
   "firstEndPos" : 13674,
   "secondEndPos" : 13552
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// put in constructor?",
+  "secondLabel" : "// put in constructor?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13701,
+  "secondPos" : 13579,
+  "firstEndPos" : 13723,
+  "secondEndPos" : 13601
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12891,6 +13287,17 @@
   "firstEndPos" : 14367,
   "secondEndPos" : 14245
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Leave the envelope empty TODO include error information",
+  "secondLabel" : "// Leave the envelope empty TODO include error information",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14251,
+  "secondPos" : 14129,
+  "firstEndPos" : 14309,
+  "secondEndPos" : 14187
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12956,6 +13363,17 @@
   "secondPos" : 14265,
   "firstEndPos" : 14622,
   "secondEndPos" : 14500
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No profile request, this must be a plain one to many routing request.",
+  "secondLabel" : "// No profile request, this must be a plain one to many routing request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14405,
+  "secondPos" : 14283,
+  "firstEndPos" : 14477,
+  "secondEndPos" : 14355
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13023,6 +13441,17 @@
   "firstEndPos" : 14555,
   "secondEndPos" : 14433
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO finish the non-profile case",
+  "secondLabel" : "// TODO finish the non-profile case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14573,
+  "secondPos" : 14451,
+  "firstEndPos" : 14608,
+  "secondEndPos" : 14486
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -13088,6 +13517,28 @@
   "secondPos" : 14557,
   "firstEndPos" : 15802,
   "secondEndPos" : 15680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Convert the result envelope and its contents to JSON and gzip it in this thread.",
+  "secondLabel" : "// Convert the result envelope and its contents to JSON and gzip it in this thread.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14697,
+  "secondPos" : 14575,
+  "firstEndPos" : 14780,
+  "secondEndPos" : 14658
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Transfer the results to Amazon S3 in another thread, piping between the two.",
+  "secondLabel" : "// Transfer the results to Amazon S3 in another thread, piping between the two.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14797,
+  "secondPos" : 14675,
+  "firstEndPos" : 14876,
+  "secondEndPos" : 14754
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13760,6 +14211,28 @@
   "firstEndPos" : 15346,
   "secondEndPos" : 15224
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We could do the writeValue() in a thread instead, in which case both the DELETE and S3 options",
+  "secondLabel" : "// We could do the writeValue() in a thread instead, in which case both the DELETE and S3 options",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15365,
+  "secondPos" : 15243,
+  "firstEndPos" : 15462,
+  "secondEndPos" : 15340
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// could consume it in the same way.",
+  "secondLabel" : "// could consume it in the same way.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15479,
+  "secondPos" : 15357,
+  "firstEndPos" : 15515,
+  "secondEndPos" : 15393
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13903,6 +14376,17 @@
   "firstEndPos" : 15623,
   "secondEndPos" : 15501
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DELETE the task from the broker, confirming it has been handled and should not be re-delivered.",
+  "secondLabel" : "// DELETE the task from the broker, confirming it has been handled and should not be re-delivered.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15643,
+  "secondPos" : 15521,
+  "firstEndPos" : 15741,
+  "secondEndPos" : 15619
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13968,6 +14452,17 @@
   "secondPos" : 15686,
   "firstEndPos" : 16002,
   "secondEndPos" : 15880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No output location on S3 specified, return the result via the broker and mark the task completed.",
+  "secondLabel" : "// No output location on S3 specified, return the result via the broker and mark the task completed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15826,
+  "secondPos" : 15704,
+  "firstEndPos" : 15926,
+  "secondEndPos" : 15804
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14628,6 +15123,17 @@
   "secondPos" : 16203,
   "firstEndPos" : 17821,
   "secondEndPos" : 17700
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Run a POST request (long-polling for work) indicating which graph this worker prefers to work on",
+  "secondLabel" : "// Run a POST request (long-polling for work) indicating which graph this worker prefers to work on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16336,
+  "secondPos" : 16214,
+  "firstEndPos" : 16435,
+  "secondEndPos" : 16313
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17148,6 +17654,28 @@
   "firstEndPos" : 19291,
   "secondEndPos" : 19170
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO reveal any errors etc. that occurred on the worker.",
+  "secondLabel" : "// TODO reveal any errors etc. that occurred on the worker.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18197,
+  "secondPos" : 18076,
+  "firstEndPos" : 18256,
+  "secondEndPos" : 18135
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Really this should probably be done with an InputStreamEntity and a JSON writer thread.",
+  "secondLabel" : "// Really this should probably be done with an InputStreamEntity and a JSON writer thread.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18269,
+  "secondPos" : 18148,
+  "firstEndPos" : 18359,
+  "secondEndPos" : 18238
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -17510,6 +18038,17 @@
   "secondPos" : 18443,
   "firstEndPos" : 18572,
   "secondEndPos" : 18451
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Signal the http client library that we're done with this response object, allowing connection reuse.",
+  "secondLabel" : "// Signal the http client library that we're done with this response object, allowing connection reuse.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18587,
+  "secondPos" : 18466,
+  "firstEndPos" : 18690,
+  "secondEndPos" : 18569
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18952,6 +19491,17 @@
   "firstEndPos" : 19857,
   "secondEndPos" : 19736
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Signal the http client library that we're done with this response object, allowing connection reuse.",
+  "secondLabel" : "// Signal the http client library that we're done with this response object, allowing connection reuse.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19872,
+  "secondPos" : 19751,
+  "firstEndPos" : 19975,
+  "secondEndPos" : 19854
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19842,6 +20392,39 @@
   "secondPos" : 20499,
   "firstEndPos" : 20627,
   "secondEndPos" : 20506
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+  "secondLabel" : "// see http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20643,
+  "secondPos" : 20522,
+  "firstEndPos" : 20727,
+  "secondEndPos" : 20606
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This seems very much not EC2-like to hardwire an IP address for getting instance metadata,",
+  "secondLabel" : "// This seems very much not EC2-like to hardwire an IP address for getting instance metadata,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20740,
+  "secondPos" : 20619,
+  "firstEndPos" : 20833,
+  "secondEndPos" : 20712
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but that's how it's done.",
+  "secondLabel" : "// but that's how it's done.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20846,
+  "secondPos" : 20725,
+  "firstEndPos" : 20874,
+  "secondEndPos" : 20753
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

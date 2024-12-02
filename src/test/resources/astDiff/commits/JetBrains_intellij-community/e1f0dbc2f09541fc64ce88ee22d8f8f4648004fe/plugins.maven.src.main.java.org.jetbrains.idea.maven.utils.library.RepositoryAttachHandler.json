@@ -10,6 +10,17 @@
   "firstEndPos" : 18507,
   "secondEndPos" : 19100
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1186,6 +1197,17 @@
   "secondPos" : 3112,
   "firstEndPos" : 3134,
   "secondEndPos" : 3134
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3112,
+  "secondPos" : 3112,
+  "firstEndPos" : 3119,
+  "secondEndPos" : 3119
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9019,6 +9041,17 @@
   "firstEndPos" : 7922,
   "secondEndPos" : 8515
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// search for jar file first otherwise lib root won't be found!",
+  "secondLabel" : "// search for jar file first otherwise lib root won't be found!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7955,
+  "secondPos" : 8548,
+  "firstEndPos" : 8018,
+  "secondEndPos" : 8611
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14321,6 +14354,28 @@
   "firstEndPos" : 11076,
   "secondEndPos" : 11669
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the artifact is provided by an unsupported repository just skip it",
+  "secondLabel" : "// if the artifact is provided by an unsupported repository just skip it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11099,
+  "secondPos" : 11692,
+  "firstEndPos" : 11171,
+  "secondEndPos" : 11764
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because it won't be resolved anyway",
+  "secondLabel" : "// because it won't be resolved anyway",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11190,
+  "secondPos" : 11783,
+  "firstEndPos" : 11228,
+  "secondEndPos" : 11821
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16377,6 +16432,28 @@
   "secondPos" : 13149,
   "firstEndPos" : 12567,
   "secondEndPos" : 13160
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "MavenRepositoryInfo",
+  "secondLabel" : "MavenRepositoryInfo",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 12569,
+  "secondPos" : 13162,
+  "firstEndPos" : 12588,
+  "secondEndPos" : 13181
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 12569,
+  "secondPos" : 13162,
+  "firstEndPos" : 12588,
+  "secondEndPos" : 13181
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -21900,6 +21977,17 @@
   "firstEndPos" : 16419,
   "secondEndPos" : 17012
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// download docs & sources",
+  "secondLabel" : "// download docs & sources",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16436,
+  "secondPos" : 17029,
+  "firstEndPos" : 16462,
+  "secondEndPos" : 17055
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22757,6 +22845,17 @@
   "secondPos" : 17507,
   "firstEndPos" : 16934,
   "secondEndPos" : 17527
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip sources/javadoc for dependencies",
+  "secondLabel" : "// skip sources/javadoc for dependencies",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16962,
+  "secondPos" : 17555,
+  "firstEndPos" : 17002,
+  "secondEndPos" : 17595
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",

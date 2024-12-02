@@ -1352,6 +1352,17 @@
   "firstEndPos" : 3193,
   "secondEndPos" : 3236
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3168,
+  "secondPos" : 3211,
+  "firstEndPos" : 3175,
+  "secondEndPos" : 3218
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Moxie Marlinspike",
@@ -29071,6 +29082,28 @@
   "secondPos" : 22110,
   "firstEndPos" : 21445,
   "secondEndPos" : 22240
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE :: I don't totally trust this thing, so I'm catching",
+  "secondLabel" : "// NOTE :: I don't totally trust this thing, so I'm catching",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21323,
+  "secondPos" : 22118,
+  "firstEndPos" : 21383,
+  "secondEndPos" : 22178
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// everything.",
+  "secondLabel" : "// everything.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21390,
+  "secondPos" : 22185,
+  "firstEndPos" : 21404,
+  "secondEndPos" : 22199
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

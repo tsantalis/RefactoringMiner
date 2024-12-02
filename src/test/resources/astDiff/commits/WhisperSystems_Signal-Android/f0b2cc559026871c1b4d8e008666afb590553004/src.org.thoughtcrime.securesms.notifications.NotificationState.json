@@ -3420,6 +3420,39 @@
   "firstEndPos" : 2337,
   "secondEndPos" : 2831
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// XXX : This is an Android bug.  If we don't pull off the extra",
+  "secondLabel" : "// XXX : This is an Android bug.  If we don't pull off the extra",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2347,
+  "secondPos" : 2841,
+  "firstEndPos" : 2411,
+  "secondEndPos" : 2905
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// once before handing off the PendingIntent, the array will be",
+  "secondLabel" : "// once before handing off the PendingIntent, the array will be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2416,
+  "secondPos" : 2910,
+  "firstEndPos" : 2479,
+  "secondEndPos" : 2973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// truncated to one element when the PendingIntent fires.  Thanks guys!",
+  "secondLabel" : "// truncated to one element when the PendingIntent fires.  Thanks guys!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2484,
+  "secondPos" : 2978,
+  "firstEndPos" : 2555,
+  "secondEndPos" : 3049
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

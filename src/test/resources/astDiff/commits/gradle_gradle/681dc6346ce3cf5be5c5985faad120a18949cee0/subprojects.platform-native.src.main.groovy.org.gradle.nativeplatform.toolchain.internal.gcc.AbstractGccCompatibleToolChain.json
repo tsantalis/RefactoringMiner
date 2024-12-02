@@ -10,6 +10,17 @@
   "firstEndPos" : 12919,
   "secondEndPos" : 13527
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2013 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2013 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 615,
+  "secondEndPos" : 615
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -3994,6 +4005,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "NativePlatformToolChain",
+  "secondLabel" : "NativePlatformToolChain",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4766,
+  "secondPos" : 4980,
+  "firstEndPos" : 4789,
+  "secondEndPos" : 5003
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 4766,
+  "secondPos" : 4980,
+  "firstEndPos" : 4789,
+  "secondEndPos" : 5003
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "doNothing",
   "secondLabel" : "doNothing",
   "firstParentType" : "MethodInvocation",
@@ -6500,6 +6533,17 @@
   "firstEndPos" : 8462,
   "secondEndPos" : 9070
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Attempt to determine whether the compiler is the correct implementation",
+  "secondLabel" : "// Attempt to determine whether the compiler is the correct implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6858,
+  "secondPos" : 7466,
+  "firstEndPos" : 6932,
+  "secondEndPos" : 7540
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7215,6 +7259,17 @@
   "firstEndPos" : 7456,
   "secondEndPos" : 8064
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Assume all the other compilers are ok, if they happen to be installed",
+  "secondLabel" : "// Assume all the other compilers are ok, if they happen to be installed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7491,
+  "secondPos" : 8099,
+  "firstEndPos" : 7563,
+  "secondEndPos" : 8171
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7478,6 +7533,17 @@
   "secondPos" : 8399,
   "firstEndPos" : 7797,
   "secondEndPos" : 8405
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Attempt to locate each tool",
+  "secondLabel" : "// Attempt to locate each tool",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7831,
+  "secondPos" : 8439,
+  "firstEndPos" : 7861,
+  "secondEndPos" : 8469
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -7863,6 +7929,28 @@
   "secondPos" : 8692,
   "firstEndPos" : 8456,
   "secondEndPos" : 9064
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No tools found - report just the C compiler as missing",
+  "secondLabel" : "// No tools found - report just the C compiler as missing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8098,
+  "secondPos" : 8706,
+  "firstEndPos" : 8155,
+  "secondEndPos" : 8763
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO - report whichever tool is actually required, eg if there's only assembler source, complain about the assembler",
+  "secondLabel" : "// TODO - report whichever tool is actually required, eg if there's only assembler source, complain about the assembler",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8168,
+  "secondPos" : 8776,
+  "firstEndPos" : 8287,
+  "secondEndPos" : 8895
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13297,6 +13385,17 @@
   "secondPos" : 12722,
   "firstEndPos" : 12141,
   "secondEndPos" : 12749
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO this should be a container of platforms",
+  "secondLabel" : "//TODO this should be a container of platforms",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12152,
+  "secondPos" : 12760,
+  "firstEndPos" : 12198,
+  "secondEndPos" : 12806
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

@@ -10,6 +10,17 @@
   "firstEndPos" : 72806,
   "secondEndPos" : 73760
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2007 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2007 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 619,
+  "secondEndPos" : 619
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1220,6 +1231,17 @@
   "firstEndPos" : 2347,
   "secondEndPos" : 2347
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2313,
+  "secondPos" : 2313,
+  "firstEndPos" : 2318,
+  "secondEndPos" : 2318
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -2155,6 +2177,17 @@
   "firstEndPos" : 3669,
   "secondEndPos" : 3669
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3630,
+  "secondPos" : 3630,
+  "firstEndPos" : 3635,
+  "secondEndPos" : 3635
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -2198,6 +2231,17 @@
   "secondPos" : 3674,
   "firstEndPos" : 3711,
   "secondEndPos" : 3711
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3674,
+  "secondPos" : 3674,
+  "firstEndPos" : 3679,
+  "secondEndPos" : 3679
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -3463,6 +3507,17 @@
   "secondPos" : 5123,
   "firstEndPos" : 5159,
   "secondEndPos" : 5159
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// More precisely defines the lock method when the password type is set to biometric_weak",
+  "secondLabel" : "// More precisely defines the lock method when the password type is set to biometric_weak",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5165,
+  "secondPos" : 5165,
+  "firstEndPos" : 5254,
+  "secondEndPos" : 5254
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4751,6 +4806,28 @@
   "firstEndPos" : 6539,
   "secondEndPos" : 6539
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Maximum allowed number of repeated or ordered characters in a sequence before we'll",
+  "secondLabel" : "// Maximum allowed number of repeated or ordered characters in a sequence before we'll",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6546,
+  "secondPos" : 6546,
+  "firstEndPos" : 6632,
+  "secondEndPos" : 6632
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// consider it a complex PIN/password.",
+  "secondLabel" : "// consider it a complex PIN/password.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6637,
+  "secondPos" : 6637,
+  "firstEndPos" : 6675,
+  "secondEndPos" : 6675
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4838,6 +4915,17 @@
   "secondPos" : 6727,
   "firstEndPos" : 6728,
   "secondEndPos" : 6728
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Types of weak biometric lock types",
+  "secondLabel" : "// Types of weak biometric lock types",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6735,
+  "secondPos" : 6735,
+  "firstEndPos" : 6772,
+  "secondEndPos" : 6772
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -5542,6 +5630,17 @@
   "secondPos" : 7205,
   "firstEndPos" : 7219,
   "secondEndPos" : 7219
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The current user is set by KeyguardViewMediator and shared by all LockPatternUtils.",
+  "secondLabel" : "// The current user is set by KeyguardViewMediator and shared by all LockPatternUtils.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7226,
+  "secondPos" : 7226,
+  "firstEndPos" : 7312,
+  "secondEndPos" : 7312
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -6939,6 +7038,39 @@
   "secondPos" : 8427,
   "firstEndPos" : 8450,
   "secondEndPos" : 8450
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this is being called by the system or by an application like keyguard that",
+  "secondLabel" : "// If this is being called by the system or by an application like keyguard that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8462,
+  "secondPos" : 8462,
+  "firstEndPos" : 8542,
+  "secondEndPos" : 8542
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// has permision INTERACT_ACROSS_USERS, then LockPatternUtils will operate in multi-user",
+  "secondLabel" : "// has permision INTERACT_ACROSS_USERS, then LockPatternUtils will operate in multi-user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8551,
+  "secondPos" : 8551,
+  "firstEndPos" : 8639,
+  "secondEndPos" : 8639
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// mode where calls are for the current user rather than the user of the calling process.",
+  "secondLabel" : "// mode where calls are for the current user rather than the user of the calling process.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8648,
+  "secondPos" : 8648,
+  "firstEndPos" : 8737,
+  "secondEndPos" : 8737
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9294,6 +9426,17 @@
   "firstEndPos" : 11163,
   "secondEndPos" : 11163
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* authenticated */",
+  "secondLabel" : "/* authenticated */",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 11164,
+  "secondPos" : 11164,
+  "firstEndPos" : 11183,
+  "secondEndPos" : 11183
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "userId",
@@ -9635,6 +9778,17 @@
   "firstEndPos" : 11462,
   "secondEndPos" : 11462
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* authenticated */",
+  "secondLabel" : "/* authenticated */",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 11463,
+  "secondPos" : 11463,
+  "firstEndPos" : 11482,
+  "secondEndPos" : 11482
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -9920,6 +10074,17 @@
   "secondPos" : 11708,
   "firstEndPos" : 11838,
   "secondEndPos" : 11838
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Someone is regularly updating using setCurrentUser() use that value.",
+  "secondLabel" : "// Someone is regularly updating using setCurrentUser() use that value.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11722,
+  "secondPos" : 11722,
+  "firstEndPos" : 11793,
+  "secondEndPos" : 11793
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -10636,6 +10801,28 @@
   "firstEndPos" : 12531,
   "secondEndPos" : 12531
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: This is a little inefficient. See if all users of this are able to",
+  "secondLabel" : "// TODO: This is a little inefficient. See if all users of this are able to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12351,
+  "secondPos" : 12351,
+  "firstEndPos" : 12426,
+  "secondEndPos" : 12426
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handle USER_CURRENT and pass that instead.",
+  "secondLabel" : "// handle USER_CURRENT and pass that instead.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12439,
+  "secondPos" : 12439,
+  "firstEndPos" : 12484,
+  "secondEndPos" : 12484
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -10801,6 +10988,17 @@
   "firstEndPos" : 12768,
   "secondEndPos" : 12768
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12732,
+  "secondPos" : 12732,
+  "firstEndPos" : 12738,
+  "secondEndPos" : 12738
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pattern",
@@ -10833,6 +11031,17 @@
   "secondPos" : 12776,
   "firstEndPos" : 12827,
   "secondEndPos" : 12827
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12776,
+  "secondPos" : 12776,
+  "firstEndPos" : 12783,
+  "secondEndPos" : 12783
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -11351,6 +11560,17 @@
   "firstEndPos" : 13309,
   "secondEndPos" : 13309
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13271,
+  "secondPos" : 13271,
+  "firstEndPos" : 13277,
+  "secondEndPos" : 13277
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -11383,6 +11603,17 @@
   "secondPos" : 13317,
   "firstEndPos" : 13369,
   "secondEndPos" : 13369
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13317,
+  "secondPos" : 13317,
+  "firstEndPos" : 13324,
+  "secondEndPos" : 13324
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -11835,6 +12066,17 @@
   "firstEndPos" : 13832,
   "secondEndPos" : 13832
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13783,
+  "secondPos" : 13783,
+  "firstEndPos" : 13790,
+  "secondEndPos" : 13790
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the vold password matches or not.",
@@ -12231,6 +12473,17 @@
   "firstEndPos" : 14260,
   "secondEndPos" : 14260
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14222,
+  "secondPos" : 14222,
+  "firstEndPos" : 14228,
+  "secondEndPos" : 14228
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -12263,6 +12516,17 @@
   "secondPos" : 14268,
   "firstEndPos" : 14324,
   "secondEndPos" : 14324
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14268,
+  "secondPos" : 14268,
+  "firstEndPos" : 14275,
+  "secondEndPos" : 14275
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -12703,6 +12967,17 @@
   "secondPos" : 14636,
   "firstEndPos" : 14641,
   "secondEndPos" : 14641
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Password History may be too long...",
+  "secondLabel" : "// Password History may be too long...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14661,
+  "secondPos" : 14661,
+  "firstEndPos" : 14699,
+  "secondEndPos" : 14699
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13452,6 +13727,17 @@
   "firstEndPos" : 15392,
   "secondEndPos" : 15392
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15353,
+  "secondPos" : 15353,
+  "firstEndPos" : 15360,
+  "secondEndPos" : 15360
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether a saved pattern exists.",
@@ -13627,6 +13913,17 @@
   "secondPos" : 15588,
   "firstEndPos" : 15627,
   "secondEndPos" : 15627
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15588,
+  "secondPos" : 15588,
+  "firstEndPos" : 15595,
+  "secondEndPos" : 15595
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -13969,6 +14266,17 @@
   "firstEndPos" : 15955,
   "secondEndPos" : 15955
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15916,
+  "secondPos" : 15916,
+  "firstEndPos" : 15923,
+  "secondEndPos" : 15923
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether a saved pattern exists.",
@@ -14144,6 +14452,17 @@
   "secondPos" : 16154,
   "firstEndPos" : 16193,
   "secondEndPos" : 16193
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16154,
+  "secondPos" : 16154,
+  "firstEndPos" : 16161,
+  "secondEndPos" : 16161
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14497,6 +14816,17 @@
   "firstEndPos" : 16604,
   "secondEndPos" : 16604
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16553,
+  "secondPos" : 16553,
+  "firstEndPos" : 16560,
+  "secondEndPos" : 16560
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " True if the user has ever chosen a pattern.",
@@ -14683,6 +15013,17 @@
   "secondPos" : 16871,
   "firstEndPos" : 16927,
   "secondEndPos" : 16927
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16871,
+  "secondPos" : 16871,
+  "firstEndPos" : 16878,
+  "secondEndPos" : 16878
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14958,6 +15299,28 @@
   "secondPos" : 17251,
   "firstEndPos" : 17299,
   "secondEndPos" : 17299
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note we don't want to use getKeyguardStoredPasswordQuality() because we want this to",
+  "secondLabel" : "// Note we don't want to use getKeyguardStoredPasswordQuality() because we want this to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17309,
+  "secondPos" : 17309,
+  "firstEndPos" : 17396,
+  "secondEndPos" : 17396
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// return biometric_weak if that is being used instead of the backup",
+  "secondLabel" : "// return biometric_weak if that is being used instead of the backup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17405,
+  "secondPos" : 17405,
+  "firstEndPos" : 17473,
+  "secondEndPos" : 17473
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -16994,6 +17357,17 @@
   "firstEndPos" : 20439,
   "secondEndPos" : 20439
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20394,
+  "secondPos" : 20394,
+  "firstEndPos" : 20400,
+  "secondEndPos" : 20400
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "disable",
@@ -17258,6 +17632,17 @@
   "firstEndPos" : 20792,
   "secondEndPos" : 20792
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20746,
+  "secondPos" : 20746,
+  "firstEndPos" : 20753,
+  "secondEndPos" : 20753
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if lock screen is can be disabled",
@@ -17488,6 +17873,17 @@
   "secondPos" : 20913,
   "firstEndPos" : 21386,
   "secondEndPos" : 21386
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if the number of switchable users forces the lockscreen.",
+  "secondLabel" : "// Check if the number of switchable users forces the lockscreen.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20927,
+  "secondPos" : 20927,
+  "firstEndPos" : 20992,
+  "secondEndPos" : 20992
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19238,6 +19634,17 @@
   "firstEndPos" : 22223,
   "secondEndPos" : 22223
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22184,
+  "secondPos" : 22184,
+  "firstEndPos" : 22190,
+  "secondEndPos" : 22190
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pattern",
@@ -19534,6 +19941,17 @@
   "secondPos" : 22405,
   "firstEndPos" : 22444,
   "secondEndPos" : 22444
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22405,
+  "secondPos" : 22405,
+  "firstEndPos" : 22411,
+  "secondEndPos" : 22411
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19920,6 +20338,17 @@
   "firstEndPos" : 22794,
   "secondEndPos" : 22794
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22755,
+  "secondPos" : 22755,
+  "firstEndPos" : 22761,
+  "secondEndPos" : 22761
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pattern",
@@ -19953,6 +20382,17 @@
   "firstEndPos" : 22869,
   "secondEndPos" : 22869
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22802,
+  "secondPos" : 22802,
+  "firstEndPos" : 22808,
+  "secondEndPos" : 22808
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "isFallback",
@@ -19985,6 +20425,17 @@
   "secondPos" : 22877,
   "firstEndPos" : 22929,
   "secondEndPos" : 22929
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22877,
+  "secondPos" : 22877,
+  "firstEndPos" : 22883,
+  "secondEndPos" : 22883
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -20524,6 +20975,17 @@
   "secondPos" : 23274,
   "firstEndPos" : 24984,
   "secondEndPos" : 24984
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update the device encryption password.",
+  "secondLabel" : "// Update the device encryption password.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23292,
+  "secondPos" : 23292,
+  "firstEndPos" : 23333,
+  "secondEndPos" : 23333
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -26146,6 +26608,17 @@
   "firstEndPos" : 28013,
   "secondEndPos" : 28013
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Returns the maximum length of a sequential characters.  A sequence is defined as\n     * monotonically increasing characters with a constant interval or the same character repeated.\n     *\n     * For example:\n     * maxLengthSequence(\"1234\") == 4\n     * maxLengthSequence(\"1234abc\") == 4\n     * maxLengthSequence(\"aabc\") == 3\n     * maxLengthSequence(\"qwertyuio\") == 1\n     * maxLengthSequence(\"@ABC\") == 3\n     * maxLengthSequence(\";;;;\") == 4 (anything that repeats)\n     * maxLengthSequence(\":;<=>\") == 1  (ordered, but not composed of alphas or digits)\n     *\n     * @param string the pass\n     * @return the number of sequential letters or digits\n     */",
+  "secondLabel" : "/*\n     * Returns the maximum length of a sequential characters.  A sequence is defined as\n     * monotonically increasing characters with a constant interval or the same character repeated.\n     *\n     * For example:\n     * maxLengthSequence(\"1234\") == 4\n     * maxLengthSequence(\"1234abc\") == 4\n     * maxLengthSequence(\"aabc\") == 3\n     * maxLengthSequence(\"qwertyuio\") == 1\n     * maxLengthSequence(\"@ABC\") == 3\n     * maxLengthSequence(\";;;;\") == 4 (anything that repeats)\n     * maxLengthSequence(\":;<=>\") == 1  (ordered, but not composed of alphas or digits)\n     *\n     * @param string the pass\n     * @return the number of sequential letters or digits\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28026,
+  "secondPos" : 28026,
+  "firstEndPos" : 28694,
+  "secondEndPos" : 28694
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -26564,6 +27037,17 @@
   "firstEndPos" : 28890,
   "secondEndPos" : 28890
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//current category of the sequence",
+  "secondLabel" : "//current category of the sequence",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28893,
+  "secondPos" : 28893,
+  "firstEndPos" : 28927,
+  "secondEndPos" : 28927
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26618,6 +27102,17 @@
   "secondPos" : 28947,
   "firstEndPos" : 28948,
   "secondEndPos" : 28948
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//difference between two consecutive characters",
+  "secondLabel" : "//difference between two consecutive characters",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28950,
+  "secondPos" : 28950,
+  "firstEndPos" : 28997,
+  "secondEndPos" : 28997
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -26674,6 +27169,17 @@
   "firstEndPos" : 29029,
   "secondEndPos" : 29029
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if we are currently targeting a sequence",
+  "secondLabel" : "//if we are currently targeting a sequence",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29031,
+  "secondPos" : 29031,
+  "firstEndPos" : 29073,
+  "secondEndPos" : 29073
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26729,6 +27235,17 @@
   "firstEndPos" : 29099,
   "secondEndPos" : 29099
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//maximum length of a sequence already found",
+  "secondLabel" : "//maximum length of a sequence already found",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29101,
+  "secondPos" : 29101,
+  "firstEndPos" : 29145,
+  "secondEndPos" : 29145
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26783,6 +27300,17 @@
   "secondPos" : 29174,
   "firstEndPos" : 29175,
   "secondEndPos" : 29175
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//where the current sequence started",
+  "secondLabel" : "//where the current sequence started",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29177,
+  "secondPos" : 29177,
+  "firstEndPos" : 29213,
+  "secondEndPos" : 29213
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -29941,6 +30469,17 @@
   "firstEndPos" : 31407,
   "secondEndPos" : 31407
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31371,
+  "secondPos" : 31371,
+  "firstEndPos" : 31377,
+  "secondEndPos" : 31377
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -29974,6 +30513,17 @@
   "firstEndPos" : 31506,
   "secondEndPos" : 31506
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31415,
+  "secondPos" : 31415,
+  "firstEndPos" : 31421,
+  "secondEndPos" : 31421
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "quality",
@@ -30006,6 +30556,17 @@
   "secondPos" : 31430,
   "firstEndPos" : 31506,
   "secondEndPos" : 31506
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31430,
+  "secondPos" : 31430,
+  "firstEndPos" : 31434,
+  "secondEndPos" : 31434
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -30315,6 +30876,17 @@
   "firstEndPos" : 31862,
   "secondEndPos" : 31862
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31826,
+  "secondPos" : 31826,
+  "firstEndPos" : 31832,
+  "secondEndPos" : 31832
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -30347,6 +30919,17 @@
   "secondPos" : 31870,
   "firstEndPos" : 31961,
   "secondEndPos" : 31961
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31870,
+  "secondPos" : 31870,
+  "firstEndPos" : 31876,
+  "secondEndPos" : 31876
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -30381,6 +30964,17 @@
   "firstEndPos" : 31961,
   "secondEndPos" : 31961
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31885,
+  "secondPos" : 31885,
+  "firstEndPos" : 31889,
+  "secondEndPos" : 31889
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " DevicePolicyManager#getPasswordQuality(android.content.ComponentName)",
@@ -30402,6 +30996,17 @@
   "secondPos" : 31969,
   "firstEndPos" : 32036,
   "secondEndPos" : 32036
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31969,
+  "secondPos" : 31969,
+  "firstEndPos" : 31975,
+  "secondEndPos" : 31975
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -30744,6 +31349,17 @@
   "firstEndPos" : 32419,
   "secondEndPos" : 32419
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32383,
+  "secondPos" : 32383,
+  "firstEndPos" : 32389,
+  "secondEndPos" : 32389
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -30776,6 +31392,17 @@
   "secondPos" : 32427,
   "firstEndPos" : 32518,
   "secondEndPos" : 32518
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32427,
+  "secondPos" : 32427,
+  "firstEndPos" : 32433,
+  "secondEndPos" : 32433
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -30810,6 +31437,17 @@
   "firstEndPos" : 32518,
   "secondEndPos" : 32518
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32442,
+  "secondPos" : 32442,
+  "firstEndPos" : 32446,
+  "secondEndPos" : 32446
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " DevicePolicyManager#getPasswordQuality(android.content.ComponentName)",
@@ -30831,6 +31469,17 @@
   "secondPos" : 32526,
   "firstEndPos" : 32593,
   "secondEndPos" : 32593
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32526,
+  "secondPos" : 32526,
+  "firstEndPos" : 32532,
+  "secondEndPos" : 32532
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -30864,6 +31513,17 @@
   "secondPos" : 32601,
   "firstEndPos" : 32677,
   "secondEndPos" : 32677
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32601,
+  "secondPos" : 32601,
+  "firstEndPos" : 32607,
+  "secondEndPos" : 32607
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -31261,6 +31921,17 @@
   "firstEndPos" : 33185,
   "secondEndPos" : 33185
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33149,
+  "secondPos" : 33149,
+  "firstEndPos" : 33155,
+  "secondEndPos" : 33155
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "password",
@@ -31293,6 +31964,17 @@
   "secondPos" : 33193,
   "firstEndPos" : 33284,
   "secondEndPos" : 33284
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33193,
+  "secondPos" : 33193,
+  "firstEndPos" : 33199,
+  "secondEndPos" : 33199
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -31327,6 +32009,17 @@
   "firstEndPos" : 33284,
   "secondEndPos" : 33284
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33208,
+  "secondPos" : 33208,
+  "firstEndPos" : 33212,
+  "secondEndPos" : 33212
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " DevicePolicyManager#getPasswordQuality(android.content.ComponentName)",
@@ -31348,6 +32041,17 @@
   "secondPos" : 33292,
   "firstEndPos" : 33359,
   "secondEndPos" : 33359
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33292,
+  "secondPos" : 33292,
+  "firstEndPos" : 33298,
+  "secondEndPos" : 33298
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -31381,6 +32085,17 @@
   "secondPos" : 33367,
   "firstEndPos" : 33434,
   "secondEndPos" : 33434
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33367,
+  "secondPos" : 33367,
+  "firstEndPos" : 33373,
+  "secondEndPos" : 33373
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -32019,6 +32734,17 @@
   "secondPos" : 33835,
   "firstEndPos" : 33843,
   "secondEndPos" : 33843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update the device encryption password.",
+  "secondLabel" : "// Update the device encryption password.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33863,
+  "secondPos" : 33863,
+  "firstEndPos" : 33904,
+  "secondEndPos" : 33904
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -34627,6 +35353,17 @@
   "firstEndPos" : 36572,
   "secondEndPos" : 36572
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The password is not anything.",
+  "secondLabel" : "// The password is not anything.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36318,
+  "secondPos" : 36318,
+  "firstEndPos" : 36350,
+  "secondEndPos" : 36350
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -35001,6 +35738,17 @@
   "firstEndPos" : 37285,
   "secondEndPos" : 37285
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Case where it's a fallback for biometric weak",
+  "secondLabel" : "// Case where it's a fallback for biometric weak",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36806,
+  "secondPos" : 36806,
+  "firstEndPos" : 36854,
+  "secondEndPos" : 36854
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -35297,6 +36045,28 @@
   "secondPos" : 37251,
   "firstEndPos" : 37261,
   "secondEndPos" : 37261
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add the password to the password history. We assume all",
+  "secondLabel" : "// Add the password to the password history. We assume all",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37320,
+  "secondPos" : 37320,
+  "firstEndPos" : 37378,
+  "secondEndPos" : 37378
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// password hashes have the same length for simplicity of implementation.",
+  "secondLabel" : "// password hashes have the same length for simplicity of implementation.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37395,
+  "secondPos" : 37395,
+  "firstEndPos" : 37468,
+  "secondEndPos" : 37468
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -35980,6 +36750,28 @@
   "firstEndPos" : 38010,
   "secondEndPos" : 38010
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Cut it to contain passwordHistoryLength hashes",
+  "secondLabel" : "// Cut it to contain passwordHistoryLength hashes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38032,
+  "secondPos" : 38032,
+  "firstEndPos" : 38081,
+  "secondEndPos" : 38081
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and passwordHistoryLength -1 commas.",
+  "secondLabel" : "// and passwordHistoryLength -1 commas.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38102,
+  "secondPos" : 38102,
+  "firstEndPos" : 38141,
+  "secondEndPos" : 38141
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -36387,6 +37179,17 @@
   "firstEndPos" : 39005,
   "secondEndPos" : 39005
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Empty password",
+  "secondLabel" : "// Empty password",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38501,
+  "secondPos" : 38501,
+  "firstEndPos" : 38518,
+  "secondEndPos" : 38518
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -36551,6 +37354,17 @@
   "secondPos" : 38645,
   "firstEndPos" : 38814,
   "secondEndPos" : 38814
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the encryption password to default.",
+  "secondLabel" : "// Set the encryption password to default.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38667,
+  "secondPos" : 38667,
+  "firstEndPos" : 38709,
+  "secondEndPos" : 38709
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36904,6 +37718,17 @@
   "firstEndPos" : 39193,
   "secondEndPos" : 39193
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Cant do much",
+  "secondLabel" : "// Cant do much",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39106,
+  "secondPos" : 39106,
+  "firstEndPos" : 39121,
+  "secondEndPos" : 39121
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -37079,6 +37904,17 @@
   "secondPos" : 39268,
   "firstEndPos" : 39308,
   "secondEndPos" : 39308
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 39268,
+  "secondPos" : 39268,
+  "firstEndPos" : 39275,
+  "secondEndPos" : 39275
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -37795,6 +38631,17 @@
   "firstEndPos" : 40099,
   "secondEndPos" : 40099
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40055,
+  "secondPos" : 40055,
+  "firstEndPos" : 40062,
+  "secondEndPos" : 40062
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if device encryption is enabled",
@@ -38290,6 +39137,17 @@
   "firstEndPos" : 40626,
   "secondEndPos" : 40626
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40550,
+  "secondPos" : 40550,
+  "firstEndPos" : 40554,
+  "secondEndPos" : 40554
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " DevicePolicyManager#getPasswordQuality(android.content.ComponentName)",
@@ -38311,6 +39169,17 @@
   "secondPos" : 40641,
   "firstEndPos" : 40672,
   "secondEndPos" : 40672
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40641,
+  "secondPos" : 40641,
+  "firstEndPos" : 40648,
+  "secondEndPos" : 40648
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -38488,6 +39357,17 @@
   "firstEndPos" : 40883,
   "secondEndPos" : 40883
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40864,
+  "secondPos" : 40864,
+  "firstEndPos" : 40870,
+  "secondEndPos" : 40870
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " userHandle",
@@ -38521,6 +39401,17 @@
   "firstEndPos" : 40968,
   "secondEndPos" : 40968
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40892,
+  "secondPos" : 40892,
+  "firstEndPos" : 40896,
+  "secondEndPos" : 40896
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " DevicePolicyManager#getPasswordQuality(android.content.ComponentName)",
@@ -38542,6 +39433,17 @@
   "secondPos" : 40983,
   "firstEndPos" : 41014,
   "secondEndPos" : 41014
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40983,
+  "secondPos" : 40983,
+  "firstEndPos" : 40990,
+  "secondEndPos" : 40990
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -38762,6 +39664,28 @@
   "secondPos" : 41210,
   "firstEndPos" : 41220,
   "secondEndPos" : 41220
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the user has chosen to use weak biometric sensor, then return the backup locking",
+  "secondLabel" : "// If the user has chosen to use weak biometric sensor, then return the backup locking",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41231,
+  "secondPos" : 41231,
+  "firstEndPos" : 41317,
+  "secondEndPos" : 41317
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// method and treat biometric as a special case.",
+  "secondLabel" : "// method and treat biometric as a special case.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41326,
+  "secondPos" : 41326,
+  "firstEndPos" : 41374,
+  "secondEndPos" : 41374
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -39016,6 +39940,17 @@
   "firstEndPos" : 41723,
   "secondEndPos" : 41723
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 41661,
+  "secondPos" : 41661,
+  "firstEndPos" : 41668,
+  "secondEndPos" : 41668
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if the lockscreen method is set to biometric weak",
@@ -39169,6 +40104,17 @@
   "secondPos" : 41860,
   "firstEndPos" : 41922,
   "secondEndPos" : 41922
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 41860,
+  "secondPos" : 41860,
+  "firstEndPos" : 41867,
+  "secondEndPos" : 41867
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -39478,6 +40424,17 @@
   "firstEndPos" : 42274,
   "secondEndPos" : 42274
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42215,
+  "secondPos" : 42215,
+  "firstEndPos" : 42222,
+  "secondEndPos" : 42222
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if the lockscreen method is set to fingerprint",
@@ -39488,6 +40445,17 @@
   "secondPos" : 42222,
   "firstEndPos" : 42274,
   "secondEndPos" : 42274
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@hide",
+  "secondLabel" : "@hide",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42282,
+  "secondPos" : 42282,
+  "firstEndPos" : 42287,
+  "secondEndPos" : 42287
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -39643,6 +40611,17 @@
   "firstEndPos" : 42479,
   "secondEndPos" : 42479
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42420,
+  "secondPos" : 42420,
+  "firstEndPos" : 42427,
+  "secondEndPos" : 42427
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if the lockscreen method is set to fingerprint",
@@ -39653,6 +40632,17 @@
   "secondPos" : 42427,
   "firstEndPos" : 42479,
   "secondEndPos" : 42479
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@hide",
+  "secondLabel" : "@hide",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42487,
+  "secondPos" : 42487,
+  "firstEndPos" : 42492,
+  "secondEndPos" : 42492
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -40138,6 +41128,17 @@
   "firstEndPos" : 42949,
   "secondEndPos" : 42949
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@hide",
+  "secondLabel" : "@hide",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 42936,
+  "secondPos" : 42936,
+  "firstEndPos" : 42941,
+  "secondEndPos" : 42941
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -40280,6 +41281,17 @@
   "secondPos" : 43044,
   "firstEndPos" : 43068,
   "secondEndPos" : 43068
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@hide",
+  "secondLabel" : "@hide",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43055,
+  "secondPos" : 43055,
+  "firstEndPos" : 43060,
+  "secondEndPos" : 43060
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -40798,6 +41810,17 @@
   "firstEndPos" : 43554,
   "secondEndPos" : 43554
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43514,
+  "secondPos" : 43514,
+  "firstEndPos" : 43521,
+  "secondEndPos" : 43521
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " whether fingerprint is installed",
@@ -40808,6 +41831,17 @@
   "secondPos" : 43521,
   "firstEndPos" : 43554,
   "secondEndPos" : 43554
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@hide",
+  "secondLabel" : "@hide",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43562,
+  "secondPos" : 43562,
+  "firstEndPos" : 43567,
+  "secondEndPos" : 43567
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -41073,6 +42107,17 @@
   "firstEndPos" : 43852,
   "secondEndPos" : 43852
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43786,
+  "secondPos" : 43786,
+  "firstEndPos" : 43792,
+  "secondEndPos" : 43792
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "string",
@@ -41106,6 +42151,17 @@
   "firstEndPos" : 43852,
   "secondEndPos" : 43852
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43828,
+  "secondPos" : 43828,
+  "firstEndPos" : 43833,
+  "secondEndPos" : 43833
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -41138,6 +42194,17 @@
   "secondPos" : 43860,
   "firstEndPos" : 43880,
   "secondEndPos" : 43880
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43860,
+  "secondPos" : 43860,
+  "firstEndPos" : 43867,
+  "secondEndPos" : 43867
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -42107,6 +43174,17 @@
   "firstEndPos" : 44436,
   "secondEndPos" : 44830
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 44409,
+  "secondPos" : 44803,
+  "firstEndPos" : 44415,
+  "secondEndPos" : 44809
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pattern",
@@ -42139,6 +43217,17 @@
   "secondPos" : 44838,
   "firstEndPos" : 44479,
   "secondEndPos" : 44873
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 44444,
+  "secondPos" : 44838,
+  "firstEndPos" : 44451,
+  "secondEndPos" : 44845
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -42415,6 +43504,17 @@
   "firstEndPos" : 44700,
   "secondEndPos" : 45094
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 44673,
+  "secondPos" : 45067,
+  "firstEndPos" : 44679,
+  "secondEndPos" : 45073
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pattern",
@@ -42448,6 +43548,17 @@
   "firstEndPos" : 44747,
   "secondEndPos" : 45141
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 44708,
+  "secondPos" : 45102,
+  "firstEndPos" : 44714,
+  "secondEndPos" : 45108
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "patternGridSize",
@@ -42480,6 +43591,17 @@
   "secondPos" : 45149,
   "firstEndPos" : 44790,
   "secondEndPos" : 45184
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 44755,
+  "secondPos" : 45149,
+  "firstEndPos" : 44762,
+  "secondEndPos" : 45156
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -43547,6 +44669,17 @@
   "secondPos" : 45672,
   "firstEndPos" : 45281,
   "secondEndPos" : 45675
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Generate an SHA-1 hash for the pattern. Not the most secure, but it is\n     * at least a second level of protection. First level is that the file\n     * is in a location only readable by the system process.\n     * @param pattern the gesture pattern.\n     * @return the hash of the pattern in a byte array.\n     */",
+  "secondLabel" : "/*\n     * Generate an SHA-1 hash for the pattern. Not the most secure, but it is\n     * at least a second level of protection. First level is that the file\n     * is in a location only readable by the system process.\n     * @param pattern the gesture pattern.\n     * @return the hash of the pattern in a byte array.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 45295,
+  "secondPos" : 46249,
+  "firstEndPos" : 45618,
+  "secondEndPos" : 46572
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -45627,6 +46760,17 @@
   "firstEndPos" : 46904,
   "secondEndPos" : 47858
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw an exception rather than storing a password we'll never be able to recover",
+  "secondLabel" : "// Throw an exception rather than storing a password we'll never be able to recover",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46719,
+  "secondPos" : 47673,
+  "firstEndPos" : 46802,
+  "secondEndPos" : 47756
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -45769,6 +46913,17 @@
   "secondPos" : 47901,
   "firstEndPos" : 46951,
   "secondEndPos" : 47905
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Generate a hash for the given password. To avoid brute force attacks, we use a salted hash.\n     * Not the most secure, but it is at least a second level of protection. First level is that\n     * the file is in a location only readable by the system process.\n     * @param password the gesture pattern.\n     * @return the hash of the pattern in a byte array.\n     */",
+  "secondLabel" : "/*\n     * Generate a hash for the given password. To avoid brute force attacks, we use a salted hash.\n     * Not the most secure, but it is at least a second level of protection. First level is that\n     * the file is in a location only readable by the system process.\n     * @param password the gesture pattern.\n     * @return the hash of the pattern in a byte array.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 46965,
+  "secondPos" : 47919,
+  "firstEndPos" : 47341,
+  "secondEndPos" : 48295
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -48069,6 +49224,17 @@
   "firstEndPos" : 48445,
   "secondEndPos" : 49399
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 48353,
+  "secondPos" : 49307,
+  "firstEndPos" : 48360,
+  "secondEndPos" : 49314
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the lock password is enabled, or if it is set as a backup for biometric weak",
@@ -49246,6 +50412,17 @@
   "firstEndPos" : 49673,
   "secondEndPos" : 50627
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 49582,
+  "secondPos" : 50536,
+  "firstEndPos" : 49589,
+  "secondEndPos" : 50543
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the lock pattern is enabled, or if it is set as a backup for biometric weak",
@@ -49399,6 +50576,17 @@
   "secondPos" : 50768,
   "firstEndPos" : 49905,
   "secondEndPos" : 50859
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 49814,
+  "secondPos" : 50768,
+  "firstEndPos" : 49821,
+  "secondEndPos" : 50775
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -49994,6 +51182,17 @@
   "firstEndPos" : 50668,
   "secondEndPos" : 51622
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 50580,
+  "secondPos" : 51534,
+  "firstEndPos" : 50587,
+  "secondEndPos" : 51541
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether biometric weak lock is installed and that the front facing camera exists",
@@ -50048,6 +51247,17 @@
   "secondPos" : 51677,
   "firstEndPos" : 51689,
   "secondEndPos" : 52643
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check that it's installed",
+  "secondLabel" : "// Check that it's installed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50733,
+  "secondPos" : 51687,
+  "firstEndPos" : 50761,
+  "secondEndPos" : 51715
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -50346,6 +51556,17 @@
   "firstEndPos" : 51003,
   "secondEndPos" : 51957
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check that the camera is enabled",
+  "secondLabel" : "// Check that the camera is enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51024,
+  "secondPos" : 51978,
+  "firstEndPos" : 51059,
+  "secondEndPos" : 52013
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -50620,6 +51841,39 @@
   "secondPos" : 52235,
   "firstEndPos" : 51286,
   "secondEndPos" : 52240
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: If we decide not to proceed with Face Unlock as a trustlet, this must be changed",
+  "secondLabel" : "// TODO: If we decide not to proceed with Face Unlock as a trustlet, this must be changed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51307,
+  "secondPos" : 52261,
+  "firstEndPos" : 51396,
+  "secondEndPos" : 52350
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// back to returning true.  If we become certain that Face Unlock will be a trustlet, this",
+  "secondLabel" : "// back to returning true.  If we become certain that Face Unlock will be a trustlet, this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51405,
+  "secondPos" : 52359,
+  "firstEndPos" : 51495,
+  "secondEndPos" : 52449
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entire function and a lot of other code can be removed.",
+  "secondLabel" : "// entire function and a lot of other code can be removed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51504,
+  "secondPos" : 52458,
+  "firstEndPos" : 51562,
+  "secondEndPos" : 52516
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -51358,6 +52612,17 @@
   "firstEndPos" : 52273,
   "secondEndPos" : 53227
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 52216,
+  "secondPos" : 53170,
+  "firstEndPos" : 52223,
+  "secondEndPos" : 53177
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the biometric weak liveliness is enabled.",
@@ -52084,6 +53349,17 @@
   "firstEndPos" : 52980,
   "secondEndPos" : 53934
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 52933,
+  "secondPos" : 53887,
+  "firstEndPos" : 52940,
+  "secondEndPos" : 53894
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the visible pattern is enabled.",
@@ -52391,6 +53667,17 @@
   "secondPos" : 54253,
   "firstEndPos" : 53306,
   "secondEndPos" : 54260
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update for crypto if owner",
+  "secondLabel" : "// Update for crypto if owner",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53318,
+  "secondPos" : 54272,
+  "firstEndPos" : 53347,
+  "secondEndPos" : 54301
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -53283,6 +54570,17 @@
   "firstEndPos" : 54065,
   "secondEndPos" : 55019
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 54005,
+  "secondPos" : 54959,
+  "firstEndPos" : 54012,
+  "secondEndPos" : 54966
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether tactile feedback for the pattern is enabled.",
@@ -53513,6 +54811,17 @@
   "secondPos" : 55252,
   "firstEndPos" : 54333,
   "secondEndPos" : 55287
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 54298,
+  "secondPos" : 55252,
+  "firstEndPos" : 54305,
+  "secondEndPos" : 55259
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -54691,6 +56000,17 @@
   "firstEndPos" : 55426,
   "secondEndPos" : 56380
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 55398,
+  "secondPos" : 56352,
+  "firstEndPos" : 55405,
+  "secondEndPos" : 56359
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the chosen deadline.",
@@ -54998,6 +56318,17 @@
   "secondPos" : 56624,
   "firstEndPos" : 55851,
   "secondEndPos" : 56805
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 55670,
+  "secondPos" : 56624,
+  "firstEndPos" : 55677,
+  "secondEndPos" : 56631
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -55538,6 +56869,17 @@
   "firstEndPos" : 56363,
   "secondEndPos" : 57317
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 56189,
+  "secondPos" : 57143,
+  "firstEndPos" : 56196,
+  "secondEndPos" : 57150
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether the user is permanently locked out until they verify their",
@@ -55570,6 +56912,17 @@
   "secondPos" : 57254,
   "firstEndPos" : 56337,
   "secondEndPos" : 57291
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 56300,
+  "secondPos" : 57254,
+  "firstEndPos" : 56305,
+  "secondEndPos" : 57259
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -55791,6 +57144,17 @@
   "firstEndPos" : 56806,
   "secondEndPos" : 57760
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 56626,
+  "secondPos" : 57580,
+  "firstEndPos" : 56632,
+  "secondEndPos" : 57586
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "locked",
@@ -55834,6 +57198,17 @@
   "secondPos" : 57697,
   "firstEndPos" : 56780,
   "secondEndPos" : 57734
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 56743,
+  "secondPos" : 57697,
+  "firstEndPos" : 56748,
+  "secondEndPos" : 57702
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -56549,6 +57924,17 @@
   "secondPos" : 58461,
   "firstEndPos" : 57629,
   "secondEndPos" : 58583
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 57507,
+  "secondPos" : 58461,
+  "firstEndPos" : 57514,
+  "secondEndPos" : 58468
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -57825,6 +59211,17 @@
   "secondPos" : 59499,
   "firstEndPos" : 58662,
   "secondEndPos" : 59616
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// What can we do?",
+  "secondLabel" : "// What can we do?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58559,
+  "secondPos" : 59513,
+  "firstEndPos" : 58577,
+  "secondEndPos" : 59531
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -61632,6 +63029,28 @@
   "firstEndPos" : 60812,
   "secondEndPos" : 61766
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// appwidget used when appwidgets are disabled (we make an exception for",
+  "secondLabel" : "// appwidget used when appwidgets are disabled (we make an exception for",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 60827,
+  "secondPos" : 61781,
+  "firstEndPos" : 60899,
+  "secondEndPos" : 61853
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default clock widget)",
+  "secondLabel" : "// default clock widget)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 60904,
+  "secondPos" : 61858,
+  "firstEndPos" : 60928,
+  "secondEndPos" : 61882
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -61829,6 +63248,28 @@
   "secondPos" : 62111,
   "firstEndPos" : 61180,
   "secondEndPos" : 62134
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// appwidget used when appwidgets are disabled (we make an exception for",
+  "secondLabel" : "// appwidget used when appwidgets are disabled (we make an exception for",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 61194,
+  "secondPos" : 62148,
+  "firstEndPos" : 61266,
+  "secondEndPos" : 62220
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default clock widget)",
+  "secondLabel" : "// default clock widget)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 61271,
+  "secondPos" : 62225,
+  "firstEndPos" : 61295,
+  "secondEndPos" : 62249
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -62258,6 +63699,17 @@
   "secondPos" : 62807,
   "firstEndPos" : 61876,
   "secondEndPos" : 62830
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: log an error if this returns false",
+  "secondLabel" : "// TODO: log an error if this returns false",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 61890,
+  "secondPos" : 62844,
+  "firstEndPos" : 61933,
+  "secondEndPos" : 62887
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -64217,6 +65669,17 @@
   "firstEndPos" : 62972,
   "secondEndPos" : 63926
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// continue...",
+  "secondLabel" : "// continue...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 62944,
+  "secondPos" : 63898,
+  "firstEndPos" : 62958,
+  "secondEndPos" : 63912
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -64282,6 +65745,17 @@
   "secondPos" : 63960,
   "firstEndPos" : 63098,
   "secondEndPos" : 64052
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we couldn't find the widget",
+  "secondLabel" : "// we couldn't find the widget",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 63024,
+  "secondPos" : 63978,
+  "firstEndPos" : 63054,
+  "secondEndPos" : 64008
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -65867,6 +67341,17 @@
   "firstEndPos" : 64304,
   "secondEndPos" : 65258
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// What can we do?",
+  "secondLabel" : "// What can we do?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 64204,
+  "secondPos" : 65158,
+  "firstEndPos" : 64222,
+  "secondEndPos" : 65176
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -66922,6 +68407,17 @@
   "secondPos" : 65866,
   "firstEndPos" : 65028,
   "secondEndPos" : 65982
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// What can we do?",
+  "secondLabel" : "// What can we do?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 64926,
+  "secondPos" : 65880,
+  "firstEndPos" : 64944,
+  "secondEndPos" : 65898
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -68243,6 +69739,17 @@
   "firstEndPos" : 66449,
   "secondEndPos" : 67403
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check device policy",
+  "secondLabel" : "// Check device policy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 66037,
+  "secondPos" : 66991,
+  "firstEndPos" : 66059,
+  "secondEndPos" : 67013
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -68418,6 +69925,17 @@
   "secondPos" : 67142,
   "firstEndPos" : 66286,
   "secondEndPos" : 67240
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Always enforce lock screen",
+  "secondLabel" : "// Always enforce lock screen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 66202,
+  "secondPos" : 67156,
+  "firstEndPos" : 66231,
+  "secondEndPos" : 67185
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -68760,6 +70278,17 @@
   "firstEndPos" : 66806,
   "secondEndPos" : 67760
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66772,
+  "secondPos" : 67726,
+  "firstEndPos" : 66778,
+  "secondEndPos" : 67732
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "button",
@@ -68793,6 +70322,17 @@
   "firstEndPos" : 66903,
   "secondEndPos" : 67857
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66814,
+  "secondPos" : 67768,
+  "firstEndPos" : 66820,
+  "secondEndPos" : 67774
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "shown",
@@ -68825,6 +70365,17 @@
   "secondPos" : 67865,
   "firstEndPos" : 66981,
   "secondEndPos" : 67935
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 66911,
+  "secondPos" : 67865,
+  "firstEndPos" : 66917,
+  "secondEndPos" : 67871
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -69342,6 +70893,17 @@
   "secondPos" : 68275,
   "firstEndPos" : 67614,
   "secondEndPos" : 68568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show \"return to call\" text and show phone icon",
+  "secondLabel" : "// show \"return to call\" text and show phone icon",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67335,
+  "secondPos" : 68289,
+  "firstEndPos" : 67384,
+  "secondEndPos" : 68338
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -70157,6 +71719,17 @@
   "firstEndPos" : 68209,
   "secondEndPos" : 69163
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68122,
+  "secondPos" : 69076,
+  "firstEndPos" : 68129,
+  "secondEndPos" : 69083
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ",
@@ -70178,6 +71751,17 @@
   "secondPos" : 69084,
   "firstEndPos" : 68142,
   "secondEndPos" : 69096
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68130,
+  "secondPos" : 69084,
+  "firstEndPos" : 68135,
+  "secondEndPos" : 69089
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -70211,6 +71795,17 @@
   "secondPos" : 69139,
   "firstEndPos" : 68198,
   "secondEndPos" : 69152
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 68185,
+  "secondPos" : 69139,
+  "firstEndPos" : 68190,
+  "secondEndPos" : 69144
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -70684,6 +72279,28 @@
   "secondPos" : 69508,
   "firstEndPos" : 68560,
   "secondEndPos" : 69514
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Launch intent to show final screen, this also",
+  "secondLabel" : "// Launch intent to show final screen, this also",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68572,
+  "secondPos" : 69526,
+  "firstEndPos" : 68620,
+  "secondEndPos" : 69574
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// moves the temporary gallery to the actual gallery",
+  "secondLabel" : "// moves the temporary gallery to the actual gallery",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 68629,
+  "secondPos" : 69583,
+  "firstEndPos" : 68681,
+  "secondEndPos" : 69635
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -71576,6 +73193,17 @@
   "firstEndPos" : 69451,
   "secondEndPos" : 70405
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Shouldn't happen!",
+  "secondLabel" : "// Shouldn't happen!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 69421,
+  "secondPos" : 70375,
+  "firstEndPos" : 69441,
+  "secondEndPos" : 70395
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -71652,6 +73280,17 @@
   "secondPos" : 70539,
   "firstEndPos" : 69627,
   "secondEndPos" : 70581
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 69585,
+  "secondPos" : 70539,
+  "firstEndPos" : 69592,
+  "secondEndPos" : 70546
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -75007,6 +76646,17 @@
   "secondPos" : 72758,
   "firstEndPos" : 71873,
   "secondEndPos" : 72827
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 71804,
+  "secondPos" : 72758,
+  "firstEndPos" : 71808,
+  "secondEndPos" : 72762
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",

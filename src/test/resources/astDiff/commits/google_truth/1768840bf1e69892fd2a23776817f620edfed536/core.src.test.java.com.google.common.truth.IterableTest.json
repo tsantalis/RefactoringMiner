@@ -10,6 +10,17 @@
   "firstEndPos" : 23910,
   "secondEndPos" : 27201
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2011 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2011 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 595,
+  "secondEndPos" : 595
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -538,6 +549,17 @@
   "firstEndPos" : 1187,
   "secondEndPos" : 1128
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1169,
+  "secondPos" : 1110,
+  "firstEndPos" : 1176,
+  "secondEndPos" : 1117
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstLabel" : "",
@@ -614,6 +636,17 @@
   "secondPos" : 1132,
   "firstEndPos" : 1237,
   "secondEndPos" : 1178
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1191,
+  "secondPos" : 1132,
+  "firstEndPos" : 1198,
+  "secondEndPos" : 1139
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2693,6 +2726,28 @@
   "secondPos" : 23987,
   "firstEndPos" : 1746,
   "secondEndPos" : 24018
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Object",
+  "secondLabel" : "Object",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 1717,
+  "secondPos" : 23995,
+  "firstEndPos" : 1723,
+  "secondEndPos" : 24001
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 1717,
+  "secondPos" : 23995,
+  "firstEndPos" : 1723,
+  "secondEndPos" : 24001
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5675,6 +5730,28 @@
   "firstEndPos" : 2699,
   "secondEndPos" : 2632
 }, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Object",
+  "secondLabel" : "Object",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 2464,
+  "secondPos" : 24703,
+  "firstEndPos" : 2470,
+  "secondEndPos" : 24709
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 2464,
+  "secondPos" : 24703,
+  "firstEndPos" : 2470,
+  "secondEndPos" : 24709
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -6840,6 +6917,17 @@
   "secondPos" : 2736,
   "firstEndPos" : 2815,
   "secondEndPos" : 2748
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note: Use \"10\" and \"20\" to distinguish numerical and lexicographical ordering.",
+  "secondLabel" : "// Note: Use \"10\" and \"20\" to distinguish numerical and lexicographical ordering.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2810,
+  "secondPos" : 25075,
+  "firstEndPos" : 2891,
+  "secondEndPos" : 25156
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18391,6 +18479,17 @@
   "firstEndPos" : 7219,
   "secondEndPos" : 7011
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Slightly subtle test to ensure that if multiple equal elements are found\n   * to be missing we only reference it once in the output message.\n   */",
+  "secondLabel" : "/*\n   * Slightly subtle test to ensure that if multiple equal elements are found\n   * to be missing we only reference it once in the output message.\n   */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7235,
+  "secondPos" : 7027,
+  "firstEndPos" : 7389,
+  "secondEndPos" : 7181
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -26982,6 +27081,17 @@
   "firstEndPos" : 12157,
   "secondEndPos" : 11924
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This test fails w/o the explicit cast",
+  "secondLabel" : "// This test fails w/o the explicit cast",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12164,
+  "secondPos" : 11931,
+  "firstEndPos" : 12204,
+  "secondEndPos" : 11971
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -35429,6 +35539,17 @@
   "secondPos" : 16987,
   "firstEndPos" : 17304,
   "secondEndPos" : 17029
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Slightly subtle test to ensure that if multiple equal elements are found\n   * to be missing we only reference it once in the output message.\n   */",
+  "secondLabel" : "/*\n   * Slightly subtle test to ensure that if multiple equal elements are found\n   * to be missing we only reference it once in the output message.\n   */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 17320,
+  "secondPos" : 17045,
+  "firstEndPos" : 17474,
+  "secondEndPos" : 17199
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

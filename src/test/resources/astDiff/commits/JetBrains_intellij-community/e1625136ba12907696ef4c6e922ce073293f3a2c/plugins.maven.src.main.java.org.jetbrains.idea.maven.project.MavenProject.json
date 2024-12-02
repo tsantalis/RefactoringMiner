@@ -10,6 +10,17 @@
   "firstEndPos" : 40182,
   "secondEndPos" : 40512
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2013 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2013 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1783,6 +1794,50 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 2393,
+  "secondPos" : 2393,
+  "firstEndPos" : 2399,
+  "secondEndPos" : 2399
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 2393,
+  "secondPos" : 2393,
+  "firstEndPos" : 2399,
+  "secondEndPos" : 2399
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 2400,
+  "secondPos" : 2400,
+  "firstEndPos" : 2406,
+  "secondEndPos" : 2406
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 2400,
+  "secondPos" : 2400,
+  "firstEndPos" : 2406,
+  "secondEndPos" : 2406
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "immutableMapBuilder",
   "secondLabel" : "immutableMapBuilder",
   "firstParentType" : "MethodInvocation",
@@ -2979,6 +3034,17 @@
   "secondPos" : 2959,
   "firstEndPos" : 2964,
   "secondEndPos" : 2964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should read full byte content first!!!",
+  "secondLabel" : "// should read full byte content first!!!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2972,
+  "secondPos" : 2972,
+  "firstEndPos" : 3013,
+  "secondEndPos" : 3013
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14760,6 +14826,17 @@
   "secondPos" : 9962,
   "firstEndPos" : 9966,
   "secondEndPos" : 9966
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// module name can be relative and contain either / of \\\\ separators",
+  "secondLabel" : "// module name can be relative and contain either / of \\\\ separators",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9974,
+  "secondPos" : 9974,
+  "firstEndPos" : 10042,
+  "secondEndPos" : 10042
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -34407,6 +34484,17 @@
   "firstEndPos" : 23479,
   "secondEndPos" : 23809
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo a bit hacky",
+  "secondLabel" : "// todo a bit hacky",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23393,
+  "secondPos" : 23723,
+  "firstEndPos" : 23412,
+  "secondEndPos" : 23742
+}, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "SynchronizedStatement",
   "firstLabel" : "",
@@ -40313,6 +40401,39 @@
   "secondPos" : 27412,
   "firstEndPos" : 27459,
   "secondEndPos" : 27789
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Collect only extensions that were attempted to be resolved.",
+  "secondLabel" : "// Collect only extensions that were attempted to be resolved.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27094,
+  "secondPos" : 27424,
+  "firstEndPos" : 27156,
+  "secondEndPos" : 27486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It is because embedder does not even try to resolve extensions that",
+  "secondLabel" : "// It is because embedder does not even try to resolve extensions that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27167,
+  "secondPos" : 27497,
+  "firstEndPos" : 27237,
+  "secondEndPos" : 27567
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are not necessary.",
+  "secondLabel" : "// are not necessary.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27248,
+  "secondPos" : 27578,
+  "firstEndPos" : 27269,
+  "secondEndPos" : 27599
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -53173,6 +53294,17 @@
   "firstEndPos" : 35463,
   "secondEndPos" : 35793
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// getSuitableImporters() guarantees that all returned importers require the same module type",
+  "secondLabel" : "// getSuitableImporters() guarantees that all returned importers require the same module type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35471,
+  "secondPos" : 35801,
+  "firstEndPos" : 35564,
+  "secondEndPos" : 35894
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -54822,6 +54954,17 @@
   "secondPos" : 36763,
   "firstEndPos" : 36507,
   "secondEndPos" : 36837
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection unchecked",
+  "secondLabel" : "//noinspection unchecked",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36439,
+  "secondPos" : 36769,
+  "firstEndPos" : 36463,
+  "secondEndPos" : 36793
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

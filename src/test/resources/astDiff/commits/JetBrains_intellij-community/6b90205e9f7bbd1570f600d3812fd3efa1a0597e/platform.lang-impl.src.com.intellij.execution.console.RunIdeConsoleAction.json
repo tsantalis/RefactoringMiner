@@ -10,6 +10,17 @@
   "firstEndPos" : 13624,
   "secondEndPos" : 12307
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -966,6 +977,17 @@
   "secondPos" : 2520,
   "firstEndPos" : 2619,
   "secondEndPos" : 2534
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2605,
+  "secondPos" : 2520,
+  "firstEndPos" : 2612,
+  "secondEndPos" : 2527
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7787,6 +7809,17 @@
   "firstEndPos" : 6820,
   "secondEndPos" : 6691
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//myHistoryController.getModel().addToHistory(command);",
+  "secondLabel" : "//myHistoryController.getModel().addToHistory(command);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6390,
+  "secondPos" : 6261,
+  "firstEndPos" : 6445,
+  "secondEndPos" : 6316
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8501,6 +8534,17 @@
   "secondPos" : 6716,
   "firstEndPos" : 7146,
   "secondEndPos" : 7017
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection ThrowableResultOfMethodCallIgnored",
+  "secondLabel" : "//noinspection ThrowableResultOfMethodCallIgnored",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6853,
+  "secondPos" : 6724,
+  "firstEndPos" : 6902,
+  "secondEndPos" : 6773
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17983,6 +18027,17 @@
   "secondPos" : 11974,
   "firstEndPos" : 12435,
   "secondEndPos" : 12077
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO ignore ?",
+  "secondLabel" : "//TODO ignore ?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12344,
+  "secondPos" : 11986,
+  "firstEndPos" : 12359,
+  "secondEndPos" : 12001
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 6325,
   "secondEndPos" : 3981
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n* Licensed to the Apache Software Foundation (ASF) under one\n* or more contributor license agreements.  See the NOTICE file\n* distributed with this work for additional information\n* regarding copyright ownership.  The ASF licenses this file\n* to you under the Apache License, Version 2.0 (the\n* \"License\"); you may not use this file except in compliance\n* with the License.  You may obtain a copy of the License at\n*\n*    http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing,\n* software distributed under the License is distributed on an\n* \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n* KIND, either express or implied.  See the License for the\n* specific language governing permissions and limitations\n* under the License.\n*/",
+  "secondLabel" : "/*\n* Licensed to the Apache Software Foundation (ASF) under one\n* or more contributor license agreements.  See the NOTICE file\n* distributed with this work for additional information\n* regarding copyright ownership.  The ASF licenses this file\n* to you under the Apache License, Version 2.0 (the\n* \"License\"); you may not use this file except in compliance\n* with the License.  You may obtain a copy of the License at\n*\n*    http://www.apache.org/licenses/LICENSE-2.0\n*\n* Unless required by applicable law or agreed to in writing,\n* software distributed under the License is distributed on an\n* \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n* KIND, either express or implied.  See the License for the\n* specific language governing permissions and limitations\n* under the License.\n*/",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 791,
+  "secondEndPos" : 791
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1275,6 +1286,17 @@
   "firstEndPos" : 4033,
   "secondEndPos" : 3978
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do this because SS needs to be initialized before DES can work properly.",
+  "secondLabel" : "// do this because SS needs to be initialized before DES can work properly.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1736,
+  "secondPos" : 1681,
+  "firstEndPos" : 1811,
+  "secondEndPos" : 1756
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2276,6 +2298,17 @@
   "firstEndPos" : 2328,
   "secondEndPos" : 2273
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first, make all hosts equal",
+  "secondLabel" : "// first, make all hosts equal",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2340,
+  "secondPos" : 2285,
+  "firstEndPos" : 2370,
+  "secondEndPos" : 2315
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2771,6 +2804,17 @@
   "firstEndPos" : 2591,
   "secondEndPos" : 2536
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make host1 a little worse",
+  "secondLabel" : "// make host1 a little worse",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2605,
+  "secondPos" : 2550,
+  "firstEndPos" : 2633,
+  "secondEndPos" : 2578
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3221,6 +3265,17 @@
   "secondPos" : 2776,
   "firstEndPos" : 2836,
   "secondEndPos" : 2781
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make host2 as bad as host1",
+  "secondLabel" : "// make host2 as bad as host1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2850,
+  "secondPos" : 2795,
+  "firstEndPos" : 2879,
+  "secondEndPos" : 2824
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3673,6 +3728,17 @@
   "firstEndPos" : 3082,
   "secondEndPos" : 3027
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make host3 the worst",
+  "secondLabel" : "// make host3 the worst",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3096,
+  "secondPos" : 3041,
+  "firstEndPos" : 3119,
+  "secondEndPos" : 3064
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4124,6 +4190,17 @@
   "firstEndPos" : 3322,
   "secondEndPos" : 3267
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make host3 equal to the others",
+  "secondLabel" : "// make host3 equal to the others",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3336,
+  "secondPos" : 3281,
+  "firstEndPos" : 3369,
+  "secondEndPos" : 3314
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4574,6 +4651,39 @@
   "secondPos" : 3512,
   "firstEndPos" : 3572,
   "secondEndPos" : 3517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "/// Tests CASSANDRA-6683 improvements",
+  "secondLabel" : "/// Tests CASSANDRA-6683 improvements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3586,
+  "secondPos" : 3531,
+  "firstEndPos" : 3623,
+  "secondEndPos" : 3568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make the scores differ enough from the ideal order that we sort by score; under the old",
+  "secondLabel" : "// make the scores differ enough from the ideal order that we sort by score; under the old",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3632,
+  "secondPos" : 3577,
+  "firstEndPos" : 3722,
+  "secondEndPos" : 3667
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dynamic snitch behavior (where we only compared neighbors), these wouldn't get sorted",
+  "secondLabel" : "// dynamic snitch behavior (where we only compared neighbors), these wouldn't get sorted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3731,
+  "secondPos" : 3676,
+  "firstEndPos" : 3819,
+  "secondEndPos" : 3764
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5169,6 +5279,17 @@
   "firstEndPos" : 5548,
   "secondEndPos" : 2842
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The goal of this test is to check for CASSANDRA-8448/CASSANDRA-9519",
+  "secondLabel" : "// The goal of this test is to check for CASSANDRA-8448/CASSANDRA-9519",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4158,
+  "secondPos" : 1366,
+  "firstEndPos" : 4228,
+  "secondEndPos" : 1436
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5399,6 +5520,17 @@
   "secondPos" : 1629,
   "firstEndPos" : 4397,
   "secondEndPos" : 1634
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do this because SS needs to be initialized before DES can work properly.",
+  "secondLabel" : "// do this because SS needs to be initialized before DES can work properly.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4408,
+  "secondPos" : 1649,
+  "firstEndPos" : 4483,
+  "secondEndPos" : 1724
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5993,6 +6125,28 @@
   "secondPos" : 2041,
   "firstEndPos" : 4789,
   "secondEndPos" : 2050
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We want a giant list of hosts so that sorting it takes time, making it much more likely to reproduce the",
+  "secondLabel" : "// We want a big list of hosts so  sorting takes time, making it much more likely to reproduce the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4803,
+  "secondPos" : 2068,
+  "firstEndPos" : 4910,
+  "secondEndPos" : 2166
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// problem we're looking for.",
+  "secondLabel" : "// problem we're looking for.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4919,
+  "secondPos" : 2179,
+  "firstEndPos" : 4948,
+  "secondEndPos" : 2208
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",

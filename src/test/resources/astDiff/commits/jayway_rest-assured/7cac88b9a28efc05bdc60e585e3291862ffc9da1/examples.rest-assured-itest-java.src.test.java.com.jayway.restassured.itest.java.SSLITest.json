@@ -10,6 +10,17 @@
   "firstEndPos" : 10003,
   "secondEndPos" : 10740
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2013 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2013 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *        http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 617,
+  "secondEndPos" : 617
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -11395,6 +11406,17 @@
   "firstEndPos" : 9999,
   "secondEndPos" : 10084
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Load the trust store",
+  "secondLabel" : "// Load the trust store",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9345,
+  "secondPos" : 9430,
+  "firstEndPos" : 9368,
+  "secondEndPos" : 9453
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11856,6 +11878,17 @@
   "secondPos" : 9721,
   "firstEndPos" : 9647,
   "secondEndPos" : 9732
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the truststore on the global config",
+  "secondLabel" : "// Set the truststore on the global config",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9661,
+  "secondPos" : 9746,
+  "firstEndPos" : 9703,
+  "secondEndPos" : 9788
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -3200,6 +3200,17 @@
   "firstEndPos" : 3406,
   "secondEndPos" : 3719
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO inspect naming strategy (for OSGI, signed package, java.* (and bootstrap classes), etc...)",
+  "secondLabel" : "// TODO inspect naming strategy (for OSGI, signed package, java.* (and bootstrap classes), etc...)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3421,
+  "secondPos" : 4116,
+  "firstEndPos" : 3519,
+  "secondEndPos" : 4214
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4013,6 +4024,39 @@
   "secondPos" : 4645,
   "firstEndPos" : 4373,
   "secondEndPos" : 5068
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Comes from the manifest entry :",
+  "secondLabel" : "// Comes from the manifest entry :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3960,
+  "secondPos" : 4655,
+  "firstEndPos" : 3994,
+  "secondEndPos" : 4689
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Implementation-Title: Java Runtime Environment",
+  "secondLabel" : "// Implementation-Title: Java Runtime Environment",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4003,
+  "secondPos" : 4698,
+  "firstEndPos" : 4052,
+  "secondEndPos" : 4747
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This entry is not necessarily present in every jar of the JDK",
+  "secondLabel" : "// This entry is not necessarily present in every jar of the JDK",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4061,
+  "secondPos" : 4756,
+  "firstEndPos" : 4125,
+  "secondEndPos" : 4820
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

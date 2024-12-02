@@ -10,6 +10,17 @@
   "firstEndPos" : 2239,
   "secondEndPos" : 11935
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010 Google Inc.\n * \n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not\n * use this file except in compliance with the License. You may obtain a copy of\n * the License at\n * \n * http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2010 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not\n * use this file except in compliance with the License. You may obtain a copy of\n * the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 593,
+  "secondEndPos" : 590
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2936,6 +2947,17 @@
   "firstEndPos" : 4273,
   "secondEndPos" : 948
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 16 * 4 bytes",
+  "secondLabel" : "// 16 * 4 bytes",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4279,
+  "secondPos" : 956,
+  "firstEndPos" : 4294,
+  "secondEndPos" : 971
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3794,6 +3816,17 @@
   "firstEndPos" : 4640,
   "secondEndPos" : 1332
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4624,
+  "secondPos" : 1316,
+  "firstEndPos" : 4630,
+  "secondEndPos" : 1322
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "n",
@@ -3826,6 +3859,17 @@
   "secondPos" : 1340,
   "firstEndPos" : 4663,
   "secondEndPos" : 1357
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4646,
+  "secondPos" : 1340,
+  "firstEndPos" : 4653,
+  "secondEndPos" : 1347
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5411,6 +5455,17 @@
   "firstEndPos" : 5129,
   "secondEndPos" : 1870
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5110,
+  "secondPos" : 1851,
+  "firstEndPos" : 5116,
+  "secondEndPos" : 1857
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "in",
@@ -5443,6 +5498,17 @@
   "secondPos" : 1878,
   "firstEndPos" : 5155,
   "secondEndPos" : 1898
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5135,
+  "secondPos" : 1878,
+  "firstEndPos" : 5141,
+  "secondEndPos" : 1884
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -6445,6 +6511,17 @@
   "firstEndPos" : 5420,
   "secondEndPos" : 2173
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method F.\n   * \n   * @param x An int.\n   * @param y An int.\n   * @param z An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method F.\n     *\n     * @param x An int.\n     * @param y An int.\n     * @param z An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5437,
+  "secondPos" : 2196,
+  "firstEndPos" : 5553,
+  "secondEndPos" : 2325
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6763,6 +6840,17 @@
   "secondPos" : 2402,
   "firstEndPos" : 5627,
   "secondEndPos" : 2403
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method FF.\n   * \n   * @param a An int.\n   * @param b An int.\n   * @param c An int.\n   * @param d An int.\n   * @param x An int.\n   * @param s An int.\n   * @param ac An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method FF.\n     *\n     * @param a An int.\n     * @param b An int.\n     * @param c An int.\n     * @param d An int.\n     * @param x An int.\n     * @param s An int.\n     * @param ac An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5639,
+  "secondPos" : 2419,
+  "firstEndPos" : 5845,
+  "secondEndPos" : 2646
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7457,6 +7545,17 @@
   "firstEndPos" : 5997,
   "secondEndPos" : 2806
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method G.\n   * \n   * @param x An int.\n   * @param y An int.\n   * @param z An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method G.\n     *\n     * @param x An int.\n     * @param y An int.\n     * @param z An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6006,
+  "secondPos" : 2819,
+  "firstEndPos" : 6122,
+  "secondEndPos" : 2948
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -7775,6 +7874,17 @@
   "secondPos" : 3025,
   "firstEndPos" : 6196,
   "secondEndPos" : 3026
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method GG.\n   * \n   * @param a An int.\n   * @param b An int.\n   * @param c An int.\n   * @param d An int.\n   * @param x An int.\n   * @param s An int.\n   * @param ac An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method GG.\n     *\n     * @param a An int.\n     * @param b An int.\n     * @param c An int.\n     * @param d An int.\n     * @param x An int.\n     * @param s An int.\n     * @param ac An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6208,
+  "secondPos" : 3042,
+  "firstEndPos" : 6414,
+  "secondEndPos" : 3269
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -8469,6 +8579,17 @@
   "firstEndPos" : 6566,
   "secondEndPos" : 3429
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method H.\n   * \n   * @param x An int.\n   * @param y An int.\n   * @param z An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method H.\n     *\n     * @param x An int.\n     * @param y An int.\n     * @param z An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6575,
+  "secondPos" : 3442,
+  "firstEndPos" : 6691,
+  "secondEndPos" : 3571
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -8710,6 +8831,17 @@
   "secondPos" : 3642,
   "firstEndPos" : 6759,
   "secondEndPos" : 3643
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method HH.\n   * \n   * @param a An int.\n   * @param b An int.\n   * @param c An int.\n   * @param d An int.\n   * @param x An int.\n   * @param s An int.\n   * @param ac An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method HH.\n     *\n     * @param a An int.\n     * @param b An int.\n     * @param c An int.\n     * @param d An int.\n     * @param x An int.\n     * @param s An int.\n     * @param ac An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6769,
+  "secondPos" : 3657,
+  "firstEndPos" : 6975,
+  "secondEndPos" : 3884
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -9404,6 +9536,17 @@
   "firstEndPos" : 7127,
   "secondEndPos" : 4044
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method I.\n   * \n   * @param x An int.\n   * @param y An int.\n   * @param z An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method I.\n     *\n     * @param x An int.\n     * @param y An int.\n     * @param z An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7136,
+  "secondPos" : 4057,
+  "firstEndPos" : 7252,
+  "secondEndPos" : 4186
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -9700,6 +9843,17 @@
   "secondPos" : 4259,
   "firstEndPos" : 7322,
   "secondEndPos" : 4260
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * Method II.\n   * \n   * @param a An int.\n   * @param b An int.\n   * @param c An int.\n   * @param d An int.\n   * @param x An int.\n   * @param s An int.\n   * @param ac An int.\n   * @return An int.\n   */",
+  "secondLabel" : "/*\n     * Method II.\n     *\n     * @param a An int.\n     * @param b An int.\n     * @param c An int.\n     * @param d An int.\n     * @param x An int.\n     * @param s An int.\n     * @param ac An int.\n     * @return An int.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7333,
+  "secondPos" : 4275,
+  "firstEndPos" : 7539,
+  "secondEndPos" : 4502
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -10449,6 +10603,17 @@
   "firstEndPos" : 7784,
   "secondEndPos" : 4764
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7765,
+  "secondPos" : 4745,
+  "firstEndPos" : 7771,
+  "secondEndPos" : 4751
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "in",
@@ -10481,6 +10646,17 @@
   "secondPos" : 4772,
   "firstEndPos" : 7810,
   "secondEndPos" : 4792
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7790,
+  "secondPos" : 4772,
+  "firstEndPos" : 7796,
+  "secondEndPos" : 4778
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11801,6 +11977,17 @@
   "secondPos" : 5186,
   "firstEndPos" : 8186,
   "secondEndPos" : 5188
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(jat): consider doing away with long math",
+  "secondLabel" : "// TODO(jat): consider doing away with long math",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8191,
+  "secondPos" : 5195,
+  "firstEndPos" : 8239,
+  "secondEndPos" : 5243
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -14211,6 +14398,17 @@
   "firstEndPos" : 9320,
   "secondEndPos" : 6414
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(jat): better implementation",
+  "secondLabel" : "// TODO(jat): better implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9223,
+  "secondPos" : 6311,
+  "firstEndPos" : 9258,
+  "secondEndPos" : 6346
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15442,6 +15640,17 @@
   "secondPos" : 6957,
   "firstEndPos" : 9837,
   "secondEndPos" : 6963
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * TODO: Document.\n   * \n   * @param buffer A byte[].\n   */",
+  "secondLabel" : "/*\n     * TODO: Document.\n     *\n     * @param buffer A byte[].\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9859,
+  "secondPos" : 6993,
+  "firstEndPos" : 9923,
+  "secondEndPos" : 7064
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -27300,6 +27509,17 @@
   "secondPos" : 10305,
   "firstEndPos" : 13032,
   "secondEndPos" : 10315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Coerce to 32-bits to compute the expression correctly in JavaScript.",
+  "secondLabel" : "// Coerce to 32-bits to compute the expression correctly in JavaScript.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13040,
+  "secondPos" : 10325,
+  "firstEndPos" : 13111,
+  "secondEndPos" : 10396
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

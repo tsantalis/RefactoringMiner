@@ -10,6 +10,17 @@
   "firstEndPos" : 20751,
   "secondEndPos" : 11385
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 610,
+  "secondEndPos" : 610
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -262,6 +273,17 @@
   "secondPos" : 1037,
   "firstEndPos" : 1099,
   "secondEndPos" : 1099
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1037,
+  "secondPos" : 1037,
+  "firstEndPos" : 1044,
+  "secondEndPos" : 1044
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1352,6 +1374,28 @@
   "firstEndPos" : 3643,
   "secondEndPos" : 3100
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request indicates a term that is greater than the current term then",
+  "secondLabel" : "// If the request indicates a term that is greater than the current term then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2482,
+  "secondPos" : 1939,
+  "firstEndPos" : 2559,
+  "secondEndPos" : 2016
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "secondLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2564,
+  "secondPos" : 2021,
+  "firstEndPos" : 2642,
+  "secondEndPos" : 2099
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2000,6 +2044,39 @@
   "secondPos" : 2316,
   "firstEndPos" : 2863,
   "secondEndPos" : 2320
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request term is less than the current term then immediately",
+  "secondLabel" : "// If the request term is less than the current term then immediately",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2876,
+  "secondPos" : 2333,
+  "firstEndPos" : 2945,
+  "secondEndPos" : 2402
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reply false and return our current term. The leader will receive",
+  "secondLabel" : "// reply false and return our current term. The leader will receive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2950,
+  "secondPos" : 2407,
+  "firstEndPos" : 3017,
+  "secondEndPos" : 2474
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the updated term and step down.",
+  "secondLabel" : "// the updated term and step down.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3022,
+  "secondPos" : 2479,
+  "firstEndPos" : 3056,
+  "secondEndPos" : 2513
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5290,6 +5367,17 @@
   "firstEndPos" : 4809,
   "secondEndPos" : 4266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the previous entry term doesn't match the local previous term then reject the request.",
+  "secondLabel" : "// If the previous entry term doesn't match the local previous term then reject the request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4824,
+  "secondPos" : 4281,
+  "firstEndPos" : 4916,
+  "secondEndPos" : 4373
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6797,6 +6885,28 @@
   "firstEndPos" : 8299,
   "secondEndPos" : 7756
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the log contains entries after the request's previous log index",
+  "secondLabel" : "// If the log contains entries after the request's previous log index",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5728,
+  "secondPos" : 5185,
+  "firstEndPos" : 5797,
+  "secondEndPos" : 5254
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then remove those entries to be replaced by the request entries.",
+  "secondLabel" : "// then remove those entries to be replaced by the request entries.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5802,
+  "secondPos" : 5259,
+  "firstEndPos" : 5869,
+  "secondEndPos" : 5326
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6918,6 +7028,17 @@
   "firstEndPos" : 7828,
   "secondEndPos" : 7285
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Iterate through request entries and append them to the log.",
+  "secondLabel" : "// Iterate through request entries and append them to the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5917,
+  "secondPos" : 5374,
+  "firstEndPos" : 5979,
+  "secondEndPos" : 5436
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -7027,6 +7148,39 @@
   "secondPos" : 5481,
   "firstEndPos" : 7822,
   "secondEndPos" : 7279
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Replicated snapshot entries are *always* immediately logged and applied to the state machine",
+  "secondLabel" : "// Replicated snapshot entries are *always* immediately logged and applied to the state machine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6034,
+  "secondPos" : 5491,
+  "firstEndPos" : 6129,
+  "secondEndPos" : 5586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since snapshots are only taken of committed state machine state. This will cause all previous",
+  "secondLabel" : "// since snapshots are only taken of committed state machine state. This will cause all previous",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6138,
+  "secondPos" : 5595,
+  "firstEndPos" : 6234,
+  "secondEndPos" : 5691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entries to be removed from the log.",
+  "secondLabel" : "// entries to be removed from the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6243,
+  "secondPos" : 5700,
+  "firstEndPos" : 6281,
+  "secondEndPos" : 5738
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7181,6 +7335,17 @@
   "secondPos" : 5801,
   "firstEndPos" : 7471,
   "secondEndPos" : 6928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Compare the term of the received entry with the matching entry in the log.",
+  "secondLabel" : "// Compare the term of the received entry with the matching entry in the log.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6356,
+  "secondPos" : 5813,
+  "firstEndPos" : 6433,
+  "secondEndPos" : 5890
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7566,6 +7731,28 @@
   "secondPos" : 6043,
   "firstEndPos" : 7194,
   "secondEndPos" : 6651
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We found an invalid entry in the log. Remove the invalid entry and append the new entry.",
+  "secondLabel" : "// We found an invalid entry in the log. Remove the invalid entry and append the new entry.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6602,
+  "secondPos" : 6059,
+  "firstEndPos" : 6693,
+  "secondEndPos" : 6150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "secondLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6708,
+  "secondPos" : 6165,
+  "firstEndPos" : 6794,
+  "secondEndPos" : 6251
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8832,6 +9019,17 @@
   "firstEndPos" : 7814,
   "secondEndPos" : 7271
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "secondLabel" : "// If appending to the log fails, apply commits and reply false to the append request.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7489,
+  "secondPos" : 6946,
+  "firstEndPos" : 7575,
+  "secondEndPos" : 7032
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9381,6 +9579,17 @@
   "secondPos" : 7249,
   "firstEndPos" : 7800,
   "secondEndPos" : 7257
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we've made it this far, apply commits and send a successful response.",
+  "secondLabel" : "// If we've made it this far, apply commits and send a successful response.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7834,
+  "secondPos" : 7291,
+  "firstEndPos" : 7909,
+  "secondEndPos" : 7366
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10404,6 +10613,72 @@
   "secondPos" : 7917,
   "firstEndPos" : 10976,
   "secondEndPos" : 10433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the synced commit index is greater than the local commit index then",
+  "secondLabel" : "// If the synced commit index is greater than the local commit index then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8466,
+  "secondPos" : 7923,
+  "firstEndPos" : 8539,
+  "secondEndPos" : 7996
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// apply commits to the local state machine.",
+  "secondLabel" : "// apply commits to the local state machine.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8544,
+  "secondPos" : 8001,
+  "firstEndPos" : 8588,
+  "secondEndPos" : 8045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also, it's possible that one of the previous write applications failed",
+  "secondLabel" : "// Also, it's possible that one of the previous write applications failed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8593,
+  "secondPos" : 8050,
+  "firstEndPos" : 8666,
+  "secondEndPos" : 8123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// due to asynchronous communication errors, so alternatively check if the",
+  "secondLabel" : "// due to asynchronous communication errors, so alternatively check if the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8671,
+  "secondPos" : 8128,
+  "firstEndPos" : 8745,
+  "secondEndPos" : 8202
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// local commit index is greater than last applied. If all the state machine",
+  "secondLabel" : "// local commit index is greater than last applied. If all the state machine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8750,
+  "secondPos" : 8207,
+  "firstEndPos" : 8826,
+  "secondEndPos" : 8283
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// commands have not yet been applied then we want to re-attempt to apply them.",
+  "secondLabel" : "// commands have not yet been applied then we want to re-attempt to apply them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8831,
+  "secondPos" : 8288,
+  "firstEndPos" : 8910,
+  "secondEndPos" : 8367
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11461,6 +11736,17 @@
   "firstEndPos" : 9335,
   "secondEndPos" : 8792
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update the local commit index with min(request commit, last log // index)",
+  "secondLabel" : "// Update the local commit index with min(request commit, last log // index)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9347,
+  "secondPos" : 8804,
+  "firstEndPos" : 9423,
+  "secondEndPos" : 8880
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11890,6 +12176,28 @@
   "firstEndPos" : 9651,
   "secondEndPos" : 9108
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the updated commit index indicates that commits remain to be",
+  "secondLabel" : "// If the updated commit index indicates that commits remain to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9666,
+  "secondPos" : 9123,
+  "firstEndPos" : 9732,
+  "secondEndPos" : 9189
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// applied to the state machine, iterate entries and apply them.",
+  "secondLabel" : "// applied to the state machine, iterate entries and apply them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9743,
+  "secondPos" : 9200,
+  "firstEndPos" : 9807,
+  "secondEndPos" : 9264
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11988,6 +12296,28 @@
   "secondPos" : 9327,
   "firstEndPos" : 10840,
   "secondEndPos" : 10297
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Starting after the last applied entry, iterate through new entries",
+  "secondLabel" : "// Starting after the last applied entry, iterate through new entries",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9884,
+  "secondPos" : 9341,
+  "firstEndPos" : 9953,
+  "secondEndPos" : 9410
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and apply them to the state machine up to the commit index.",
+  "secondLabel" : "// and apply them to the state machine up to the commit index.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9966,
+  "secondPos" : 9423,
+  "firstEndPos" : 10028,
+  "secondEndPos" : 9485
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15872,6 +16202,28 @@
   "firstEndPos" : 15215,
   "secondEndPos" : 5849
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request indicates a term that is greater than the current term then",
+  "secondLabel" : "// If the request indicates a term that is greater than the current term then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12196,
+  "secondPos" : 2830,
+  "firstEndPos" : 12273,
+  "secondEndPos" : 2907
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "secondLabel" : "// assign that term and leader to the current context and step down as leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12278,
+  "secondPos" : 2912,
+  "firstEndPos" : 12356,
+  "secondEndPos" : 2990
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16113,6 +16465,39 @@
   "secondPos" : 3067,
   "firstEndPos" : 12437,
   "secondEndPos" : 3071
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the request term is not as great as the current context term then don't",
+  "secondLabel" : "// If the request term is not as great as the current context term then don't",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12453,
+  "secondPos" : 3087,
+  "firstEndPos" : 12530,
+  "secondEndPos" : 3164
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// vote for the candidate. We want to vote for candidates that are at least",
+  "secondLabel" : "// vote for the candidate. We want to vote for candidates that are at least",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12535,
+  "secondPos" : 3169,
+  "firstEndPos" : 12610,
+  "secondEndPos" : 3244
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// as up to date as us.",
+  "secondLabel" : "// as up to date as us.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12615,
+  "secondPos" : 3249,
+  "firstEndPos" : 12638,
+  "secondEndPos" : 3272
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16729,6 +17114,39 @@
   "secondPos" : 3600,
   "firstEndPos" : 12971,
   "secondEndPos" : 3605
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the requesting candidate is our self then always vote for our self. Votes",
+  "secondLabel" : "// If the requesting candidate is our self then always vote for our self. Votes",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 12985,
+  "secondPos" : 3619,
+  "firstEndPos" : 13064,
+  "secondEndPos" : 3698
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for self are done by calling the local node. Note that this obviously",
+  "secondLabel" : "// for self are done by calling the local node. Note that this obviously",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 13069,
+  "secondPos" : 3703,
+  "firstEndPos" : 13141,
+  "secondEndPos" : 3775
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doesn't make sense for a leader.",
+  "secondLabel" : "// doesn't make sense for a leader.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 13146,
+  "secondPos" : 3780,
+  "firstEndPos" : 13181,
+  "secondEndPos" : 3815
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -17587,6 +18005,28 @@
   "secondPos" : 4220,
   "firstEndPos" : 13591,
   "secondEndPos" : 4225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the requesting candidate is not a known member of the cluster (to this",
+  "secondLabel" : "// If the requesting candidate is not a known member of the cluster (to this",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 13605,
+  "secondPos" : 4239,
+  "firstEndPos" : 13681,
+  "secondEndPos" : 4315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// node) then don't vote for it. Only vote for candidates that we know about.",
+  "secondLabel" : "// node) then don't vote for it. Only vote for candidates that we know about.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 13686,
+  "secondPos" : 4320,
+  "firstEndPos" : 13763,
+  "secondEndPos" : 4397
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -18478,6 +18918,17 @@
   "secondPos" : 4806,
   "firstEndPos" : 14177,
   "secondEndPos" : 4811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we've already voted for someone else then don't vote again.",
+  "secondLabel" : "// If we've already voted for someone else then don't vote again.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 14191,
+  "secondPos" : 4825,
+  "firstEndPos" : 14256,
+  "secondEndPos" : 4890
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -19557,6 +20008,17 @@
   "firstEndPos" : 14827,
   "secondEndPos" : 5461
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In this case, we've already voted for someone else.",
+  "secondLabel" : "// In this case, we've already voted for someone else.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 14849,
+  "secondPos" : 5483,
+  "firstEndPos" : 14903,
+  "secondEndPos" : 5537
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -20294,6 +20756,17 @@
   "firstEndPos" : 16755,
   "secondEndPos" : 7389
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the log is empty then vote for the candidate.",
+  "secondLabel" : "// If the log is empty then vote for the candidate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15394,
+  "secondPos" : 6028,
+  "firstEndPos" : 15445,
+  "secondEndPos" : 6079
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -20623,6 +21096,28 @@
   "secondPos" : 6264,
   "firstEndPos" : 16751,
   "secondEndPos" : 7385
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, load the last entry in the log. The last entry should be",
+  "secondLabel" : "// Otherwise, load the last entry in the log. The last entry should be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15638,
+  "secondPos" : 6272,
+  "firstEndPos" : 15708,
+  "secondEndPos" : 6342
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// at least as up to date as the candidates entry and term.",
+  "secondLabel" : "// at least as up to date as the candidates entry and term.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15715,
+  "secondPos" : 6349,
+  "firstEndPos" : 15774,
+  "secondEndPos" : 6408
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23825,6 +24320,28 @@
   "firstEndPos" : 19213,
   "secondEndPos" : 9847
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the commit index is not in the log then we've fallen too far behind the leader to perform a query.",
+  "secondLabel" : "// If the commit index is not in the log then we've fallen too far behind the leader to perform a query.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17773,
+  "secondPos" : 8407,
+  "firstEndPos" : 17877,
+  "secondEndPos" : 8511
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Forward the request to the leader.",
+  "secondLabel" : "// Forward the request to the leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17882,
+  "secondPos" : 8516,
+  "firstEndPos" : 17919,
+  "secondEndPos" : 8553
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26442,6 +26959,28 @@
   "secondPos" : 9980,
   "firstEndPos" : 20747,
   "secondEndPos" : 11381
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the commit index is not in the log then we've fallen too far behind the leader to perform a query.",
+  "secondLabel" : "// If the commit index is not in the log then we've fallen too far behind the leader to perform a query.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19352,
+  "secondPos" : 9986,
+  "firstEndPos" : 19456,
+  "secondEndPos" : 10090
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Forward the request to the leader.",
+  "secondLabel" : "// Forward the request to the leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19461,
+  "secondPos" : 10095,
+  "firstEndPos" : 19498,
+  "secondEndPos" : 10132
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

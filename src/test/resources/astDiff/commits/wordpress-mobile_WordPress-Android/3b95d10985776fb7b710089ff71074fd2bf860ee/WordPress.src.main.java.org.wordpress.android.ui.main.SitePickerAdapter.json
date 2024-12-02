@@ -6720,6 +6720,17 @@
   "firstEndPos" : 5032,
   "secondEndPos" : 5359
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// different styling for visible/hidden sites",
+  "secondLabel" : "// different styling for visible/hidden sites",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5054,
+  "secondPos" : 5381,
+  "firstEndPos" : 5099,
+  "secondEndPos" : 5426
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7281,6 +7292,17 @@
   "firstEndPos" : 5513,
   "secondEndPos" : 5840
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hide the divider for the last item",
+  "secondLabel" : "// hide the divider for the last item",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5535,
+  "secondPos" : 5862,
+  "firstEndPos" : 5572,
+  "secondEndPos" : 5899
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7786,6 +7808,17 @@
   "secondPos" : 6328,
   "firstEndPos" : 5833,
   "secondEndPos" : 6332
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * called when the user chooses to edit the visibility of wp.com blogs\n     */",
+  "secondLabel" : "/*\n     * called when the user chooses to edit the visibility of wp.com blogs\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5849,
+  "secondPos" : 6348,
+  "firstEndPos" : 5934,
+  "secondEndPos" : 6433
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -13584,6 +13617,17 @@
   "firstEndPos" : 9746,
   "secondEndPos" : 10245
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * AsyncTask which loads sites from database and populates the adapter\n     */",
+  "secondLabel" : "/*\n     * AsyncTask which loads sites from database and populates the adapter\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9770,
+  "secondPos" : 11070,
+  "firstEndPos" : 9855,
+  "secondEndPos" : 11155
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -14585,6 +14629,17 @@
   "firstEndPos" : 10665,
   "secondEndPos" : 12972
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// all self-hosted blogs and all wp.com blogs",
+  "secondLabel" : "// all self-hosted blogs and all wp.com blogs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10528,
+  "secondPos" : 12836,
+  "firstEndPos" : 10573,
+  "secondEndPos" : 12881
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -14672,6 +14727,17 @@
   "secondPos" : 12978,
   "firstEndPos" : 10815,
   "secondEndPos" : 13121
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only wp.com blogs",
+  "secondLabel" : "// only wp.com blogs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10693,
+  "secondPos" : 13000,
+  "firstEndPos" : 10713,
+  "secondEndPos" : 13020
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -14794,6 +14860,17 @@
   "firstEndPos" : 11087,
   "secondEndPos" : 13392
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// all self-hosted blogs plus visible wp.com blogs",
+  "secondLabel" : "// all self-hosted blogs plus visible wp.com blogs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10901,
+  "secondPos" : 13207,
+  "firstEndPos" : 10951,
+  "secondEndPos" : 13257
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -14881,6 +14958,17 @@
   "secondPos" : 13398,
   "firstEndPos" : 11260,
   "secondEndPos" : 13564
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only visible wp.com blogs",
+  "secondLabel" : "// only visible wp.com blogs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11115,
+  "secondPos" : 13420,
+  "firstEndPos" : 11143,
+  "secondEndPos" : 13448
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -15057,6 +15145,17 @@
   "secondPos" : 11882,
   "firstEndPos" : 11323,
   "secondEndPos" : 11887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sort by blog/host",
+  "secondLabel" : "// sort by blog/host",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11339,
+  "secondPos" : 11903,
+  "firstEndPos" : 11359,
+  "secondEndPos" : 11923
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

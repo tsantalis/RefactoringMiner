@@ -10,6 +10,17 @@
   "firstEndPos" : 9107,
   "secondEndPos" : 1177
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2014 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2014 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 595,
+  "secondEndPos" : 595
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2957,6 +2968,17 @@
   "secondPos" : 2798,
   "firstEndPos" : 2825,
   "secondEndPos" : 2815
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Members of converted types use ClassName and not Class<?>.",
+  "secondLabel" : "// Members of converted types use ClassName and not Class<?>.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2834,
+  "secondPos" : 2824,
+  "firstEndPos" : 2895,
+  "secondEndPos" : 2885
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13275,6 +13297,17 @@
   "secondPos" : 7722,
   "firstEndPos" : 7927,
   "secondEndPos" : 7725
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (Bounds are only emitted in declaration.)",
+  "secondLabel" : "// (Bounds are only emitted in declaration.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7930,
+  "secondPos" : 7728,
+  "firstEndPos" : 7974,
+  "secondEndPos" : 7772
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

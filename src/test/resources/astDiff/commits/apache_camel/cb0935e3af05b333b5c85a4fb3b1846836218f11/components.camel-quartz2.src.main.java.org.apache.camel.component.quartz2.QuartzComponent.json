@@ -3772,6 +3772,17 @@
   "firstEndPos" : 5310,
   "secondEndPos" : 5310
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// force disabling update checker (will do online check over the internet)",
+  "secondLabel" : "// force disabling update checker (will do online check over the internet)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4451,
+  "secondPos" : 4451,
+  "firstEndPos" : 4525,
+  "secondEndPos" : 4525
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3947,6 +3958,17 @@
   "secondPos" : 4658,
   "firstEndPos" : 4664,
   "secondEndPos" : 4664
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "secondLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4680,
+  "secondPos" : 4680,
+  "firstEndPos" : 4751,
+  "secondEndPos" : 4751
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -4134,6 +4156,17 @@
   "secondPos" : 4883,
   "firstEndPos" : 4891,
   "secondEndPos" : 4891
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// enable jmx unless configured to not do so",
+  "secondLabel" : "// enable jmx unless configured to not do so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4907,
+  "secondPos" : 4907,
+  "firstEndPos" : 4951,
+  "secondEndPos" : 4951
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4541,6 +4574,50 @@
   "secondPos" : 5316,
   "firstEndPos" : 7133,
   "secondEndPos" : 7133
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// read default props to be able to use a single scheduler per camel context",
+  "secondLabel" : "// read default props to be able to use a single scheduler per camel context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5330,
+  "secondPos" : 5330,
+  "firstEndPos" : 5406,
+  "secondEndPos" : 5406
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we need more than one scheduler per context use setScheduler(Scheduler)",
+  "secondLabel" : "// if we need more than one scheduler per context use setScheduler(Scheduler)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5419,
+  "secondPos" : 5419,
+  "firstEndPos" : 5496,
+  "secondEndPos" : 5496
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// or setFactory(SchedulerFactory) methods",
+  "secondLabel" : "// or setFactory(SchedulerFactory) methods",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5509,
+  "secondPos" : 5509,
+  "firstEndPos" : 5551,
+  "secondEndPos" : 5551
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// must use classloader from StdSchedulerFactory to work even in OSGi",
+  "secondLabel" : "// must use classloader from StdSchedulerFactory to work even in OSGi",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5565,
+  "secondPos" : 5565,
+  "firstEndPos" : 5634,
+  "secondEndPos" : 5634
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5235,6 +5312,17 @@
   "firstEndPos" : 6244,
   "secondEndPos" : 6244
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "secondLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6274,
+  "secondPos" : 6274,
+  "firstEndPos" : 6345,
+  "secondEndPos" : 6345
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5422,6 +5510,17 @@
   "firstEndPos" : 6485,
   "secondEndPos" : 6485
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// force disabling update checker (will do online check over the internet)",
+  "secondLabel" : "// force disabling update checker (will do online check over the internet)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6501,
+  "secondPos" : 6501,
+  "firstEndPos" : 6575,
+  "secondEndPos" : 6575
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5597,6 +5696,17 @@
   "secondPos" : 6708,
   "firstEndPos" : 6714,
   "secondEndPos" : 6714
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// enable jmx unless configured to not do so",
+  "secondLabel" : "// enable jmx unless configured to not do so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6730,
+  "secondPos" : 6730,
+  "firstEndPos" : 6774,
+  "secondEndPos" : 6774
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6532,6 +6642,17 @@
   "secondPos" : 7491,
   "firstEndPos" : 7535,
   "secondEndPos" : 7535
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "secondLabel" : "// camel context name will be a suffix to use one scheduler per context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7547,
+  "secondPos" : 7547,
+  "firstEndPos" : 7618,
+  "secondEndPos" : 7618
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9074,6 +9195,17 @@
   "firstEndPos" : 11174,
   "secondEndPos" : 11174
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get couple of scheduler settings",
+  "secondLabel" : "// Get couple of scheduler settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9368,
+  "secondPos" : 9368,
+  "firstEndPos" : 9403,
+  "secondEndPos" : 9403
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10262,6 +10394,17 @@
   "firstEndPos" : 10517,
   "secondEndPos" : 10517
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Extract trigger.XXX and job.XXX properties to be set on endpoint below",
+  "secondLabel" : "// Extract trigger.XXX and job.XXX properties to be set on endpoint below",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10538,
+  "secondPos" : 10538,
+  "firstEndPos" : 10611,
+  "secondEndPos" : 10611
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10635,6 +10778,17 @@
   "secondPos" : 10819,
   "firstEndPos" : 10825,
   "secondEndPos" : 10825
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create quartz endpoint",
+  "secondLabel" : "// Create quartz endpoint",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10837,
+  "secondPos" : 10837,
+  "firstEndPos" : 10862,
+  "secondEndPos" : 10862
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11340,6 +11494,17 @@
   "firstEndPos" : 12362,
   "secondEndPos" : 12362
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Parse uri for trigger name and group",
+  "secondLabel" : "// Parse uri for trigger name and group",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11298,
+  "secondPos" : 11298,
+  "firstEndPos" : 11337,
+  "secondEndPos" : 11337
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11703,6 +11868,17 @@
   "firstEndPos" : 11459,
   "secondEndPos" : 11459
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// host can be null if the uri did contain invalid host characters such as an underscore",
+  "secondLabel" : "// host can be null if the uri did contain invalid host characters such as an underscore",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11472,
+  "secondPos" : 11472,
+  "firstEndPos" : 11560,
+  "secondEndPos" : 11560
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12010,6 +12186,17 @@
   "secondPos" : 11700,
   "firstEndPos" : 11709,
   "secondEndPos" : 11709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Trigger group can be optional, if so set it to this context's unique name",
+  "secondLabel" : "// Trigger group can be optional, if so set it to this context's unique name",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11744,
+  "secondPos" : 11744,
+  "firstEndPos" : 11820,
+  "secondEndPos" : 11820
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13419,6 +13606,17 @@
   "firstEndPos" : 12701,
   "secondEndPos" : 12701
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Store CamelContext into QuartzContext space",
+  "secondLabel" : "// Store CamelContext into QuartzContext space",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12714,
+  "secondPos" : 13385,
+  "firstEndPos" : 12760,
+  "secondEndPos" : 13431
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13880,6 +14078,28 @@
   "secondPos" : 13769,
   "firstEndPos" : 13113,
   "secondEndPos" : 13784
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set camel job counts to zero. We needed this to prevent shutdown in case there are multiple Camel contexts",
+  "secondLabel" : "// Set camel job counts to zero. We needed this to prevent shutdown in case there are multiple Camel contexts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13127,
+  "secondPos" : 12792,
+  "firstEndPos" : 13236,
+  "secondEndPos" : 12901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that has not completed yet, and the last one with job counts to zero will eventually shutdown.",
+  "secondLabel" : "// that has not completed yet, and the last one with job counts to zero will eventually shutdown.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13245,
+  "secondPos" : 12910,
+  "firstEndPos" : 13342,
+  "secondEndPos" : 13007
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15586,6 +15806,28 @@
   "firstEndPos" : 15697,
   "secondEndPos" : 16150
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If Camel has already started and then user add a route dynamically, we need to ensure",
+  "secondLabel" : "// If Camel has already started and then user add a route dynamically, we need to ensure",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14542,
+  "secondPos" : 14748,
+  "firstEndPos" : 14630,
+  "secondEndPos" : 14836
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to create and init the scheduler first.",
+  "secondLabel" : "// to create and init the scheduler first.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14639,
+  "secondPos" : 14845,
+  "firstEndPos" : 14681,
+  "secondEndPos" : 14887
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15684,6 +15926,17 @@
   "secondPos" : 14933,
   "firstEndPos" : 14749,
   "secondEndPos" : 14955
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now scheduler is ready, let see how we should start it.",
+  "secondLabel" : "// Now scheduler is ready, let see how we should start it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14772,
+  "secondPos" : 15225,
+  "firstEndPos" : 14830,
+  "secondEndPos" : 15283
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

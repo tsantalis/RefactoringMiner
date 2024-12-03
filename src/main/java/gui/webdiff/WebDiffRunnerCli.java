@@ -33,10 +33,6 @@ public class WebDiffRunnerCli {
     boolean help;
     @Parameter(names = {"-e", "--export"}, description = "Export Mappings/Actions into files")
     boolean export = false;
-    @Parameter(names = {"-pf", "--perforce"}, description = "When this is set, the commit ID (provided by the -c " +
-            "parameter) is used as a Perforce ChangeList, and ASTDiff will try" +
-            "to connect to perforce server instead of Git")
-    boolean perforce = false;
     @Parameter(names = {"-pun", "--perforce-user-name"}, description = "Perforce user name")
     String perforceUserName = null;
     @Parameter(names = {"-pup", "--perforce-password"}, description = "Perforce password")
@@ -102,8 +98,7 @@ To export the mappings/actions, add --export to the end of the command.
         CLONED,
         PERFORCE_CL;
         public static RunMode getRunMode(WebDiffRunnerCli runner) {
-            if (runner.perforce &&
-                runner.commit != null &&
+            if (runner.commit != null &&
                 runner.perforceUserName != null &&
                 runner.perforcePassword != null &&
                 runner.url != null

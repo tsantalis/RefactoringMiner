@@ -12,9 +12,11 @@ import org.rendersnake.HtmlCanvas;
 import org.rendersnake.Renderable;
 import spark.Spark;
 
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 
 import static spark.Spark.*;
 
@@ -31,13 +33,26 @@ public class WebDiff  {
         this.projectASTDiff = projectASTDiff;
     }
 
-    public void run() throws IOException {
+    public void run() {
         DirComparator comparator = new DirComparator(projectASTDiff);
         killProcessOnPort(this.port);
         configureSpark(comparator, this.port);
         Spark.awaitInitialization();
         System.out.println(String.format("Starting server: %s:%d.", "http://127.0.0.1", this.port));
     }
+
+    public void openInBrowser() {
+        run();
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(new URI("http://127.0.0.1" + ":" + this.port));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void killProcessOnPort(int port) {
         try {
             Process findPidProcess = Runtime.getRuntime().exec(String.format("lsof -t -i:%d", port));

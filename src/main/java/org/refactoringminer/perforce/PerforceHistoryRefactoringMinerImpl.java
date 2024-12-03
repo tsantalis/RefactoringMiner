@@ -67,13 +67,13 @@ public class PerforceHistoryRefactoringMinerImpl implements PerforceHistoryRefac
 		return filteredList;
 	}
 
-	@Override
-	public IOptionsServer connectToPerforceServer(String serverUrl, String userName, String password) throws Exception {
-		PerforceConnectionDetails connection = PerforceUtils.getPerforceCredentialsObject(serverUrl, userName, password);
+    @Override
+    public IOptionsServer connectToPerforceServer(String serverUrl, String userName, String password) throws Exception {
+        PerforceConnectionDetails connection = PerforceUtils.getPerforceCredentialsObject(serverUrl, userName, password);
         // Get perforce server object
         IOptionsServer server = ServerFactory.getOptionsServer(connection.perforceServerUri(), null, null);
         if (server == null) {
-        	logger.warn("Error connecting to Perforce server");
+            logger.warn("Error connecting to Perforce server");
             throw new ConnectionException("Error connecting to Perforce server");
         }
         server.connect();
@@ -82,33 +82,33 @@ public class PerforceHistoryRefactoringMinerImpl implements PerforceHistoryRefac
         server.login(connection.password());
         logger.info("Connected to Perforce server with credentials");
         return server;
-	}
+    }
 
-	@Override
-	public ProjectASTDiff diffAtChangeList(String serverUrl, String userName, String password, int changeListNumber) {
-		try {
-			// Connect to Perforce server.
-	        this.perforceServer = connectToPerforceServer(serverUrl, userName, password);
-	        ASTDiffInput astDiffInput = populateContentsForPerforceCl(changeListNumber);
-	        GitHistoryRefactoringMinerImpl.processIdenticalFiles(
-	        		astDiffInput.getFileContentsBefore(), 
-	        		astDiffInput.getFileContentsAfter(), 
-	        		Collections.emptyMap(), true);
-	        UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModelForASTDiff(
-	                astDiffInput.getFileContentsBefore(),
-	                astDiffInput.getDirectoriesBefore());
-	        UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModelForASTDiff(
-	                astDiffInput.getFileContentsAfter(),
-	                astDiffInput.getDirectoriesAfter());
-	        UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-	        ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, astDiffInput.getFileContentsBefore(), astDiffInput.getFileContentsAfter());
-	        return differ.getProjectASTDiff();
-		} catch (RefactoringMinerTimedOutException e) {
-			logger.warn(String.format("Ignored changeList %s due to timeout", changeListNumber), e);
-		} catch (Exception e) {
-			logger.warn(String.format("Ignored changeList %s due to error", changeListNumber), e);
-		}
-		return null;
+    @Override
+    public ProjectASTDiff diffAtChangeList(String serverUrl, String userName, String password, int changeListNumber) {
+        try {
+            // Connect to Perforce server.
+            this.perforceServer = connectToPerforceServer(serverUrl, userName, password);
+            ASTDiffInput astDiffInput = populateContentsForPerforceCl(changeListNumber);
+            GitHistoryRefactoringMinerImpl.processIdenticalFiles(
+                    astDiffInput.getFileContentsBefore(), 
+                    astDiffInput.getFileContentsAfter(), 
+                    Collections.emptyMap(), true);
+            UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModelForASTDiff(
+                    astDiffInput.getFileContentsBefore(),
+                    astDiffInput.getDirectoriesBefore());
+            UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModelForASTDiff(
+                    astDiffInput.getFileContentsAfter(),
+                    astDiffInput.getDirectoriesAfter());
+            UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+            ProjectASTDiffer differ = new ProjectASTDiffer(modelDiff, astDiffInput.getFileContentsBefore(), astDiffInput.getFileContentsAfter());
+            return differ.getProjectASTDiff();
+        } catch (RefactoringMinerTimedOutException e) {
+            logger.warn(String.format("Ignored changeList %s due to timeout", changeListNumber), e);
+        } catch (Exception e) {
+            logger.warn(String.format("Ignored changeList %s due to error", changeListNumber), e);
+        }
+        return null;
     }
 
     private ASTDiffInput populateContentsForPerforceCl(int clNumber) throws Exception {
@@ -207,36 +207,36 @@ public class PerforceHistoryRefactoringMinerImpl implements PerforceHistoryRefac
         return path.toLowerCase().endsWith(".java");
     }
 
-	@Override
-	public void detectAtChangeList(String serverUrl, String userName, String password, int changeListNumber,
-			RefactoringHandler handler) {
-		try {
-			// Connect to Perforce server.
-	        this.perforceServer = connectToPerforceServer(serverUrl, userName, password);
-	        ASTDiffInput astDiffInput = populateContentsForPerforceCl(changeListNumber);
-	        List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(
-	        		astDiffInput.getFileContentsBefore(), 
-	        		astDiffInput.getFileContentsAfter(), 
-	        		Collections.emptyMap(), false);
-	        UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(
-	                astDiffInput.getFileContentsBefore(),
-	                astDiffInput.getDirectoriesBefore());
-	        UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(
-	                astDiffInput.getFileContentsAfter(),
-	                astDiffInput.getDirectoriesAfter());
-	        UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
-	        List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
-			refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
-			refactoringsAtRevision = filter(refactoringsAtRevision);
-			handler.handle(String.valueOf(changeListNumber), refactoringsAtRevision);
-			handler.handleModelDiff(String.valueOf(changeListNumber), refactoringsAtRevision, modelDiff);
-		} catch (RefactoringMinerTimedOutException e) {
-			logger.warn(String.format("Ignored changeList %s due to timeout", changeListNumber), e);
-		} catch (Exception e) {
-			logger.warn(String.format("Ignored changeList %s due to error", changeListNumber), e);
-			handler.handleException(String.valueOf(changeListNumber), e);
-		}
-	}
+    @Override
+    public void detectAtChangeList(String serverUrl, String userName, String password, int changeListNumber,
+            RefactoringHandler handler) {
+        try {
+            // Connect to Perforce server.
+            this.perforceServer = connectToPerforceServer(serverUrl, userName, password);
+            ASTDiffInput astDiffInput = populateContentsForPerforceCl(changeListNumber);
+            List<MoveSourceFolderRefactoring> moveSourceFolderRefactorings = GitHistoryRefactoringMinerImpl.processIdenticalFiles(
+                    astDiffInput.getFileContentsBefore(), 
+                    astDiffInput.getFileContentsAfter(), 
+                    Collections.emptyMap(), false);
+            UMLModel parentUMLModel = GitHistoryRefactoringMinerImpl.createModel(
+                    astDiffInput.getFileContentsBefore(),
+                    astDiffInput.getDirectoriesBefore());
+            UMLModel currentUMLModel = GitHistoryRefactoringMinerImpl.createModel(
+                    astDiffInput.getFileContentsAfter(),
+                    astDiffInput.getDirectoriesAfter());
+            UMLModelDiff modelDiff = parentUMLModel.diff(currentUMLModel);
+            List<Refactoring> refactoringsAtRevision = modelDiff.getRefactorings();
+            refactoringsAtRevision.addAll(moveSourceFolderRefactorings);
+            refactoringsAtRevision = filter(refactoringsAtRevision);
+            handler.handle(String.valueOf(changeListNumber), refactoringsAtRevision);
+            handler.handleModelDiff(String.valueOf(changeListNumber), refactoringsAtRevision, modelDiff);
+        } catch (RefactoringMinerTimedOutException e) {
+            logger.warn(String.format("Ignored changeList %s due to timeout", changeListNumber), e);
+        } catch (Exception e) {
+            logger.warn(String.format("Ignored changeList %s due to error", changeListNumber), e);
+            handler.handleException(String.valueOf(changeListNumber), e);
+        }
+    }
 
 	@Override
 	public void detectAtChangeList(String serverUrl, String userName, String password, int changeListNumber,

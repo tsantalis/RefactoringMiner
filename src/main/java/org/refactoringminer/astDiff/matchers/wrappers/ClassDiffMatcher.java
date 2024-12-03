@@ -49,7 +49,7 @@ public class ClassDiffMatcher extends OptimizationAwareMatcher{
         new EnumConstantsMatcher(classDiff.getCommonEnumConstants()).match(srcTree, dstTree, mappingStore);
         for(UMLOperationBodyMapper umlOperationBodyMapper : classDiff.getOperationBodyMapperList())
             new MethodMatcher(optimizationData, umlOperationBodyMapper).match(srcTree, dstTree, mappingStore);
-        new CommentMatcher(classDiff.getCommentListDiff()).match(srcTree, dstTree, mappingStore);
+        new CommentMatcher(optimizationData, classDiff.getCommentListDiff()).match(srcTree, dstTree, mappingStore);
 
         if (isBaseDiff){
             UMLClassBaseDiff baseClassDiff = (UMLClassBaseDiff) classDiff;

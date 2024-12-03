@@ -73,8 +73,8 @@ public class AddCommand extends BaseCommand {
         {
             System.err.println("Repo-Commit pair already exists in the data folder");
             System.err.println("Enter yes to confirm the overwrite");
-            String input = new Scanner(System.in).next();
-            if (!input.equals("yes")) goingToAdd = false;
+//            String input = new Scanner(System.in).next();
+//            if (!input.equals("yes")) goingToAdd = false;
         }
         else {
             infos.add(caseInfo);

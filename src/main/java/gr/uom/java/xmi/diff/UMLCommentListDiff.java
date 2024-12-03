@@ -273,6 +273,38 @@ public class UMLCommentListDiff {
 	}
 
 	private void processModifiedComments(List<UMLComment> deletedComments, List<UMLComment> addedComments) {
+		if(deletedComments.isEmpty() || addedComments.isEmpty()) {
+			this.deletedComments.addAll(deletedComments);
+			this.addedComments.addAll(addedComments);
+			return;
+		}
+		List<UMLCommentGroup> groupsBefore = createCommentGroups(deletedComments);
+		List<UMLCommentGroup> groupsAfter = createCommentGroups(addedComments);
+		if(groupsBefore.size() <= groupsAfter.size()) {
+			for(UMLCommentGroup groupBefore : groupsBefore) {
+				for(UMLCommentGroup groupAfter : groupsAfter) {
+					processModifiedComments(groupBefore, groupAfter);
+				}
+			}
+		}
+		else {
+			for(UMLCommentGroup groupAfter : groupsAfter) {
+				for(UMLCommentGroup groupBefore : groupsBefore) {
+					processModifiedComments(groupBefore, groupAfter);
+				}
+			}
+		}
+		for(UMLCommentGroup group : groupsBefore) {
+			this.deletedComments.addAll(group.getGroup());
+		}
+		for(UMLCommentGroup group : groupsAfter) {
+			this.addedComments.addAll(group.getGroup());
+		}
+	}
+
+	private void processModifiedComments(UMLCommentGroup groupBefore, UMLCommentGroup groupAfter) {
+		List<UMLComment> deletedComments = groupBefore.getGroup();
+		List<UMLComment> addedComments = groupAfter.getGroup();
 		//match comments differing only in opening/closing quotes
 		if(deletedComments.size() <= addedComments.size()) {
 			for(UMLComment deletedComment : new ArrayList<>(deletedComments)) {
@@ -531,8 +563,6 @@ public class UMLCommentListDiff {
 				}
 			}
 		}
-		this.deletedComments.addAll(deletedComments);
-		this.addedComments.addAll(addedComments);
 	}
 
 	private int nonPunctuationWords(List<String> longestSubSequence) {

@@ -6,6 +6,7 @@ import org.refactoringminer.astDiff.models.ASTDiff;
 import org.refactoringminer.astDiff.models.ProjectASTDiff;
 import org.refactoringminer.astDiff.utils.MappingExportModel;
 import org.refactoringminer.astDiff.utils.URLHelper;
+import org.refactoringminer.perforce.PerforceHistoryRefactoringMinerImpl;
 import org.refactoringminer.rm1.GitHistoryRefactoringMinerImpl;
 import org.refactoringminer.util.GitServiceImpl;
 
@@ -18,7 +19,7 @@ import static org.refactoringminer.astDiff.utils.ExportUtils.getFileNameFromSrcD
 /* Created by pourya on 2024-02-09*/
 public class WebDiffRunnerCli {
     private static final int timeout = 1000;
-    @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR" , order = 0)
+    @Parameter(names = {"-u", "--url"}, description = "URL of the commit/PR, or the Perforce Server" , order = 0)
     String url;
     @Parameter(names = {"-s", "--src"}, description = "Source directory", order = 1)
     Path src;
@@ -26,13 +27,20 @@ public class WebDiffRunnerCli {
     Path dst;
     @Parameter(names = {"-r", "--repo"}, description = "Repository path (locally cloned repo)", order = 3)
     String repo;
-    @Parameter(names = {"-c", "--commit"}, description = "Commit ID for locally cloned repo", order = 4)
+    @Parameter(names = {"-c", "--commit"}, description = "Commit ID for locally cloned repo, or Perforce ChangeList number", order = 4)
     String commit;
     @Parameter(names = {"-h", "--help"}, description = "Help", help = true)
     boolean help;
     @Parameter(names = {"-e", "--export"}, description = "Export Mappings/Actions into files")
     boolean export = false;
-
+    @Parameter(names = {"-pf", "--perforce"}, description = "When this is set, the commit ID (provided by the -c " +
+            "parameter) is used as a Perforce ChangeList, and ASTDiff will try" +
+            "to connect to perforce server instead of Git")
+    boolean perforce = false;
+    @Parameter(names = {"-pun", "--perforce-user-name"}, description = "Perforce user name")
+    String perforceUserName = null;
+    @Parameter(names = {"-pup", "--perforce-password"}, description = "Perforce password")
+    String perforcePassword = null;
 
     private static final String HELP_MSG = """
 You can run the diff with the following options:
@@ -69,7 +77,7 @@ To export the mappings/actions, add --export to the end of the command.
                 export(projectASTDiff);
             }
             else
-                new WebDiff(projectASTDiff).run();
+                new WebDiff(projectASTDiff).openInBrowser();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -91,8 +99,17 @@ To export the mappings/actions, add --export to the end of the command.
         URL,
         PR,
         DIR,
-        CLONED;
+        CLONED,
+        PERFORCE_CL;
         public static RunMode getRunMode(WebDiffRunnerCli runner) {
+            if (runner.perforce &&
+                runner.commit != null &&
+                runner.perforceUserName != null &&
+                runner.perforcePassword != null &&
+                runner.url != null
+            ) {
+                return PERFORCE_CL;
+            }
             if (runner.url != null)
             {
                 if (URLHelper.isPR(runner.url)) return PR;
@@ -120,6 +137,11 @@ To export the mappings/actions, add --export to the end of the command.
                         runner.dst.toAbsolutePath().normalize());
                 case CLONED -> new GitHistoryRefactoringMinerImpl().diffAtCommit(
                         new GitServiceImpl().openRepository(runner.repo), runner.commit);
+                case PERFORCE_CL -> new PerforceHistoryRefactoringMinerImpl().diffAtChangeList(
+                        runner.url,
+                        runner.perforceUserName,
+                        runner.perforcePassword,
+                        Integer.parseInt(runner.commit));
             };
         }
     }

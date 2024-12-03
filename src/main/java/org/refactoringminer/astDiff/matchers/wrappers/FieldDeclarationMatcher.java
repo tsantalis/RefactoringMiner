@@ -63,7 +63,7 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
             dstFieldDeclaration = TreeUtilFunctions.getParentUntilType(dstAttr, Constants.RECORD_COMPONENT);
         }
         //				|| srcFieldDeclaration.isIsoStructuralTo(dstFieldDeclaration))
-        new CommentMatcher(umlCommentListDiff).match(srcTree, dstTree, mappingStore);
+        new CommentMatcher(optimizationData, umlCommentListDiff).match(srcTree, dstTree, mappingStore);
         if (srcFieldDeclaration != null && dstFieldDeclaration != null && srcFieldDeclaration.getMetrics().hash == dstFieldDeclaration.getMetrics().hash) {
             //IsoStructural can't be a good idea here, i.e. anonymous class
             mappingStore.addMappingRecursively(srcFieldDeclaration, dstFieldDeclaration);

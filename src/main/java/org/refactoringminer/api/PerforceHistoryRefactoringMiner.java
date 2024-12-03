@@ -27,12 +27,11 @@ public interface PerforceHistoryRefactoringMiner {
 	 * @param password The user password used to connect to the Perforce server
 	 * @param changeListNumber The Change List number to generate AST diff for
 	 * @return A set of ASTDiff objects. Each ASTDiff corresponds to a pair of Java compilation units.
-	 * @throws Exception
 	 */
 	ProjectASTDiff diffAtChangeList(String serverUrl,
             String userName,
             String password,
-            int changeListNumber) throws Exception;
+            int changeListNumber);
 
 	/**
 	 * Detect refactorings performed in the specified Perforce Change List.
@@ -42,13 +41,12 @@ public interface PerforceHistoryRefactoringMiner {
 	 * @param password The user password used to connect to the Perforce server
 	 * @param changeListNumber The Change List number to generate AST diff for
 	 * @param handler A handler object that is responsible to process the detected refactorings.
-	 * @throws Exception
 	 */
 	void detectAtChangeList(String serverUrl,
             String userName,
             String password,
             int changeListNumber,
-            RefactoringHandler handler) throws Exception;
+            RefactoringHandler handler);
 
 	/**
 	 * Detect refactorings performed in the specified Perforce Change List.
@@ -59,11 +57,10 @@ public interface PerforceHistoryRefactoringMiner {
 	 * @param changeListNumber The Change List number to generate AST diff for
 	 * @param handler A handler object that is responsible to process the detected refactorings.
 	 * @param timeout A timeout, in seconds. When timeout is reached, the operation stops and returns no refactorings.
-	 * @throws Exception
 	 */
 	void detectAtChangeList(String serverUrl,
             String userName,
             String password,
             int changeListNumber,
-            RefactoringHandler handler, int timeout) throws Exception;
+            RefactoringHandler handler, int timeout);
 }

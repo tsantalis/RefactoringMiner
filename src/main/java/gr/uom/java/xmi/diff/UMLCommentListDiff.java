@@ -318,6 +318,17 @@ public class UMLCommentListDiff {
 				}
 			}
 		}
+		if(groupsBefore.isEmpty() && groupsAfter.isEmpty()) {
+			UMLCommentGroup groupBefore = new UMLCommentGroup();
+			for(UMLComment comment : deletedComments)
+				groupBefore.addComment(comment);
+			UMLCommentGroup groupAfter = new UMLCommentGroup();
+			for(UMLComment comment : addedComments)
+				groupAfter.addComment(comment);
+			processModifiedComments(groupBefore, groupAfter);
+			this.deletedComments.addAll(groupBefore.getGroup());
+			this.addedComments.addAll(groupAfter.getGroup());
+		}
 		for(UMLCommentGroup group : groupsBefore) {
 			this.deletedComments.addAll(group.getGroup());
 		}

@@ -163,13 +163,10 @@ public class ExtractOperationDetection {
 							if(parentMapping != null && parentMapping instanceof CompositeStatementObjectMapping) {
 								CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)parentMapping;
 								double score = compositeMapping.getCompositeChildMatchingScore();
-								if(score > maxScore) {
+								if(score > maxScore && score > 0.5) {
 									invocation = addedOperationInvocations.get(i);
 									maxScore = score;
 								}
-							}
-							else if(parentMapping == null) {
-								break;
 							}
 						}
 					}

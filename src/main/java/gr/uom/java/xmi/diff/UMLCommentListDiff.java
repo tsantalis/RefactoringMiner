@@ -212,7 +212,8 @@ public class UMLCommentListDiff {
 			for(UMLComment deletedComment : new ArrayList<>(deletedComments)) {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(deletedComment.getText()) &&
-							pair.getRight().getText().equals(deletedComment.getText())) {
+							pair.getRight().getText().equals(deletedComment.getText()) &&
+							!deletedComment.isCommentedCode()) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(deletedComment, pair.getRight());
 						commonComments.add(newPair);
 						deletedComments.remove(deletedComment);
@@ -226,7 +227,8 @@ public class UMLCommentListDiff {
 			for(UMLComment addedComment : new ArrayList<>(addedComments)) {
 				for(Pair<UMLComment, UMLComment> pair : commonComments) {
 					if(pair.getLeft().getText().equals(addedComment.getText()) &&
-							pair.getRight().getText().equals(addedComment.getText())) {
+							pair.getRight().getText().equals(addedComment.getText()) &&
+							!addedComment.isCommentedCode()) {
 						Pair<UMLComment, UMLComment> newPair = Pair.of(pair.getLeft(), addedComment);
 						commonComments.add(newPair);
 						addedComments.remove(addedComment);

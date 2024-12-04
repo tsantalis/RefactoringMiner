@@ -17,6 +17,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
+import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
@@ -154,11 +155,59 @@ public class ExtractOperationDetection {
 					}
 				}
 				else {
-					processAddedOperation(addedOperation, refactorings, addedOperationInvocations, addedOperationInvocations.get(0));
+					AbstractCall invocation = addedOperationInvocations.get(0);
+					if(addedOperationInvocations.size() > 1) {
+						double maxScore = 0;
+						for(int i=0; i<addedOperationInvocations.size(); i++) {
+							AbstractCodeMapping parentMapping = findParentMapping(mapper, addedOperationInvocations.get(i), addedOperation);
+							if(parentMapping != null && parentMapping instanceof CompositeStatementObjectMapping) {
+								CompositeStatementObjectMapping compositeMapping = (CompositeStatementObjectMapping)parentMapping;
+								double score = compositeMapping.getCompositeChildMatchingScore();
+								if(score > maxScore) {
+									invocation = addedOperationInvocations.get(i);
+									maxScore = score;
+								}
+							}
+						}
+					}
+					processAddedOperation(addedOperation, refactorings, addedOperationInvocations, invocation);
 				}
 			}
 		}
 		return refactorings;
+	}
+
+	private AbstractCodeMapping findParentMapping(UMLOperationBodyMapper parentMapper, AbstractCall operationInvocation, UMLOperation addedOperation) {
+		AbstractCodeFragment statementContainingOperationInvocation = null; 
+		for(AbstractCodeFragment leaf : parentMapper.getNonMappedLeavesT2()) { 
+			if(leaf.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+				statementContainingOperationInvocation = leaf; 
+				break; 
+			} 
+		}
+		for(AbstractCodeMapping mapping : parentMapper.getMappings()) { 
+			if(mapping instanceof LeafMapping) { 
+				if(mapping.getFragment2().getLocationInfo().subsumes(operationInvocation.getLocationInfo())) { 
+					statementContainingOperationInvocation = mapping.getFragment2(); 
+				} 
+			} 
+			if(statementContainingOperationInvocation != null) { 
+				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) { 
+					boolean extractedStatement = parentMapper.getExtractedStatements().containsKey(addedOperation) && parentMapper.getExtractedStatements().get(addedOperation).contains(mapping.getFragment1());
+					if(!extractedStatement)
+						return mapping; 
+				} 
+				if(statementContainingOperationInvocation.getParent() != null && statementContainingOperationInvocation.getParent().getParent() != null && 
+						statementContainingOperationInvocation.getParent().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && 
+						mapping.getFragment2().equals(statementContainingOperationInvocation.getParent().getParent())) { 
+					return mapping; 
+				} 
+				if(operationInvocation.getContainer() instanceof LambdaExpressionObject && mapping.getFragment2().getLambdas().contains(operationInvocation.getContainer())) {
+					return mapping;
+				}
+			}
+		}
+		return null;
 	}
 
 	private List<AbstractCall> sortInvocationsBasedOnArgumentOccurrences(List<AbstractCall> invocations) {

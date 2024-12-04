@@ -131,7 +131,7 @@ public interface GitHistoryRefactoringMiner {
 	 * @param fileContentsAfter A map where the keys are file paths, and the values are the corresponding file contents.
 	 * @param handler A handler object that is responsible to process the detected refactorings. 
 	 * The keys should correspond to the file path starting from the root of the repository.
-	 * For example, {@code src/org/refactoringminer/api/GitHistoryRefactoringMiner.java}
+	 * For example, {@code src/main/java/org/refactoringminer/api/GitHistoryRefactoringMiner.java}
 	 */
 	void detectAtFileContents(Map<String, String> fileContentsBefore, Map<String, String> fileContentsAfter, RefactoringHandler handler);
 

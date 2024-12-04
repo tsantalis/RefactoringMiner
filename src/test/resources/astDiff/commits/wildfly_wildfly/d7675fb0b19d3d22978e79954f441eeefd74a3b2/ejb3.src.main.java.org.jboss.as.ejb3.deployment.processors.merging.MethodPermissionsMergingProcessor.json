@@ -10,6 +10,17 @@
   "firstEndPos" : 12989,
   "secondEndPos" : 13599
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * JBoss, Home of Professional Open Source\n * Copyright 2010, Red Hat Inc., and individual contributors as indicated\n * by the @authors tag. See the copyright.txt in the distribution for a\n * full listing of individual contributors.\n *\n * This is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as\n * published by the Free Software Foundation; either version 2.1 of\n * the License, or (at your option) any later version.\n *\n * This software is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this software; if not, write to the Free\n * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA\n * 02110-1301 USA, or see the FSF site: http://www.fsf.org.\n */",
+  "secondLabel" : "/*\n * JBoss, Home of Professional Open Source\n * Copyright 2010, Red Hat Inc., and individual contributors as indicated\n * by the @authors tag. See the copyright.txt in the distribution for a\n * full listing of individual contributors.\n *\n * This is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as\n * published by the Free Software Foundation; either version 2.1 of\n * the License, or (at your option) any later version.\n *\n * This software is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this software; if not, write to the Free\n * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA\n * 02110-1301 USA, or see the FSF site: http://www.fsf.org.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1015,
+  "secondEndPos" : 1015
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -747,6 +758,17 @@
   "firstEndPos" : 2681,
   "secondEndPos" : 2681
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2635,
+  "secondPos" : 2635,
+  "firstEndPos" : 2640,
+  "secondEndPos" : 2640
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "javax.annotation.security.RolesAllowed",
@@ -780,6 +802,17 @@
   "firstEndPos" : 2697,
   "secondEndPos" : 2697
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2682,
+  "secondPos" : 2682,
+  "firstEndPos" : 2687,
+  "secondEndPos" : 2687
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "DenyAll",
@@ -812,6 +845,17 @@
   "secondPos" : 2698,
   "firstEndPos" : 2741,
   "secondEndPos" : 2741
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2698,
+  "secondPos" : 2698,
+  "firstEndPos" : 2703,
+  "secondEndPos" : 2703
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -890,6 +934,17 @@
   "firstEndPos" : 3026,
   "secondEndPos" : 3026
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2995,
+  "secondPos" : 2995,
+  "firstEndPos" : 3000,
+  "secondEndPos" : 3000
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "EJBComponentDescription",
@@ -911,6 +966,17 @@
   "secondPos" : 3033,
   "firstEndPos" : 3055,
   "secondEndPos" : 3055
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3033,
+  "secondPos" : 3033,
+  "firstEndPos" : 3040,
+  "secondEndPos" : 3040
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3631,6 +3697,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4877,
+  "secondPos" : 4877,
+  "firstEndPos" : 4883,
+  "secondEndPos" : 4883
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 4877,
+  "secondPos" : 4877,
+  "firstEndPos" : 4883,
+  "secondEndPos" : 4883
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "asList",
   "secondLabel" : "asList",
   "firstParentType" : "MethodInvocation",
@@ -4376,6 +4464,28 @@
   "secondPos" : 5214,
   "firstEndPos" : 5220,
   "secondEndPos" : 5220
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 5222,
+  "secondPos" : 5222,
+  "firstEndPos" : 5228,
+  "secondEndPos" : 5228
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 5222,
+  "secondPos" : 5222,
+  "firstEndPos" : 5228,
+  "secondEndPos" : 5228
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -6357,6 +6467,28 @@
   "firstEndPos" : 12431,
   "secondEndPos" : 8646
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Add the configurator that calculates JACC permissions",
+  "secondLabel" : "//Add the configurator that calculates JACC permissions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6507,
+  "secondPos" : 6507,
+  "firstEndPos" : 6562,
+  "secondEndPos" : 6562
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO: should this be elsewhere?",
+  "secondLabel" : "//TODO: should this be elsewhere?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6571,
+  "secondPos" : 6571,
+  "firstEndPos" : 6604,
+  "secondEndPos" : 6604
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6488,6 +6620,28 @@
   "secondPos" : 6661,
   "firstEndPos" : 6680,
   "secondEndPos" : 6680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//DO NOT USE componentConfiguration.getDescriptorData()",
+  "secondLabel" : "//DO NOT USE componentConfiguration.getDescriptorData()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6694,
+  "secondPos" : 6694,
+  "firstEndPos" : 6749,
+  "secondEndPos" : 6749
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//It will return null if there is no <enterprise-beans/> declaration even if there is an assembly descriptor entry",
+  "secondLabel" : "//It will return null if there is no <enterprise-beans/> declaration even if there is an assembly descriptor entry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6758,
+  "secondPos" : 6758,
+  "firstEndPos" : 6872,
+  "secondEndPos" : 6872
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8117,6 +8271,17 @@
   "firstEndPos" : 8222,
   "secondEndPos" : 12496
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the session bean description with the tx attribute info",
+  "secondLabel" : "// update the session bean description with the tx attribute info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8254,
+  "secondPos" : 12516,
+  "firstEndPos" : 8319,
+  "secondEndPos" : 12581
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -9172,6 +9337,17 @@
   "secondPos" : 9071,
   "firstEndPos" : 9477,
   "secondEndPos" : 9096
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// EJB 3.1 FR 17.3.2.2 The unchecked element is used instead of a role name in the method-permission element to indicate that all roles are permitted.",
+  "secondLabel" : "// EJB 3.1 FR 17.3.2.2 The unchecked element is used instead of a role name in the method-permission element to indicate that all roles are permitted.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9507,
+  "secondPos" : 9114,
+  "firstEndPos" : 9657,
+  "secondEndPos" : 9264
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10536,6 +10712,17 @@
   "secondPos" : 10479,
   "firstEndPos" : 11055,
   "secondEndPos" : 10494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the session bean description with the tx attribute info",
+  "secondLabel" : "// update the session bean description with the tx attribute info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11091,
+  "secondPos" : 10518,
+  "firstEndPos" : 11156,
+  "secondEndPos" : 10583
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

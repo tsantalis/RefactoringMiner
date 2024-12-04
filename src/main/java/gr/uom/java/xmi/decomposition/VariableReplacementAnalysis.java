@@ -2022,6 +2022,56 @@ public class VariableReplacementAnalysis {
 							}
 						}
 					}
+					String getPrefix = "get";
+					if(invocation.getName().startsWith(getPrefix) && invocation.arguments().size() == 0 && (invocation.getExpression() == null || invocation.getExpression().equals("this"))) {
+						Replacement variableReplacement = null;
+						if(variableReplacedWithMethod.getDirection().equals(Direction.VARIABLE_TO_INVOCATION)) {
+							String before = variable;
+							String after = invocation.getName().substring(getPrefix.length());
+							String lowerCaseFirstLetter = Character.toLowerCase(after.charAt(0)) + after.substring(1, after.length());
+							String attributeNameAfter = null;
+							if(modelDiff != null) {
+								for(UMLAttribute attribute : modelDiff.getAddedAttributesInCommonClasses()) {
+									if(attribute.getName().equals(lowerCaseFirstLetter) || attribute.getName().equals("_" + lowerCaseFirstLetter)) {
+										attributeNameAfter = attribute.getName();
+										break;
+									}
+								}
+							}
+							if(attributeNameAfter != null && !before.equals(attributeNameAfter)) {
+								variableReplacement = new Replacement(before, attributeNameAfter, ReplacementType.VARIABLE_NAME);
+							}
+						}
+						else if(variableReplacedWithMethod.getDirection().equals(Direction.INVOCATION_TO_VARIABLE)) {
+							String before = invocation.getName().substring(getPrefix.length());
+							String lowerCaseFirstLetter = Character.toLowerCase(before.charAt(0)) + before.substring(1, before.length());
+							String after = variable;
+							String attributeNameBefore = null;
+							if(modelDiff != null) {
+								for(UMLAttribute attribute : modelDiff.getRemovedAttributesInCommonClasses()) {
+									if(attribute.getName().equals(lowerCaseFirstLetter) || attribute.getName().equals("_" + lowerCaseFirstLetter)) {
+										attributeNameBefore = attribute.getName();
+										break;
+									}
+								}
+							}
+							if(attributeNameBefore != null && !attributeNameBefore.equals(after)) {
+								variableReplacement = new Replacement(attributeNameBefore, after, ReplacementType.VARIABLE_NAME);
+							}
+						}
+						if(variableReplacement != null && !returnVariableMapping(mapping, replacement) &&
+								!containsMethodInvocationReplacementWithDifferentExpressionNameAndArguments(mapping.getReplacements()) &&
+								replacementNotInsideMethodSignatureOfAnonymousClass(mapping, replacement)) {
+							if(map.containsKey(variableReplacement)) {
+								map.get(variableReplacement).add(mapping);
+							}
+							else {
+								Set<AbstractCodeMapping> list = new LinkedHashSet<AbstractCodeMapping>();
+								list.add(mapping);
+								map.put(variableReplacement, list);
+							}
+						}
+					}
 					if(invocation.getName().startsWith("to") && invocation.getExpression() != null && !variable.equals(invocation.getExpression())) {
 						Replacement variableReplacement = new Replacement(variable, invocation.getExpression(), ReplacementType.VARIABLE_NAME);
 						if(!returnVariableMapping(mapping, replacement) &&

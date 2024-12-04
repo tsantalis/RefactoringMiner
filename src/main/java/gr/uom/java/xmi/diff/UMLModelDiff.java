@@ -1609,7 +1609,7 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	private List<UMLAttribute> getAddedAttributesInCommonClasses() {
+	public List<UMLAttribute> getAddedAttributesInCommonClasses() {
 		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
@@ -1623,7 +1623,7 @@ public class UMLModelDiff {
 		return addedAttributes;
 	}
 
-	private List<UMLAttribute> getRemovedAttributesInCommonClasses() {
+	public List<UMLAttribute> getRemovedAttributesInCommonClasses() {
 		List<UMLAttribute> removedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());

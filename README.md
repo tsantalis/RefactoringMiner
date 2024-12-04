@@ -893,7 +893,7 @@ miner.detectAtDirectories(dir1, dir2, new RefactoringHandler() {
 ## With file contents as strings
 
 You can provide two maps (before and after the changes) where the keys are file paths, and the values are the corresponding file contents.
-Each key should correspond to a file path starting from the root of the repository. For example, `src/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
+Each key should correspond to a file path starting from the root of the repository. For example, `src/main/java/org/refactoringminer/api/GitHistoryRefactoringMiner.java`.
 
 After populating the maps, you can use the following code snippet:
 
@@ -966,7 +966,7 @@ All AST Diff APIs return a `ProjectASTDiff` object. By calling `getDiffSet()` on
 
 `ASTDiff` extends `com.github.gumtreediff.actions.Diff` and thus it is compatible with the [GumTree](https://github.com/GumTreeDiff/gumtree) core APIs.
 
-More detailed documentation can be found in [GitHistoryRefactoringMiner](https://github.com/tsantalis/RefactoringMiner/blob/master/src/org/refactoringminer/api/GitHistoryRefactoringMiner.java) JavaDoc.
+More detailed documentation can be found in [GitHistoryRefactoringMiner](https://github.com/tsantalis/RefactoringMiner/blob/master/src/main/java/org/refactoringminer/api/GitHistoryRefactoringMiner.java) JavaDoc.
 
 ## With commit of a locally cloned git repository
 ```java

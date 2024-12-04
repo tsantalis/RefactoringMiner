@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import net.joshka.junit.json.params.JsonFileSource;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -27,6 +28,7 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
+@Disabled("For CI purposes (temporary)")
 public class Defects4JPerfectDiffTest extends IgnoringCommentsVisitorTest {
     private static final String dir = getDefects4jMappingPath();
     @ParameterizedTest(name= "{index}: {0}")

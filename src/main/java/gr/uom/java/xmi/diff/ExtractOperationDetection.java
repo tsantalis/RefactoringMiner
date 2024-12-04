@@ -168,6 +168,9 @@ public class ExtractOperationDetection {
 									maxScore = score;
 								}
 							}
+							else if(parentMapping == null) {
+								break;
+							}
 						}
 					}
 					processAddedOperation(addedOperation, refactorings, addedOperationInvocations, invocation);

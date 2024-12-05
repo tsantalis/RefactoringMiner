@@ -1361,6 +1361,7 @@ public class UMLModelDiff {
 					movedAttributeDiffList.add(attributeDiff);
 				}
 				PullUpAttributeRefactoring pullUpAttribute = new PullUpAttributeRefactoring(removedAttribute, addedAttribute);
+				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pullUpAttribute;
 			}
 			else if(isSubclassOf(addedAttribute.getClassName(), removedAttribute.getClassName())) {
@@ -1369,6 +1370,7 @@ public class UMLModelDiff {
 					movedAttributeDiffList.add(attributeDiff);
 				}
 				PushDownAttributeRefactoring pushDownAttribute = new PushDownAttributeRefactoring(removedAttribute, addedAttribute);
+				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return pushDownAttribute;
 			}
 			else if(sourceClassImportsTargetClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
@@ -1398,6 +1400,7 @@ public class UMLModelDiff {
 							movedAttributeDiffList.add(attributeDiff);
 						}
 						MoveAttributeRefactoring moveAttribute = new MoveAttributeRefactoring(removedAttribute, addedAttribute);
+						checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 						return moveAttribute;
 					}
 				}
@@ -1413,10 +1416,70 @@ public class UMLModelDiff {
 				}
 				Set<CandidateAttributeRefactoring> candidates = renameMap.get(rename);
 				MoveAndRenameAttributeRefactoring moveAttribute = new MoveAndRenameAttributeRefactoring(removedAttribute, addedAttribute, candidates);
+				checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(attributeDiff);
 				return moveAttribute;
 			}
 		}
 		return null;
+	}
+
+	private void checkForOverlappingExtractInlineAttributeRefactoringInMovedAttribute(UMLAttributeDiff attributeDiff) {
+		if(attributeDiff.getInitializerMapper().isPresent()) {
+			List<UMLAttribute> removedAttributes = getRemovedAttributesInCommonClasses();
+			List<UMLAttribute> addedAttributes = getAddedAttributesInCommonClasses();
+			for(AbstractCodeMapping mapping : attributeDiff.getInitializerMapper().get().getMappings()) {
+				for(Replacement replacement : mapping.getReplacements()) {
+					if(replacement.involvesVariable()) {
+						for(UMLAttribute addedAttribute : addedAttributes) {
+							VariableDeclaration declaration2 = addedAttribute.getVariableDeclaration();
+							if(addedAttribute.getName().equals(replacement.getAfter())) {
+								if(declaration2.getInitializer() != null) {
+									if(declaration2.getInitializer().getString().equals(replacement.getBefore())) {
+										List<LeafExpression> subExpressions2 = declaration2.getInitializer().findExpression(replacement.getBefore());
+										if(subExpressions2.size() == 1) {
+											ExtractAttributeRefactoring refactoring = new ExtractAttributeRefactoring(addedAttribute, 
+													findClassInParentModel(attributeDiff.getRemovedAttribute().getClassName()), 
+													findClassInChildModel(attributeDiff.getAddedAttribute().getClassName()), false);
+											if(!refactorings.contains(refactoring)) {
+												refactorings.add(refactoring);
+												List<LeafExpression> subExpressions1 = mapping.getFragment1().findExpression(replacement.getBefore());
+												for(LeafExpression subExpression : subExpressions1) {
+													LeafMapping leafMapping = new LeafMapping(subExpression, subExpressions2.get(0), attributeDiff.getContainer1(), attributeDiff.getContainer2());
+													refactoring.addSubExpressionMapping(leafMapping);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						for(UMLAttribute removedAttribute : removedAttributes) {
+							VariableDeclaration declaration1 = removedAttribute.getVariableDeclaration();
+							if(removedAttribute.getName().equals(replacement.getBefore())) {
+								if(declaration1.getInitializer() != null) {
+									if(declaration1.getInitializer().getString().equals(replacement.getAfter())) {
+										List<LeafExpression> subExpressions1 = declaration1.getInitializer().findExpression(replacement.getAfter());
+										if(subExpressions1.size() == 1) {
+											InlineAttributeRefactoring refactoring = new InlineAttributeRefactoring(removedAttribute, 
+													findClassInParentModel(attributeDiff.getRemovedAttribute().getClassName()), 
+													findClassInChildModel(attributeDiff.getAddedAttribute().getClassName()), false);
+											if(!refactorings.contains(refactoring)) {
+												refactorings.add(refactoring);
+												List<LeafExpression> subExpressions2 = mapping.getFragment2().findExpression(replacement.getAfter());
+												for(LeafExpression subExpression : subExpressions2) {
+													LeafMapping leafMapping = new LeafMapping(subExpressions1.get(0), subExpression, attributeDiff.getContainer1(), attributeDiff.getContainer2());
+													refactoring.addSubExpressionMapping(leafMapping);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	private boolean initializerContainsTypeLiteral(VariableDeclaration v1, VariableDeclaration v2) {

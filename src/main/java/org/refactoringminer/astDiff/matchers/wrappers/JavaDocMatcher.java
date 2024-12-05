@@ -18,8 +18,7 @@ import org.refactoringminer.astDiff.utils.TreeUtilFunctions;
 
 import java.util.Optional;
 
-import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.areBothFromThisType;
-import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.isFromType;
+import static org.refactoringminer.astDiff.utils.TreeUtilFunctions.*;
 
 /* Created by pourya on 2024-05-22*/
 public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatcher {
@@ -93,8 +92,14 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                         {
                             if (srcTag.isIsoStructuralTo(dstTag))
                                 optimizationData.getSubtreeMappings().addMappingRecursively(srcTag,dstTag);
-                            else
-                                optimizationData.getSubtreeMappings().addMapping(srcTag,dstTag);
+                            else {
+                                optimizationData.getSubtreeMappings().addMapping(srcTag, dstTag);
+                                Tree srcTagName = findFirstByType(srcTag, Constants.TAG_NAME);
+                                Tree dstTagName = findFirstByType(dstTag, Constants.TAG_NAME);
+                                if (srcTagName != null && dstTagName != null)
+                                    if (srcTagName.isIsoStructuralTo(dstTagName))
+                                        optimizationData.getSubtreeMappings().addMapping(srcTagName, dstTagName);
+                            }
                         }
                     }
                 }

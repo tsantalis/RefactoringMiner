@@ -82,6 +82,7 @@ public class Constants {
 	public static final String JAVA_DOC = "Javadoc";
 	public static final String TEXT_ELEMENT = "TextElement";
 	public static final String TAG_ELEMENT = "TagElement";
+	public static final String TAG_NAME = "TAG_NAME";
 
 	public static final String SIMPLE_TYPE = "SimpleType";
 	public static final String EXPRESSION_METHOD_REFERENCE = "ExpressionMethodReference";
@@ -92,4 +93,5 @@ public class Constants {
 
 	public static final String LINE_COMMENT = "LineComment";
 	public static final String BLOCK_COMMENT = "BlockComment";
+
 }

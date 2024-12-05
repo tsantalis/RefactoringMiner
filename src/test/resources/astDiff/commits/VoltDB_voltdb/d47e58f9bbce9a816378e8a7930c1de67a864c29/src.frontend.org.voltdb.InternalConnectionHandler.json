@@ -10,6 +10,17 @@
   "firstEndPos" : 5764,
   "secondEndPos" : 5848
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "secondLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 738,
+  "secondEndPos" : 738
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -318,6 +329,17 @@
   "firstEndPos" : 1338,
   "secondEndPos" : 1382
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1321,
+  "secondPos" : 1365,
+  "firstEndPos" : 1328,
+  "secondEndPos" : 1372
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " akhanzode",
@@ -493,6 +515,17 @@
   "secondPos" : 1491,
   "firstEndPos" : 1474,
   "secondEndPos" : 1518
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Atomically allows the catalog reference to change between access",
+  "secondLabel" : "// Atomically allows the catalog reference to change between access",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1482,
+  "secondPos" : 1526,
+  "firstEndPos" : 1549,
+  "secondEndPos" : 1593
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1088,6 +1121,17 @@
   "firstEndPos" : 1969,
   "secondEndPos" : 2013
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Allocate and pool similar row sizes will reuse the buffers.",
+  "secondLabel" : "//Allocate and pool similar row sizes will reuse the buffers.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1982,
+  "secondPos" : 2026,
+  "firstEndPos" : 2043,
+  "secondEndPos" : 2087
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -1671,6 +1715,17 @@
   "firstEndPos" : 2390,
   "secondEndPos" : 2434
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use backPressureTimeout value <= 0  for no back pressure timeout",
+  "secondLabel" : "// Use backPressureTimeout value <= 0  for no back pressure timeout",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2404,
+  "secondPos" : 2448,
+  "firstEndPos" : 2471,
+  "secondEndPos" : 2515
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -1868,6 +1923,17 @@
   "secondPos" : 2641,
   "firstEndPos" : 5701,
   "secondEndPos" : 5785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for admin mode restrictions before proceeding any further",
+  "secondLabel" : "// Check for admin mode restrictions before proceeding any further",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2575,
+  "secondPos" : 2651,
+  "firstEndPos" : 2641,
+  "secondEndPos" : 2717
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3420,6 +3486,17 @@
   "firstEndPos" : 3660,
   "secondEndPos" : 3736
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//estimate the new nanos based on time slept, instead of calling nanoTime in a loop",
+  "secondLabel" : "//estimate the new nanos based on time slept, instead of calling nanoTime in a loop",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3679,
+  "secondPos" : 3755,
+  "firstEndPos" : 3762,
+  "secondEndPos" : 3838
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3970,6 +4047,17 @@
   "firstEndPos" : 4170,
   "secondEndPos" : 4246
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//type + procname(len + name) + connectionId (long) + params",
+  "secondLabel" : "//type + procname(len + name) + connectionId (long) + params",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4181,
+  "secondPos" : 4257,
+  "firstEndPos" : 4241,
+  "secondEndPos" : 4317
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4156,6 +4244,17 @@
   "secondPos" : 4368,
   "firstEndPos" : 4309,
   "secondEndPos" : 4385
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//This is released in callback from adapter side.",
+  "secondLabel" : "//This is released in callback from adapter side.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4321,
+  "secondPos" : 4397,
+  "firstEndPos" : 4370,
+  "secondEndPos" : 4446
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

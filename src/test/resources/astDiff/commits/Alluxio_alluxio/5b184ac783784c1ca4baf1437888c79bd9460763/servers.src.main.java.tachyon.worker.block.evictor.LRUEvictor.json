@@ -10,6 +10,17 @@
   "firstEndPos" : 11184,
   "secondEndPos" : 9789
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the University of California, Berkeley under one or more contributor license\n * agreements. See the NOTICE file distributed with this work for additional information regarding\n * copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance with the License. You may obtain a\n * copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the University of California, Berkeley under one or more contributor license\n * agreements. See the NOTICE file distributed with this work for additional information regarding\n * copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance with the License. You may obtain a\n * copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 791,
+  "secondEndPos" : 791
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1143,6 +1154,17 @@
   "firstEndPos" : 2011,
   "secondEndPos" : 2011
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1980,
+  "secondPos" : 1980,
+  "firstEndPos" : 1985,
+  "secondEndPos" : 1985
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.LinkedHashMap",
@@ -1175,6 +1197,17 @@
   "secondPos" : 2028,
   "firstEndPos" : 2053,
   "secondEndPos" : 2053
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2028,
+  "secondPos" : 2028,
+  "firstEndPos" : 2033,
+  "secondEndPos" : 2033
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -1715,6 +1748,17 @@
   "firstEndPos" : 2580,
   "secondEndPos" : 2580
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// preload existing blocks loaded by StorageDir to Evictor",
+  "secondLabel" : "// preload existing blocks loaded by StorageDir to Evictor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2588,
+  "secondPos" : 2588,
+  "firstEndPos" : 2646,
+  "secondEndPos" : 2646
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -2045,6 +2089,17 @@
   "firstEndPos" : 2951,
   "secondEndPos" : 2951
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// all blocks with initial view",
+  "secondLabel" : "// all blocks with initial view",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2843,
+  "secondPos" : 2843,
+  "firstEndPos" : 2874,
+  "secondEndPos" : 2874
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2198,6 +2253,17 @@
   "secondPos" : 2982,
   "firstEndPos" : 3123,
   "secondEndPos" : 3123
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2982,
+  "secondPos" : 2982,
+  "firstEndPos" : 2989,
+  "secondEndPos" : 2989
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3871,6 +3937,17 @@
   "firstEndPos" : 4710,
   "secondEndPos" : 4671
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4645,
+  "secondPos" : 4645,
+  "firstEndPos" : 4650,
+  "secondEndPos" : 4650
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -3881,6 +3958,17 @@
   "secondPos" : 4682,
   "firstEndPos" : 4783,
   "secondEndPos" : 4744
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4721,
+  "secondPos" : 4682,
+  "firstEndPos" : 4727,
+  "secondEndPos" : 4688
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3915,6 +4003,17 @@
   "firstEndPos" : 4841,
   "secondEndPos" : 4802
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4789,
+  "secondPos" : 4750,
+  "firstEndPos" : 4795,
+  "secondEndPos" : 4756
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "location",
@@ -3947,6 +4046,17 @@
   "secondPos" : 4808,
   "firstEndPos" : 5002,
   "secondEndPos" : 4924
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4847,
+  "secondPos" : 4808,
+  "firstEndPos" : 4853,
+  "secondEndPos" : 4814
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3981,6 +4091,17 @@
   "firstEndPos" : 5002,
   "secondEndPos" : 4924
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4937,
+  "secondPos" : 4898,
+  "firstEndPos" : 4942,
+  "secondEndPos" : 4903
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -3991,6 +4112,17 @@
   "secondPos" : 4930,
   "firstEndPos" : 5132,
   "secondEndPos" : 5054
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5008,
+  "secondPos" : 4930,
+  "firstEndPos" : 5015,
+  "secondEndPos" : 4937
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4212,6 +4344,17 @@
   "firstEndPos" : 7986,
   "secondEndPos" : 7908
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1. if bytesToBeAvailable can already be satisfied without eviction, return emtpy plan",
+  "secondLabel" : "// 1. if bytesToBeAvailable can already be satisfied without eviction, return emtpy plan",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5284,
+  "secondPos" : 5206,
+  "firstEndPos" : 5372,
+  "secondEndPos" : 5294
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4409,6 +4552,28 @@
   "secondPos" : 5441,
   "firstEndPos" : 5535,
   "secondEndPos" : 5457
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2. iterate over blocks in LRU order until we find a dir view that is in the range of",
+  "secondLabel" : "// 2. iterate over blocks in LRU order until we find a dir view that is in the range of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5548,
+  "secondPos" : 5470,
+  "firstEndPos" : 5635,
+  "secondEndPos" : 5557
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// location and can satisfy bytesToBeAvailable after evicting its blocks iterated so far",
+  "secondLabel" : "// location and can satisfy bytesToBeAvailable after evicting its blocks iterated so far",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5640,
+  "secondPos" : 5562,
+  "firstEndPos" : 5728,
+  "secondEndPos" : 5650
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5212,6 +5377,17 @@
   "secondPos" : 6022,
   "firstEndPos" : 6498,
   "secondEndPos" : 6420
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// might not present in this view",
+  "secondLabel" : "// might not present in this view",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6102,
+  "secondPos" : 6024,
+  "firstEndPos" : 6135,
+  "secondEndPos" : 6057
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6071,6 +6247,17 @@
   "firstEndPos" : 6627,
   "secondEndPos" : 6549
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 3. have no eviction plan",
+  "secondLabel" : "// 3. have no eviction plan",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6650,
+  "secondPos" : 6572,
+  "firstEndPos" : 6677,
+  "secondEndPos" : 6599
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6191,6 +6378,28 @@
   "secondPos" : 6675,
   "firstEndPos" : 6757,
   "secondEndPos" : 6679
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 4. cascading eviction: try to free space in next tier to move candidate blocks there, evict",
+  "secondLabel" : "// 4. cascading eviction: try to free space in next tier to move candidate blocks there, evict",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6770,
+  "secondPos" : 6692,
+  "firstEndPos" : 6864,
+  "secondEndPos" : 6786
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// blocks only when it can not be moved to next tiers",
+  "secondLabel" : "// blocks only when it can not be moved to next tiers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6869,
+  "secondPos" : 6791,
+  "firstEndPos" : 6922,
+  "secondEndPos" : 6844
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6631,6 +6840,17 @@
   "secondPos" : 7083,
   "firstEndPos" : 7177,
   "secondEndPos" : 7099
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// find a dir in below tiers to transfer blocks there, from top tier to bottom tier",
+  "secondLabel" : "// find a dir in below tiers to transfer blocks there, from top tier to bottom tier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7186,
+  "secondPos" : 7108,
+  "firstEndPos" : 7269,
+  "secondEndPos" : 7191
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7148,6 +7368,17 @@
   "secondPos" : 7555,
   "firstEndPos" : 7740,
   "secondEndPos" : 7662
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nowhere to transfer blocks to, so evict them",
+  "secondLabel" : "// nowhere to transfer blocks to, so evict them",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7641,
+  "secondPos" : 7563,
+  "firstEndPos" : 7688,
+  "secondEndPos" : 7610
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8776,6 +9007,17 @@
   "secondPos" : 8490,
   "firstEndPos" : 9889,
   "secondEndPos" : 8494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assure all blocks are in the store, if not, remove from plan and lru cache",
+  "secondLabel" : "// assure all blocks are in the store, if not, remove from plan and lru cache",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9902,
+  "secondPos" : 8507,
+  "firstEndPos" : 9979,
+  "secondEndPos" : 8584
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10558,6 +10800,17 @@
   "secondPos" : 9419,
   "firstEndPos" : 10955,
   "secondEndPos" : 9560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since the temp block has been committed, update Evictor about the new added blocks",
+  "secondLabel" : "// Since the temp block has been committed, update Evictor about the new added blocks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10820,
+  "secondPos" : 9425,
+  "firstEndPos" : 10905,
+  "secondEndPos" : 9510
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

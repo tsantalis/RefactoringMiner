@@ -5,6 +5,7 @@ import com.github.gumtreediff.tree.TreeContext;
 import com.github.gumtreediff.utils.Pair;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
+import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.diff.*;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -39,8 +40,29 @@ public class UnifiedModelDiffRefactoringsMatcher {
     }
 
     private void process() {
+        processModelDiffCommentsMovedBetweenClasses();
         processModeldiffRefactorings();
         processModeldiffMovedAttributes();
+    }
+
+    private void processModelDiffCommentsMovedBetweenClasses() {
+        // TODO: Its not the most optimized one.
+        //  I am iterating through all the astDiffs, and then I am checking if the srcPath or dstPath is equal to the comment's path.
+        //  However since this information comes from modelDiff, there is no other clear alternative.
+        for (UMLCommentListDiff commentsMovedBetweenClass : modelDiff.getCommentsMovedBetweenClasses()) {
+            for (org.apache.commons.lang3.tuple.Pair<UMLComment, UMLComment> commonComment : commentsMovedBetweenClass.getCommonComments()) {
+                UMLComment left = commonComment.getLeft();
+                UMLComment right = commonComment.getRight();
+                findDiffsAndApplyMatcher(
+                        left.getLocationInfo().getFilePath(),
+                        right.getLocationInfo().getFilePath(),
+                        new CommentMatcher(null, commentsMovedBetweenClass));
+                break;
+                //We break because the comments always belong to the same pair of files, and the CommentMatcher handles everything
+                //Basically, need to take one pair to find the locations of the comments. The For loop is just overkill.
+
+            }
+        }
     }
 
     private void processModeldiffMovedAttributes() {

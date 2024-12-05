@@ -90,7 +90,7 @@ public class PurityChecker {
 
                 UMLOperationBodyMapper bodyMapper = findTheMapper(refactoring, mapping);
                 HashSet<Replacement> replacementsToCheck = new HashSet<>(mapping.getReplacements());
-                replacementJustificationResult = checkReplacementForSplitMethod(refactoring, replacementsToCheck, bodyMapper);
+                replacementJustificationResult = checkReplacementForSplitMethod(refactoring, replacementsToCheck, refactorings, bodyMapper);
                 if (!replacementJustificationResult.isJustificationState()) {
                     return new PurityCheckResult(false, "Replacements cannot be justified", "Severe Changes", 2);
                 }
@@ -147,10 +147,11 @@ public class PurityChecker {
         return new PurityCheckResult(false, "Replacements cannot be justified", "Severe Changes", 2);
     }
 
-    private static ReplacementJustificationResult checkReplacementForSplitMethod(SplitOperationRefactoring refactoring, HashSet<Replacement> replacementsToCheck, UMLOperationBodyMapper bodyMapper) {
+    private static ReplacementJustificationResult checkReplacementForSplitMethod(SplitOperationRefactoring refactoring, HashSet<Replacement> replacementsToCheck, List<Refactoring> refactorings, UMLOperationBodyMapper bodyMapper) {
         ReplacementJustificationResult replacementJustificationResult = new ReplacementJustificationResult();
 
         omitThisPatternReplacements(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
         omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, bodyMapper);
         omitBooleanVariableDeclarationReplacement(replacementsToCheck, bodyMapper); // For the runTests commit
         omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -189,7 +190,7 @@ public class PurityChecker {
             int sizeToCheckBefore = replacementsToCheck.size();
 
             omitThisPatternReplacements(replacementsToCheck);
-
+            omitDiamondReplacements(replacementsToCheck, refactorings);
 
 
             omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
@@ -625,6 +626,7 @@ public class PurityChecker {
         int sizeBefore = replacementsToCheck.size();
 
         omitThisPatternReplacements(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
         omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
         omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit
         omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -814,6 +816,7 @@ public class PurityChecker {
             int sizeToCheckBefore = replacementsToCheck.size();
 
             omitThisPatternReplacements(replacementsToCheck);
+            omitDiamondReplacements(replacementsToCheck, refactorings);
 
             if (replacementsToCheck.isEmpty()) {
                 return new PurityCheckResult(true, "this pattern-has been either added or deleted", "Tolerable changes in the body", mappingState);
@@ -1126,6 +1129,7 @@ public class PurityChecker {
         int sizeBefore = replacementsToCheck.size();
 
         omitThisPatternReplacements(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
         omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
         omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit
         omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -1327,6 +1331,7 @@ public class PurityChecker {
                 purityComment += "Changes are within the Inline Method refactoring mechanics" + "\n";
 
             omitThisPatternReplacements(replacementsToCheck);
+            omitDiamondReplacements(replacementsToCheck, refactorings);
             omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
             omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper());
             omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -1977,6 +1982,7 @@ public class PurityChecker {
             purityComment += "Changes are within the Inline Method refactoring mechanics" + "\n";
 
         omitThisPatternReplacements(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
         omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
         omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper());
         omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -2161,6 +2167,7 @@ Mapping state for Move Method refactoring purity:
             int sizeToCheckBefore = replacementsToCheck.size();
 
             omitThisPatternReplacements(replacementsToCheck);
+            omitDiamondReplacements(replacementsToCheck, refactorings);
             omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
             omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit
             omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -3043,6 +3050,7 @@ Mapping state for Move Method refactoring purity:
         int sizeToCheckBefore = replacementsToCheck.size();
 
         omitThisPatternReplacements(replacementsToCheck);
+        omitDiamondReplacements(replacementsToCheck, refactorings);
         omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
         omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit
         omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -3395,6 +3403,7 @@ Mapping state for Move Method refactoring purity:
             }
 
             omitThisPatternReplacements(replacementsToCheck);
+            omitDiamondReplacements(replacementsToCheck, refactorings);
             omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
             omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit
             omitEqualStringLiteralsReplacement(replacementsToCheck);
@@ -4229,7 +4238,36 @@ Mapping state for Move Method refactoring purity:
                             //System.out.println("ignored");
                         }
                     }
+                else if (replacement.getBefore().contains("this.") && !replacement.getAfter().contains("this.")) {
+                    String before = replacement.getBefore().replace("this.", "");
+                    if (before.equals(replacement.getAfter())) {
+                        replacementsToRemove.add(replacement);
+                    }
+                }
+                else if (!replacement.getBefore().contains("this.") && replacement.getAfter().contains("this.")) {
+                    String after = replacement.getAfter().replace("this.", "");
+                    if (after.equals(replacement.getBefore())) {
+                        replacementsToRemove.add(replacement);
+                    }
+                }
             }
+        }
+        replacementsToCheck.removeAll(replacementsToRemove);
+    }
+
+    private static void omitDiamondReplacements(HashSet<Replacement> replacementsToCheck, List<Refactoring> refactorings) {
+    	Set<Replacement> replacementsToRemove = new HashSet<>();
+
+        for (Replacement replacement : replacementsToCheck) {
+        	for(Refactoring r : refactorings) {
+        		if(r instanceof ReplaceGenericWithDiamondRefactoring) {
+        			ReplaceGenericWithDiamondRefactoring ref = (ReplaceGenericWithDiamondRefactoring)r;
+        			if(replacement.getBefore().equals(ref.getTypeBefore()) && replacement.getAfter().equals(ref.getTypeAfter())) {
+        				replacementsToRemove.add(replacement);
+        				break;
+        			}
+        		}
+        	}
         }
         replacementsToCheck.removeAll(replacementsToRemove);
     }
@@ -5098,6 +5136,7 @@ Mapping state for Move Method refactoring purity:
                 purityComment += "Changes are within the Extract Method refactoring mechanics \n";
 
             omitThisPatternReplacements(replacementsToCheck);
+            omitDiamondReplacements(replacementsToCheck, refactorings);
             checkForParameterArgumentPair(refactoring, replacementsToCheck);
             omitPrintAndLogMessagesRelatedReplacements(replacementsToCheck, refactoring.getBodyMapper());
             omitBooleanVariableDeclarationReplacement(replacementsToCheck, refactoring.getBodyMapper()); // For the runTests commit

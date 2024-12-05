@@ -10,6 +10,17 @@
   "firstEndPos" : 62821,
   "secondEndPos" : 63741
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2014 Spotify AB.\n *\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2014 Spotify AB.\n *\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 844,
+  "secondEndPos" : 844
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -4311,6 +4322,17 @@
   "firstEndPos" : 6255,
   "secondEndPos" : 6255
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6245,
+  "secondPos" : 6245,
+  "firstEndPos" : 6250,
+  "secondEndPos" : 6250
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " id",
@@ -4772,6 +4794,50 @@
   "secondPos" : 6667,
   "firstEndPos" : 7347,
   "secondEndPos" : 7347
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO (dano): this code is replicated in AgentZooKeeperRegistrar",
+  "secondLabel" : "// TODO (dano): this code is replicated in AgentZooKeeperRegistrar",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6675,
+  "secondPos" : 6675,
+  "firstEndPos" : 6741,
+  "secondEndPos" : 6741
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This would've been nice to do in a transaction but PathChildrenCache ensures paths",
+  "secondLabel" : "// This would've been nice to do in a transaction but PathChildrenCache ensures paths",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6749,
+  "secondPos" : 6749,
+  "firstEndPos" : 6834,
+  "secondEndPos" : 6834
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we can't know what paths already exist so assembling a suitable transaction is too",
+  "secondLabel" : "// so we can't know what paths already exist so assembling a suitable transaction is too",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6841,
+  "secondPos" : 6841,
+  "firstEndPos" : 6929,
+  "secondEndPos" : 6929
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// painful.",
+  "secondLabel" : "// painful.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6936,
+  "secondPos" : 6936,
+  "firstEndPos" : 6947,
+  "secondEndPos" : 6947
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5433,6 +5499,17 @@
   "firstEndPos" : 7202,
   "secondEndPos" : 7202
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Finish registration by creating the id node last",
+  "secondLabel" : "// Finish registration by creating the id node last",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7213,
+  "secondPos" : 7213,
+  "firstEndPos" : 7264,
+  "secondEndPos" : 7264
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5982,6 +6059,17 @@
   "secondPos" : 7599,
   "firstEndPos" : 7775,
   "secondEndPos" : 7775
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO (dano): only return hosts whose agents completed registration (i.e. has id nodes)",
+  "secondLabel" : "// TODO (dano): only return hosts whose agents completed registration (i.e. has id nodes)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7607,
+  "secondPos" : 7607,
+  "firstEndPos" : 7696,
+  "secondEndPos" : 7696
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -7611,6 +7699,17 @@
   "firstEndPos" : 8731,
   "secondEndPos" : 8731
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8674,
+  "secondPos" : 8674,
+  "firstEndPos" : 8679,
+  "secondEndPos" : 8679
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -8117,6 +8216,17 @@
   "firstEndPos" : 9021,
   "secondEndPos" : 9021
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO (dano): handle retry failures",
+  "secondLabel" : "// TODO (dano): handle retry failures",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9028,
+  "secondPos" : 9028,
+  "firstEndPos" : 9065,
+  "secondEndPos" : 9065
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -8281,6 +8391,17 @@
   "secondPos" : 9132,
   "firstEndPos" : 9144,
   "secondEndPos" : 9144
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove all jobs deployed to this host",
+  "secondLabel" : "// Remove all jobs deployed to this host",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9155,
+  "secondPos" : 9155,
+  "firstEndPos" : 9195,
+  "secondEndPos" : 9195
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9822,6 +9943,17 @@
   "firstEndPos" : 9896,
   "secondEndPos" : 9896
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Clean out the history for each job",
+  "secondLabel" : "// Clean out the history for each job",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9923,
+  "secondPos" : 9923,
+  "firstEndPos" : 9960,
+  "secondEndPos" : 9960
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10438,6 +10570,17 @@
   "firstEndPos" : 10234,
   "secondEndPos" : 10234
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove the host status",
+  "secondLabel" : "// Remove the host status",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10246,
+  "secondPos" : 10246,
+  "firstEndPos" : 10271,
+  "secondEndPos" : 10271
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10877,6 +11020,17 @@
   "secondPos" : 10435,
   "firstEndPos" : 10439,
   "secondEndPos" : 10439
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove port allocations",
+  "secondLabel" : "// Remove port allocations",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10458,
+  "secondPos" : 10458,
+  "firstEndPos" : 10484,
+  "secondEndPos" : 10484
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11571,6 +11725,17 @@
   "firstEndPos" : 10757,
   "secondEndPos" : 10757
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove host id",
+  "secondLabel" : "// Remove host id",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10769,
+  "secondPos" : 10769,
+  "firstEndPos" : 10786,
+  "secondEndPos" : 10786
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11933,6 +12098,17 @@
   "secondPos" : 10914,
   "firstEndPos" : 10920,
   "secondEndPos" : 10920
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove host config root",
+  "secondLabel" : "// Remove host config root",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10939,
+  "secondPos" : 10939,
+  "firstEndPos" : 10965,
+  "secondEndPos" : 10965
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12670,6 +12846,28 @@
   "secondPos" : 11320,
   "firstEndPos" : 11331,
   "secondEndPos" : 11331
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "JobId",
+  "secondLabel" : "JobId",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 11333,
+  "secondPos" : 11333,
+  "firstEndPos" : 11338,
+  "secondEndPos" : 11338
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 11333,
+  "secondPos" : 11333,
+  "firstEndPos" : 11338,
+  "secondEndPos" : 11338
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -15245,6 +15443,28 @@
   "firstEndPos" : 12731,
   "secondEndPos" : 12731
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Touch the jobs root node so that its version is bumped on every job",
+  "secondLabel" : "// Touch the jobs root node so that its version is bumped on every job",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 12761,
+  "secondPos" : 12761,
+  "firstEndPos" : 12831,
+  "secondEndPos" : 12831
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// change down the tree. Effectively, make it that version == cVersion.",
+  "secondLabel" : "// change down the tree. Effectively, make it that version == cVersion.",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 12859,
+  "secondPos" : 12859,
+  "firstEndPos" : 12930,
+  "secondEndPos" : 12930
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -15629,6 +15849,17 @@
   "secondPos" : 13120,
   "firstEndPos" : 13199,
   "secondEndPos" : 13199
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The job was created, we're done here",
+  "secondLabel" : "// The job was created, we're done here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13132,
+  "secondPos" : 13132,
+  "firstEndPos" : 13171,
+  "secondEndPos" : 13171
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -18698,6 +18929,17 @@
   "secondPos" : 14886,
   "firstEndPos" : 14939,
   "secondEndPos" : 14939
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore, it went away before we read it",
+  "secondLabel" : "// ignore, it went away before we read it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14888,
+  "secondPos" : 14888,
+  "firstEndPos" : 14929,
+  "secondEndPos" : 14929
 }, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
@@ -25123,6 +25365,17 @@
   "firstEndPos" : 19098,
   "secondEndPos" : 19098
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the current and desired deployment group are identical, nothing to do.",
+  "secondLabel" : "// the current and desired deployment group are identical, nothing to do.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19005,
+  "secondPos" : 19005,
+  "firstEndPos" : 19078,
+  "secondEndPos" : 19078
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -27851,6 +28104,28 @@
   "firstEndPos" : 20970,
   "secondEndPos" : 20970
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The rolling-update command hasn't been called yet for this deployment group.",
+  "secondLabel" : "// The rolling-update command hasn't been called yet for this deployment group.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20789,
+  "secondPos" : 20789,
+  "firstEndPos" : 20868,
+  "secondEndPos" : 20868
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The deployment group status doesn't exist yet and there's nothing to do.",
+  "secondLabel" : "// The deployment group status doesn't exist yet and there's nothing to do.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20875,
+  "secondPos" : 20875,
+  "firstEndPos" : 20950,
+  "secondEndPos" : 20950
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -28125,6 +28400,17 @@
   "secondPos" : 21095,
   "firstEndPos" : 22037,
   "secondEndPos" : 22037
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// generate the rollout plan and proceed to ROLLING_OUT",
+  "secondLabel" : "// generate the rollout plan and proceed to ROLLING_OUT",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21103,
+  "secondPos" : 21103,
+  "firstEndPos" : 21158,
+  "secondEndPos" : 21158
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29270,6 +29556,28 @@
   "firstEndPos" : 21972,
   "secondEndPos" : 21972
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if our plan changes (because hosts have been added or removed), reset",
+  "secondLabel" : "// if our plan changes (because hosts have been added or removed), reset",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21755,
+  "secondPos" : 21755,
+  "firstEndPos" : 21827,
+  "secondEndPos" : 21827
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the successful iteration counter (since our new plan has never been successful)",
+  "secondLabel" : "// the successful iteration counter (since our new plan has never been successful)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21836,
+  "secondPos" : 21836,
+  "firstEndPos" : 21918,
+  "secondEndPos" : 21918
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29622,6 +29930,17 @@
   "firstEndPos" : 22237,
   "secondEndPos" : 22237
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// grab the current task off the rollout task list and execute it",
+  "secondLabel" : "// grab the current task off the rollout task list and execute it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22094,
+  "secondPos" : 22094,
+  "firstEndPos" : 22159,
+  "secondEndPos" : 22159
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29863,6 +30182,17 @@
   "secondPos" : 22279,
   "firstEndPos" : 22451,
   "secondEndPos" : 22451
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// after DONE, go back to PLANNING_ROLLOUT",
+  "secondLabel" : "// after DONE, go back to PLANNING_ROLLOUT",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22287,
+  "secondPos" : 22287,
+  "firstEndPos" : 22329,
+  "secondEndPos" : 22329
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31327,6 +31657,28 @@
   "firstEndPos" : 23441,
   "secondEndPos" : 23441
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if there are no rollout tasks, then we're done by definition. this can happen",
+  "secondLabel" : "// if there are no rollout tasks, then we're done by definition. this can happen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23230,
+  "secondPos" : 23230,
+  "firstEndPos" : 23310,
+  "secondEndPos" : 23310
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// when (for example) there are no hosts in the deployment group",
+  "secondLabel" : "// when (for example) there are no hosts in the deployment group",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23317,
+  "secondPos" : 23317,
+  "firstEndPos" : 23381,
+  "secondEndPos" : 23381
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -31624,6 +31976,17 @@
   "firstEndPos" : 23723,
   "secondEndPos" : 23723
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add undeploy ops for jobs previously deployed by this deployment group",
+  "secondLabel" : "// add undeploy ops for jobs previously deployed by this deployment group",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23579,
+  "secondPos" : 23579,
+  "firstEndPos" : 23652,
+  "secondEndPos" : 23652
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -31843,6 +32206,17 @@
   "secondPos" : 23788,
   "firstEndPos" : 23900,
   "secondEndPos" : 23900
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add deploy ops for the new job",
+  "secondLabel" : "// add deploy ops for the new job",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23798,
+  "secondPos" : 23798,
+  "firstEndPos" : 23831,
+  "secondEndPos" : 23831
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -32603,6 +32977,17 @@
   "firstEndPos" : 24482,
   "secondEndPos" : 24482
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not an error, but nothing to do",
+  "secondLabel" : "// not an error, but nothing to do",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24416,
+  "secondPos" : 24416,
+  "firstEndPos" : 24450,
+  "secondEndPos" : 24450
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -32701,6 +33086,17 @@
   "secondPos" : 24514,
   "firstEndPos" : 24747,
   "secondEndPos" : 24747
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if an error occurred, record it in the status and fail",
+  "secondLabel" : "// if an error occurred, record it in the status and fail",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24522,
+  "secondPos" : 24522,
+  "firstEndPos" : 24579,
+  "secondEndPos" : 24579
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -33361,6 +33757,17 @@
   "secondPos" : 24899,
   "firstEndPos" : 25141,
   "secondEndPos" : 25141
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// successfully completed the last task",
+  "secondLabel" : "// successfully completed the last task",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24909,
+  "secondPos" : 24909,
+  "firstEndPos" : 24948,
+  "secondEndPos" : 24948
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -34913,6 +35320,17 @@
   "firstEndPos" : 26884,
   "secondEndPos" : 27024
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// job isn't running yet",
+  "secondLabel" : "// job isn't running yet",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25945,
+  "secondPos" : 26668,
+  "firstEndPos" : 25969,
+  "secondEndPos" : 26692
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -35540,6 +35958,28 @@
   "firstEndPos" : 26533,
   "secondEndPos" : 26962
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// time exceeding the configured deploy timeout has passed, and this job is still not",
+  "secondLabel" : "// time exceeding the configured deploy timeout has passed, and this job is still not",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26323,
+  "secondPos" : 26758,
+  "firstEndPos" : 26408,
+  "secondEndPos" : 26843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// running",
+  "secondLabel" : "// running",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26419,
+  "secondPos" : 26852,
+  "firstEndPos" : 26429,
+  "secondEndPos" : 26862
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -35682,6 +36122,28 @@
   "secondPos" : 28343,
   "firstEndPos" : 26822,
   "secondEndPos" : 28607
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// statusPath doesn't exist or some other ZK issue. probably this deployment group",
+  "secondLabel" : "// statusPath doesn't exist or some other ZK issue. probably this deployment group",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26578,
+  "secondPos" : 28351,
+  "firstEndPos" : 26660,
+  "secondEndPos" : 28433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// was removed.",
+  "secondLabel" : "// was removed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26669,
+  "secondPos" : 28440,
+  "firstEndPos" : 26684,
+  "secondEndPos" : 28455
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -35847,6 +36309,39 @@
   "secondPos" : 27030,
   "firstEndPos" : 27687,
   "secondEndPos" : 27829
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the job is running on the host. last thing we have to ensure is that it was",
+  "secondLabel" : "// the job is running on the host. last thing we have to ensure is that it was",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26898,
+  "secondPos" : 27038,
+  "firstEndPos" : 26976,
+  "secondEndPos" : 27116
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// deployed by this deployment group. otherwise some weird conflict has occurred and we",
+  "secondLabel" : "// deployed by this deployment group. otherwise some weird conflict has occurred and we",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26983,
+  "secondPos" : 27123,
+  "firstEndPos" : 27070,
+  "secondEndPos" : 27210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// won't be able to undeploy the job on the next update.",
+  "secondLabel" : "// won't be able to undeploy the job on the next update.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27077,
+  "secondPos" : 27217,
+  "firstEndPos" : 27133,
+  "secondEndPos" : 27273
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -38752,6 +39247,17 @@
   "firstEndPos" : 29565,
   "secondEndPos" : 30485
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this deployed job is the same as the one we want deployed. just leave it.",
+  "secondLabel" : "// this deployed job is the same as the one we want deployed. just leave it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29459,
+  "secondPos" : 30379,
+  "firstEndPos" : 29535,
+  "secondEndPos" : 30455
+}, {
   "firstType" : "ContinueStatement",
   "secondType" : "ContinueStatement",
   "firstLabel" : "",
@@ -39202,6 +39708,17 @@
   "secondPos" : 30825,
   "firstEndPos" : 29997,
   "secondEndPos" : 30917
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// probably somebody beat us to the punch of undeploying. that's fine.",
+  "secondLabel" : "// probably somebody beat us to the punch of undeploying. that's fine.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29917,
+  "secondPos" : 30837,
+  "firstEndPos" : 29987,
+  "secondEndPos" : 30907
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -40864,6 +41381,17 @@
   "firstEndPos" : 31171,
   "secondEndPos" : 32091
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31160,
+  "secondPos" : 32080,
+  "firstEndPos" : 31165,
+  "secondEndPos" : 32085
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Map",
@@ -40896,6 +41424,17 @@
   "secondPos" : 32120,
   "firstEndPos" : 31223,
   "secondEndPos" : 32143
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31200,
+  "secondPos" : 32120,
+  "firstEndPos" : 31205,
+  "secondEndPos" : 32125
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -42634,6 +43173,17 @@
   "secondPos" : 33048,
   "firstEndPos" : 32295,
   "secondEndPos" : 33215
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ignore, the deployment group was deleted before we had a chance to read it.",
+  "secondLabel" : "// Ignore, the deployment group was deleted before we had a chance to read it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32140,
+  "secondPos" : 33060,
+  "firstEndPos" : 32218,
+  "secondEndPos" : 33138
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -45693,6 +46243,17 @@
   "firstEndPos" : 34161,
   "secondEndPos" : 35081
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not fatal",
+  "secondLabel" : "// not fatal",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34143,
+  "secondPos" : 35063,
+  "firstEndPos" : 34155,
+  "secondEndPos" : 35075
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",
@@ -45979,6 +46540,17 @@
   "firstEndPos" : 34409,
   "secondEndPos" : 35329
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 34399,
+  "secondPos" : 35319,
+  "firstEndPos" : 34404,
+  "secondEndPos" : 35324
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " id",
@@ -46011,6 +46583,17 @@
   "secondPos" : 35340,
   "firstEndPos" : 34431,
   "secondEndPos" : 35351
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 34420,
+  "secondPos" : 35340,
+  "firstEndPos" : 34425,
+  "secondEndPos" : 35345
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -47101,6 +47684,17 @@
   "firstEndPos" : 34964,
   "secondEndPos" : 35884
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Return null to indicate that the job does not exist",
+  "secondLabel" : "// Return null to indicate that the job does not exist",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34885,
+  "secondPos" : 35805,
+  "firstEndPos" : 34939,
+  "secondEndPos" : 35859
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -47387,6 +47981,17 @@
   "firstEndPos" : 35126,
   "secondEndPos" : 36046
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35115,
+  "secondPos" : 36035,
+  "firstEndPos" : 35120,
+  "secondEndPos" : 36040
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Map",
@@ -47420,6 +48025,17 @@
   "firstEndPos" : 35143,
   "secondEndPos" : 36063
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35130,
+  "secondPos" : 36050,
+  "firstEndPos" : 35135,
+  "secondEndPos" : 36055
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JobId",
@@ -47452,6 +48068,17 @@
   "secondPos" : 36067,
   "firstEndPos" : 35158,
   "secondEndPos" : 36078
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35147,
+  "secondPos" : 36067,
+  "firstEndPos" : 35152,
+  "secondEndPos" : 36072
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -49312,6 +49939,17 @@
   "firstEndPos" : 36117,
   "secondEndPos" : 37037
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ignore, the job was deleted before we had a chance to read it.",
+  "secondLabel" : "// Ignore, the job was deleted before we had a chance to read it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35987,
+  "secondPos" : 36907,
+  "firstEndPos" : 36052,
+  "secondEndPos" : 36972
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -49641,6 +50279,17 @@
   "secondPos" : 37244,
   "firstEndPos" : 36341,
   "secondEndPos" : 37261
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36324,
+  "secondPos" : 37244,
+  "firstEndPos" : 36329,
+  "secondEndPos" : 37249
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -53932,6 +54581,17 @@
   "firstEndPos" : 38724,
   "secondEndPos" : 39644
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO (dano): handle retry failures",
+  "secondLabel" : "// TODO (dano): handle retry failures",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38732,
+  "secondPos" : 39652,
+  "firstEndPos" : 38769,
+  "secondEndPos" : 39689
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -54822,6 +55482,28 @@
   "secondPos" : 40156,
   "firstEndPos" : 39238,
   "secondEndPos" : 40158
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Touch the jobs root node so that its version is bumped on every job",
+  "secondLabel" : "// Touch the jobs root node so that its version is bumped on every job",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 39263,
+  "secondPos" : 40183,
+  "firstEndPos" : 39333,
+  "secondEndPos" : 40253
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// change down the tree. Effectively, make it that version == cVersion.",
+  "secondLabel" : "// change down the tree. Effectively, make it that version == cVersion.",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 39355,
+  "secondPos" : 40275,
+  "firstEndPos" : 39426,
+  "secondEndPos" : 40346
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -57023,6 +57705,17 @@
   "firstEndPos" : 40855,
   "secondEndPos" : 41775
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40843,
+  "secondPos" : 41763,
+  "firstEndPos" : 40848,
+  "secondEndPos" : 41768
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Goal",
@@ -57055,6 +57748,17 @@
   "secondPos" : 41785,
   "firstEndPos" : 40883,
   "secondEndPos" : 41803
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40865,
+  "secondPos" : 41785,
+  "firstEndPos" : 40870,
+  "secondEndPos" : 41790
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -60939,6 +61643,17 @@
   "firstEndPos" : 43149,
   "secondEndPos" : 44069
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Attempt to read a task here.",
+  "secondLabel" : "// Attempt to read a task here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43159,
+  "secondPos" : 44079,
+  "firstEndPos" : 43190,
+  "secondEndPos" : 44110
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -61037,6 +61752,17 @@
   "secondPos" : 44142,
   "firstEndPos" : 43230,
   "secondEndPos" : 44150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we get here the node exists already",
+  "secondLabel" : "// if we get here the node exists already",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43239,
+  "secondPos" : 44159,
+  "firstEndPos" : 43280,
+  "secondEndPos" : 44200
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -61533,6 +62259,17 @@
   "firstEndPos" : 43582,
   "secondEndPos" : 44502
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO (dano): Failure handling is racy wrt agent and job modifications.",
+  "secondLabel" : "// TODO (dano): Failure handling is racy wrt agent and job modifications.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43596,
+  "secondPos" : 44516,
+  "firstEndPos" : 43669,
+  "secondEndPos" : 44589
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -61808,6 +62545,17 @@
   "firstEndPos" : 44217,
   "secondEndPos" : 45137
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Either the job, the host or the task went away",
+  "secondLabel" : "// Either the job, the host or the task went away",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43829,
+  "secondPos" : 44749,
+  "firstEndPos" : 43878,
+  "secondEndPos" : 44798
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -61939,6 +62687,28 @@
   "secondPos" : 44865,
   "firstEndPos" : 43949,
   "secondEndPos" : 44869
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the job and host still exists, we likely tried to redeploy a job that had an UNDEPLOY",
+  "secondLabel" : "// If the job and host still exists, we likely tried to redeploy a job that had an UNDEPLOY",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43958,
+  "secondPos" : 44878,
+  "firstEndPos" : 44049,
+  "secondEndPos" : 44969
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goal and lost the race with the agent removing the task before we could set it. Retry.",
+  "secondLabel" : "// goal and lost the race with the agent removing the task before we could set it. Retry.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44056,
+  "secondPos" : 44976,
+  "firstEndPos" : 44145,
+  "secondEndPos" : 45065
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -62138,6 +62908,17 @@
   "firstEndPos" : 45601,
   "secondEndPos" : 46521
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for conflict due to transaction retry",
+  "secondLabel" : "// Check for conflict due to transaction retry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44256,
+  "secondPos" : 45176,
+  "firstEndPos" : 44302,
+  "secondEndPos" : 45222
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -62280,6 +63061,17 @@
   "secondPos" : 45288,
   "firstEndPos" : 44463,
   "secondEndPos" : 45383
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Our creation operation node existed, we're done here",
+  "secondLabel" : "// Our creation operation node existed, we're done here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44380,
+  "secondPos" : 45300,
+  "firstEndPos" : 44435,
+  "secondEndPos" : 45355
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -62445,6 +63237,17 @@
   "secondPos" : 45519,
   "firstEndPos" : 44771,
   "secondEndPos" : 45691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if the job was already deployed",
+  "secondLabel" : "// Check if the job was already deployed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44609,
+  "secondPos" : 45529,
+  "firstEndPos" : 44649,
+  "secondEndPos" : 45569
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -62764,6 +63567,17 @@
   "secondPos" : 45796,
   "firstEndPos" : 44877,
   "secondEndPos" : 45797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check for static port collisions",
+  "secondLabel" : "// Check for static port collisions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44895,
+  "secondPos" : 45815,
+  "firstEndPos" : 44930,
+  "secondEndPos" : 45850
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -63677,6 +64491,17 @@
   "secondPos" : 46376,
   "firstEndPos" : 45457,
   "secondEndPos" : 46377
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Catch all for logic and ephemeral issues",
+  "secondLabel" : "// Catch all for logic and ephemeral issues",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45485,
+  "secondPos" : 46405,
+  "firstEndPos" : 45528,
+  "secondEndPos" : 46448
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -68815,6 +69640,17 @@
   "firstEndPos" : 48691,
   "secondEndPos" : 49611
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 48678,
+  "secondPos" : 49598,
+  "firstEndPos" : 48683,
+  "secondEndPos" : 49603
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " jobId",
@@ -68847,6 +69683,17 @@
   "secondPos" : 49615,
   "firstEndPos" : 48707,
   "secondEndPos" : 49627
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 48695,
+  "secondPos" : 49615,
+  "firstEndPos" : 48700,
+  "secondEndPos" : 49620
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -70200,6 +71047,17 @@
   "secondPos" : 50370,
   "firstEndPos" : 49462,
   "secondEndPos" : 50382
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 49450,
+  "secondPos" : 50370,
+  "firstEndPos" : 49455,
+  "secondEndPos" : 50375
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -76350,6 +77208,28 @@
   "firstEndPos" : 52646,
   "secondEndPos" : 53566
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Skip this task status so we can return other available information instead of failing the",
+  "secondLabel" : "// Skip this task status so we can return other available information instead of failing the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52498,
+  "secondPos" : 53418,
+  "firstEndPos" : 52590,
+  "secondEndPos" : 53510
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entire thing.",
+  "secondLabel" : "// entire thing.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52599,
+  "secondPos" : 53519,
+  "firstEndPos" : 52615,
+  "secondEndPos" : 53535
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -81619,6 +82499,17 @@
   "firstEndPos" : 55611,
   "secondEndPos" : 56531
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 55598,
+  "secondPos" : 56518,
+  "firstEndPos" : 55603,
+  "secondEndPos" : 56523
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " jobId",
@@ -81651,6 +82542,17 @@
   "secondPos" : 56535,
   "firstEndPos" : 55627,
   "secondEndPos" : 56547
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 55615,
+  "secondPos" : 56535,
+  "firstEndPos" : 55620,
+  "secondEndPos" : 56540
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -82884,6 +83786,17 @@
   "firstEndPos" : 56719,
   "secondEndPos" : 57639
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// use listRecursive to remove both job node and its child creation node",
+  "secondLabel" : "// use listRecursive to remove both job node and its child creation node",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56291,
+  "secondPos" : 57211,
+  "firstEndPos" : 56363,
+  "secondEndPos" : 57283
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -83785,6 +84698,39 @@
   "secondPos" : 57666,
   "firstEndPos" : 57077,
   "secondEndPos" : 57997
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is racy since it's possible someone undeployed the job after we called",
+  "secondLabel" : "// This method is racy since it's possible someone undeployed the job after we called",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56754,
+  "secondPos" : 57674,
+  "firstEndPos" : 56839,
+  "secondEndPos" : 57759
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// getDeployment and checked the job exists. If we now discover the job is undeployed,",
+  "secondLabel" : "// getDeployment and checked the job exists. If we now discover the job is undeployed,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56846,
+  "secondPos" : 57766,
+  "firstEndPos" : 56932,
+  "secondEndPos" : 57852
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// throw an exception and handle it the same as if we discovered this earlier.",
+  "secondLabel" : "// throw an exception and handle it the same as if we discovered this earlier.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56939,
+  "secondPos" : 57859,
+  "firstEndPos" : 57017,
+  "secondEndPos" : 57937
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -85062,6 +86008,17 @@
   "firstEndPos" : 58341,
   "secondEndPos" : 59261
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// use listRecursive to remove both job node and its child creation node",
+  "secondLabel" : "// use listRecursive to remove both job node and its child creation node",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57910,
+  "secondPos" : 58830,
+  "firstEndPos" : 57982,
+  "secondEndPos" : 58902
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -85963,6 +86920,39 @@
   "secondPos" : 59288,
   "firstEndPos" : 58699,
   "secondEndPos" : 59619
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is racy since it's possible someone undeployed the job after we called",
+  "secondLabel" : "// This method is racy since it's possible someone undeployed the job after we called",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58376,
+  "secondPos" : 59296,
+  "firstEndPos" : 58461,
+  "secondEndPos" : 59381
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// getDeployment and checked the job exists. If we now discover the job is undeployed,",
+  "secondLabel" : "// getDeployment and checked the job exists. If we now discover the job is undeployed,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58468,
+  "secondPos" : 59388,
+  "firstEndPos" : 58554,
+  "secondEndPos" : 59474
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// throw an exception and handle it the same as if we discovered this earlier.",
+  "secondLabel" : "// throw an exception and handle it the same as if we discovered this earlier.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58561,
+  "secondPos" : 59481,
+  "firstEndPos" : 58639,
+  "secondEndPos" : 59559
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -88923,6 +89913,17 @@
   "firstEndPos" : 60392,
   "secondEndPos" : 61312
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Attempt to read a task here.",
+  "secondLabel" : "// Attempt to read a task here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 60402,
+  "secondPos" : 61322,
+  "firstEndPos" : 60433,
+  "secondEndPos" : 61353
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -89021,6 +90022,17 @@
   "secondPos" : 61385,
   "firstEndPos" : 60473,
   "secondEndPos" : 61393
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we get here the node exists already",
+  "secondLabel" : "// if we get here the node exists already",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 60482,
+  "secondPos" : 61402,
+  "firstEndPos" : 60523,
+  "secondEndPos" : 61443
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -90616,6 +91628,28 @@
   "secondPos" : 62353,
   "firstEndPos" : 61444,
   "secondEndPos" : 62364
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "ZooKeeperOperation",
+  "secondLabel" : "ZooKeeperOperation",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 61446,
+  "secondPos" : 62366,
+  "firstEndPos" : 61464,
+  "secondEndPos" : 62384
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 61446,
+  "secondPos" : 62366,
+  "firstEndPos" : 61464,
+  "secondEndPos" : 62384
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

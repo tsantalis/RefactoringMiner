@@ -10,6 +10,17 @@
   "firstEndPos" : 32987,
   "secondEndPos" : 32992
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -5015,6 +5026,17 @@
   "firstEndPos" : 5136,
   "secondEndPos" : 5136
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// myEditorPane.getText() surprisingly crashes.., let's cache the text",
+  "secondLabel" : "// myEditorPane.getText() surprisingly crashes.., let's cache the text",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5138,
+  "secondPos" : 5138,
+  "firstEndPos" : 5208,
+  "secondEndPos" : 5208
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -7489,6 +7511,17 @@
   "secondPos" : 6616,
   "firstEndPos" : 6629,
   "secondEndPos" : 6629
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Necessary! Without this line, the size won't increase when the content does",
+  "secondLabel" : "// Necessary! Without this line, the size won't increase when the content does",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6633,
+  "secondPos" : 6633,
+  "firstEndPos" : 6711,
+  "secondEndPos" : 6711
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18105,6 +18138,17 @@
   "firstEndPos" : 13294,
   "secondEndPos" : 13299
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not recalculate size according to the text",
+  "secondLabel" : "// do not recalculate size according to the text",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13298,
+  "secondPos" : 13303,
+  "firstEndPos" : 13346,
+  "secondEndPos" : 13351
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19864,6 +19908,28 @@
   "secondPos" : 14509,
   "firstEndPos" : 14837,
   "secondEndPos" : 14842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Javadocs often contain &nbsp; symbols (non-breakable white space). We don't want to copy them as is and replace",
+  "secondLabel" : "// Javadocs often contain &nbsp; symbols (non-breakable white space). We don't want to copy them as is and replace",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14512,
+  "secondPos" : 14517,
+  "firstEndPos" : 14626,
+  "secondEndPos" : 14631
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with raw white spaces. See IDEA-86633 for more details.",
+  "secondLabel" : "// with raw white spaces. See IDEA-86633 for more details.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14633,
+  "secondPos" : 14638,
+  "firstEndPos" : 14691,
+  "secondEndPos" : 14696
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29908,6 +29974,17 @@
   "firstEndPos" : 20298,
   "secondEndPos" : 20303
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection SSBasedInspection",
+  "secondLabel" : "//noinspection SSBasedInspection",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20311,
+  "secondPos" : 20316,
+  "firstEndPos" : 20343,
+  "secondEndPos" : 20348
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30171,6 +30248,17 @@
   "secondPos" : 20480,
   "firstEndPos" : 20483,
   "secondEndPos" : 20488
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if ref is defined but is not found in document, this provides a default location",
+  "secondLabel" : "// if ref is defined but is not found in document, this provides a default location",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20486,
+  "secondPos" : 20491,
+  "firstEndPos" : 20569,
+  "secondEndPos" : 20574
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33483,6 +33571,17 @@
   "firstEndPos" : 22600,
   "secondEndPos" : 22605
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update faster",
+  "secondLabel" : "// update faster",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22604,
+  "secondPos" : 22609,
+  "firstEndPos" : 22620,
+  "secondEndPos" : 22625
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33537,6 +33636,17 @@
   "secondPos" : 22653,
   "firstEndPos" : 22652,
   "secondEndPos" : 22657
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//(!myBackStack.isEmpty() || !myForwardStack.isEmpty());",
+  "secondLabel" : "//(!myBackStack.isEmpty() || !myForwardStack.isEmpty());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22654,
+  "secondPos" : 22659,
+  "firstEndPos" : 22710,
+  "secondEndPos" : 22715
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",

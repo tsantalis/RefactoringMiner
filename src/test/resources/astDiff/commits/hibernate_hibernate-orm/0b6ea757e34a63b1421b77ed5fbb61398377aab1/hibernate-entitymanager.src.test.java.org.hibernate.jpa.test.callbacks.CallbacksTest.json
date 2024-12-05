@@ -10,6 +10,17 @@
   "firstEndPos" : 10925,
   "secondEndPos" : 7227
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "secondLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 236,
+  "secondEndPos" : 236
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -372,6 +383,17 @@
   "secondPos" : 830,
   "firstEndPos" : 989,
   "secondEndPos" : 854
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 965,
+  "secondPos" : 830,
+  "firstEndPos" : 972,
+  "secondEndPos" : 837
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1714,6 +1736,17 @@
   "secondPos" : 1376,
   "firstEndPos" : 1519,
   "secondEndPos" : 1384
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//update this entity",
+  "secondLabel" : "//update this entity",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1523,
+  "secondPos" : 1388,
+  "firstEndPos" : 1543,
+  "secondEndPos" : 1408
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5884,6 +5917,17 @@
   "firstEndPos" : 3001,
   "secondEndPos" : 2866
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Not a test since the spec did not make the proper change on listeners",
+  "secondLabel" : "//Not a test since the spec did not make the proper change on listeners",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3010,
+  "secondPos" : 2875,
+  "firstEndPos" : 3081,
+  "secondEndPos" : 2946
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6796,6 +6840,17 @@
   "secondPos" : 3363,
   "firstEndPos" : 3516,
   "secondEndPos" : 3381
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//success",
+  "secondLabel" : "//success",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3503,
+  "secondPos" : 3368,
+  "firstEndPos" : 3512,
+  "secondEndPos" : 3377
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -9514,6 +9569,17 @@
   "firstEndPos" : 4710,
   "secondEndPos" : 4575
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//success",
+  "secondLabel" : "//success",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4697,
+  "secondPos" : 4562,
+  "firstEndPos" : 4706,
+  "secondEndPos" : 4571
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",
@@ -10735,6 +10801,17 @@
   "firstEndPos" : 7141,
   "secondEndPos" : 7006
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create a cat",
+  "secondLabel" : "// create a cat",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5343,
+  "secondPos" : 5208,
+  "firstEndPos" : 5358,
+  "secondEndPos" : 5223
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11483,6 +11560,17 @@
   "firstEndPos" : 5616,
   "secondEndPos" : 5481
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assert it is persisted",
+  "secondLabel" : "// assert it is persisted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5623,
+  "secondPos" : 5488,
+  "firstEndPos" : 5648,
+  "secondEndPos" : 5513
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11856,6 +11944,17 @@
   "secondPos" : 5614,
   "firstEndPos" : 5751,
   "secondEndPos" : 5616
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add a kitten to the cat - triggers PostCollectionRecreateEvent",
+  "secondLabel" : "// add a kitten to the cat - triggers PostCollectionRecreateEvent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5758,
+  "secondPos" : 5623,
+  "firstEndPos" : 5823,
+  "secondEndPos" : 5688
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12638,6 +12737,17 @@
   "firstEndPos" : 6165,
   "secondEndPos" : 6030
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add another kitten - triggers PostCollectionUpdateEvent.",
+  "secondLabel" : "// add another kitten - triggers PostCollectionUpdateEvent.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6171,
+  "secondPos" : 6036,
+  "firstEndPos" : 6230,
+  "secondEndPos" : 6095
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13254,6 +13364,17 @@
   "firstEndPos" : 6500,
   "secondEndPos" : 6365
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// delete a kitty - triggers PostCollectionUpdateEvent",
+  "secondLabel" : "// delete a kitty - triggers PostCollectionUpdateEvent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6506,
+  "secondPos" : 6371,
+  "firstEndPos" : 6560,
+  "secondEndPos" : 6425
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13704,6 +13825,17 @@
   "secondPos" : 6632,
   "firstEndPos" : 6782,
   "secondEndPos" : 6647
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// delete and recreate kittens - triggers PostCollectionRemoveEvent and PostCollectionRecreateEvent)",
+  "secondLabel" : "// delete and recreate kittens - triggers PostCollectionRemoveEvent and PostCollectionRecreateEvent)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6788,
+  "secondPos" : 6653,
+  "firstEndPos" : 6888,
+  "secondEndPos" : 6753
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14992,6 +15124,17 @@
   "firstEndPos" : 7870,
   "secondEndPos" : 869
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//persist the test entity.",
+  "secondLabel" : "//persist the test entity.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7876,
+  "secondPos" : 875,
+  "firstEndPos" : 7902,
+  "secondEndPos" : 901
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15607,6 +15750,50 @@
   "secondPos" : 1136,
   "firstEndPos" : 8146,
   "secondEndPos" : 1145
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8152,
+  "secondPos" : 1151,
+  "firstEndPos" : 8383,
+  "secondEndPos" : 1382
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 8161,
+  "secondPos" : 1160,
+  "firstEndPos" : 8377,
+  "secondEndPos" : 1376
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Set a non lazy field, therefore the lazyData field will be LazyPropertyInitializer.UNFETCHED_PROPERTY",
+  "secondLabel" : "Set a non lazy field, therefore the lazyData field will be LazyPropertyInitializer.UNFETCHED_PROPERTY",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8161,
+  "secondPos" : 1160,
+  "firstEndPos" : 8262,
+  "secondEndPos" : 1261
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "for both state and newState so the field should not change. This should no longer cause a ClassCastException.",
+  "secondLabel" : "for both state and newState so the field should not change. This should no longer cause a ClassCastException.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8268,
+  "secondPos" : 1267,
+  "firstEndPos" : 8377,
+  "secondEndPos" : 1376
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16476,6 +16663,61 @@
   "secondPos" : 1767,
   "firstEndPos" : 8779,
   "secondEndPos" : 1776
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8785,
+  "secondPos" : 1782,
+  "firstEndPos" : 9098,
+  "secondEndPos" : 2095
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 8794,
+  "secondPos" : 1791,
+  "firstEndPos" : 9092,
+  "secondEndPos" : 2089
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Set the updateLazyFieldInPreUpdate flag so that the lazy field is updated from within the",
+  "secondLabel" : "Set the updateLazyFieldInPreUpdate flag so that the lazy field is updated from within the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8794,
+  "secondPos" : 1791,
+  "firstEndPos" : 8883,
+  "secondEndPos" : 1880
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "PreUpdate annotated callback method. So state == LazyPropertyInitializer.UNFETCHED_PROPERTY and",
+  "secondLabel" : "PreUpdate annotated callback method. So state == LazyPropertyInitializer.UNFETCHED_PROPERTY and",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8889,
+  "secondPos" : 1886,
+  "firstEndPos" : 8984,
+  "secondEndPos" : 1981
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "newState == EntityWithLazyProperty.PRE_UPDATE_VALUE. This should no longer cause a ClassCastException.",
+  "secondLabel" : "newState == EntityWithLazyProperty.PRE_UPDATE_VALUE. This should no longer cause a ClassCastException.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8990,
+  "secondPos" : 1987,
+  "firstEndPos" : 9092,
+  "secondEndPos" : 2089
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17422,6 +17664,61 @@
   "secondPos" : 2525,
   "firstEndPos" : 9567,
   "secondEndPos" : 2564
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9573,
+  "secondPos" : 2570,
+  "firstEndPos" : 9849,
+  "secondEndPos" : 2846
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 9582,
+  "secondPos" : 2579,
+  "firstEndPos" : 9843,
+  "secondEndPos" : 2840
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Set the updateLazyFieldInPreUpdate flag so that the lazy field is updated from within the",
+  "secondLabel" : "Set the updateLazyFieldInPreUpdate flag so that the lazy field is updated from within the",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9582,
+  "secondPos" : 2579,
+  "firstEndPos" : 9671,
+  "secondEndPos" : 2668
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "PreUpdate annotated callback method and also set the lazyData field directly to testArray1. When we reload we",
+  "secondLabel" : "PreUpdate annotated callback method and also set the lazyData field directly to testArray1. When we reload we",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9677,
+  "secondPos" : 2674,
+  "firstEndPos" : 9786,
+  "secondEndPos" : 2783
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "should get EntityWithLazyProperty.PRE_UPDATE_VALUE.",
+  "secondLabel" : "should get EntityWithLazyProperty.PRE_UPDATE_VALUE.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9792,
+  "secondPos" : 2789,
+  "firstEndPos" : 9843,
+  "secondEndPos" : 2840
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18643,6 +18940,17 @@
   "secondPos" : 3451,
   "firstEndPos" : 10922,
   "secondEndPos" : 3919
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reload the entity and check the lazy value matches what we expect.",
+  "secondLabel" : "// reload the entity and check the lazy value matches what we expect.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10458,
+  "secondPos" : 3455,
+  "firstEndPos" : 10527,
+  "secondEndPos" : 3524
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

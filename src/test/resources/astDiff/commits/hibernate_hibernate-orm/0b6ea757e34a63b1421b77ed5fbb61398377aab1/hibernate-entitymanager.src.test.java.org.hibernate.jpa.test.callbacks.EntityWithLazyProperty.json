@@ -10,6 +10,17 @@
   "firstEndPos" : 1726,
   "secondEndPos" : 1734
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "secondLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 236,
+  "secondEndPos" : 236
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -108,6 +119,17 @@
   "secondPos" : 406,
   "firstEndPos" : 417,
   "secondEndPos" : 425
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 398,
+  "secondPos" : 406,
+  "firstEndPos" : 405,
+  "secondEndPos" : 413
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1890,6 +1912,17 @@
   "secondPos" : 1507,
   "firstEndPos" : 1723,
   "secondEndPos" : 1731
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Allow the update of the lazy field from within the pre update to check that this does not break things.",
+  "secondLabel" : "//Allow the update of the lazy field from within the pre update to check that this does not break things.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1509,
+  "secondPos" : 1517,
+  "firstEndPos" : 1614,
+  "secondEndPos" : 1622
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

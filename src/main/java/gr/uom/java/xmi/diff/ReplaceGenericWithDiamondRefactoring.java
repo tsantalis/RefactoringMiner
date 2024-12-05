@@ -76,6 +76,14 @@ public class ReplaceGenericWithDiamondRefactoring implements Refactoring, LeafMa
 		return creationAfter;
 	}
 
+	public String getTypeBefore() {
+		return extractType(creationBefore);
+	}
+
+	public String getTypeAfter() {
+		return extractType(creationAfter);
+	}
+
 	public VariableDeclarationContainer getOperationBefore() {
 		return operationBefore;
 	}

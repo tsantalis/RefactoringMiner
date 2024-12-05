@@ -207,7 +207,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		//eliminate cyclic replacements
 		Replacement toRemove = null;
 		for(Replacement r : replacements) {
-			if(r.getBefore().equals(replacement.getAfter()) && r.getAfter().equals(replacement.getBefore())) {
+			if(r.getBefore().equals(replacement.getAfter()) && r.getAfter().equals(replacement.getBefore()) && 
+					!r.getType().equals(ReplacementType.COMPOSITE) && !replacement.getType().equals(ReplacementType.COMPOSITE)) {
 				toRemove = r;
 				break;
 			}

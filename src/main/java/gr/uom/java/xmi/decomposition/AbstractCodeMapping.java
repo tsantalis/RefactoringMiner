@@ -204,12 +204,27 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	public void addReplacement(Replacement replacement) {
-		this.replacements.add(replacement);
+		//eliminate cyclic replacements
+		Replacement toRemove = null;
+		for(Replacement r : replacements) {
+			if(r.getBefore().equals(replacement.getAfter()) && r.getAfter().equals(replacement.getBefore())) {
+				toRemove = r;
+				break;
+			}
+		}
+		if(toRemove != null) {
+			this.replacements.remove(toRemove);
+		}
+		else {
+			this.replacements.add(replacement);
+		}
 	}
 
 	public void addReplacements(Set<Replacement> replacements) {
 		if(replacements != null) {
-			this.replacements.addAll(replacements);
+			for(Replacement r : replacements) {
+				addReplacement(r);
+			}
 		}
 		else {
 			matchedWithNullReplacements = true;

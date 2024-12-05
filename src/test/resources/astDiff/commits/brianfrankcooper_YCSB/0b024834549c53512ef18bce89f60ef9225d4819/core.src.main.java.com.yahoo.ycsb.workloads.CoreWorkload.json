@@ -12154,6 +12154,28 @@
   "firstEndPos" : 14135,
   "secondEndPos" : 14164
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Confirm that fieldlengthgenerator returns a constant if data",
+  "secondLabel" : "//Confirm that fieldlengthgenerator returns a constant if data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14143,
+  "secondPos" : 14172,
+  "firstEndPos" : 14205,
+  "secondEndPos" : 14234
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//integrity check requested.",
+  "secondLabel" : "//integrity check requested.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14210,
+  "secondPos" : 14239,
+  "firstEndPos" : 14238,
+  "secondEndPos" : 14267
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14860,6 +14882,72 @@
   "firstEndPos" : 17151,
   "secondEndPos" : 17180
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//it does this by generating a random \"next key\" in part by taking the modulus over the number of keys",
+  "secondLabel" : "//it does this by generating a random \"next key\" in part by taking the modulus over the number of keys",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16131,
+  "secondPos" : 16160,
+  "firstEndPos" : 16233,
+  "secondEndPos" : 16262
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if the number of keys changes, this would shift the modulus, and we don't want that to change which keys are popular",
+  "secondLabel" : "//if the number of keys changes, this would shift the modulus, and we don't want that to change which keys are popular",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16237,
+  "secondPos" : 16266,
+  "firstEndPos" : 16355,
+  "secondEndPos" : 16384
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//so we'll actually construct the scrambled zipfian generator with a keyspace that is larger than exists at the beginning",
+  "secondLabel" : "//so we'll actually construct the scrambled zipfian generator with a keyspace that is larger than exists at the beginning",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16359,
+  "secondPos" : 16388,
+  "firstEndPos" : 16480,
+  "secondEndPos" : 16509
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//of the test. that is, we'll predict the number of inserts, and tell the scrambled zipfian generator the number of existing keys",
+  "secondLabel" : "//of the test. that is, we'll predict the number of inserts, and tell the scrambled zipfian generator the number of existing keys",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16484,
+  "secondPos" : 16513,
+  "firstEndPos" : 16613,
+  "secondEndPos" : 16642
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//plus the number of predicted keys as the total keyspace. then, if the generator picks a key that hasn't been inserted yet, will",
+  "secondLabel" : "//plus the number of predicted keys as the total keyspace. then, if the generator picks a key that hasn't been inserted yet, will",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16617,
+  "secondPos" : 16646,
+  "firstEndPos" : 16746,
+  "secondEndPos" : 16775
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//just ignore it and pick another key. this way, the size of the keyspace doesn't change from the perspective of the scrambled zipfian generator",
+  "secondLabel" : "//just ignore it and pick another key. this way, the size of the keyspace doesn't change from the perspective of the scrambled zipfian generator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16750,
+  "secondPos" : 16779,
+  "firstEndPos" : 16894,
+  "secondEndPos" : 16923
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15189,6 +15277,17 @@
   "secondPos" : 17073,
   "firstEndPos" : 17047,
   "secondEndPos" : 17076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//2 is fudge factor",
+  "secondLabel" : "//2 is fudge factor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17050,
+  "secondPos" : 17079,
+  "firstEndPos" : 17069,
+  "secondEndPos" : 17098
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18061,6 +18160,17 @@
   "firstEndPos" : 18897,
   "secondEndPos" : 18926
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//fill with random data",
+  "secondLabel" : "//fill with random data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18799,
+  "secondPos" : 18828,
+  "firstEndPos" : 18822,
+  "secondEndPos" : 18851
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18995,6 +19105,17 @@
   "secondPos" : 19370,
   "firstEndPos" : 19453,
   "secondEndPos" : 19482
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//fill with random data",
+  "secondLabel" : "//fill with random data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19351,
+  "secondPos" : 19380,
+  "firstEndPos" : 19374,
+  "secondEndPos" : 19403
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -23022,6 +23143,17 @@
   "firstEndPos" : 22260,
   "secondEndPos" : 22289
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//This assumes that null data is never valid",
+  "secondLabel" : "//This assumes that null data is never valid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22166,
+  "secondPos" : 22195,
+  "firstEndPos" : 22210,
+  "secondEndPos" : 22239
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -23891,6 +24023,17 @@
   "firstEndPos" : 23392,
   "secondEndPos" : 23421
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose a random key",
+  "secondLabel" : "//choose a random key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22872,
+  "secondPos" : 22901,
+  "firstEndPos" : 22893,
+  "secondEndPos" : 22922
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -24209,6 +24352,17 @@
   "secondPos" : 23055,
   "firstEndPos" : 23199,
   "secondEndPos" : 23228
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//read a random field  ",
+  "secondLabel" : "//read a random field  ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23031,
+  "secondPos" : 23060,
+  "firstEndPos" : 23054,
+  "secondEndPos" : 23083
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25112,6 +25266,17 @@
   "firstEndPos" : 24398,
   "secondEndPos" : 24427
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose a random key",
+  "secondLabel" : "//choose a random key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23449,
+  "secondPos" : 23478,
+  "firstEndPos" : 23470,
+  "secondEndPos" : 23499
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -25430,6 +25595,17 @@
   "secondPos" : 23628,
   "firstEndPos" : 23772,
   "secondEndPos" : 23801
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//read a random field  ",
+  "secondLabel" : "//read a random field  ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23604,
+  "secondPos" : 23633,
+  "firstEndPos" : 23627,
+  "secondEndPos" : 23656
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25970,6 +26146,17 @@
   "firstEndPos" : 23916,
   "secondEndPos" : 23945
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//new data for all the fields",
+  "secondLabel" : "//new data for all the fields",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23847,
+  "secondPos" : 23876,
+  "firstEndPos" : 23876,
+  "secondEndPos" : 23905
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26069,6 +26256,17 @@
   "firstEndPos" : 24001,
   "secondEndPos" : 24030
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//update a random field",
+  "secondLabel" : "//update a random field",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23933,
+  "secondPos" : 23962,
+  "firstEndPos" : 23956,
+  "secondEndPos" : 23985
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26156,6 +26354,17 @@
   "secondPos" : 24017,
   "firstEndPos" : 23995,
   "secondEndPos" : 24024
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//do the transaction",
+  "secondLabel" : "//do the transaction",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24005,
+  "secondPos" : 24034,
+  "firstEndPos" : 24025,
+  "secondEndPos" : 24054
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27169,6 +27378,17 @@
   "firstEndPos" : 24928,
   "secondEndPos" : 24957
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose a random key",
+  "secondLabel" : "//choose a random key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24444,
+  "secondPos" : 24473,
+  "firstEndPos" : 24465,
+  "secondEndPos" : 24494
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27333,6 +27553,17 @@
   "secondPos" : 24562,
   "firstEndPos" : 24539,
   "secondEndPos" : 24568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose a random scan length",
+  "secondLabel" : "//choose a random scan length",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24547,
+  "secondPos" : 24576,
+  "firstEndPos" : 24576,
+  "secondEndPos" : 24605
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27575,6 +27806,17 @@
   "secondPos" : 24695,
   "firstEndPos" : 24839,
   "secondEndPos" : 24868
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//read a random field  ",
+  "secondLabel" : "//read a random field  ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24671,
+  "secondPos" : 24700,
+  "firstEndPos" : 24694,
+  "secondEndPos" : 24723
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -28302,6 +28544,17 @@
   "firstEndPos" : 25331,
   "secondEndPos" : 25360
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose a random key",
+  "secondLabel" : "//choose a random key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24975,
+  "secondPos" : 25004,
+  "firstEndPos" : 24996,
+  "secondEndPos" : 25025
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28610,6 +28863,17 @@
   "firstEndPos" : 25207,
   "secondEndPos" : 25236
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//new data for all the fields",
+  "secondLabel" : "//new data for all the fields",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25138,
+  "secondPos" : 25167,
+  "firstEndPos" : 25167,
+  "secondEndPos" : 25196
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28708,6 +28972,17 @@
   "secondPos" : 25246,
   "firstEndPos" : 25292,
   "secondEndPos" : 25321
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//update a random field",
+  "secondLabel" : "//update a random field",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25224,
+  "secondPos" : 25253,
+  "firstEndPos" : 25247,
+  "secondEndPos" : 25276
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -28994,6 +29269,17 @@
   "secondPos" : 25403,
   "firstEndPos" : 25590,
   "secondEndPos" : 25619
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//choose the next key",
+  "secondLabel" : "//choose the next key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25378,
+  "secondPos" : 25407,
+  "firstEndPos" : 25399,
+  "secondEndPos" : 25428
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

@@ -95,6 +95,7 @@ public class UMLModelDiff {
 	private Set<Pair<UMLClass, UMLClass>> processedClassPairs = new HashSet<Pair<UMLClass, UMLClass>>();
 	private Map<Replacement, Set<CandidateAttributeRefactoring>> renameMap = new LinkedHashMap<Replacement, Set<CandidateAttributeRefactoring>>();
 	private Map<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>> mergeMap = new LinkedHashMap<MergeVariableReplacement, Set<CandidateMergeVariableRefactoring>>();
+	private List<UMLCommentListDiff> commentsMovedBetweenClasses = new ArrayList<UMLCommentListDiff>();
 
 	public UMLModelDiff(UMLModel parentModel, UMLModel childModel) {
 		this.parentModel = parentModel;
@@ -259,6 +260,10 @@ public class UMLModelDiff {
 
 	public List<UMLAttributeDiff> getMovedAttributeDiffList() {
 		return movedAttributeDiffList;
+	}
+
+	public List<UMLCommentListDiff> getCommentsMovedBetweenClasses() {
+		return commentsMovedBetweenClasses;
 	}
 
 	public boolean commonlyImplementedOperations(UMLOperation operation1, UMLOperation operation2, UMLClassBaseDiff classDiff2) {
@@ -1972,6 +1977,7 @@ public class UMLModelDiff {
 	}
 
 	private void detectSubRefactorings(UMLClassBaseDiff classDiff, UMLClass addedClass, RefactoringType parentType) throws RefactoringMinerTimedOutException {
+		int refactoringsBefore = refactorings.size();
 		for(UMLOperation addedOperation : addedClass.getOperations()) {
 			UMLOperation removedOperation = classDiff.containsRemovedOperationWithTheSameSignature(addedOperation);
 			if(parentType.equals(RefactoringType.MERGE_CLASS) && removedOperation == null) {
@@ -2075,6 +2081,13 @@ public class UMLModelDiff {
 					movedAttributeDiffList.add(attributeDiff);
 				}
 				refactorings.addAll(attributeDiff.getRefactorings()); 
+			}
+		}
+		if(refactorings.size() > refactoringsBefore) {
+			//check if comments are moved
+			UMLCommentListDiff diff = new UMLCommentListDiff(classDiff.getCommentListDiff().getDeletedComments(), addedClass.getComments());
+			if(diff.getCommonComments().size() > 0) {
+				commentsMovedBetweenClasses.add(diff);
 			}
 		}
 	}

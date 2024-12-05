@@ -10,6 +10,17 @@
   "firstEndPos" : 8988,
   "secondEndPos" : 9001
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2010-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -527,6 +538,17 @@
   "firstEndPos" : 1658,
   "secondEndPos" : 1658
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1631,
+  "secondPos" : 1631,
+  "firstEndPos" : 1636,
+  "secondEndPos" : 1636
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ApplicationListener",
@@ -581,6 +603,17 @@
   "secondPos" : 1873,
   "firstEndPos" : 1892,
   "secondEndPos" : 1892
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1873,
+  "secondPos" : 1873,
+  "firstEndPos" : 1878,
+  "secondEndPos" : 1878
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1010,6 +1043,17 @@
   "secondPos" : 4295,
   "firstEndPos" : 4312,
   "secondEndPos" : 4312
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4295,
+  "secondPos" : 4295,
+  "firstEndPos" : 4302,
+  "secondEndPos" : 4302
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1505,6 +1549,17 @@
   "secondPos" : 4636,
   "firstEndPos" : 4651,
   "secondEndPos" : 4651
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Before ConfigFileApplicationListener so values there can use these ones",
+  "secondLabel" : "// Before ConfigFileApplicationListener so values there can use these ones",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4655,
+  "secondPos" : 4655,
+  "firstEndPos" : 4729,
+  "secondEndPos" : 4729
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8370,6 +8425,17 @@
   "firstEndPos" : 8487,
   "secondEndPos" : 8069
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need a compound key",
+  "secondLabel" : "// Need a compound key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8331,
+  "secondPos" : 7983,
+  "firstEndPos" : 8353,
+  "secondEndPos" : 8005
+}, {
   "firstType" : "CastExpression",
   "secondType" : "CastExpression",
   "firstLabel" : "",
@@ -8600,6 +8666,17 @@
   "secondPos" : 8111,
   "firstEndPos" : 8909,
   "secondEndPos" : 8476
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need a compound key",
+  "secondLabel" : "// Need a compound key",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8535,
+  "secondPos" : 8117,
+  "firstEndPos" : 8557,
+  "secondEndPos" : 8139
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

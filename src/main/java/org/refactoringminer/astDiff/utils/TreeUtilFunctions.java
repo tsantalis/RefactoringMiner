@@ -28,7 +28,8 @@ public class TreeUtilFunctions {
 
 	public static Tree findByLocationInfo(Tree tree, LocationInfo locationInfo){
 		int start_offset = locationInfo.getStartOffset();
-		if (tree.getPos() > start_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
+		int end_offset = locationInfo.getEndOffset();
+		if (tree.getPos() > start_offset || tree.getEndPos() < end_offset)  return (tree.getParent() != null) ? findByLocationInfo(tree.getParent(),locationInfo) : null;
 		return findByLocationInfoNoLookAhead(tree, locationInfo);
 	}
 

@@ -2250,7 +2250,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					UMLOperation addedOperation = classDiff.matchesOperation(call, classDiff.getAddedOperations(), callerOperation);
 					if(addedOperation != null && !map.keySet().contains(addedOperation)) {
 						List<AbstractCodeFragment> newLeaves2 = new ArrayList<AbstractCodeFragment>();
-						if(!addedOperation.hasEmptyBody()) {
+						if(!addedOperation.hasEmptyBody() && addedOperation.getBody() != null) {
 							Set<AbstractCodeFragment> newStreamAPIStatements2 = statementsWithStreamAPICalls(addedOperation.getBody().getCompositeStatement().getLeaves());
 							for(AbstractCodeFragment streamAPICall : newStreamAPIStatements2) {
 								if(streamAPICall.getLambdas().size() > 0) {

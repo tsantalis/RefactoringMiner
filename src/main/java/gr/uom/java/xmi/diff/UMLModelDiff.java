@@ -1209,7 +1209,7 @@ public class UMLModelDiff {
 						if(!r.getBefore().contains("{\n") && !r.getAfter().contains("{\n")) {
 							String matchingClassNameBefore = matches(r.getBefore(), removedClassNames, mapping.getFragment1());
 							String matchingClassNameAfter = matches(r.getAfter(), addedClassNames, mapping.getFragment2());
-							if(matchingClassNameBefore != null && matchingClassNameAfter != null) {
+							if(matchingClassNameBefore != null && matchingClassNameAfter != null && !r.getAfter().contains(matchingClassNameBefore) && !r.getBefore().contains(matchingClassNameAfter)) {
 								Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
 								if(countMap.containsKey(pair)) {
 									countMap.put(pair, countMap.get(pair) + 1);

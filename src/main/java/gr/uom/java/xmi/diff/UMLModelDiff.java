@@ -1209,7 +1209,7 @@ public class UMLModelDiff {
 						if(!r.getBefore().contains("{\n") && !r.getAfter().contains("{\n")) {
 							String matchingClassNameBefore = matches(r.getBefore(), removedClassNames, mapping.getFragment1());
 							String matchingClassNameAfter = matches(r.getAfter(), addedClassNames, mapping.getFragment2());
-							if(matchingClassNameBefore != null && matchingClassNameAfter != null && !r.getAfter().contains(matchingClassNameBefore) && !r.getBefore().contains(matchingClassNameAfter)) {
+							if(condition(matchingClassNameBefore, matchingClassNameAfter, r)) {
 								Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
 								if(countMap.containsKey(pair)) {
 									countMap.put(pair, countMap.get(pair) + 1);
@@ -1242,6 +1242,18 @@ public class UMLModelDiff {
 		classRenameDiffList.addAll(diffsToBeAdded);
 		removedClasses.removeAll(removedClassesToBeRemoved);
 		addedClasses.removeAll(addedClassesToBeRemoved);
+	}
+
+	private static boolean condition(String matchingClassNameBefore, String matchingClassNameAfter, Replacement r) {
+		if(matchingClassNameBefore != null && matchingClassNameAfter != null) {
+			if(matchingClassNameBefore.contains(matchingClassNameAfter) || matchingClassNameAfter.contains(matchingClassNameBefore)) {
+				return true;
+			}
+			else {
+				return !r.getAfter().contains(matchingClassNameBefore) && !r.getBefore().contains(matchingClassNameAfter);
+			}
+		}
+		return false;
 	}
 
 	private static boolean conflictingPair(Pair<String, String> currentPair, Set<Pair<String, String>> allPairs) {

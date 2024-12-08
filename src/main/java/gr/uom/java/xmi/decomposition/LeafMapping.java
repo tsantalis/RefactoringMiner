@@ -1076,13 +1076,13 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		List<LeafExpression> variables2 = parent2.getVariables();
 		Set<String> lowerCaseVariables1 = new LinkedHashSet<>();
 		for(LeafExpression variable1 : variables1) {
-			if(Character.isLowerCase(variable1.getString().charAt(0))) {
+			if(variable1.getString().length() > 0 && Character.isLowerCase(variable1.getString().charAt(0))) {
 				lowerCaseVariables1.add(variable1.getString());
 			}
 		}
 		Set<String> lowerCaseVariables2 = new LinkedHashSet<>();
 		for(LeafExpression variable2 : variables2) {
-			if(Character.isLowerCase(variable2.getString().charAt(0))) {
+			if(variable2.getString().length() > 0 && Character.isLowerCase(variable2.getString().charAt(0))) {
 				lowerCaseVariables2.add(variable2.getString());
 			}
 		}

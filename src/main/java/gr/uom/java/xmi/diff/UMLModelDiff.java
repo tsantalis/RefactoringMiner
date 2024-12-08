@@ -1204,16 +1204,20 @@ public class UMLModelDiff {
 		Map<Pair<String, String>, Integer> countMap = new LinkedHashMap<>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-				for(Replacement r : mapper.getReplacements()) {
-					String matchingClassNameBefore = matches(r.getBefore(), removedClassNames);
-					String matchingClassNameAfter = matches(r.getAfter(), addedClassNames);
-					if(matchingClassNameBefore != null && matchingClassNameAfter != null) {
-						Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
-						if(countMap.containsKey(pair)) {
-							countMap.put(pair, countMap.get(pair) + 1);
-						}
-						else {
-							countMap.put(pair, 1);
+				for(AbstractCodeMapping mapping : mapper.getMappings()) {
+					for(Replacement r : mapping.getReplacements()) {
+						if(!r.getBefore().contains("{\n") && !r.getAfter().contains("{\n")) {
+							String matchingClassNameBefore = matches(r.getBefore(), removedClassNames, mapping.getFragment1());
+							String matchingClassNameAfter = matches(r.getAfter(), addedClassNames, mapping.getFragment2());
+							if(matchingClassNameBefore != null && matchingClassNameAfter != null) {
+								Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
+								if(countMap.containsKey(pair)) {
+									countMap.put(pair, countMap.get(pair) + 1);
+								}
+								else {
+									countMap.put(pair, 1);
+								}
+							}
 						}
 					}
 				}
@@ -1250,10 +1254,17 @@ public class UMLModelDiff {
 		return false;
 	}
 
-	private static String matches(String s, Set<String> classNames) {
+	private static String matches(String s, Set<String> classNames, AbstractCodeFragment fragment) {
 		for(String className : classNames) {
-			if(s.contains(className)) {
-				return className;
+			for(LeafExpression expr : fragment.getStringLiterals()) {
+				if(expr.getString().equals(s) && s.contains(className)) {
+					return className;
+				}
+			}
+			for(AbstractCall call : fragment.getMethodInvocations()) {
+				if(call.actualString().equals(s) && s.contains(className)) {
+					return className;
+				}
 			}
 		}
 		return null;

@@ -10,6 +10,17 @@
   "firstEndPos" : 1811,
   "secondEndPos" : 1529
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to Apereo under one or more contributor license\n * agreements. See the NOTICE file distributed with this work\n * for additional information regarding copyright ownership.\n * Apereo licenses this file to you under the Apache License,\n * Version 2.0 (the \"License\"); you may not use this file\n * except in compliance with the License.  You may obtain a\n * copy of the License at the following location:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to Apereo under one or more contributor license\n * agreements. See the NOTICE file distributed with this work\n * for additional information regarding copyright ownership.\n * Apereo licenses this file to you under the Apache License,\n * Version 2.0 (the \"License\"); you may not use this file\n * except in compliance with the License.  You may obtain a\n * copy of the License at the following location:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 798,
+  "secondEndPos" : 798
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -87,6 +98,17 @@
   "firstEndPos" : 896,
   "secondEndPos" : 896
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 874,
+  "secondPos" : 874,
+  "firstEndPos" : 881,
+  "secondEndPos" : 881
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Arnaud Lesueur",
@@ -109,6 +131,17 @@
   "firstEndPos" : 929,
   "secondEndPos" : 929
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 900,
+  "secondPos" : 900,
+  "firstEndPos" : 907,
+  "secondEndPos" : 907
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Marc-Antoine Garrigue",
@@ -130,6 +163,17 @@
   "secondPos" : 933,
   "firstEndPos" : 943,
   "secondEndPos" : 943
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 933,
+  "secondPos" : 933,
+  "firstEndPos" : 939,
+  "secondEndPos" : 939
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1241,6 +1285,182 @@
   "secondPos" : 1977,
   "firstEndPos" : 1655,
   "secondEndPos" : 1980
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 1658,
+  "secondPos" : 1741,
+  "firstEndPos" : 1682,
+  "secondEndPos" : 1765
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1658,
+  "secondPos" : 1741,
+  "firstEndPos" : 1662,
+  "secondEndPos" : 1745
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Byte",
+  "secondLabel" : "Byte",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 1658,
+  "secondPos" : 1741,
+  "firstEndPos" : 1662,
+  "secondEndPos" : 1745
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "valueOf",
+  "secondLabel" : "valueOf",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1663,
+  "secondPos" : 1746,
+  "firstEndPos" : 1670,
+  "secondEndPos" : 1753
+}, {
+  "firstType" : "CastExpression",
+  "secondType" : "CastExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 1671,
+  "secondPos" : 1754,
+  "firstEndPos" : 1681,
+  "secondEndPos" : 1764
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1671,
+  "secondPos" : 1754,
+  "firstEndPos" : 1681,
+  "secondEndPos" : 1764
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "byte",
+  "secondLabel" : "byte",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 1672,
+  "secondPos" : 1755,
+  "firstEndPos" : 1676,
+  "secondEndPos" : 1759
+}, {
+  "firstType" : "CharacterLiteral",
+  "secondType" : "CharacterLiteral",
+  "firstLabel" : "'S'",
+  "secondLabel" : "'S'",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 1678,
+  "secondPos" : 1761,
+  "firstEndPos" : 1681,
+  "secondEndPos" : 1764
+}, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 1684,
+  "secondPos" : 1741,
+  "firstEndPos" : 1708,
+  "secondEndPos" : 1765
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1684,
+  "secondPos" : 1741,
+  "firstEndPos" : 1688,
+  "secondEndPos" : 1745
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Byte",
+  "secondLabel" : "Byte",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 1684,
+  "secondPos" : 1741,
+  "firstEndPos" : 1688,
+  "secondEndPos" : 1745
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "valueOf",
+  "secondLabel" : "valueOf",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1689,
+  "secondPos" : 1746,
+  "firstEndPos" : 1696,
+  "secondEndPos" : 1753
+}, {
+  "firstType" : "CastExpression",
+  "secondType" : "CastExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 1697,
+  "secondPos" : 1754,
+  "firstEndPos" : 1707,
+  "secondEndPos" : 1764
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1697,
+  "secondPos" : 1754,
+  "firstEndPos" : 1707,
+  "secondEndPos" : 1764
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "byte",
+  "secondLabel" : "byte",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 1698,
+  "secondPos" : 1755,
+  "firstEndPos" : 1702,
+  "secondEndPos" : 1759
+}, {
+  "firstType" : "CharacterLiteral",
+  "secondType" : "CharacterLiteral",
+  "firstLabel" : "'S'",
+  "secondLabel" : "'S'",
+  "firstParentType" : "CastExpression",
+  "secondParentType" : "CastExpression",
+  "firstPos" : 1704,
+  "secondPos" : 1761,
+  "firstEndPos" : 1707,
+  "secondEndPos" : 1764
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",

@@ -10,6 +10,17 @@
   "firstEndPos" : 66518,
   "secondEndPos" : 66879
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2014 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2014 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 618,
+  "secondEndPos" : 618
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1693,6 +1704,17 @@
   "firstEndPos" : 4621,
   "secondEndPos" : 4676
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4585,
+  "secondPos" : 4640,
+  "firstEndPos" : 4590,
+  "secondEndPos" : 4645
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -1792,6 +1814,17 @@
   "firstEndPos" : 4847,
   "secondEndPos" : 4902
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4807,
+  "secondPos" : 4862,
+  "firstEndPos" : 4812,
+  "secondEndPos" : 4867
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "android.view.WindowManagerPolicy",
@@ -1847,6 +1880,17 @@
   "firstEndPos" : 5071,
   "secondEndPos" : 5126
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5019,
+  "secondPos" : 5074,
+  "firstEndPos" : 5024,
+  "secondEndPos" : 5079
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.android.server.input.InputManagerService",
@@ -1879,6 +1923,17 @@
   "secondPos" : 5133,
   "firstEndPos" : 5112,
   "secondEndPos" : 5167
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5078,
+  "secondPos" : 5133,
+  "firstEndPos" : 5083,
+  "secondEndPos" : 5138
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -1934,6 +1989,17 @@
   "secondPos" : 5302,
   "firstEndPos" : 5273,
   "secondEndPos" : 5328
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5247,
+  "secondPos" : 5302,
+  "firstEndPos" : 5252,
+  "secondEndPos" : 5307
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -2946,6 +3012,17 @@
   "secondPos" : 6318,
   "firstEndPos" : 6271,
   "secondEndPos" : 6326
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// used for handler messages",
+  "secondLabel" : "// used for handler messages",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6278,
+  "secondPos" : 6333,
+  "firstEndPos" : 6306,
+  "secondEndPos" : 6361
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4586,6 +4663,17 @@
   "firstEndPos" : 7611,
   "secondEndPos" : 7666
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7561,
+  "secondPos" : 7616,
+  "firstEndPos" : 7566,
+  "secondEndPos" : 7621
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -4640,6 +4728,17 @@
   "secondPos" : 7711,
   "firstEndPos" : 7692,
   "secondEndPos" : 7747
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7656,
+  "secondPos" : 7711,
+  "firstEndPos" : 7661,
+  "secondEndPos" : 7716
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -5477,6 +5576,28 @@
   "firstEndPos" : 8398,
   "secondEndPos" : 8453
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Whether the next call to playSounds() should be skipped.  Defaults to",
+  "secondLabel" : "// Whether the next call to playSounds() should be skipped.  Defaults to",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8405,
+  "secondPos" : 8460,
+  "firstEndPos" : 8477,
+  "secondEndPos" : 8532
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// true because the first lock (on boot) should be silent.",
+  "secondLabel" : "// true because the first lock (on boot) should be silent.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8482,
+  "secondPos" : 8537,
+  "firstEndPos" : 8540,
+  "secondEndPos" : 8595
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6115,6 +6236,17 @@
   "firstEndPos" : 9299,
   "secondEndPos" : 9354
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these are protected by synchronized (this)",
+  "secondLabel" : "// these are protected by synchronized (this)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9306,
+  "secondPos" : 9361,
+  "firstEndPos" : 9351,
+  "secondEndPos" : 9406
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6269,6 +6401,17 @@
   "firstEndPos" : 9570,
   "secondEndPos" : 9625
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9543,
+  "secondPos" : 9598,
+  "firstEndPos" : 9548,
+  "secondEndPos" : 9603
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -6378,6 +6521,28 @@
   "secondPos" : 9841,
   "firstEndPos" : 9791,
   "secondEndPos" : 9846
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cached value of whether we are showing (need to know this to quickly",
+  "secondLabel" : "// cached value of whether we are showing (need to know this to quickly",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9798,
+  "secondPos" : 9853,
+  "firstEndPos" : 9869,
+  "secondEndPos" : 9924
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// answer whether the input should be restricted)",
+  "secondLabel" : "// answer whether the input should be restricted)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9874,
+  "secondPos" : 9929,
+  "firstEndPos" : 9923,
+  "secondEndPos" : 9978
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -6522,6 +6687,17 @@
   "firstEndPos" : 10037,
   "secondEndPos" : 10092
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// true if the keyguard is hidden by another window",
+  "secondLabel" : "// true if the keyguard is hidden by another window",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10044,
+  "secondPos" : 10099,
+  "firstEndPos" : 10095,
+  "secondEndPos" : 10150
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6653,6 +6829,17 @@
   "secondPos" : 10315,
   "firstEndPos" : 10291,
   "secondEndPos" : 10346
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10260,
+  "secondPos" : 10315,
+  "firstEndPos" : 10265,
+  "secondEndPos" : 10320
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -6863,6 +7050,17 @@
   "firstEndPos" : 10650,
   "secondEndPos" : 10705
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the properties of the keyguard",
+  "secondLabel" : "// the properties of the keyguard",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10657,
+  "secondPos" : 10712,
+  "firstEndPos" : 10690,
+  "secondEndPos" : 10745
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -7049,6 +7247,17 @@
   "secondPos" : 10879,
   "firstEndPos" : 10829,
   "secondEndPos" : 10884
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// last known state of the cellular connection",
+  "secondLabel" : "// last known state of the cellular connection",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10836,
+  "secondPos" : 10891,
+  "firstEndPos" : 10882,
+  "secondEndPos" : 10937
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -7709,6 +7918,17 @@
   "secondPos" : 11710,
   "firstEndPos" : 11682,
   "secondEndPos" : 11737
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11655,
+  "secondPos" : 11710,
+  "firstEndPos" : 11660,
+  "secondEndPos" : 11715
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -8953,6 +9173,39 @@
   "firstEndPos" : 13579,
   "secondEndPos" : 13634
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note that the mLockPatternUtils user has already been updated from setCurrentUser.",
+  "secondLabel" : "// Note that the mLockPatternUtils user has already been updated from setCurrentUser.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12816,
+  "secondPos" : 12871,
+  "firstEndPos" : 12901,
+  "secondEndPos" : 12956
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We need to force a reset of the views, since lockNow (called by",
+  "secondLabel" : "// We need to force a reset of the views, since lockNow (called by",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12914,
+  "secondPos" : 12969,
+  "firstEndPos" : 12980,
+  "secondEndPos" : 13035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ActivityManagerService) will not reconstruct the keyguard if it is already showing.",
+  "secondLabel" : "// ActivityManagerService) will not reconstruct the keyguard if it is already showing.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12993,
+  "secondPos" : 13048,
+  "firstEndPos" : 13079,
+  "secondEndPos" : 13134
+}, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "SynchronizedStatement",
   "firstLabel" : "",
@@ -9150,6 +9403,28 @@
   "secondPos" : 13331,
   "firstEndPos" : 13297,
   "secondEndPos" : 13352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When we switch users we want to bring the new user to the biometric unlock even",
+  "secondLabel" : "// When we switch users we want to bring the new user to the biometric unlock even",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13317,
+  "secondPos" : 13372,
+  "firstEndPos" : 13399,
+  "secondEndPos" : 13454
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the current user has gone to the backup.",
+  "secondLabel" : "// if the current user has gone to the backup.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13416,
+  "secondPos" : 13471,
+  "firstEndPos" : 13462,
+  "secondEndPos" : 13517
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9821,6 +10096,17 @@
   "secondPos" : 13927,
   "firstEndPos" : 14002,
   "secondEndPos" : 14057
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we just switched to a guest, try to dismiss keyguard.",
+  "secondLabel" : "// If we just switched to a guest, try to dismiss keyguard.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13894,
+  "secondPos" : 13949,
+  "firstEndPos" : 13953,
+  "secondEndPos" : 14008
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10614,6 +10900,17 @@
   "firstEndPos" : 14574,
   "secondEndPos" : 14629
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call ending",
+  "secondLabel" : "// call ending",
+  "firstParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstPos" : 14559,
+  "secondPos" : 14614,
+  "firstEndPos" : 14573,
+  "secondEndPos" : 14628
+}, {
   "firstType" : "PrefixExpression",
   "secondType" : "PrefixExpression",
   "firstLabel" : "",
@@ -10658,6 +10955,17 @@
   "firstEndPos" : 14652,
   "secondEndPos" : 14707
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// screen off",
+  "secondLabel" : "// screen off",
+  "firstParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstPos" : 14638,
+  "secondPos" : 14693,
+  "firstEndPos" : 14651,
+  "secondEndPos" : 14706
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "mExternallyEnabled",
@@ -10679,6 +10987,61 @@
   "secondPos" : 14754,
   "firstEndPos" : 15334,
   "secondEndPos" : 15389
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not disabled by any app",
+  "secondLabel" : "// not disabled by any app",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14716,
+  "secondPos" : 14771,
+  "firstEndPos" : 14742,
+  "secondEndPos" : 14797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: this is a way to gracefully reenable the keyguard when the call",
+  "secondLabel" : "// note: this is a way to gracefully reenable the keyguard when the call",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14764,
+  "secondPos" : 14819,
+  "firstEndPos" : 14836,
+  "secondEndPos" : 14891
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ends and the screen is off without always reenabling the keyguard",
+  "secondLabel" : "// ends and the screen is off without always reenabling the keyguard",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14857,
+  "secondPos" : 14912,
+  "firstEndPos" : 14925,
+  "secondEndPos" : 14980
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// each time the screen turns off while in call (and having an occasional ugly",
+  "secondLabel" : "// each time the screen turns off while in call (and having an occasional ugly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14946,
+  "secondPos" : 15001,
+  "firstEndPos" : 15024,
+  "secondEndPos" : 15079
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// flicker while turning back on the screen and disabling the keyguard again).",
+  "secondLabel" : "// flicker while turning back on the screen and disabling the keyguard again).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15045,
+  "secondPos" : 15100,
+  "firstEndPos" : 15123,
+  "secondEndPos" : 15178
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12197,6 +12560,28 @@
   "secondPos" : 16417,
   "firstEndPos" : 16368,
   "secondEndPos" : 16423
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only force lock screen in case of missing sim if user hasn't",
+  "secondLabel" : "// only force lock screen in case of missing sim if user hasn't",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16390,
+  "secondPos" : 16445,
+  "firstEndPos" : 16453,
+  "secondEndPos" : 16508
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// gone through setup wizard",
+  "secondLabel" : "// gone through setup wizard",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16474,
+  "secondPos" : 16529,
+  "firstEndPos" : 16502,
+  "secondEndPos" : 16557
 }, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "SynchronizedStatement",
@@ -15553,6 +15938,17 @@
   "firstEndPos" : 20330,
   "secondEndPos" : 20385
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* finishRunnable */",
+  "secondLabel" : "/* finishRunnable */",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 20331,
+  "secondPos" : 20386,
+  "firstEndPos" : 20351,
+  "secondEndPos" : 20406
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15883,6 +16279,28 @@
   "firstEndPos" : 20947,
   "secondEndPos" : 21002
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Somebody has called keyguardDonePending before, which means that we are",
+  "secondLabel" : "// Somebody has called keyguardDonePending before, which means that we are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20725,
+  "secondPos" : 20780,
+  "firstEndPos" : 20799,
+  "secondEndPos" : 20854
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// authenticated",
+  "secondLabel" : "// authenticated",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20816,
+  "secondPos" : 20871,
+  "firstEndPos" : 20832,
+  "secondEndPos" : 20887
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15971,6 +16389,17 @@
   "firstEndPos" : 20892,
   "secondEndPos" : 20947
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* authenticated */",
+  "secondLabel" : "/* authenticated */",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 20893,
+  "secondPos" : 20948,
+  "firstEndPos" : 20912,
+  "secondEndPos" : 20967
+}, {
   "firstType" : "BooleanLiteral",
   "secondType" : "BooleanLiteral",
   "firstLabel" : "true",
@@ -15981,6 +16410,17 @@
   "secondPos" : 20969,
   "firstEndPos" : 20918,
   "secondEndPos" : 20973
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* wakeUp */",
+  "secondLabel" : "/* wakeUp */",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 20919,
+  "secondPos" : 20974,
+  "firstEndPos" : 20931,
+  "secondEndPos" : 20986
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -18126,6 +18566,17 @@
   "secondPos" : 22677,
   "firstEndPos" : 22636,
   "secondEndPos" : 22691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Assume keyguard is showing (unless it's disabled) until we know for sure...",
+  "secondLabel" : "// Assume keyguard is showing (unless it's disabled) until we know for sure...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22650,
+  "secondPos" : 22705,
+  "firstEndPos" : 22728,
+  "secondEndPos" : 22783
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21669,6 +22120,105 @@
   "firstEndPos" : 25107,
   "secondEndPos" : 25162
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppress biometric unlock right after boot until things have settled if it is the",
+  "secondLabel" : "// Suppress biometric unlock right after boot until things have settled if it is the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25123,
+  "secondPos" : 25178,
+  "firstEndPos" : 25207,
+  "secondEndPos" : 25262
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// selected security method, otherwise unsuppress it.  It must be unsuppressed if it is",
+  "secondLabel" : "// selected security method, otherwise unsuppress it.  It must be unsuppressed if it is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25220,
+  "secondPos" : 25275,
+  "firstEndPos" : 25307,
+  "secondEndPos" : 25362
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not the selected security method for the following reason:  if the user starts",
+  "secondLabel" : "// not the selected security method for the following reason:  if the user starts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25320,
+  "secondPos" : 25375,
+  "firstEndPos" : 25401,
+  "secondEndPos" : 25456
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without a screen lock selected, the biometric unlock would be suppressed the first",
+  "secondLabel" : "// without a screen lock selected, the biometric unlock would be suppressed the first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25414,
+  "secondPos" : 25469,
+  "firstEndPos" : 25499,
+  "secondEndPos" : 25554
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// time they try to use it.",
+  "secondLabel" : "// time they try to use it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25512,
+  "secondPos" : 25567,
+  "firstEndPos" : 25539,
+  "secondEndPos" : 25594
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25552,
+  "secondPos" : 25607,
+  "firstEndPos" : 25554,
+  "secondEndPos" : 25609
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note that the biometric unlock will still not show if it is not the selected method.",
+  "secondLabel" : "// Note that the biometric unlock will still not show if it is not the selected method.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25567,
+  "secondPos" : 25622,
+  "firstEndPos" : 25654,
+  "secondEndPos" : 25709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Calling setAlternateUnlockEnabled(true) simply says don't suppress it if it is the",
+  "secondLabel" : "// Calling setAlternateUnlockEnabled(true) simply says don't suppress it if it is the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25667,
+  "secondPos" : 25722,
+  "firstEndPos" : 25752,
+  "secondEndPos" : 25807
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// selected method.",
+  "secondLabel" : "// selected method.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25765,
+  "secondPos" : 25820,
+  "firstEndPos" : 25784,
+  "secondEndPos" : 25839
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22131,6 +22681,28 @@
   "firstEndPos" : 26192,
   "secondEndPos" : 26247
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Most services aren't available until the system reaches the ready state, so we",
+  "secondLabel" : "// Most services aren't available until the system reaches the ready state, so we",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26213,
+  "secondPos" : 26268,
+  "firstEndPos" : 26294,
+  "secondEndPos" : 26349
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// send it here when the device first boots.",
+  "secondLabel" : "// send it here when the device first boots.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26303,
+  "secondPos" : 26358,
+  "firstEndPos" : 26347,
+  "secondEndPos" : 26402
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22219,6 +22791,17 @@
   "firstEndPos" : 26622,
   "secondEndPos" : 26677
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26467,
+  "secondPos" : 26522,
+  "firstEndPos" : 26473,
+  "secondEndPos" : 26528
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "why",
@@ -22251,6 +22834,17 @@
   "secondPos" : 26540,
   "firstEndPos" : 26545,
   "secondEndPos" : 26600
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26485,
+  "secondPos" : 26540,
+  "firstEndPos" : 26490,
+  "secondEndPos" : 26545
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -22306,6 +22900,17 @@
   "secondPos" : 26613,
   "firstEndPos" : 26621,
   "secondEndPos" : 26676
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26558,
+  "secondPos" : 26613,
+  "firstEndPos" : 26563,
+  "secondEndPos" : 26618
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -22757,6 +23362,39 @@
   "secondPos" : 26940,
   "firstEndPos" : 26890,
   "secondEndPos" : 26945
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lock immediately based on setting if secure (user has a pin/pattern/password).",
+  "secondLabel" : "// Lock immediately based on setting if secure (user has a pin/pattern/password).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26905,
+  "secondPos" : 26960,
+  "firstEndPos" : 26986,
+  "secondEndPos" : 27041
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This also \"locks\" the device when not secure to provide easy access to the",
+  "secondLabel" : "// This also \"locks\" the device when not secure to provide easy access to the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26999,
+  "secondPos" : 27054,
+  "firstEndPos" : 27076,
+  "secondEndPos" : 27131
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// camera while preventing unwanted input.",
+  "secondLabel" : "// camera while preventing unwanted input.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27089,
+  "secondPos" : 27144,
+  "firstEndPos" : 27131,
+  "secondEndPos" : 27186
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -24210,6 +24848,61 @@
   "firstEndPos" : 30484,
   "secondEndPos" : 30539
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the screen turned off because of timeout or the user hit the power button",
+  "secondLabel" : "// if the screen turned off because of timeout or the user hit the power button",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28405,
+  "secondPos" : 28460,
+  "firstEndPos" : 28484,
+  "secondEndPos" : 28539
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we don't need to lock immediately, set an alarm",
+  "secondLabel" : "// and we don't need to lock immediately, set an alarm",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28493,
+  "secondPos" : 28548,
+  "firstEndPos" : 28547,
+  "secondEndPos" : 28602
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to enable it a little bit later (i.e, give the user a chance",
+  "secondLabel" : "// to enable it a little bit later (i.e, give the user a chance",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28556,
+  "secondPos" : 28611,
+  "firstEndPos" : 28619,
+  "secondEndPos" : 28674
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to turn the screen back on within a certain window without",
+  "secondLabel" : "// to turn the screen back on within a certain window without",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28628,
+  "secondPos" : 28683,
+  "firstEndPos" : 28689,
+  "secondEndPos" : 28744
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// having to unlock the screen)",
+  "secondLabel" : "// having to unlock the screen)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28698,
+  "secondPos" : 28753,
+  "firstEndPos" : 28729,
+  "secondEndPos" : 28784
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -24319,6 +25012,17 @@
   "secondPos" : 28829,
   "firstEndPos" : 28792,
   "secondEndPos" : 28847
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From DisplaySettings",
+  "secondLabel" : "// From DisplaySettings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28805,
+  "secondPos" : 28860,
+  "firstEndPos" : 28828,
+  "secondEndPos" : 28883
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -24451,6 +25155,17 @@
   "secondPos" : 28977,
   "firstEndPos" : 28960,
   "secondEndPos" : 29015
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From SecuritySettings",
+  "secondLabel" : "// From SecuritySettings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28972,
+  "secondPos" : 29027,
+  "firstEndPos" : 28996,
+  "secondEndPos" : 29051
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -24594,6 +25309,17 @@
   "secondPos" : 29197,
   "firstEndPos" : 29175,
   "secondEndPos" : 29230
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From DevicePolicyAdmin",
+  "secondLabel" : "// From DevicePolicyAdmin",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29187,
+  "secondPos" : 29242,
+  "firstEndPos" : 29212,
+  "secondEndPos" : 29267
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -24903,6 +25629,17 @@
   "firstEndPos" : 29679,
   "secondEndPos" : 29734
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// policy in effect. Make sure we don't go beyond policy limit.",
+  "secondLabel" : "// policy in effect. Make sure we don't go beyond policy limit.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29440,
+  "secondPos" : 29495,
+  "firstEndPos" : 29503,
+  "secondEndPos" : 29558
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25023,6 +25760,17 @@
   "secondPos" : 29613,
   "firstEndPos" : 29559,
   "secondEndPos" : 29614
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore negative values",
+  "secondLabel" : "// ignore negative values",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29562,
+  "secondPos" : 29617,
+  "firstEndPos" : 29587,
+  "secondEndPos" : 29642
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25310,6 +26058,17 @@
   "firstEndPos" : 29878,
   "secondEndPos" : 29933
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lock now",
+  "secondLabel" : "// Lock now",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29778,
+  "secondPos" : 29833,
+  "firstEndPos" : 29789,
+  "secondEndPos" : 29844
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25430,6 +26189,17 @@
   "secondPos" : 29939,
   "firstEndPos" : 30478,
   "secondEndPos" : 30533
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lock in the future",
+  "secondLabel" : "// Lock in the future",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29898,
+  "secondPos" : 29953,
+  "firstEndPos" : 29919,
+  "secondEndPos" : 29974
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27147,6 +27917,39 @@
   "firstEndPos" : 31627,
   "secondEndPos" : 31682
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lock screen is disabled because the user has set the preference to \"None\".",
+  "secondLabel" : "// Lock screen is disabled because the user has set the preference to \"None\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31387,
+  "secondPos" : 31442,
+  "firstEndPos" : 31464,
+  "secondEndPos" : 31519
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In this case, send out ACTION_USER_PRESENT here instead of in",
+  "secondLabel" : "// In this case, send out ACTION_USER_PRESENT here instead of in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31477,
+  "secondPos" : 31532,
+  "firstEndPos" : 31541,
+  "secondEndPos" : 31596
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handleKeyguardDone()",
+  "secondLabel" : "// handleKeyguardDone()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31554,
+  "secondPos" : 31609,
+  "firstEndPos" : 31577,
+  "secondEndPos" : 31632
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28797,6 +29600,17 @@
   "firstEndPos" : 33316,
   "secondEndPos" : 33371
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33302,
+  "secondPos" : 33357,
+  "firstEndPos" : 33308,
+  "secondEndPos" : 33363
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "enabled",
@@ -29258,6 +30072,17 @@
   "secondPos" : 33746,
   "firstEndPos" : 33746,
   "secondEndPos" : 33801
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33691,
+  "secondPos" : 33746,
+  "firstEndPos" : 33696,
+  "secondEndPos" : 33751
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -29754,6 +30579,28 @@
   "firstEndPos" : 34480,
   "secondEndPos" : 34535
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if keyguard is forcefully disabled internally (by lock screen tile), don't allow",
+  "secondLabel" : "// if keyguard is forcefully disabled internally (by lock screen tile), don't allow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34269,
+  "secondPos" : 34324,
+  "firstEndPos" : 34352,
+  "secondEndPos" : 34407
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it to be enabled externally, unless the device policy manager says so.",
+  "secondLabel" : "// it to be enabled externally, unless the device policy manager says so.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34369,
+  "secondPos" : 34424,
+  "firstEndPos" : 34442,
+  "secondEndPos" : 34497
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -30029,6 +30876,28 @@
   "firstEndPos" : 34661,
   "secondEndPos" : 34716
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we're in the process of handling a request to verify the user",
+  "secondLabel" : "// we're in the process of handling a request to verify the user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34684,
+  "secondPos" : 34739,
+  "firstEndPos" : 34748,
+  "secondEndPos" : 34803
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// can get past the keyguard. ignore extraneous requests to disable / reenable",
+  "secondLabel" : "// can get past the keyguard. ignore extraneous requests to disable / reenable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34769,
+  "secondPos" : 34824,
+  "firstEndPos" : 34847,
+  "secondEndPos" : 34902
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -30039,6 +30908,17 @@
   "secondPos" : 34923,
   "firstEndPos" : 34875,
   "secondEndPos" : 34930
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hiding keyguard that is showing, remember to reshow later",
+  "secondLabel" : "// hiding keyguard that is showing, remember to reshow later",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34911,
+  "secondPos" : 34966,
+  "firstEndPos" : 34971,
+  "secondEndPos" : 35026
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -30369,6 +31249,17 @@
   "secondPos" : 35359,
   "firstEndPos" : 37054,
   "secondEndPos" : 37109
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reenabled after previously hidden, reshow",
+  "secondLabel" : "// reenabled after previously hidden, reshow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35322,
+  "secondPos" : 35377,
+  "firstEndPos" : 35366,
+  "secondEndPos" : 35421
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -31195,6 +32086,39 @@
   "firstEndPos" : 36141,
   "secondEndPos" : 36196
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// block until we know the keygaurd is done drawing (and post a message",
+  "secondLabel" : "// block until we know the keygaurd is done drawing (and post a message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36165,
+  "secondPos" : 36220,
+  "firstEndPos" : 36236,
+  "secondEndPos" : 36291
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to unblock us after a timeout so we don't risk blocking too long",
+  "secondLabel" : "// to unblock us after a timeout so we don't risk blocking too long",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36257,
+  "secondPos" : 36312,
+  "firstEndPos" : 36324,
+  "secondEndPos" : 36379
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and causing an ANR).",
+  "secondLabel" : "// and causing an ANR).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36345,
+  "secondPos" : 36400,
+  "firstEndPos" : 36368,
+  "secondEndPos" : 36423
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -31833,6 +32757,17 @@
   "firstEndPos" : 37140,
   "secondEndPos" : 37195
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 37087,
+  "secondPos" : 37142,
+  "firstEndPos" : 37091,
+  "secondEndPos" : 37146
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -32140,6 +33075,17 @@
   "secondPos" : 37393,
   "firstEndPos" : 37737,
   "secondEndPos" : 37792
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// don't allow this api when the device isn't provisioned",
+  "secondLabel" : "// don't allow this api when the device isn't provisioned",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37356,
+  "secondPos" : 37411,
+  "firstEndPos" : 37413,
+  "secondEndPos" : 37468
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -32547,6 +33493,39 @@
   "secondPos" : 37822,
   "firstEndPos" : 38285,
   "secondEndPos" : 38340
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this only applies when the user has externally disabled the",
+  "secondLabel" : "// this only applies when the user has externally disabled the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37785,
+  "secondPos" : 37840,
+  "firstEndPos" : 37847,
+  "secondEndPos" : 37902
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// keyguard.  this is unexpected and means the user is not",
+  "secondLabel" : "// keyguard.  this is unexpected and means the user is not",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37864,
+  "secondPos" : 37919,
+  "firstEndPos" : 37922,
+  "secondEndPos" : 37977
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// using the api properly.",
+  "secondLabel" : "// using the api properly.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37939,
+  "secondPos" : 37994,
+  "firstEndPos" : 37965,
+  "secondEndPos" : 38020
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -32965,6 +33944,17 @@
   "secondPos" : 38379,
   "firstEndPos" : 38622,
   "secondEndPos" : 38677
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// already in progress with someone else",
+  "secondLabel" : "// already in progress with someone else",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38342,
+  "secondPos" : 38397,
+  "firstEndPos" : 38382,
+  "secondEndPos" : 38437
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -36387,6 +37377,17 @@
   "firstEndPos" : 44371,
   "secondEndPos" : 44426
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the keyguard is already showing, don't bother",
+  "secondLabel" : "// if the keyguard is already showing, don't bother",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41594,
+  "secondPos" : 41649,
+  "firstEndPos" : 41645,
+  "secondEndPos" : 41700
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -36606,6 +37607,17 @@
   "secondPos" : 41894,
   "firstEndPos" : 41846,
   "secondEndPos" : 41901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the setup wizard hasn't run yet, don't show",
+  "secondLabel" : "// if the setup wizard hasn't run yet, don't show",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41866,
+  "secondPos" : 41921,
+  "firstEndPos" : 41915,
+  "secondEndPos" : 41970
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -37586,6 +38598,17 @@
   "firstEndPos" : 42727,
   "secondEndPos" : 42782
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if another app is disabling us, don't show",
+  "secondLabel" : "// if another app is disabling us, don't show",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42747,
+  "secondPos" : 42802,
+  "firstEndPos" : 42792,
+  "secondEndPos" : 42847
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -37806,6 +38829,105 @@
   "firstEndPos" : 42935,
   "secondEndPos" : 42990
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: we *should* set mNeedToReshowWhenReenabled=true here, but that makes",
+  "secondLabel" : "// note: we *should* set mNeedToReshowWhenReenabled=true here, but that makes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42951,
+  "secondPos" : 43006,
+  "firstEndPos" : 43028,
+  "secondEndPos" : 43083
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for an occasional ugly flicker in this situation:",
+  "secondLabel" : "// for an occasional ugly flicker in this situation:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43041,
+  "secondPos" : 43096,
+  "firstEndPos" : 43093,
+  "secondEndPos" : 43148
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1) receive a call with the screen on (no keyguard) or make a call",
+  "secondLabel" : "// 1) receive a call with the screen on (no keyguard) or make a call",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43106,
+  "secondPos" : 43161,
+  "firstEndPos" : 43174,
+  "secondEndPos" : 43229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2) screen times out",
+  "secondLabel" : "// 2) screen times out",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43187,
+  "secondPos" : 43242,
+  "firstEndPos" : 43209,
+  "secondEndPos" : 43264
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 3) user hits key to turn screen back on",
+  "secondLabel" : "// 3) user hits key to turn screen back on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43222,
+  "secondPos" : 43277,
+  "firstEndPos" : 43264,
+  "secondEndPos" : 43319
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// instead, we reenable the keyguard when we know the screen is off and the call",
+  "secondLabel" : "// instead, we reenable the keyguard when we know the screen is off and the call",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43277,
+  "secondPos" : 43332,
+  "firstEndPos" : 43357,
+  "secondEndPos" : 43412
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ends (see the broadcast receiver below)",
+  "secondLabel" : "// ends (see the broadcast receiver below)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43370,
+  "secondPos" : 43425,
+  "firstEndPos" : 43412,
+  "secondEndPos" : 43467
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: clean this up when we have better support at the window manager level",
+  "secondLabel" : "// TODO: clean this up when we have better support at the window manager level",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43425,
+  "secondPos" : 43480,
+  "firstEndPos" : 43503,
+  "secondEndPos" : 43558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for apps that wish to be on top of the keyguard",
+  "secondLabel" : "// for apps that wish to be on top of the keyguard",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43516,
+  "secondPos" : 43571,
+  "firstEndPos" : 43566,
+  "secondEndPos" : 43621
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -38025,6 +39147,17 @@
   "secondPos" : 43743,
   "firstEndPos" : 43739,
   "secondEndPos" : 43794
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update state",
+  "secondLabel" : "// update state",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43754,
+  "secondPos" : 43809,
+  "firstEndPos" : 43769,
+  "secondEndPos" : 43824
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -38366,6 +39499,17 @@
   "secondPos" : 44090,
   "firstEndPos" : 44081,
   "secondEndPos" : 44136
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Without this, settings is not enabled until the lock screen first appears",
+  "secondLabel" : "// Without this, settings is not enabled until the lock screen first appears",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44096,
+  "secondPos" : 44151,
+  "firstEndPos" : 44172,
+  "secondEndPos" : 44227
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -40446,6 +41590,17 @@
   "firstEndPos" : 46135,
   "secondEndPos" : 46190
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 46118,
+  "secondPos" : 46173,
+  "firstEndPos" : 46122,
+  "secondEndPos" : 46177
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -40875,6 +42030,17 @@
   "firstEndPos" : 46429,
   "secondEndPos" : 46484
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 46403,
+  "secondPos" : 46458,
+  "firstEndPos" : 46407,
+  "secondEndPos" : 46462
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -41183,6 +42349,17 @@
   "firstEndPos" : 46704,
   "secondEndPos" : 46759
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 46676,
+  "secondPos" : 46731,
+  "firstEndPos" : 46680,
+  "secondEndPos" : 46735
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -41237,6 +42414,17 @@
   "secondPos" : 46767,
   "firstEndPos" : 46739,
   "secondEndPos" : 46794
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 46712,
+  "secondPos" : 46767,
+  "firstEndPos" : 46716,
+  "secondEndPos" : 46771
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -41546,6 +42734,17 @@
   "firstEndPos" : 47017,
   "secondEndPos" : 47072
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 46995,
+  "secondPos" : 47050,
+  "firstEndPos" : 46999,
+  "secondEndPos" : 47054
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -41578,6 +42777,17 @@
   "secondPos" : 47080,
   "firstEndPos" : 47051,
   "secondEndPos" : 47106
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 47025,
+  "secondPos" : 47080,
+  "firstEndPos" : 47029,
+  "secondEndPos" : 47084
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -42063,6 +43273,17 @@
   "firstEndPos" : 47388,
   "secondEndPos" : 47443
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 47372,
+  "secondPos" : 47427,
+  "firstEndPos" : 47376,
+  "secondEndPos" : 47431
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -42282,6 +43503,17 @@
   "secondPos" : 47528,
   "firstEndPos" : 47485,
   "secondEndPos" : 47540
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ensure we stay awake until we are finished displaying the keyguard",
+  "secondLabel" : "// ensure we stay awake until we are finished displaying the keyguard",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47496,
+  "secondPos" : 47551,
+  "firstEndPos" : 47565,
+  "secondEndPos" : 47620
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -42601,6 +43833,17 @@
   "secondPos" : 47838,
   "firstEndPos" : 47801,
   "secondEndPos" : 47856
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 47783,
+  "secondPos" : 47838,
+  "firstEndPos" : 47787,
+  "secondEndPos" : 47842
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -43272,6 +44515,17 @@
   "secondPos" : 48389,
   "firstEndPos" : 48379,
   "secondEndPos" : 48434
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 48334,
+  "secondPos" : 48389,
+  "firstEndPos" : 48340,
+  "secondEndPos" : 48395
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -44262,6 +45516,17 @@
   "secondPos" : 49154,
   "firstEndPos" : 49317,
   "secondEndPos" : 49372
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't play lockscreen SFX if the screen went off due to timeout.",
+  "secondLabel" : "// Don't play lockscreen SFX if the screen went off due to timeout.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 49125,
+  "secondPos" : 49180,
+  "firstEndPos" : 49192,
+  "secondEndPos" : 49247
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -46001,6 +47266,17 @@
   "firstEndPos" : 50821,
   "secondEndPos" : 50876
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*async*/",
+  "secondLabel" : "/*async*/",
+  "firstParentType" : "ClassInstanceCreation",
+  "secondParentType" : "ClassInstanceCreation",
+  "firstPos" : 50822,
+  "secondPos" : 50877,
+  "firstEndPos" : 50831,
+  "secondEndPos" : 50886
+}, {
   "firstType" : "AnonymousClassDeclaration",
   "secondType" : "AnonymousClassDeclaration",
   "firstLabel" : "",
@@ -47651,6 +48927,17 @@
   "firstEndPos" : 52764,
   "secondEndPos" : 52819
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fall through.",
+  "secondLabel" : "// Fall through.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 52787,
+  "secondPos" : 52842,
+  "firstEndPos" : 52803,
+  "secondEndPos" : 52858
+}, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
   "firstLabel" : "",
@@ -47750,6 +49037,17 @@
   "firstEndPos" : 52981,
   "secondEndPos" : 53036
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 52963,
+  "secondPos" : 53018,
+  "firstEndPos" : 52967,
+  "secondEndPos" : 53022
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -47782,6 +49080,17 @@
   "secondPos" : 53044,
   "firstEndPos" : 53008,
   "secondEndPos" : 53063
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 52989,
+  "secondPos" : 53044,
+  "firstEndPos" : 52993,
+  "secondEndPos" : 53048
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -48750,6 +50059,28 @@
   "secondPos" : 54157,
   "firstEndPos" : 54083,
   "secondEndPos" : 54444
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// after succesfully exiting securely, no need to reshow",
+  "secondLabel" : "// after succesfully exiting securely, no need to reshow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53814,
+  "secondPos" : 54175,
+  "firstEndPos" : 53870,
+  "secondEndPos" : 54231
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the keyguard when they've released the lock",
+  "secondLabel" : "// the keyguard when they've released the lock",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53887,
+  "secondPos" : 54248,
+  "firstEndPos" : 53933,
+  "secondEndPos" : 54294
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49840,6 +51171,17 @@
   "firstEndPos" : 54840,
   "secondEndPos" : 55201
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 54822,
+  "secondPos" : 55183,
+  "firstEndPos" : 54826,
+  "secondEndPos" : 55187
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -49872,6 +51214,17 @@
   "secondPos" : 55209,
   "firstEndPos" : 54875,
   "secondEndPos" : 55236
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 54848,
+  "secondPos" : 55209,
+  "firstEndPos" : 54852,
+  "secondEndPos" : 55213
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -50313,6 +51666,39 @@
   "firstEndPos" : 55259,
   "secondEndPos" : 55620
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// there will usually be two of these sent, one as a timeout, and one",
+  "secondLabel" : "// there will usually be two of these sent, one as a timeout, and one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55280,
+  "secondPos" : 55641,
+  "firstEndPos" : 55349,
+  "secondEndPos" : 55710
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// as a result of the callback, so remove any remaining messages from",
+  "secondLabel" : "// as a result of the callback, so remove any remaining messages from",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55366,
+  "secondPos" : 55727,
+  "firstEndPos" : 55435,
+  "secondEndPos" : 55796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the queue",
+  "secondLabel" : "// the queue",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55452,
+  "secondPos" : 55813,
+  "firstEndPos" : 55464,
+  "secondEndPos" : 55825
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -50477,6 +51863,17 @@
   "secondPos" : 55965,
   "firstEndPos" : 55823,
   "secondEndPos" : 56184
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// User feedback for keyguard.",
+  "secondLabel" : "// User feedback for keyguard.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55614,
+  "secondPos" : 55975,
+  "firstEndPos" : 55644,
+  "secondEndPos" : 56005
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -51149,6 +52546,17 @@
   "firstEndPos" : 56108,
   "secondEndPos" : 56469
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Init mAudioManager",
+  "secondLabel" : "// Init mAudioManager",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56123,
+  "secondPos" : 56484,
+  "firstEndPos" : 56144,
+  "secondEndPos" : 56505
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -51512,6 +52920,17 @@
   "firstEndPos" : 56403,
   "secondEndPos" : 56764
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the stream is muted, don't play the sound",
+  "secondLabel" : "// If the stream is muted, don't play the sound",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56433,
+  "secondPos" : 56794,
+  "firstEndPos" : 56480,
+  "secondEndPos" : 56841
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -51743,6 +53162,17 @@
   "firstEndPos" : 56669,
   "secondEndPos" : 57030
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*priortiy*/",
+  "secondLabel" : "/*priortiy*/",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 56669,
+  "secondPos" : 57030,
+  "firstEndPos" : 56681,
+  "secondEndPos" : 57042
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "NumberLiteral",
   "firstLabel" : "0",
@@ -51754,6 +53184,17 @@
   "firstEndPos" : 56684,
   "secondEndPos" : 57045
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*loop*/",
+  "secondLabel" : "/*loop*/",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 56684,
+  "secondPos" : 57045,
+  "firstEndPos" : 56692,
+  "secondEndPos" : 57053
+}, {
   "firstType" : "NumberLiteral",
   "secondType" : "NumberLiteral",
   "firstLabel" : "1.0f",
@@ -51764,6 +53205,17 @@
   "secondPos" : 57055,
   "firstEndPos" : 56698,
   "secondEndPos" : 57059
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*rate*/",
+  "secondLabel" : "/*rate*/",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 56698,
+  "secondPos" : 57059,
+  "firstEndPos" : 56706,
+  "secondEndPos" : 57067
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -52282,6 +53734,17 @@
   "firstEndPos" : 57143,
   "secondEndPos" : 57504
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 57124,
+  "secondPos" : 57485,
+  "firstEndPos" : 57129,
+  "secondEndPos" : 57490
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -52325,6 +53788,17 @@
   "secondPos" : 57513,
   "firstEndPos" : 57162,
   "secondEndPos" : 57523
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 57152,
+  "secondPos" : 57513,
+  "firstEndPos" : 57156,
+  "secondEndPos" : 57517
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -53151,6 +54625,17 @@
   "firstEndPos" : 57818,
   "secondEndPos" : 58179
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do this at the end to not slow down display of the keyguard.",
+  "secondLabel" : "// Do this at the end to not slow down display of the keyguard.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57835,
+  "secondPos" : 58196,
+  "firstEndPos" : 57898,
+  "secondEndPos" : 58259
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -53535,6 +55020,39 @@
   "secondPos" : 58528,
   "firstEndPos" : 58681,
   "secondEndPos" : 59042
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't actually hide the Keyguard at the moment, wait for window",
+  "secondLabel" : "// Don't actually hide the Keyguard at the moment, wait for window",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58185,
+  "secondPos" : 58546,
+  "firstEndPos" : 58251,
+  "secondEndPos" : 58612
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// manager until it tells us it's safe to do so with",
+  "secondLabel" : "// manager until it tells us it's safe to do so with",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58268,
+  "secondPos" : 58629,
+  "firstEndPos" : 58320,
+  "secondEndPos" : 58681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// startKeyguardExitAnimation.",
+  "secondLabel" : "// startKeyguardExitAnimation.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58337,
+  "secondPos" : 58698,
+  "firstEndPos" : 58367,
+  "secondEndPos" : 58728
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -53954,6 +55472,17 @@
   "firstEndPos" : 58869,
   "secondEndPos" : 59230
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 58848,
+  "secondPos" : 59209,
+  "firstEndPos" : 58853,
+  "secondEndPos" : 59214
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -53986,6 +55515,17 @@
   "secondPos" : 59238,
   "firstEndPos" : 58887,
   "secondEndPos" : 59248
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 58877,
+  "secondPos" : 59238,
+  "firstEndPos" : 58881,
+  "secondEndPos" : 59242
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -54558,6 +56098,28 @@
   "secondPos" : 59719,
   "firstEndPos" : 59715,
   "secondEndPos" : 60076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't try to rely on WindowManager - if Keyguard wasn't showing, window",
+  "secondLabel" : "// Don't try to rely on WindowManager - if Keyguard wasn't showing, window",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 59377,
+  "secondPos" : 59738,
+  "firstEndPos" : 59451,
+  "secondEndPos" : 59812
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// manager won't start the exit animation.",
+  "secondLabel" : "// manager won't start the exit animation.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 59468,
+  "secondPos" : 59829,
+  "firstEndPos" : 59510,
+  "secondEndPos" : 59871
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -55185,6 +56747,28 @@
   "secondPos" : 60481,
   "firstEndPos" : 60125,
   "secondEndPos" : 60486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only play \"unlock\" noises if not on a call (since the incall UI",
+  "secondLabel" : "// only play \"unlock\" noises if not on a call (since the incall UI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 60140,
+  "secondPos" : 60501,
+  "firstEndPos" : 60206,
+  "secondEndPos" : 60567
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// disables the keyguard)",
+  "secondLabel" : "// disables the keyguard)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 60219,
+  "secondPos" : 60580,
+  "firstEndPos" : 60244,
+  "secondEndPos" : 60605
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -56088,6 +57672,28 @@
   "firstEndPos" : 62108,
   "secondEndPos" : 62469
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Disable aspects of the system/status/navigation bars that must not be re-enabled by",
+  "secondLabel" : "// Disable aspects of the system/status/navigation bars that must not be re-enabled by",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61055,
+  "secondPos" : 61416,
+  "firstEndPos" : 61141,
+  "secondEndPos" : 61502
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// windows that appear on top, ever",
+  "secondLabel" : "// windows that appear on top, ever",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61154,
+  "secondPos" : 61515,
+  "firstEndPos" : 61189,
+  "secondEndPos" : 61550
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -56175,6 +57781,39 @@
   "secondPos" : 61632,
   "firstEndPos" : 61625,
   "secondEndPos" : 61986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Permanently disable components not available when keyguard is enabled",
+  "secondLabel" : "// Permanently disable components not available when keyguard is enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61289,
+  "secondPos" : 61650,
+  "firstEndPos" : 61361,
+  "secondEndPos" : 61722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (like recents). Temporary enable/disable (e.g. the \"back\" button) are",
+  "secondLabel" : "// (like recents). Temporary enable/disable (e.g. the \"back\" button) are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61378,
+  "secondPos" : 61739,
+  "firstEndPos" : 61450,
+  "secondEndPos" : 61811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// done in KeyguardHostView.",
+  "secondLabel" : "// done in KeyguardHostView.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61467,
+  "secondPos" : 61828,
+  "firstEndPos" : 61495,
+  "secondEndPos" : 61856
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -56902,6 +58541,17 @@
   "firstEndPos" : 62179,
   "secondEndPos" : 62540
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62154,
+  "secondPos" : 62515,
+  "firstEndPos" : 62159,
+  "secondEndPos" : 62520
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -56934,6 +58584,17 @@
   "secondPos" : 62548,
   "firstEndPos" : 62198,
   "secondEndPos" : 62559
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62187,
+  "secondPos" : 62548,
+  "firstEndPos" : 62191,
+  "secondEndPos" : 62552
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -57265,6 +58926,17 @@
   "firstEndPos" : 62468,
   "secondEndPos" : 62829
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62447,
+  "secondPos" : 62808,
+  "firstEndPos" : 62452,
+  "secondEndPos" : 62813
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -57297,6 +58969,17 @@
   "secondPos" : 62837,
   "firstEndPos" : 62495,
   "secondEndPos" : 62856
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62476,
+  "secondPos" : 62837,
+  "firstEndPos" : 62480,
+  "secondEndPos" : 62841
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -57716,6 +59399,17 @@
   "firstEndPos" : 62878,
   "secondEndPos" : 63239
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62846,
+  "secondPos" : 63207,
+  "firstEndPos" : 62851,
+  "secondEndPos" : 63212
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -57748,6 +59442,17 @@
   "secondPos" : 63247,
   "firstEndPos" : 62909,
   "secondEndPos" : 63270
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 62886,
+  "secondPos" : 63247,
+  "firstEndPos" : 62890,
+  "secondEndPos" : 63251
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -58266,6 +59971,17 @@
   "firstEndPos" : 63379,
   "secondEndPos" : 63740
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63350,
+  "secondPos" : 63711,
+  "firstEndPos" : 63355,
+  "secondEndPos" : 63716
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -58298,6 +60014,17 @@
   "secondPos" : 63748,
   "firstEndPos" : 63409,
   "secondEndPos" : 63770
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 63387,
+  "secondPos" : 63748,
+  "firstEndPos" : 63391,
+  "secondEndPos" : 63752
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",

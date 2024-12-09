@@ -10,6 +10,17 @@
   "firstEndPos" : 7580,
   "secondEndPos" : 7661
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2014, The Linux Foundation. All rights reserved.\n * Not a Contribution.\n *\n * Copyright (C) 2012 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2014, The Linux Foundation. All rights reserved.\n * Not a Contribution.\n *\n * Copyright (C) 2012 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 711,
+  "secondEndPos" : 711
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -834,6 +845,28 @@
   "secondPos" : 1582,
   "firstEndPos" : 1583,
   "secondEndPos" : 1583
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// To avoid accidental lockout due to events while the device in in the pocket, ignore",
+  "secondLabel" : "// To avoid accidental lockout due to events while the device in in the pocket, ignore",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1590,
+  "secondPos" : 1590,
+  "firstEndPos" : 1676,
+  "secondEndPos" : 1676
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// any passwords with length less than or equal to this length.",
+  "secondLabel" : "// any passwords with length less than or equal to this length.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1681,
+  "secondPos" : 1681,
+  "firstEndPos" : 1744,
+  "secondEndPos" : 1744
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1660,6 +1693,17 @@
   "firstEndPos" : 2676,
   "secondEndPos" : 2360
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start fresh",
+  "secondLabel" : "// start fresh",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2341,
+  "secondPos" : 2424,
+  "firstEndPos" : 2355,
+  "secondEndPos" : 2438
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -1714,6 +1758,17 @@
   "secondPos" : 2465,
   "firstEndPos" : 2387,
   "secondEndPos" : 2482
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the user is currently locked out, enforce it.",
+  "secondLabel" : "// if the user is currently locked out, enforce it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2412,
+  "secondPos" : 2493,
+  "firstEndPos" : 2463,
+  "secondEndPos" : 2544
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -1967,6 +2022,17 @@
   "secondPos" : 2728,
   "firstEndPos" : 2657,
   "secondEndPos" : 2738
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Allow subclasses to override this behavior",
+  "secondLabel" : "// Allow subclasses to override this behavior",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2682,
+  "secondPos" : 2763,
+  "firstEndPos" : 2727,
+  "secondEndPos" : 2808
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2815,6 +2881,17 @@
   "firstEndPos" : 3343,
   "secondEndPos" : 3424
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Override this if you have a different string for \"wrong password\"\n     *\n     * Note that PIN/PUK have their own implementation of verifyPasswordAndUnlock and so don't need this\n     */",
+  "secondLabel" : "/*\n     * Override this if you have a different string for \"wrong password\"\n     *\n     * Note that PIN/PUK have their own implementation of verifyPasswordAndUnlock and so don't need this\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3368,
+  "secondPos" : 3449,
+  "firstEndPos" : 3563,
+  "secondEndPos" : 3644
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3375,6 +3452,28 @@
   "secondPos" : 4061,
   "firstEndPos" : 4609,
   "secondEndPos" : 4690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to avoid accidental lockout, only count attempts that are long enough to be a",
+  "secondLabel" : "// to avoid accidental lockout, only count attempts that are long enough to be a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3998,
+  "secondPos" : 4079,
+  "firstEndPos" : 4078,
+  "secondEndPos" : 4159
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// real password. This may require some tweaking.",
+  "secondLabel" : "// real password. This may require some tweaking.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4095,
+  "secondPos" : 4176,
+  "firstEndPos" : 4144,
+  "secondEndPos" : 4225
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4036,6 +4135,17 @@
   "firstEndPos" : 4683,
   "secondEndPos" : 4764
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* animate */",
+  "secondLabel" : "/* animate */",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 4684,
+  "secondPos" : 4765,
+  "firstEndPos" : 4697,
+  "secondEndPos" : 4778
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4277,6 +4387,17 @@
   "secondPos" : 4961,
   "firstEndPos" : 4887,
   "secondEndPos" : 4968
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Prevent user from using the PIN/Password entry until scheduled deadline.",
+  "secondLabel" : "// Prevent user from using the PIN/Password entry until scheduled deadline.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4895,
+  "secondPos" : 4976,
+  "firstEndPos" : 4970,
+  "secondEndPos" : 5051
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6653,6 +6774,17 @@
   "secondPos" : 6812,
   "firstEndPos" : 6740,
   "secondEndPos" : 6821
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Cause a VIRTUAL_KEY vibration",
+  "secondLabel" : "// Cause a VIRTUAL_KEY vibration",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6753,
+  "secondPos" : 6834,
+  "firstEndPos" : 6785,
+  "secondEndPos" : 6866
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

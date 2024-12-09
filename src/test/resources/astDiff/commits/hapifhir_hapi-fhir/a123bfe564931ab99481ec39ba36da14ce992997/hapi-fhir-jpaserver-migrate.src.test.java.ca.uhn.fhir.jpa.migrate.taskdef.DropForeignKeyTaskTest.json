@@ -1319,6 +1319,17 @@
   "firstEndPos" : 1100,
   "secondEndPos" : 1109
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional calls don't crash",
+  "secondLabel" : "// Make sure additional calls don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1108,
+  "secondPos" : 1117,
+  "firstEndPos" : 1149,
+  "secondEndPos" : 1158
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

@@ -10,6 +10,17 @@
   "firstEndPos" : 3370,
   "secondEndPos" : 3709
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2002-2015 \"Neo Technology,\"\n * Network Engine for Objects in Lund AB [http://neotechnology.com]\n *\n * This file is part of Neo4j.\n *\n * Neo4j is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2002-2015 \"Neo Technology,\"\n * Network Engine for Objects in Lund AB [http://neotechnology.com]\n *\n * This file is part of Neo4j.\n *\n * Neo4j is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 795,
+  "secondEndPos" : 795
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -174,6 +185,17 @@
   "secondPos" : 1054,
   "firstEndPos" : 1130,
   "secondEndPos" : 1132
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1052,
+  "secondPos" : 1054,
+  "firstEndPos" : 1063,
+  "secondEndPos" : 1065
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -779,6 +801,17 @@
   "secondPos" : 1755,
   "firstEndPos" : 1825,
   "secondEndPos" : 1811
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1769,
+  "secondPos" : 1755,
+  "firstEndPos" : 1776,
+  "secondEndPos" : 1762
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

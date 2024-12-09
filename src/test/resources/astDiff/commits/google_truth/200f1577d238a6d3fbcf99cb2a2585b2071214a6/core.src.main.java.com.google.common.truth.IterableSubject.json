@@ -10,6 +10,17 @@
   "firstEndPos" : 18588,
   "secondEndPos" : 19257
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2011 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2011 Google, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 595,
+  "secondEndPos" : 595
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -527,6 +538,17 @@
   "firstEndPos" : 1539,
   "secondEndPos" : 1539
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1523,
+  "secondPos" : 1523,
+  "firstEndPos" : 1528,
+  "secondEndPos" : 1528
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Iterable",
@@ -559,6 +581,17 @@
   "secondPos" : 1556,
   "firstEndPos" : 1583,
   "secondEndPos" : 1583
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1556,
+  "secondPos" : 1556,
+  "firstEndPos" : 1563,
+  "secondEndPos" : 1563
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2143,6 +2176,50 @@
   "secondPos" : 2402,
   "firstEndPos" : 2780,
   "secondEndPos" : 2780
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(kak): \"Not true that <[]> is not empty\" doesn't really need the <[]>,",
+  "secondLabel" : "// TODO(kak): \"Not true that <[]> is not empty\" doesn't really need the <[]>,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2410,
+  "secondPos" : 2410,
+  "firstEndPos" : 2487,
+  "secondEndPos" : 2487
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since it's empty. But would the bulkier \"the subject\" really be better?",
+  "secondLabel" : "// since it's empty. But would the bulkier \"the subject\" really be better?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2494,
+  "secondPos" : 2494,
+  "firstEndPos" : 2568,
+  "secondEndPos" : 2568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// At best, we could *replace* <[]> with a given label (rather than supplementing it).",
+  "secondLabel" : "// At best, we could *replace* <[]> with a given label (rather than supplementing it).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2575,
+  "secondPos" : 2575,
+  "firstEndPos" : 2661,
+  "secondEndPos" : 2661
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Perhaps the right failure message is just \"<[]> should not have been empty\"",
+  "secondLabel" : "// Perhaps the right failure message is just \"<[]> should not have been empty\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2668,
+  "secondPos" : 2668,
+  "firstEndPos" : 2746,
+  "secondEndPos" : 2746
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5312,6 +5389,28 @@
   "firstEndPos" : 5170,
   "secondEndPos" : 5170
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should be safe to assume that any Iterable implementing Collection isn't a one-shot",
+  "secondLabel" : "// Should be safe to assume that any Iterable implementing Collection isn't a one-shot",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4990,
+  "secondPos" : 4990,
+  "firstEndPos" : 5076,
+  "secondEndPos" : 5076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// iterable, right? I sure hope so.",
+  "secondLabel" : "// iterable, right? I sure hope so.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5083,
+  "secondPos" : 5083,
+  "firstEndPos" : 5118,
+  "secondEndPos" : 5118
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5454,6 +5553,39 @@
   "secondPos" : 5176,
   "firstEndPos" : 5475,
   "secondEndPos" : 5475
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Would really like to use a HashSet here, but that would mean this would fail for elements",
+  "secondLabel" : "// Would really like to use a HashSet here, but that would mean this would fail for elements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5184,
+  "secondPos" : 5184,
+  "firstEndPos" : 5276,
+  "secondEndPos" : 5276
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that don't implement hashCode correctly (or even throw an exception from it), where using",
+  "secondLabel" : "// that don't implement hashCode correctly (or even throw an exception from it), where using",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5283,
+  "secondPos" : 5283,
+  "firstEndPos" : 5375,
+  "secondEndPos" : 5375
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Iterables.contains would not fail.",
+  "secondLabel" : "// Iterables.contains would not fail.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5382,
+  "secondPos" : 5382,
+  "firstEndPos" : 5419,
+  "secondEndPos" : 5419
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5905,6 +6037,17 @@
   "secondPos" : 5876,
   "firstEndPos" : 5893,
   "secondEndPos" : 5893
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5876,
+  "secondPos" : 5876,
+  "firstEndPos" : 5881,
+  "secondEndPos" : 5881
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6411,6 +6554,17 @@
   "secondPos" : 6438,
   "firstEndPos" : 6455,
   "secondEndPos" : 6455
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6438,
+  "secondPos" : 6438,
+  "firstEndPos" : 6443,
+  "secondEndPos" : 6443
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7435,6 +7589,17 @@
   "firstEndPos" : 6994,
   "secondEndPos" : 6994
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// step through the expected elements...",
+  "secondLabel" : "// step through the expected elements...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7000,
+  "secondPos" : 7000,
+  "firstEndPos" : 7040,
+  "secondEndPos" : 7040
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -7710,6 +7875,28 @@
   "firstEndPos" : 7412,
   "secondEndPos" : 7412
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we find the element in the actual list...",
+  "secondLabel" : "// if we find the element in the actual list...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7135,
+  "secondPos" : 7135,
+  "firstEndPos" : 7182,
+  "secondEndPos" : 7182
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// drain all the elements that come before that element into actualNotInOrder",
+  "secondLabel" : "// drain all the elements that come before that element into actualNotInOrder",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7191,
+  "secondPos" : 7191,
+  "firstEndPos" : 7268,
+  "secondEndPos" : 7268
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7786,6 +7973,17 @@
   "secondPos" : 7316,
   "firstEndPos" : 7321,
   "secondEndPos" : 7321
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and remove the element from the actual list",
+  "secondLabel" : "// and remove the element from the actual list",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7332,
+  "secondPos" : 7332,
+  "firstEndPos" : 7378,
+  "secondEndPos" : 7378
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7875,6 +8073,17 @@
   "firstEndPos" : 7726,
   "secondEndPos" : 7726
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise try removing it from actualNotInOrder...",
+  "secondLabel" : "// otherwise try removing it from actualNotInOrder...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7420,
+  "secondPos" : 7420,
+  "firstEndPos" : 7473,
+  "secondEndPos" : 7473
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7963,6 +8172,17 @@
   "firstEndPos" : 7605,
   "secondEndPos" : 7605
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if it was in actualNotInOrder, we're not in order",
+  "secondLabel" : "// if it was in actualNotInOrder, we're not in order",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7516,
+  "secondPos" : 7516,
+  "firstEndPos" : 7568,
+  "secondEndPos" : 7568
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8028,6 +8248,17 @@
   "secondPos" : 7611,
   "firstEndPos" : 7718,
   "secondEndPos" : 7718
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if it's not in actualNotInOrder, we're missing an expected element",
+  "secondLabel" : "// if it's not in actualNotInOrder, we're missing an expected element",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7613,
+  "secondPos" : 7613,
+  "firstEndPos" : 7682,
+  "secondEndPos" : 7682
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8105,6 +8336,17 @@
   "secondPos" : 7705,
   "firstEndPos" : 7706,
   "secondEndPos" : 7706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we have any missing expected elements, fail",
+  "secondLabel" : "// if we have any missing expected elements, fail",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7737,
+  "secondPos" : 7737,
+  "firstEndPos" : 7786,
+  "secondEndPos" : 7786
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9085,6 +9327,17 @@
   "firstEndPos" : 8681,
   "secondEndPos" : 8681
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8664,
+  "secondPos" : 8664,
+  "firstEndPos" : 8669,
+  "secondEndPos" : 8669
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " inOrder()",
@@ -9888,6 +10141,17 @@
   "firstEndPos" : 9294,
   "secondEndPos" : 9294
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9278,
+  "secondPos" : 9278,
+  "firstEndPos" : 9283,
+  "secondEndPos" : 9283
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Iterable",
@@ -9942,6 +10206,17 @@
   "secondPos" : 9439,
   "firstEndPos" : 9456,
   "secondEndPos" : 9456
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9439,
+  "secondPos" : 9439,
+  "firstEndPos" : 9444,
+  "secondEndPos" : 9444
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -10790,6 +11065,17 @@
   "firstEndPos" : 10173,
   "secondEndPos" : 10173
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Step through both iterators comparing elements pairwise.",
+  "secondLabel" : "// Step through both iterators comparing elements pairwise.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10182,
+  "secondPos" : 10182,
+  "firstEndPos" : 10241,
+  "secondEndPos" : 10241
+}, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
   "firstLabel" : "",
@@ -11120,6 +11406,50 @@
   "firstEndPos" : 10399,
   "secondEndPos" : 10399
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As soon as we encounter a pair of elements that differ, we know that inOrder()",
+  "secondLabel" : "// As soon as we encounter a pair of elements that differ, we know that inOrder()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10410,
+  "secondPos" : 10410,
+  "firstEndPos" : 10491,
+  "secondEndPos" : 10491
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cannot succeed, so we can check the rest of the elements more normally.",
+  "secondLabel" : "// cannot succeed, so we can check the rest of the elements more normally.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10498,
+  "secondPos" : 10498,
+  "firstEndPos" : 10572,
+  "secondEndPos" : 10572
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since any previous pairs of elements we iterated over were equal, they have no",
+  "secondLabel" : "// Since any previous pairs of elements we iterated over were equal, they have no",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10579,
+  "secondPos" : 10579,
+  "firstEndPos" : 10660,
+  "secondEndPos" : 10660
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// effect on the result now.",
+  "secondLabel" : "// effect on the result now.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10667,
+  "secondPos" : 10667,
+  "firstEndPos" : 10695,
+  "secondEndPos" : 10695
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11240,6 +11570,17 @@
   "secondPos" : 10754,
   "firstEndPos" : 12742,
   "secondEndPos" : 12742
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Missing elements; elements that are not missing will be removed as we iterate.",
+  "secondLabel" : "// Missing elements; elements that are not missing will be removed as we iterate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10764,
+  "secondPos" : 10764,
+  "firstEndPos" : 10845,
+  "secondEndPos" : 10845
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11538,6 +11879,17 @@
   "firstEndPos" : 10989,
   "secondEndPos" : 10989
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Extra elements that the subject had but shouldn't have.",
+  "secondLabel" : "// Extra elements that the subject had but shouldn't have.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11001,
+  "secondPos" : 11001,
+  "firstEndPos" : 11059,
+  "secondEndPos" : 11059
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11669,6 +12021,28 @@
   "secondPos" : 11101,
   "firstEndPos" : 11113,
   "secondEndPos" : 11113
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove all actual elements from missing, and add any that weren't in missing",
+  "secondLabel" : "// Remove all actual elements from missing, and add any that weren't in missing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11126,
+  "secondPos" : 11126,
+  "firstEndPos" : 11205,
+  "secondEndPos" : 11205
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to extra.",
+  "secondLabel" : "// to extra.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11214,
+  "secondPos" : 11214,
+  "firstEndPos" : 11226,
+  "secondEndPos" : 11226
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12209,6 +12583,39 @@
   "firstEndPos" : 11466,
   "secondEndPos" : 11466
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fail if there are either missing or extra elements.",
+  "secondLabel" : "// Fail if there are either missing or extra elements.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11500,
+  "secondPos" : 11500,
+  "firstEndPos" : 11554,
+  "secondEndPos" : 11554
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(kak): Possible enhancement: Include \"[1 copy]\" if the element does appear in",
+  "secondLabel" : "// TODO(kak): Possible enhancement: Include \"[1 copy]\" if the element does appear in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11564,
+  "secondPos" : 11564,
+  "firstEndPos" : 11648,
+  "secondEndPos" : 11648
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the subject but not enough times. Similarly for unexpected extra items.",
+  "secondLabel" : "// the subject but not enough times. Similarly for unexpected extra items.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11657,
+  "secondPos" : 11657,
+  "firstEndPos" : 11731,
+  "secondEndPos" : 11731
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12384,6 +12791,17 @@
   "secondPos" : 11798,
   "firstEndPos" : 12224,
   "secondEndPos" : 12224
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Subject is both missing required elements and contains extra elements",
+  "secondLabel" : "// Subject is both missing required elements and contains extra elements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11812,
+  "secondPos" : 11812,
+  "firstEndPos" : 11884,
+  "secondEndPos" : 11884
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12946,6 +13364,17 @@
   "firstEndPos" : 12547,
   "secondEndPos" : 12547
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since we know the iterables were not in the same order, inOrder() can just fail.",
+  "secondLabel" : "// Since we know the iterables were not in the same order, inOrder() can just fail.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12569,
+  "secondPos" : 12569,
+  "firstEndPos" : 12652,
+  "secondEndPos" : 12652
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -13011,6 +13440,39 @@
   "secondPos" : 12724,
   "firstEndPos" : 12732,
   "secondEndPos" : 12732
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Here,  we must have reached the end of one of the iterators without finding any",
+  "secondLabel" : "// Here,  we must have reached the end of one of the iterators without finding any",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12754,
+  "secondPos" : 12754,
+  "firstEndPos" : 12836,
+  "secondEndPos" : 12836
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pairs of elements that differ. If the actual iterator still has elements, they're",
+  "secondLabel" : "// pairs of elements that differ. If the actual iterator still has elements, they're",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12841,
+  "secondPos" : 12841,
+  "firstEndPos" : 12925,
+  "secondEndPos" : 12925
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// extras. If the required iterator has elements, they're missing elements.",
+  "secondLabel" : "// extras. If the required iterator has elements, they're missing elements.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12930,
+  "secondPos" : 12930,
+  "firstEndPos" : 13005,
+  "secondEndPos" : 13005
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13518,6 +13980,28 @@
   "firstEndPos" : 13450,
   "secondEndPos" : 13450
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If neither iterator has elements, we reached the end and the elements were in",
+  "secondLabel" : "// If neither iterator has elements, we reached the end and the elements were in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13464,
+  "secondPos" : 13464,
+  "firstEndPos" : 13544,
+  "secondEndPos" : 13544
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// order, so inOrder() can just succeed.",
+  "secondLabel" : "// order, so inOrder() can just succeed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13549,
+  "secondPos" : 13549,
+  "firstEndPos" : 13589,
+  "secondEndPos" : 13589
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -13595,6 +14079,17 @@
   "firstEndPos" : 13720,
   "secondEndPos" : 13720
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13678,
+  "secondPos" : 13678,
+  "firstEndPos" : 13684,
+  "secondEndPos" : 13684
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "verb",
@@ -13627,6 +14122,17 @@
   "secondPos" : 13726,
   "firstEndPos" : 13796,
   "secondEndPos" : 13796
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13726,
+  "secondPos" : 13726,
+  "firstEndPos" : 13732,
+  "secondEndPos" : 13732
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13661,6 +14167,17 @@
   "firstEndPos" : 13863,
   "secondEndPos" : 13863
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13802,
+  "secondPos" : 13802,
+  "firstEndPos" : 13808,
+  "secondEndPos" : 13808
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "failVerb",
@@ -13694,6 +14211,17 @@
   "firstEndPos" : 13932,
   "secondEndPos" : 13932
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13869,
+  "secondPos" : 13869,
+  "firstEndPos" : 13875,
+  "secondEndPos" : 13875
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "actual",
@@ -13726,6 +14254,17 @@
   "secondPos" : 13938,
   "firstEndPos" : 13993,
   "secondEndPos" : 13993
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13938,
+  "secondPos" : 13938,
+  "firstEndPos" : 13944,
+  "secondEndPos" : 13944
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -16752,6 +17291,17 @@
   "firstEndPos" : 16156,
   "secondEndPos" : 16156
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16079,
+  "secondPos" : 16079,
+  "firstEndPos" : 16086,
+  "secondEndPos" : 16086
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ClassCastException",
@@ -16784,6 +17334,17 @@
   "secondPos" : 16162,
   "firstEndPos" : 16213,
   "secondEndPos" : 16213
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16162,
+  "secondPos" : 16162,
+  "firstEndPos" : 16169,
+  "secondEndPos" : 16169
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17049,6 +17610,17 @@
   "firstEndPos" : 16534,
   "secondEndPos" : 16534
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16457,
+  "secondPos" : 16457,
+  "firstEndPos" : 16464,
+  "secondEndPos" : 16464
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ClassCastException",
@@ -17081,6 +17653,17 @@
   "secondPos" : 16540,
   "firstEndPos" : 16591,
   "secondEndPos" : 16591
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16540,
+  "secondPos" : 16540,
+  "firstEndPos" : 16547,
+  "secondEndPos" : 16547
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17874,6 +18457,17 @@
   "firstEndPos" : 17201,
   "secondEndPos" : 17570
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17124,
+  "secondPos" : 17493,
+  "firstEndPos" : 17131,
+  "secondEndPos" : 17500
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ClassCastException",
@@ -17906,6 +18500,17 @@
   "secondPos" : 17576,
   "firstEndPos" : 17258,
   "secondEndPos" : 17627
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17207,
+  "secondPos" : 17576,
+  "firstEndPos" : 17214,
+  "secondEndPos" : 17583
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18171,6 +18776,17 @@
   "firstEndPos" : 17658,
   "secondEndPos" : 18609
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17581,
+  "secondPos" : 18532,
+  "firstEndPos" : 17588,
+  "secondEndPos" : 18539
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ClassCastException",
@@ -18203,6 +18819,17 @@
   "secondPos" : 18615,
   "firstEndPos" : 17715,
   "secondEndPos" : 18666
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17664,
+  "secondPos" : 18615,
+  "firstEndPos" : 17671,
+  "secondEndPos" : 18622
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

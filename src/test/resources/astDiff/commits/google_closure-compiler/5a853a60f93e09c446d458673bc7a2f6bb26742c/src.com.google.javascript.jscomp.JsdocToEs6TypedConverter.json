@@ -10,6 +10,17 @@
   "firstEndPos" : 3415,
   "secondEndPos" : 11303
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -229,6 +240,17 @@
   "secondPos" : 2284,
   "firstEndPos" : 1300,
   "secondEndPos" : 2395
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1189,
+  "secondPos" : 2284,
+  "firstEndPos" : 1196,
+  "secondEndPos" : 2291
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1715,6 +1737,17 @@
   "firstEndPos" : 2164,
   "secondEndPos" : 4665
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2123,
+  "secondPos" : 4624,
+  "firstEndPos" : 2130,
+  "secondEndPos" : 4631
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "isAssign",
@@ -1934,6 +1967,17 @@
   "secondPos" : 3311,
   "firstEndPos" : 2233,
   "secondEndPos" : 3328
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Allow functional-style Iterables.transform over collections of nodes.",
+  "secondLabel" : "// Allow functional-style Iterables.transform over collections of nodes.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2219,
+  "secondPos" : 4733,
+  "firstEndPos" : 2291,
+  "secondEndPos" : 4805
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -3145,6 +3189,17 @@
   "firstEndPos" : 2758,
   "secondEndPos" : 5300
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Modify the primary AST to represent a function parameter as a",
+  "secondLabel" : "// Modify the primary AST to represent a function parameter as a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2651,
+  "secondPos" : 3746,
+  "firstEndPos" : 2715,
+  "secondEndPos" : 3810
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3265,6 +3320,17 @@
   "secondPos" : 5255,
   "firstEndPos" : 2733,
   "secondEndPos" : 5273
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// REST node, if the type indicates it is a rest parameter.",
+  "secondLabel" : "// REST node, if the type indicates it is a rest parameter.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2728,
+  "secondPos" : 3823,
+  "firstEndPos" : 2787,
+  "secondEndPos" : 3882
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -3871,6 +3937,17 @@
   "firstEndPos" : 3158,
   "secondEndPos" : 5716
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3052,
+  "secondPos" : 5608,
+  "firstEndPos" : 3059,
+  "secondEndPos" : 5615
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the root node of a TypeDeclaration AST, or null if no type is",
@@ -3980,6 +4057,17 @@
   "secondPos" : 4251,
   "firstEndPos" : 3164,
   "secondEndPos" : 4259
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(dimvar): Eventually, we want to just parse types to the new",
+  "secondLabel" : "// TODO(dimvar): Eventually, we want to just parse types to the new",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3167,
+  "secondPos" : 5729,
+  "firstEndPos" : 3234,
+  "secondEndPos" : 5796
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
@@ -4112,6 +4200,17 @@
   "secondPos" : 4327,
   "firstEndPos" : 3248,
   "secondEndPos" : 4343
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// representation directly, and delete this function.",
+  "secondLabel" : "// representation directly, and delete this function.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3237,
+  "secondPos" : 5801,
+  "firstEndPos" : 3290,
+  "secondEndPos" : 5854
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4718,6 +4817,17 @@
   "firstEndPos" : 3463,
   "secondEndPos" : 6039
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for function types that don't declare a return type",
+  "secondLabel" : "// for function types that don't declare a return type",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 3465,
+  "secondPos" : 6041,
+  "firstEndPos" : 3519,
+  "secondEndPos" : 6095
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4827,6 +4937,17 @@
   "secondPos" : 6196,
   "firstEndPos" : 3622,
   "secondEndPos" : 6206
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(alexeagle): non-nullable is assumed to be the default",
+  "secondLabel" : "// TODO(alexeagle): non-nullable is assumed to be the default",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 3632,
+  "secondPos" : 6218,
+  "firstEndPos" : 3693,
+  "secondEndPos" : 6279
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -6422,6 +6543,39 @@
   "secondPos" : 7466,
   "firstEndPos" : 4823,
   "secondEndPos" : 7473
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For now, our ES6_TYPED language doesn't support nullable",
+  "secondLabel" : "// For now, our ES6_TYPED language doesn't support nullable",
+  "firstParentType" : "ConditionalExpression",
+  "secondParentType" : "ConditionalExpression",
+  "firstPos" : 4838,
+  "secondPos" : 7490,
+  "firstEndPos" : 4897,
+  "secondEndPos" : 7549
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we drop it before building the tree.",
+  "secondLabel" : "// so we drop it before building the tree.",
+  "firstParentType" : "ConditionalExpression",
+  "secondParentType" : "ConditionalExpression",
+  "firstPos" : 4910,
+  "secondPos" : 7564,
+  "firstEndPos" : 4952,
+  "secondEndPos" : 7606
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// : nullable(convertTypeNodeAST(child));",
+  "secondLabel" : "// : nullable(convertTypeNodeAST(child));",
+  "firstParentType" : "ConditionalExpression",
+  "secondParentType" : "ConditionalExpression",
+  "firstPos" : 4965,
+  "secondPos" : 7621,
+  "firstEndPos" : 5006,
+  "secondEndPos" : 7662
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -10570,6 +10724,28 @@
   "firstEndPos" : 7758,
   "secondEndPos" : 10532
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(alexeagle): keep the constructor signatures on the tree, and emit them following",
+  "secondLabel" : "// TODO(alexeagle): keep the constructor signatures on the tree, and emit them following",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7568,
+  "secondPos" : 10338,
+  "firstEndPos" : 7656,
+  "secondEndPos" : 10426
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the syntax in TypeScript 1.4 spec, section 3.7.8 Constructor Type Literals",
+  "secondLabel" : "// the syntax in TypeScript 1.4 spec, section 3.7.8 Constructor Type Literals",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7669,
+  "secondPos" : 10441,
+  "firstEndPos" : 7746,
+  "secondEndPos" : 10518
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10635,6 +10811,28 @@
   "secondPos" : 10559,
   "firstEndPos" : 7951,
   "secondEndPos" : 10731
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not expressible in TypeScript syntax, so we omit them from the tree.",
+  "secondLabel" : "// Not expressible in TypeScript syntax, so we omit them from the tree.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7799,
+  "secondPos" : 10575,
+  "firstEndPos" : 7870,
+  "secondEndPos" : 10646
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// They could be added as properties on the result node.",
+  "secondLabel" : "// They could be added as properties on the result node.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7883,
+  "secondPos" : 10661,
+  "firstEndPos" : 7939,
+  "secondEndPos" : 10717
 }, {
   "firstType" : "Block",
   "secondType" : "Block",

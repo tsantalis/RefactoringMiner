@@ -10,6 +10,17 @@
   "firstEndPos" : 4050,
   "secondEndPos" : 4057
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2014 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2014 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 613,
+  "secondEndPos" : 613
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -3772,6 +3783,17 @@
   "firstEndPos" : 3820,
   "secondEndPos" : 3826
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// @formatter:off",
+  "secondLabel" : "// @formatter:off",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3568,
+  "secondPos" : 3574,
+  "firstEndPos" : 3585,
+  "secondEndPos" : 3591
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4431,6 +4453,17 @@
   "secondPos" : 3780,
   "firstEndPos" : 3777,
   "secondEndPos" : 3783
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// @formatter:on",
+  "secondLabel" : "// @formatter:on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3798,
+  "secondPos" : 3804,
+  "firstEndPos" : 3814,
+  "secondEndPos" : 3820
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

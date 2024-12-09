@@ -10,6 +10,17 @@
   "firstEndPos" : 3630,
   "secondEndPos" : 3644
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2014 Brett Wooldridge\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2014 Brett Wooldridge\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -284,6 +295,17 @@
   "secondPos" : 1094,
   "firstEndPos" : 1104,
   "secondEndPos" : 1118
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1080,
+  "secondPos" : 1094,
+  "firstEndPos" : 1087,
+  "secondEndPos" : 1101
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2496,6 +2518,17 @@
   "firstEndPos" : 2742,
   "secondEndPos" : 2756
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we can reserve it, close it",
+  "secondLabel" : "// If we can reserve it, close it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2296,
+  "secondPos" : 2310,
+  "firstEndPos" : 2329,
+  "secondEndPos" : 2343
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2704,6 +2737,17 @@
   "secondPos" : 2544,
   "firstEndPos" : 2728,
   "secondEndPos" : 2742
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// else the connection is \"in-use\" and we mark it for eviction by pool.releaseConnection() or the housekeeper",
+  "secondLabel" : "// else the connection is \"in-use\" and we mark it for eviction by pool.releaseConnection() or the housekeeper",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2550,
+  "secondPos" : 2564,
+  "firstEndPos" : 2659,
+  "secondEndPos" : 2673
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3045,6 +3089,17 @@
   "secondPos" : 2947,
   "firstEndPos" : 2946,
   "secondEndPos" : 2960
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@inheritDoc",
+  "secondLabel" : "@inheritDoc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2933,
+  "secondPos" : 2947,
+  "firstEndPos" : 2944,
+  "secondEndPos" : 2958
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 33821,
   "secondEndPos" : 35460
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * SonarQube, open source software quality management tool.\n * Copyright (C) 2008-2014 SonarSource\n * mailto:contact AT sonarsource DOT com\n *\n * SonarQube is free software; you can redistribute it and/or\n * modify it under the terms of the GNU Lesser General Public\n * License as published by the Free Software Foundation; either\n * version 3 of the License, or (at your option) any later version.\n *\n * SonarQube is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with this program; if not, write to the Free Software Foundation,\n * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n */",
+  "secondLabel" : "/*\n * SonarQube, open source software quality management tool.\n * Copyright (C) 2008-2014 SonarSource\n * mailto:contact AT sonarsource DOT com\n *\n * SonarQube is free software; you can redistribute it and/or\n * modify it under the terms of the GNU Lesser General Public\n * License as published by the Free Software Foundation; either\n * version 3 of the License, or (at your option) any later version.\n *\n * SonarQube is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n * Lesser General Public License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public License\n * along with this program; if not, write to the Free Software Foundation,\n * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 883,
+  "secondEndPos" : 883
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -18753,6 +18764,17 @@
   "secondPos" : 11717,
   "firstEndPos" : 14533,
   "secondEndPos" : 15054
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Project amd module already exists",
+  "secondLabel" : "// Project amd module already exists",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11202,
+  "secondPos" : 11723,
+  "firstEndPos" : 11238,
+  "secondEndPos" : 11759
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -56197,6 +56219,17 @@
   "secondPos" : 31288,
   "firstEndPos" : 30772,
   "secondEndPos" : 31293
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Module B is now a sub module of module A",
+  "secondLabel" : "// Module B is now a sub module of module A",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30781,
+  "secondPos" : 31302,
+  "firstEndPos" : 30824,
+  "secondEndPos" : 31345
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

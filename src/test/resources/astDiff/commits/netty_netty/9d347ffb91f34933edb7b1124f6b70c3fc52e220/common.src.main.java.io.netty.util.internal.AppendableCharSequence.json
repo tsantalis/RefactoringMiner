@@ -10,6 +10,17 @@
   "firstEndPos" : 4074,
   "secondEndPos" : 5030
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2013 The Netty Project\n *\n * The Netty Project licenses this file to you under the Apache License,\n * version 2.0 (the \"License\"); you may not use this file except in compliance\n * with the License. You may obtain a copy of the License at:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2013 The Netty Project\n *\n * The Netty Project licenses this file to you under the Apache License,\n * version 2.0 (the \"License\"); you may not use this file except in compliance\n * with the License. You may obtain a copy of the License at:\n *\n *   http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 634,
+  "secondEndPos" : 634
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1704,6 +1715,17 @@
   "firstEndPos" : 1693,
   "secondEndPos" : 4298
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// double it",
+  "secondLabel" : "// double it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1707,
+  "secondPos" : 4308,
+  "firstEndPos" : 1719,
+  "secondEndPos" : 4320
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3222,6 +3244,17 @@
   "firstEndPos" : 2808,
   "secondEndPos" : 3141
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Optimize append operations via array copy",
+  "secondLabel" : "// Optimize append operations via array copy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2533,
+  "secondPos" : 2866,
+  "firstEndPos" : 2577,
+  "secondEndPos" : 2910
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3981,6 +4014,17 @@
   "firstEndPos" : 2989,
   "secondEndPos" : 3322
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2959,
+  "secondPos" : 3292,
+  "firstEndPos" : 2964,
+  "secondEndPos" : 3297
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AppendableCharSequence",
@@ -4332,6 +4376,17 @@
   "secondPos" : 3611,
   "firstEndPos" : 3292,
   "secondEndPos" : 3625
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3278,
+  "secondPos" : 3611,
+  "firstEndPos" : 3283,
+  "secondEndPos" : 3616
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5102,6 +5157,17 @@
   "secondPos" : 4657,
   "firstEndPos" : 3899,
   "secondEndPos" : 4855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// double capacity until it is big enough",
+  "secondLabel" : "// double capacity until it is big enough",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3715,
+  "secondPos" : 4671,
+  "firstEndPos" : 3756,
+  "secondEndPos" : 4712
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

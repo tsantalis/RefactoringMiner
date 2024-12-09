@@ -1847,6 +1847,17 @@
   "firstEndPos" : 1642,
   "secondEndPos" : 1642
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cache",
+  "secondLabel" : "// cache",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1646,
+  "secondPos" : 1646,
+  "firstEndPos" : 1654,
+  "secondEndPos" : 1654
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -5400,6 +5411,17 @@
   "firstEndPos" : 3311,
   "secondEndPos" : 3311
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cachedColor = view.getResources().getColor(R.color.nav_track);",
+  "secondLabel" : "// cachedColor = view.getResources().getColor(R.color.nav_track);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3316,
+  "secondPos" : 3316,
+  "firstEndPos" : 3381,
+  "secondEndPos" : 3381
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6004,6 +6026,17 @@
   "secondPos" : 3709,
   "firstEndPos" : 3722,
   "secondEndPos" : 3722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\t\tcachedColor = req.getIntPropertyValue(rrs.PROPS.R_COLOR);",
+  "secondLabel" : "//\t\t\t\t\tcachedColor = req.getIntPropertyValue(rrs.PROPS.R_COLOR);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3727,
+  "secondPos" : 3727,
+  "firstEndPos" : 3791,
+  "secondEndPos" : 3791
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8996,6 +9029,28 @@
   "secondPos" : 5326,
   "firstEndPos" : 5341,
   "secondEndPos" : 5341
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\tcoloredArrowUp = Bitmap.createScaledBitmap(originalArrowUp, originalArrowUp.getWidth() * 3 / 4,\t",
+  "secondLabel" : "//\t\t\t\tcoloredArrowUp = Bitmap.createScaledBitmap(originalArrowUp, originalArrowUp.getWidth() * 3 / 4,\t",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5343,
+  "secondPos" : 5343,
+  "firstEndPos" : 5445,
+  "secondEndPos" : 5445
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\t\t\toriginalArrowUp.getHeight() * 3 / 4, true);",
+  "secondLabel" : "//\t\t\t\t\t\toriginalArrowUp.getHeight() * 3 / 4, true);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5446,
+  "secondPos" : 5446,
+  "firstEndPos" : 5497,
+  "secondEndPos" : 5497
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13011,6 +13066,17 @@
   "secondPos" : 7154,
   "firstEndPos" : 7143,
   "secondEndPos" : 7163
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// int len = (int) (distSegment / pxStep);",
+  "secondLabel" : "// int len = (int) (distSegment / pxStep);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7158,
+  "secondPos" : 7178,
+  "firstEndPos" : 7200,
+  "secondEndPos" : 7220
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -30326,6 +30392,17 @@
   "firstEndPos" : 15020,
   "secondEndPos" : 14503
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// action point",
+  "secondLabel" : "// action point",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14049,
+  "secondPos" : 14226,
+  "firstEndPos" : 14064,
+  "secondEndPos" : 14241
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -30424,6 +30501,17 @@
   "secondPos" : 14274,
   "firstEndPos" : 14935,
   "secondEndPos" : 14399
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// put some points in front",
+  "secondLabel" : "// put some points in front",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14153,
+  "secondPos" : 14749,
+  "firstEndPos" : 14180,
+  "secondEndPos" : 14776
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -33427,6 +33515,17 @@
   "secondPos" : 15770,
   "firstEndPos" : 15436,
   "secondEndPos" : 15776
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to show further direction",
+  "secondLabel" : "// to show further direction",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15445,
+  "secondPos" : 15785,
+  "firstEndPos" : 15473,
+  "secondEndPos" : 15813
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

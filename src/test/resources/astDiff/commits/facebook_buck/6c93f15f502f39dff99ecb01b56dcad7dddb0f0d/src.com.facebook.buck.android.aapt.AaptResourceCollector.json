@@ -10,6 +10,17 @@
   "firstEndPos" : 3002,
   "secondEndPos" : 3298
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2014-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2014-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -285,6 +296,17 @@
   "firstEndPos" : 1093,
   "secondEndPos" : 1141
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1077,
+  "secondPos" : 1125,
+  "firstEndPos" : 1082,
+  "secondEndPos" : 1130
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "MiniAapt",
@@ -329,6 +351,17 @@
   "firstEndPos" : 1197,
   "secondEndPos" : 1245
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1179,
+  "secondPos" : 1227,
+  "firstEndPos" : 1184,
+  "secondEndPos" : 1232
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 0x7fxxyyyy",
@@ -361,6 +394,17 @@
   "secondPos" : 1254,
   "firstEndPos" : 1216,
   "secondEndPos" : 1264
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1206,
+  "secondPos" : 1254,
+  "firstEndPos" : 1211,
+  "secondEndPos" : 1259
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -405,6 +449,17 @@
   "secondPos" : 1302,
   "firstEndPos" : 1266,
   "secondEndPos" : 1314
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1254,
+  "secondPos" : 1302,
+  "firstEndPos" : 1259,
+  "secondEndPos" : 1307
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2231,6 +2286,28 @@
   "secondPos" : 2096,
   "firstEndPos" : 2509,
   "secondEndPos" : 2577
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Robolectric expects the array to be populated with the right number of values, irrespective",
+  "secondLabel" : "// Robolectric expects the array to be populated with the right number of values, irrespective",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2193,
+  "secondPos" : 2102,
+  "firstEndPos" : 2287,
+  "secondEndPos" : 2196
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// of what the values are.",
+  "secondLabel" : "// of what the values are.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2292,
+  "secondPos" : 2201,
+  "firstEndPos" : 2318,
+  "secondEndPos" : 2227
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

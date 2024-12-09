@@ -5708,6 +5708,61 @@
   "firstEndPos" : 4053,
   "secondEndPos" : 4053
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// button.addListener(new ClickListener() {",
+  "secondLabel" : "// button.addListener(new ClickListener() {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4057,
+  "secondPos" : 4057,
+  "firstEndPos" : 4100,
+  "secondEndPos" : 4100
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public void clicked (InputEvent event, float x, float y) {",
+  "secondLabel" : "// public void clicked (InputEvent event, float x, float y) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4101,
+  "secondPos" : 4101,
+  "firstEndPos" : 4162,
+  "secondEndPos" : 4162
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// System.out.println(\"click! \" + x + \" \" + y);",
+  "secondLabel" : "// System.out.println(\"click! \" + x + \" \" + y);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4163,
+  "secondPos" : 4163,
+  "firstEndPos" : 4210,
+  "secondEndPos" : 4210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4211,
+  "secondPos" : 4211,
+  "firstEndPos" : 4215,
+  "secondEndPos" : 4215
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// });",
+  "secondLabel" : "// });",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4216,
+  "secondPos" : 4216,
+  "firstEndPos" : 4222,
+  "secondEndPos" : 4222
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7358,6 +7413,61 @@
   "firstEndPos" : 4964,
   "secondEndPos" : 4964
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// button.addListener(new ChangeListener() {",
+  "secondLabel" : "// button.addListener(new ChangeListener() {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4981,
+  "secondPos" : 4981,
+  "firstEndPos" : 5025,
+  "secondEndPos" : 5025
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public void changed (ChangeEvent event, Actor actor) {",
+  "secondLabel" : "// public void changed (ChangeEvent event, Actor actor) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5026,
+  "secondPos" : 5026,
+  "firstEndPos" : 5083,
+  "secondEndPos" : 5083
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // event.cancel();",
+  "secondLabel" : "// // event.cancel();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5084,
+  "secondPos" : 5084,
+  "firstEndPos" : 5105,
+  "secondEndPos" : 5105
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5106,
+  "secondPos" : 5106,
+  "firstEndPos" : 5110,
+  "secondEndPos" : 5110
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// });",
+  "secondLabel" : "// });",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5111,
+  "secondPos" : 5111,
+  "firstEndPos" : 5117,
+  "secondEndPos" : 5117
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7522,6 +7632,105 @@
   "secondPos" : 5166,
   "firstEndPos" : 5172,
   "secondEndPos" : 5172
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// List select = new List(skin);",
+  "secondLabel" : "// List select = new List(skin);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5176,
+  "secondPos" : 5176,
+  "firstEndPos" : 5208,
+  "secondEndPos" : 5208
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// select.setBounds(200, 200, 100, 100);",
+  "secondLabel" : "// select.setBounds(200, 200, 100, 100);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5209,
+  "secondPos" : 5209,
+  "firstEndPos" : 5249,
+  "secondEndPos" : 5249
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// select.setItems(new Object[] {1, 2, 3, 4, 5});",
+  "secondLabel" : "// select.setItems(new Object[] {1, 2, 3, 4, 5});",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5250,
+  "secondPos" : 5250,
+  "firstEndPos" : 5299,
+  "secondEndPos" : 5299
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// stage.addActor(select);",
+  "secondLabel" : "// stage.addActor(select);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5300,
+  "secondPos" : 5300,
+  "firstEndPos" : 5326,
+  "secondEndPos" : 5326
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// stage.addListener(new ChangeListener() {",
+  "secondLabel" : "// stage.addListener(new ChangeListener() {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5328,
+  "secondPos" : 5328,
+  "firstEndPos" : 5371,
+  "secondEndPos" : 5371
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public void changed (ChangeEvent event, Actor actor) {",
+  "secondLabel" : "// public void changed (ChangeEvent event, Actor actor) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5372,
+  "secondPos" : 5372,
+  "firstEndPos" : 5429,
+  "secondEndPos" : 5429
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// System.out.println(actor);",
+  "secondLabel" : "// System.out.println(actor);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5430,
+  "secondPos" : 5430,
+  "firstEndPos" : 5459,
+  "secondEndPos" : 5459
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5460,
+  "secondPos" : 5460,
+  "firstEndPos" : 5464,
+  "secondEndPos" : 5464
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// });",
+  "secondLabel" : "// });",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5465,
+  "secondPos" : 5465,
+  "firstEndPos" : 5471,
+  "secondEndPos" : 5471
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8094,6 +8303,39 @@
   "secondPos" : 5634,
   "firstEndPos" : 5635,
   "secondEndPos" : 5635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actor.addAction(parallel(rotateBy(90, 2), rotateBy(90, 2)));",
+  "secondLabel" : "// actor.addAction(parallel(rotateBy(90, 2), rotateBy(90, 2)));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5654,
+  "secondPos" : 5654,
+  "firstEndPos" : 5717,
+  "secondEndPos" : 5717
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actor.addAction(parallel(moveTo(250, 250, 2, elasticOut), color(RED, 6), delay(0.5f), rotateTo(180, 5, swing)));",
+  "secondLabel" : "// actor.addAction(parallel(moveTo(250, 250, 2, elasticOut), color(RED, 6), delay(0.5f), rotateTo(180, 5, swing)));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5720,
+  "secondPos" : 5720,
+  "firstEndPos" : 5835,
+  "secondEndPos" : 5835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actor.addAction(forever(sequence(scaleTo(2, 2, 0.5f), scaleTo(1, 1, 0.5f), delay(0.5f))));",
+  "secondLabel" : "// actor.addAction(forever(sequence(scaleTo(2, 2, 0.5f), scaleTo(1, 1, 0.5f), delay(0.5f))));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5838,
+  "secondPos" : 5838,
+  "firstEndPos" : 5931,
+  "secondEndPos" : 5931
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10800,6 +11042,17 @@
   "secondPos" : 7294,
   "firstEndPos" : 7510,
   "secondEndPos" : 7549
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// System.out.println(meow.getValue());",
+  "secondLabel" : "// System.out.println(meow.getValue());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7259,
+  "secondPos" : 7298,
+  "firstEndPos" : 7298,
+  "secondEndPos" : 7337
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

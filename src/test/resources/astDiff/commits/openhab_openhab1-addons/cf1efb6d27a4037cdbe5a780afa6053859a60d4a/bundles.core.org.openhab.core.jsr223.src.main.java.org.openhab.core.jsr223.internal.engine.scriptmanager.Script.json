@@ -967,6 +967,17 @@
   "firstEndPos" : 2292,
   "secondEndPos" : 2646
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2266,
+  "secondPos" : 2620,
+  "firstEndPos" : 2273,
+  "secondEndPos" : 2627
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Simon Merschjohann",
@@ -988,6 +999,17 @@
   "secondPos" : 2677,
   "firstEndPos" : 2308,
   "secondEndPos" : 2689
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2296,
+  "secondPos" : 2677,
+  "firstEndPos" : 2302,
+  "secondEndPos" : 2683
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4882,6 +4904,17 @@
   "secondPos" : 10862,
   "firstEndPos" : 4090,
   "secondEndPos" : 10869
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default types, TODO: auto import would be nice",
+  "secondLabel" : "// default types, TODO: auto import would be nice",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4102,
+  "secondPos" : 11381,
+  "firstEndPos" : 4151,
+  "secondEndPos" : 11430
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

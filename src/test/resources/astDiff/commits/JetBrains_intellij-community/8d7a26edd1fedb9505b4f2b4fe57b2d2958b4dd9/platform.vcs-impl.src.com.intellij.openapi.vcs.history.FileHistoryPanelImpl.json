@@ -10,6 +10,17 @@
   "firstEndPos" : 63007,
   "secondEndPos" : 62747
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -4464,6 +4475,17 @@
   "secondPos" : 5821,
   "firstEndPos" : 5972,
   "secondEndPos" : 5972
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// descending",
+  "secondLabel" : "// descending",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5829,
+  "secondPos" : 5829,
+  "firstEndPos" : 5842,
+  "secondEndPos" : 5842
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -20239,6 +20261,17 @@
   "firstEndPos" : 16058,
   "secondEndPos" : 16058
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// scroll tree view to most recent change",
+  "secondLabel" : "// scroll tree view to most recent change",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15758,
+  "secondPos" : 15758,
+  "firstEndPos" : 15799,
+  "secondEndPos" : 15799
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -21107,6 +21140,17 @@
   "secondPos" : 16301,
   "firstEndPos" : 16318,
   "secondEndPos" : 16318
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo react to event?",
+  "secondLabel" : "// todo react to event?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16341,
+  "secondPos" : 16341,
+  "firstEndPos" : 16364,
+  "secondEndPos" : 16364
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36002,6 +36046,17 @@
   "firstEndPos" : 25042,
   "secondEndPos" : 25042
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//splitter.getDivider().setBackground(UIUtil.getBgFillColor(splitter.getDivider()).brighter());",
+  "secondLabel" : "//splitter.getDivider().setBackground(UIUtil.getBgFillColor(splitter.getDivider()).brighter());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25049,
+  "secondPos" : 25049,
+  "firstEndPos" : 25144,
+  "secondEndPos" : 25144
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -46099,6 +46154,17 @@
   "secondPos" : 31349,
   "firstEndPos" : 31504,
   "secondEndPos" : 31504
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no previous",
+  "secondLabel" : "// no previous",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31361,
+  "secondPos" : 31361,
+  "firstEndPos" : 31375,
+  "secondEndPos" : 31375
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -67077,6 +67143,17 @@
   "firstEndPos" : 45854,
   "secondEndPos" : 45582
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection unchecked",
+  "secondLabel" : "//noinspection unchecked",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45788,
+  "secondPos" : 45516,
+  "firstEndPos" : 45812,
+  "secondEndPos" : 45540
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -77075,6 +77152,17 @@
   "secondPos" : 51686,
   "firstEndPos" : 52050,
   "secondEndPos" : 51778
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection unchecked",
+  "secondLabel" : "//noinspection unchecked",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51966,
+  "secondPos" : 51694,
+  "firstEndPos" : 51990,
+  "secondEndPos" : 51718
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -89836,6 +89924,17 @@
   "firstEndPos" : 59922,
   "secondEndPos" : 59662
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//myList = provider.getOneList(vf, myRevision.getRevisionNumber());",
+  "secondLabel" : "//myList = provider.getOneList(vf, myRevision.getRevisionNumber());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 59933,
+  "secondPos" : 59673,
+  "firstEndPos" : 60000,
+  "secondEndPos" : 59740
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",
@@ -92794,6 +92893,17 @@
   "secondPos" : 61610,
   "firstEndPos" : 62007,
   "secondEndPos" : 61747
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in order to do not load changes only for action update",
+  "secondLabel" : "// in order to do not load changes only for action update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61880,
+  "secondPos" : 61620,
+  "firstEndPos" : 61937,
+  "secondEndPos" : 61677
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

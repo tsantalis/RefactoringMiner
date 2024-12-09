@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
-@Disabled("For CI purposes (temporary)")
 /* Created by pourya on 2024-02-17*/
 public class RefactoringOracleProblematicCasesTest extends IgnoringCommentsVisitorTest {
     private static final String dir = getCommitsMappingsPath();

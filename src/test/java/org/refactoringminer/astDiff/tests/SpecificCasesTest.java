@@ -2,6 +2,7 @@ package org.refactoringminer.astDiff.tests;
 
 import com.github.gumtreediff.matchers.Mapping;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -29,6 +30,9 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2023-02-28 4:48 p.m. */
 public class SpecificCasesTest {
+    @BeforeAll public static void setup() {
+        System.setProperty("rm.jdt.comments", "true");
+    }
     @Test
     public void testRenameParameter() throws Exception {
         String m1 = "SingleVariableDeclaration [3886,3897] -> SingleVariableDeclaration [2778,2797]";

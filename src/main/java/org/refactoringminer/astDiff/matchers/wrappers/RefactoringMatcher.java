@@ -250,10 +250,11 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                         eligible = !renameVariableRefactoring.isInsideExtractedOrInlinedMethod();
                         if (!eligible)
                             break;
-                        while (!TreeUtilFunctions.isStatement(dstInput.getType().name)) {
+                        while (dstInput != null && !TreeUtilFunctions.isStatement(dstInput.getType().name) ) {
                             if (dstInput.getType() == null) break;
                             dstInput = dstInput.getParent();
                         }
+                        if (dstInput == null) return;
                         if (TreeUtilFunctions.isStatement(dstInput.getType().name)){
                             new LeafMatcher().match(srcInput,dstInput,mappingStore);
                         }

@@ -658,7 +658,7 @@ public class UMLModelASTReader {
 			umlClass.setPackageDeclaration(umlPackage);
 			umlClass.setPackageDeclarationJavadoc(packageDoc);
 			for(UMLComment comment : comments) {
-				if(comment.getLocationInfo().before(locationInfo)) {
+				if(comment.getLocationInfo().before(umlPackage.getLocationInfo())) {
 					umlClass.getPackageDeclarationComments().add(comment);
 				}
 			}

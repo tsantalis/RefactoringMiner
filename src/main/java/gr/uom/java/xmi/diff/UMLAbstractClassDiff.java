@@ -97,6 +97,7 @@ public abstract class UMLAbstractClassDiff {
 		this.interfaceListDiff = new UMLTypeListDiff(originalClass.getImplementedInterfaces(), nextClass.getImplementedInterfaces());
 		this.permittedTypeListDiff = new UMLTypeListDiff(originalClass.getPermittedTypes(), nextClass.getPermittedTypes());
 		processAnnotations();
+		getCommentListDiff();
 	}
 
 	public List<UMLOperation> getAddedOperations() {

@@ -38,7 +38,6 @@ public class SpecificCasesTest {
         Set<ASTDiff> astDiffs = UtilMethods.getProjectDiffLocally(url);
         boolean executed = false;
         for (ASTDiff astDiff : astDiffs) {
-            System.out.println();
             if (!astDiff.getSrcPath().equals("src/java/org/apache/commons/lang/time/DurationFormatUtils.java"))
                 continue;
             Set<Mapping> mappings = astDiff.getAllMappings().getMappings();

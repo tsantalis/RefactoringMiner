@@ -1124,7 +1124,9 @@ public class UMLModelDiff {
 						if(op1.getBodyHashCode() == op2.getBodyHashCode()) {
 							identicalBodies++;
 						}
-						if(op1.getActualSignature().equals(op2.getActualSignature())) {
+						String actualSignature1 = op1.getActualSignature();
+						String actualSignature2 = op2.getActualSignature();
+						if(actualSignature1 != null && actualSignature2 != null && actualSignature1.equals(actualSignature2)) {
 							identicalSignatures++;
 						}
 					}

@@ -10,6 +10,17 @@
   "firstEndPos" : 25570,
   "secondEndPos" : 25741
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2001,6 +2012,39 @@
   "firstEndPos" : 5720,
   "secondEndPos" : 5759
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Our connection to Spark. It needs to be static so that it can be reused",
+  "secondLabel" : "// Our connection to Spark. It needs to be static so that it can be reused",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5731,
+  "secondPos" : 5770,
+  "firstEndPos" : 5805,
+  "secondEndPos" : 5844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// across jobs, because a",
+  "secondLabel" : "// across jobs, because a",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5807,
+  "secondPos" : 5846,
+  "firstEndPos" : 5832,
+  "secondEndPos" : 5871
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new SparkLauncher gets created for each job.",
+  "secondLabel" : "// new SparkLauncher gets created for each job.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5834,
+  "secondPos" : 5873,
+  "firstEndPos" : 5881,
+  "secondEndPos" : 5920
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3794,6 +3838,39 @@
   "firstEndPos" : 6903,
   "secondEndPos" : 6760
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set a unique group id for this query, so we can lookup all Spark job",
+  "secondLabel" : "// Set a unique group id for this query, so we can lookup all Spark job",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6909,
+  "secondPos" : 6766,
+  "firstEndPos" : 6980,
+  "secondEndPos" : 6837
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ids",
+  "secondLabel" : "// ids",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6983,
+  "secondPos" : 6840,
+  "firstEndPos" : 6989,
+  "secondEndPos" : 6846
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// related to this query.",
+  "secondLabel" : "// related to this query.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6992,
+  "secondPos" : 6849,
+  "firstEndPos" : 7017,
+  "secondEndPos" : 6874
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5014,6 +5091,17 @@
   "secondPos" : 7519,
   "firstEndPos" : 7664,
   "secondEndPos" : 7526
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create conversion map, mapping between pig operator and spark convertor",
+  "secondLabel" : "// Create conversion map, mapping between pig operator and spark convertor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7670,
+  "secondPos" : 7532,
+  "firstEndPos" : 7744,
+  "secondEndPos" : 7606
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9338,6 +9426,17 @@
   "firstEndPos" : 10504,
   "secondEndPos" : 10366
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10425,
+  "secondPos" : 10287,
+  "firstEndPos" : 10431,
+  "secondEndPos" : 10293
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "seenJobIDs",
@@ -9370,6 +9469,17 @@
   "secondPos" : 10371,
   "firstEndPos" : 10546,
   "secondEndPos" : 10408
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10509,
+  "secondPos" : 10371,
+  "firstEndPos" : 10516,
+  "secondEndPos" : 10378
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -19469,6 +19579,17 @@
   "firstEndPos" : 15938,
   "secondEndPos" : 15808
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// optimize key - value handling in package",
+  "secondLabel" : "// optimize key - value handling in package",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15945,
+  "secondPos" : 15815,
+  "firstEndPos" : 15988,
+  "secondEndPos" : 15858
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -21460,6 +21581,28 @@
   "firstEndPos" : 17184,
   "secondEndPos" : 17054
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check that we have the Mesos native library and Spark home",
+  "secondLabel" : "// Check that we have the Mesos native library and Spark home",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16924,
+  "secondPos" : 16794,
+  "firstEndPos" : 16985,
+  "secondEndPos" : 16855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are set",
+  "secondLabel" : "// are set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16990,
+  "secondPos" : 16860,
+  "firstEndPos" : 17000,
+  "secondEndPos" : 16870
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22295,6 +22438,17 @@
   "secondPos" : 17333,
   "firstEndPos" : 17481,
   "secondEndPos" : 17351
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// You can use this in unit tests to stop the SparkContext between tests.",
+  "secondLabel" : "// You can use this in unit tests to stop the SparkContext between tests.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 17493,
+  "secondPos" : 17363,
+  "firstEndPos" : 17566,
+  "secondEndPos" : 17436
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -34759,6 +34913,17 @@
   "firstEndPos" : 24658,
   "secondEndPos" : 24528
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: add support for other file format",
+  "secondLabel" : "// TODO: add support for other file format",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24532,
+  "secondPos" : 24402,
+  "firstEndPos" : 24574,
+  "secondEndPos" : 24444
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -34912,6 +35077,17 @@
   "secondPos" : 24588,
   "firstEndPos" : 24760,
   "secondEndPos" : 24630
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO Auto-generated method stub",
+  "secondLabel" : "// TODO Auto-generated method stub",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24722,
+  "secondPos" : 24592,
+  "firstEndPos" : 24756,
+  "secondEndPos" : 24626
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -35099,6 +35275,17 @@
   "secondPos" : 24725,
   "firstEndPos" : 24897,
   "secondEndPos" : 24767
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO Auto-generated method stub",
+  "secondLabel" : "// TODO Auto-generated method stub",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24859,
+  "secondPos" : 24729,
+  "firstEndPos" : 24893,
+  "secondEndPos" : 24763
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

@@ -1077,6 +1077,17 @@
   "firstEndPos" : 1801,
   "secondEndPos" : 1833
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There will always be NUMBER_OF_TESTS+1 tests run, since the first round is thrown away (JITing)",
+  "secondLabel" : "// There will always be NUMBER_OF_TESTS+1 runs since the first round is thrown away (JITing)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1803,
+  "secondPos" : 1835,
+  "firstEndPos" : 1901,
+  "secondEndPos" : 1927
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1197,6 +1208,17 @@
   "secondPos" : 1975,
   "firstEndPos" : 1951,
   "secondEndPos" : 1977
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Number of items to add/remove/look-up from each data structure",
+  "secondLabel" : "// Number of items to add/remove/look-up from each data structure",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1953,
+  "secondPos" : 1979,
+  "firstEndPos" : 2018,
+  "secondEndPos" : 2044
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1660,6 +1682,17 @@
   "firstEndPos" : 2322,
   "secondEndPos" : 2921
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We throw away the first set of data to avoid JITing",
+  "secondLabel" : "// We throw away the first set of data to avoid JITing",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2324,
+  "secondPos" : 2923,
+  "firstEndPos" : 2378,
+  "secondEndPos" : 2977
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1736,6 +1769,17 @@
   "secondPos" : 2489,
   "firstEndPos" : 2411,
   "secondEndPos" : 2490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Debug level. 0=None, 1=Time and Memory (if enabled), 2=Time, Memory, data structure debug",
+  "secondLabel" : "// Debug level. 0=None, 1=Time and Memory (if enabled), 2=Time, Memory, data structure debug",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2413,
+  "secondPos" : 2492,
+  "firstEndPos" : 2505,
+  "secondEndPos" : 2584
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1814,6 +1858,17 @@
   "firstEndPos" : 2549,
   "secondEndPos" : 2628
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// How much time to: add all, remove all, add all items in reverse order, remove all",
+  "secondLabel" : "// How much time to: add all, remove all, add all items in reverse order, remove all",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2551,
+  "secondPos" : 2630,
+  "firstEndPos" : 2635,
+  "secondEndPos" : 2714
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1890,6 +1945,17 @@
   "secondPos" : 2756,
   "firstEndPos" : 2681,
   "secondEndPos" : 2760
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// How much memory is used by the data structure",
+  "secondLabel" : "// How much memory is used by the data structure",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2683,
+  "secondPos" : 2762,
+  "firstEndPos" : 2731,
+  "secondEndPos" : 2810
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1978,6 +2044,17 @@
   "secondPos" : 2206,
   "firstEndPos" : 2772,
   "secondEndPos" : 2208
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Max number of dynamic data structures to test",
+  "secondLabel" : "// Max number of dynamic data structures to test",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2774,
+  "secondPos" : 2210,
+  "firstEndPos" : 2822,
+  "secondEndPos" : 2258
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2155,6 +2232,17 @@
   "firstEndPos" : 2885,
   "secondEndPos" : 2321
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Array to hold the test names",
+  "secondLabel" : "// Array to hold the test names",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2888,
+  "secondPos" : 2324,
+  "firstEndPos" : 2919,
+  "secondEndPos" : 2355
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2331,6 +2419,17 @@
   "firstEndPos" : 2985,
   "secondEndPos" : 2421
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Array to hold the test results",
+  "secondLabel" : "// Array to hold the test results",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2987,
+  "secondPos" : 2423,
+  "firstEndPos" : 3020,
+  "secondEndPos" : 2456
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2407,6 +2506,17 @@
   "secondPos" : 2847,
   "firstEndPos" : 3057,
   "secondEndPos" : 2848
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Index into the tests",
+  "secondLabel" : "// Index into the tests",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3059,
+  "secondPos" : 2850,
+  "firstEndPos" : 3082,
+  "secondEndPos" : 2873
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4311,6 +4421,17 @@
   "firstEndPos" : 4026,
   "secondEndPos" : 3881
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure there are no duplicates",
+  "secondLabel" : "// Make sure there are no duplicates",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4041,
+  "secondPos" : 3896,
+  "firstEndPos" : 4077,
+  "secondEndPos" : 3932
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6137,6 +6258,17 @@
   "firstEndPos" : 4928,
   "secondEndPos" : 10336
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// requested number of tests plus the warm-up round",
+  "secondLabel" : "// requested number of tests plus the warm-up round",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4939,
+  "secondPos" : 4768,
+  "firstEndPos" : 4990,
+  "secondEndPos" : 4819
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6939,6 +7071,17 @@
   "secondPos" : 5111,
   "firstEndPos" : 5289,
   "secondEndPos" : 5118
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Trees",
+  "secondLabel" : "// Trees",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5301,
+  "secondPos" : 5158,
+  "firstEndPos" : 5309,
+  "secondEndPos" : 5166
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17170,6 +17313,17 @@
   "firstEndPos" : 12768,
   "secondEndPos" : 6279
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sets",
+  "secondLabel" : "// Sets",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12781,
+  "secondPos" : 6418,
+  "firstEndPos" : 12788,
+  "secondEndPos" : 6425
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19215,6 +19369,17 @@
   "secondPos" : 6532,
   "firstEndPos" : 14280,
   "secondEndPos" : 6548
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Heaps",
+  "secondLabel" : "// Heaps",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14293,
+  "secondPos" : 6683,
+  "firstEndPos" : 14301,
+  "secondEndPos" : 6691
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -23308,6 +23473,17 @@
   "firstEndPos" : 17276,
   "secondEndPos" : 7064
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lists",
+  "secondLabel" : "// Lists",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17289,
+  "secondPos" : 7453,
+  "firstEndPos" : 17297,
+  "secondEndPos" : 7461
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -27399,6 +27575,17 @@
   "secondPos" : 7569,
   "firstEndPos" : 20266,
   "secondEndPos" : 7585
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Queues",
+  "secondLabel" : "// Queues",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20279,
+  "secondPos" : 7973,
+  "firstEndPos" : 20288,
+  "secondEndPos" : 7982
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31492,6 +31679,17 @@
   "firstEndPos" : 23265,
   "secondEndPos" : 8107
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Stacks",
+  "secondLabel" : "// Stacks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23278,
+  "secondPos" : 8498,
+  "firstEndPos" : 23287,
+  "secondEndPos" : 8507
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34560,6 +34758,17 @@
   "secondPos" : 8469,
   "firstEndPos" : 25509,
   "secondEndPos" : 8485
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Maps",
+  "secondLabel" : "// Maps",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25522,
+  "secondPos" : 8889,
+  "firstEndPos" : 25529,
+  "secondEndPos" : 8896
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -66373,6 +66582,17 @@
   "firstEndPos" : 63158,
   "secondEndPos" : 51399
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure the collection is empty",
+  "secondLabel" : "// Make sure the collection is empty",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46777,
+  "secondPos" : 35249,
+  "firstEndPos" : 46813,
+  "secondEndPos" : 35285
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -67836,6 +68056,17 @@
   "firstEndPos" : 47663,
   "secondEndPos" : 36494
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw away first test to remove JITing",
+  "secondLabel" : "// Throw away first test to remove JITing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47675,
+  "secondPos" : 36506,
+  "firstEndPos" : 47716,
+  "secondEndPos" : 36547
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -68011,6 +68242,17 @@
   "secondPos" : 36651,
   "firstEndPos" : 51331,
   "secondEndPos" : 40015
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// UNSORTED: Add and remove in order (from index zero to length)",
+  "secondLabel" : "// UNSORTED: Add and remove in order (from index zero to length)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47824,
+  "secondPos" : 36655,
+  "firstEndPos" : 47888,
+  "secondEndPos" : 36719
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -73302,6 +73544,17 @@
   "secondPos" : 40050,
   "firstEndPos" : 54934,
   "secondEndPos" : 43471
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// UNSORTED: Add in reverse (from index length-1 to zero) order and then remove in order (from index zero to length)",
+  "secondLabel" : "// UNSORTED: Add in reverse (from index length-1 to zero) order and then remove in order (from index zero to length)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51370,
+  "secondPos" : 40054,
+  "firstEndPos" : 51486,
+  "secondEndPos" : 40170
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -78957,6 +79210,17 @@
   "firstEndPos" : 58772,
   "secondEndPos" : 47160
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SORTED: Add and remove in order (from index zero to length)",
+  "secondLabel" : "// SORTED: Add and remove in order (from index zero to length)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55203,
+  "secondPos" : 43740,
+  "firstEndPos" : 55265,
+  "secondEndPos" : 43802
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -84159,6 +84423,17 @@
   "secondPos" : 47193,
   "firstEndPos" : 62434,
   "secondEndPos" : 50675
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SORTED: Add in order (from index zero to length) and then remove in reverse (from index length-1 to zero) order ",
+  "secondLabel" : "// SORTED: Add in order (from index zero to length) and then remove in reverse (from index length-1 to zero) order ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58809,
+  "secondPos" : 47197,
+  "firstEndPos" : 58924,
+  "secondEndPos" : 47312
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -89429,6 +89704,17 @@
   "firstEndPos" : 62409,
   "secondEndPos" : 50650
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw away first test to remove JITing",
+  "secondLabel" : "// Throw away first test to remove JITing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 62444,
+  "secondPos" : 50685,
+  "firstEndPos" : 62485,
+  "secondEndPos" : 50726
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -91178,6 +91464,17 @@
   "firstEndPos" : 80064,
   "secondEndPos" : 67024
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure the map is empty",
+  "secondLabel" : "// Make sure the map is empty",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 63327,
+  "secondPos" : 51642,
+  "firstEndPos" : 63356,
+  "secondEndPos" : 51671
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -92640,6 +92937,17 @@
   "secondPos" : 53238,
   "firstEndPos" : 64178,
   "secondEndPos" : 53242
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw away first test to remove JITing",
+  "secondLabel" : "// Throw away first test to remove JITing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 64190,
+  "secondPos" : 53254,
+  "firstEndPos" : 64231,
+  "secondEndPos" : 53295
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -103553,6 +103861,17 @@
   "firstEndPos" : 75585,
   "secondEndPos" : 63072
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sorted",
+  "secondLabel" : "// sorted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 71871,
+  "secondPos" : 59885,
+  "firstEndPos" : 71880,
+  "secondEndPos" : 59894
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -108778,6 +109097,17 @@
   "firstEndPos" : 79340,
   "secondEndPos" : 66300
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sorted",
+  "secondLabel" : "// sorted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75620,
+  "secondPos" : 63107,
+  "firstEndPos" : 75629,
+  "secondEndPos" : 63116
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -113981,6 +114311,17 @@
   "firstEndPos" : 79314,
   "secondEndPos" : 66274
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Throw away first test to remove JITing",
+  "secondLabel" : "// Throw away first test to remove JITing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 79350,
+  "secondPos" : 66310,
+  "firstEndPos" : 79391,
+  "secondEndPos" : 66351
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -118622,6 +118963,17 @@
   "secondPos" : 68920,
   "firstEndPos" : 81942,
   "secondEndPos" : 68925
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sorted",
+  "secondLabel" : "// sorted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 81979,
+  "secondPos" : 68962,
+  "firstEndPos" : 81988,
+  "secondEndPos" : 68971
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

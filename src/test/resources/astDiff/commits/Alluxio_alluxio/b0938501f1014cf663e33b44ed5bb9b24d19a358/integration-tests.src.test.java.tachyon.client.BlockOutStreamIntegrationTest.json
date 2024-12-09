@@ -10,6 +10,17 @@
   "firstEndPos" : 2696,
   "secondEndPos" : 3563
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the University of California, Berkeley under one or more contributor license\n * agreements. See the NOTICE file distributed with this work for additional information regarding\n * copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance with the License. You may obtain a\n * copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the University of California, Berkeley under one or more contributor license\n * agreements. See the NOTICE file distributed with this work for additional information regarding\n * copyright ownership. The ASF licenses this file to You under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance with the License. You may obtain a\n * copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 791,
+  "secondEndPos" : 791
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -911,6 +922,17 @@
   "secondPos" : 2405,
   "firstEndPos" : 1649,
   "secondEndPos" : 2424
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1630,
+  "secondPos" : 2405,
+  "firstEndPos" : 1637,
+  "secondEndPos" : 2412
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1890,6 +1912,17 @@
   "secondPos" : 2701,
   "firstEndPos" : 2209,
   "secondEndPos" : 2720
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2190,
+  "secondPos" : 2701,
+  "firstEndPos" : 2197,
+  "secondEndPos" : 2708
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -10,6 +10,17 @@
   "firstEndPos" : 15776,
   "secondEndPos" : 17399
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -4278,6 +4289,39 @@
   "firstEndPos" : 4909,
   "secondEndPos" : 4909
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We now have the complete set of dependencies. Build the graph of dependencies. We'd like",
+  "secondLabel" : "// We now have the complete set of dependencies. Build the graph of dependencies. We'd like",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4917,
+  "secondPos" : 4917,
+  "firstEndPos" : 5008,
+  "secondEndPos" : 5008
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// aether to do this for us, but it doesn't preserve the complete dependency information we need",
+  "secondLabel" : "// aether to do this for us, but it doesn't preserve the complete dependency information we need",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5013,
+  "secondPos" : 5013,
+  "firstEndPos" : 5109,
+  "secondEndPos" : 5109
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to accurately construct build files.",
+  "secondLabel" : "// to accurately construct build files.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5114,
+  "secondPos" : 5114,
+  "firstEndPos" : 5153,
+  "secondEndPos" : 5153
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4431,6 +4475,28 @@
   "secondPos" : 5236,
   "firstEndPos" : 5245,
   "secondEndPos" : 5245
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now we have the graph, grab the sources and jars for each dependency, as well as the relevant",
+  "secondLabel" : "// Now we have the graph, grab the sources and jars for each dependency, as well as the relevant",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5253,
+  "secondPos" : 5253,
+  "firstEndPos" : 5349,
+  "secondEndPos" : 5349
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// checksums (which are download by default. Yay!)",
+  "secondLabel" : "// checksums (which are download by default. Yay!)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5354,
+  "secondPos" : 5354,
+  "firstEndPos" : 5404,
+  "secondEndPos" : 5404
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12891,6 +12957,17 @@
   "firstEndPos" : 9870,
   "secondEndPos" : 10844
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It's possible that the runtime dep of an artifact is the test time dep of another.",
+  "secondLabel" : "// It's possible that the runtime dep of an artifact is the test time dep of another.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9889,
+  "secondPos" : 10863,
+  "firstEndPos" : 9974,
+  "secondEndPos" : 10948
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12967,6 +13044,50 @@
   "secondPos" : 10997,
   "firstEndPos" : 10032,
   "secondEndPos" : 11006
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(simons): Do we always want optional dependencies?",
+  "secondLabel" : "// TODO(simons): Do we always want optional dependencies?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10052,
+  "secondPos" : 11026,
+  "firstEndPos" : 10109,
+  "secondEndPos" : 11083
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        if (dependency.isOptional()) {",
+  "secondLabel" : "//        if (dependency.isOptional()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10110,
+  "secondPos" : 11084,
+  "firstEndPos" : 10150,
+  "secondEndPos" : 11124
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          continue;",
+  "secondLabel" : "//          continue;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10151,
+  "secondPos" : 11125,
+  "firstEndPos" : 10172,
+  "secondEndPos" : 11146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        }",
+  "secondLabel" : "//        }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10173,
+  "secondPos" : 11147,
+  "firstEndPos" : 10184,
+  "secondEndPos" : 11158
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15310,6 +15431,28 @@
   "secondPos" : 12685,
   "firstEndPos" : 11719,
   "secondEndPos" : 12693
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Setting this appears to have exactly zero effect on the returned values. *sigh*",
+  "secondLabel" : "// Setting this appears to have exactly zero effect on the returned values. *sigh*",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11728,
+  "secondPos" : 12702,
+  "firstEndPos" : 11810,
+  "secondEndPos" : 12784
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      descriptorRequest.setRequestContext(JavaScopes.RUNTIME);",
+  "secondLabel" : "//      descriptorRequest.setRequestContext(JavaScopes.RUNTIME);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11811,
+  "secondPos" : 12785,
+  "firstEndPos" : 11875,
+  "secondEndPos" : 12849
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20052,6 +20195,17 @@
   "firstEndPos" : 14773,
   "secondEndPos" : 15826
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is read reflectively.",
+  "secondLabel" : "// This method is read reflectively.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14775,
+  "secondPos" : 15828,
+  "firstEndPos" : 14811,
+  "secondEndPos" : 15864
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -20172,6 +20326,17 @@
   "secondPos" : 15943,
   "firstEndPos" : 14898,
   "secondEndPos" : 15951
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is read reflectively.",
+  "secondLabel" : "// This method is read reflectively.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 14900,
+  "secondPos" : 15953,
+  "firstEndPos" : 14936,
+  "secondEndPos" : 15989
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -20469,6 +20634,17 @@
   "secondPos" : 16164,
   "firstEndPos" : 15119,
   "secondEndPos" : 16172
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is read reflectively.",
+  "secondLabel" : "// This method is read reflectively.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15121,
+  "secondPos" : 16174,
+  "firstEndPos" : 15157,
+  "secondEndPos" : 16210
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -20788,6 +20964,17 @@
   "secondPos" : 16519,
   "firstEndPos" : 15322,
   "secondEndPos" : 16527
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is read reflectively.",
+  "secondLabel" : "// This method is read reflectively.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15324,
+  "secondPos" : 16529,
+  "firstEndPos" : 15360,
+  "secondEndPos" : 16565
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -21140,6 +21327,17 @@
   "secondPos" : 17158,
   "firstEndPos" : 15543,
   "secondEndPos" : 17166
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This method is read reflectively.",
+  "secondLabel" : "// This method is read reflectively.",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 15545,
+  "secondPos" : 17168,
+  "firstEndPos" : 15581,
+  "secondEndPos" : 17204
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",

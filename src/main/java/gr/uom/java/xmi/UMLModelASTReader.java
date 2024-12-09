@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import com.github.gumtreediff.gen.jdt.AbstractJdtVisitor;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IProblem;
@@ -72,7 +73,7 @@ import org.refactoringminer.astDiff.visitors.JdtVisitor;
 import org.refactoringminer.astDiff.visitors.JdtWithCommentsVisitor;
 
 public class UMLModelASTReader {
-//	private static final boolean VISIT_JDT_COMMENTS = Boolean.parseBoolean(System.getProperty("rm.jdt.comments", "true"));
+	private boolean VISIT_JDT_COMMENTS = Boolean.parseBoolean(System.getProperty("rm.jdt.comments", "true"));
 	private static final String FREE_MARKER_GENERATED = "generated using freemarker";
 	private static final String FREE_MARKER_GENERATED_2 = "generated using FreeMarker";
 	private static final String ANTLR_GENERATED = "// $ANTLR";
@@ -137,10 +138,10 @@ public class UMLModelASTReader {
 				if(astDiff) {
 					IScanner scanner = ToolFactory.createScanner(true, false, false, false);
 					scanner.setSource(charArray);
-//					JdtVisitor visitor = (VISIT_JDT_COMMENTS) ?
-//							new JdtWithCommentsVisitor(scanner) :
-//							new JdtVisitor(scanner);
-					JdtVisitor visitor = new JdtWithCommentsVisitor(scanner);
+					AbstractJdtVisitor visitor = (VISIT_JDT_COMMENTS) ?
+							new JdtWithCommentsVisitor(scanner) :
+							new com.github.gumtreediff.gen.jdt.JdtVisitor(scanner);
+//					JdtVisitor visitor = new JdtWithCommentsVisitor(scanner);
 					compilationUnit.accept(visitor);
 					TreeContext treeContext = visitor.getTreeContext();
 					this.umlModel.getTreeContextMap().put(filePath, treeContext);

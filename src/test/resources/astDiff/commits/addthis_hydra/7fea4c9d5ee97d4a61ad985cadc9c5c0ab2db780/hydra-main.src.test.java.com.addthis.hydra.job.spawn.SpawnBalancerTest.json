@@ -10,6 +10,17 @@
   "firstEndPos" : 30010,
   "secondEndPos" : 30003
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 557,
+  "secondEndPos" : 557
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -6269,6 +6280,28 @@
   "firstEndPos" : 6360,
   "secondEndPos" : 6353
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we allocate a job with N tasks to a cluster with N hosts, with one of the hosts near full disk.",
+  "secondLabel" : "// Suppose we allocate a job with N tasks to a cluster with N hosts, with one of the hosts near full disk.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4800,
+  "secondPos" : 4793,
+  "firstEndPos" : 4906,
+  "secondEndPos" : 4899
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Then we should put replicas on all the light hosts, but not the heavy one",
+  "secondLabel" : "// Then we should put replicas on all the light hosts, but not the heavy one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4915,
+  "secondPos" : 4908,
+  "firstEndPos" : 4991,
+  "secondEndPos" : 4984
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9139,6 +9172,94 @@
   "secondPos" : 6414,
   "firstEndPos" : 8921,
   "secondEndPos" : 8914
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we have a cluster with the following machines:",
+  "secondLabel" : "// Suppose we have a cluster with the following machines:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6431,
+  "secondPos" : 6424,
+  "firstEndPos" : 6488,
+  "secondEndPos" : 6481
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a host that is readOnly",
+  "secondLabel" : "//  - a host that is readOnly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6497,
+  "secondPos" : 6490,
+  "firstEndPos" : 6526,
+  "secondEndPos" : 6519
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a host that is down",
+  "secondLabel" : "//  - a host that is down",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6535,
+  "secondPos" : 6528,
+  "firstEndPos" : 6560,
+  "secondEndPos" : 6553
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a host that is dead",
+  "secondLabel" : "//  - a host that is dead",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6569,
+  "secondPos" : 6562,
+  "firstEndPos" : 6594,
+  "secondEndPos" : 6587
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a live host that has no jobs",
+  "secondLabel" : "//  - a live host that has no jobs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6603,
+  "secondPos" : 6596,
+  "firstEndPos" : 6637,
+  "secondEndPos" : 6630
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a live host that has one old task and one new",
+  "secondLabel" : "//  - a live host that has one old task and one new",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6646,
+  "secondPos" : 6639,
+  "firstEndPos" : 6697,
+  "secondEndPos" : 6690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  - a live host that has two new tasks",
+  "secondLabel" : "//  - a live host that has two new tasks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6706,
+  "secondPos" : 6699,
+  "firstEndPos" : 6746,
+  "secondEndPos" : 6739
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sortHostsByLiveTasks should omit the first two and return the last three in the given order.",
+  "secondLabel" : "// sortHostsByLiveTasks should omit the first two and return the last three in the given order.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6755,
+  "secondPos" : 6748,
+  "firstEndPos" : 6850,
+  "secondEndPos" : 6843
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12693,6 +12814,17 @@
   "firstEndPos" : 9947,
   "secondEndPos" : 9940
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we assign a job with 3N tasks to 3 hosts, N tasks should go on each host.",
+  "secondLabel" : "// If we assign a job with 3N tasks to 3 hosts, N tasks should go on each host.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9007,
+  "secondPos" : 9000,
+  "firstEndPos" : 9086,
+  "secondEndPos" : 9079
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14122,6 +14254,28 @@
   "secondPos" : 10029,
   "firstEndPos" : 12121,
   "secondEndPos" : 12114
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we put a 4-node job on a single heavily loaded host, and there are two light hosts available.",
+  "secondLabel" : "// Suppose we put a 4-node job on a single heavily loaded host, and there are two light hosts available.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10046,
+  "secondPos" : 10039,
+  "firstEndPos" : 10150,
+  "secondEndPos" : 10143
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// After a job reallocation, we want to move one tasks to each light host.",
+  "secondLabel" : "// After a job reallocation, we want to move one tasks to each light host.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10159,
+  "secondPos" : 10152,
+  "firstEndPos" : 10233,
+  "secondEndPos" : 10226
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17236,6 +17390,28 @@
   "firstEndPos" : 13401,
   "secondEndPos" : 13394
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we have a cluster with three hosts, one with a mild load.",
+  "secondLabel" : "// Suppose we have a cluster with three hosts, one with a mild load.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12212,
+  "secondPos" : 12205,
+  "firstEndPos" : 12280,
+  "secondEndPos" : 12273
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we create a 5-node job, we want to assign two tasks to each light host and one to the heavier host",
+  "secondLabel" : "// If we create a 5-node job, we want to assign two tasks to each light host and one to the heavier host",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12289,
+  "secondPos" : 12282,
+  "firstEndPos" : 12393,
+  "secondEndPos" : 12386
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -18830,6 +19006,28 @@
   "secondPos" : 13483,
   "firstEndPos" : 15392,
   "secondEndPos" : 15385
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we have two 3-node jobs all running on a single heavy host.",
+  "secondLabel" : "// Suppose we have two 3-node jobs all running on a single heavy host.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13500,
+  "secondPos" : 13493,
+  "firstEndPos" : 13570,
+  "secondEndPos" : 13563
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// After a host reallocation, we want to move one task from each job to a light host.",
+  "secondLabel" : "// After a host reallocation, we want to move one task from each job to a light host.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13579,
+  "secondPos" : 13572,
+  "firstEndPos" : 13664,
+  "secondEndPos" : 13657
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -21426,6 +21624,28 @@
   "secondPos" : 15455,
   "firstEndPos" : 18111,
   "secondEndPos" : 18104
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we have one host with full disk and another with mostly empty disk.",
+  "secondLabel" : "// Suppose we have one host with full disk and another with mostly empty disk.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15472,
+  "secondPos" : 15465,
+  "firstEndPos" : 15550,
+  "secondEndPos" : 15543
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should move some tasks from heavy to light, but not too much.",
+  "secondLabel" : "// Should move some tasks from heavy to light, but not too much.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15559,
+  "secondPos" : 15552,
+  "firstEndPos" : 15623,
+  "secondEndPos" : 15616
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25838,6 +26058,17 @@
   "firstEndPos" : 19327,
   "secondEndPos" : 19320
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we have a cluster that is essentially balanced. Rebalancing it shouldn't do anything.",
+  "secondLabel" : "// Suppose we have a cluster that is essentially balanced. Rebalancing it shouldn't do anything.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18193,
+  "secondPos" : 18186,
+  "firstEndPos" : 18289,
+  "secondEndPos" : 18282
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -29259,6 +29490,17 @@
   "firstEndPos" : 20135,
   "secondEndPos" : 20128
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// FIXME spawn2 can't be instantiated due to 5050 already being used by spawn",
+  "secondLabel" : "// FIXME spawn2 can't be instantiated due to 5050 already being used by spawn",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20147,
+  "secondPos" : 20140,
+  "firstEndPos" : 20224,
+  "secondEndPos" : 20217
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -31624,6 +31866,28 @@
   "firstEndPos" : 23289,
   "secondEndPos" : 23282
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose we start out with eight hosts, and have a job with 10 live tasks.",
+  "secondLabel" : "// Suppose we start out with eight hosts, and have a job with 10 live tasks.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21547,
+  "secondPos" : 21540,
+  "firstEndPos" : 21623,
+  "secondEndPos" : 21616
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Then if we add two hosts and rebalance the job, we should move tasks onto each.",
+  "secondLabel" : "// Then if we add two hosts and rebalance the job, we should move tasks onto each.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21632,
+  "secondPos" : 21625,
+  "firstEndPos" : 21714,
+  "secondEndPos" : 21707
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33009,6 +33273,17 @@
   "secondPos" : 22318,
   "firstEndPos" : 22445,
   "secondEndPos" : 22438
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Takes a little while for the new hosts to show up as available",
+  "secondLabel" : "// Takes a little while for the new hosts to show up as available",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22339,
+  "secondPos" : 22332,
+  "firstEndPos" : 22404,
+  "secondEndPos" : 22397
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -34461,6 +34736,28 @@
   "secondPos" : 23343,
   "firstEndPos" : 24565,
   "secondEndPos" : 24558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Test that heavily-loaded and lightly-loaded hosts are identified as such, and that medium-loaded hosts are",
+  "secondLabel" : "// Test that heavily-loaded and lightly-loaded hosts are identified as such, and that medium-loaded hosts are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23360,
+  "secondPos" : 23353,
+  "firstEndPos" : 23469,
+  "secondEndPos" : 23462
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not identified as heavy or light",
+  "secondLabel" : "// not identified as heavy or light",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23478,
+  "secondPos" : 23471,
+  "firstEndPos" : 23513,
+  "secondEndPos" : 23506
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -36409,6 +36706,17 @@
   "firstEndPos" : 26010,
   "secondEndPos" : 26003
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Simulate some task state changes, and make sure job.isFinished() behaves as expected.",
+  "secondLabel" : "// Simulate some task state changes, and make sure job.isFinished() behaves as expected.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24645,
+  "secondPos" : 24638,
+  "firstEndPos" : 24733,
+  "secondEndPos" : 24726
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -37399,6 +37707,17 @@
   "firstEndPos" : 25188,
   "secondEndPos" : 25181
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a task is busy, the job should not be finished",
+  "secondLabel" : "// If a task is busy, the job should not be finished",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25199,
+  "secondPos" : 25192,
+  "firstEndPos" : 25251,
+  "secondEndPos" : 25244
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -37806,6 +38125,17 @@
   "firstEndPos" : 25497,
   "secondEndPos" : 25490
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a task is migrating, the job should not be finished.",
+  "secondLabel" : "// If a task is migrating, the job should not be finished.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25508,
+  "secondPos" : 25501,
+  "firstEndPos" : 25566,
+  "secondEndPos" : 25559
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -38113,6 +38443,28 @@
   "secondPos" : 25719,
   "firstEndPos" : 25748,
   "secondEndPos" : 25741
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a task is rebalancing, the job _should_ be finished.",
+  "secondLabel" : "// If a task is rebalancing, the job _should_ be finished.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25759,
+  "secondPos" : 25752,
+  "firstEndPos" : 25817,
+  "secondEndPos" : 25810
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The idea is that the task successfully ran, got into idle state, then a rebalance action was called afterwards.",
+  "secondLabel" : "// The idea is that the task successfully ran, got into idle state, then a rebalance action was called afterwards.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25826,
+  "secondPos" : 25819,
+  "firstEndPos" : 25940,
+  "secondEndPos" : 25933
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

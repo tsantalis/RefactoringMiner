@@ -10,6 +10,17 @@
   "firstEndPos" : 10931,
   "secondEndPos" : 10940
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 557,
+  "secondEndPos" : 557
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -406,6 +417,17 @@
   "firstEndPos" : 1312,
   "secondEndPos" : 1321
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// How aggressively balancing should be done. For now, 0=no rebalancing, 1=rebalance jobs that are over/under-allocated, 2=rebalance all jobs",
+  "secondLabel" : "// How aggressively balancing should be done. For now, 0=no rebalancing, 1=rebalance jobs that are over/under-allocated, 2=rebalance all jobs",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1320,
+  "secondPos" : 1329,
+  "firstEndPos" : 1461,
+  "secondEndPos" : 1470
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -493,6 +515,17 @@
   "secondPos" : 1523,
   "firstEndPos" : 1515,
   "secondEndPos" : 1524
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// During reallocation, don't move more than this many tasks",
+  "secondLabel" : "// During reallocation, don't move more than this many tasks",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1522,
+  "secondPos" : 1531,
+  "firstEndPos" : 1582,
+  "secondEndPos" : 1591
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -647,6 +680,17 @@
   "secondPos" : 1704,
   "firstEndPos" : 1697,
   "secondEndPos" : 1706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// During reallocation, don't move more than this many bytes",
+  "secondLabel" : "// During reallocation, don't move more than this many bytes",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1704,
+  "secondPos" : 1713,
+  "firstEndPos" : 1764,
+  "secondEndPos" : 1773
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -879,6 +923,17 @@
   "firstEndPos" : 1915,
   "secondEndPos" : 1924
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// During host reallocation, a single moved task can only be this portion of the overall byte maximum",
+  "secondLabel" : "// During host reallocation, a single moved task can only be this portion of the overall byte maximum",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1922,
+  "secondPos" : 1931,
+  "firstEndPos" : 2023,
+  "secondEndPos" : 2032
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1065,6 +1120,17 @@
   "secondPos" : 2139,
   "firstEndPos" : 2134,
   "secondEndPos" : 2143
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't move more than this percentage of bytes off of a loaded disk, and don't fill up more than that much of an unloaded disk",
+  "secondLabel" : "// Don't move more than this percentage of bytes off of a loaded disk, and don't fill up more than that much of an unloaded disk",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2142,
+  "secondPos" : 2151,
+  "firstEndPos" : 2270,
+  "secondEndPos" : 2279
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1253,6 +1319,17 @@
   "firstEndPos" : 2375,
   "secondEndPos" : 2384
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// During reallocation, don't move this many tasks to/from a host unless that host was specifically rebalanced",
+  "secondLabel" : "// During reallocation, don't move this many tasks to/from a host unless that host was specifically rebalanced",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2383,
+  "secondPos" : 2392,
+  "firstEndPos" : 2493,
+  "secondEndPos" : 2502
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1384,6 +1461,17 @@
   "secondPos" : 2602,
   "firstEndPos" : 2594,
   "secondEndPos" : 2603
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't bother moving very small tasks during disk space balancing",
+  "secondLabel" : "// Don't bother moving very small tasks during disk space balancing",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2601,
+  "secondPos" : 2610,
+  "firstEndPos" : 2668,
+  "secondEndPos" : 2677
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1560,6 +1648,17 @@
   "secondPos" : 2773,
   "firstEndPos" : 2768,
   "secondEndPos" : 2777
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Consider load balance of two hosts to be significantly different only if the difference is at least 10% above/below",
+  "secondLabel" : "// Consider load balance of two hosts to be significantly different only if the difference is at least 10% above/below",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2776,
+  "secondPos" : 2785,
+  "firstEndPos" : 2894,
+  "secondEndPos" : 2903
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1748,6 +1847,17 @@
   "firstEndPos" : 3003,
   "secondEndPos" : 3012
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Consider a host's load to be heavy (/light) only if it is heavier (/lighter) than 50% of hosts",
+  "secondLabel" : "// Consider a host's load to be heavy (/light) only if it is heavier (/lighter) than 50% of hosts",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3011,
+  "secondPos" : 3020,
+  "firstEndPos" : 3108,
+  "secondEndPos" : 3117
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1934,6 +2044,28 @@
   "secondPos" : 3225,
   "firstEndPos" : 3220,
   "secondEndPos" : 3229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When rebalancing a heavy host, push onto the lightest 20% of suitable hosts. When rebalancing a light host, pull from",
+  "secondLabel" : "// When rebalancing a heavy host, push onto the lightest 20% of suitable hosts. When rebalancing a light host, pull from",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3228,
+  "secondPos" : 3237,
+  "firstEndPos" : 3348,
+  "secondEndPos" : 3357
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the heaviest 20% of suitable hosts.",
+  "secondLabel" : "// the heaviest 20% of suitable hosts.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3353,
+  "secondPos" : 3362,
+  "firstEndPos" : 3391,
+  "secondEndPos" : 3400
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2287,6 +2419,17 @@
   "firstEndPos" : 3617,
   "secondEndPos" : 3626
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only do job autobalancing once per time interval",
+  "secondLabel" : "// Only do job autobalancing once per time interval",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3624,
+  "secondPos" : 3633,
+  "firstEndPos" : 3675,
+  "secondEndPos" : 3684
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2528,6 +2671,17 @@
   "secondPos" : 3856,
   "firstEndPos" : 3851,
   "secondEndPos" : 3860
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only do host autobalancing once per time interval",
+  "secondLabel" : "// Only do host autobalancing once per time interval",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3858,
+  "secondPos" : 3867,
+  "firstEndPos" : 3910,
+  "secondEndPos" : 3919
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2771,6 +2925,17 @@
   "firstEndPos" : 4088,
   "secondEndPos" : 4097
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Track the last time a job autobalance was done",
+  "secondLabel" : "// Track the last time a job autobalance was done",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4095,
+  "secondPos" : 4104,
+  "firstEndPos" : 4144,
+  "secondEndPos" : 4153
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2836,6 +3001,17 @@
   "secondPos" : 4196,
   "firstEndPos" : 4189,
   "secondEndPos" : 4198
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If you're at more than 80% disk capacity, you don't get assigned any new tasks or replicas",
+  "secondLabel" : "// If you're at more than 80% disk capacity, you don't get assigned any new tasks or replicas",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4196,
+  "secondPos" : 4205,
+  "firstEndPos" : 4289,
+  "secondEndPos" : 4298
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3024,6 +3200,17 @@
   "firstEndPos" : 4435,
   "secondEndPos" : 4444
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If you're at more than 90% disk capacity, push tasks off before running additional tasks",
+  "secondLabel" : "// If you're at more than 90% disk capacity, push tasks off before running additional tasks",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4443,
+  "secondPos" : 4452,
+  "firstEndPos" : 4534,
+  "secondEndPos" : 4543
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3211,6 +3398,17 @@
   "firstEndPos" : 4672,
   "secondEndPos" : 4681
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Max number of read-only-replicas for a given host",
+  "secondLabel" : "// Max number of read-only-replicas for a given host",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4680,
+  "secondPos" : 4689,
+  "firstEndPos" : 4732,
+  "secondEndPos" : 4741
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3342,6 +3540,17 @@
   "secondPos" : 4846,
   "firstEndPos" : 4838,
   "secondEndPos" : 4847
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Tasks that have run within this many milliseconds are considered \"active\" and weighted more heavily. Default is one day.",
+  "secondLabel" : "// Tasks that have run within this many milliseconds are considered \"active\" and weighted more heavily. Default is one day.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4846,
+  "secondPos" : 4855,
+  "firstEndPos" : 4969,
+  "secondEndPos" : 4978
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3530,6 +3739,17 @@
   "firstEndPos" : 5083,
   "secondEndPos" : 5092
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// control whether minions on the same host can replicate to each other",
+  "secondLabel" : "// control whether minions on the same host can replicate to each other",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5090,
+  "secondPos" : 5099,
+  "firstEndPos" : 5161,
+  "secondEndPos" : 5170
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3661,6 +3881,17 @@
   "secondPos" : 5268,
   "firstEndPos" : 5263,
   "secondEndPos" : 5272
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The score weight for task siblings",
+  "secondLabel" : "// The score weight for task siblings",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5270,
+  "secondPos" : 5279,
+  "firstEndPos" : 5307,
+  "secondEndPos" : 5316
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3794,6 +4025,17 @@
   "firstEndPos" : 5384,
   "secondEndPos" : 5393
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The score weight for recently-run tasks",
+  "secondLabel" : "// The score weight for recently-run tasks",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5391,
+  "secondPos" : 5400,
+  "firstEndPos" : 5433,
+  "secondEndPos" : 5442
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3926,6 +4168,17 @@
   "firstEndPos" : 5521,
   "secondEndPos" : 5530
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The score weight for disk usage",
+  "secondLabel" : "// The score weight for disk usage",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5528,
+  "secondPos" : 5537,
+  "firstEndPos" : 5562,
+  "secondEndPos" : 5571
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -4057,6 +4310,17 @@
   "secondPos" : 5653,
   "firstEndPos" : 5646,
   "secondEndPos" : 5655
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The default score to give to new hosts",
+  "secondLabel" : "// The default score to give to new hosts",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5653,
+  "secondPos" : 5662,
+  "firstEndPos" : 5694,
+  "secondEndPos" : 5703
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

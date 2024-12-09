@@ -22,6 +22,7 @@ public class GeneralMatcher extends BasicTreeMatcher implements TreeMatcher {
     }
     @Override
     public void match(Tree src, Tree dst, ExtendedMultiMappingStore mappingStore) {
+        if (src == null || dst == null) return;
         if ((st1 instanceof CompositeStatementObject) &&  (st2 instanceof CompositeStatementObject)) {
             new CompositeMatcher((CompositeStatementObject) st1, (CompositeStatementObject) st2)
                     .match(src, dst, mappingStore);

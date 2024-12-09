@@ -67,6 +67,12 @@ public class ASTDiffMappingOptimizer extends OptimizationAwareMatcher{
             }
             else {
                 //Inter-file optimizations
+                TreeContext tc1 = parentContextMap.get(lastStepMapping.getFragment1().getLocationInfo().getFilePath());
+                Tree t1 = TreeUtilFunctions.findByLocationInfo(tc1.getRoot(), lastStepMapping.getFragment1().getLocationInfo());
+                TreeContext tc2 = childContextMap.get(lastStepMapping.getFragment2().getLocationInfo().getFilePath());
+                Tree t2 = TreeUtilFunctions.findByLocationInfo(tc2.getRoot(), lastStepMapping.getFragment2().getLocationInfo());
+                if (t1 == null || t2 == null) continue;
+                new LeafMatcher().match(t1, t2, input.getAllMappings());
             }
         }
         ExtendedMultiMappingStore allMappings = input.getAllMappings();

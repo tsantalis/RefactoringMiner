@@ -3431,6 +3431,28 @@
   "firstEndPos" : 3392,
   "secondEndPos" : 3392
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// step 1) see if we can serve request from the cache directly.",
+  "secondLabel" : "// step 1) see if we can serve request from the cache directly.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3405,
+  "secondPos" : 3405,
+  "firstEndPos" : 3468,
+  "secondEndPos" : 3468
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also see if this can be turned into a conditional cache request.",
+  "secondLabel" : "// also see if this can be turned into a conditional cache request.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3473,
+  "secondPos" : 3473,
+  "firstEndPos" : 3540,
+  "secondEndPos" : 3540
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5081,6 +5103,17 @@
   "firstEndPos" : 4626,
   "secondEndPos" : 4626
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Give up because the cache cannot be read.",
+  "secondLabel" : "// Give up because the cache cannot be read.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4469,
+  "secondPos" : 4469,
+  "firstEndPos" : 4513,
+  "secondEndPos" : 4513
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5223,6 +5256,17 @@
   "secondPos" : 4611,
   "firstEndPos" : 4615,
   "secondEndPos" : 4615
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// verify the entry matches",
+  "secondLabel" : "// verify the entry matches",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4636,
+  "secondPos" : 4636,
+  "firstEndPos" : 4663,
+  "secondEndPos" : 4663
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9426,6 +9470,17 @@
   "firstEndPos" : 7618,
   "secondEndPos" : 7635
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NETWORK or other",
+  "secondLabel" : "// NETWORK or other",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7633,
+  "secondPos" : 7650,
+  "firstEndPos" : 7652,
+  "secondEndPos" : 7669
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9876,6 +9931,28 @@
   "secondPos" : 8086,
   "firstEndPos" : 8084,
   "secondEndPos" : 8101
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// step 2) if this is a conditional cache request, serve it from the cache if necessary",
+  "secondLabel" : "// step 2) if this is a conditional cache request, serve it from the cache if necessary",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8097,
+  "secondPos" : 8114,
+  "firstEndPos" : 8184,
+  "secondEndPos" : 8201
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise, see if it is cacheable",
+  "secondLabel" : "// otherwise, see if it is cacheable",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8189,
+  "secondPos" : 8206,
+  "firstEndPos" : 8225,
+  "secondEndPos" : 8242
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -12517,6 +12594,17 @@
   "firstEndPos" : 9944,
   "secondEndPos" : 9971
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// did not validate, so fall through and cache the response",
+  "secondLabel" : "// did not validate, so fall through and cache the response",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9972,
+  "secondPos" : 9999,
+  "firstEndPos" : 10031,
+  "secondEndPos" : 10058
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13165,6 +13253,17 @@
   "secondPos" : 10434,
   "firstEndPos" : 10769,
   "secondEndPos" : 10796
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Don't cache non-GET responses. We're technically allowed to cache\n             * HEAD requests and some POST requests, but the complexity of doing\n             * so is high and the benefit is low.\n             */",
+  "secondLabel" : "/*\n             * Don't cache non-GET responses. We're technically allowed to cache\n             * HEAD requests and some POST requests, but the complexity of doing\n             * so is high and the benefit is low.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10421,
+  "secondPos" : 10448,
+  "firstEndPos" : 10651,
+  "secondEndPos" : 10678
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14123,6 +14222,17 @@
   "firstEndPos" : 11196,
   "secondEndPos" : 11223
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create the file",
+  "secondLabel" : "// create the file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11211,
+  "secondPos" : 11238,
+  "firstEndPos" : 11229,
+  "secondEndPos" : 11256
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14265,6 +14375,17 @@
   "secondPos" : 11343,
   "firstEndPos" : 11445,
   "secondEndPos" : 11472
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Log.e(LOGTAG, \"error\", e);",
+  "secondLabel" : "// Log.e(LOGTAG, \"error\", e);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11330,
+  "secondPos" : 11357,
+  "firstEndPos" : 11359,
+  "secondEndPos" : 11386
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14771,6 +14892,17 @@
   "secondPos" : 11708,
   "firstEndPos" : 11683,
   "secondEndPos" : 11710
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// step 3: close up shop",
+  "secondLabel" : "// step 3: close up shop",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11696,
+  "secondPos" : 11723,
+  "firstEndPos" : 11720,
+  "secondEndPos" : 11747
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -17082,6 +17214,17 @@
   "firstEndPos" : 13198,
   "secondEndPos" : 13225
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// couldn't emit it all, so just wait for another day...",
+  "secondLabel" : "// couldn't emit it all, so just wait for another day...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13217,
+  "secondPos" : 13244,
+  "firstEndPos" : 13273,
+  "secondEndPos" : 13300
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -17235,6 +17378,17 @@
   "secondPos" : 13398,
   "firstEndPos" : 13375,
   "secondEndPos" : 13402
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write to cache... any data not consumed needs to be retained for the next callback",
+  "secondLabel" : "// write to cache... any data not consumed needs to be retained for the next callback",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13404,
+  "secondPos" : 13431,
+  "firstEndPos" : 13489,
+  "secondEndPos" : 13516
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -20393,6 +20547,17 @@
   "firstEndPos" : 15926,
   "secondEndPos" : 15997
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fill pending",
+  "secondLabel" : "// fill pending",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15954,
+  "secondPos" : 16025,
+  "firstEndPos" : 15969,
+  "secondEndPos" : 16040
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -21790,6 +21955,28 @@
   "firstEndPos" : 16827,
   "secondEndPos" : 16898
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this limits max throughput to 256k (aka max alloc) * 100 per second...",
+  "secondLabel" : "// this limits max throughput to 256k (aka max alloc) * 100 per second...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16840,
+  "secondPos" : 16911,
+  "firstEndPos" : 16913,
+  "secondEndPos" : 16984
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// roughly 25MB/s",
+  "secondLabel" : "// roughly 25MB/s",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16926,
+  "secondPos" : 16997,
+  "firstEndPos" : 16943,
+  "secondEndPos" : 17014
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22592,6 +22779,28 @@
   "secondPos" : 17610,
   "firstEndPos" : 17830,
   "secondEndPos" : 17941
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a 304 response will immediate call report/end since there is no body.",
+  "secondLabel" : "// a 304 response will immediate call report/end since there is no body.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17513,
+  "secondPos" : 17624,
+  "firstEndPos" : 17585,
+  "secondEndPos" : 17696
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// prevent this from happening by waiting for the actual body to be spit out.",
+  "secondLabel" : "// prevent this from happening by waiting for the actual body to be spit out.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17598,
+  "secondPos" : 17709,
+  "firstEndPos" : 17675,
+  "secondEndPos" : 17786
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -23450,6 +23659,17 @@
   "secondPos" : 18298,
   "firstEndPos" : 18204,
   "secondEndPos" : 18315
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Reads an entry from an input stream. A typical entry looks like this:\n         *   http://google.com/foo\n         *   GET\n         *   2\n         *   Accept-Language: fr-CA\n         *   Accept-Charset: UTF-8\n         *   HTTP/1.1 200 OK\n         *   3\n         *   Content-Type: image/png\n         *   Content-Length: 100\n         *   Cache-Control: max-age=600\n         *\n         * A typical HTTPS file looks like this:\n         *   https://google.com/foo\n         *   GET\n         *   2\n         *   Accept-Language: fr-CA\n         *   Accept-Charset: UTF-8\n         *   HTTP/1.1 200 OK\n         *   3\n         *   Content-Type: image/png\n         *   Content-Length: 100\n         *   Cache-Control: max-age=600\n         *\n         *   AES_256_WITH_MD5\n         *   2\n         *   base64-encoded peerCertificate[0]\n         *   base64-encoded peerCertificate[1]\n         *   -1\n         *\n         * The file is newline separated. The first two lines are the URL and\n         * the request method. Next is the number of HTTP Vary request header\n         * lines, followed by those lines.\n         *\n         * Next is the response status line, followed by the number of HTTP\n         * response header lines, followed by those lines.\n         *\n         * HTTPS responses also contain SSL session information. This begins\n         * with a blank line, and then a line containing the cipher suite. Next\n         * is the length of the peer certificate chain. These certificates are\n         * base64-encoded and appear each on their own line. The next line\n         * contains the length of the local certificate chain. These\n         * certificates are also base64-encoded and appear each on their own\n         * line. A length of -1 is used to encode a null array.\n         */",
+  "secondLabel" : "/*\n         * Reads an entry from an input stream. A typical entry looks like this:\n         *   http://google.com/foo\n         *   GET\n         *   2\n         *   Accept-Language: fr-CA\n         *   Accept-Charset: UTF-8\n         *   HTTP/1.1 200 OK\n         *   3\n         *   Content-Type: image/png\n         *   Content-Length: 100\n         *   Cache-Control: max-age=600\n         *\n         * A typical HTTPS file looks like this:\n         *   https://google.com/foo\n         *   GET\n         *   2\n         *   Accept-Language: fr-CA\n         *   Accept-Charset: UTF-8\n         *   HTTP/1.1 200 OK\n         *   3\n         *   Content-Type: image/png\n         *   Content-Length: 100\n         *   Cache-Control: max-age=600\n         *\n         *   AES_256_WITH_MD5\n         *   2\n         *   base64-encoded peerCertificate[0]\n         *   base64-encoded peerCertificate[1]\n         *   -1\n         *\n         * The file is newline separated. The first two lines are the URL and\n         * the request method. Next is the number of HTTP Vary request header\n         * lines, followed by those lines.\n         *\n         * Next is the response status line, followed by the number of HTTP\n         * response header lines, followed by those lines.\n         *\n         * HTTPS responses also contain SSL session information. This begins\n         * with a blank line, and then a line containing the cipher suite. Next\n         * is the length of the peer certificate chain. These certificates are\n         * base64-encoded and appear each on their own line. The next line\n         * contains the length of the local certificate chain. These\n         * certificates are also base64-encoded and appear each on their own\n         * line. A length of -1 is used to encode a null array.\n         */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 18215,
+  "secondPos" : 18326,
+  "firstEndPos" : 20009,
+  "secondEndPos" : 20120
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -24892,6 +25112,105 @@
   "firstEndPos" : 20866,
   "secondEndPos" : 20977
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                if (isHttps()) {",
+  "secondLabel" : "//                if (isHttps()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20890,
+  "secondPos" : 21001,
+  "firstEndPos" : 20924,
+  "secondEndPos" : 21035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    String blank = reader.readLine();",
+  "secondLabel" : "//                    String blank = reader.readLine();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20925,
+  "secondPos" : 21036,
+  "firstEndPos" : 20980,
+  "secondEndPos" : 21091
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    if (blank.length() != 0) {",
+  "secondLabel" : "//                    if (blank.length() != 0) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20981,
+  "secondPos" : 21092,
+  "firstEndPos" : 21029,
+  "secondEndPos" : 21140
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                        throw new IOException(\"expected \\\"\\\" but was \\\"\" + blank + \"\\\"\");",
+  "secondLabel" : "//                        throw new IOException(\"expected \\\"\\\" but was \\\"\" + blank + \"\\\"\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21030,
+  "secondPos" : 21141,
+  "firstEndPos" : 21121,
+  "secondEndPos" : 21232
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    }",
+  "secondLabel" : "//                    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21122,
+  "secondPos" : 21233,
+  "firstEndPos" : 21145,
+  "secondEndPos" : 21256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    cipherSuite = reader.readLine();",
+  "secondLabel" : "//                    cipherSuite = reader.readLine();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21146,
+  "secondPos" : 21257,
+  "firstEndPos" : 21200,
+  "secondEndPos" : 21311
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    peerCertificates = readCertArray(reader);",
+  "secondLabel" : "//                    peerCertificates = readCertArray(reader);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21201,
+  "secondPos" : 21312,
+  "firstEndPos" : 21264,
+  "secondEndPos" : 21375
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    localCertificates = readCertArray(reader);",
+  "secondLabel" : "//                    localCertificates = readCertArray(reader);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21265,
+  "secondPos" : 21376,
+  "firstEndPos" : 21329,
+  "secondEndPos" : 21440
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                } else {",
+  "secondLabel" : "//                } else {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21330,
+  "secondPos" : 21441,
+  "firstEndPos" : 21356,
+  "secondEndPos" : 21467
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25056,6 +25375,17 @@
   "secondPos" : 21593,
   "firstEndPos" : 21486,
   "secondEndPos" : 21597
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                }",
+  "secondLabel" : "//                }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21488,
+  "secondPos" : 21599,
+  "firstEndPos" : 21507,
+  "secondEndPos" : 21618
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -25750,6 +26080,127 @@
   "firstEndPos" : 21910,
   "secondEndPos" : 22021
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            if (isHttps()) {",
+  "secondLabel" : "//            if (isHttps()) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21913,
+  "secondPos" : 22024,
+  "firstEndPos" : 21943,
+  "secondEndPos" : 22054
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                HttpsURLConnection httpsConnection = (HttpsURLConnection) httpConnection;",
+  "secondLabel" : "//                HttpsURLConnection httpsConnection = (HttpsURLConnection) httpConnection;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21944,
+  "secondPos" : 22055,
+  "firstEndPos" : 22035,
+  "secondEndPos" : 22146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                cipherSuite = httpsConnection.getCipherSuite();",
+  "secondLabel" : "//                cipherSuite = httpsConnection.getCipherSuite();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22036,
+  "secondPos" : 22147,
+  "firstEndPos" : 22101,
+  "secondEndPos" : 22212
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                Certificate[] peerCertificatesNonFinal = null;",
+  "secondLabel" : "//                Certificate[] peerCertificatesNonFinal = null;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22102,
+  "secondPos" : 22213,
+  "firstEndPos" : 22166,
+  "secondEndPos" : 22277
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                try {",
+  "secondLabel" : "//                try {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22167,
+  "secondPos" : 22278,
+  "firstEndPos" : 22190,
+  "secondEndPos" : 22301
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    peerCertificatesNonFinal = httpsConnection.getServerCertificates();",
+  "secondLabel" : "//                    peerCertificatesNonFinal = httpsConnection.getServerCertificates();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22191,
+  "secondPos" : 22302,
+  "firstEndPos" : 22280,
+  "secondEndPos" : 22391
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                } catch (SSLPeerUnverifiedException ignored) {",
+  "secondLabel" : "//                } catch (SSLPeerUnverifiedException ignored) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22281,
+  "secondPos" : 22392,
+  "firstEndPos" : 22345,
+  "secondEndPos" : 22456
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                }",
+  "secondLabel" : "//                }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22346,
+  "secondPos" : 22457,
+  "firstEndPos" : 22365,
+  "secondEndPos" : 22476
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                peerCertificates = peerCertificatesNonFinal;",
+  "secondLabel" : "//                peerCertificates = peerCertificatesNonFinal;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22366,
+  "secondPos" : 22477,
+  "firstEndPos" : 22428,
+  "secondEndPos" : 22539
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                localCertificates = httpsConnection.getLocalCertificates();",
+  "secondLabel" : "//                localCertificates = httpsConnection.getLocalCertificates();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22429,
+  "secondPos" : 22540,
+  "firstEndPos" : 22506,
+  "secondEndPos" : 22617
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            } else {",
+  "secondLabel" : "//            } else {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22507,
+  "secondPos" : 22618,
+  "firstEndPos" : 22529,
+  "secondEndPos" : 22640
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25914,6 +26365,17 @@
   "secondPos" : 22754,
   "firstEndPos" : 22647,
   "secondEndPos" : 22758
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            }",
+  "secondLabel" : "//            }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22649,
+  "secondPos" : 22760,
+  "firstEndPos" : 22664,
+  "secondEndPos" : 22775
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -33977,6 +34439,17 @@
   "secondPos" : 27811,
   "firstEndPos" : 27799,
   "secondEndPos" : 27910
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it's gonna write headers and stuff... whatever",
+  "secondLabel" : "// it's gonna write headers and stuff... whatever",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27714,
+  "secondPos" : 27825,
+  "firstEndPos" : 27763,
+  "secondEndPos" : 27874
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

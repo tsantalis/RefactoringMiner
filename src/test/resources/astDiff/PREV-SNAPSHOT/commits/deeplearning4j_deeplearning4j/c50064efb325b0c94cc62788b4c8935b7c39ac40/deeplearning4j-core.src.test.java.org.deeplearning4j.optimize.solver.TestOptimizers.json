@@ -857,6 +857,17 @@
   "firstEndPos" : 2099,
   "secondEndPos" : 2124
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Basic tests of the 'does it throw an exception' variety.",
+  "secondLabel" : "//Basic tests of the 'does it throw an exception' variety.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1766,
+  "secondPos" : 1791,
+  "firstEndPos" : 1824,
+  "secondEndPos" : 1849
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5851,6 +5862,17 @@
   "firstEndPos" : 4661,
   "secondEndPos" : 4992
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//For debugging.",
+  "secondLabel" : "//For debugging.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4670,
+  "secondPos" : 5001,
+  "firstEndPos" : 4686,
+  "secondEndPos" : 5017
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6774,6 +6796,17 @@
   "secondPos" : 5544,
   "firstEndPos" : 5216,
   "secondEndPos" : 5547
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Normally done by ParamInitializers, but obviously that isn't done here ",
+  "secondLabel" : "//Normally done by ParamInitializers, but obviously that isn't done here ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5219,
+  "secondPos" : 5550,
+  "firstEndPos" : 5292,
+  "secondEndPos" : 5623
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9074,6 +9107,39 @@
   "firstEndPos" : 6666,
   "secondEndPos" : 6476
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Expected behaviour after optimization:",
+  "secondLabel" : "//Expected behaviour after optimization:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6680,
+  "secondPos" : 6490,
+  "firstEndPos" : 6720,
+  "secondEndPos" : 6530
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//(a) score is better (lower) after optimization.",
+  "secondLabel" : "//(a) score is better (lower) after optimization.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6723,
+  "secondPos" : 6533,
+  "firstEndPos" : 6772,
+  "secondEndPos" : 6582
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//(b) Parameters are closer to minimum after optimization (TODO)",
+  "secondLabel" : "//(b) Parameters are closer to minimum after optimization (TODO)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6775,
+  "secondPos" : 6585,
+  "firstEndPos" : 6839,
+  "secondEndPos" : 6649
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9656,6 +9722,17 @@
   "secondPos" : 10095,
   "firstEndPos" : 7511,
   "secondEndPos" : 10200
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7406,
+  "secondPos" : 10095,
+  "firstEndPos" : 7412,
+  "secondEndPos" : 10101
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11131,6 +11208,17 @@
   "firstEndPos" : 8263,
   "secondEndPos" : 10952
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sum_i x_i^2",
+  "secondLabel" : "//sum_i x_i^2",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8266,
+  "secondPos" : 10955,
+  "firstEndPos" : 8279,
+  "secondEndPos" : 10968
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -12396,6 +12484,17 @@
   "firstEndPos" : 9160,
   "secondEndPos" : 11849
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Gradients: d(x^2)/dx = 2x",
+  "secondLabel" : "// Gradients: d(x^2)/dx = 2x",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8987,
+  "secondPos" : 11676,
+  "firstEndPos" : 9015,
+  "secondEndPos" : 11704
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13495,6 +13594,28 @@
   "secondPos" : 12248,
   "firstEndPos" : 9724,
   "secondEndPos" : 12413
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Work-around for BaseUpdater.postApply(): Uses Layer.input().size(0)",
+  "secondLabel" : "//Work-around for BaseUpdater.postApply(): Uses Layer.input().size(0)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9564,
+  "secondPos" : 12253,
+  "firstEndPos" : 9633,
+  "secondEndPos" : 12322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//in order to get mini-batch size. i.e., divide by 1 here.",
+  "secondLabel" : "//in order to get mini-batch size. i.e., divide by 1 here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9637,
+  "secondPos" : 12326,
+  "firstEndPos" : 9695,
+  "secondEndPos" : 12384
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 13475,
   "secondEndPos" : 4354
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2002-2012 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on\n * an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the\n * specific language governing permissions and limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2002-2012 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on\n * an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the\n * specific language governing permissions and limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 606,
+  "secondEndPos" : 606
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -538,6 +549,17 @@
   "firstEndPos" : 1564,
   "secondEndPos" : 1389
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1515,
+  "secondPos" : 1340,
+  "firstEndPos" : 1520,
+  "secondEndPos" : 1345
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SaveContextOnUpdateOrErrorResponseWrapper",
@@ -670,6 +692,17 @@
   "firstEndPos" : 1698,
   "secondEndPos" : 1526
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1653,
+  "secondPos" : 1481,
+  "firstEndPos" : 1658,
+  "secondEndPos" : 1486
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -780,6 +813,17 @@
   "firstEndPos" : 1795,
   "secondEndPos" : 1623
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1776,
+  "secondPos" : 1604,
+  "firstEndPos" : 1783,
+  "secondEndPos" : 1611
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Luke Taylor",
@@ -801,6 +845,17 @@
   "secondPos" : 1627,
   "firstEndPos" : 1822,
   "secondEndPos" : 1650
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1799,
+  "secondPos" : 1627,
+  "firstEndPos" : 1806,
+  "secondEndPos" : 1634
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -824,6 +879,17 @@
   "firstEndPos" : 1843,
   "secondEndPos" : 1671
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1826,
+  "secondPos" : 1654,
+  "firstEndPos" : 1833,
+  "secondEndPos" : 1661
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Rob Winch",
@@ -845,6 +911,17 @@
   "secondPos" : 1675,
   "firstEndPos" : 1857,
   "secondEndPos" : 1685
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1847,
+  "secondPos" : 1675,
+  "firstEndPos" : 1853,
+  "secondEndPos" : 1681
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1143,6 +1220,17 @@
   "firstEndPos" : 2119,
   "secondEndPos" : 1903
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* See SEC-1052 */",
+  "secondLabel" : "/* See SEC-1052 */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2125,
+  "secondPos" : 1909,
+  "firstEndPos" : 2143,
+  "secondEndPos" : 1927
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1242,6 +1330,17 @@
   "firstEndPos" : 2262,
   "secondEndPos" : 2033
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2207,
+  "secondPos" : 1991,
+  "firstEndPos" : 2213,
+  "secondEndPos" : 1997
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "response",
@@ -1274,6 +1373,17 @@
   "secondPos" : 2041,
   "firstEndPos" : 2473,
   "secondEndPos" : 2220
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2270,
+  "secondPos" : 2041,
+  "firstEndPos" : 2276,
+  "secondEndPos" : 2047
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1616,6 +1726,17 @@
   "firstEndPos" : 2783,
   "secondEndPos" : 2535
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2760,
+  "secondPos" : 2512,
+  "firstEndPos" : 2765,
+  "secondEndPos" : 2517
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SecurityContext",
@@ -1681,6 +1802,17 @@
   "secondPos" : 2552,
   "firstEndPos" : 2820,
   "secondEndPos" : 2579
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2793,
+  "secondPos" : 2552,
+  "firstEndPos" : 2798,
+  "secondEndPos" : 2557
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1836,6 +1968,17 @@
   "firstEndPos" : 2969,
   "secondEndPos" : 2721
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2946,
+  "secondPos" : 2698,
+  "firstEndPos" : 2951,
+  "secondEndPos" : 2703
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SecurityContext",
@@ -1956,6 +2099,17 @@
   "secondPos" : 2924,
   "firstEndPos" : 3240,
   "secondEndPos" : 2985
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3179,
+  "secondPos" : 2924,
+  "firstEndPos" : 3185,
+  "secondEndPos" : 2930
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4915,6 +5069,17 @@
   "secondPos" : 7432,
   "firstEndPos" : 6757,
   "secondEndPos" : 7449
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6740,
+  "secondPos" : 7432,
+  "firstEndPos" : 6747,
+  "secondEndPos" : 7439
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -12219,6 +12384,17 @@
   "secondPos" : 12878,
   "firstEndPos" : 10826,
   "secondEndPos" : 12895
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10809,
+  "secondPos" : 12878,
+  "firstEndPos" : 10816,
+  "secondEndPos" : 12885
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

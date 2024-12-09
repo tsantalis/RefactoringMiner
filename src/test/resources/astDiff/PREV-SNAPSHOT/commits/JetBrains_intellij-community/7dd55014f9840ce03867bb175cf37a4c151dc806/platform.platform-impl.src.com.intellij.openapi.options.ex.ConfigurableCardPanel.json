@@ -10,6 +10,17 @@
   "firstEndPos" : 4329,
   "secondEndPos" : 5383
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2014 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -306,6 +317,17 @@
   "secondPos" : 1177,
   "firstEndPos" : 1148,
   "secondEndPos" : 1200
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1125,
+  "secondPos" : 1177,
+  "firstEndPos" : 1132,
+  "secondEndPos" : 1184
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -890,6 +912,17 @@
   "firstEndPos" : 1469,
   "secondEndPos" : 1565
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create wrapped configurable on a pooled thread",
+  "secondLabel" : "// create wrapped configurable on a pooled thread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1472,
+  "secondPos" : 1568,
+  "firstEndPos" : 1521,
+  "secondEndPos" : 1617
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",
@@ -1143,6 +1176,17 @@
   "firstEndPos" : 1847,
   "secondEndPos" : 1997
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1826,
+  "secondPos" : 1976,
+  "firstEndPos" : 1831,
+  "secondEndPos" : 1981
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "MasterDetails",
@@ -1198,6 +1242,17 @@
   "firstEndPos" : 1988,
   "secondEndPos" : 2138
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1959,
+  "secondPos" : 2109,
+  "firstEndPos" : 1964,
+  "secondEndPos" : 2114
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "Configurable.NoMargin",
@@ -1252,6 +1307,17 @@
   "secondPos" : 2266,
   "firstEndPos" : 2145,
   "secondEndPos" : 2295
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2116,
+  "secondPos" : 2266,
+  "firstEndPos" : 2121,
+  "secondEndPos" : 2271
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -2671,6 +2737,17 @@
   "secondPos" : 3278,
   "firstEndPos" : 3245,
   "secondEndPos" : 3517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// some custom components do not support borders",
+  "secondLabel" : "// some custom components do not support borders",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3024,
+  "secondPos" : 3296,
+  "firstEndPos" : 3072,
+  "secondEndPos" : 3344
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

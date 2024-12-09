@@ -10,6 +10,17 @@
   "firstEndPos" : 18074,
   "secondEndPos" : 20201
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2007 The Guava Authors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n * in compliance with the License. You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2007 The Guava Authors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except\n * in compliance with the License. You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software distributed under the License\n * is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express\n * or implied. See the License for the specific language governing permissions and limitations under\n * the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -549,6 +560,17 @@
   "firstEndPos" : 1572,
   "secondEndPos" : 1572
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1559,
+  "secondPos" : 1559,
+  "firstEndPos" : 1564,
+  "secondEndPos" : 1564
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BiMap",
@@ -581,6 +603,17 @@
   "secondPos" : 1654,
   "firstEndPos" : 1671,
   "secondEndPos" : 1671
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1654,
+  "secondPos" : 1654,
+  "firstEndPos" : 1659,
+  "secondEndPos" : 1659
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -637,6 +670,17 @@
   "firstEndPos" : 1855,
   "secondEndPos" : 1855
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1842,
+  "secondPos" : 1842,
+  "firstEndPos" : 1847,
+  "secondEndPos" : 1847
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " BiMap",
@@ -670,6 +714,17 @@
   "firstEndPos" : 1894,
   "secondEndPos" : 1894
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1871,
+  "secondPos" : 1871,
+  "firstEndPos" : 1878,
+  "secondEndPos" : 1878
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Louis Wasserman",
@@ -692,6 +747,17 @@
   "firstEndPos" : 1918,
   "secondEndPos" : 1918
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1898,
+  "secondPos" : 1898,
+  "firstEndPos" : 1905,
+  "secondEndPos" : 1905
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Mike Bostock",
@@ -713,6 +779,17 @@
   "secondPos" : 1922,
   "firstEndPos" : 1932,
   "secondEndPos" : 1932
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1922,
+  "secondPos" : 1922,
+  "firstEndPos" : 1928,
+  "secondEndPos" : 1928
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1099,6 +1176,17 @@
   "firstEndPos" : 2136,
   "secondEndPos" : 2136
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2119,
+  "secondPos" : 2119,
+  "firstEndPos" : 2124,
+  "secondEndPos" : 2124
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " HashBiMap",
@@ -1396,6 +1484,17 @@
   "firstEndPos" : 2396,
   "secondEndPos" : 2396
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2346,
+  "secondPos" : 2346,
+  "firstEndPos" : 2352,
+  "secondEndPos" : 2352
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "expectedSize",
@@ -1428,6 +1527,17 @@
   "secondPos" : 2402,
   "firstEndPos" : 2477,
   "secondEndPos" : 2477
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2402,
+  "secondPos" : 2402,
+  "firstEndPos" : 2409,
+  "secondEndPos" : 2409
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1813,6 +1923,17 @@
   "secondPos" : 2666,
   "firstEndPos" : 2677,
   "secondEndPos" : 2677
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2666,
+  "secondPos" : 2666,
+  "firstEndPos" : 2671,
+  "secondEndPos" : 2671
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4893,6 +5014,17 @@
   "secondPos" : 4355,
   "firstEndPos" : 4038,
   "secondEndPos" : 4368
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4025,
+  "secondPos" : 4355,
+  "firstEndPos" : 4030,
+  "secondEndPos" : 4360
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -28951,6 +29083,28 @@
   "firstEndPos" : 16730,
   "secondEndPos" : 18857
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is safe because entries can only get bumped up to earlier in the iteration,",
+  "secondLabel" : "// This is safe because entries can only get bumped up to earlier in the iteration,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16748,
+  "secondPos" : 18875,
+  "firstEndPos" : 16831,
+  "secondEndPos" : 18958
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so they can't get revisited.",
+  "secondLabel" : "// so they can't get revisited.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16848,
+  "secondPos" : 18975,
+  "firstEndPos" : 16879,
+  "secondEndPos" : 19006
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -29764,6 +29918,17 @@
   "secondPos" : 19496,
   "firstEndPos" : 17464,
   "secondEndPos" : 19591
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@serialData",
+  "secondLabel" : "@serialData",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17369,
+  "secondPos" : 19496,
+  "firstEndPos" : 17380,
+  "secondEndPos" : 19507
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

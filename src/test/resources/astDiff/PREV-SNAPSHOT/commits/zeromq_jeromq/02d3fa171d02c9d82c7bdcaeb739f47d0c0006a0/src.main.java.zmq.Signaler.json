@@ -10,6 +10,17 @@
   "firstEndPos" : 4435,
   "secondEndPos" : 4700
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    Copyright (c) 2007-2014 Contributors as noted in the AUTHORS file\n\n    This file is part of 0MQ.\n\n    0MQ is free software; you can redistribute it and/or modify it under\n    the terms of the GNU Lesser General Public License as published by\n    the Free Software Foundation; either version 3 of the License, or\n    (at your option) any later version.\n\n    0MQ is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU Lesser General Public License for more details.\n\n    You should have received a copy of the GNU Lesser General Public License\n    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n*/",
+  "secondLabel" : "/*\n    Copyright (c) 2007-2014 Contributors as noted in the AUTHORS file\n\n    This file is part of 0MQ.\n\n    0MQ is free software; you can redistribute it and/or modify it under\n    the terms of the GNU Lesser General Public License as published by\n    the Free Software Foundation; either version 3 of the License, or\n    (at your option) any later version.\n\n    0MQ is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU Lesser General Public License for more details.\n\n    You should have received a copy of the GNU Lesser General Public License\n    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n*/",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 762,
+  "secondEndPos" : 762
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -208,6 +219,50 @@
   "firstEndPos" : 1057,
   "secondEndPos" : 1057
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  This is a cross-platform equivalent to signal_fd. However, as opposed",
+  "secondLabel" : "//  This is a cross-platform equivalent to signal_fd. However, as opposed",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1060,
+  "secondPos" : 1060,
+  "firstEndPos" : 1133,
+  "secondEndPos" : 1133
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  to signal_fd there can be at most one signal in the signaler at any",
+  "secondLabel" : "//  to signal_fd there can be at most one signal in the signaler at any",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1134,
+  "secondPos" : 1134,
+  "firstEndPos" : 1205,
+  "secondEndPos" : 1205
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  given moment. Attempt to send a signal before receiving the previous",
+  "secondLabel" : "//  given moment. Attempt to send a signal before receiving the previous",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1206,
+  "secondPos" : 1206,
+  "firstEndPos" : 1278,
+  "secondEndPos" : 1278
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  one will result in undefined behaviour.",
+  "secondLabel" : "//  one will result in undefined behaviour.",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1279,
+  "secondPos" : 1279,
+  "firstEndPos" : 1322,
+  "secondEndPos" : 1322
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -273,6 +328,17 @@
   "secondPos" : 1365,
   "firstEndPos" : 1374,
   "secondEndPos" : 1374
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Underlying write & read file descriptor.",
+  "secondLabel" : "//  Underlying write & read file descriptor.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1381,
+  "secondPos" : 1381,
+  "firstEndPos" : 1425,
+  "secondEndPos" : 1425
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -471,6 +537,17 @@
   "secondPos" : 1531,
   "firstEndPos" : 1521,
   "secondEndPos" : 1539
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Selector.selectNow at every sending message doesn't show enough performance",
+  "secondLabel" : "// Selector.selectNow at every sending message doesn't show enough performance",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1528,
+  "secondPos" : 1546,
+  "firstEndPos" : 1606,
+  "secondEndPos" : 1624
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -702,6 +779,28 @@
   "secondPos" : 1745,
   "firstEndPos" : 2245,
   "secondEndPos" : 2456
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Create the socketpair for signaling.",
+  "secondLabel" : "//  Create the socketpair for signaling.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1737,
+  "secondPos" : 1755,
+  "firstEndPos" : 1777,
+  "secondEndPos" : 1795
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Set both fds to non-blocking mode.",
+  "secondLabel" : "//  Set both fds to non-blocking mode.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1809,
+  "secondPos" : 2020,
+  "firstEndPos" : 1847,
+  "secondEndPos" : 2058
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -3144,6 +3243,39 @@
   "secondPos" : 3693,
   "firstEndPos" : 3721,
   "secondEndPos" : 3986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// waitEvent(0) is called every read/send of SocketBase",
+  "secondLabel" : "// waitEvent(0) is called every read/send of SocketBase",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3446,
+  "secondPos" : 3711,
+  "firstEndPos" : 3501,
+  "secondEndPos" : 3766
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// instant readiness is not strictly required",
+  "secondLabel" : "// instant readiness is not strictly required",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3518,
+  "secondPos" : 3783,
+  "firstEndPos" : 3563,
+  "secondEndPos" : 3828
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// On the other hand, we can save lots of system call and increase performance",
+  "secondLabel" : "// On the other hand, we can save lots of system call and increase performance",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3580,
+  "secondPos" : 3845,
+  "firstEndPos" : 3658,
+  "secondEndPos" : 3923
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

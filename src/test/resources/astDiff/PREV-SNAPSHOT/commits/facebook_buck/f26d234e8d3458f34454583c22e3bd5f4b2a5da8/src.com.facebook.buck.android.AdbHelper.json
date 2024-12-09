@@ -10,6 +10,17 @@
   "firstEndPos" : 31597,
   "secondEndPos" : 31679
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2012-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2012-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1605,6 +1616,17 @@
   "firstEndPos" : 3286,
   "secondEndPos" : 3286
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Taken from ddms source code.",
+  "secondLabel" : "// Taken from ddms source code.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3291,
+  "secondPos" : 3291,
+  "firstEndPos" : 3322,
+  "secondEndPos" : 3322
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1737,6 +1759,17 @@
   "firstEndPos" : 3381,
   "secondEndPos" : 3381
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2 min",
+  "secondLabel" : "// 2 min",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3383,
+  "secondPos" : 3383,
+  "firstEndPos" : 3391,
+  "secondEndPos" : 3391
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1857,6 +1890,17 @@
   "secondPos" : 3441,
   "firstEndPos" : 3445,
   "secondEndPos" : 3445
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2 seconds",
+  "secondLabel" : "// 2 seconds",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3447,
+  "secondPos" : 3447,
+  "firstEndPos" : 3459,
+  "secondEndPos" : 3459
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -5345,6 +5389,28 @@
   "firstEndPos" : 5951,
   "secondEndPos" : 5951
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only devices of specific type are accepted:",
+  "secondLabel" : "// Only devices of specific type are accepted:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5756,
+  "secondPos" : 5756,
+  "firstEndPos" : 5802,
+  "secondEndPos" : 5802
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// either real devices only or emulators only.",
+  "secondLabel" : "// either real devices only or emulators only.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5813,
+  "secondPos" : 5813,
+  "firstEndPos" : 5859,
+  "secondEndPos" : 5859
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5520,6 +5586,17 @@
   "secondPos" : 5957,
   "firstEndPos" : 6043,
   "secondEndPos" : 6043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// All online devices match.",
+  "secondLabel" : "// All online devices match.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5969,
+  "secondPos" : 5969,
+  "firstEndPos" : 5997,
+  "secondEndPos" : 5997
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5773,6 +5850,17 @@
   "secondPos" : 6146,
   "firstEndPos" : 6152,
   "secondEndPos" : 6152
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Filtered out all devices.",
+  "secondLabel" : "// Filtered out all devices.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6174,
+  "secondPos" : 6174,
+  "firstEndPos" : 6202,
+  "secondEndPos" : 6202
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6169,6 +6257,17 @@
   "secondPos" : 6519,
   "firstEndPos" : 6523,
   "secondEndPos" : 6523
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Found multiple devices but multi-install mode is not enabled.",
+  "secondLabel" : "// Found multiple devices but multi-install mode is not enabled.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6536,
+  "secondPos" : 6536,
+  "firstEndPos" : 6600,
+  "secondEndPos" : 6600
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6598,6 +6697,17 @@
   "secondPos" : 6984,
   "firstEndPos" : 6988,
   "secondEndPos" : 6988
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Report if multiple devices are matching the filter.",
+  "secondLabel" : "// Report if multiple devices are matching the filter.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7001,
+  "secondPos" : 7001,
+  "firstEndPos" : 7055,
+  "secondEndPos" : 7055
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7435,6 +7545,17 @@
   "firstEndPos" : 7651,
   "secondEndPos" : 7651
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* clientSupport */",
+  "secondLabel" : "/* clientSupport */",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7652,
+  "secondPos" : 7652,
+  "firstEndPos" : 7671,
+  "secondEndPos" : 7671
+}, {
   "firstType" : "BooleanLiteral",
   "secondType" : "BooleanLiteral",
   "firstLabel" : "false",
@@ -7522,6 +7643,17 @@
   "secondPos" : 7719,
   "firstEndPos" : 7792,
   "secondEndPos" : 7792
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ADB was already initialized, we're fine, so just ignore.",
+  "secondLabel" : "// ADB was already initialized, we're fine, so just ignore.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7727,
+  "secondPos" : 7727,
+  "firstEndPos" : 7786,
+  "secondEndPos" : 7786
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8480,6 +8612,17 @@
   "firstEndPos" : 8409,
   "secondEndPos" : 9022
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8390,
+  "secondPos" : 9003,
+  "firstEndPos" : 8395,
+  "secondEndPos" : 9008
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AdbCallable",
@@ -8964,6 +9107,17 @@
   "firstEndPos" : 9872,
   "secondEndPos" : 9954
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Initialize adb connection.",
+  "secondLabel" : "// Initialize adb connection.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9254,
+  "secondPos" : 8450,
+  "firstEndPos" : 9283,
+  "secondEndPos" : 8479
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9216,6 +9370,17 @@
   "secondPos" : 8627,
   "firstEndPos" : 9452,
   "secondEndPos" : 8639
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build list of matching devices.",
+  "secondLabel" : "// Build list of matching devices.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9468,
+  "secondPos" : 8651,
+  "firstEndPos" : 9502,
+  "secondEndPos" : 8685
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10009,6 +10174,17 @@
   "firstEndPos" : 9994,
   "secondEndPos" : 10076
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Start executions on all matching devices.",
+  "secondLabel" : "// Start executions on all matching devices.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10009,
+  "secondPos" : 10091,
+  "firstEndPos" : 10053,
+  "secondEndPos" : 10135
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10668,6 +10844,17 @@
   "secondPos" : 10526,
   "firstEndPos" : 10450,
   "secondEndPos" : 10532
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Wait for all executions to complete or fail.",
+  "secondLabel" : "// Wait for all executions to complete or fail.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10466,
+  "secondPos" : 10548,
+  "firstEndPos" : 10513,
+  "secondEndPos" : 10595
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11527,6 +11714,17 @@
   "firstEndPos" : 10985,
   "secondEndPos" : 11067
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Rethrow original InterruptedException instead.",
+  "secondLabel" : "// Rethrow original InterruptedException instead.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10928,
+  "secondPos" : 11010,
+  "firstEndPos" : 10977,
+  "secondEndPos" : 11059
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12121,6 +12319,17 @@
   "firstEndPos" : 11428,
   "secondEndPos" : 11510
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Report results.",
+  "secondLabel" : "// Report results.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11435,
+  "secondPos" : 11517,
+  "firstEndPos" : 11453,
+  "secondEndPos" : 11535
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12671,6 +12880,17 @@
   "firstEndPos" : 11895,
   "secondEndPos" : 11977
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11853,
+  "secondPos" : 11935,
+  "firstEndPos" : 11858,
+  "secondEndPos" : 11940
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.android.ddmlib.IDevice",
@@ -12814,6 +13034,17 @@
   "firstEndPos" : 12021,
   "secondEndPos" : 12103
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12002,
+  "secondPos" : 12084,
+  "firstEndPos" : 12007,
+  "secondEndPos" : 12089
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " AdbCallable",
@@ -12847,6 +13078,17 @@
   "firstEndPos" : 12132,
   "secondEndPos" : 12214
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12057,
+  "secondPos" : 12139,
+  "firstEndPos" : 12063,
+  "secondEndPos" : 12145
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "device",
@@ -12879,6 +13121,17 @@
   "secondPos" : 12157,
   "firstEndPos" : 12117,
   "secondEndPos" : 12199
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12075,
+  "secondPos" : 12157,
+  "firstEndPos" : 12080,
+  "secondEndPos" : 12162
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -12924,6 +13177,17 @@
   "firstEndPos" : 12186,
   "secondEndPos" : 12268
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12140,
+  "secondPos" : 12222,
+  "firstEndPos" : 12147,
+  "secondEndPos" : 12229
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ",
@@ -12945,6 +13209,17 @@
   "secondPos" : 12230,
   "firstEndPos" : 12160,
   "secondEndPos" : 12242
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12148,
+  "secondPos" : 12230,
+  "firstEndPos" : 12153,
+  "secondEndPos" : 12235
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -13133,6 +13408,17 @@
   "firstEndPos" : 12355,
   "secondEndPos" : 12437
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12294,
+  "secondPos" : 12376,
+  "firstEndPos" : 12299,
+  "secondEndPos" : 12381
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.concurrent.Callable",
@@ -13176,6 +13462,17 @@
   "secondPos" : 12451,
   "firstEndPos" : 12399,
   "secondEndPos" : 12481
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12369,
+  "secondPos" : 12451,
+  "firstEndPos" : 12374,
+  "secondEndPos" : 12456
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -13242,6 +13539,17 @@
   "secondPos" : 12502,
   "firstEndPos" : 12477,
   "secondEndPos" : 12559
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12420,
+  "secondPos" : 12502,
+  "firstEndPos" : 12425,
+  "secondEndPos" : 12507
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -13353,6 +13661,17 @@
   "firstEndPos" : 12598,
   "secondEndPos" : 12680
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12522,
+  "secondPos" : 12604,
+  "firstEndPos" : 12528,
+  "secondEndPos" : 12610
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "device",
@@ -13385,6 +13704,17 @@
   "secondPos" : 12622,
   "firstEndPos" : 12582,
   "secondEndPos" : 12664
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12540,
+  "secondPos" : 12622,
+  "firstEndPos" : 12545,
+  "secondEndPos" : 12627
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -13430,6 +13760,17 @@
   "firstEndPos" : 12632,
   "secondEndPos" : 12714
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12606,
+  "secondPos" : 12688,
+  "firstEndPos" : 12613,
+  "secondEndPos" : 12695
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a ",
@@ -13451,6 +13792,17 @@
   "secondPos" : 12698,
   "firstEndPos" : 12632,
   "secondEndPos" : 12714
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12616,
+  "secondPos" : 12698,
+  "firstEndPos" : 12621,
+  "secondEndPos" : 12703
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14101,6 +14453,17 @@
   "firstEndPos" : 13073,
   "secondEndPos" : 13155
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13026,
+  "secondPos" : 13108,
+  "firstEndPos" : 13031,
+  "secondEndPos" : 13113
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.android.ddmlib.IShellOutputReceiver",
@@ -14144,6 +14507,17 @@
   "secondPos" : 13238,
   "firstEndPos" : 13264,
   "secondEndPos" : 13346
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13156,
+  "secondPos" : 13238,
+  "firstEndPos" : 13161,
+  "secondEndPos" : 13243
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -14486,6 +14860,17 @@
   "firstEndPos" : 13475,
   "secondEndPos" : 13557
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13463,
+  "secondPos" : 13545,
+  "firstEndPos" : 13468,
+  "secondEndPos" : 13550
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " line",
@@ -14519,6 +14904,17 @@
   "firstEndPos" : 13495,
   "secondEndPos" : 13577
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13484,
+  "secondPos" : 13566,
+  "firstEndPos" : 13490,
+  "secondEndPos" : 13572
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "line",
@@ -14541,6 +14937,17 @@
   "firstEndPos" : 13594,
   "secondEndPos" : 13676
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13503,
+  "secondPos" : 13585,
+  "firstEndPos" : 13510,
+  "secondEndPos" : 13592
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " an error message if ",
@@ -14562,6 +14969,17 @@
   "secondPos" : 13613,
   "firstEndPos" : 13543,
   "secondEndPos" : 13625
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13531,
+  "secondPos" : 13613,
+  "firstEndPos" : 13536,
+  "secondEndPos" : 13618
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14595,6 +15013,17 @@
   "secondPos" : 13653,
   "firstEndPos" : 13583,
   "secondEndPos" : 13665
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13571,
+  "secondPos" : 13653,
+  "firstEndPos" : 13576,
+  "secondEndPos" : 13658
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14794,6 +15223,17 @@
   "firstEndPos" : 13793,
   "secondEndPos" : 13875
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13781,
+  "secondPos" : 13863,
+  "firstEndPos" : 13786,
+  "secondEndPos" : 13868
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true",
@@ -14827,6 +15267,17 @@
   "firstEndPos" : 13813,
   "secondEndPos" : 13895
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13802,
+  "secondPos" : 13884,
+  "firstEndPos" : 13808,
+  "secondEndPos" : 13890
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "line",
@@ -14849,6 +15300,17 @@
   "firstEndPos" : 13873,
   "secondEndPos" : 13955
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13821,
+  "secondPos" : 13903,
+  "firstEndPos" : 13828,
+  "secondEndPos" : 13910
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ",
@@ -14870,6 +15332,17 @@
   "secondPos" : 13911,
   "firstEndPos" : 13841,
   "secondEndPos" : 13923
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13829,
+  "secondPos" : 13911,
+  "firstEndPos" : 13834,
+  "secondEndPos" : 13916
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -16807,6 +17280,17 @@
   "firstEndPos" : 15377,
   "secondEndPos" : 15459
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15334,
+  "secondPos" : 15416,
+  "firstEndPos" : 15340,
+  "secondEndPos" : 15422
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "device",
@@ -16839,6 +17323,17 @@
   "secondPos" : 15465,
   "firstEndPos" : 15455,
   "secondEndPos" : 15537
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15383,
+  "secondPos" : 15465,
+  "firstEndPos" : 15389,
+  "secondEndPos" : 15471
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -16873,6 +17368,17 @@
   "firstEndPos" : 15505,
   "secondEndPos" : 15587
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15461,
+  "secondPos" : 15543,
+  "firstEndPos" : 15468,
+  "secondEndPos" : 15550
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The full text output of the command.",
@@ -16894,6 +17400,17 @@
   "secondPos" : 15593,
   "firstEndPos" : 15563,
   "secondEndPos" : 15645
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15511,
+  "secondPos" : 15593,
+  "firstEndPos" : 15518,
+  "secondEndPos" : 15600
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22483,6 +23000,17 @@
   "firstEndPos" : 19980,
   "secondEndPos" : 20062
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pattern for Android's \"toolbox\" version of ls",
+  "secondLabel" : "// Pattern for Android's \"toolbox\" version of ls",
+  "firstParentType" : "ParenthesizedExpression",
+  "secondParentType" : "ParenthesizedExpression",
+  "firstPos" : 19693,
+  "secondPos" : 19775,
+  "firstEndPos" : 19741,
+  "secondEndPos" : 19823
+}, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
   "firstLabel" : "",
@@ -22570,6 +23098,17 @@
   "secondPos" : 19900,
   "firstEndPos" : 19820,
   "secondEndPos" : 19902
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pattern for CyanogenMod's busybox version of ls",
+  "secondLabel" : "// Pattern for CyanogenMod's busybox version of ls",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 19833,
+  "secondPos" : 19915,
+  "firstEndPos" : 19883,
+  "secondEndPos" : 19965
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -26047,6 +26586,17 @@
   "firstEndPos" : 23234,
   "secondEndPos" : 23316
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Figure out where the SD card is mounted.",
+  "secondLabel" : "// Figure out where the SD card is mounted.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22665,
+  "secondPos" : 22747,
+  "firstEndPos" : 22708,
+  "secondEndPos" : 22790
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26410,6 +26960,17 @@
   "firstEndPos" : 22963,
   "secondEndPos" : 23045
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Copy APK to device",
+  "secondLabel" : "// Copy APK to device",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22974,
+  "secondPos" : 23056,
+  "firstEndPos" : 22995,
+  "secondEndPos" : 23077
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26497,6 +27058,17 @@
   "secondPos" : 23105,
   "firstEndPos" : 23036,
   "secondEndPos" : 23118
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Install",
+  "secondLabel" : "// Install",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23045,
+  "secondPos" : 23127,
+  "firstEndPos" : 23055,
+  "secondEndPos" : 23137
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -26629,6 +27201,17 @@
   "secondPos" : 23203,
   "firstEndPos" : 23125,
   "secondEndPos" : 23207
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Delete temporary file",
+  "secondLabel" : "// Delete temporary file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23134,
+  "secondPos" : 23216,
+  "firstEndPos" : 23158,
+  "secondEndPos" : 23240
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -27807,6 +28390,17 @@
   "firstEndPos" : 26077,
   "secondEndPos" : 26159
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Might need the package name and activities from the AndroidManifest.",
+  "secondLabel" : "// Might need the package name and activities from the AndroidManifest.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24060,
+  "secondPos" : 24142,
+  "firstEndPos" : 24131,
+  "secondEndPos" : 24213
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28137,6 +28731,17 @@
   "firstEndPos" : 24940,
   "secondEndPos" : 25022
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get list of activities that show up in the launcher.",
+  "secondLabel" : "// Get list of activities that show up in the launcher.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24357,
+  "secondPos" : 24439,
+  "firstEndPos" : 24412,
+  "secondEndPos" : 24494
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28268,6 +28873,17 @@
   "secondPos" : 24542,
   "firstEndPos" : 24481,
   "secondEndPos" : 24563
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sanity check.",
+  "secondLabel" : "// Sanity check.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24492,
+  "secondPos" : 24574,
+  "firstEndPos" : 24508,
+  "secondEndPos" : 24590
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -28632,6 +29248,17 @@
   "firstEndPos" : 24774,
   "secondEndPos" : 24856
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Construct a component for the '-n' argument of 'adb shell am start'.",
+  "secondLabel" : "// Construct a component for the '-n' argument of 'adb shell am start'.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24791,
+  "secondPos" : 24873,
+  "firstEndPos" : 24862,
+  "secondEndPos" : 24944
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28928,6 +29555,17 @@
   "secondPos" : 25057,
   "firstEndPos" : 25111,
   "secondEndPos" : 25193
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If no package name was provided, assume the one in the manifest.",
+  "secondLabel" : "// If no package name was provided, assume the one in the manifest.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24983,
+  "secondPos" : 25065,
+  "firstEndPos" : 25050,
+  "secondEndPos" : 25132
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -30964,6 +31602,17 @@
   "firstEndPos" : 26612,
   "secondEndPos" : 26694
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Parses output from shell am to determine if activity was started correctly.",
+  "secondLabel" : "// Parses output from shell am to determine if activity was started correctly.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26378,
+  "secondPos" : 26460,
+  "firstEndPos" : 26456,
+  "secondEndPos" : 26538
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -31590,6 +32239,17 @@
   "secondPos" : 27056,
   "firstEndPos" : 27015,
   "secondEndPos" : 27097
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26974,
+  "secondPos" : 27056,
+  "firstEndPos" : 26978,
+  "secondEndPos" : 27060
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -32405,6 +33065,17 @@
   "firstEndPos" : 27782,
   "secondEndPos" : 27864
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove any exopackage data as well.  GB doesn't support \"rm -f\", so just ignore output.",
+  "secondLabel" : "// Remove any exopackage data as well.  GB doesn't support \"rm -f\", so just ignore output.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27471,
+  "secondPos" : 27553,
+  "firstEndPos" : 27561,
+  "secondEndPos" : 27643
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -32988,6 +33659,17 @@
   "firstEndPos" : 28163,
   "secondEndPos" : 28245
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 28119,
+  "secondPos" : 28201,
+  "firstEndPos" : 28124,
+  "secondEndPos" : 28206
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.facebook.buck.cli.InstallCommand",
@@ -33020,6 +33702,17 @@
   "secondPos" : 28255,
   "firstEndPos" : 28219,
   "secondEndPos" : 28301
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 28173,
+  "secondPos" : 28255,
+  "firstEndPos" : 28178,
+  "secondEndPos" : 28260
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -35353,6 +36046,17 @@
   "firstEndPos" : 29631,
   "secondEndPos" : 29713
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29599,
+  "secondPos" : 29681,
+  "firstEndPos" : 29605,
+  "secondEndPos" : 29687
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "device",
@@ -35386,6 +36090,17 @@
   "firstEndPos" : 29631,
   "secondEndPos" : 29713
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29616,
+  "secondPos" : 29698,
+  "firstEndPos" : 29621,
+  "secondEndPos" : 29703
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IDevice",
@@ -35407,6 +36122,17 @@
   "secondPos" : 29719,
   "firstEndPos" : 29680,
   "secondEndPos" : 29762
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29637,
+  "secondPos" : 29719,
+  "firstEndPos" : 29643,
+  "secondEndPos" : 29725
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -35441,6 +36167,17 @@
   "firstEndPos" : 29734,
   "secondEndPos" : 29816
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29686,
+  "secondPos" : 29768,
+  "firstEndPos" : 29692,
+  "secondEndPos" : 29774
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "keepData",
@@ -35474,6 +36211,17 @@
   "firstEndPos" : 29783,
   "secondEndPos" : 29865
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29740,
+  "secondPos" : 29822,
+  "firstEndPos" : 29747,
+  "secondEndPos" : 29829
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " error message or null if successful",
@@ -35495,6 +36243,17 @@
   "secondPos" : 29871,
   "firstEndPos" : 29813,
   "secondEndPos" : 29895
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 29789,
+  "secondPos" : 29871,
+  "firstEndPos" : 29796,
+  "secondEndPos" : 29878
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -37145,6 +37904,28 @@
   "secondPos" : 31056,
   "firstEndPos" : 30989,
   "secondEndPos" : 31071
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note that the file may not exist if AndroidManifest.xml is a generated file",
+  "secondLabel" : "// Note that the file may not exist if AndroidManifest.xml is a generated file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30998,
+  "secondPos" : 31080,
+  "firstEndPos" : 31076,
+  "secondEndPos" : 31158
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and the rule has not been built yet.",
+  "secondLabel" : "// and the rule has not been built yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31081,
+  "secondPos" : 31163,
+  "firstEndPos" : 31120,
+  "secondEndPos" : 31202
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

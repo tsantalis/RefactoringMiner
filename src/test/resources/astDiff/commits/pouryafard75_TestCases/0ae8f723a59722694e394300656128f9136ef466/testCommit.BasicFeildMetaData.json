@@ -10,6 +10,17 @@
   "firstEndPos" : 30834,
   "secondEndPos" : 30743
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * #%L\n * BroadleafCommerce Open Admin Platform\n * %%\n * Copyright (C) 2009 - 2013 Broadleaf Commerce\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n * \n *       http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "secondLabel" : "/*\n * #%L\n * BroadleafCommerce Open Admin Platform\n * %%\n * Copyright (C) 2009 - 2013 Broadleaf Commerce\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n * \n *       http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 680,
+  "secondEndPos" : 680
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -218,6 +229,17 @@
   "secondPos" : 1164,
   "firstEndPos" : 1181,
   "secondEndPos" : 1184
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1161,
+  "secondPos" : 1164,
+  "firstEndPos" : 1168,
+  "secondEndPos" : 1171
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1472,6 +1494,17 @@
   "secondPos" : 1940,
   "firstEndPos" : 1944,
   "secondEndPos" : 1949
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//@AdminPresentation derived fields",
+  "secondLabel" : "//@AdminPresentation derived fields",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1950,
+  "secondPos" : 1956,
+  "firstEndPos" : 1985,
+  "secondEndPos" : 1991
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4035,6 +4068,17 @@
   "secondPos" : 3337,
   "firstEndPos" : 3378,
   "secondEndPos" : 3354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//for MapFields",
+  "secondLabel" : "//for MapFields",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3385,
+  "secondPos" : 3361,
+  "firstEndPos" : 3400,
+  "secondEndPos" : 3376
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -11549,6 +11593,17 @@
   "firstEndPos" : 8580,
   "secondEndPos" : 8607
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8436,
+  "secondPos" : 8463,
+  "firstEndPos" : 8443,
+  "secondEndPos" : 8470
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the validation configurations for this property keyed by the fully-qualified name of the",
@@ -11570,6 +11625,17 @@
   "secondPos" : 8567,
   "firstEndPos" : 8565,
   "secondEndPos" : 8592
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8540,
+  "secondPos" : 8567,
+  "firstEndPos" : 8545,
+  "secondEndPos" : 8572
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

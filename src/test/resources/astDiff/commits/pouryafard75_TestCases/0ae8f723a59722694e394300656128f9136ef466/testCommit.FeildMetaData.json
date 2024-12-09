@@ -10,6 +10,17 @@
   "firstEndPos" : 9959,
   "secondEndPos" : 10210
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * #%L\n * BroadleafCommerce Open Admin Platform\n * %%\n * Copyright (C) 2009 - 2013 Broadleaf Commerce\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n * \n *       http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "secondLabel" : "/*\n * #%L\n * BroadleafCommerce Open Admin Platform\n * %%\n * Copyright (C) 2009 - 2013 Broadleaf Commerce\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n * \n *       http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 680,
+  "secondEndPos" : 680
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -174,6 +185,17 @@
   "secondPos" : 910,
   "firstEndPos" : 924,
   "secondEndPos" : 926
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 908,
+  "secondPos" : 910,
+  "firstEndPos" : 915,
+  "secondEndPos" : 917
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -956,6 +978,17 @@
   "firstEndPos" : 1350,
   "secondEndPos" : 1381
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//temporary fields",
+  "secondLabel" : "//temporary fields",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1356,
+  "secondPos" : 1388,
+  "firstEndPos" : 1374,
+  "secondEndPos" : 1406
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1417,6 +1450,17 @@
   "secondPos" : 1620,
   "firstEndPos" : 1605,
   "secondEndPos" : 1637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Additional metadata not supported as first class",
+  "secondLabel" : "//Additional metadata not supported as first class",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1611,
+  "secondPos" : 1644,
+  "firstEndPos" : 1661,
+  "secondEndPos" : 1694
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

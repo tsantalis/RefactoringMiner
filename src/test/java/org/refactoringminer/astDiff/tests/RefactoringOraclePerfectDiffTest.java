@@ -22,7 +22,8 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
  */
 
 //@Isolated
-public class RefactoringOraclePerfectDiffTest {
+public class RefactoringOraclePerfectDiffTest extends ConsideringCommentsVisitorTest{
+
     private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")
 

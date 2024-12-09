@@ -1059,28 +1059,9 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		if(diffSet.size() > 1) {
-			TreeSet<UMLClassRenameDiff> identicalBodyDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
-			for(UMLClassRenameDiff diff : diffSet) {
-				List<UMLOperation> operations1 = diff.getOriginalClass().getOperations();
-				List<UMLOperation> operations2 = diff.getNextClass().getOperations();
-				int identicalBodies = 0;
-				if(operations1.size() == operations2.size()) {
-					for(int i=0; i<operations1.size(); i++) {
-						UMLOperation op1 = operations1.get(i);
-						UMLOperation op2 = operations2.get(i);
-						if(op1.getBodyHashCode() == op2.getBodyHashCode()) {
-							identicalBodies++;
-						}
-					}
-				}
-				if(identicalBodies == operations1.size()) {
-					identicalBodyDiffSet.add(diff);
-				}
-			}
-			if(identicalBodyDiffSet.size() == 1) {
-				return identicalBodyDiffSet;
-			}
+		TreeSet<UMLClassRenameDiff> optimized = optimize(diffSet);
+		if(optimized.size() == 1) {
+			return optimized;
 		}
 		return diffSet;
 	}
@@ -1120,12 +1101,22 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		TreeSet<UMLClassRenameDiff> optimized = optimize(diffSet);
+		if(optimized.size() == 1) {
+			return optimized;
+		}
+		return diffSet;
+	}
+
+	private TreeSet<UMLClassRenameDiff> optimize(TreeSet<UMLClassRenameDiff> diffSet) {
 		if(diffSet.size() > 1) {
 			TreeSet<UMLClassRenameDiff> identicalBodyDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			for(UMLClassRenameDiff diff : diffSet) {
 				List<UMLOperation> operations1 = diff.getOriginalClass().getOperations();
 				List<UMLOperation> operations2 = diff.getNextClass().getOperations();
 				int identicalBodies = 0;
+				int identicalSignatures = 0;
 				if(operations1.size() == operations2.size()) {
 					for(int i=0; i<operations1.size(); i++) {
 						UMLOperation op1 = operations1.get(i);
@@ -1133,14 +1124,23 @@ public class UMLModelDiff {
 						if(op1.getBodyHashCode() == op2.getBodyHashCode()) {
 							identicalBodies++;
 						}
+						if(op1.getActualSignature().equals(op2.getActualSignature())) {
+							identicalSignatures++;
+						}
 					}
 				}
 				if(identicalBodies == operations1.size()) {
 					identicalBodyDiffSet.add(diff);
 				}
+				if(identicalSignatures == operations1.size()) {
+					identicalSignatureDiffSet.add(diff);
+				}
 			}
 			if(identicalBodyDiffSet.size() == 1) {
 				return identicalBodyDiffSet;
+			}
+			if(identicalSignatureDiffSet.size() == 1) {
+				return identicalSignatureDiffSet;
 			}
 		}
 		return diffSet;

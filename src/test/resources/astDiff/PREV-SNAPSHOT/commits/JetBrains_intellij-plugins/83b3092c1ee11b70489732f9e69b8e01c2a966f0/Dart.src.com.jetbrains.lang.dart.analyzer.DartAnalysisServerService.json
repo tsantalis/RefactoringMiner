@@ -3365,6 +3365,17 @@
   "firstEndPos" : 4158,
   "secondEndPos" : 4158
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Access all fields under this lock. Do not wait for server response under lock.",
+  "secondLabel" : "// Access all fields under this lock. Do not wait for server response under lock.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4162,
+  "secondPos" : 4162,
+  "firstEndPos" : 4243,
+  "secondEndPos" : 4243
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -6489,6 +6500,17 @@
   "firstEndPos" : 5896,
   "secondEndPos" : 5896
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ignore notifications for files that has been changed, but server does not know about them yet.",
+  "secondLabel" : "// Ignore notifications for files that has been changed, but server does not know about them yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5907,
+  "secondPos" : 5907,
+  "firstEndPos" : 6004,
+  "secondEndPos" : 6004
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6587,6 +6609,17 @@
   "secondPos" : 6074,
   "firstEndPos" : 6081,
   "secondEndPos" : 6081
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Convert HighlightRegion(s) into PluginHighlightRegion(s).",
+  "secondLabel" : "// Convert HighlightRegion(s) into PluginHighlightRegion(s).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6100,
+  "secondPos" : 6100,
+  "firstEndPos" : 6160,
+  "secondEndPos" : 6160
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6907,6 +6940,17 @@
   "firstEndPos" : 6344,
   "secondEndPos" : 6344
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Put PluginHighlightRegion(s).",
+  "secondLabel" : "// Put PluginHighlightRegion(s).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6366,
+  "secondPos" : 6366,
+  "firstEndPos" : 6398,
+  "secondEndPos" : 6398
+}, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "SynchronizedStatement",
   "firstLabel" : "",
@@ -7027,6 +7071,17 @@
   "secondPos" : 6476,
   "firstEndPos" : 6489,
   "secondEndPos" : 6489
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Force (re)highlighting.",
+  "secondLabel" : "// Force (re)highlighting.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6510,
+  "secondPos" : 6510,
+  "firstEndPos" : 6536,
+  "secondEndPos" : 6536
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7457,6 +7512,17 @@
   "firstEndPos" : 6788,
   "secondEndPos" : 6788
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ignore notifications for files that has been changed, but server does not know about them yet.",
+  "secondLabel" : "// Ignore notifications for files that has been changed, but server does not know about them yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6799,
+  "secondPos" : 6799,
+  "firstEndPos" : 6896,
+  "secondEndPos" : 6896
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7555,6 +7621,17 @@
   "secondPos" : 6966,
   "firstEndPos" : 6973,
   "secondEndPos" : 6973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Convert NavigationRegion(s) into PluginNavigationRegion(s).",
+  "secondLabel" : "// Convert NavigationRegion(s) into PluginNavigationRegion(s).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6992,
+  "secondPos" : 6992,
+  "firstEndPos" : 7054,
+  "secondEndPos" : 7054
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7941,6 +8018,17 @@
   "firstEndPos" : 7274,
   "secondEndPos" : 7274
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Put PluginNavigationRegion(s).",
+  "secondLabel" : "// Put PluginNavigationRegion(s).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7296,
+  "secondPos" : 7296,
+  "firstEndPos" : 7329,
+  "secondEndPos" : 7329
+}, {
   "firstType" : "SynchronizedStatement",
   "secondType" : "SynchronizedStatement",
   "firstLabel" : "",
@@ -8061,6 +8149,17 @@
   "secondPos" : 7409,
   "firstEndPos" : 7422,
   "secondEndPos" : 7422
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Force (re)highlighting.",
+  "secondLabel" : "// Force (re)highlighting.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7443,
+  "secondPos" : 7443,
+  "firstEndPos" : 7469,
+  "secondEndPos" : 7469
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12088,6 +12187,17 @@
   "firstEndPos" : 10353,
   "secondEndPos" : 10353
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection WaitNotInLoop",
+  "secondLabel" : "//noinspection WaitNotInLoop",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10248,
+  "secondPos" : 10248,
+  "firstEndPos" : 10276,
+  "secondEndPos" : 10276
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12209,6 +12319,17 @@
   "firstEndPos" : 10450,
   "secondEndPos" : 10450
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* unlucky */",
+  "secondLabel" : "/* unlucky */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10436,
+  "secondPos" : 10436,
+  "firstEndPos" : 10449,
+  "secondEndPos" : 10449
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12318,6 +12439,28 @@
   "secondPos" : 10569,
   "firstEndPos" : 10573,
   "secondEndPos" : 10573
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 50ms delay to minimize blinking in case of consequent start-stop-start-stop-... events that happen with pubStatus events",
+  "secondLabel" : "// 50ms delay to minimize blinking in case of consequent start-stop-start-stop-... events that happen with pubStatus events",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10620,
+  "secondPos" : 10620,
+  "firstEndPos" : 10743,
+  "secondEndPos" : 10743
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 300ms delay to avoid showing progress for very fast analysis start-stop cycle that happens with analysisStatus events",
+  "secondLabel" : "// 300ms delay to avoid showing progress for very fast analysis start-stop cycle that happens with analysisStatus events",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10756,
+  "secondPos" : 10756,
+  "firstEndPos" : 10876,
+  "secondEndPos" : 10876
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -20668,6 +20811,17 @@
   "firstEndPos" : 15994,
   "secondEndPos" : 15994
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15965,
+  "secondPos" : 15965,
+  "firstEndPos" : 15970,
+  "secondEndPos" : 15970
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PluginHighlightRegion",
@@ -21272,6 +21426,17 @@
   "secondPos" : 16400,
   "firstEndPos" : 16430,
   "secondEndPos" : 16430
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16400,
+  "secondPos" : 16400,
+  "firstEndPos" : 16405,
+  "secondEndPos" : 16405
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -23440,6 +23605,17 @@
   "firstEndPos" : 20499,
   "secondEndPos" : 20499
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO: consider using DocumentListener to collect deltas instead of sending the whole Document.getText() each time",
+  "secondLabel" : "//TODO: consider using DocumentListener to collect deltas instead of sending the whole Document.getText() each time",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17795,
+  "secondPos" : 17795,
+  "firstEndPos" : 17910,
+  "secondEndPos" : 17910
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -25210,6 +25386,17 @@
   "secondPos" : 18885,
   "firstEndPos" : 18905,
   "secondEndPos" : 18905
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// oldTrackedFiles at this point contains only those files that are not in FileDocumentManager.getUnsavedDocuments() any more",
+  "secondLabel" : "// oldTrackedFiles at this point contains only those files that are not in FileDocumentManager.getUnsavedDocuments() any more",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18947,
+  "secondPos" : 18947,
+  "firstEndPos" : 19072,
+  "secondEndPos" : 19072
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -27289,6 +27476,17 @@
   "secondPos" : 20388,
   "firstEndPos" : 20398,
   "secondEndPos" : 20398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection UnnecessaryReturnStatement",
+  "secondLabel" : "//noinspection UnnecessaryReturnStatement",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20412,
+  "secondPos" : 20412,
+  "firstEndPos" : 20453,
+  "secondEndPos" : 20453
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -31657,6 +31855,17 @@
   "firstEndPos" : 23979,
   "secondEndPos" : 23979
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// semaphore unlocked by timeout, schedule to highlight the file again",
+  "secondLabel" : "// semaphore unlocked by timeout, schedule to highlight the file again",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23177,
+  "secondPos" : 23177,
+  "firstEndPos" : 23247,
+  "secondEndPos" : 23247
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33867,6 +34076,17 @@
   "secondPos" : 25093,
   "firstEndPos" : 24874,
   "secondEndPos" : 25095
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make sure to unlock semaphore so that computedErrors() can understand when it was unlocked by timeout",
+  "secondLabel" : "// make sure to unlock semaphore so that computedErrors() can understand when it was unlocked by timeout",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24878,
+  "secondPos" : 25099,
+  "firstEndPos" : 24982,
+  "secondEndPos" : 25203
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -36122,6 +36342,17 @@
   "secondPos" : 26759,
   "firstEndPos" : 26540,
   "secondEndPos" : 26761
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make sure to unlock semaphore so that computedDependencies() can understand when it was unlocked by timeout",
+  "secondLabel" : "// make sure to unlock semaphore so that computedDependencies() can understand when it was unlocked by timeout",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26544,
+  "secondPos" : 26765,
+  "firstEndPos" : 26654,
+  "secondEndPos" : 26875
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -41535,6 +41766,17 @@
   "firstEndPos" : 30083,
   "secondEndPos" : 30304
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// process already received results",
+  "secondLabel" : "// process already received results",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30093,
+  "secondPos" : 30314,
+  "firstEndPos" : 30128,
+  "secondEndPos" : 30349
+}, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
   "firstLabel" : "",
@@ -41985,6 +42227,17 @@
   "secondPos" : 30631,
   "firstEndPos" : 30417,
   "secondEndPos" : 30638
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// wait for more results",
+  "secondLabel" : "// wait for more results",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30436,
+  "secondPos" : 30657,
+  "firstEndPos" : 30460,
+  "secondEndPos" : 30681
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -43327,6 +43580,17 @@
   "secondPos" : 31466,
   "firstEndPos" : 31388,
   "secondEndPos" : 31609
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not a problem. Happens if a file is outside of the project, or server is just not ready yet.",
+  "secondLabel" : "// Not a problem. Happens if a file is outside of the project, or server is just not ready yet.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31257,
+  "secondPos" : 31478,
+  "firstEndPos" : 31352,
+  "secondEndPos" : 31573
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -54460,6 +54724,17 @@
   "firstEndPos" : 38423,
   "secondEndPos" : 39139
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//System.out.println(\"debugStream: \" + str);",
+  "secondLabel" : "//System.out.println(\"debugStream: \" + str);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38369,
+  "secondPos" : 39085,
+  "firstEndPos" : 38413,
+  "secondEndPos" : 39129
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -62985,6 +63260,17 @@
   "firstEndPos" : 44069,
   "secondEndPos" : 44759
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// runnable is still not complete",
+  "secondLabel" : "// runnable is still not complete",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43927,
+  "secondPos" : 44617,
+  "firstEndPos" : 43960,
+  "secondEndPos" : 44650
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -69210,6 +69496,17 @@
   "secondPos" : 48398,
   "firstEndPos" : 47728,
   "secondEndPos" : 48418
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 47708,
+  "secondPos" : 48398,
+  "firstEndPos" : 47713,
+  "secondEndPos" : 48403
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -10,6 +10,17 @@
   "firstEndPos" : 9060,
   "secondEndPos" : 12892
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2013 Glyptodon LLC\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n * THE SOFTWARE.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2013 Glyptodon LLC\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n * THE SOFTWARE.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1117,
+  "secondEndPos" : 1117
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -790,6 +801,17 @@
   "secondPos" : 2746,
   "firstEndPos" : 2474,
   "secondEndPos" : 2784
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2436,
+  "secondPos" : 2746,
+  "firstEndPos" : 2443,
+  "secondEndPos" : 2753
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3376,6 +3398,17 @@
   "firstEndPos" : 4302,
   "secondEndPos" : 6131
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create new ModeledUser backed by blank model",
+  "secondLabel" : "// Create new ModeledUser backed by blank model",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3930,
+  "secondPos" : 5759,
+  "firstEndPos" : 3977,
+  "secondEndPos" : 5806
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3573,6 +3606,17 @@
   "secondPos" : 5908,
   "firstEndPos" : 4084,
   "secondEndPos" : 5913
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set model contents through ModeledUser, copying the provided user",
+  "secondLabel" : "// Set model contents through ModeledUser, copying the provided user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4096,
+  "secondPos" : 5925,
+  "firstEndPos" : 4164,
+  "secondEndPos" : 5993
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3959,6 +4003,17 @@
   "firstEndPos" : 4662,
   "secondEndPos" : 6491
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Return whether user has explicit user creation permission",
+  "secondLabel" : "// Return whether user has explicit user creation permission",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4433,
+  "secondPos" : 6262,
+  "firstEndPos" : 4493,
+  "secondEndPos" : 6322
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4322,6 +4377,17 @@
   "firstEndPos" : 4899,
   "secondEndPos" : 6728
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Return permissions related to users",
+  "secondLabel" : "// Return permissions related to users",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4802,
+  "secondPos" : 6631,
+  "firstEndPos" : 4840,
+  "secondEndPos" : 6669
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4652,6 +4718,17 @@
   "firstEndPos" : 5067,
   "secondEndPos" : 6896
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Username must not be blank",
+  "secondLabel" : "// Username must not be blank",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5087,
+  "secondPos" : 6916,
+  "firstEndPos" : 5116,
+  "secondEndPos" : 6945
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4926,6 +5003,17 @@
   "secondPos" : 7078,
   "firstEndPos" : 5282,
   "secondEndPos" : 7111
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not create duplicate users",
+  "secondLabel" : "// Do not create duplicate users",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5302,
+  "secondPos" : 7131,
+  "firstEndPos" : 5334,
+  "secondEndPos" : 7163
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5620,6 +5708,17 @@
   "firstEndPos" : 5754,
   "secondEndPos" : 7583
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Username must not be blank",
+  "secondLabel" : "// Username must not be blank",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5774,
+  "secondPos" : 7603,
+  "firstEndPos" : 5803,
+  "secondEndPos" : 7632
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5895,6 +5994,17 @@
   "firstEndPos" : 5969,
   "secondEndPos" : 7798
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check whether such a user is already present",
+  "secondLabel" : "// Check whether such a user is already present",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5989,
+  "secondPos" : 7818,
+  "firstEndPos" : 6036,
+  "secondEndPos" : 7865
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6114,6 +6224,17 @@
   "secondPos" : 7970,
   "firstEndPos" : 6391,
   "secondEndPos" : 8220
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not rename to existing user",
+  "secondLabel" : "// Do not rename to existing user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6156,
+  "secondPos" : 7985,
+  "firstEndPos" : 6189,
+  "secondEndPos" : 8018
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6621,6 +6742,17 @@
   "firstEndPos" : 7393,
   "secondEndPos" : 9222
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get original set of implicit permissions",
+  "secondLabel" : "// Get original set of implicit permissions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6565,
+  "secondPos" : 8394,
+  "firstEndPos" : 6608,
+  "secondEndPos" : 8437
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6752,6 +6884,17 @@
   "secondPos" : 8537,
   "firstEndPos" : 6713,
   "secondEndPos" : 8542
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Grant implicit permissions to the new user",
+  "secondLabel" : "// Grant implicit permissions to the new user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6733,
+  "secondPos" : 8562,
+  "firstEndPos" : 6778,
+  "secondEndPos" : 8607
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -7325,6 +7468,17 @@
   "firstEndPos" : 7198,
   "secondEndPos" : 9027
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add new permission to implicit permission set ",
+  "secondLabel" : "// Add new permission to implicit permission set ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7216,
+  "secondPos" : 9045,
+  "firstEndPos" : 7265,
+  "secondEndPos" : 9094
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7666,6 +7820,17 @@
   "firstEndPos" : 7564,
   "secondEndPos" : 9393
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not allow users to delete themselves",
+  "secondLabel" : "// Do not allow users to delete themselves",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7576,
+  "secondPos" : 9405,
+  "firstEndPos" : 7618,
+  "secondEndPos" : 9447
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7930,6 +8095,17 @@
   "firstEndPos" : 7974,
   "secondEndPos" : 9966
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7898,
+  "secondPos" : 9890,
+  "firstEndPos" : 7904,
+  "secondEndPos" : 9896
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "credentials",
@@ -7962,6 +8138,17 @@
   "secondPos" : 9981,
   "firstEndPos" : 8102,
   "secondEndPos" : 10094
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7989,
+  "secondPos" : 9981,
+  "firstEndPos" : 7996,
+  "secondEndPos" : 9988
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8083,6 +8270,17 @@
   "secondPos" : 10314,
   "firstEndPos" : 9056,
   "secondEndPos" : 12888
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get username and password",
+  "secondLabel" : "// Get username and password",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8183,
+  "secondPos" : 10325,
+  "firstEndPos" : 8211,
+  "secondEndPos" : 10353
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8281,6 +8479,17 @@
   "secondPos" : 10445,
   "firstEndPos" : 8314,
   "secondEndPos" : 10456
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Retrieve corresponding user model, if such a user exists",
+  "secondLabel" : "// Retrieve corresponding user model, if such a user exists",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8327,
+  "secondPos" : 10469,
+  "firstEndPos" : 8386,
+  "secondEndPos" : 10528
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8776,6 +8985,17 @@
   "secondPos" : 10959,
   "firstEndPos" : 8725,
   "secondEndPos" : 10974
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Return corresponding user, set up cyclic reference",
+  "secondLabel" : "// Create corresponding user object, set up cyclic reference",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8745,
+  "secondPos" : 11013,
+  "firstEndPos" : 8798,
+  "secondEndPos" : 11073
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

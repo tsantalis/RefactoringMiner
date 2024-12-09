@@ -10,6 +10,17 @@
   "firstEndPos" : 9379,
   "secondEndPos" : 8927
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1857,6 +1868,17 @@
   "secondPos" : 2960,
   "firstEndPos" : 2982,
   "secondEndPos" : 2983
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're running this test in IJ, then this path doesn't exist. Fall back to one that does",
+  "secondLabel" : "// If we're running this test in IJ, then this path doesn't exist. Fall back to one that does",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2991,
+  "secondPos" : 2992,
+  "firstEndPos" : 3084,
+  "secondEndPos" : 3085
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4277,6 +4299,50 @@
   "secondPos" : 4650,
   "firstEndPos" : 4661,
   "secondEndPos" : 4662
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4663,
+  "secondPos" : 4664,
+  "firstEndPos" : 4669,
+  "secondEndPos" : 4670
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 4663,
+  "secondPos" : 4664,
+  "firstEndPos" : 4669,
+  "secondEndPos" : 4670
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 4671,
+  "secondPos" : 4672,
+  "firstEndPos" : 4677,
+  "secondEndPos" : 4678
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 4671,
+  "secondPos" : 4672,
+  "firstEndPos" : 4677,
+  "secondEndPos" : 4678
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7028,6 +7094,17 @@
   "firstEndPos" : 6028,
   "secondEndPos" : 6017
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Name is derived from the project identifier",
+  "secondLabel" : "// Name is derived from the project identifier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6035,
+  "secondPos" : 6024,
+  "firstEndPos" : 6081,
+  "secondEndPos" : 6070
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7149,6 +7226,17 @@
   "firstEndPos" : 6125,
   "secondEndPos" : 6114
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The binary jar should be set",
+  "secondLabel" : "// The binary jar should be set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6134,
+  "secondPos" : 6123,
+  "firstEndPos" : 6165,
+  "secondEndPos" : 6154
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7269,6 +7357,17 @@
   "secondPos" : 6200,
   "firstEndPos" : 6222,
   "secondEndPos" : 6211
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There was no source jar in the repo",
+  "secondLabel" : "// There was no source jar in the repo",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6231,
+  "secondPos" : 6220,
+  "firstEndPos" : 6269,
+  "secondEndPos" : 6258
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7490,6 +7589,17 @@
   "firstEndPos" : 6352,
   "secondEndPos" : 6341
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Nothing depends on this, so it's not visible",
+  "secondLabel" : "// Nothing depends on this, so it's not visible",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6361,
+  "secondPos" : 6350,
+  "firstEndPos" : 6408,
+  "secondEndPos" : 6397
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7643,6 +7753,17 @@
   "secondPos" : 6444,
   "firstEndPos" : 6467,
   "secondEndPos" : 6456
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And it doesn't depend on anything",
+  "secondLabel" : "// And it doesn't depend on anything",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6476,
+  "secondPos" : 6465,
+  "firstEndPos" : 6512,
+  "secondEndPos" : 6501
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -13033,6 +13154,28 @@
   "secondPos" : 8687,
   "firstEndPos" : 9145,
   "secondEndPos" : 8693
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Although the \"deps-in-same-project\" could be in the visibility param, it doesn't need to be",
+  "secondLabel" : "// Although the \"deps-in-same-project\" could be in the visibility param, it doesn't need to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9153,
+  "secondPos" : 8701,
+  "firstEndPos" : 9247,
+  "secondEndPos" : 8795
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because it's declared in the same build file.",
+  "secondLabel" : "// because it's declared in the same build file.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9252,
+  "secondPos" : 8800,
+  "firstEndPos" : 9300,
+  "secondEndPos" : 8848
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

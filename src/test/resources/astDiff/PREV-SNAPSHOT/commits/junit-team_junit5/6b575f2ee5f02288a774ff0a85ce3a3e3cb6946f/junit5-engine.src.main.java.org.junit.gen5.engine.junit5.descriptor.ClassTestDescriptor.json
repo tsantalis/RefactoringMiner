@@ -10,6 +10,17 @@
   "firstEndPos" : 10591,
   "secondEndPos" : 8864
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015-2016 the original author or authors.\n *\n * All rights reserved. This program and the accompanying materials are\n * made available under the terms of the Eclipse Public License v1.0 which\n * accompanies this distribution and is available at\n *\n * http://www.eclipse.org/legal/epl-v10.html\n */",
+  "secondLabel" : "/*\n * Copyright 2015-2016 the original author or authors.\n *\n * All rights reserved. This program and the accompanying materials are\n * made available under the terms of the Eclipse Public License v1.0 which\n * accompanies this distribution and is available at\n *\n * http://www.eclipse.org/legal/epl-v10.html\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 312,
+  "secondEndPos" : 312
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -714,6 +725,17 @@
   "firstEndPos" : 2491,
   "secondEndPos" : 2385
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2469,
+  "secondPos" : 2363,
+  "firstEndPos" : 2474,
+  "secondEndPos" : 2368
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TestDescriptor",
@@ -746,6 +768,17 @@
   "secondPos" : 2425,
   "firstEndPos" : 2541,
   "secondEndPos" : 2435
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2531,
+  "secondPos" : 2425,
+  "firstEndPos" : 2537,
+  "secondEndPos" : 2431
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3816,6 +3849,17 @@
   "firstEndPos" : 4332,
   "secondEndPos" : 4446
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// @formatter:off",
+  "secondLabel" : "// @formatter:off",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4338,
+  "secondPos" : 4452,
+  "firstEndPos" : 4355,
+  "secondEndPos" : 4469
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4046,6 +4090,17 @@
   "secondPos" : 4615,
   "firstEndPos" : 4506,
   "secondEndPos" : 4620
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// @formatter:on",
+  "secondLabel" : "// @formatter:on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4512,
+  "secondPos" : 4626,
+  "firstEndPos" : 4528,
+  "secondEndPos" : 4642
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6423,6 +6478,17 @@
   "firstEndPos" : 6243,
   "secondEndPos" : 6357
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 6250,
+  "secondPos" : 6364,
+  "firstEndPos" : 6252,
+  "secondEndPos" : 6366
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "forEach",
@@ -7698,6 +7764,17 @@
   "secondPos" : 7210,
   "firstEndPos" : 7212,
   "secondEndPos" : 7226
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7219,
+  "secondPos" : 7233,
+  "firstEndPos" : 7221,
+  "secondEndPos" : 7235
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

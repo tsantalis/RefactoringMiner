@@ -10,6 +10,17 @@
   "firstEndPos" : 12630,
   "secondEndPos" : 12962
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "secondLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 738,
+  "secondEndPos" : 738
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -593,6 +604,17 @@
   "firstEndPos" : 1753,
   "secondEndPos" : 1753
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Avoid unecessary sync with this flag",
+  "secondLabel" : "//Avoid unecessary sync with this flag",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1761,
+  "secondPos" : 1761,
+  "firstEndPos" : 1799,
+  "secondEndPos" : 1799
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -978,6 +1000,28 @@
   "firstEndPos" : 1996,
   "secondEndPos" : 1996
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//If this is the first time polling a segment, madvise the entire thing",
+  "secondLabel" : "//If this is the first time polling a segment, madvise the entire thing",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2003,
+  "secondPos" : 2003,
+  "firstEndPos" : 2074,
+  "secondEndPos" : 2074
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//into memory",
+  "secondLabel" : "//into memory",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2079,
+  "secondPos" : 2079,
+  "firstEndPos" : 2092,
+  "secondEndPos" : 2092
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1032,6 +1076,28 @@
   "secondPos" : 2113,
   "firstEndPos" : 2127,
   "secondEndPos" : 2127
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Index of the next object to read, not an offset into the file",
+  "secondLabel" : "//Index of the next object to read, not an offset into the file",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2134,
+  "secondPos" : 2134,
+  "firstEndPos" : 2197,
+  "secondEndPos" : 2197
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//The offset is maintained by the ByteBuffer. Used to determine if there is another object",
+  "secondLabel" : "//The offset is maintained by the ByteBuffer. Used to determine if there is another object",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2202,
+  "secondPos" : 2202,
+  "firstEndPos" : 2292,
+  "secondEndPos" : 2292
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1131,6 +1197,17 @@
   "secondPos" : 2336,
   "firstEndPos" : 2347,
   "secondEndPos" : 2347
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//ID of this segment",
+  "secondLabel" : "//ID of this segment",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2354,
+  "secondPos" : 2354,
+  "firstEndPos" : 2374,
+  "secondEndPos" : 2374
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1274,6 +1351,28 @@
   "secondPos" : 2439,
   "firstEndPos" : 2443,
   "secondEndPos" : 2443
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//How many entries that have been polled have from this file have been discarded.",
+  "secondLabel" : "//How many entries that have been polled have from this file have been discarded.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2450,
+  "secondPos" : 2450,
+  "firstEndPos" : 2531,
+  "secondEndPos" : 2531
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Convenient to let PBQ maintain the counter here",
+  "secondLabel" : "//Convenient to let PBQ maintain the counter here",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2536,
+  "secondPos" : 2536,
+  "firstEndPos" : 2585,
+  "secondEndPos" : 2585
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3662,6 +3761,17 @@
   "firstEndPos" : 4021,
   "secondEndPos" : 4011
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//First read the existing amount",
+  "secondLabel" : "//First read the existing amount",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4033,
+  "secondPos" : 4023,
+  "firstEndPos" : 4065,
+  "secondEndPos" : 4055
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4740,6 +4850,17 @@
   "firstEndPos" : 4959,
   "secondEndPos" : 5291
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//If this is for writing, map the chunk size RW and put the buf positions at the start",
+  "secondLabel" : "//If this is for writing, map the chunk size RW and put the buf positions at the start",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4655,
+  "secondPos" : 4937,
+  "firstEndPos" : 4741,
+  "secondEndPos" : 5023
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5234,6 +5355,28 @@
   "secondPos" : 5297,
   "firstEndPos" : 5390,
   "secondEndPos" : 5722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//If it isn't for write, map read only to the actual size and put the write buf position at the end",
+  "secondLabel" : "//If it isn't for write, map read only to the actual size and put the write buf position at the end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4979,
+  "secondPos" : 5311,
+  "firstEndPos" : 5078,
+  "secondEndPos" : 5410
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//so size is reported correctly",
+  "secondLabel" : "//so size is reported correctly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5091,
+  "secondPos" : 5423,
+  "firstEndPos" : 5122,
+  "secondEndPos" : 5454
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9151,6 +9294,17 @@
   "firstEndPos" : 8355,
   "secondEndPos" : 8687
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Leave space for length prefix and flags",
+  "secondLabel" : "//Leave space for length prefix and flags",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7373,
+  "secondPos" : 7705,
+  "firstEndPos" : 7414,
+  "secondEndPos" : 7746
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9480,6 +9634,17 @@
   "secondPos" : 7942,
   "firstEndPos" : 7939,
   "secondEndPos" : 8271
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Calculate destination pointer and compress directly to file",
+  "secondLabel" : "//Calculate destination pointer and compress directly to file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7628,
+  "secondPos" : 7960,
+  "firstEndPos" : 7689,
+  "secondEndPos" : 8021
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10129,6 +10294,28 @@
   "secondPos" : 8304,
   "firstEndPos" : 7975,
   "secondEndPos" : 8307
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Record the size of the compressed object and update buffer positions",
+  "secondLabel" : "//Record the size of the compressed object and update buffer positions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8005,
+  "secondPos" : 8337,
+  "firstEndPos" : 8075,
+  "secondEndPos" : 8407
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//and whether the object was compressed",
+  "secondLabel" : "//and whether the object was compressed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8088,
+  "secondPos" : 8420,
+  "firstEndPos" : 8127,
+  "secondEndPos" : 8459
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12341,6 +12528,17 @@
   "firstEndPos" : 9463,
   "secondEndPos" : 9795
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//No more entries to read",
+  "secondLabel" : "//No more entries to read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9499,
+  "secondPos" : 9831,
+  "firstEndPos" : 9524,
+  "secondEndPos" : 9856
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12472,6 +12670,17 @@
   "secondPos" : 9951,
   "firstEndPos" : 9621,
   "secondEndPos" : 9953
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Get the length prefix and then read the object",
+  "secondLabel" : "//Get the length prefix and then read the object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9632,
+  "secondPos" : 9964,
+  "firstEndPos" : 9680,
+  "secondEndPos" : 10012
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12671,6 +12880,17 @@
   "firstEndPos" : 9788,
   "secondEndPos" : 10120
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Check for compression",
+  "secondLabel" : "//Check for compression",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9801,
+  "secondPos" : 10133,
+  "firstEndPos" : 9824,
+  "secondEndPos" : 10156
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -12813,6 +13033,17 @@
   "secondPos" : 10225,
   "firstEndPos" : 9894,
   "secondEndPos" : 10226
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Determine the length of the object if uncompressed",
+  "secondLabel" : "//Determine the length of the object if uncompressed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9904,
+  "secondPos" : 10236,
+  "firstEndPos" : 9956,
+  "secondEndPos" : 10288
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13221,6 +13452,17 @@
   "firstEndPos" : 10821,
   "secondEndPos" : 11153
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Get storage for output",
+  "secondLabel" : "//Get storage for output",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10244,
+  "secondPos" : 10576,
+  "firstEndPos" : 10268,
+  "secondEndPos" : 10600
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13441,6 +13683,17 @@
   "firstEndPos" : 10384,
   "secondEndPos" : 10716
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Limit to appropriate uncompressed size",
+  "secondLabel" : "//Limit to appropriate uncompressed size",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10401,
+  "secondPos" : 10733,
+  "firstEndPos" : 10441,
+  "secondEndPos" : 10773
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13517,6 +13770,17 @@
   "secondPos" : 10799,
   "firstEndPos" : 10489,
   "secondEndPos" : 10821
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Uncompress to output buffer",
+  "secondLabel" : "//Uncompress to output buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10505,
+  "secondPos" : 10837,
+  "firstEndPos" : 10534,
+  "secondEndPos" : 10866
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14001,6 +14265,17 @@
   "secondPos" : 11159,
   "firstEndPos" : 11759,
   "secondEndPos" : 12091
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Return a slice",
+  "secondLabel" : "//Return a slice",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10841,
+  "secondPos" : 11173,
+  "firstEndPos" : 10857,
+  "secondEndPos" : 11189
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14529,6 +14804,17 @@
   "secondPos" : 11448,
   "firstEndPos" : 11124,
   "secondEndPos" : 11456
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * For uncompressed data, touch all the pages to make 100% sure\n             * they are available since they will be accessed directly.\n             *\n             * This code mimics MappedByteBuffer.load, but without the expensive\n             * madvise call for data we are 99% sure was already madvised.\n             *\n             * This would only ever be an issue in the unlikely event that the page cache\n             * is trashed at the wrong moment or we are very low on memory\n             */",
+  "secondLabel" : "/*\n             * For uncompressed data, touch all the pages to make 100% sure\n             * they are available since they will be accessed directly.\n             *\n             * This code mimics MappedByteBuffer.load, but without the expensive\n             * madvise call for data we are 99% sure was already madvised.\n             *\n             * This would only ever be an issue in the unlikely event that the page cache\n             * is trashed at the wrong moment or we are very low on memory\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11140,
+  "secondPos" : 11472,
+  "firstEndPos" : 11657,
+  "secondEndPos" : 11989
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15266,6 +15552,17 @@
   "secondPos" : 12549,
   "firstEndPos" : 12219,
   "secondEndPos" : 12551
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Don't use size in bytes to determine empty, could potentially\n     * diverge from object count on crash or power failure\n     * although incredibly unlikely\n     */",
+  "secondLabel" : "/*\n     * Don't use size in bytes to determine empty, could potentially\n     * diverge from object count on crash or power failure\n     * although incredibly unlikely\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12257,
+  "secondPos" : 12589,
+  "firstEndPos" : 12431,
+  "secondEndPos" : 12763
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

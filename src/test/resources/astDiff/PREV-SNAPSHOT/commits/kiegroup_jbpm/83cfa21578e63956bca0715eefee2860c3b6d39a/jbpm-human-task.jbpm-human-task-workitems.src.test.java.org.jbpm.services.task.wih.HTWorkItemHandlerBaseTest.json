@@ -8480,6 +8480,17 @@
   "firstEndPos" : 6491,
   "secondEndPos" : 6491
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Check if the parent task is InProgress",
+  "secondLabel" : "//Check if the parent task is InProgress",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6503,
+  "secondPos" : 6503,
+  "firstEndPos" : 6543,
+  "secondEndPos" : 6543
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8864,6 +8875,50 @@
   "secondPos" : 6786,
   "firstEndPos" : 8058,
   "secondEndPos" : 8058
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    \tProperties userGroups = new Properties();",
+  "secondLabel" : "//    \tProperties userGroups = new Properties();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6788,
+  "secondPos" : 6788,
+  "firstEndPos" : 6836,
+  "secondEndPos" : 6836
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        userGroups.setProperty(\"Darth Vader\", \"Crusaders\");",
+  "secondLabel" : "//        userGroups.setProperty(\"Darth Vader\", \"Crusaders\");",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6837,
+  "secondPos" : 6837,
+  "firstEndPos" : 6898,
+  "secondEndPos" : 6898
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        ",
+  "secondLabel" : "//        ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6899,
+  "secondPos" : 6899,
+  "firstEndPos" : 6909,
+  "secondEndPos" : 6909
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        UserGroupCallbackManager.getInstance().setCallback(new DefaultUserGroupCallbackImpl(userGroups));",
+  "secondLabel" : "//        UserGroupCallbackManager.getInstance().setCallback(new DefaultUserGroupCallbackImpl(userGroups));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6910,
+  "secondPos" : 6910,
+  "firstEndPos" : 7017,
+  "secondEndPos" : 7017
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -22285,6 +22340,17 @@
   "firstEndPos" : 14831,
   "secondEndPos" : 14831
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// aborting work item will exit task and not skip it",
+  "secondLabel" : "// aborting work item will exit task and not skip it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14843,
+  "secondPos" : 14843,
+  "firstEndPos" : 14895,
+  "secondEndPos" : 14895
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -25947,6 +26013,28 @@
   "secondPos" : 17064,
   "firstEndPos" : 17084,
   "secondEndPos" : 17084
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        ContentData result = ContentMarshallerHelper.marshal(, ",
+  "secondLabel" : "//        ContentData result = ContentMarshallerHelper.marshal(, ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17087,
+  "secondPos" : 17087,
+  "firstEndPos" : 17152,
+  "secondEndPos" : 17152
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                                                ksession.getEnvironment());",
+  "secondLabel" : "//                                                                ksession.getEnvironment());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17153,
+  "secondPos" : 17153,
+  "firstEndPos" : 17246,
+  "secondEndPos" : 17246
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -30083,6 +30171,17 @@
   "secondPos" : 19687,
   "firstEndPos" : 19701,
   "secondEndPos" : 19701
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Checking that the input parameters are being copied automatically if the Content Element doesn't exist",
+  "secondLabel" : "//Checking that the input parameters are being copied automatically if the Content Element doesn't exist",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19721,
+  "secondPos" : 19721,
+  "firstEndPos" : 19825,
+  "secondEndPos" : 19825
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36474,6 +36573,17 @@
   "secondPos" : 23783,
   "firstEndPos" : 23816,
   "secondEndPos" : 23833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do nothing",
+  "secondLabel" : "// do nothing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23780,
+  "secondPos" : 23797,
+  "firstEndPos" : 23793,
+  "secondEndPos" : 23810
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -50324,6 +50434,17 @@
   "firstEndPos" : 31741,
   "secondEndPos" : 31758
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Period 2 days",
+  "secondLabel" : "// Period 2 days",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31744,
+  "secondPos" : 31761,
+  "firstEndPos" : 31760,
+  "secondEndPos" : 31777
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -58398,6 +58519,17 @@
   "firstEndPos" : 36552,
   "secondEndPos" : 38502
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swallow and return state of completed",
+  "secondLabel" : "// swallow and return state of completed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36494,
+  "secondPos" : 38444,
+  "firstEndPos" : 36534,
+  "secondEndPos" : 38484
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -58738,6 +58870,17 @@
   "secondPos" : 38763,
   "firstEndPos" : 36891,
   "secondEndPos" : 38841
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swallow and return state of aborted",
+  "secondLabel" : "// swallow and return state of aborted",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36835,
+  "secondPos" : 38785,
+  "firstEndPos" : 36873,
+  "secondEndPos" : 38823
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

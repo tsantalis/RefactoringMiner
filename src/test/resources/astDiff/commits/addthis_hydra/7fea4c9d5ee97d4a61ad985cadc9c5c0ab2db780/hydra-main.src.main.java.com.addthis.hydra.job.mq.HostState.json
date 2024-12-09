@@ -10,6 +10,17 @@
   "firstEndPos" : 11955,
   "secondEndPos" : 12000
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 557,
+  "secondEndPos" : 557
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1043,6 +1054,28 @@
   "secondPos" : 1484,
   "firstEndPos" : 1454,
   "secondEndPos" : 1489
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Host State is determined by others zk group membership, by",
+  "secondLabel" : "// Host State is determined by others zk group membership, by",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1460,
+  "secondPos" : 1495,
+  "firstEndPos" : 1521,
+  "secondEndPos" : 1556
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// definition it can not persist.",
+  "secondLabel" : "// definition it can not persist.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1526,
+  "secondPos" : 1561,
+  "firstEndPos" : 1559,
+  "secondEndPos" : 1594
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2683,6 +2716,17 @@
   "firstEndPos" : 2362,
   "secondEndPos" : 2397
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO:  remove but need this in for now because de-serialization fails without it",
+  "secondLabel" : "//TODO:  remove but need this in for now because de-serialization fails without it",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2368,
+  "secondPos" : 2403,
+  "firstEndPos" : 2450,
+  "secondEndPos" : 2485
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3188,6 +3232,17 @@
   "secondPos" : 2742,
   "firstEndPos" : 2718,
   "secondEndPos" : 2753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not encode this derived, internal, non-typesafe field",
+  "secondLabel" : "// Do not encode this derived, internal, non-typesafe field",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2725,
+  "secondPos" : 2760,
+  "firstEndPos" : 2784,
+  "secondEndPos" : 2819
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -10878,6 +10933,61 @@
   "firstEndPos" : 6981,
   "secondEndPos" : 7026
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// You probably only want to print these out when testing locally",
+  "secondLabel" : "// You probably only want to print these out when testing locally",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7009,
+  "secondPos" : 7054,
+  "firstEndPos" : 7074,
+  "secondEndPos" : 7119
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// .add(\"running\", getRunning())",
+  "secondLabel" : "// .add(\"running\", getRunning())",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7099,
+  "secondPos" : 7144,
+  "firstEndPos" : 7131,
+  "secondEndPos" : 7176
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// .add(\"stopped\", getStopped())",
+  "secondLabel" : "// .add(\"stopped\", getStopped())",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7156,
+  "secondPos" : 7201,
+  "firstEndPos" : 7188,
+  "secondEndPos" : 7233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// .add(\"replicas\", getReplicas())",
+  "secondLabel" : "// .add(\"replicas\", getReplicas())",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7213,
+  "secondPos" : 7258,
+  "firstEndPos" : 7247,
+  "secondEndPos" : 7292
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// .add(\"queued\",getQueued())",
+  "secondLabel" : "// .add(\"queued\",getQueued())",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 7272,
+  "secondPos" : 7317,
+  "firstEndPos" : 7301,
+  "secondEndPos" : 7346
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "add",
@@ -11273,6 +11383,39 @@
   "secondPos" : 7651,
   "firstEndPos" : 7614,
   "secondEndPos" : 7659
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7629,
+  "secondPos" : 7674,
+  "firstEndPos" : 7631,
+  "secondEndPos" : 7676
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// generic getters / setters",
+  "secondLabel" : "// generic getters / setters",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7636,
+  "secondPos" : 7681,
+  "firstEndPos" : 7664,
+  "secondEndPos" : 7709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7669,
+  "secondPos" : 7714,
+  "firstEndPos" : 7671,
+  "secondEndPos" : 7716
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -13804,6 +13947,17 @@
   "firstEndPos" : 9109,
   "secondEndPos" : 9154
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Needed for serialization!",
+  "secondLabel" : "// Needed for serialization!",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9122,
+  "secondPos" : 9167,
+  "firstEndPos" : 9150,
+  "secondEndPos" : 9195
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -14111,6 +14265,17 @@
   "secondPos" : 9352,
   "firstEndPos" : 9318,
   "secondEndPos" : 9363
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Needed for serialization!",
+  "secondLabel" : "// Needed for serialization!",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9331,
+  "secondPos" : 9376,
+  "firstEndPos" : 9359,
+  "secondEndPos" : 9404
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

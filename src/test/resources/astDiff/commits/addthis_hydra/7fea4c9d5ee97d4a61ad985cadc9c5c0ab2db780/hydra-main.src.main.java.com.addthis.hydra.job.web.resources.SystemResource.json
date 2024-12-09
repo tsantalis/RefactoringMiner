@@ -10,6 +10,17 @@
   "firstEndPos" : 7030,
   "secondEndPos" : 7048
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * The contents of this file are subject to the terms\n * of the Common Development and Distribution License\n * (the \"License\").  You may not use this file except\n * in compliance with the License.\n * \n * You can obtain a copy of the license at\n * http://www.opensource.org/licenses/cddl1.php\n * See the License for the specific language governing\n * permissions and limitations under the License.\n */",
+  "secondLabel" : "/*\n * The contents of this file are subject to the terms\n * of the Common Development and Distribution License\n * (the \"License\").  You may not use this file except\n * in compliance with the License.\n * \n * You can obtain a copy of the license at\n * http://www.opensource.org/licenses/cddl1.php\n * See the License for the specific language governing\n * permissions and limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 403,
+  "secondEndPos" : 403
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -7963,6 +7974,17 @@
   "firstEndPos" : 5977,
   "secondEndPos" : 5995
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5793,
+  "secondPos" : 5811,
+  "firstEndPos" : 5799,
+  "secondEndPos" : 5817
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "retries",
@@ -8007,6 +8029,17 @@
   "firstEndPos" : 6223,
   "secondEndPos" : 6241
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5985,
+  "secondPos" : 6003,
+  "firstEndPos" : 5991,
+  "secondEndPos" : 6009
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "details",
@@ -8039,6 +8072,17 @@
   "secondPos" : 6023,
   "firstEndPos" : 6017,
   "secondEndPos" : 6035
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6005,
+  "secondPos" : 6023,
+  "firstEndPos" : 6010,
+  "secondEndPos" : 6028
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8094,6 +8138,17 @@
   "secondPos" : 6227,
   "firstEndPos" : 6222,
   "secondEndPos" : 6240
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6209,
+  "secondPos" : 6227,
+  "firstEndPos" : 6214,
+  "secondEndPos" : 6232
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

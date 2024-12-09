@@ -10,6 +10,17 @@
   "firstEndPos" : 24223,
   "secondEndPos" : 24622
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2298,6 +2309,17 @@
   "firstEndPos" : 3606,
   "secondEndPos" : 3697
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Depend on the rules that generate the sources and headers we're compiling.",
+  "secondLabel" : "// Depend on the rules that generate the sources and headers we're compiling.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2890,
+  "secondPos" : 2981,
+  "firstEndPos" : 2967,
+  "secondEndPos" : 3058
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2517,6 +2539,28 @@
   "secondPos" : 3159,
   "firstEndPos" : 3081,
   "secondEndPos" : 3172
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SourcePath",
+  "secondLabel" : "SourcePath",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 3083,
+  "secondPos" : 3174,
+  "firstEndPos" : 3093,
+  "secondEndPos" : 3184
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 3083,
+  "secondPos" : 3174,
+  "firstEndPos" : 3093,
+  "secondEndPos" : 3184
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2770,6 +2814,28 @@
   "secondPos" : 3373,
   "firstEndPos" : 3287,
   "secondEndPos" : 3378
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also add in extra deps from the preprocessor input, such as the symlink tree",
+  "secondLabel" : "// Also add in extra deps from the preprocessor input, such as the symlink tree",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3306,
+  "secondPos" : 3397,
+  "firstEndPos" : 3385,
+  "secondEndPos" : 3476
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// rules.",
+  "secondLabel" : "// rules.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3398,
+  "secondPos" : 3489,
+  "firstEndPos" : 3407,
+  "secondEndPos" : 3498
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7314,6 +7380,17 @@
   "firstEndPos" : 6525,
   "secondEndPos" : 6616
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6464,
+  "secondPos" : 6555,
+  "firstEndPos" : 6471,
+  "secondEndPos" : 6562
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the preprocessed file name for the given source name.",
@@ -7787,6 +7864,17 @@
   "firstEndPos" : 6888,
   "secondEndPos" : 6979
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6775,
+  "secondPos" : 6866,
+  "firstEndPos" : 6782,
+  "secondEndPos" : 6873
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a ",
@@ -7808,6 +7896,17 @@
   "secondPos" : 6876,
   "firstEndPos" : 6804,
   "secondEndPos" : 6895
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6785,
+  "secondPos" : 6876,
+  "firstEndPos" : 6790,
+  "secondEndPos" : 6881
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -9250,6 +9349,17 @@
   "firstEndPos" : 7872,
   "secondEndPos" : 7963
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7784,
+  "secondPos" : 7875,
+  "firstEndPos" : 7791,
+  "secondEndPos" : 7882
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the output path for an object file compiled from the source with the given name.",
@@ -10394,6 +10504,17 @@
   "firstEndPos" : 8521,
   "secondEndPos" : 8612
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build up the list of dependencies for this rule.",
+  "secondLabel" : "// Build up the list of dependencies for this rule.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8531,
+  "secondPos" : 8622,
+  "firstEndPos" : 8582,
+  "secondEndPos" : 8673
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10605,6 +10726,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 8660,
+  "secondPos" : 16355,
+  "firstEndPos" : 8669,
+  "secondEndPos" : 16364
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 8660,
+  "secondPos" : 16355,
+  "firstEndPos" : 8669,
+  "secondEndPos" : 16364
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "naturalOrder",
   "secondLabel" : "naturalOrder",
   "firstParentType" : "MethodInvocation",
@@ -10613,6 +10756,17 @@
   "secondPos" : 16365,
   "firstEndPos" : 8682,
   "secondEndPos" : 16377
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add dependencies on any build rules used to create the preprocessor.",
+  "secondLabel" : "// Add dependencies on any build rules used to create the preprocessor.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 8697,
+  "secondPos" : 16392,
+  "firstEndPos" : 8768,
+  "secondEndPos" : 16463
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -10646,6 +10800,17 @@
   "secondPos" : 8787,
   "firstEndPos" : 8793,
   "secondEndPos" : 8791
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "secondLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 8831,
+  "secondPos" : 16512,
+  "firstEndPos" : 8903,
+  "secondEndPos" : 16584
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -10779,6 +10944,17 @@
   "firstEndPos" : 8973,
   "secondEndPos" : 16654
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Depend on the rule that generates the sources and headers we're compiling.",
+  "secondLabel" : "// Add in all preprocessor deps.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 8990,
+  "secondPos" : 16675,
+  "firstEndPos" : 9067,
+  "secondEndPos" : 16707
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "addAll",
@@ -10855,6 +11031,17 @@
   "secondPos" : 16763,
   "firstEndPos" : 9128,
   "secondEndPos" : 16768
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build up the list of extra preprocessor flags for this rule.",
+  "secondLabel" : "// Build up the list of extra preprocessor flags for this rule.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9137,
+  "secondPos" : 8808,
+  "firstEndPos" : 9200,
+  "secondEndPos" : 8871
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11067,6 +11254,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 9266,
+  "secondPos" : 16902,
+  "firstEndPos" : 9272,
+  "secondEndPos" : 16908
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 9266,
+  "secondPos" : 16902,
+  "firstEndPos" : 9272,
+  "secondEndPos" : 16908
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -11075,6 +11284,17 @@
   "secondPos" : 16909,
   "firstEndPos" : 9280,
   "secondEndPos" : 16916
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're using pic, add in the appropriate flag.",
+  "secondLabel" : "// If we're using pic, add in the appropriate flag.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 9295,
+  "secondPos" : 16927,
+  "firstEndPos" : 9346,
+  "secondEndPos" : 16978
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11141,6 +11361,17 @@
   "secondPos" : 16999,
   "firstEndPos" : 9379,
   "secondEndPos" : 17007
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in platform specific preprocessor flags.",
+  "secondLabel" : "// Add in platform specific preprocessor flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 9395,
+  "secondPos" : 17023,
+  "firstEndPos" : 9442,
+  "secondEndPos" : 17070
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11273,6 +11504,17 @@
   "secondPos" : 17149,
   "firstEndPos" : 9532,
   "secondEndPos" : 17156
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in the platform specific compiler flags.",
+  "secondLabel" : "// Add in the platform specific compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 9549,
+  "secondPos" : 17173,
+  "firstEndPos" : 9596,
+  "secondEndPos" : 17220
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11650,6 +11892,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 9801,
+  "secondPos" : 17941,
+  "firstEndPos" : 9807,
+  "secondEndPos" : 17947
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 9801,
+  "secondPos" : 17941,
+  "firstEndPos" : 9807,
+  "secondEndPos" : 17947
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -11658,6 +11922,17 @@
   "secondPos" : 17948,
   "firstEndPos" : 9815,
   "secondEndPos" : 17955
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom preprocessor flags.",
+  "secondLabel" : "// Add custom preprocessor flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 9830,
+  "secondPos" : 17966,
+  "firstEndPos" : 9863,
+  "secondEndPos" : 17999
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11779,6 +12054,17 @@
   "secondPos" : 18054,
   "firstEndPos" : 9929,
   "secondEndPos" : 18061
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom compiler flags.",
+  "secondLabel" : "// Add custom compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 9946,
+  "secondPos" : 18078,
+  "firstEndPos" : 9975,
+  "secondEndPos" : 18107
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11934,6 +12220,17 @@
   "firstEndPos" : 10071,
   "secondEndPos" : 18199
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom per-file flags.",
+  "secondLabel" : "// Add custom per-file flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 10089,
+  "secondPos" : 18217,
+  "firstEndPos" : 10118,
+  "secondEndPos" : 18246
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "addAll",
@@ -12010,6 +12307,17 @@
   "secondPos" : 18291,
   "firstEndPos" : 10176,
   "secondEndPos" : 18296
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "secondLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10185,
+  "secondPos" : 9019,
+  "firstEndPos" : 10258,
+  "secondEndPos" : 9092
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12340,6 +12648,28 @@
   "secondPos" : 9299,
   "firstEndPos" : 10483,
   "secondEndPos" : 9317
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 10485,
+  "secondPos" : 9319,
+  "firstEndPos" : 10494,
+  "secondEndPos" : 9328
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 10485,
+  "secondPos" : 9319,
+  "firstEndPos" : 10494,
+  "secondEndPos" : 9328
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13738,6 +14068,17 @@
   "firstEndPos" : 11523,
   "secondEndPos" : 10357
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11468,
+  "secondPos" : 10302,
+  "firstEndPos" : 11475,
+  "secondEndPos" : 10309
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the object file name for the given source name.",
@@ -13935,6 +14276,17 @@
   "secondPos" : 10457,
   "firstEndPos" : 11711,
   "secondEndPos" : 10545
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11623,
+  "secondPos" : 10457,
+  "firstEndPos" : 11630,
+  "secondEndPos" : 10464
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14310,6 +14662,17 @@
   "firstEndPos" : 12013,
   "secondEndPos" : 10847
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11904,
+  "secondPos" : 10738,
+  "firstEndPos" : 11911,
+  "secondEndPos" : 10745
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a build target for a ",
@@ -14331,6 +14694,17 @@
   "secondPos" : 10767,
   "firstEndPos" : 11964,
   "secondEndPos" : 10798
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11933,
+  "secondPos" : 10767,
+  "firstEndPos" : 11938,
+  "secondEndPos" : 10772
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -15685,6 +16059,28 @@
   "firstEndPos" : 12843,
   "secondEndPos" : 11677
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pick the compiler to use.  Basically, if we're dealing with C++ sources, use the C++",
+  "secondLabel" : "// Pick the compiler to use.  Basically, if we're dealing with C++ sources, use the C++",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12852,
+  "secondPos" : 11686,
+  "firstEndPos" : 12939,
+  "secondEndPos" : 11773
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compiler, and the C compiler for everything.",
+  "secondLabel" : "// compiler, and the C compiler for everything.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12942,
+  "secondPos" : 11776,
+  "firstEndPos" : 12989,
+  "secondEndPos" : 11823
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -16246,6 +16642,17 @@
   "firstEndPos" : 13301,
   "secondEndPos" : 12135
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're dealing with a C source that can be compiled, add the platform C compiler flags.",
+  "secondLabel" : "// If we're dealing with a C source that can be compiled, add the platform C compiler flags.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13310,
+  "secondPos" : 12144,
+  "firstEndPos" : 13402,
+  "secondEndPos" : 12236
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16488,6 +16895,28 @@
   "firstEndPos" : 13539,
   "secondEndPos" : 12373
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're dealing with a C++ source that can be compiled, add the platform C++ compiler",
+  "secondLabel" : "// If we're dealing with a C++ source that can be compiled, add the platform C++ compiler",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13555,
+  "secondPos" : 12389,
+  "firstEndPos" : 13644,
+  "secondEndPos" : 12478
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// flags.",
+  "secondLabel" : "// flags.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13649,
+  "secondPos" : 12483,
+  "firstEndPos" : 13658,
+  "secondEndPos" : 12492
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16729,6 +17158,17 @@
   "secondPos" : 12624,
   "firstEndPos" : 13801,
   "secondEndPos" : 12635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// All source types require assembling, so add in platform-specific assembler flags.",
+  "secondLabel" : "// All source types require assembling, so add in platform-specific assembler flags.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13817,
+  "secondPos" : 12651,
+  "firstEndPos" : 13901,
+  "secondEndPos" : 12735
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17170,6 +17610,17 @@
   "firstEndPos" : 14113,
   "secondEndPos" : 12947
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in explicit additional compiler flags, if we're compiling.",
+  "secondLabel" : "// Add in explicit additional compiler flags, if we're compiling.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14122,
+  "secondPos" : 12956,
+  "firstEndPos" : 14187,
+  "secondEndPos" : 13021
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -17599,6 +18050,17 @@
   "firstEndPos" : 14594,
   "secondEndPos" : 13428
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14468,
+  "secondPos" : 13302,
+  "firstEndPos" : 14475,
+  "secondEndPos" : 13309
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a ",
@@ -17620,6 +18082,17 @@
   "secondPos" : 13312,
   "firstEndPos" : 14509,
   "secondEndPos" : 13343
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14478,
+  "secondPos" : 13312,
+  "firstEndPos" : 14483,
+  "secondEndPos" : 13317
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17664,6 +18137,17 @@
   "secondPos" : 13410,
   "firstEndPos" : 14593,
   "secondEndPos" : 13427
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14576,
+  "secondPos" : 13410,
+  "firstEndPos" : 14581,
+  "secondEndPos" : 13415
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18536,6 +19020,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 15058,
+  "secondPos" : 13892,
+  "firstEndPos" : 15067,
+  "secondEndPos" : 13901
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 15058,
+  "secondPos" : 13892,
+  "firstEndPos" : 15067,
+  "secondEndPos" : 13901
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "naturalOrder",
   "secondLabel" : "naturalOrder",
   "firstParentType" : "MethodInvocation",
@@ -18544,6 +19050,17 @@
   "secondPos" : 13902,
   "firstEndPos" : 15080,
   "secondEndPos" : 13914
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add dependencies on any build rules used to create the compiler.",
+  "secondLabel" : "// Add dependencies on any build rules used to create the compiler.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15095,
+  "secondPos" : 13929,
+  "firstEndPos" : 15162,
+  "secondEndPos" : 13996
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18632,6 +19149,17 @@
   "secondPos" : 14036,
   "firstEndPos" : 15214,
   "secondEndPos" : 14048
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "secondLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15229,
+  "secondPos" : 14063,
+  "firstEndPos" : 15301,
+  "secondEndPos" : 14135
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -18764,6 +19292,17 @@
   "secondPos" : 14223,
   "firstEndPos" : 15394,
   "secondEndPos" : 14228
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build up the list of compiler flags.",
+  "secondLabel" : "// Build up the list of compiler flags.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15403,
+  "secondPos" : 14237,
+  "firstEndPos" : 15442,
+  "secondEndPos" : 14276
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18954,6 +19493,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 15508,
+  "secondPos" : 14342,
+  "firstEndPos" : 15514,
+  "secondEndPos" : 14348
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 15508,
+  "secondPos" : 14342,
+  "firstEndPos" : 15514,
+  "secondEndPos" : 14348
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -18962,6 +19523,17 @@
   "secondPos" : 14349,
   "firstEndPos" : 15522,
   "secondEndPos" : 14356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're using pic, add in the appropriate flag.",
+  "secondLabel" : "// If we're using pic, add in the appropriate flag.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15537,
+  "secondPos" : 14371,
+  "firstEndPos" : 15588,
+  "secondEndPos" : 14422
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19028,6 +19600,17 @@
   "secondPos" : 14447,
   "firstEndPos" : 15621,
   "secondEndPos" : 14455
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in the platform specific compiler flags.",
+  "secondLabel" : "// Add in the platform specific compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15637,
+  "secondPos" : 14471,
+  "firstEndPos" : 15684,
+  "secondEndPos" : 14518
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19328,6 +19911,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 15832,
+  "secondPos" : 14666,
+  "firstEndPos" : 15838,
+  "secondEndPos" : 14672
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 15832,
+  "secondPos" : 14666,
+  "firstEndPos" : 15838,
+  "secondEndPos" : 14672
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -19336,6 +19941,17 @@
   "secondPos" : 14673,
   "firstEndPos" : 15846,
   "secondEndPos" : 14680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom compiler flags.",
+  "secondLabel" : "// Add custom compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15861,
+  "secondPos" : 14695,
+  "firstEndPos" : 15890,
+  "secondEndPos" : 14724
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19436,6 +20052,17 @@
   "firstEndPos" : 15945,
   "secondEndPos" : 14779
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom per-file flags.",
+  "secondLabel" : "// Add custom per-file flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 15962,
+  "secondPos" : 14796,
+  "firstEndPos" : 15991,
+  "secondEndPos" : 14825
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "addAll",
@@ -19512,6 +20139,17 @@
   "secondPos" : 14878,
   "firstEndPos" : 16049,
   "secondEndPos" : 14883
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "secondLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16058,
+  "secondPos" : 14892,
+  "firstEndPos" : 16131,
+  "secondEndPos" : 14965
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19842,6 +20480,28 @@
   "secondPos" : 15169,
   "firstEndPos" : 16353,
   "secondEndPos" : 15187
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 16355,
+  "secondPos" : 15189,
+  "firstEndPos" : 16364,
+  "secondEndPos" : 15198
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 16355,
+  "secondPos" : 15189,
+  "firstEndPos" : 16364,
+  "secondEndPos" : 15198
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -20976,6 +21636,17 @@
   "firstEndPos" : 17304,
   "secondEndPos" : 18797
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17178,
+  "secondPos" : 18671,
+  "firstEndPos" : 17185,
+  "secondEndPos" : 18678
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a ",
@@ -20997,6 +21668,17 @@
   "secondPos" : 18681,
   "firstEndPos" : 17219,
   "secondEndPos" : 18712
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17188,
+  "secondPos" : 18681,
+  "firstEndPos" : 17193,
+  "secondEndPos" : 18686
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -21041,6 +21723,17 @@
   "secondPos" : 18779,
   "firstEndPos" : 17303,
   "secondEndPos" : 18796
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17286,
+  "secondPos" : 18779,
+  "firstEndPos" : 17291,
+  "secondEndPos" : 18784
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22056,6 +22749,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 17914,
+  "secondPos" : 16355,
+  "firstEndPos" : 17923,
+  "secondEndPos" : 16364
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 17914,
+  "secondPos" : 16355,
+  "firstEndPos" : 17923,
+  "secondEndPos" : 16364
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "naturalOrder",
   "secondLabel" : "naturalOrder",
   "firstParentType" : "MethodInvocation",
@@ -22064,6 +22779,17 @@
   "secondPos" : 16365,
   "firstEndPos" : 17936,
   "secondEndPos" : 16377
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add dependencies on any build rules used to create the preprocessor.",
+  "secondLabel" : "// Add dependencies on any build rules used to create the preprocessor.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 17951,
+  "secondPos" : 16392,
+  "firstEndPos" : 18022,
+  "secondEndPos" : 16463
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22086,6 +22812,17 @@
   "secondPos" : 16484,
   "firstEndPos" : 18075,
   "secondEndPos" : 16494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "secondLabel" : "// If a build rule generates our input source, add that as a dependency.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18089,
+  "secondPos" : 16512,
+  "firstEndPos" : 18161,
+  "secondEndPos" : 16584
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22208,6 +22945,17 @@
   "firstEndPos" : 18231,
   "secondEndPos" : 16654
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in all preprocessor deps.",
+  "secondLabel" : "// Add in all preprocessor deps.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18248,
+  "secondPos" : 16675,
+  "firstEndPos" : 18280,
+  "secondEndPos" : 16707
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "addAll",
@@ -22284,6 +23032,17 @@
   "secondPos" : 16763,
   "firstEndPos" : 18341,
   "secondEndPos" : 16768
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build up the list of compiler flags.",
+  "secondLabel" : "// Build up the list of compiler flags.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18350,
+  "secondPos" : 17487,
+  "firstEndPos" : 18389,
+  "secondEndPos" : 17526
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -22386,6 +23145,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 18455,
+  "secondPos" : 17553,
+  "firstEndPos" : 18461,
+  "secondEndPos" : 17559
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 18455,
+  "secondPos" : 17553,
+  "firstEndPos" : 18461,
+  "secondEndPos" : 17559
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -22394,6 +23175,17 @@
   "secondPos" : 17560,
   "firstEndPos" : 18469,
   "secondEndPos" : 17567
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're using pic, add in the appropriate flag.",
+  "secondLabel" : "// If we're using pic, add in the appropriate flag.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18480,
+  "secondPos" : 17578,
+  "firstEndPos" : 18531,
+  "secondEndPos" : 17629
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22460,6 +23252,17 @@
   "secondPos" : 17650,
   "firstEndPos" : 18560,
   "secondEndPos" : 17658
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add in the platform specific compiler flags.",
+  "secondLabel" : "// Add in the platform specific compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18572,
+  "secondPos" : 17674,
+  "firstEndPos" : 18619,
+  "secondEndPos" : 17721
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22727,6 +23530,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "String",
+  "secondLabel" : "String",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 18801,
+  "secondPos" : 18408,
+  "firstEndPos" : 18807,
+  "secondEndPos" : 18414
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 18801,
+  "secondPos" : 18408,
+  "firstEndPos" : 18807,
+  "secondEndPos" : 18414
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "builder",
   "secondLabel" : "builder",
   "firstParentType" : "MethodInvocation",
@@ -22735,6 +23560,17 @@
   "secondPos" : 18415,
   "firstEndPos" : 18815,
   "secondEndPos" : 18422
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom compiler flags.",
+  "secondLabel" : "// Add custom compiler flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18826,
+  "secondPos" : 18433,
+  "firstEndPos" : 18855,
+  "secondEndPos" : 18462
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22889,6 +23725,17 @@
   "secondPos" : 18547,
   "firstEndPos" : 18947,
   "secondEndPos" : 18554
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add custom per-file flags.",
+  "secondLabel" : "// Add custom per-file flags.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 18961,
+  "secondPos" : 18572,
+  "firstEndPos" : 18990,
+  "secondEndPos" : 18601
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -23065,6 +23912,17 @@
   "secondPos" : 19399,
   "firstEndPos" : 19120,
   "secondEndPos" : 19405
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "secondLabel" : "// Build the CxxCompile rule and add it to our sorted set of build rules.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19128,
+  "secondPos" : 19413,
+  "firstEndPos" : 19201,
+  "secondEndPos" : 19486
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23384,6 +24242,28 @@
   "secondPos" : 19782,
   "firstEndPos" : 19436,
   "secondEndPos" : 19800
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "BuildRule",
+  "secondLabel" : "BuildRule",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 19438,
+  "secondPos" : 19802,
+  "firstEndPos" : 19447,
+  "secondEndPos" : 19811
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 19438,
+  "secondPos" : 19802,
+  "firstEndPos" : 19447,
+  "secondEndPos" : 19811
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -26190,6 +27070,28 @@
   "firstEndPos" : 21374,
   "secondEndPos" : 21773
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If it's a preprocessable source, use a combine preprocess-and-compile build rule.",
+  "secondLabel" : "// If it's a preprocessable source, use a combine preprocess-and-compile build rule.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21387,
+  "secondPos" : 21786,
+  "firstEndPos" : 21471,
+  "secondEndPos" : 21870
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, use a regular compile rule.",
+  "secondLabel" : "// Otherwise, use a regular compile rule.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21482,
+  "secondPos" : 21881,
+  "firstEndPos" : 21523,
+  "secondEndPos" : 21922
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26695,6 +27597,28 @@
   "secondPos" : 22275,
   "firstEndPos" : 22659,
   "secondEndPos" : 23058
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this is a preprocessable source, first create the preprocess build rule and",
+  "secondLabel" : "// If this is a preprocessable source, first create the preprocess build rule and",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21889,
+  "secondPos" : 22288,
+  "firstEndPos" : 21970,
+  "secondEndPos" : 22369
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the source and name to represent its compilable output.",
+  "secondLabel" : "// update the source and name to represent its compilable output.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21981,
+  "secondPos" : 22380,
+  "firstEndPos" : 22046,
+  "secondEndPos" : 22445
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -27323,6 +28247,17 @@
   "firstEndPos" : 22442,
   "secondEndPos" : 22841
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now build the compile build rule.",
+  "secondLabel" : "// Now build the compile build rule.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22471,
+  "secondPos" : 22870,
+  "firstEndPos" : 22507,
+  "secondEndPos" : 22906
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27542,6 +28477,17 @@
   "secondPos" : 23042,
   "firstEndPos" : 22649,
   "secondEndPos" : 23048
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// $CASES-OMITTED$",
+  "secondLabel" : "// $CASES-OMITTED$",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 22669,
+  "secondPos" : 23068,
+  "firstEndPos" : 22687,
+  "secondEndPos" : 23086
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",

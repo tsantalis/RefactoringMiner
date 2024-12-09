@@ -1968,6 +1968,17 @@
   "firstEndPos" : 2314,
   "secondEndPos" : 2314
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * @see javax.jms.MessageListener#onMessage(javax.jms.Message)\n     *\n     * @param message\n     */",
+  "secondLabel" : "/*\n     * @see javax.jms.MessageListener#onMessage(javax.jms.Message)\n     *\n     * @param message\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2327,
+  "secondPos" : 2327,
+  "firstEndPos" : 2433,
+  "secondEndPos" : 2433
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4189,6 +4200,17 @@
   "secondPos" : 4256,
   "firstEndPos" : 4174,
   "secondEndPos" : 4271
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4159,
+  "secondPos" : 4256,
+  "firstEndPos" : 4165,
+  "secondEndPos" : 4262
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

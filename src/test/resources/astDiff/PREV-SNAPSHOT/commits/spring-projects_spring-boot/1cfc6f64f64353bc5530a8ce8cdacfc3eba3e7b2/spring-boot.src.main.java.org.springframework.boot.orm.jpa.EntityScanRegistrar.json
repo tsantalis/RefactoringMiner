@@ -10,6 +10,17 @@
   "firstEndPos" : 5002,
   "secondEndPos" : 6008
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2012-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2012-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -450,6 +461,17 @@
   "firstEndPos" : 1656,
   "secondEndPos" : 1745
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1619,
+  "secondPos" : 1708,
+  "firstEndPos" : 1624,
+  "secondEndPos" : 1713
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ImportBeanDefinitionRegistrar",
@@ -483,6 +505,17 @@
   "firstEndPos" : 1683,
   "secondEndPos" : 1772
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1665,
+  "secondPos" : 1754,
+  "firstEndPos" : 1670,
+  "secondEndPos" : 1759
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "EntityScan",
@@ -515,6 +548,17 @@
   "secondPos" : 1780,
   "firstEndPos" : 1711,
   "secondEndPos" : 1800
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1691,
+  "secondPos" : 1780,
+  "firstEndPos" : 1698,
+  "secondEndPos" : 1787
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1351,6 +1395,28 @@
   "secondPos" : 3777,
   "firstEndPos" : 2362,
   "secondEndPos" : 3811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We don't need this one to be post processed otherwise it can cause a",
+  "secondLabel" : "// We don't need this one to be post processed otherwise it can cause a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2368,
+  "secondPos" : 3816,
+  "firstEndPos" : 2439,
+  "secondEndPos" : 3887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cascade of bean instantiation that we would rather avoid.",
+  "secondLabel" : "// cascade of bean instantiation that we would rather avoid.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2443,
+  "secondPos" : 3890,
+  "firstEndPos" : 2503,
+  "secondEndPos" : 3950
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3420,6 +3486,17 @@
   "firstEndPos" : 3732,
   "secondEndPos" : 4738
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3707,
+  "secondPos" : 4713,
+  "firstEndPos" : 3712,
+  "secondEndPos" : 4718
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanPostProcessor",
@@ -3452,6 +3529,17 @@
   "secondPos" : 4750,
   "firstEndPos" : 3819,
   "secondEndPos" : 4825
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3744,
+  "secondPos" : 4750,
+  "firstEndPos" : 3749,
+  "secondEndPos" : 4755
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -3551,6 +3639,17 @@
   "secondPos" : 4842,
   "firstEndPos" : 3854,
   "secondEndPos" : 4860
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3836,
+  "secondPos" : 4842,
+  "firstEndPos" : 3841,
+  "secondEndPos" : 4847
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

@@ -10,6 +10,17 @@
   "firstEndPos" : 7715,
   "secondEndPos" : 10146
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010 Ning, Inc.\n *\n * Ning licenses this file to you under the Apache License, version 2.0\n * (the \"License\"); you may not use this file except in compliance with the\n * License.  You may obtain a copy of the License at:\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2010 Ning, Inc.\n *\n * Ning licenses this file to you under the Apache License, version 2.0\n * (the \"License\"); you may not use this file except in compliance with the\n * License.  You may obtain a copy of the License at:\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 617,
+  "secondEndPos" : 617
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1857,6 +1868,28 @@
   "secondPos" : 2349,
   "firstEndPos" : 2376,
   "secondEndPos" : 2354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// based on the reference test case from",
+  "secondLabel" : "// based on the reference test case from",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2403,
+  "secondPos" : 4722,
+  "firstEndPos" : 2443,
+  "secondEndPos" : 4762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// http://oauth.pbwiki.com/TestCases",
+  "secondLabel" : "// http://oauth.pbwiki.com/TestCases",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2448,
+  "secondPos" : 4767,
+  "firstEndPos" : 2484,
+  "secondEndPos" : 4803
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

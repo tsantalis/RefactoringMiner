@@ -10,6 +10,17 @@
   "firstEndPos" : 132828,
   "secondEndPos" : 132685
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2007 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2007 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 619,
+  "secondEndPos" : 619
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1077,6 +1088,17 @@
   "firstEndPos" : 2527,
   "secondEndPos" : 2488
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2503,
+  "secondPos" : 2464,
+  "firstEndPos" : 2508,
+  "secondEndPos" : 2469
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SettingsProvider",
@@ -1120,6 +1142,17 @@
   "secondPos" : 2515,
   "firstEndPos" : 2571,
   "secondEndPos" : 2532
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2554,
+  "secondPos" : 2515,
+  "firstEndPos" : 2559,
+  "secondEndPos" : 2520
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -1516,6 +1549,50 @@
   "secondPos" : 2784,
   "firstEndPos" : 2824,
   "secondEndPos" : 2785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Please, please please. If you update the database version, check to make sure the",
+  "secondLabel" : "// Please, please please. If you update the database version, check to make sure the",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2831,
+  "secondPos" : 2792,
+  "firstEndPos" : 2915,
+  "secondEndPos" : 2876
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// database gets upgraded properly. At a minimum, please confirm that 'upgradeVersion'",
+  "secondLabel" : "// database gets upgraded properly. At a minimum, please confirm that 'upgradeVersion'",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2920,
+  "secondPos" : 2881,
+  "firstEndPos" : 3006,
+  "secondEndPos" : 2967
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is properly propagated through your change.  Not doing so will result in a loss of user",
+  "secondLabel" : "// is properly propagated through your change.  Not doing so will result in a loss of user",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3011,
+  "secondPos" : 2972,
+  "firstEndPos" : 3101,
+  "secondEndPos" : 3062
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// settings.",
+  "secondLabel" : "// settings.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3106,
+  "secondPos" : 3067,
+  "firstEndPos" : 3118,
+  "secondEndPos" : 3079
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2507,6 +2584,17 @@
   "firstEndPos" : 3647,
   "secondEndPos" : 3608
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Maximum number of phones",
+  "secondLabel" : "//Maximum number of phones",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3654,
+  "secondPos" : 3615,
+  "firstEndPos" : 3680,
+  "secondEndPos" : 3641
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3013,6 +3101,17 @@
   "firstEndPos" : 3948,
   "secondEndPos" : 3909
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// These are old.",
+  "secondLabel" : "// These are old.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3960,
+  "secondPos" : 3921,
+  "firstEndPos" : 3977,
+  "secondEndPos" : 3938
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3354,6 +3453,17 @@
   "firstEndPos" : 4641,
   "secondEndPos" : 4602
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The owner gets the unadorned db name;",
+  "secondLabel" : "// The owner gets the unadorned db name;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4170,
+  "secondPos" : 4131,
+  "firstEndPos" : 4210,
+  "secondEndPos" : 4171
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3452,6 +3562,28 @@
   "secondPos" : 4272,
   "firstEndPos" : 4635,
   "secondEndPos" : 4596
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Place the database in the user-specific data tree so that it's",
+  "secondLabel" : "// Place the database in the user-specific data tree so that it's",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4325,
+  "secondPos" : 4286,
+  "firstEndPos" : 4390,
+  "secondEndPos" : 4351
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cleaned up automatically when the user is deleted.",
+  "secondLabel" : "// cleaned up automatically when the user is deleted.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4403,
+  "secondPos" : 4364,
+  "firstEndPos" : 4456,
+  "secondEndPos" : 4417
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5213,6 +5345,17 @@
   "firstEndPos" : 6033,
   "secondEndPos" : 5994
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only create the global table for the singleton 'owner' user",
+  "secondLabel" : "// Only create the global table for the singleton 'owner' user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6045,
+  "secondPos" : 6006,
+  "firstEndPos" : 6107,
+  "secondEndPos" : 6068
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5829,6 +5972,17 @@
   "firstEndPos" : 6954,
   "secondEndPos" : 6915
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate bookmarks table with initial bookmarks",
+  "secondLabel" : "// Populate bookmarks table with initial bookmarks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6966,
+  "secondPos" : 6927,
+  "firstEndPos" : 7016,
+  "secondEndPos" : 6977
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6280,6 +6434,17 @@
   "firstEndPos" : 7299,
   "secondEndPos" : 7260
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Load initial volume levels into DB",
+  "secondLabel" : "// Load initial volume levels into DB",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7321,
+  "secondPos" : 7282,
+  "firstEndPos" : 7358,
+  "secondEndPos" : 7319
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6334,6 +6499,17 @@
   "secondPos" : 7345,
   "firstEndPos" : 7386,
   "secondEndPos" : 7347
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Load inital settings values",
+  "secondLabel" : "// Load inital settings values",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7398,
+  "secondPos" : 7359,
+  "firstEndPos" : 7428,
+  "secondEndPos" : 7389
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6775,6 +6951,72 @@
   "firstEndPos" : 7719,
   "secondEndPos" : 7680
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pattern for upgrade blocks:",
+  "secondLabel" : "// Pattern for upgrade blocks:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7730,
+  "secondPos" : 7691,
+  "firstEndPos" : 7760,
+  "secondEndPos" : 7721
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7769,
+  "secondPos" : 7730,
+  "firstEndPos" : 7771,
+  "secondEndPos" : 7732
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    if (upgradeVersion == [the DATABASE_VERSION you set] - 1) {",
+  "secondLabel" : "//    if (upgradeVersion == [the DATABASE_VERSION you set] - 1) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7780,
+  "secondPos" : 7741,
+  "firstEndPos" : 7845,
+  "secondEndPos" : 7806
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        .. your upgrade logic..",
+  "secondLabel" : "//        .. your upgrade logic..",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7854,
+  "secondPos" : 7815,
+  "firstEndPos" : 7887,
+  "secondEndPos" : 7848
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        upgradeVersion = [the DATABASE_VERSION you set]",
+  "secondLabel" : "//        upgradeVersion = [the DATABASE_VERSION you set]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7896,
+  "secondPos" : 7857,
+  "firstEndPos" : 7953,
+  "secondEndPos" : 7914
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7962,
+  "secondPos" : 7923,
+  "firstEndPos" : 7969,
+  "secondEndPos" : 7930
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6840,6 +7082,17 @@
   "secondPos" : 7966,
   "firstEndPos" : 8396,
   "secondEndPos" : 8357
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Version 21 is part of the volume control refresh. There is no\n             * longer a UI-visible for setting notification vibrate on/off (in\n             * our design), but the functionality still exists. Force the\n             * notification vibrate to on.\n             */",
+  "secondLabel" : "/*\n             * Version 21 is part of the volume control refresh. There is no\n             * longer a UI-visible for setting notification vibrate on/off (in\n             * our design), but the functionality still exists. Force the\n             * notification vibrate to on.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8019,
+  "secondPos" : 7980,
+  "firstEndPos" : 8310,
+  "secondEndPos" : 8271
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7082,6 +7335,17 @@
   "secondPos" : 8423,
   "firstEndPos" : 8464,
   "secondEndPos" : 8425
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Upgrade the lock gesture storage location and format",
+  "secondLabel" : "// Upgrade the lock gesture storage location and format",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8478,
+  "secondPos" : 8439,
+  "firstEndPos" : 8533,
+  "secondEndPos" : 8494
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7633,6 +7897,17 @@
   "firstEndPos" : 8976,
   "secondEndPos" : 8937
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Shortcuts, applications, folders",
+  "secondLabel" : "// Shortcuts, applications, folders",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8995,
+  "secondPos" : 8956,
+  "firstEndPos" : 9030,
+  "secondEndPos" : 8991
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7710,6 +7985,17 @@
   "firstEndPos" : 9115,
   "secondEndPos" : 9076
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Photo frames, clocks",
+  "secondLabel" : "// Photo frames, clocks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9134,
+  "secondPos" : 9095,
+  "firstEndPos" : 9157,
+  "secondEndPos" : 9118
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7786,6 +8072,17 @@
   "secondPos" : 9167,
   "firstEndPos" : 9282,
   "secondEndPos" : 9243
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Search boxes",
+  "secondLabel" : "// Search boxes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9301,
+  "secondPos" : 9262,
+  "firstEndPos" : 9316,
+  "secondEndPos" : 9277
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8182,6 +8479,28 @@
   "secondPos" : 9620,
   "firstEndPos" : 10131,
   "secondEndPos" : 10092
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The value of the constants for preferring wifi or preferring mobile have been",
+  "secondLabel" : "// The value of the constants for preferring wifi or preferring mobile have been",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9677,
+  "secondPos" : 9638,
+  "firstEndPos" : 9757,
+  "secondEndPos" : 9718
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swapped, so reload the default.",
+  "secondLabel" : "// swapped, so reload the default.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9774,
+  "secondPos" : 9735,
+  "firstEndPos" : 9808,
+  "secondEndPos" : 9769
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9095,6 +9414,17 @@
   "secondPos" : 10630,
   "firstEndPos" : 10989,
   "secondEndPos" : 10950
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This introduces the new secure settings table.",
+  "secondLabel" : "// This introduces the new secure settings table.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10683,
+  "secondPos" : 10644,
+  "firstEndPos" : 10732,
+  "secondEndPos" : 10693
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10185,6 +10515,61 @@
   "firstEndPos" : 14305,
   "secondEndPos" : 14266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note: The upgrade to 28 was flawed since it didn't delete the old",
+  "secondLabel" : "// Note: The upgrade to 28 was flawed since it didn't delete the old",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13218,
+  "secondPos" : 13179,
+  "firstEndPos" : 13286,
+  "secondEndPos" : 13247
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// setting first before inserting. Combining 28 and 29 with the",
+  "secondLabel" : "// setting first before inserting. Combining 28 and 29 with the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13299,
+  "secondPos" : 13260,
+  "firstEndPos" : 13362,
+  "secondEndPos" : 13323
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fixed version.",
+  "secondLabel" : "// fixed version.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13375,
+  "secondPos" : 13336,
+  "firstEndPos" : 13392,
+  "secondEndPos" : 13353
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This upgrade adds the STREAM_NOTIFICATION type to the list of",
+  "secondLabel" : "// This upgrade adds the STREAM_NOTIFICATION type to the list of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13406,
+  "secondPos" : 13367,
+  "firstEndPos" : 13470,
+  "secondEndPos" : 13431
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "secondLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13483,
+  "secondPos" : 13444,
+  "firstEndPos" : 13540,
+  "secondEndPos" : 13501
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11054,6 +11439,17 @@
   "firstEndPos" : 14941,
   "secondEndPos" : 14902
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Upgrade 31 clears the title for all quick launch shortcuts so the\n             * activities' titles will be resolved at display time. Also, the\n             * folder is changed to '@quicklaunch'.\n             */",
+  "secondLabel" : "/*\n             * Upgrade 31 clears the title for all quick launch shortcuts so the\n             * activities' titles will be resolved at display time. Also, the\n             * folder is changed to '@quicklaunch'.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14355,
+  "secondPos" : 14316,
+  "firstEndPos" : 14584,
+  "secondEndPos" : 14545
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11526,6 +11922,17 @@
   "secondPos" : 14938,
   "firstEndPos" : 15892,
   "secondEndPos" : 15853
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Animations are now managed in preferences, and may be\n             * enabled or disabled based on product resources.\n             */",
+  "secondLabel" : "/*\n             * Animations are now managed in preferences, and may be\n             * enabled or disabled based on product resources.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14991,
+  "secondPos" : 14952,
+  "firstEndPos" : 15141,
+  "secondEndPos" : 15102
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12462,6 +12869,28 @@
   "firstEndPos" : 16678,
   "secondEndPos" : 16639
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The Wi-Fi watchdog SSID list is now seeded with the value of",
+  "secondLabel" : "// The Wi-Fi watchdog SSID list is now seeded with the value of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15942,
+  "secondPos" : 15903,
+  "firstEndPos" : 16005,
+  "secondEndPos" : 15966
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the property ro.com.android.wifi-watchlist",
+  "secondLabel" : "// the property ro.com.android.wifi-watchlist",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16018,
+  "secondPos" : 15979,
+  "firstEndPos" : 16063,
+  "secondEndPos" : 16024
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13154,6 +13583,17 @@
   "secondPos" : 16675,
   "firstEndPos" : 17090,
   "secondEndPos" : 17051
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the default zoom controls to: tap-twice to bring up +/-",
+  "secondLabel" : "// Set the default zoom controls to: tap-twice to bring up +/-",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16728,
+  "secondPos" : 16689,
+  "firstEndPos" : 16790,
+  "secondEndPos" : 16751
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14178,6 +14618,50 @@
   "firstEndPos" : 17597,
   "secondEndPos" : 17558
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// due to a botched merge from donut to eclair, the initialization of ASSISTED_GPS_ENABLED",
+  "secondLabel" : "// due to a botched merge from donut to eclair, the initialization of ASSISTED_GPS_ENABLED",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17621,
+  "secondPos" : 17582,
+  "firstEndPos" : 17711,
+  "secondEndPos" : 17672
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// was accidentally done out of order here.",
+  "secondLabel" : "// was accidentally done out of order here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17724,
+  "secondPos" : 17685,
+  "firstEndPos" : 17767,
+  "secondEndPos" : 17728
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to fix this, ASSISTED_GPS_ENABLED is now initialized while upgrading from 38 to 39,",
+  "secondLabel" : "// to fix this, ASSISTED_GPS_ENABLED is now initialized while upgrading from 38 to 39,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17780,
+  "secondPos" : 17741,
+  "firstEndPos" : 17866,
+  "secondEndPos" : 17827
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we intentionally do nothing from 35 to 36 now.",
+  "secondLabel" : "// and we intentionally do nothing from 35 to 36 now.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17879,
+  "secondPos" : 17840,
+  "firstEndPos" : 17932,
+  "secondEndPos" : 17893
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14364,6 +14848,28 @@
   "secondPos" : 18008,
   "firstEndPos" : 19030,
   "secondEndPos" : 18991
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This upgrade adds the STREAM_SYSTEM_ENFORCED type to the list of",
+  "secondLabel" : "// This upgrade adds the STREAM_SYSTEM_ENFORCED type to the list of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18060,
+  "secondPos" : 18021,
+  "firstEndPos" : 18127,
+  "secondEndPos" : 18088
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "secondLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18140,
+  "secondPos" : 18101,
+  "firstEndPos" : 18197,
+  "secondEndPos" : 18158
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16829,6 +17335,17 @@
   "firstEndPos" : 21214,
   "secondEndPos" : 21175
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * All animations are now turned on by default!\n             */",
+  "secondLabel" : "/*\n             * All animations are now turned on by default!\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20385,
+  "secondPos" : 20346,
+  "firstEndPos" : 20463,
+  "secondEndPos" : 20424
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17764,6 +18281,17 @@
   "firstEndPos" : 21956,
   "secondEndPos" : 21917
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Initialize newly public haptic feedback setting\n             */",
+  "secondLabel" : "/*\n             * Initialize newly public haptic feedback setting\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21264,
+  "secondPos" : 21225,
+  "firstEndPos" : 21345,
+  "secondEndPos" : 21306
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18578,6 +19106,17 @@
   "firstEndPos" : 22647,
   "secondEndPos" : 22608
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Initialize new notification pulse setting\n             */",
+  "secondLabel" : "/*\n             * Initialize new notification pulse setting\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22006,
+  "secondPos" : 21967,
+  "firstEndPos" : 22081,
+  "secondEndPos" : 22042
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19292,6 +19831,17 @@
   "secondPos" : 22644,
   "firstEndPos" : 23401,
   "secondEndPos" : 23362
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * This upgrade stores bluetooth volume separately from voice volume\n             */",
+  "secondLabel" : "/*\n             * This upgrade stores bluetooth volume separately from voice volume\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22697,
+  "secondPos" : 22658,
+  "firstEndPos" : 22796,
+  "secondEndPos" : 22757
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20030,6 +20580,17 @@
   "firstEndPos" : 23689,
   "secondEndPos" : 23650
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Gservices was moved into vendor/google.\n             */",
+  "secondLabel" : "/*\n             * Gservices was moved into vendor/google.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23451,
+  "secondPos" : 23412,
+  "firstEndPos" : 23524,
+  "secondEndPos" : 23485
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -20304,6 +20865,17 @@
   "secondPos" : 23686,
   "firstEndPos" : 24613,
   "secondEndPos" : 24574
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n              * New settings for MountService\n              */",
+  "secondLabel" : "/*\n              * New settings for MountService\n              */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23740,
+  "secondPos" : 23701,
+  "firstEndPos" : 23805,
+  "secondEndPos" : 23766
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21108,6 +21680,17 @@
   "firstEndPos" : 25085,
   "secondEndPos" : 25046
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * The password mode constants have changed; reset back to no\n             * password.\n             */",
+  "secondLabel" : "/*\n             * The password mode constants have changed; reset back to no\n             * password.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24663,
+  "secondPos" : 24624,
+  "firstEndPos" : 24780,
+  "secondEndPos" : 24741
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21503,6 +22086,17 @@
   "secondPos" : 25083,
   "firstEndPos" : 25564,
   "secondEndPos" : 25525
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * The password mode constants have changed again; reset back to no\n             * password.\n             */",
+  "secondLabel" : "/*\n             * The password mode constants have changed again; reset back to no\n             * password.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25136,
+  "secondPos" : 25097,
+  "firstEndPos" : 25259,
+  "secondEndPos" : 25220
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21900,6 +22494,17 @@
   "firstEndPos" : 25790,
   "secondEndPos" : 25751
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n            * Default recognition service no longer initialized here,\n            * moved to RecognitionManagerService.\n            */",
+  "secondLabel" : "/*\n            * Default recognition service no longer initialized here,\n            * moved to RecognitionManagerService.\n            */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25612,
+  "secondPos" : 25573,
+  "firstEndPos" : 25749,
+  "secondEndPos" : 25710
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22020,6 +22625,17 @@
   "secondPos" : 25786,
   "firstEndPos" : 26386,
   "secondEndPos" : 26347
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n            * New settings for new user interface noises.\n            */",
+  "secondLabel" : "/*\n            * New settings for new user interface noises.\n            */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25838,
+  "secondPos" : 25799,
+  "firstEndPos" : 25913,
+  "secondEndPos" : 25874
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -22714,6 +23330,17 @@
   "firstEndPos" : 26549,
   "secondEndPos" : 26510
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n            * Install location no longer initiated here.\n            */",
+  "secondLabel" : "/*\n            * Install location no longer initiated here.\n            */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26434,
+  "secondPos" : 26395,
+  "firstEndPos" : 26508,
+  "secondEndPos" : 26469
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22834,6 +23461,17 @@
   "secondPos" : 26545,
   "firstEndPos" : 27460,
   "secondEndPos" : 27421
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Move the lockscreen related settings to Secure, including some private ones. */",
+  "secondLabel" : "/* Move the lockscreen related settings to Secure, including some private ones. */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26597,
+  "secondPos" : 26558,
+  "firstEndPos" : 26679,
+  "secondEndPos" : 26640
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23274,6 +23912,17 @@
   "secondPos" : 27457,
   "firstEndPos" : 28106,
   "secondEndPos" : 28067
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new vibration/silent mode settings",
+  "secondLabel" : "// new vibration/silent mode settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27510,
+  "secondPos" : 27471,
+  "firstEndPos" : 27547,
+  "secondEndPos" : 27508
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -23990,6 +24639,17 @@
   "firstEndPos" : 28299,
   "secondEndPos" : 28260
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * New settings for set install location UI no longer initiated here.\n             */",
+  "secondLabel" : "/*\n             * New settings for set install location UI no longer initiated here.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28156,
+  "secondPos" : 28117,
+  "firstEndPos" : 28256,
+  "secondEndPos" : 28217
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -24110,6 +24770,17 @@
   "secondPos" : 28296,
   "firstEndPos" : 28700,
   "secondEndPos" : 28661
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Update the screen timeout value if set to never\n             */",
+  "secondLabel" : "/*\n             * Update the screen timeout value if set to never\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28349,
+  "secondPos" : 28310,
+  "firstEndPos" : 28430,
+  "secondEndPos" : 28391
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -24484,6 +25155,17 @@
   "secondPos" : 28697,
   "firstEndPos" : 29660,
   "secondEndPos" : 29621
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Move the install location settings. */",
+  "secondLabel" : "/* Move the install location settings. */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28750,
+  "secondPos" : 28711,
+  "firstEndPos" : 28791,
+  "secondEndPos" : 28752
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25486,6 +26168,17 @@
   "firstEndPos" : 30539,
   "secondEndPos" : 30500
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Add Bluetooth to list of toggleable radios in airplane mode\n             */",
+  "secondLabel" : "/*\n             * Add Bluetooth to list of toggleable radios in airplane mode\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29710,
+  "secondPos" : 29671,
+  "firstEndPos" : 29803,
+  "secondEndPos" : 29764
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26256,6 +26949,39 @@
   "firstEndPos" : 30528,
   "secondEndPos" : 30489
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30549,
+  "secondPos" : 30510,
+  "firstEndPos" : 30613,
+  "secondEndPos" : 30574
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 30564,
+  "secondPos" : 30525,
+  "firstEndPos" : 30600,
+  "secondEndPos" : 30561
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "The following are Honeycomb changes ",
+  "secondLabel" : "The following are Honeycomb changes ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 30564,
+  "secondPos" : 30525,
+  "firstEndPos" : 30600,
+  "secondEndPos" : 30561
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26321,6 +27047,17 @@
   "secondPos" : 30610,
   "firstEndPos" : 31778,
   "secondEndPos" : 31739
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * New settings to:\n             *  1. Enable injection of accessibility scripts in WebViews.\n             *  2. Define the key bindings for traversing web content in WebViews.\n             */",
+  "secondLabel" : "/*\n             * New settings to:\n             *  1. Enable injection of accessibility scripts in WebViews.\n             *  2. Define the key bindings for traversing web content in WebViews.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30663,
+  "secondPos" : 30624,
+  "firstEndPos" : 30870,
+  "secondEndPos" : 30831
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -27312,6 +28049,17 @@
   "firstEndPos" : 32516,
   "secondEndPos" : 32477
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Add default for new Auto Time Zone */",
+  "secondLabel" : "/* Add default for new Auto Time Zone */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31828,
+  "secondPos" : 31789,
+  "firstEndPos" : 31868,
+  "secondEndPos" : 31829
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27785,6 +28533,17 @@
   "firstEndPos" : 32251,
   "secondEndPos" : 32212
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sync timezone to NITZ if auto_time was enabled",
+  "secondLabel" : "// Sync timezone to NITZ if auto_time was enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32254,
+  "secondPos" : 32215,
+  "firstEndPos" : 32303,
+  "secondEndPos" : 32264
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28136,6 +28895,17 @@
   "secondPos" : 32513,
   "firstEndPos" : 33190,
   "secondEndPos" : 33151
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Persistence for the rotation lock feature.",
+  "secondLabel" : "// Persistence for the rotation lock feature.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32566,
+  "secondPos" : 32527,
+  "firstEndPos" : 32611,
+  "secondEndPos" : 32572
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -28500,6 +29270,17 @@
   "firstEndPos" : 32949,
   "secondEndPos" : 32910
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should be zero degrees",
+  "secondLabel" : "// should be zero degrees",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32952,
+  "secondPos" : 32913,
+  "firstEndPos" : 32977,
+  "secondEndPos" : 32938
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28852,6 +29633,39 @@
   "firstEndPos" : 33445,
   "secondEndPos" : 33406
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't do this for upgrades from Gingerbread",
+  "secondLabel" : "// Don't do this for upgrades from Gingerbread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33240,
+  "secondPos" : 33201,
+  "firstEndPos" : 33286,
+  "secondEndPos" : 33247
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "secondLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33299,
+  "secondPos" : 33260,
+  "firstEndPos" : 33361,
+  "secondEndPos" : 33322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// upgradeScreenTimeout(db);",
+  "secondLabel" : "// upgradeScreenTimeout(db);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33374,
+  "secondPos" : 33335,
+  "firstEndPos" : 33402,
+  "secondEndPos" : 33363
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28973,6 +29787,39 @@
   "firstEndPos" : 33700,
   "secondEndPos" : 33661
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't do this for upgrades from Gingerbread",
+  "secondLabel" : "// Don't do this for upgrades from Gingerbread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33495,
+  "secondPos" : 33456,
+  "firstEndPos" : 33541,
+  "secondEndPos" : 33502
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "secondLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33554,
+  "secondPos" : 33515,
+  "firstEndPos" : 33616,
+  "secondEndPos" : 33577
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// upgradeScreenTimeout(db);",
+  "secondLabel" : "// upgradeScreenTimeout(db);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33629,
+  "secondPos" : 33590,
+  "firstEndPos" : 33657,
+  "secondEndPos" : 33618
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29027,6 +29874,17 @@
   "secondPos" : 33648,
   "firstEndPos" : 33689,
   "secondEndPos" : 33650
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Change the default for screen auto-brightness mode",
+  "secondLabel" : "// Change the default for screen auto-brightness mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33710,
+  "secondPos" : 33671,
+  "firstEndPos" : 33763,
+  "secondEndPos" : 33724
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -29093,6 +29951,39 @@
   "secondPos" : 33759,
   "firstEndPos" : 34018,
   "secondEndPos" : 33979
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't do this for upgrades from Gingerbread",
+  "secondLabel" : "// Don't do this for upgrades from Gingerbread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33812,
+  "secondPos" : 33773,
+  "firstEndPos" : 33858,
+  "secondEndPos" : 33819
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "secondLabel" : "// Were only required for intra-Honeycomb upgrades for testing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33871,
+  "secondPos" : 33832,
+  "firstEndPos" : 33933,
+  "secondEndPos" : 33894
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// upgradeAutoBrightness(db);",
+  "secondLabel" : "// upgradeAutoBrightness(db);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33946,
+  "secondPos" : 33907,
+  "firstEndPos" : 33975,
+  "secondEndPos" : 33936
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -29214,6 +30105,28 @@
   "secondPos" : 34015,
   "firstEndPos" : 35106,
   "secondEndPos" : 35067
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This upgrade adds the STREAM_MUSIC type to the list of",
+  "secondLabel" : "// This upgrade adds the STREAM_MUSIC type to the list of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34068,
+  "secondPos" : 34029,
+  "firstEndPos" : 34125,
+  "secondEndPos" : 34086
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "secondLabel" : "// types affected by ringer modes (silent, vibrate, etc.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34139,
+  "secondPos" : 34100,
+  "firstEndPos" : 34196,
+  "secondEndPos" : 34157
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -30194,6 +31107,17 @@
   "firstEndPos" : 35807,
   "secondEndPos" : 35768
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// New setting to configure the long press timeout.",
+  "secondLabel" : "// New setting to configure the long press timeout.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35156,
+  "secondPos" : 35117,
+  "firstEndPos" : 35207,
+  "secondEndPos" : 35168
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30898,6 +31822,39 @@
   "firstEndPos" : 35796,
   "secondEndPos" : 35757
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35817,
+  "secondPos" : 35778,
+  "firstEndPos" : 35890,
+  "secondEndPos" : 35851
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 35832,
+  "secondPos" : 35793,
+  "firstEndPos" : 35877,
+  "secondEndPos" : 35838
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "The following are Ice Cream Sandwich changes ",
+  "secondLabel" : "The following are Ice Cream Sandwich changes ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35832,
+  "secondPos" : 35793,
+  "firstEndPos" : 35877,
+  "secondEndPos" : 35838
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -30963,6 +31920,17 @@
   "secondPos" : 35887,
   "firstEndPos" : 36783,
   "secondEndPos" : 36744
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n             * Animations are removed from Settings. Turned on by default\n             */",
+  "secondLabel" : "/*\n             * Animations are removed from Settings. Turned on by default\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35940,
+  "secondPos" : 35901,
+  "firstEndPos" : 36032,
+  "secondEndPos" : 35993
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31898,6 +32866,28 @@
   "secondPos" : 36780,
   "firstEndPos" : 38126,
   "secondEndPos" : 38087
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This upgrade makes sure that MODE_RINGER_STREAMS_AFFECTED is set",
+  "secondLabel" : "// This upgrade makes sure that MODE_RINGER_STREAMS_AFFECTED is set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36833,
+  "secondPos" : 36794,
+  "firstEndPos" : 36900,
+  "secondEndPos" : 36861
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// according to device voice capability",
+  "secondLabel" : "// according to device voice capability",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36913,
+  "secondPos" : 36874,
+  "firstEndPos" : 36952,
+  "secondEndPos" : 36913
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -33065,6 +34055,17 @@
   "firstEndPos" : 38823,
   "secondEndPos" : 38784
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// New setting to enable touch exploration.",
+  "secondLabel" : "// New setting to enable touch exploration.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38176,
+  "secondPos" : 38137,
+  "firstEndPos" : 38219,
+  "secondEndPos" : 38180
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33835,6 +34836,17 @@
   "firstEndPos" : 39270,
   "secondEndPos" : 39231
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Enable all system sounds by default",
+  "secondLabel" : "// Enable all system sounds by default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38873,
+  "secondPos" : 38834,
+  "firstEndPos" : 38911,
+  "secondEndPos" : 38872
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34274,6 +35286,17 @@
   "secondPos" : 39267,
   "firstEndPos" : 40223,
   "secondEndPos" : 40184
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add RADIO_NFC to AIRPLANE_MODE_RADIO and AIRPLANE_MODE_TOGGLEABLE_RADIOS",
+  "secondLabel" : "// Add RADIO_NFC to AIRPLANE_MODE_RADIO and AIRPLANE_MODE_TOGGLEABLE_RADIOS",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39320,
+  "secondPos" : 39281,
+  "firstEndPos" : 39395,
+  "secondEndPos" : 39356
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -35210,6 +36233,17 @@
   "firstEndPos" : 40421,
   "secondEndPos" : 40382
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update all built-in bookmarks.  Some of the package names have changed.",
+  "secondLabel" : "// Update all built-in bookmarks.  Some of the package names have changed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40273,
+  "secondPos" : 40234,
+  "firstEndPos" : 40347,
+  "secondEndPos" : 40308
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -35385,6 +36419,17 @@
   "secondPos" : 40418,
   "firstEndPos" : 41127,
   "secondEndPos" : 41088
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// New setting to specify whether to speak passwords in accessibility mode.",
+  "secondLabel" : "// New setting to specify whether to speak passwords in accessibility mode.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40472,
+  "secondPos" : 40433,
+  "firstEndPos" : 40547,
+  "secondEndPos" : 40508
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36100,6 +37145,17 @@
   "secondPos" : 41124,
   "firstEndPos" : 41774,
   "secondEndPos" : 41735
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update vibration settings",
+  "secondLabel" : "// update vibration settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41177,
+  "secondPos" : 41138,
+  "firstEndPos" : 41205,
+  "secondEndPos" : 41166
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36991,6 +38047,17 @@
   "secondPos" : 41898,
   "firstEndPos" : 42574,
   "secondEndPos" : 42535
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// URL from which WebView loads a JavaScript based screen-reader.",
+  "secondLabel" : "// URL from which WebView loads a JavaScript based screen-reader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41951,
+  "secondPos" : 41912,
+  "firstEndPos" : 42016,
+  "secondEndPos" : 41977
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -38136,6 +39203,17 @@
   "firstEndPos" : 42908,
   "secondEndPos" : 42869
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only set default if it has not yet been set",
+  "secondLabel" : "// only set default if it has not yet been set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 42927,
+  "secondPos" : 42888,
+  "firstEndPos" : 42973,
+  "secondEndPos" : 42934
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -38917,6 +39995,39 @@
   "firstEndPos" : 43560,
   "secondEndPos" : 43521
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43581,
+  "secondPos" : 43542,
+  "firstEndPos" : 43646,
+  "secondEndPos" : 43607
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 43596,
+  "secondPos" : 43557,
+  "firstEndPos" : 43633,
+  "secondEndPos" : 43594
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "The following are Jelly Bean changes ",
+  "secondLabel" : "The following are Jelly Bean changes ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43596,
+  "secondPos" : 43557,
+  "firstEndPos" : 43633,
+  "secondEndPos" : 43594
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -38982,6 +40093,17 @@
   "secondPos" : 43643,
   "firstEndPos" : 44088,
   "secondEndPos" : 44049
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Removed VIBRATE_IN_SILENT setting",
+  "secondLabel" : "// Removed VIBRATE_IN_SILENT setting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 43696,
+  "secondPos" : 43657,
+  "firstEndPos" : 43732,
+  "secondEndPos" : 43693
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -39423,6 +40545,17 @@
   "firstEndPos" : 44272,
   "secondEndPos" : 44233
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Introduce \"vibrate when ringing\" setting",
+  "secondLabel" : "// Introduce \"vibrate when ringing\" setting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44138,
+  "secondPos" : 44099,
+  "firstEndPos" : 44181,
+  "secondEndPos" : 44142
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -39598,6 +40731,17 @@
   "secondPos" : 44269,
   "firstEndPos" : 44983,
   "secondEndPos" : 44944
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The JavaScript based screen-reader URL changes in JellyBean.",
+  "secondLabel" : "// The JavaScript based screen-reader URL changes in JellyBean.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44322,
+  "secondPos" : 44283,
+  "firstEndPos" : 44385,
+  "secondEndPos" : 44346
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -40313,6 +41457,182 @@
   "secondPos" : 44980,
   "firstEndPos" : 47957,
   "secondEndPos" : 47918
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Before touch exploration was a global setting controlled by the user",
+  "secondLabel" : "// Before touch exploration was a global setting controlled by the user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45033,
+  "secondPos" : 44994,
+  "firstEndPos" : 45104,
+  "secondEndPos" : 45065
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// via the UI. However, if the enabled accessibility services do not",
+  "secondLabel" : "// via the UI. However, if the enabled accessibility services do not",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45117,
+  "secondPos" : 45078,
+  "firstEndPos" : 45185,
+  "secondEndPos" : 45146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handle touch exploration mode, enabling it makes no sense. Therefore,",
+  "secondLabel" : "// handle touch exploration mode, enabling it makes no sense. Therefore,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45198,
+  "secondPos" : 45159,
+  "firstEndPos" : 45270,
+  "secondEndPos" : 45231
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// now the services request touch exploration mode and the user is",
+  "secondLabel" : "// now the services request touch exploration mode and the user is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45283,
+  "secondPos" : 45244,
+  "firstEndPos" : 45349,
+  "secondEndPos" : 45310
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// presented with a dialog to allow that and if she does we store that",
+  "secondLabel" : "// presented with a dialog to allow that and if she does we store that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45362,
+  "secondPos" : 45323,
+  "firstEndPos" : 45432,
+  "secondEndPos" : 45393
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in the database. As a result of this change a user that has enabled",
+  "secondLabel" : "// in the database. As a result of this change a user that has enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45445,
+  "secondPos" : 45406,
+  "firstEndPos" : 45515,
+  "secondEndPos" : 45476
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// accessibility, touch exploration, and some accessibility services",
+  "secondLabel" : "// accessibility, touch exploration, and some accessibility services",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45528,
+  "secondPos" : 45489,
+  "firstEndPos" : 45596,
+  "secondEndPos" : 45557
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// may lose touch exploration state, thus rendering the device useless",
+  "secondLabel" : "// may lose touch exploration state, thus rendering the device useless",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45609,
+  "secondPos" : 45570,
+  "firstEndPos" : 45679,
+  "secondEndPos" : 45640
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unless sighted help is provided, since the enabled service(s) are",
+  "secondLabel" : "// unless sighted help is provided, since the enabled service(s) are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45692,
+  "secondPos" : 45653,
+  "firstEndPos" : 45760,
+  "secondEndPos" : 45721
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not in the list of services to which the user granted a permission",
+  "secondLabel" : "// not in the list of services to which the user granted a permission",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45773,
+  "secondPos" : 45734,
+  "firstEndPos" : 45842,
+  "secondEndPos" : 45803
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to put the device in touch explore mode. Here we are allowing all",
+  "secondLabel" : "// to put the device in touch explore mode. Here we are allowing all",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45855,
+  "secondPos" : 45816,
+  "firstEndPos" : 45923,
+  "secondEndPos" : 45884
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// enabled accessibility services to toggle touch exploration provided",
+  "secondLabel" : "// enabled accessibility services to toggle touch exploration provided",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45936,
+  "secondPos" : 45897,
+  "firstEndPos" : 46006,
+  "secondEndPos" : 45967
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// accessibility and touch exploration are enabled and no services can",
+  "secondLabel" : "// accessibility and touch exploration are enabled and no services can",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46019,
+  "secondPos" : 45980,
+  "firstEndPos" : 46089,
+  "secondEndPos" : 46050
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// toggle touch exploration. Note that the user has already manually",
+  "secondLabel" : "// toggle touch exploration. Note that the user has already manually",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46102,
+  "secondPos" : 46063,
+  "firstEndPos" : 46170,
+  "secondEndPos" : 46131
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// enabled the services and touch exploration which means the she has",
+  "secondLabel" : "// enabled the services and touch exploration which means the she has",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46183,
+  "secondPos" : 46144,
+  "firstEndPos" : 46252,
+  "secondEndPos" : 46213
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// given consent to have these services work in touch exploration mode.",
+  "secondLabel" : "// given consent to have these services work in touch exploration mode.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 46265,
+  "secondPos" : 46226,
+  "firstEndPos" : 46336,
+  "secondEndPos" : 46297
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -41821,6 +43141,17 @@
   "firstEndPos" : 47946,
   "secondEndPos" : 47907
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// vvv Jelly Bean MR1 changes begin here vvv",
+  "secondLabel" : "// vvv Jelly Bean MR1 changes begin here vvv",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47967,
+  "secondPos" : 47928,
+  "firstEndPos" : 48011,
+  "secondEndPos" : 47972
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -41886,6 +43217,17 @@
   "secondPos" : 48008,
   "firstEndPos" : 49391,
   "secondEndPos" : 49352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update screensaver settings",
+  "secondLabel" : "// update screensaver settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 48061,
+  "secondPos" : 48022,
+  "firstEndPos" : 48091,
+  "secondEndPos" : 48052
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -42910,6 +44252,17 @@
   "firstEndPos" : 50057,
   "secondEndPos" : 50018
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add package verification setting",
+  "secondLabel" : "// Add package verification setting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 49441,
+  "secondPos" : 49402,
+  "firstEndPos" : 49476,
+  "secondEndPos" : 49437
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -43625,6 +44978,17 @@
   "firstEndPos" : 51121,
   "secondEndPos" : 51082
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Move to per-user settings dbs",
+  "secondLabel" : "// Move to per-user settings dbs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50107,
+  "secondPos" : 50068,
+  "firstEndPos" : 50139,
+  "secondEndPos" : 50100
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -43833,6 +45197,28 @@
   "secondPos" : 50262,
   "firstEndPos" : 50943,
   "secondEndPos" : 50904
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Migrate now-global settings. Note that this happens before",
+  "secondLabel" : "// Migrate now-global settings. Note that this happens before",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50323,
+  "secondPos" : 50284,
+  "firstEndPos" : 50384,
+  "secondEndPos" : 50345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new users can be created.",
+  "secondLabel" : "// new users can be created.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50405,
+  "secondPos" : 50366,
+  "firstEndPos" : 50433,
+  "secondEndPos" : 50394
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -44647,6 +46033,39 @@
   "secondPos" : 51118,
   "firstEndPos" : 52597,
   "secondEndPos" : 52558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1. Setting whether screen magnification is enabled.",
+  "secondLabel" : "// 1. Setting whether screen magnification is enabled.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51171,
+  "secondPos" : 51132,
+  "firstEndPos" : 51225,
+  "secondEndPos" : 51186
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2. Setting for screen magnification scale.",
+  "secondLabel" : "// 2. Setting for screen magnification scale.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51238,
+  "secondPos" : 51199,
+  "firstEndPos" : 51283,
+  "secondEndPos" : 51244
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 3. Setting for screen magnification auto update.",
+  "secondLabel" : "// 3. Setting for screen magnification auto update.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51296,
+  "secondPos" : 51257,
+  "firstEndPos" : 51347,
+  "secondEndPos" : 51308
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -46034,6 +47453,28 @@
   "firstEndPos" : 53579,
   "secondEndPos" : 53540
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Patch up the slightly-wrong key migration from 82 -> 83 for those",
+  "secondLabel" : "// Patch up the slightly-wrong key migration from 82 -> 83 for those",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52817,
+  "secondPos" : 52778,
+  "firstEndPos" : 52885,
+  "secondEndPos" : 52846
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// devices that missed it, ignoring if the move is redundant",
+  "secondLabel" : "// devices that missed it, ignoring if the move is redundant",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52906,
+  "secondPos" : 52867,
+  "firstEndPos" : 52966,
+  "secondEndPos" : 52927
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -46781,6 +48222,28 @@
   "secondPos" : 53871,
   "firstEndPos" : 54362,
   "secondEndPos" : 54323
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fix up the migration, ignoring already-migrated elements, to snap up to",
+  "secondLabel" : "// Fix up the migration, ignoring already-migrated elements, to snap up to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 53932,
+  "secondPos" : 53893,
+  "firstEndPos" : 54006,
+  "secondEndPos" : 53967
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// date with new changes to the set of global versus system/secure settings",
+  "secondLabel" : "// date with new changes to the set of global versus system/secure settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54027,
+  "secondPos" : 53988,
+  "firstEndPos" : 54102,
+  "secondEndPos" : 54063
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -50984,6 +52447,17 @@
   "firstEndPos" : 61471,
   "secondEndPos" : 61432
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Move ringer mode from system to global settings",
+  "secondLabel" : "// Move ringer mode from system to global settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61174,
+  "secondPos" : 61135,
+  "firstEndPos" : 61224,
+  "secondEndPos" : 61185
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -51721,6 +53195,39 @@
   "firstEndPos" : 62423,
   "secondEndPos" : 62384
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// consider existing primary users to have made it through user setup",
+  "secondLabel" : "// consider existing primary users to have made it through user setup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61904,
+  "secondPos" : 61865,
+  "firstEndPos" : 61973,
+  "secondEndPos" : 61934
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if the globally-scoped device-provisioned bit is set",
+  "secondLabel" : "// if the globally-scoped device-provisioned bit is set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 61994,
+  "secondPos" : 61955,
+  "firstEndPos" : 62049,
+  "secondEndPos" : 62010
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (indicating they already made it through setup as primary)",
+  "secondLabel" : "// (indicating they already made it through setup as primary)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 62070,
+  "secondPos" : 62031,
+  "firstEndPos" : 62131,
+  "secondEndPos" : 62092
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -51929,6 +53436,17 @@
   "secondPos" : 62390,
   "firstEndPos" : 62640,
   "secondEndPos" : 62601
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise use the default",
+  "secondLabel" : "// otherwise use the default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 62451,
+  "secondPos" : 62412,
+  "firstEndPos" : 62479,
+  "secondEndPos" : 62440
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -52249,6 +53767,17 @@
   "firstEndPos" : 63655,
   "secondEndPos" : 63616
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Redo this step, since somehow it didn't work the first time for some users",
+  "secondLabel" : "// Redo this step, since somehow it didn't work the first time for some users",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 62819,
+  "secondPos" : 62780,
+  "firstEndPos" : 62896,
+  "secondEndPos" : 62857
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -52391,6 +53920,17 @@
   "secondPos" : 62973,
   "firstEndPos" : 63529,
   "secondEndPos" : 63490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Migrate now-global settings",
+  "secondLabel" : "// Migrate now-global settings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 63034,
+  "secondPos" : 62995,
+  "firstEndPos" : 63064,
+  "secondEndPos" : 63025
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -53040,6 +54580,17 @@
   "secondPos" : 63652,
   "firstEndPos" : 64947,
   "secondEndPos" : 64908
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add wireless charging started sound setting",
+  "secondLabel" : "// Add wireless charging started sound setting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 63705,
+  "secondPos" : 63666,
+  "firstEndPos" : 63751,
+  "secondEndPos" : 63712
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -54636,6 +56187,17 @@
   "firstEndPos" : 65647,
   "secondEndPos" : 65608
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOP bump due to a reverted change that some people got on upgrade.",
+  "secondLabel" : "// NOP bump due to a reverted change that some people got on upgrade.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 65535,
+  "secondPos" : 65496,
+  "firstEndPos" : 65604,
+  "secondEndPos" : 65565
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -55538,6 +57100,17 @@
   "firstEndPos" : 66550,
   "secondEndPos" : 66511
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no-op; LOCK_SCREEN_SHOW_NOTIFICATIONS now handled in version 106",
+  "secondLabel" : "// no-op; LOCK_SCREEN_SHOW_NOTIFICATIONS now handled in version 106",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 66440,
+  "secondPos" : 66401,
+  "firstEndPos" : 66507,
+  "secondEndPos" : 66468
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -55659,6 +57232,17 @@
   "firstEndPos" : 66711,
   "secondEndPos" : 66672
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no-op; HEADS_UP_NOTIFICATIONS_ENABLED now handled in version 100",
+  "secondLabel" : "// no-op; HEADS_UP_NOTIFICATIONS_ENABLED now handled in version 100",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 66600,
+  "secondPos" : 66561,
+  "firstEndPos" : 66667,
+  "secondEndPos" : 66628
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -55779,6 +57363,17 @@
   "secondPos" : 66709,
   "firstEndPos" : 66919,
   "secondEndPos" : 66880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: LOCK_SCREEN_SHOW_NOTIFICATIONS now handled in version 106",
+  "secondLabel" : "// note: LOCK_SCREEN_SHOW_NOTIFICATIONS now handled in version 106",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 66762,
+  "secondPos" : 66723,
+  "firstEndPos" : 66828,
+  "secondEndPos" : 66789
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -56275,6 +57870,28 @@
   "firstEndPos" : 68281,
   "secondEndPos" : 68242
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The INSTALL_NON_MARKET_APPS setting is becoming per-user rather",
+  "secondLabel" : "// The INSTALL_NON_MARKET_APPS setting is becoming per-user rather",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67193,
+  "secondPos" : 67154,
+  "firstEndPos" : 67259,
+  "secondEndPos" : 67220
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// than device-global.",
+  "secondLabel" : "// than device-global.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67276,
+  "secondPos" : 67237,
+  "firstEndPos" : 67298,
+  "secondEndPos" : 67259
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -56340,6 +57957,28 @@
   "secondPos" : 67318,
   "firstEndPos" : 67784,
   "secondEndPos" : 67745
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In the owner user, the global table exists so we can migrate the",
+  "secondLabel" : "// In the owner user, the global table exists so we can migrate the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67379,
+  "secondPos" : 67340,
+  "firstEndPos" : 67446,
+  "secondEndPos" : 67407
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entry from there to the secure table, preserving its value.",
+  "secondLabel" : "// entry from there to the secure table, preserving its value.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67467,
+  "secondPos" : 67428,
+  "firstEndPos" : 67529,
+  "secondEndPos" : 67490
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -56549,6 +58188,28 @@
   "secondPos" : 67751,
   "firstEndPos" : 68220,
   "secondEndPos" : 68181
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Secondary users' dbs don't have the global table, so institute the",
+  "secondLabel" : "// Secondary users' dbs don't have the global table, so institute the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67812,
+  "secondPos" : 67773,
+  "firstEndPos" : 67881,
+  "secondEndPos" : 67842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default.",
+  "secondLabel" : "// default.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 67902,
+  "secondPos" : 67863,
+  "firstEndPos" : 67913,
+  "secondEndPos" : 67874
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -58618,6 +60279,17 @@
   "firstEndPos" : 71234,
   "secondEndPos" : 71195
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// LOCK_SCREEN_SHOW_NOTIFICATIONS is now per-user.",
+  "secondLabel" : "// LOCK_SCREEN_SHOW_NOTIFICATIONS is now per-user.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 69824,
+  "secondPos" : 69785,
+  "firstEndPos" : 69874,
+  "secondEndPos" : 69835
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -59266,6 +60938,17 @@
   "secondPos" : 70478,
   "firstEndPos" : 71002,
   "secondEndPos" : 70963
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// overwrite the default with whatever you had",
+  "secondLabel" : "// overwrite the default with whatever you had",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 70543,
+  "secondPos" : 70504,
+  "firstEndPos" : 70589,
+  "secondEndPos" : 70550
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -59970,6 +61653,17 @@
   "secondPos" : 71231,
   "firstEndPos" : 71993,
   "secondEndPos" : 71954
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add trusted sound setting",
+  "secondLabel" : "// Add trusted sound setting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 71284,
+  "secondPos" : 71245,
+  "firstEndPos" : 71312,
+  "secondEndPos" : 71273
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -60751,6 +62445,39 @@
   "secondPos" : 71990,
   "firstEndPos" : 72841,
   "secondEndPos" : 72802
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Reset the auto-brightness setting to default since the behavior",
+  "secondLabel" : "// Reset the auto-brightness setting to default since the behavior",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72043,
+  "secondPos" : 72004,
+  "firstEndPos" : 72109,
+  "secondEndPos" : 72070
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// of the feature is now quite different and is being presented to",
+  "secondLabel" : "// of the feature is now quite different and is being presented to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72122,
+  "secondPos" : 72083,
+  "firstEndPos" : 72188,
+  "secondEndPos" : 72149
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the user in a new way as \"adaptive brightness\".",
+  "secondLabel" : "// the user in a new way as \"adaptive brightness\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 72201,
+  "secondPos" : 72162,
+  "firstEndPos" : 72251,
+  "secondEndPos" : 72212
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -62182,6 +63909,39 @@
   "firstEndPos" : 74408,
   "secondEndPos" : 74369
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The SIP_CALL_OPTIONS value SIP_ASK_EACH_TIME is being deprecated.",
+  "secondLabel" : "// The SIP_CALL_OPTIONS value SIP_ASK_EACH_TIME is being deprecated.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 73532,
+  "secondPos" : 73493,
+  "firstEndPos" : 73600,
+  "secondEndPos" : 73561
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the SIP_CALL_OPTIONS setting is set to SIP_ASK_EACH_TIME, default to",
+  "secondLabel" : "// If the SIP_CALL_OPTIONS setting is set to SIP_ASK_EACH_TIME, default to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 73613,
+  "secondPos" : 73574,
+  "firstEndPos" : 73687,
+  "secondEndPos" : 73648
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SIP_ADDRESS_ONLY.",
+  "secondLabel" : "// SIP_ADDRESS_ONLY.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 73700,
+  "secondPos" : 73661,
+  "firstEndPos" : 73720,
+  "secondEndPos" : 73681
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -63139,6 +64899,17 @@
   "firstEndPos" : 75168,
   "secondEndPos" : 75129
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reset ringer mode, so it doesn't force zen mode to follow",
+  "secondLabel" : "// reset ringer mode, so it doesn't force zen mode to follow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 74458,
+  "secondPos" : 74419,
+  "firstEndPos" : 74518,
+  "secondEndPos" : 74479
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -63986,6 +65757,39 @@
   "firstEndPos" : 76221,
   "secondEndPos" : 76182
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When device name was added, we went with Manufacturer + Model, device name should",
+  "secondLabel" : "// When device name was added, we went with Manufacturer + Model, device name should",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75278,
+  "secondPos" : 75239,
+  "firstEndPos" : 75362,
+  "secondEndPos" : 75323
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actually be Model only.",
+  "secondLabel" : "// actually be Model only.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75379,
+  "secondPos" : 75340,
+  "firstEndPos" : 75405,
+  "secondEndPos" : 75366
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Update device name to Model if it wasn't modified by user.",
+  "secondLabel" : "// Update device name to Model if it wasn't modified by user.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75422,
+  "secondPos" : 75383,
+  "firstEndPos" : 75483,
+  "secondEndPos" : 75444
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -64371,6 +66175,17 @@
   "firstEndPos" : 75787,
   "secondEndPos" : 75748
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new default device name",
+  "secondLabel" : "// new default device name",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75792,
+  "secondPos" : 75753,
+  "firstEndPos" : 75818,
+  "secondEndPos" : 75779
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -64557,6 +66372,17 @@
   "secondPos" : 75888,
   "firstEndPos" : 75950,
   "secondEndPos" : 75911
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// old default device name",
+  "secondLabel" : "// old default device name",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 75955,
+  "secondPos" : 75916,
+  "firstEndPos" : 75981,
+  "secondEndPos" : 75942
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -65614,6 +67440,39 @@
   "firstEndPos" : 76855,
   "secondEndPos" : 76816
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 76876,
+  "secondPos" : 76837,
+  "firstEndPos" : 76938,
+  "secondEndPos" : 76899
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 76891,
+  "secondPos" : 76852,
+  "firstEndPos" : 76925,
+  "secondEndPos" : 76886
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "The following are CM-12.0 changes ",
+  "secondLabel" : "The following are CM-12.0 changes ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 76891,
+  "secondPos" : 76852,
+  "firstEndPos" : 76925,
+  "secondEndPos" : 76886
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -65679,6 +67538,50 @@
   "secondPos" : 76935,
   "firstEndPos" : 77720,
   "secondEndPos" : 77681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Artificially bump our upgrade version to handle",
+  "secondLabel" : "// Artificially bump our upgrade version to handle",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 76988,
+  "secondPos" : 76949,
+  "firstEndPos" : 77038,
+  "secondEndPos" : 76999
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// migration path from cm-11.0 to cm-12.0",
+  "secondLabel" : "// migration path from cm-11.0 to cm-12.0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77051,
+  "secondPos" : 77012,
+  "firstEndPos" : 77092,
+  "secondEndPos" : 77053
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// without this, heads up would never work if",
+  "secondLabel" : "// without this, heads up would never work if",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77105,
+  "secondPos" : 77066,
+  "firstEndPos" : 77150,
+  "secondEndPos" : 77111
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a user did not wipe data",
+  "secondLabel" : "// a user did not wipe data",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77163,
+  "secondPos" : 77124,
+  "firstEndPos" : 77190,
+  "secondEndPos" : 77151
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -65789,6 +67692,28 @@
   "secondPos" : 77237,
   "firstEndPos" : 77278,
   "secondEndPos" : 77239
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Removal of back/recents is no longer supported",
+  "secondLabel" : "// Removal of back/recents is no longer supported",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77294,
+  "secondPos" : 77255,
+  "firstEndPos" : 77343,
+  "secondEndPos" : 77304
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// due to pinned apps",
+  "secondLabel" : "// due to pinned apps",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77356,
+  "secondPos" : 77317,
+  "firstEndPos" : 77377,
+  "secondEndPos" : 77338
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -66163,6 +68088,17 @@
   "secondPos" : 77667,
   "firstEndPos" : 77709,
   "secondEndPos" : 77670
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From here on out, we can assume the user is coming from CM and will have these rows",
+  "secondLabel" : "// From here on out, we can assume the user is coming from CM and will have these rows",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 77730,
+  "secondPos" : 77691,
+  "firstEndPos" : 77816,
+  "secondEndPos" : 77777
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -66801,6 +68737,28 @@
   "secondPos" : 78272,
   "firstEndPos" : 79894,
   "secondEndPos" : 79855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CM11 used \"holo\" as a system default theme. For CM12 and up its been",
+  "secondLabel" : "// CM11 used \"holo\" as a system default theme. For CM12 and up its been",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 78325,
+  "secondPos" : 78286,
+  "firstEndPos" : 78396,
+  "secondEndPos" : 78357
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// switched to \"system\". So change all \"holo\" references in themeConfig to \"system\"",
+  "secondLabel" : "// switched to \"system\". So change all \"holo\" references in themeConfig to \"system\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 78409,
+  "secondPos" : 78370,
+  "firstEndPos" : 78492,
+  "secondEndPos" : 78453
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -68000,6 +69958,17 @@
   "secondPos" : 79158,
   "firstEndPos" : 79200,
   "secondEndPos" : 79161
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now update the entry",
+  "secondLabel" : "// Now update the entry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 79228,
+  "secondPos" : 79189,
+  "firstEndPos" : 79251,
+  "secondEndPos" : 79212
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -71257,6 +73226,17 @@
   "firstEndPos" : 82733,
   "secondEndPos" : 82694
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only the owner has access to global table, so we need to check that here",
+  "secondLabel" : "// only the owner has access to global table, so we need to check that here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 81998,
+  "secondPos" : 81959,
+  "firstEndPos" : 82073,
+  "secondEndPos" : 82034
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -71982,6 +73962,17 @@
   "secondPos" : 82730,
   "firstEndPos" : 83553,
   "secondEndPos" : 83514
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Migrate from cm-12.0 if there is no entry from cm-11.0",
+  "secondLabel" : "// Migrate from cm-12.0 if there is no entry from cm-11.0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 82783,
+  "secondPos" : 82744,
+  "firstEndPos" : 82840,
+  "secondEndPos" : 82801
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -72808,6 +74799,17 @@
   "firstEndPos" : 84446,
   "secondEndPos" : 84407
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Force enable advanced settings if the overlay defaults to true",
+  "secondLabel" : "// Force enable advanced settings if the overlay defaults to true",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 83603,
+  "secondPos" : 83564,
+  "firstEndPos" : 83668,
+  "secondEndPos" : 83629
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -73577,6 +75579,17 @@
   "secondPos" : 84393,
   "firstEndPos" : 84435,
   "secondEndPos" : 84396
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// *** Remember to update DATABASE_VERSION above!",
+  "secondLabel" : "// *** Remember to update DATABASE_VERSION above!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 84456,
+  "secondPos" : 84417,
+  "firstEndPos" : 84505,
+  "secondEndPos" : 84466
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -74832,6 +76845,17 @@
   "firstEndPos" : 85502,
   "secondEndPos" : 85463
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Added for diagnosing settings.db wipes after the fact",
+  "secondLabel" : "// Added for diagnosing settings.db wipes after the fact",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 85518,
+  "secondPos" : 85479,
+  "firstEndPos" : 85574,
+  "secondEndPos" : 85535
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -75832,6 +77856,17 @@
   "secondPos" : 86099,
   "firstEndPos" : 87241,
   "secondEndPos" : 87202
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Copy settings values from the source table to the dest, and remove from the source",
+  "secondLabel" : "// Copy settings values from the source table to the dest, and remove from the source",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 86148,
+  "secondPos" : 86109,
+  "firstEndPos" : 86233,
+  "secondEndPos" : 86194
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -79782,6 +81817,17 @@
   "firstEndPos" : 89468,
   "secondEndPos" : 89429
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Convert lock pattern",
+  "secondLabel" : "// Convert lock pattern",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 89000,
+  "secondPos" : 88961,
+  "firstEndPos" : 89023,
+  "secondEndPos" : 88984
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -80200,6 +82246,17 @@
   "firstEndPos" : 89454,
   "secondEndPos" : 89415
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't want corrupted lock pattern to hang the reboot process",
+  "secondLabel" : "// Don't want corrupted lock pattern to hang the reboot process",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 89373,
+  "secondPos" : 89334,
+  "firstEndPos" : 89436,
+  "secondEndPos" : 89397
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -80518,6 +82575,17 @@
   "secondPos" : 89642,
   "firstEndPos" : 90519,
   "secondEndPos" : 90480
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See if the timeout is -1 (for \"Never\").",
+  "secondLabel" : "// See if the timeout is -1 (for \"Never\").",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 89691,
+  "secondPos" : 89652,
+  "firstEndPos" : 89733,
+  "secondEndPos" : 89694
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -81244,6 +83312,17 @@
   "secondPos" : 90126,
   "firstEndPos" : 90180,
   "secondEndPos" : 90141
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the timeout to 30 minutes in milliseconds",
+  "secondLabel" : "// Set the timeout to 30 minutes in milliseconds",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 90200,
+  "secondPos" : 90161,
+  "firstEndPos" : 90248,
+  "secondEndPos" : 90209
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -83346,6 +85425,17 @@
   "firstEndPos" : 91957,
   "secondEndPos" : 91918
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the ringer vibrate value is invalid, set it to the default",
+  "secondLabel" : "// If the ringer vibrate value is invalid, set it to the default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 91968,
+  "secondPos" : 91929,
+  "firstEndPos" : 92032,
+  "secondEndPos" : 91993
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -83587,6 +85677,17 @@
   "secondPos" : 92191,
   "firstEndPos" : 92270,
   "secondEndPos" : 92231
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Apply the same setting to the notification vibrate value",
+  "secondLabel" : "// Apply the same setting to the notification vibrate value",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 92291,
+  "secondPos" : 92252,
+  "firstEndPos" : 92350,
+  "secondEndPos" : 92311
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -84247,6 +86348,17 @@
   "secondPos" : 92869,
   "firstEndPos" : 93466,
   "secondEndPos" : 93427
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Change screen timeout to current default",
+  "secondLabel" : "// Change screen timeout to current default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 92918,
+  "secondPos" : 92879,
+  "firstEndPos" : 92961,
+  "secondEndPos" : 92922
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -85523,6 +87635,17 @@
   "secondPos" : 94064,
   "firstEndPos" : 94150,
   "secondEndPos" : 94111
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 94103,
+  "secondPos" : 94064,
+  "firstEndPos" : 94109,
+  "secondEndPos" : 94070
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -90980,6 +93103,17 @@
   "firstEndPos" : 98050,
   "secondEndPos" : 98011
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 97995,
+  "secondPos" : 97956,
+  "firstEndPos" : 98001,
+  "secondEndPos" : 97962
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "db",
@@ -92200,6 +94334,61 @@
   "secondPos" : 99532,
   "firstEndPos" : 99604,
   "secondEndPos" : 99565
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// By default:",
+  "secondLabel" : "// By default:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 99621,
+  "secondPos" : 99582,
+  "firstEndPos" : 99635,
+  "secondEndPos" : 99596
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - ringtones, notification, system and music streams are affected by ringer mode",
+  "secondLabel" : "// - ringtones, notification, system and music streams are affected by ringer mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 99648,
+  "secondPos" : 99609,
+  "firstEndPos" : 99730,
+  "secondEndPos" : 99691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// on non voice capable devices (tablets)",
+  "secondLabel" : "// on non voice capable devices (tablets)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 99743,
+  "secondPos" : 99704,
+  "firstEndPos" : 99784,
+  "secondEndPos" : 99745
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - ringtones, notification and system streams are affected by ringer mode",
+  "secondLabel" : "// - ringtones, notification and system streams are affected by ringer mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 99797,
+  "secondPos" : 99758,
+  "firstEndPos" : 99872,
+  "secondEndPos" : 99833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// on voice capable devices (phones)",
+  "secondLabel" : "// on voice capable devices (phones)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 99885,
+  "secondPos" : 99846,
+  "firstEndPos" : 99921,
+  "secondEndPos" : 99882
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -94786,6 +96975,17 @@
   "firstEndPos" : 102436,
   "secondEndPos" : 102397
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set headset default volume",
+  "secondLabel" : "// set headset default volume",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 102453,
+  "secondPos" : 102414,
+  "firstEndPos" : 102482,
+  "secondEndPos" : 102443
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -96172,6 +98372,17 @@
   "firstEndPos" : 103782,
   "secondEndPos" : 103743
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set speaker default volume",
+  "secondLabel" : "// set speaker default volume",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 103799,
+  "secondPos" : 103760,
+  "firstEndPos" : 103828,
+  "secondEndPos" : 103789
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -96568,6 +98779,17 @@
   "firstEndPos" : 104199,
   "secondEndPos" : 104160
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set earpiece default volume",
+  "secondLabel" : "// set earpiece default volume",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104216,
+  "secondPos" : 104177,
+  "firstEndPos" : 104246,
+  "secondEndPos" : 104207
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -96765,6 +98987,61 @@
   "secondPos" : 104375,
   "firstEndPos" : 104454,
   "secondEndPos" : 104415
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// By default:",
+  "secondLabel" : "// By default:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104471,
+  "secondPos" : 104432,
+  "firstEndPos" : 104485,
+  "secondEndPos" : 104446
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - ringtones, notification, system and music streams are affected by ringer mode",
+  "secondLabel" : "// - ringtones, notification, system and music streams are affected by ringer mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104498,
+  "secondPos" : 104459,
+  "firstEndPos" : 104580,
+  "secondEndPos" : 104541
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// on non voice capable devices (tablets)",
+  "secondLabel" : "// on non voice capable devices (tablets)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104593,
+  "secondPos" : 104554,
+  "firstEndPos" : 104634,
+  "secondEndPos" : 104595
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - ringtones, notification and system streams are affected by ringer mode",
+  "secondLabel" : "// - ringtones, notification and system streams are affected by ringer mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104647,
+  "secondPos" : 104608,
+  "firstEndPos" : 104722,
+  "secondEndPos" : 104683
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// on voice capable devices (phones)",
+  "secondLabel" : "// on voice capable devices (phones)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 104735,
+  "secondPos" : 104696,
+  "firstEndPos" : 104771,
+  "secondEndPos" : 104732
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -98383,6 +100660,17 @@
   "firstEndPos" : 106250,
   "secondEndPos" : 106211
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Vibrate on by default for ringer, on for notification",
+  "secondLabel" : "// Vibrate on by default for ringer, on for notification",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 106266,
+  "secondPos" : 106227,
+  "firstEndPos" : 106322,
+  "secondEndPos" : 106283
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -98998,6 +101286,39 @@
   "secondPos" : 106889,
   "firstEndPos" : 107982,
   "secondEndPos" : 107943
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The default should be off. VIBRATE_SETTING_ONLY_SILENT should also be ignored here.",
+  "secondLabel" : "// The default should be off. VIBRATE_SETTING_ONLY_SILENT should also be ignored here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 106938,
+  "secondPos" : 106899,
+  "firstEndPos" : 107024,
+  "secondEndPos" : 106985
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Phone app should separately check whether AudioManager#getRingerMode() returns",
+  "secondLabel" : "// Phone app should separately check whether AudioManager#getRingerMode() returns",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 107033,
+  "secondPos" : 106994,
+  "firstEndPos" : 107114,
+  "secondEndPos" : 107075
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// RINGER_MODE_VIBRATE, with which the device should vibrate anyway.",
+  "secondLabel" : "// RINGER_MODE_VIBRATE, with which the device should vibrate anyway.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 107123,
+  "secondPos" : 107084,
+  "firstEndPos" : 107191,
+  "secondEndPos" : 107152
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -100616,6 +102937,17 @@
   "firstEndPos" : 108492,
   "secondEndPos" : 108453
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The global table only exists for the 'owner' user",
+  "secondLabel" : "// The global table only exists for the 'owner' user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 108503,
+  "secondPos" : 108464,
+  "firstEndPos" : 108555,
+  "secondEndPos" : 108516
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -101221,6 +103553,17 @@
   "firstEndPos" : 109126,
   "secondEndPos" : 109087
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default cdma DTMF type",
+  "secondLabel" : "// Set default cdma DTMF type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 109142,
+  "secondPos" : 109103,
+  "firstEndPos" : 109171,
+  "secondEndPos" : 109132
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -101298,6 +103641,17 @@
   "firstEndPos" : 109248,
   "secondEndPos" : 109209
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default hearing aid",
+  "secondLabel" : "// Set default hearing aid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 109264,
+  "secondPos" : 109225,
+  "firstEndPos" : 109290,
+  "secondEndPos" : 109251
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -101374,6 +103728,17 @@
   "secondPos" : 109311,
   "firstEndPos" : 109351,
   "secondEndPos" : 109312
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default tty mode",
+  "secondLabel" : "// Set default tty mode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 109367,
+  "secondPos" : 109328,
+  "firstEndPos" : 109390,
+  "secondEndPos" : 109351
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -104565,6 +106930,50 @@
   "firstEndPos" : 113587,
   "secondEndPos" : 113444
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't do this.  The SystemServer will initialize ADB_ENABLED from a",
+  "secondLabel" : "// Don't do this.  The SystemServer will initialize ADB_ENABLED from a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 113617,
+  "secondPos" : 113474,
+  "firstEndPos" : 113687,
+  "secondEndPos" : 113544
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// persistent system property instead.",
+  "secondLabel" : "// persistent system property instead.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 113700,
+  "secondPos" : 113557,
+  "firstEndPos" : 113738,
+  "secondEndPos" : 113595
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//loadSetting(stmt, Settings.Secure.ADB_ENABLED, 0);",
+  "secondLabel" : "//loadSetting(stmt, Settings.Secure.ADB_ENABLED, 0);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 113751,
+  "secondPos" : 113608,
+  "firstEndPos" : 113803,
+  "secondEndPos" : 113660
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Allow mock locations default, based on build",
+  "secondLabel" : "// Allow mock locations default, based on build",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 113817,
+  "secondPos" : 113674,
+  "firstEndPos" : 113864,
+  "secondEndPos" : 113721
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -107700,6 +110109,17 @@
   "firstEndPos" : 118828,
   "secondEndPos" : 118685
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for accessibility enabled",
+  "secondLabel" : "// for accessibility enabled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 118858,
+  "secondPos" : 118715,
+  "firstEndPos" : 118886,
+  "secondEndPos" : 118743
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -108975,6 +111395,17 @@
   "secondPos" : 120241,
   "firstEndPos" : 120399,
   "secondEndPos" : 120256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// --- Previously in 'system'",
+  "secondLabel" : "// --- Previously in 'system'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 120415,
+  "secondPos" : 120272,
+  "firstEndPos" : 120444,
+  "secondEndPos" : 120301
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -110450,6 +112881,17 @@
   "firstEndPos" : 121944,
   "secondEndPos" : 121801
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sync time to NITZ",
+  "secondLabel" : "// Sync time to NITZ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 121947,
+  "secondPos" : 121804,
+  "firstEndPos" : 121967,
+  "secondEndPos" : 121824
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -110526,6 +112968,17 @@
   "secondPos" : 121915,
   "firstEndPos" : 122083,
   "secondEndPos" : 121940
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sync timezone to NITZ",
+  "secondLabel" : "// Sync timezone to NITZ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 122086,
+  "secondPos" : 121943,
+  "firstEndPos" : 122110,
+  "secondEndPos" : 121967
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -111033,6 +113486,17 @@
   "firstEndPos" : 122625,
   "secondEndPos" : 122482
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// --- Previously in 'secure'",
+  "secondLabel" : "// --- Previously in 'secure'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 122641,
+  "secondPos" : 122498,
+  "firstEndPos" : 122670,
+  "secondEndPos" : 122527
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -111341,6 +113805,17 @@
   "firstEndPos" : 123184,
   "secondEndPos" : 123041
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Enable or disable Cell Broadcast SMS",
+  "secondLabel" : "// Enable or disable Cell Broadcast SMS",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 123200,
+  "secondPos" : 123057,
+  "firstEndPos" : 123239,
+  "secondEndPos" : 123096
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -111417,6 +113892,17 @@
   "secondPos" : 123188,
   "firstEndPos" : 123376,
   "secondEndPos" : 123233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Data roaming default, based on build",
+  "secondLabel" : "// Data roaming default, based on build",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 123392,
+  "secondPos" : 123249,
+  "firstEndPos" : 123431,
+  "secondEndPos" : 123288
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -112276,6 +114762,17 @@
   "firstEndPos" : 124369,
   "secondEndPos" : 124226
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mobile Data default, based on build",
+  "secondLabel" : "// Mobile Data default, based on build",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 124400,
+  "secondPos" : 124257,
+  "firstEndPos" : 124438,
+  "secondEndPos" : 124295
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -112474,6 +114971,17 @@
   "firstEndPos" : 124630,
   "secondEndPos" : 124487
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SUB specific flags for Multisim devices",
+  "secondLabel" : "// SUB specific flags for Multisim devices",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 124646,
+  "secondPos" : 124503,
+  "firstEndPos" : 124688,
+  "secondEndPos" : 124545
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -112628,6 +115136,17 @@
   "firstEndPos" : 125162,
   "secondEndPos" : 125019
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mobile Data default, based on build",
+  "secondLabel" : "// Mobile Data default, based on build",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 124779,
+  "secondPos" : 124636,
+  "firstEndPos" : 124817,
+  "secondEndPos" : 124674
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -112737,6 +115256,17 @@
   "secondPos" : 124779,
   "firstEndPos" : 124951,
   "secondEndPos" : 124808
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Data roaming default, based on build",
+  "secondLabel" : "// Data roaming default, based on build",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 124971,
+  "secondPos" : 124828,
+  "firstEndPos" : 125010,
+  "secondEndPos" : 124867
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -114311,6 +116841,17 @@
   "firstEndPos" : 127516,
   "secondEndPos" : 127373
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default cdma emergency tone",
+  "secondLabel" : "// Set default cdma emergency tone",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 127532,
+  "secondPos" : 127389,
+  "firstEndPos" : 127566,
+  "secondEndPos" : 127423
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -114387,6 +116928,17 @@
   "secondPos" : 127486,
   "firstEndPos" : 127630,
   "secondEndPos" : 127487
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default cdma call auto retry",
+  "secondLabel" : "// Set default cdma call auto retry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 127646,
+  "secondPos" : 127503,
+  "firstEndPos" : 127681,
+  "secondEndPos" : 127538
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -114465,6 +117017,17 @@
   "firstEndPos" : 127746,
   "secondEndPos" : 127603
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set default simplified carrier network settings to 0",
+  "secondLabel" : "// Set default simplified carrier network settings to 0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 127762,
+  "secondPos" : 127619,
+  "firstEndPos" : 127817,
+  "secondEndPos" : 127674
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -114541,6 +117104,28 @@
   "secondPos" : 127752,
   "firstEndPos" : 127896,
   "secondEndPos" : 127753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the preferred network mode to target desired value or Default",
+  "secondLabel" : "// Set the preferred network mode to target desired value or Default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 127912,
+  "secondPos" : 127769,
+  "firstEndPos" : 127980,
+  "secondEndPos" : 127837
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// value defined in RILConstants",
+  "secondLabel" : "// value defined in RILConstants",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 127993,
+  "secondPos" : 127850,
+  "firstEndPos" : 128025,
+  "secondEndPos" : 127882
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -116280,6 +118865,28 @@
   "firstEndPos" : 129231,
   "secondEndPos" : 129088
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set the preferred cdma subscription source to target desired value or default",
+  "secondLabel" : "// Set the preferred cdma subscription source to target desired value or default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 129248,
+  "secondPos" : 129105,
+  "firstEndPos" : 129328,
+  "secondEndPos" : 129185
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// value defined in CdmaSubscriptionSourceManager",
+  "secondLabel" : "// value defined in CdmaSubscriptionSourceManager",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 129341,
+  "secondPos" : 129198,
+  "firstEndPos" : 129390,
+  "secondEndPos" : 129247
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -116950,6 +119557,17 @@
   "secondPos" : 130221,
   "firstEndPos" : 130393,
   "secondEndPos" : 130250
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// --- New global settings start here",
+  "secondLabel" : "// --- New global settings start here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 130408,
+  "secondPos" : 130265,
+  "firstEndPos" : 130445,
+  "secondEndPos" : 130302
 }, {
   "firstType" : "Block",
   "secondType" : "Block",

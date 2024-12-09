@@ -10,6 +10,17 @@
   "firstEndPos" : 4758,
   "secondEndPos" : 7799
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2007 The Guava Authors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2007 The Guava Authors\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -395,6 +406,17 @@
   "firstEndPos" : 1318,
   "secondEndPos" : 1375
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1301,
+  "secondPos" : 1358,
+  "firstEndPos" : 1306,
+  "secondEndPos" : 1363
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "HashBiMap",
@@ -427,6 +449,17 @@
   "secondPos" : 1383,
   "firstEndPos" : 1346,
   "secondEndPos" : 1403
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1326,
+  "secondPos" : 1383,
+  "firstEndPos" : 1333,
+  "secondEndPos" : 1390
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2099,6 +2132,17 @@
   "secondPos" : 2531,
   "firstEndPos" : 2775,
   "secondEndPos" : 2873
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Test with non-empty Map. */",
+  "secondLabel" : "/* Test with non-empty Map. */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2439,
+  "secondPos" : 2537,
+  "firstEndPos" : 2469,
+  "secondEndPos" : 2567
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7677,6 +7721,17 @@
   "firstEndPos" : 4208,
   "secondEndPos" : 4306
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// changes the iterator's current entry value",
+  "secondLabel" : "// changes the iterator's current entry value",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4211,
+  "secondPos" : 4309,
+  "firstEndPos" : 4256,
+  "secondEndPos" : 4354
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8061,6 +8116,17 @@
   "secondPos" : 4469,
   "firstEndPos" : 4377,
   "secondEndPos" : 4475
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// removes the updated entry",
+  "secondLabel" : "// removes the updated entry",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4381,
+  "secondPos" : 4479,
+  "firstEndPos" : 4409,
+  "secondEndPos" : 4507
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

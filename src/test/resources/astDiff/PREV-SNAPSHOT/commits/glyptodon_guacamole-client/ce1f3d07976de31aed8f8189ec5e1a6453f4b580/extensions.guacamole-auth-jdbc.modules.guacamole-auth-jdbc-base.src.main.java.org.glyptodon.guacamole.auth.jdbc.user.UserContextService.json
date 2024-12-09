@@ -10,6 +10,17 @@
   "firstEndPos" : 6659,
   "secondEndPos" : 3187
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2015 Glyptodon LLC\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n * THE SOFTWARE.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2015 Glyptodon LLC\n *\n * Permission is hereby granted, free of charge, to any person obtaining a copy\n * of this software and associated documentation files (the \"Software\"), to deal\n * in the Software without restriction, including without limitation the rights\n * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n * copies of the Software, and to permit persons to whom the Software is\n * furnished to do so, subject to the following conditions:\n *\n * The above copyright notice and this permission notice shall be included in\n * all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n * THE SOFTWARE.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1117,
+  "secondEndPos" : 1117
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -229,6 +240,17 @@
   "secondPos" : 1602,
   "firstEndPos" : 1947,
   "secondEndPos" : 1624
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1925,
+  "secondPos" : 1602,
+  "firstEndPos" : 1932,
+  "secondEndPos" : 1609
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1803,6 +1825,17 @@
   "firstEndPos" : 4099,
   "secondEndPos" : 2253
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4019,
+  "secondPos" : 2173,
+  "firstEndPos" : 4025,
+  "secondEndPos" : 2179
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "credentials",
@@ -1836,6 +1869,17 @@
   "firstEndPos" : 4220,
   "secondEndPos" : 2374
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4114,
+  "secondPos" : 2268,
+  "firstEndPos" : 4121,
+  "secondEndPos" : 2275
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "A new UserContext instance for the user identified by the given",
@@ -1868,6 +1912,17 @@
   "secondPos" : 2389,
   "firstEndPos" : 4377,
   "secondEndPos" : 2531
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4235,
+  "secondPos" : 2389,
+  "firstEndPos" : 4242,
+  "secondEndPos" : 2396
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2022,6 +2077,17 @@
   "secondPos" : 2686,
   "firstEndPos" : 6655,
   "secondEndPos" : 3183
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Authenticate user",
+  "secondLabel" : "// Authenticate user",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4543,
+  "secondPos" : 2697,
+  "firstEndPos" : 4563,
+  "secondEndPos" : 2717
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2209,6 +2275,17 @@
   "secondPos" : 2810,
   "firstEndPos" : 6504,
   "secondEndPos" : 3032
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Upon successful authentication, return new user context",
+  "secondLabel" : "// Upon successful authentication, return new user context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6297,
+  "secondPos" : 2825,
+  "firstEndPos" : 6355,
+  "secondEndPos" : 2883
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2440,6 +2517,17 @@
   "secondPos" : 3013,
   "firstEndPos" : 6492,
   "secondEndPos" : 3020
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, unauthorized",
+  "secondLabel" : "// Otherwise, unauthorized",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6514,
+  "secondPos" : 3042,
+  "firstEndPos" : 6540,
+  "secondEndPos" : 3068
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

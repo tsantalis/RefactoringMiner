@@ -10,6 +10,17 @@
   "firstEndPos" : 9818,
   "secondEndPos" : 10125
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -328,6 +339,17 @@
   "secondPos" : 1143,
   "firstEndPos" : 1189,
   "secondEndPos" : 1189
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1143,
+  "secondPos" : 1143,
+  "firstEndPos" : 1150,
+  "secondEndPos" : 1150
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4432,6 +4454,17 @@
   "firstEndPos" : 3496,
   "secondEndPos" : 3797
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not create configurable that cannot be cast to the specified type",
+  "secondLabel" : "// do not create configurable that cannot be cast to the specified type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3498,
+  "secondPos" : 3799,
+  "firstEndPos" : 3569,
+  "secondEndPos" : 3870
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4629,6 +4662,17 @@
   "secondPos" : 4005,
   "firstEndPos" : 3708,
   "secondEndPos" : 4009
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not create configurable from ConfigurableProvider which replaces OptionalConfigurable",
+  "secondLabel" : "// do not create configurable from ConfigurableProvider which replaces OptionalConfigurable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3710,
+  "secondPos" : 4011,
+  "firstEndPos" : 3801,
+  "secondEndPos" : 4102
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -13022,6 +13066,17 @@
   "secondPos" : 9176,
   "firstEndPos" : 8875,
   "secondEndPos" : 9182
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sort configurables is needed",
+  "secondLabel" : "// sort configurables is needed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8886,
+  "secondPos" : 9193,
+  "firstEndPos" : 8917,
+  "secondEndPos" : 9224
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",

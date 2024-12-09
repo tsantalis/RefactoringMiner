@@ -10,6 +10,17 @@
   "firstEndPos" : 38255,
   "secondEndPos" : 38384
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    Copyright (c) 2007-2014 Contributors as noted in the AUTHORS file\n\n    This file is part of 0MQ.\n\n    0MQ is free software; you can redistribute it and/or modify it under\n    the terms of the GNU Lesser General Public License as published by\n    the Free Software Foundation; either version 3 of the License, or\n    (at your option) any later version.\n\n    0MQ is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU Lesser General Public License for more details.\n\n    You should have received a copy of the GNU Lesser General Public License\n    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n*/",
+  "secondLabel" : "/*\n    Copyright (c) 2007-2014 Contributors as noted in the AUTHORS file\n\n    This file is part of 0MQ.\n\n    0MQ is free software; you can redistribute it and/or modify it under\n    the terms of the GNU Lesser General Public License as published by\n    the Free Software Foundation; either version 3 of the License, or\n    (at your option) any later version.\n\n    0MQ is distributed in the hope that it will be useful,\n    but WITHOUT ANY WARRANTY; without even the implied warranty of\n    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n    GNU Lesser General Public License for more details.\n\n    You should have received a copy of the GNU Lesser General Public License\n    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n*/",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 762,
+  "secondEndPos" : 762
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -329,6 +340,17 @@
   "firstEndPos" : 1097,
   "secondEndPos" : 1125
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Map of open endpoints.",
+  "secondLabel" : "//  Map of open endpoints.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1104,
+  "secondPos" : 1132,
+  "firstEndPos" : 1130,
+  "secondEndPos" : 1158
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -460,6 +482,17 @@
   "secondPos" : 1194,
   "firstEndPos" : 1175,
   "secondEndPos" : 1203
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Map of open inproc endpoints.",
+  "secondLabel" : "//  Map of open inproc endpoints.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1182,
+  "secondPos" : 1210,
+  "firstEndPos" : 1215,
+  "secondEndPos" : 1243
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -593,6 +626,17 @@
   "firstEndPos" : 1259,
   "secondEndPos" : 1287
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Used to check whether the object is a socket.",
+  "secondLabel" : "//  Used to check whether the object is a socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1266,
+  "secondPos" : 1294,
+  "firstEndPos" : 1315,
+  "secondEndPos" : 1343
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -647,6 +691,17 @@
   "secondPos" : 1360,
   "firstEndPos" : 1335,
   "secondEndPos" : 1363
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If true, associated context was already terminated.",
+  "secondLabel" : "//  If true, associated context was already terminated.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1342,
+  "secondPos" : 1370,
+  "firstEndPos" : 1397,
+  "secondEndPos" : 1425
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -703,6 +758,39 @@
   "firstEndPos" : 1431,
   "secondEndPos" : 1459
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If true, object should have been already destroyed. However,",
+  "secondLabel" : "//  If true, object should have been already destroyed. However,",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1438,
+  "secondPos" : 1466,
+  "firstEndPos" : 1502,
+  "secondEndPos" : 1530
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  destruction is delayed while we unwind the stack to the point",
+  "secondLabel" : "//  destruction is delayed while we unwind the stack to the point",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1507,
+  "secondPos" : 1535,
+  "firstEndPos" : 1572,
+  "secondEndPos" : 1600
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  where it doesn't intersect the object being destroyed.",
+  "secondLabel" : "//  where it doesn't intersect the object being destroyed.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1577,
+  "secondPos" : 1605,
+  "firstEndPos" : 1635,
+  "secondEndPos" : 1663
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -757,6 +845,17 @@
   "secondPos" : 1684,
   "firstEndPos" : 1665,
   "secondEndPos" : 1693
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Socket's mailbox object.",
+  "secondLabel" : "//  Socket's mailbox object.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1672,
+  "secondPos" : 1700,
+  "firstEndPos" : 1700,
+  "secondEndPos" : 1728
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -834,6 +933,17 @@
   "secondPos" : 1755,
   "firstEndPos" : 1734,
   "secondEndPos" : 1762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  List of attached pipes.",
+  "secondLabel" : "//  List of attached pipes.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1741,
+  "secondPos" : 1769,
+  "firstEndPos" : 1768,
+  "secondEndPos" : 1796
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -944,6 +1054,17 @@
   "secondPos" : 1826,
   "firstEndPos" : 1803,
   "secondEndPos" : 1831
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Reaper's poller and handle of this socket within it.",
+  "secondLabel" : "//  Reaper's poller and handle of this socket within it.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1810,
+  "secondPos" : 1838,
+  "firstEndPos" : 1866,
+  "secondEndPos" : 1894
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1077,6 +1198,17 @@
   "firstEndPos" : 1930,
   "secondEndPos" : 1958
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Timestamp of when commands were processed the last time.",
+  "secondLabel" : "//  Timestamp of when commands were processed the last time.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1937,
+  "secondPos" : 1965,
+  "firstEndPos" : 1997,
+  "secondEndPos" : 2025
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1131,6 +1263,17 @@
   "secondPos" : 2043,
   "firstEndPos" : 2022,
   "secondEndPos" : 2050
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Number of messages received since last command processing.",
+  "secondLabel" : "//  Number of messages received since last command processing.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2029,
+  "secondPos" : 2057,
+  "firstEndPos" : 2091,
+  "secondEndPos" : 2119
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1187,6 +1330,17 @@
   "firstEndPos" : 2113,
   "secondEndPos" : 2141
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  True if the last message received had MORE flag set.",
+  "secondLabel" : "//  True if the last message received had MORE flag set.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2120,
+  "secondPos" : 2148,
+  "firstEndPos" : 2176,
+  "secondEndPos" : 2204
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1241,6 +1395,17 @@
   "secondPos" : 2225,
   "firstEndPos" : 2204,
   "secondEndPos" : 2232
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Monitor socket",
+  "secondLabel" : "// Monitor socket",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2211,
+  "secondPos" : 2239,
+  "firstEndPos" : 2228,
+  "secondEndPos" : 2256
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1307,6 +1472,17 @@
   "secondPos" : 2280,
   "firstEndPos" : 2265,
   "secondEndPos" : 2293
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Bitmask of events being monitored",
+  "secondLabel" : "// Bitmask of events being monitored",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2272,
+  "secondPos" : 2300,
+  "firstEndPos" : 2308,
+  "secondEndPos" : 2336
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2958,6 +3134,28 @@
   "firstEndPos" : 3014,
   "secondEndPos" : 3042
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Concrete algorithms for the x- methods are to be defined by",
+  "secondLabel" : "//  Concrete algorithms for the x- methods are to be defined by",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3028,
+  "secondPos" : 3056,
+  "firstEndPos" : 3091,
+  "secondEndPos" : 3119
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  individual socket types.",
+  "secondLabel" : "//  individual socket types.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3096,
+  "secondPos" : 3124,
+  "firstEndPos" : 3124,
+  "secondEndPos" : 3152
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3189,6 +3387,17 @@
   "firstEndPos" : 3250,
   "secondEndPos" : 3278
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Returns false if object is not a socket.",
+  "secondLabel" : "//  Returns false if object is not a socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3258,
+  "secondPos" : 3286,
+  "firstEndPos" : 3302,
+  "secondEndPos" : 3330
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3298,6 +3507,17 @@
   "secondPos" : 3389,
   "firstEndPos" : 3371,
   "secondEndPos" : 3399
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Create a socket of a specified type.",
+  "secondLabel" : "//  Create a socket of a specified type.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3384,
+  "secondPos" : 3412,
+  "firstEndPos" : 3424,
+  "secondEndPos" : 3452
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -5422,6 +5642,17 @@
   "firstEndPos" : 4749,
   "secondEndPos" : 4878
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Returns the mailbox associated with this socket.",
+  "secondLabel" : "//  Returns the mailbox associated with this socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4763,
+  "secondPos" : 4892,
+  "firstEndPos" : 4815,
+  "secondEndPos" : 4944
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5510,6 +5741,28 @@
   "firstEndPos" : 4876,
   "secondEndPos" : 5005
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Interrupt blocking call if the socket is stuck in one.",
+  "secondLabel" : "//  Interrupt blocking call if the socket is stuck in one.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4889,
+  "secondPos" : 5018,
+  "firstEndPos" : 4947,
+  "secondEndPos" : 5076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  This function can be called from a different thread!",
+  "secondLabel" : "//  This function can be called from a different thread!",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4952,
+  "secondPos" : 5081,
+  "firstEndPos" : 5008,
+  "secondEndPos" : 5137
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5565,6 +5818,50 @@
   "firstEndPos" : 5317,
   "secondEndPos" : 5446
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Called by ctx when it is terminated (zmq_term).",
+  "secondLabel" : "//  Called by ctx when it is terminated (zmq_term).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5046,
+  "secondPos" : 5175,
+  "firstEndPos" : 5097,
+  "secondEndPos" : 5226
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  'stop' command is sent from the threads that called zmq_term to",
+  "secondLabel" : "//  'stop' command is sent from the threads that called zmq_term to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5106,
+  "secondPos" : 5235,
+  "firstEndPos" : 5173,
+  "secondEndPos" : 5302
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  the thread owning the socket. This way, blocking call in the",
+  "secondLabel" : "//  the thread owning the socket. This way, blocking call in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5182,
+  "secondPos" : 5311,
+  "firstEndPos" : 5246,
+  "secondEndPos" : 5375
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  owner thread can be interrupted.",
+  "secondLabel" : "//  owner thread can be interrupted.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5255,
+  "secondPos" : 5384,
+  "firstEndPos" : 5291,
+  "secondEndPos" : 5420
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5597,6 +5894,28 @@
   "secondPos" : 5429,
   "firstEndPos" : 5308,
   "secondEndPos" : 5437
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether transport protocol, as specified in connect or",
+  "secondLabel" : "//  Check whether transport protocol, as specified in connect or",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5323,
+  "secondPos" : 5452,
+  "firstEndPos" : 5387,
+  "secondEndPos" : 5516
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  bind, is available and compatible with the socket type.",
+  "secondLabel" : "//  bind, is available and compatible with the socket type.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5392,
+  "secondPos" : 5521,
+  "firstEndPos" : 5451,
+  "secondEndPos" : 5580
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -5696,6 +6015,17 @@
   "secondPos" : 5633,
   "firstEndPos" : 6387,
   "secondEndPos" : 6516
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  First check out whether the protcol is something we are aware of.",
+  "secondLabel" : "//  First check out whether the protcol is something we are aware of.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5514,
+  "secondPos" : 5643,
+  "firstEndPos" : 5583,
+  "secondEndPos" : 5712
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5994,6 +6324,17 @@
   "firstEndPos" : 5675,
   "secondEndPos" : 5804
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*&&\n              !protocol.equals(\"pgm\") && !protocol.equals(\"epgm\")*/",
+  "secondLabel" : "/*&&\n              !protocol.equals(\"pgm\") && !protocol.equals(\"epgm\")*/",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5677,
+  "secondPos" : 5806,
+  "firstEndPos" : 5749,
+  "secondEndPos" : 5878
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -6059,6 +6400,39 @@
   "secondPos" : 5934,
   "firstEndPos" : 5813,
   "secondEndPos" : 5942
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether socket type and transport protocol match.",
+  "secondLabel" : "//  Check whether socket type and transport protocol match.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5835,
+  "secondPos" : 5964,
+  "firstEndPos" : 5894,
+  "secondEndPos" : 6023
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Specifically, multicast protocols can't be combined with",
+  "secondLabel" : "//  Specifically, multicast protocols can't be combined with",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5903,
+  "secondPos" : 6032,
+  "firstEndPos" : 5963,
+  "secondEndPos" : 6092
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  bi-directional messaging patterns (socket types).",
+  "secondLabel" : "//  bi-directional messaging patterns (socket types).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5972,
+  "secondPos" : 6101,
+  "firstEndPos" : 6025,
+  "secondEndPos" : 6154
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6610,6 +6984,28 @@
   "firstEndPos" : 6333,
   "secondEndPos" : 6462
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Protocol is available.",
+  "secondLabel" : "//  Protocol is available.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6355,
+  "secondPos" : 6484,
+  "firstEndPos" : 6381,
+  "secondEndPos" : 6510
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Register the pipe with this socket.",
+  "secondLabel" : "//  Register the pipe with this socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6393,
+  "secondPos" : 6522,
+  "firstEndPos" : 6432,
+  "secondEndPos" : 6561
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6907,6 +7303,17 @@
   "firstEndPos" : 7042,
   "secondEndPos" : 7171
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  First, register the pipe so that we can terminate it later on.",
+  "secondLabel" : "//  First, register the pipe so that we can terminate it later on.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6591,
+  "secondPos" : 6720,
+  "firstEndPos" : 6657,
+  "secondEndPos" : 6786
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7061,6 +7468,17 @@
   "firstEndPos" : 6714,
   "secondEndPos" : 6843
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Let the derived socket type know about new pipe.",
+  "secondLabel" : "//  Let the derived socket type know about new pipe.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6726,
+  "secondPos" : 6855,
+  "firstEndPos" : 6778,
+  "secondEndPos" : 6907
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7126,6 +7544,28 @@
   "secondPos" : 6934,
   "firstEndPos" : 6815,
   "secondEndPos" : 6944
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the socket is already being closed, ask any new pipes to terminate",
+  "secondLabel" : "//  If the socket is already being closed, ask any new pipes to terminate",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6827,
+  "secondPos" : 6956,
+  "firstEndPos" : 6900,
+  "secondEndPos" : 7029
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  straight away.",
+  "secondLabel" : "//  straight away.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6909,
+  "secondPos" : 7038,
+  "firstEndPos" : 6927,
+  "secondEndPos" : 7056
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7512,6 +7952,17 @@
   "firstEndPos" : 7186,
   "secondEndPos" : 7315
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  First, check whether specific socket type overloads the option.",
+  "secondLabel" : "//  First, check whether specific socket type overloads the option.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7209,
+  "secondPos" : 7338,
+  "firstEndPos" : 7276,
+  "secondEndPos" : 7405
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7599,6 +8050,28 @@
   "secondPos" : 7461,
   "firstEndPos" : 7339,
   "secondEndPos" : 7468
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the socket type doesn't support the option, pass it to",
+  "secondLabel" : "//  If the socket type doesn't support the option, pass it to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7359,
+  "secondPos" : 7488,
+  "firstEndPos" : 7420,
+  "secondEndPos" : 7549
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  the generic option parser.",
+  "secondLabel" : "//  the generic option parser.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7429,
+  "secondPos" : 7558,
+  "firstEndPos" : 7459,
+  "secondEndPos" : 7588
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7918,6 +8391,17 @@
   "secondPos" : 7767,
   "firstEndPos" : 7667,
   "secondEndPos" : 7796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fast track to avoid boxing",
+  "secondLabel" : "// fast track to avoid boxing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7690,
+  "secondPos" : 7819,
+  "firstEndPos" : 7719,
+  "secondEndPos" : 7848
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9888,6 +10372,28 @@
   "firstEndPos" : 9029,
   "secondEndPos" : 9158
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the socket type doesn't support the option, pass it to",
+  "secondLabel" : "//  If the socket type doesn't support the option, pass it to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9049,
+  "secondPos" : 9178,
+  "firstEndPos" : 9110,
+  "secondEndPos" : 9239
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  the generic option parser.",
+  "secondLabel" : "//  the generic option parser.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9119,
+  "secondPos" : 9248,
+  "firstEndPos" : 9149,
+  "secondEndPos" : 9278
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -10152,6 +10658,17 @@
   "firstEndPos" : 9329,
   "secondEndPos" : 9458
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Process pending commands, if any.",
+  "secondLabel" : "//  Process pending commands, if any.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9352,
+  "secondPos" : 9481,
+  "firstEndPos" : 9389,
+  "secondEndPos" : 9518
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10327,6 +10844,17 @@
   "secondPos" : 9607,
   "firstEndPos" : 9483,
   "secondEndPos" : 9612
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Parse addr_ string.",
+  "secondLabel" : "//  Parse addr_ string.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9504,
+  "secondPos" : 9633,
+  "firstEndPos" : 9527,
+  "secondEndPos" : 9656
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11417,6 +11945,17 @@
   "firstEndPos" : 10222,
   "secondEndPos" : 10351
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Save last endpoint URI",
+  "secondLabel" : "// Save last endpoint URI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10138,
+  "secondPos" : 10267,
+  "firstEndPos" : 10163,
+  "secondEndPos" : 10292
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11758,6 +12297,28 @@
   "firstEndPos" : 10573,
   "secondEndPos" : 10702
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  For convenience's sake, bind can be used interchageable with",
+  "secondLabel" : "//  For convenience's sake, bind can be used interchageable with",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10412,
+  "secondPos" : 10541,
+  "firstEndPos" : 10476,
+  "secondEndPos" : 10605
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  connect for PGM and EPGM transports.",
+  "secondLabel" : "//  connect for PGM and EPGM transports.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10489,
+  "secondPos" : 10618,
+  "firstEndPos" : 10529,
+  "secondEndPos" : 10658
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -11812,6 +12373,28 @@
   "secondPos" : 10686,
   "firstEndPos" : 10561,
   "secondEndPos" : 10690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Remaining trasnports require to be run in an I/O thread, so at this",
+  "secondLabel" : "//  Remaining trasnports require to be run in an I/O thread, so at this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10583,
+  "secondPos" : 10712,
+  "firstEndPos" : 10654,
+  "secondEndPos" : 10783
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  point we'll choose one.",
+  "secondLabel" : "//  point we'll choose one.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10663,
+  "secondPos" : 10792,
+  "firstEndPos" : 10690,
+  "secondEndPos" : 10819
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12638,6 +13221,17 @@
   "firstEndPos" : 11189,
   "secondEndPos" : 11318
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Save last endpoint URI",
+  "secondLabel" : "// Save last endpoint URI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11218,
+  "secondPos" : 11347,
+  "firstEndPos" : 11243,
+  "secondEndPos" : 11372
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13419,6 +14013,17 @@
   "firstEndPos" : 11732,
   "secondEndPos" : 11861
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Save last endpoint URI",
+  "secondLabel" : "// Save last endpoint URI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11761,
+  "secondPos" : 11890,
+  "firstEndPos" : 11786,
+  "secondEndPos" : 11915
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13826,6 +14431,17 @@
   "firstEndPos" : 12106,
   "secondEndPos" : 12235
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Process pending commands, if any.",
+  "secondLabel" : "//  Process pending commands, if any.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12129,
+  "secondPos" : 12258,
+  "firstEndPos" : 12166,
+  "secondEndPos" : 12295
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14001,6 +14617,17 @@
   "secondPos" : 12384,
   "firstEndPos" : 12260,
   "secondEndPos" : 12389
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Parse addr_ string.",
+  "secondLabel" : "//  Parse addr_ string.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12281,
+  "secondPos" : 12410,
+  "firstEndPos" : 12304,
+  "secondEndPos" : 12433
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14849,6 +15476,50 @@
   "firstEndPos" : 15427,
   "secondEndPos" : 15556
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  TODO: inproc connect is specific with respect to creating pipes",
+  "secondLabel" : "//  TODO: inproc connect is specific with respect to creating pipes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12762,
+  "secondPos" : 12891,
+  "firstEndPos" : 12829,
+  "secondEndPos" : 12958
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  as there's no 'reconnect' functionality implemented. Once that",
+  "secondLabel" : "//  as there's no 'reconnect' functionality implemented. Once that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12842,
+  "secondPos" : 12971,
+  "firstEndPos" : 12908,
+  "secondEndPos" : 13037
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  is in place we should follow generic pipe creation algorithm.",
+  "secondLabel" : "//  is in place we should follow generic pipe creation algorithm.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12921,
+  "secondPos" : 13050,
+  "firstEndPos" : 12986,
+  "secondEndPos" : 13115
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Find the peer endpoint.",
+  "secondLabel" : "//  Find the peer endpoint.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13000,
+  "secondPos" : 13129,
+  "firstEndPos" : 13027,
+  "secondEndPos" : 13156
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15035,6 +15706,28 @@
   "secondPos" : 13271,
   "firstEndPos" : 13147,
   "secondEndPos" : 13276
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The total HWM for an inproc connection should be the sum of",
+  "secondLabel" : "// The total HWM for an inproc connection should be the sum of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13175,
+  "secondPos" : 13304,
+  "firstEndPos" : 13237,
+  "secondEndPos" : 13366
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the binder's HWM and the connector's HWM.",
+  "secondLabel" : "// the binder's HWM and the connector's HWM.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13250,
+  "secondPos" : 13379,
+  "firstEndPos" : 13294,
+  "secondEndPos" : 13423
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15586,6 +16279,17 @@
   "firstEndPos" : 13631,
   "secondEndPos" : 13760
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Create a bi-directional pipe to connect the peers.",
+  "secondLabel" : "//  Create a bi-directional pipe to connect the peers.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13660,
+  "secondPos" : 13789,
+  "firstEndPos" : 13714,
+  "secondEndPos" : 13843
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16114,6 +16818,17 @@
   "firstEndPos" : 13988,
   "secondEndPos" : 14117
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Attach local end of the pipe to this socket object.",
+  "secondLabel" : "//  Attach local end of the pipe to this socket object.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14004,
+  "secondPos" : 14133,
+  "firstEndPos" : 14059,
+  "secondEndPos" : 14188
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16190,6 +16905,17 @@
   "secondPos" : 14218,
   "firstEndPos" : 14090,
   "secondEndPos" : 14219
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If required, send the identity of the peer to the local socket.",
+  "secondLabel" : "//  If required, send the identity of the peer to the local socket.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14107,
+  "secondPos" : 14236,
+  "firstEndPos" : 14174,
+  "secondEndPos" : 14303
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16741,6 +17467,17 @@
   "firstEndPos" : 14505,
   "secondEndPos" : 14634
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If required, send the identity of the local socket to the peer.",
+  "secondLabel" : "//  If required, send the identity of the local socket to the peer.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14536,
+  "secondPos" : 14665,
+  "firstEndPos" : 14603,
+  "secondEndPos" : 14732
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -17291,6 +18028,39 @@
   "firstEndPos" : 14944,
   "secondEndPos" : 15073
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Attach remote end of the pipe to the peer socket. Note that peer's",
+  "secondLabel" : "//  Attach remote end of the pipe to the peer socket. Note that peer's",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14975,
+  "secondPos" : 15104,
+  "firstEndPos" : 15045,
+  "secondEndPos" : 15174
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  seqnum was incremented in findEndpoint function. We don't need it",
+  "secondLabel" : "//  seqnum was incremented in findEndpoint function. We don't need it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15058,
+  "secondPos" : 15187,
+  "firstEndPos" : 15127,
+  "secondEndPos" : 15256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  increased here.",
+  "secondLabel" : "//  increased here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15140,
+  "secondPos" : 15269,
+  "firstEndPos" : 15159,
+  "secondEndPos" : 15288
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17390,6 +18160,17 @@
   "firstEndPos" : 15209,
   "secondEndPos" : 15338
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Save last endpoint URI",
+  "secondLabel" : "// Save last endpoint URI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15225,
+  "secondPos" : 15354,
+  "firstEndPos" : 15250,
+  "secondEndPos" : 15379
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17444,6 +18225,17 @@
   "secondPos" : 15415,
   "firstEndPos" : 15290,
   "secondEndPos" : 15419
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remember inproc connections for disconnect",
+  "secondLabel" : "// remember inproc connections for disconnect",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15305,
+  "secondPos" : 15434,
+  "firstEndPos" : 15350,
+  "secondEndPos" : 15479
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17576,6 +18368,17 @@
   "secondPos" : 15541,
   "firstEndPos" : 15416,
   "secondEndPos" : 15545
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Choose the I/O thread to run the session in.",
+  "secondLabel" : "//  Choose the I/O thread to run the session in.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15437,
+  "secondPos" : 15566,
+  "firstEndPos" : 15485,
+  "secondEndPos" : 15614
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18006,6 +18809,17 @@
   "firstEndPos" : 15767,
   "secondEndPos" : 15896
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Resolve address (if needed by the protocol)",
+  "secondLabel" : "//  Resolve address (if needed by the protocol)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15779,
+  "secondPos" : 15908,
+  "firstEndPos" : 15826,
+  "secondEndPos" : 15955
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18060,6 +18874,17 @@
   "secondPos" : 15970,
   "firstEndPos" : 15848,
   "secondEndPos" : 15977
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Create session.",
+  "secondLabel" : "//  Create session.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15861,
+  "secondPos" : 15990,
+  "firstEndPos" : 15880,
+  "secondEndPos" : 16009
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18291,6 +19116,28 @@
   "secondPos" : 16137,
   "firstEndPos" : 16012,
   "secondEndPos" : 16141
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  PGM does not support subscription forwarding; ask for all data to be",
+  "secondLabel" : "//  PGM does not support subscription forwarding; ask for all data to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16024,
+  "secondPos" : 16153,
+  "firstEndPos" : 16096,
+  "secondEndPos" : 16225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  sent to this pipe.",
+  "secondLabel" : "//  sent to this pipe.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16105,
+  "secondPos" : 16234,
+  "firstEndPos" : 16127,
+  "secondEndPos" : 16256
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18676,6 +19523,17 @@
   "secondPos" : 16461,
   "firstEndPos" : 16914,
   "secondEndPos" : 17043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Create a bi-directional pipe.",
+  "secondLabel" : "//  Create a bi-directional pipe.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16346,
+  "secondPos" : 16475,
+  "firstEndPos" : 16379,
+  "secondEndPos" : 16508
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19205,6 +20063,17 @@
   "firstEndPos" : 16667,
   "secondEndPos" : 16796
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Attach local end of the pipe to the socket object.",
+  "secondLabel" : "//  Attach local end of the pipe to the socket object.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16683,
+  "secondPos" : 16812,
+  "firstEndPos" : 16737,
+  "secondEndPos" : 16866
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19292,6 +20161,17 @@
   "secondPos" : 16900,
   "firstEndPos" : 16781,
   "secondEndPos" : 16910
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Attach remote end of the pipe to the session object later on.",
+  "secondLabel" : "//  Attach remote end of the pipe to the session object later on.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16797,
+  "secondPos" : 16926,
+  "firstEndPos" : 16862,
+  "secondEndPos" : 16991
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -19391,6 +20271,17 @@
   "secondPos" : 17029,
   "firstEndPos" : 16901,
   "secondEndPos" : 17030
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Save last endpoint URI",
+  "secondLabel" : "// Save last endpoint URI",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16924,
+  "secondPos" : 17053,
+  "firstEndPos" : 16949,
+  "secondEndPos" : 17078
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -19568,6 +20459,17 @@
   "firstEndPos" : 17055,
   "secondEndPos" : 17184
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Creates new endpoint ID and adds the endpoint to the map.",
+  "secondLabel" : "//  Creates new endpoint ID and adds the endpoint to the map.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 17068,
+  "secondPos" : 17197,
+  "firstEndPos" : 17129,
+  "secondEndPos" : 17258
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -19710,6 +20612,17 @@
   "secondPos" : 17319,
   "firstEndPos" : 17333,
   "secondEndPos" : 17462
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Activate the session. Make it a child of this socket.",
+  "secondLabel" : "//  Activate the session. Make it a child of this socket.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17200,
+  "secondPos" : 17329,
+  "firstEndPos" : 17257,
+  "secondEndPos" : 17386
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20030,6 +20943,17 @@
   "firstEndPos" : 17466,
   "secondEndPos" : 17595
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether endpoint address passed to the function is valid.",
+  "secondLabel" : "//  Check whether endpoint address passed to the function is valid.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17489,
+  "secondPos" : 17618,
+  "firstEndPos" : 17556,
+  "secondEndPos" : 17685
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -20139,6 +21063,28 @@
   "secondPos" : 17736,
   "firstEndPos" : 17631,
   "secondEndPos" : 17760
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Process pending commands, if any, since there could be pending unprocessed processOwn()'s",
+  "secondLabel" : "//  Process pending commands, if any, since there could be pending unprocessed processOwn()'s",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17654,
+  "secondPos" : 17783,
+  "firstEndPos" : 17747,
+  "secondEndPos" : 17876
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  (from launchChild() for example) we're asked to terminate now.",
+  "secondLabel" : "//  (from launchChild() for example) we're asked to terminate now.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17756,
+  "secondPos" : 17885,
+  "firstEndPos" : 17822,
+  "secondEndPos" : 17951
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -20315,6 +21261,17 @@
   "secondPos" : 18038,
   "firstEndPos" : 17914,
   "secondEndPos" : 18043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Parse addr_ string.",
+  "secondLabel" : "//  Parse addr_ string.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17935,
+  "secondPos" : 18064,
+  "firstEndPos" : 17958,
+  "secondEndPos" : 18087
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -20700,6 +21657,17 @@
   "secondPos" : 18293,
   "firstEndPos" : 18173,
   "secondEndPos" : 18302
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Disconnect an inproc socket",
+  "secondLabel" : "// Disconnect an inproc socket",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18185,
+  "secondPos" : 18314,
+  "firstEndPos" : 18215,
+  "secondEndPos" : 18344
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21558,6 +22526,17 @@
   "secondPos" : 18786,
   "firstEndPos" : 18662,
   "secondEndPos" : 18791
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Find the endpoints range (if any) corresponding to the addr_ string.",
+  "secondLabel" : "//  Find the endpoints range (if any) corresponding to the addr_ string.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18682,
+  "secondPos" : 18811,
+  "firstEndPos" : 18754,
+  "secondEndPos" : 18883
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -22582,6 +23561,17 @@
   "firstEndPos" : 19234,
   "secondEndPos" : 19363
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether message passed to the function is valid.",
+  "secondLabel" : "//  Check whether message passed to the function is valid.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19255,
+  "secondPos" : 19384,
+  "firstEndPos" : 19313,
+  "secondEndPos" : 19442
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22691,6 +23681,17 @@
   "secondPos" : 19492,
   "firstEndPos" : 19387,
   "secondEndPos" : 19516
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Process pending commands, if any.",
+  "secondLabel" : "//  Process pending commands, if any.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19410,
+  "secondPos" : 19539,
+  "firstEndPos" : 19447,
+  "secondEndPos" : 19576
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -22868,6 +23869,17 @@
   "firstEndPos" : 19540,
   "secondEndPos" : 19669
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Clear any user-visible flags that are set on the message.",
+  "secondLabel" : "//  Clear any user-visible flags that are set on the message.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19561,
+  "secondPos" : 19690,
+  "firstEndPos" : 19622,
+  "secondEndPos" : 19751
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22944,6 +23956,17 @@
   "secondPos" : 19775,
   "firstEndPos" : 19654,
   "secondEndPos" : 19783
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  At this point we impose the flags on the message.",
+  "secondLabel" : "//  At this point we impose the flags on the message.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19666,
+  "secondPos" : 19795,
+  "firstEndPos" : 19719,
+  "secondEndPos" : 19848
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -23131,6 +24154,17 @@
   "secondPos" : 19919,
   "firstEndPos" : 19798,
   "secondEndPos" : 19927
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Try to send the message.",
+  "secondLabel" : "//  Try to send the message.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19820,
+  "secondPos" : 19949,
+  "firstEndPos" : 19848,
+  "secondEndPos" : 19977
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23396,6 +24430,28 @@
   "firstEndPos" : 20005,
   "secondEndPos" : 20134
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  In case of non-blocking send we'll simply propagate",
+  "secondLabel" : "//  In case of non-blocking send we'll simply propagate",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20026,
+  "secondPos" : 20155,
+  "firstEndPos" : 20081,
+  "secondEndPos" : 20210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  the error - including EAGAIN - up the stack.",
+  "secondLabel" : "//  the error - including EAGAIN - up the stack.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20090,
+  "secondPos" : 20219,
+  "firstEndPos" : 20138,
+  "secondEndPos" : 20267
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -23593,6 +24649,28 @@
   "secondPos" : 20361,
   "firstEndPos" : 20237,
   "secondEndPos" : 20366
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Compute the time when the timeout should occur.",
+  "secondLabel" : "//  Compute the time when the timeout should occur.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20258,
+  "secondPos" : 20387,
+  "firstEndPos" : 20309,
+  "secondEndPos" : 20438
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the timeout is infite, don't care.",
+  "secondLabel" : "//  If the timeout is infite, don't care.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20318,
+  "secondPos" : 20447,
+  "firstEndPos" : 20359,
+  "secondEndPos" : 20488
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23846,6 +24924,39 @@
   "secondPos" : 20586,
   "firstEndPos" : 20464,
   "secondEndPos" : 20593
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Oops, we couldn't send the message. Wait for the next",
+  "secondLabel" : "//  Oops, we couldn't send the message. Wait for the next",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20476,
+  "secondPos" : 20605,
+  "firstEndPos" : 20533,
+  "secondEndPos" : 20662
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  command, process it and try to send the message again.",
+  "secondLabel" : "//  command, process it and try to send the message again.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20542,
+  "secondPos" : 20671,
+  "firstEndPos" : 20600,
+  "secondEndPos" : 20729
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If timeout is reached in the meantime, return EAGAIN.",
+  "secondLabel" : "//  If timeout is reached in the meantime, return EAGAIN.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20609,
+  "secondPos" : 20738,
+  "firstEndPos" : 20666,
+  "secondEndPos" : 20795
 }, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
@@ -24892,6 +26003,94 @@
   "firstEndPos" : 21367,
   "secondEndPos" : 21496
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Once every inbound_poll_rate messages check for signals and process",
+  "secondLabel" : "//  Once every inbound_poll_rate messages check for signals and process",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21388,
+  "secondPos" : 21517,
+  "firstEndPos" : 21459,
+  "secondEndPos" : 21588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  incoming commands. This happens only if we are not polling altogether",
+  "secondLabel" : "//  incoming commands. This happens only if we are not polling altogether",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21468,
+  "secondPos" : 21597,
+  "firstEndPos" : 21541,
+  "secondEndPos" : 21670
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  because there are messages available all the time. If poll occurs,",
+  "secondLabel" : "//  because there are messages available all the time. If poll occurs,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21550,
+  "secondPos" : 21679,
+  "firstEndPos" : 21620,
+  "secondEndPos" : 21749
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  ticks is set to zero and thus we avoid this code.",
+  "secondLabel" : "//  ticks is set to zero and thus we avoid this code.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21629,
+  "secondPos" : 21758,
+  "firstEndPos" : 21682,
+  "secondEndPos" : 21811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21691,
+  "secondPos" : 21820,
+  "firstEndPos" : 21693,
+  "secondEndPos" : 21822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Note that 'recv' uses different command throttling algorithm (the one",
+  "secondLabel" : "//  Note that 'recv' uses different command throttling algorithm (the one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21702,
+  "secondPos" : 21831,
+  "firstEndPos" : 21775,
+  "secondEndPos" : 21904
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  described above) from the one used by 'send'. This is because counting",
+  "secondLabel" : "//  described above) from the one used by 'send'. This is because counting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21784,
+  "secondPos" : 21913,
+  "firstEndPos" : 21858,
+  "secondEndPos" : 21987
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  ticks is more efficient than doing RDTSC all the time.",
+  "secondLabel" : "//  ticks is more efficient than doing RDTSC all the time.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21867,
+  "secondPos" : 21996,
+  "firstEndPos" : 21925,
+  "secondEndPos" : 22054
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -25189,6 +26388,17 @@
   "firstEndPos" : 22098,
   "secondEndPos" : 22227
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Get the message.",
+  "secondLabel" : "//  Get the message.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22119,
+  "secondPos" : 22248,
+  "firstEndPos" : 22139,
+  "secondEndPos" : 22268
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -25453,6 +26663,17 @@
   "firstEndPos" : 22249,
   "secondEndPos" : 22378
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If we have the message, return immediately.",
+  "secondLabel" : "//  If we have the message, return immediately.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22270,
+  "secondPos" : 22399,
+  "firstEndPos" : 22317,
+  "secondEndPos" : 22446
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -25595,6 +26816,50 @@
   "secondPos" : 22524,
   "firstEndPos" : 22398,
   "secondEndPos" : 22527
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the message cannot be fetched immediately, there are two scenarios.",
+  "secondLabel" : "//  If the message cannot be fetched immediately, there are two scenarios.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22419,
+  "secondPos" : 22548,
+  "firstEndPos" : 22493,
+  "secondEndPos" : 22622
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  For non-blocking recv, commands are processed in case there's an",
+  "secondLabel" : "//  For non-blocking recv, commands are processed in case there's an",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22502,
+  "secondPos" : 22631,
+  "firstEndPos" : 22570,
+  "secondEndPos" : 22699
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  activate_reader command already waiting int a command pipe.",
+  "secondLabel" : "//  activate_reader command already waiting int a command pipe.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22579,
+  "secondPos" : 22708,
+  "firstEndPos" : 22642,
+  "secondEndPos" : 22771
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If it's not, return EAGAIN.",
+  "secondLabel" : "//  If it's not, return EAGAIN.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22651,
+  "secondPos" : 22780,
+  "firstEndPos" : 22682,
+  "secondEndPos" : 22811
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -26179,6 +27444,28 @@
   "firstEndPos" : 23024,
   "secondEndPos" : 23153
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Compute the time when the timeout should occur.",
+  "secondLabel" : "//  Compute the time when the timeout should occur.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23045,
+  "secondPos" : 23174,
+  "firstEndPos" : 23096,
+  "secondEndPos" : 23225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the timeout is infite, don't care.",
+  "secondLabel" : "//  If the timeout is infite, don't care.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23105,
+  "secondPos" : 23234,
+  "firstEndPos" : 23146,
+  "secondEndPos" : 23275
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -26431,6 +27718,28 @@
   "secondPos" : 23373,
   "firstEndPos" : 23251,
   "secondEndPos" : 23380
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  In blocking scenario, commands are processed over and over again until",
+  "secondLabel" : "//  In blocking scenario, commands are processed over and over again until",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23263,
+  "secondPos" : 23392,
+  "firstEndPos" : 23337,
+  "secondEndPos" : 23466
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  we are able to fetch a message.",
+  "secondLabel" : "//  we are able to fetch a message.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23346,
+  "secondPos" : 23475,
+  "firstEndPos" : 23381,
+  "secondEndPos" : 23510
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27609,6 +28918,17 @@
   "firstEndPos" : 24390,
   "secondEndPos" : 24519
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Mark the socket as dead",
+  "secondLabel" : "//  Mark the socket as dead",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24129,
+  "secondPos" : 24258,
+  "firstEndPos" : 24156,
+  "secondEndPos" : 24285
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -27664,6 +28984,39 @@
   "firstEndPos" : 24181,
   "secondEndPos" : 24310
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Transfer the ownership of the socket from this application thread",
+  "secondLabel" : "//  Transfer the ownership of the socket from this application thread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24192,
+  "secondPos" : 24321,
+  "firstEndPos" : 24261,
+  "secondEndPos" : 24390
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  to the reaper thread which will take care of the rest of shutdown",
+  "secondLabel" : "//  to the reaper thread which will take care of the rest of shutdown",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24270,
+  "secondPos" : 24399,
+  "firstEndPos" : 24339,
+  "secondEndPos" : 24468
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  process.",
+  "secondLabel" : "//  process.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24348,
+  "secondPos" : 24477,
+  "firstEndPos" : 24360,
+  "secondEndPos" : 24489
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -27718,6 +29071,28 @@
   "secondPos" : 24507,
   "firstEndPos" : 24382,
   "secondEndPos" : 24511
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  These functions are used by the polling mechanism to determine",
+  "secondLabel" : "//  These functions are used by the polling mechanism to determine",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 24396,
+  "secondPos" : 24525,
+  "firstEndPos" : 24462,
+  "secondEndPos" : 24591
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  which events are to be reported from this socket.",
+  "secondLabel" : "//  which events are to be reported from this socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 24467,
+  "secondPos" : 24596,
+  "firstEndPos" : 24520,
+  "secondEndPos" : 24649
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -27873,6 +29248,28 @@
   "firstEndPos" : 24628,
   "secondEndPos" : 24757
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Using this function reaper thread ask the socket to register with",
+  "secondLabel" : "//  Using this function reaper thread ask the socket to register with",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 24643,
+  "secondPos" : 24772,
+  "firstEndPos" : 24712,
+  "secondEndPos" : 24841
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  its poller.",
+  "secondLabel" : "//  its poller.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 24717,
+  "secondPos" : 24846,
+  "firstEndPos" : 24732,
+  "secondEndPos" : 24861
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -27971,6 +29368,17 @@
   "secondPos" : 24910,
   "firstEndPos" : 25136,
   "secondEndPos" : 25265
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Plug the socket to the reaper thread.",
+  "secondLabel" : "//  Plug the socket to the reaper thread.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24791,
+  "secondPos" : 24920,
+  "firstEndPos" : 24832,
+  "secondEndPos" : 24961
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -28346,6 +29754,28 @@
   "firstEndPos" : 24978,
   "secondEndPos" : 25107
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Initialise the termination and check whether it can be deallocated",
+  "secondLabel" : "//  Initialise the termination and check whether it can be deallocated",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24990,
+  "secondPos" : 25119,
+  "firstEndPos" : 25060,
+  "secondEndPos" : 25189
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  immediately.",
+  "secondLabel" : "//  immediately.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25069,
+  "secondPos" : 25198,
+  "firstEndPos" : 25085,
+  "secondEndPos" : 25214
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28411,6 +29841,50 @@
   "secondPos" : 25244,
   "firstEndPos" : 25127,
   "secondEndPos" : 25256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Processes commands sent to this socket (if any). If timeout is -1,",
+  "secondLabel" : "//  Processes commands sent to this socket (if any). If timeout is -1,",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25142,
+  "secondPos" : 25271,
+  "firstEndPos" : 25212,
+  "secondEndPos" : 25341
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  returns only after at least one command was processed.",
+  "secondLabel" : "//  returns only after at least one command was processed.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25217,
+  "secondPos" : 25346,
+  "firstEndPos" : 25275,
+  "secondEndPos" : 25404
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If throttle argument is true, commands are processed at most once",
+  "secondLabel" : "//  If throttle argument is true, commands are processed at most once",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25280,
+  "secondPos" : 25409,
+  "firstEndPos" : 25349,
+  "secondEndPos" : 25478
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  in a predefined time period.",
+  "secondLabel" : "//  in a predefined time period.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 25354,
+  "secondPos" : 25483,
+  "firstEndPos" : 25386,
+  "secondEndPos" : 25515
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -28654,6 +30128,17 @@
   "firstEndPos" : 25628,
   "secondEndPos" : 25757
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If we are asked to wait, simply ask mailbox to wait.",
+  "secondLabel" : "//  If we are asked to wait, simply ask mailbox to wait.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25521,
+  "secondPos" : 25650,
+  "firstEndPos" : 25577,
+  "secondEndPos" : 25706
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28775,6 +30260,39 @@
   "firstEndPos" : 27009,
   "secondEndPos" : 27138
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If we are asked not to wait, check whether we haven't processed",
+  "secondLabel" : "//  If we are asked not to wait, check whether we haven't processed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25656,
+  "secondPos" : 25785,
+  "firstEndPos" : 25723,
+  "secondEndPos" : 25852
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  commands recently, so that we can throttle the new commands.",
+  "secondLabel" : "//  commands recently, so that we can throttle the new commands.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25736,
+  "secondPos" : 25865,
+  "firstEndPos" : 25800,
+  "secondEndPos" : 25929
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Get the CPU's tick counter. If 0, the counter is not available.",
+  "secondLabel" : "//  Get the CPU's tick counter. If 0, the counter is not available.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25814,
+  "secondPos" : 25943,
+  "firstEndPos" : 25881,
+  "secondEndPos" : 26010
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28829,6 +30347,83 @@
   "secondPos" : 26034,
   "firstEndPos" : 25906,
   "secondEndPos" : 26035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// save cpu Clock.rdtsc ();",
+  "secondLabel" : "// save cpu Clock.rdtsc ();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25908,
+  "secondPos" : 26037,
+  "firstEndPos" : 25935,
+  "secondEndPos" : 26064
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Optimised version of command processing - it doesn't have to check",
+  "secondLabel" : "//  Optimised version of command processing - it doesn't have to check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25949,
+  "secondPos" : 26078,
+  "firstEndPos" : 26019,
+  "secondEndPos" : 26148
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  for incoming commands each time. It does so only if certain time",
+  "secondLabel" : "//  for incoming commands each time. It does so only if certain time",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26032,
+  "secondPos" : 26161,
+  "firstEndPos" : 26100,
+  "secondEndPos" : 26229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  elapsed since last command processing. Command delay varies",
+  "secondLabel" : "//  elapsed since last command processing. Command delay varies",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26113,
+  "secondPos" : 26242,
+  "firstEndPos" : 26176,
+  "secondEndPos" : 26305
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  depending on CPU speed: It's ~1ms on 3GHz CPU, ~2ms on 1.5GHz CPU",
+  "secondLabel" : "//  depending on CPU speed: It's ~1ms on 3GHz CPU, ~2ms on 1.5GHz CPU",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26189,
+  "secondPos" : 26318,
+  "firstEndPos" : 26258,
+  "secondEndPos" : 26387
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  etc. The optimisation makes sense only on platforms where getting",
+  "secondLabel" : "//  etc. The optimisation makes sense only on platforms where getting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26271,
+  "secondPos" : 26400,
+  "firstEndPos" : 26340,
+  "secondEndPos" : 26469
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  a timestamp is a very cheap operation (tens of nanoseconds).",
+  "secondLabel" : "//  a timestamp is a very cheap operation (tens of nanoseconds).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26353,
+  "secondPos" : 26482,
+  "firstEndPos" : 26417,
+  "secondEndPos" : 26546
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -28928,6 +30523,39 @@
   "secondPos" : 26585,
   "firstEndPos" : 26885,
   "secondEndPos" : 27014
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether TSC haven't jumped backwards (in case of migration",
+  "secondLabel" : "//  Check whether TSC haven't jumped backwards (in case of migration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26474,
+  "secondPos" : 26603,
+  "firstEndPos" : 26542,
+  "secondEndPos" : 26671
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  between CPU cores) and whether certain time have elapsed since",
+  "secondLabel" : "//  between CPU cores) and whether certain time have elapsed since",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26559,
+  "secondPos" : 26688,
+  "firstEndPos" : 26625,
+  "secondEndPos" : 26754
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  last command processing. If it didn't do nothing.",
+  "secondLabel" : "//  last command processing. If it didn't do nothing.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26642,
+  "secondPos" : 26771,
+  "firstEndPos" : 26695,
+  "secondEndPos" : 26824
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -29204,6 +30832,17 @@
   "firstEndPos" : 26870,
   "secondEndPos" : 26999
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Check whether there are any commands pending for this thread.",
+  "secondLabel" : "//  Check whether there are any commands pending for this thread.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26899,
+  "secondPos" : 27028,
+  "firstEndPos" : 26964,
+  "secondEndPos" : 27093
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -29313,6 +30952,17 @@
   "secondPos" : 27125,
   "firstEndPos" : 26997,
   "secondEndPos" : 27126
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Process all the commands available at the moment.",
+  "secondLabel" : "//  Process all the commands available at the moment.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27019,
+  "secondPos" : 27148,
+  "firstEndPos" : 27072,
+  "secondEndPos" : 27201
 }, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
@@ -29754,6 +31404,17 @@
   "firstEndPos" : 27324,
   "secondEndPos" : 27453
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not raise exception at the blocked operation",
+  "secondLabel" : "// Do not raise exception at the blocked operation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27327,
+  "secondPos" : 27456,
+  "firstEndPos" : 27377,
+  "secondEndPos" : 27506
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -29874,6 +31535,50 @@
   "secondPos" : 27623,
   "firstEndPos" : 27872,
   "secondEndPos" : 28001
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Here, someone have called zmq_term while the socket was still alive.",
+  "secondLabel" : "//  Here, someone have called zmq_term while the socket was still alive.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27504,
+  "secondPos" : 27633,
+  "firstEndPos" : 27576,
+  "secondEndPos" : 27705
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  We'll remember the fact so that any blocking call is interrupted and any",
+  "secondLabel" : "//  We'll remember the fact so that any blocking call is interrupted and any",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27585,
+  "secondPos" : 27714,
+  "firstEndPos" : 27661,
+  "secondEndPos" : 27790
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  further attempt to use the socket will return ETERM. The user is still",
+  "secondLabel" : "//  further attempt to use the socket will return ETERM. The user is still",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27670,
+  "secondPos" : 27799,
+  "firstEndPos" : 27744,
+  "secondEndPos" : 27873
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  responsible for calling zmq_close on the socket though!",
+  "secondLabel" : "//  responsible for calling zmq_close on the socket though!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27753,
+  "secondPos" : 27882,
+  "firstEndPos" : 27812,
+  "secondEndPos" : 27941
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -30249,6 +31954,39 @@
   "firstEndPos" : 28545,
   "secondEndPos" : 28674
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Unregister all inproc endpoints associated with this socket.",
+  "secondLabel" : "//  Unregister all inproc endpoints associated with this socket.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28040,
+  "secondPos" : 28169,
+  "firstEndPos" : 28104,
+  "secondEndPos" : 28233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Doing this we make sure that no new pipes from other sockets (inproc)",
+  "secondLabel" : "//  Doing this we make sure that no new pipes from other sockets (inproc)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28113,
+  "secondPos" : 28242,
+  "firstEndPos" : 28186,
+  "secondEndPos" : 28315
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  will be initiated.",
+  "secondLabel" : "//  will be initiated.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28195,
+  "secondPos" : 28324,
+  "firstEndPos" : 28217,
+  "secondEndPos" : 28346
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30303,6 +32041,17 @@
   "secondPos" : 28375,
   "firstEndPos" : 28250,
   "secondEndPos" : 28379
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Ask all attached pipes to terminate.",
+  "secondLabel" : "//  Ask all attached pipes to terminate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28262,
+  "secondPos" : 28391,
+  "firstEndPos" : 28302,
+  "secondEndPos" : 28431
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -30711,6 +32460,17 @@
   "firstEndPos" : 28441,
   "secondEndPos" : 28570
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Continue the termination process immediately.",
+  "secondLabel" : "//  Continue the termination process immediately.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28455,
+  "secondPos" : 28584,
+  "firstEndPos" : 28504,
+  "secondEndPos" : 28633
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30754,6 +32514,17 @@
   "secondPos" : 28660,
   "firstEndPos" : 28537,
   "secondEndPos" : 28666
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Delay actual destruction of the socket.",
+  "secondLabel" : "//  Delay actual destruction of the socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28551,
+  "secondPos" : 28680,
+  "firstEndPos" : 28594,
+  "secondEndPos" : 28723
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -30886,6 +32657,39 @@
   "secondPos" : 28800,
   "firstEndPos" : 28675,
   "secondEndPos" : 28804
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  The default implementation assumes there are no specific socket",
+  "secondLabel" : "//  The default implementation assumes there are no specific socket",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28688,
+  "secondPos" : 28817,
+  "firstEndPos" : 28755,
+  "secondEndPos" : 28884
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  options for the particular socket type. If not so, overload this",
+  "secondLabel" : "//  options for the particular socket type. If not so, overload this",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28760,
+  "secondPos" : 28889,
+  "firstEndPos" : 28828,
+  "secondEndPos" : 28957
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  method.",
+  "secondLabel" : "//  method.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28833,
+  "secondPos" : 28962,
+  "firstEndPos" : 28844,
+  "secondEndPos" : 28973
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -32009,6 +33813,50 @@
   "firstEndPos" : 30131,
   "secondEndPos" : 30260
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  This function is invoked only once the socket is running in the context",
+  "secondLabel" : "//  This function is invoked only once the socket is running in the context",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29717,
+  "secondPos" : 29846,
+  "firstEndPos" : 29792,
+  "secondEndPos" : 29921
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  of the reaper thread. Process any commands from other threads/sockets",
+  "secondLabel" : "//  of the reaper thread. Process any commands from other threads/sockets",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29801,
+  "secondPos" : 29930,
+  "firstEndPos" : 29874,
+  "secondEndPos" : 30003
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  that may be available at the moment. Ultimately, the socket will",
+  "secondLabel" : "//  that may be available at the moment. Ultimately, the socket will",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29883,
+  "secondPos" : 30012,
+  "firstEndPos" : 29951,
+  "secondEndPos" : 30080
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  be destroyed.",
+  "secondLabel" : "//  be destroyed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29960,
+  "secondPos" : 30089,
+  "firstEndPos" : 29977,
+  "secondEndPos" : 30106
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -32713,6 +34561,28 @@
   "firstEndPos" : 30557,
   "secondEndPos" : 30686
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  To be called after processing commands or invoking any command",
+  "secondLabel" : "//  To be called after processing commands or invoking any command",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 30572,
+  "secondPos" : 30701,
+  "firstEndPos" : 30638,
+  "secondEndPos" : 30767
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  handlers explicitly. If required, it will deallocate the socket.",
+  "secondLabel" : "//  handlers explicitly. If required, it will deallocate the socket.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 30643,
+  "secondPos" : 30772,
+  "firstEndPos" : 30711,
+  "secondEndPos" : 30840
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -32768,6 +34638,17 @@
   "firstEndPos" : 31202,
   "secondEndPos" : 31331
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  If the object was already marked as destroyed, finish the deallocation.",
+  "secondLabel" : "//  If the object was already marked as destroyed, finish the deallocation.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30758,
+  "secondPos" : 30887,
+  "firstEndPos" : 30833,
+  "secondEndPos" : 30962
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -32800,6 +34681,17 @@
   "secondPos" : 30986,
   "firstEndPos" : 31196,
   "secondEndPos" : 31325
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Remove the socket from the reaper's poller.",
+  "secondLabel" : "//  Remove the socket from the reaper's poller.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30871,
+  "secondPos" : 31000,
+  "firstEndPos" : 30918,
+  "secondEndPos" : 31047
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -32878,6 +34770,17 @@
   "firstEndPos" : 30957,
   "secondEndPos" : 31086
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Remove the socket from the context.",
+  "secondLabel" : "//  Remove the socket from the context.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30972,
+  "secondPos" : 31101,
+  "firstEndPos" : 31011,
+  "secondEndPos" : 31140
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -32933,6 +34836,17 @@
   "firstEndPos" : 31042,
   "secondEndPos" : 31171
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Notify the reaper about the fact.",
+  "secondLabel" : "//  Notify the reaper about the fact.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31058,
+  "secondPos" : 31187,
+  "firstEndPos" : 31095,
+  "secondEndPos" : 31224
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -32965,6 +34879,17 @@
   "secondPos" : 31237,
   "firstEndPos" : 31118,
   "secondEndPos" : 31247
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Deallocate.",
+  "secondLabel" : "//  Deallocate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31135,
+  "secondPos" : 31264,
+  "firstEndPos" : 31150,
+  "secondEndPos" : 31279
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -33626,6 +35551,17 @@
   "firstEndPos" : 31657,
   "secondEndPos" : 31786
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Notify derived sockets of the hiccup",
+  "secondLabel" : "// Notify derived sockets of the hiccup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31579,
+  "secondPos" : 31708,
+  "firstEndPos" : 31618,
+  "secondEndPos" : 31747
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33802,6 +35738,17 @@
   "firstEndPos" : 32342,
   "secondEndPos" : 32471
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Notify the specific socket type about the pipe termination.",
+  "secondLabel" : "//  Notify the specific socket type about the pipe termination.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31735,
+  "secondPos" : 31864,
+  "firstEndPos" : 31798,
+  "secondEndPos" : 31927
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33856,6 +35803,17 @@
   "secondPos" : 31952,
   "firstEndPos" : 31827,
   "secondEndPos" : 31956
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove pipe from inproc pipes",
+  "secondLabel" : "// Remove pipe from inproc pipes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31839,
+  "secondPos" : 31968,
+  "firstEndPos" : 31871,
+  "secondEndPos" : 32000
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -34341,6 +36299,28 @@
   "firstEndPos" : 32076,
   "secondEndPos" : 32205
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Remove the pipe from the list of attached pipes and confirm its",
+  "secondLabel" : "//  Remove the pipe from the list of attached pipes and confirm its",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32110,
+  "secondPos" : 32239,
+  "firstEndPos" : 32177,
+  "secondEndPos" : 32306
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  termination if we are already shutting down.",
+  "secondLabel" : "//  termination if we are already shutting down.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32186,
+  "secondPos" : 32315,
+  "firstEndPos" : 32234,
+  "secondEndPos" : 32363
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34495,6 +36475,28 @@
   "firstEndPos" : 32323,
   "secondEndPos" : 32452
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Moves the flags from the message to local variables,",
+  "secondLabel" : "//  Moves the flags from the message to local variables,",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 32348,
+  "secondPos" : 32477,
+  "firstEndPos" : 32404,
+  "secondEndPos" : 32533
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  to be later retrieved by getSocketOpt.",
+  "secondLabel" : "//  to be later retrieved by getSocketOpt.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 32409,
+  "secondPos" : 32538,
+  "firstEndPos" : 32451,
+  "secondEndPos" : 32580
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -34593,6 +36595,17 @@
   "secondPos" : 32624,
   "firstEndPos" : 32737,
   "secondEndPos" : 32866
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Test whether IDENTITY flag is valid for this socket type.",
+  "secondLabel" : "//  Test whether IDENTITY flag is valid for this socket type.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32505,
+  "secondPos" : 32634,
+  "firstEndPos" : 32566,
+  "secondEndPos" : 32695
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -34769,6 +36782,17 @@
   "secondPos" : 32764,
   "firstEndPos" : 32655,
   "secondEndPos" : 32784
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Remove MORE flag.",
+  "secondLabel" : "//  Remove MORE flag.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32677,
+  "secondPos" : 32806,
+  "firstEndPos" : 32698,
+  "secondEndPos" : 32827
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -35122,6 +37146,17 @@
   "firstEndPos" : 32903,
   "secondEndPos" : 33032
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Support deregistering monitoring endpoints as well",
+  "secondLabel" : "// Support deregistering monitoring endpoints as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32926,
+  "secondPos" : 33055,
+  "firstEndPos" : 32979,
+  "secondEndPos" : 33108
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -35242,6 +37277,17 @@
   "secondPos" : 33183,
   "firstEndPos" : 33058,
   "secondEndPos" : 33187
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  Parse addr_ string.",
+  "secondLabel" : "//  Parse addr_ string.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33079,
+  "secondPos" : 33208,
+  "firstEndPos" : 33102,
+  "secondEndPos" : 33231
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -36002,6 +38048,17 @@
   "firstEndPos" : 33502,
   "secondEndPos" : 33631
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Event notification only supported over inproc://",
+  "secondLabel" : "// Event notification only supported over inproc://",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33514,
+  "secondPos" : 33643,
+  "firstEndPos" : 33565,
+  "secondEndPos" : 33694
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -36199,6 +38256,17 @@
   "secondPos" : 33811,
   "firstEndPos" : 33706,
   "secondEndPos" : 33835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Register events to monitor",
+  "secondLabel" : "// Register events to monitor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33728,
+  "secondPos" : 33857,
+  "firstEndPos" : 33757,
+  "secondEndPos" : 33886
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36463,6 +38531,17 @@
   "secondPos" : 34037,
   "firstEndPos" : 33913,
   "secondEndPos" : 34042
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Never block context termination on pending event messages",
+  "secondLabel" : "// Never block context termination on pending event messages",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33934,
+  "secondPos" : 34063,
+  "firstEndPos" : 33994,
+  "secondEndPos" : 34123
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -36749,6 +38828,17 @@
   "secondPos" : 34326,
   "firstEndPos" : 34198,
   "secondEndPos" : 34327
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Spawn the monitor socket endpoint",
+  "secondLabel" : "// Spawn the monitor socket endpoint",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34219,
+  "secondPos" : 34348,
+  "firstEndPos" : 34255,
+  "secondEndPos" : 34384
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

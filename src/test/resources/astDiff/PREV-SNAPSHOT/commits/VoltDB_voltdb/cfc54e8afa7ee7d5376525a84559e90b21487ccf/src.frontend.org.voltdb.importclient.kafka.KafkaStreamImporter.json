@@ -10,6 +10,17 @@
   "firstEndPos" : 38519,
   "secondEndPos" : 41162
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "secondLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 738,
+  "secondEndPos" : 738
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1132,6 +1143,17 @@
   "firstEndPos" : 2780,
   "secondEndPos" : 3038
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2763,
+  "secondPos" : 3021,
+  "firstEndPos" : 2770,
+  "secondEndPos" : 3028
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " akhanzode",
@@ -1220,6 +1242,17 @@
   "firstEndPos" : 2871,
   "secondEndPos" : 3129
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Properties for the importer",
+  "secondLabel" : "//Properties for the importer",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2879,
+  "secondPos" : 3448,
+  "firstEndPos" : 2908,
+  "secondEndPos" : 3477
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1285,6 +1318,17 @@
   "secondPos" : 3501,
   "firstEndPos" : 2944,
   "secondEndPos" : 3513
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Group id",
+  "secondLabel" : "//Group id",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2950,
+  "secondPos" : 3519,
+  "firstEndPos" : 2960,
+  "secondEndPos" : 3529
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1352,6 +1396,17 @@
   "firstEndPos" : 2989,
   "secondEndPos" : 3558
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Procedure to be invoked with params.",
+  "secondLabel" : "//Procedure to be invoked with params.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2995,
+  "secondPos" : 3564,
+  "firstEndPos" : 3033,
+  "secondEndPos" : 3602
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1418,6 +1473,17 @@
   "firstEndPos" : 3064,
   "secondEndPos" : 3633
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//backpressure sleep milli seconds 100ms by default.",
+  "secondLabel" : "//backpressure sleep milli seconds 100ms by default.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3070,
+  "secondPos" : 3639,
+  "firstEndPos" : 3122,
+  "secondEndPos" : 3691
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1483,6 +1549,17 @@
   "secondPos" : 3732,
   "firstEndPos" : 3166,
   "secondEndPos" : 3735
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//List of topics form comma seperated list.",
+  "secondLabel" : "//List of topics form comma seperated list.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3173,
+  "secondPos" : 3742,
+  "firstEndPos" : 3216,
+  "secondEndPos" : 3785
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1582,6 +1659,17 @@
   "secondPos" : 3811,
   "firstEndPos" : 3253,
   "secondEndPos" : 3822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//List of brokers.",
+  "secondLabel" : "//List of brokers.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3259,
+  "secondPos" : 3828,
+  "firstEndPos" : 3277,
+  "secondEndPos" : 3846
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1758,6 +1846,17 @@
   "secondPos" : 3912,
   "firstEndPos" : 3354,
   "secondEndPos" : 3923
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//kafka properties which has defaults use 2m row limit.",
+  "secondLabel" : "//kafka properties which has defaults use 2m row limit.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3363,
+  "secondPos" : 3932,
+  "firstEndPos" : 3418,
+  "secondEndPos" : 3987
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1945,6 +2044,17 @@
   "secondPos" : 4075,
   "firstEndPos" : 3511,
   "secondEndPos" : 4080
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//In milliseconds",
+  "secondLabel" : "//In milliseconds",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3513,
+  "secondPos" : 4082,
+  "firstEndPos" : 3530,
+  "secondEndPos" : 4099
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2232,6 +2342,17 @@
   "firstEndPos" : 3709,
   "secondEndPos" : 4278
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//readyForData is waiting for this released by shutdown",
+  "secondLabel" : "//readyForData is waiting for this released by shutdown",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3715,
+  "secondPos" : 4284,
+  "firstEndPos" : 3770,
+  "secondEndPos" : 4339
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2418,6 +2539,17 @@
   "secondPos" : 4428,
   "firstEndPos" : 3864,
   "secondEndPos" : 4433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//topic partition metadata",
+  "secondLabel" : "//topic partition metadata",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3871,
+  "secondPos" : 4440,
+  "firstEndPos" : 3897,
+  "secondEndPos" : 4466
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2705,6 +2837,17 @@
   "firstEndPos" : 4014,
   "secondEndPos" : 4583
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Topic partitions",
+  "secondLabel" : "//Topic partitions",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4024,
+  "secondPos" : 4593,
+  "firstEndPos" : 4042,
+  "secondEndPos" : 4611
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2990,6 +3133,17 @@
   "secondPos" : 4702,
   "firstEndPos" : 4140,
   "secondEndPos" : 4709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//topic partition leader",
+  "secondLabel" : "//topic partition leader",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4150,
+  "secondPos" : 4719,
+  "firstEndPos" : 4174,
+  "secondEndPos" : 4743
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3749,6 +3903,17 @@
   "secondPos" : 5151,
   "firstEndPos" : 4585,
   "secondEndPos" : 5154
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Simple Host and Port abstraction....dont want to use our big stuff here orgi bundle import nastiness.",
+  "secondLabel" : "//Simple Host and Port abstraction....dont want to use our big stuff here orgi bundle import nastiness.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4592,
+  "secondPos" : 5161,
+  "firstEndPos" : 4695,
+  "secondEndPos" : 5264
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -6500,6 +6665,17 @@
   "firstEndPos" : 6165,
   "secondEndPos" : 6734
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Register ImportHandlerProxy service.",
+  "secondLabel" : "// Register ImportHandlerProxy service.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6191,
+  "secondPos" : 6760,
+  "firstEndPos" : 6230,
+  "secondEndPos" : 6799
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6951,6 +7127,17 @@
   "firstEndPos" : 6511,
   "secondEndPos" : 7080
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Do any bundle related cleanup.",
+  "secondLabel" : "//Do any bundle related cleanup.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6473,
+  "secondPos" : 7042,
+  "firstEndPos" : 6505,
+  "secondEndPos" : 7074
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -7028,6 +7215,17 @@
   "firstEndPos" : 6691,
   "secondEndPos" : 7260
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//This is not a run everywhere importer only allocated resources are polled and consumed.",
+  "secondLabel" : "//This is not a run everywhere importer only allocated resources are polled and consumed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6574,
+  "secondPos" : 7143,
+  "firstEndPos" : 6663,
+  "secondEndPos" : 7232
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -7049,6 +7247,17 @@
   "secondPos" : 7248,
   "firstEndPos" : 6684,
   "secondEndPos" : 7253
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//This is called to get all available resources. So called once during startup or catalog update.",
+  "secondLabel" : "//This is called to get all available resources. So called once during startup or catalog update.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6697,
+  "secondPos" : 7266,
+  "firstEndPos" : 6794,
+  "secondEndPos" : 7363
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7192,6 +7401,17 @@
   "secondPos" : 7435,
   "firstEndPos" : 8993,
   "secondEndPos" : 9486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//For all topics connect and get metadata.",
+  "secondLabel" : "//For all topics connect and get metadata.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6877,
+  "secondPos" : 7446,
+  "firstEndPos" : 6919,
+  "secondEndPos" : 7488
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7820,6 +8040,17 @@
   "firstEndPos" : 7441,
   "secondEndPos" : 7998
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Only called once.",
+  "secondLabel" : "//Only called once.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7295,
+  "secondPos" : 7852,
+  "firstEndPos" : 7314,
+  "secondEndPos" : 7871
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8127,6 +8358,17 @@
   "secondPos" : 8100,
   "firstEndPos" : 7689,
   "secondEndPos" : 8246
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//called once.",
+  "secondLabel" : "//called once.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7561,
+  "secondPos" : 8118,
+  "firstEndPos" : 7575,
+  "secondEndPos" : 8132
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9745,6 +9987,17 @@
   "firstEndPos" : 8708,
   "secondEndPos" : 9201
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Create an executor serice with Queue.",
+  "secondLabel" : "//Create an executor serice with Queue.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8719,
+  "secondPos" : 9212,
+  "firstEndPos" : 8758,
+  "secondEndPos" : 9251
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10680,6 +10933,17 @@
   "firstEndPos" : 9335,
   "secondEndPos" : 9828
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Build all available topic URIs",
+  "secondLabel" : "//Build all available topic URIs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9350,
+  "secondPos" : 9843,
+  "firstEndPos" : 9382,
+  "secondEndPos" : 9875
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11153,6 +11417,17 @@
   "firstEndPos" : 9773,
   "secondEndPos" : 10266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Stop all the fetchers.",
+  "secondLabel" : "//Stop all the fetchers.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9783,
+  "secondPos" : 10276,
+  "firstEndPos" : 9807,
+  "secondEndPos" : 10300
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -11383,6 +11658,17 @@
   "secondPos" : 10437,
   "firstEndPos" : 10253,
   "secondEndPos" : 10746
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Now wait for fetchers to break out.",
+  "secondLabel" : "//Now wait for fetchers to break out.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9958,
+  "secondPos" : 10451,
+  "firstEndPos" : 9995,
+  "secondEndPos" : 10488
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11615,6 +11901,17 @@
   "firstEndPos" : 10243,
   "secondEndPos" : 10736
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Should never come here.",
+  "secondLabel" : "//Should never come here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10166,
+  "secondPos" : 10659,
+  "firstEndPos" : 10191,
+  "secondEndPos" : 10684
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11835,6 +12132,17 @@
   "firstEndPos" : 10425,
   "secondEndPos" : 10918
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10396,
+  "secondPos" : 10889,
+  "firstEndPos" : 10403,
+  "secondEndPos" : 10896
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " name of the importer.",
@@ -11999,6 +12307,17 @@
   "secondPos" : 11144,
   "firstEndPos" : 10659,
   "secondEndPos" : 11152
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10651,
+  "secondPos" : 11144,
+  "firstEndPos" : 10657,
+  "secondEndPos" : 11150
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12516,6 +12835,17 @@
   "secondPos" : 11412,
   "firstEndPos" : 10939,
   "secondEndPos" : 11432
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//pipe seperated list of topics.",
+  "secondLabel" : "//pipe seperated list of topics.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10960,
+  "secondPos" : 11453,
+  "firstEndPos" : 10992,
+  "secondEndPos" : 11485
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15135,6 +15465,17 @@
   "firstEndPos" : 12799,
   "secondEndPos" : 13292
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//These are defaults picked up from kafka we save them so that they are passed around.",
+  "secondLabel" : "//These are defaults picked up from kafka we save them so that they are passed around.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12811,
+  "secondPos" : 13304,
+  "firstEndPos" : 12897,
+  "secondEndPos" : 13390
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15663,6 +16004,17 @@
   "firstEndPos" : 13211,
   "secondEndPos" : 13704
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Per topic per partition that we are responsible for.",
+  "secondLabel" : "//Per topic per partition that we are responsible for.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13226,
+  "secondPos" : 13719,
+  "firstEndPos" : 13280,
+  "secondEndPos" : 13773
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -15728,6 +16080,17 @@
   "secondPos" : 13825,
   "firstEndPos" : 13340,
   "secondEndPos" : 13833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//URL for this fetcher.",
+  "secondLabel" : "//URL for this fetcher.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13352,
+  "secondPos" : 13845,
+  "firstEndPos" : 13375,
+  "secondEndPos" : 13868
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -15806,6 +16169,17 @@
   "firstEndPos" : 13407,
   "secondEndPos" : 13900
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Leafer for fetching data",
+  "secondLabel" : "//Leafer for fetching data",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13417,
+  "secondPos" : 13910,
+  "firstEndPos" : 13443,
+  "secondEndPos" : 13936
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -15871,6 +16245,17 @@
   "secondPos" : 13965,
   "firstEndPos" : 13486,
   "secondEndPos" : 13973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//coordinator for offset management.",
+  "secondLabel" : "//coordinator for offset management.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13496,
+  "secondPos" : 13983,
+  "firstEndPos" : 13532,
+  "secondEndPos" : 14019
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -16147,6 +16532,17 @@
   "firstEndPos" : 13717,
   "secondEndPos" : 14204
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Available brokers.",
+  "secondLabel" : "//Available brokers.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13727,
+  "secondPos" : 14214,
+  "firstEndPos" : 13747,
+  "secondEndPos" : 14234
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -16322,6 +16718,17 @@
   "secondPos" : 14312,
   "firstEndPos" : 13848,
   "secondEndPos" : 14335
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Start with invalid so consumer will fetch it.",
+  "secondLabel" : "//Start with invalid so consumer will fetch it.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13858,
+  "secondPos" : 14345,
+  "firstEndPos" : 13905,
+  "secondEndPos" : 14392
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -18204,6 +18611,17 @@
   "firstEndPos" : 15008,
   "secondEndPos" : 15545
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Find leader for the topic+partition.",
+  "secondLabel" : "//Find leader for the topic+partition.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15029,
+  "secondPos" : 15566,
+  "firstEndPos" : 15067,
+  "secondEndPos" : 15604
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -20008,6 +20426,17 @@
   "firstEndPos" : 16594,
   "secondEndPos" : 17119
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Find leader for this topic partition.",
+  "secondLabel" : "//Find leader for this topic partition.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 16615,
+  "secondPos" : 17140,
+  "firstEndPos" : 16654,
+  "secondEndPos" : 17179
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -20888,6 +21317,28 @@
   "firstEndPos" : 17400,
   "secondEndPos" : 17925
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first time through if the leader hasn't changed give ZooKeeper a second to recover",
+  "secondLabel" : "// first time through if the leader hasn't changed give ZooKeeper a second to recover",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17145,
+  "secondPos" : 17670,
+  "firstEndPos" : 17230,
+  "secondEndPos" : 17755
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// second time, assume the broker did recover before failover, or it was a non-Broker issue",
+  "secondLabel" : "// second time, assume the broker did recover before failover, or it was a non-Broker issue",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17251,
+  "secondPos" : 17776,
+  "firstEndPos" : 17342,
+  "secondEndPos" : 17867
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21273,6 +21724,17 @@
   "firstEndPos" : 17593,
   "secondEndPos" : 18118
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Unable to find return null for recheck.",
+  "secondLabel" : "//Unable to find return null for recheck.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17640,
+  "secondPos" : 18165,
+  "firstEndPos" : 17681,
+  "secondEndPos" : 18206
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -21371,6 +21833,17 @@
   "secondPos" : 18308,
   "firstEndPos" : 17787,
   "secondEndPos" : 18312
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Just set shutdown flag fetcher timeout will then exit the thread.",
+  "secondLabel" : "//Just set shutdown flag fetcher timeout will then exit the thread.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 17808,
+  "secondPos" : 18333,
+  "firstEndPos" : 17875,
+  "secondEndPos" : 18400
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -25244,6 +25717,17 @@
   "firstEndPos" : 22333,
   "secondEndPos" : 25083
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Callback for each invocation we have submitted.",
+  "secondLabel" : "//Callback for each invocation we have submitted.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 22353,
+  "secondPos" : 25103,
+  "firstEndPos" : 22402,
+  "secondEndPos" : 25152
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -25981,6 +26465,17 @@
   "firstEndPos" : 23270,
   "secondEndPos" : 26020
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//We should never get here with no pending offsets.",
+  "secondLabel" : "//We should never get here with no pending offsets.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22966,
+  "secondPos" : 25716,
+  "firstEndPos" : 23017,
+  "secondEndPos" : 25767
+}, {
   "firstType" : "AssertStatement",
   "secondType" : "AssertStatement",
   "firstLabel" : "",
@@ -26201,6 +26696,17 @@
   "firstEndPos" : 23162,
   "secondEndPos" : 25912
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//This is what we commit to",
+  "secondLabel" : "//This is what we commit to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23181,
+  "secondPos" : 25931,
+  "firstEndPos" : 23208,
+  "secondEndPos" : 25958
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26277,6 +26783,17 @@
   "secondPos" : 25992,
   "firstEndPos" : 23254,
   "secondEndPos" : 26004
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Sleep with backoff.",
+  "secondLabel" : "//Sleep with backoff.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 23291,
+  "secondPos" : 26041,
+  "firstEndPos" : 23312,
+  "secondEndPos" : 26062
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -27114,6 +27631,17 @@
   "firstEndPos" : 31885,
   "secondEndPos" : 33690
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Startwith the starting leader.",
+  "secondLabel" : "//Startwith the starting leader.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23903,
+  "secondPos" : 27557,
+  "firstEndPos" : 23935,
+  "secondEndPos" : 27589
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27487,6 +28015,17 @@
   "secondPos" : 27274,
   "firstEndPos" : 24258,
   "secondEndPos" : 27283
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//If we dont know the offset get it backoff if we fail.",
+  "secondLabel" : "//If we dont know the offset get it backoff if we fail.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24303,
+  "secondPos" : 27718,
+  "firstEndPos" : 24358,
+  "secondEndPos" : 27773
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -28038,6 +28577,17 @@
   "firstEndPos" : 24799,
   "secondEndPos" : 28232
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//No latest time available so get earliest known for this consumer group.",
+  "secondLabel" : "//No latest time available so get earliest known for this consumer group.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24830,
+  "secondPos" : 28263,
+  "firstEndPos" : 24903,
+  "secondEndPos" : 28336
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -28147,6 +28697,17 @@
   "secondPos" : 28575,
   "firstEndPos" : 25320,
   "secondEndPos" : 28576
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Build fetch request of we have a valid offset and not too many are pending.",
+  "secondLabel" : "//Build fetch request of we have a valid offset and not too many are pending.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25342,
+  "secondPos" : 28598,
+  "firstEndPos" : 25419,
+  "secondEndPos" : 28675
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29017,6 +29578,17 @@
   "firstEndPos" : 26171,
   "secondEndPos" : 29429
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//See if its network error and find new leader for this partition.",
+  "secondLabel" : "//See if its network error and find new leader for this partition.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26198,
+  "secondPos" : 29456,
+  "firstEndPos" : 26264,
+  "secondEndPos" : 29522
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -29324,6 +29896,17 @@
   "secondPos" : 26609,
   "firstEndPos" : 26852,
   "secondEndPos" : 26852
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//point to original leader which will fail and we fall back again here.",
+  "secondLabel" : "//point to original leader which will fail and we fall back again here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26579,
+  "secondPos" : 26627,
+  "firstEndPos" : 26650,
+  "secondEndPos" : 26698
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -29688,6 +30271,17 @@
   "firstEndPos" : 27055,
   "secondEndPos" : 27023
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//find leader would sleep and backoff",
+  "secondLabel" : "//find leader in resetLeader would sleep and backoff",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27150,
+  "secondPos" : 29651,
+  "firstEndPos" : 27187,
+  "secondEndPos" : 29703
+}, {
   "firstType" : "ContinueStatement",
   "secondType" : "ContinueStatement",
   "firstLabel" : "",
@@ -29863,6 +30457,17 @@
   "secondPos" : 29942,
   "firstEndPos" : 29054,
   "secondEndPos" : 30844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Something went wrong!",
+  "secondLabel" : "// Something went wrong!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27452,
+  "secondPos" : 29968,
+  "firstEndPos" : 27476,
+  "secondEndPos" : 29992
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -30315,6 +30920,17 @@
   "firstEndPos" : 28269,
   "secondEndPos" : 30749
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We asked for an invalid offset. For simple case ask for the last element to reset",
+  "secondLabel" : "// We asked for an invalid offset. For simple case ask for the last element to reset",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27878,
+  "secondPos" : 30406,
+  "firstEndPos" : 27962,
+  "secondEndPos" : 30490
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30754,6 +31370,17 @@
   "secondPos" : 26609,
   "firstEndPos" : 28751,
   "secondEndPos" : 26852
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//point to original leader which will fail and we fall back again here.",
+  "secondLabel" : "//point to original leader which will fail and we fall back again here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28496,
+  "secondPos" : 26627,
+  "firstEndPos" : 28567,
+  "secondEndPos" : 26698
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31393,6 +32020,17 @@
   "firstEndPos" : 31022,
   "secondEndPos" : 32827
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//You may be catchin up so dont sleep.",
+  "secondLabel" : "//You may be catchin up so dont sleep.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29268,
+  "secondPos" : 31058,
+  "firstEndPos" : 29306,
+  "secondEndPos" : 31096
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -31524,6 +32162,17 @@
   "secondPos" : 31204,
   "firstEndPos" : 29420,
   "secondEndPos" : 31210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if currentOffset is less means we have already pushed it and also check pending queue.",
+  "secondLabel" : "//if currentOffset is less means we have already pushed it and also check pending queue.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29448,
+  "secondPos" : 31238,
+  "firstEndPos" : 29536,
+  "secondEndPos" : 31326
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -32592,6 +33241,17 @@
   "firstEndPos" : 30688,
   "secondEndPos" : 32493
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Make this failed offset known to seen offsets so committer can push ahead.",
+  "secondLabel" : "//Make this failed offset known to seen offsets so committer can push ahead.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30501,
+  "secondPos" : 32306,
+  "firstEndPos" : 30577,
+  "secondEndPos" : 32382
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -33021,6 +33681,17 @@
   "firstEndPos" : 31091,
   "secondEndPos" : 32896
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//wait to fetch more if we are in backpressure or read nothing last time.",
+  "secondLabel" : "//wait to fetch more if we are in backpressure or read nothing last time.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31135,
+  "secondPos" : 32940,
+  "firstEndPos" : 31208,
+  "secondEndPos" : 33013
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -33317,6 +33988,17 @@
   "secondPos" : 33308,
   "firstEndPos" : 31515,
   "secondEndPos" : 33320
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Drain will make sure there is nothing in pending.",
+  "secondLabel" : "//Drain will make sure there is nothing in pending.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31553,
+  "secondPos" : 33358,
+  "firstEndPos" : 31604,
+  "secondEndPos" : 33409
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -37817,6 +38499,17 @@
   "firstEndPos" : 35242,
   "secondEndPos" : 37293
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//On getting this event kick off ready",
+  "secondLabel" : "//On getting this event kick off ready",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 35266,
+  "secondPos" : 37317,
+  "firstEndPos" : 35304,
+  "secondEndPos" : 37355
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -38103,6 +38796,17 @@
   "firstEndPos" : 35729,
   "secondEndPos" : 37780
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Create executor with sufficient threads.",
+  "secondLabel" : "//Create executor with sufficient threads.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35557,
+  "secondPos" : 37608,
+  "firstEndPos" : 35599,
+  "secondEndPos" : 37650
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -38201,6 +38905,17 @@
   "secondPos" : 37764,
   "firstEndPos" : 35717,
   "secondEndPos" : 37768
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//For addeed create fetchers...make sure existing fetchers are not there.",
+  "secondLabel" : "//For addeed create fetchers...make sure existing fetchers are not there.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35739,
+  "secondPos" : 37790,
+  "firstEndPos" : 35812,
+  "secondEndPos" : 37863
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -39071,6 +39786,17 @@
   "firstEndPos" : 36457,
   "secondEndPos" : 38496
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//I got a change for added partition that I am not aware of die die.",
+  "secondLabel" : "//I got a change for added partition that I am not aware of die die.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36270,
+  "secondPos" : 38309,
+  "firstEndPos" : 36338,
+  "secondEndPos" : 38377
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -39521,6 +40247,17 @@
   "secondPos" : 38702,
   "firstEndPos" : 36672,
   "secondEndPos" : 38711
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//The fetcher must not have existed.",
+  "secondLabel" : "//The fetcher must not have existed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36695,
+  "secondPos" : 38734,
+  "firstEndPos" : 36731,
+  "secondEndPos" : 38770
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -40424,6 +41161,17 @@
   "firstEndPos" : 37407,
   "secondEndPos" : 39446
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//For removed shutdown the fetchers if all are removed the importer will be closed/shutdown?",
+  "secondLabel" : "//For removed shutdown the fetchers if all are removed the importer will be closed/shutdown?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37483,
+  "secondPos" : 39522,
+  "firstEndPos" : 37575,
+  "secondEndPos" : 39614
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -41007,6 +41755,17 @@
   "firstEndPos" : 37887,
   "secondEndPos" : 39926
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: implement",
+  "secondLabel" : "// TODO: implement",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 37927,
+  "secondPos" : 39966,
+  "firstEndPos" : 37945,
+  "secondEndPos" : 39984
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -41435,6 +42194,17 @@
   "secondPos" : 40342,
   "firstEndPos" : 38315,
   "secondEndPos" : 40354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//We wait for shutdown task to release.",
+  "secondLabel" : "//We wait for shutdown task to release.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38330,
+  "secondPos" : 40369,
+  "firstEndPos" : 38369,
+  "secondEndPos" : 40408
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

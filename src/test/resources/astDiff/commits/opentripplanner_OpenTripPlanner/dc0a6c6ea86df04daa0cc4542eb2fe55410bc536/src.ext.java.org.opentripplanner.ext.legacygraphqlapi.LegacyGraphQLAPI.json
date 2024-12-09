@@ -670,6 +670,17 @@
   "firstEndPos" : 1062,
   "secondEndPos" : 1062
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO move to org.opentripplanner.api.resource, this is a Jersey resource class",
+  "secondLabel" : "// TODO move to org.opentripplanner.api.resource, this is a Jersey resource class",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1065,
+  "secondPos" : 1065,
+  "firstEndPos" : 1146,
+  "secondEndPos" : 1146
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -747,6 +758,17 @@
   "firstEndPos" : 1227,
   "secondEndPos" : 1227
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// One @Produces annotation for all endpoints.",
+  "secondLabel" : "// One @Produces annotation for all endpoints.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1229,
+  "secondPos" : 1229,
+  "firstEndPos" : 1275,
+  "secondEndPos" : 1275
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -790,6 +812,39 @@
   "secondPos" : 1311,
   "firstEndPos" : 1463,
   "secondEndPos" : 1423
+}, {
+  "firstType" : "SingleMemberAnnotation",
+  "secondType" : "SingleMemberAnnotation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 1311,
+  "secondPos" : 1311,
+  "firstEndPos" : 1338,
+  "secondEndPos" : 1338
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "SuppressWarnings",
+  "secondLabel" : "SuppressWarnings",
+  "firstParentType" : "SingleMemberAnnotation",
+  "secondParentType" : "SingleMemberAnnotation",
+  "firstPos" : 1312,
+  "secondPos" : 1312,
+  "firstEndPos" : 1328,
+  "secondEndPos" : 1328
+}, {
+  "firstType" : "StringLiteral",
+  "secondType" : "StringLiteral",
+  "firstLabel" : "\"unused\"",
+  "secondLabel" : "\"unused\"",
+  "firstParentType" : "SingleMemberAnnotation",
+  "secondParentType" : "SingleMemberAnnotation",
+  "firstPos" : 1329,
+  "secondPos" : 1329,
+  "firstEndPos" : 1337,
+  "secondEndPos" : 1337
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",

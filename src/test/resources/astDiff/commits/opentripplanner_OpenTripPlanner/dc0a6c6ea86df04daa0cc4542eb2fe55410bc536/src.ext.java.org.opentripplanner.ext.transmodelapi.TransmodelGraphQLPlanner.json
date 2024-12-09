@@ -10306,6 +10306,17 @@
   "firstEndPos" : 6431,
   "secondEndPos" : 6432
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"maxTransferWalkDistance\", request::setMaxTransferWalkDistance);",
+  "secondLabel" : "//        callWith.argument(\"maxTransferWalkDistance\", request::setMaxTransferWalkDistance);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6434,
+  "secondPos" : 6435,
+  "firstEndPos" : 6526,
+  "secondEndPos" : 6527
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10415,6 +10426,28 @@
   "secondPos" : 6584,
   "firstEndPos" : 6603,
   "secondEndPos" : 6604
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"preTransitReluctance\", (Double v) ->  request.setPreTransitReluctance(v));",
+  "secondLabel" : "//        callWith.argument(\"preTransitReluctance\", (Double v) ->  request.setPreTransitReluctance(v));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6606,
+  "secondPos" : 6607,
+  "firstEndPos" : 6709,
+  "secondEndPos" : 6710
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"maxPreTransitWalkDistance\", (Double v) ->  request.setMaxPreTransitWalkDistance(v));",
+  "secondLabel" : "//        callWith.argument(\"maxPreTransitWalkDistance\", (Double v) ->  request.setMaxPreTransitWalkDistance(v));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6710,
+  "secondPos" : 6711,
+  "firstEndPos" : 6823,
+  "secondEndPos" : 6824
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10855,6 +10888,17 @@
   "secondPos" : 7094,
   "firstEndPos" : 7109,
   "secondEndPos" : 7110
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"walkOnStreetReluctance\", request::setWalkOnStreetReluctance);",
+  "secondLabel" : "//        callWith.argument(\"walkOnStreetReluctance\", request::setWalkOnStreetReluctance);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7112,
+  "secondPos" : 7113,
+  "firstEndPos" : 7202,
+  "secondEndPos" : 7203
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11779,6 +11823,17 @@
   "secondPos" : 7690,
   "firstEndPos" : 7690,
   "secondEndPos" : 7691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"transitDistanceReluctance\", (Double v) -> request.transitDistanceReluctance = v);",
+  "secondLabel" : "//        callWith.argument(\"transitDistanceReluctance\", (Double v) -> request.transitDistanceReluctance = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7693,
+  "secondPos" : 7694,
+  "firstEndPos" : 7803,
+  "secondEndPos" : 7804
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13166,6 +13221,17 @@
   "firstEndPos" : 8764,
   "secondEndPos" : 8765
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"preferred.lines\", lines -> request.setPreferredRoutes(mappingUtil.prepareListOfFeedScopedId((List<String>) lines, \"__\")));",
+  "secondLabel" : "//        callWith.argument(\"preferred.lines\", lines -> request.setPreferredRoutes(mappingUtil.prepareListOfFeedScopedId((List<String>) lines, \"__\")));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8770,
+  "secondPos" : 8771,
+  "firstEndPos" : 8921,
+  "secondEndPos" : 8922
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13605,6 +13671,17 @@
   "secondPos" : 9208,
   "firstEndPos" : 9209,
   "secondEndPos" : 9210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"unpreferred.lines\", lines -> request.setUnpreferredRoutes(mappingUtil.prepareListOfFeedScopedId((List<String>) lines, \"__\")));",
+  "secondLabel" : "//        callWith.argument(\"unpreferred.lines\", lines -> request.setUnpreferredRoutes(mappingUtil.prepareListOfFeedScopedId((List<String>) lines, \"__\")));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9214,
+  "secondPos" : 9215,
+  "firstEndPos" : 9369,
+  "secondEndPos" : 9370
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14816,6 +14893,28 @@
   "firstEndPos" : 10008,
   "secondEndPos" : 10009
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"banned.quays\", quays -> request.setBannedStops(mappingUtil.prepareListOfFeedScopedId((List<String>) quays)));",
+  "secondLabel" : "//        callWith.argument(\"banned.quays\", quays -> request.setBannedStops(mappingUtil.prepareListOfFeedScopedId((List<String>) quays)));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10013,
+  "secondPos" : 10014,
+  "firstEndPos" : 10151,
+  "secondEndPos" : 10152
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        callWith.argument(\"banned.quaysHard\", quaysHard -> request.setBannedStopsHard(mappingUtil.prepareListOfFeedScopedId((List<String>) quaysHard)));",
+  "secondLabel" : "//        callWith.argument(\"banned.quaysHard\", quaysHard -> request.setBannedStopsHard(mappingUtil.prepareListOfFeedScopedId((List<String>) quaysHard)));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10152,
+  "secondPos" : 10153,
+  "firstEndPos" : 10306,
+  "secondEndPos" : 10307
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15509,6 +15608,39 @@
   "firstEndPos" : 10652,
   "secondEndPos" : 10653
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"heuristicStepsPerMainStep\", (Integer v) -> request.heuristicStepsPerMainStep = v);",
+  "secondLabel" : "//callWith.argument(\"heuristicStepsPerMainStep\", (Integer v) -> request.heuristicStepsPerMainStep = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10666,
+  "secondPos" : 10667,
+  "firstEndPos" : 10769,
+  "secondEndPos" : 10770
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// callWith.argument(\"compactLegsByReversedSearch\", (Boolean v) -> { /* not used any more */ });",
+  "secondLabel" : "// callWith.argument(\"compactLegsByReversedSearch\", (Boolean v) -> { /* not used any more */ });",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10778,
+  "secondPos" : 10779,
+  "firstEndPos" : 10874,
+  "secondEndPos" : 10875
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"banFirstServiceJourneysFromReuseNo\", (Integer v) -> request.banFirstTripsFromReuseNo = v);",
+  "secondLabel" : "//callWith.argument(\"banFirstServiceJourneysFromReuseNo\", (Integer v) -> request.banFirstTripsFromReuseNo = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10883,
+  "secondPos" : 10884,
+  "firstEndPos" : 10994,
+  "secondEndPos" : 10995
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16036,6 +16168,28 @@
   "secondPos" : 11265,
   "firstEndPos" : 11265,
   "secondEndPos" : 11266
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"useFlex\", (Boolean v) -> request.useFlexService = v);",
+  "secondLabel" : "//callWith.argument(\"useFlex\", (Boolean v) -> request.useFlexService = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11277,
+  "secondPos" : 11278,
+  "firstEndPos" : 11351,
+  "secondEndPos" : 11352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"ignoreMinimumBookingPeriod\", (Boolean v) -> request.ignoreDrtAdvanceBookMin = v);",
+  "secondLabel" : "//callWith.argument(\"ignoreMinimumBookingPeriod\", (Boolean v) -> request.ignoreDrtAdvanceBookMin = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11360,
+  "secondPos" : 11361,
+  "firstEndPos" : 11462,
+  "secondEndPos" : 11463
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -17511,6 +17665,17 @@
   "firstEndPos" : 12569,
   "secondEndPos" : 12570
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Default to all transport modes if transport modes not specified",
+  "secondLabel" : "// Default to all transport modes if transport modes not specified",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12401,
+  "secondPos" : 12402,
+  "firstEndPos" : 12467,
+  "secondEndPos" : 12468
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18017,6 +18182,17 @@
   "firstEndPos" : 12765,
   "secondEndPos" : 12766
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n        List<Map<String, ?>> transportSubmodeFilters = environment.getArgument(\"transportSubmodes\");\n        if (transportSubmodeFilters != null) {\n            request.transportSubmodes = new HashMap<>();\n            for (Map<String, ?> transportSubmodeFilter : transportSubmodeFilters) {\n                TraverseMode transportMode = (TraverseMode) transportSubmodeFilter.get(\"transportMode\");\n                List<TransmodelTransportSubmode> transportSubmodes = (List<TransmodelTransportSubmode>) transportSubmodeFilter.get(\"transportSubmodes\");\n                if (!CollectionUtils.isEmpty(transportSubmodes)) {\n                    request.transportSubmodes.put(transportMode, new HashSet<>(transportSubmodes));\n                }\n            }\n        }*/",
+  "secondLabel" : "/*\n        List<Map<String, ?>> transportSubmodeFilters = environment.getArgument(\"transportSubmodes\");\n        if (transportSubmodeFilters != null) {\n            request.transportSubmodes = new HashMap<>();\n            for (Map<String, ?> transportSubmodeFilter : transportSubmodeFilters) {\n                TraverseMode transportMode = (TraverseMode) transportSubmodeFilter.get(\"transportMode\");\n                List<TransmodelTransportSubmode> transportSubmodes = (List<TransmodelTransportSubmode>) transportSubmodeFilter.get(\"transportSubmodes\");\n                if (!CollectionUtils.isEmpty(transportSubmodes)) {\n                    request.transportSubmodes.put(transportMode, new HashSet<>(transportSubmodes));\n                }\n            }\n        }*/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12803,
+  "secondPos" : 12804,
+  "firstEndPos" : 13563,
+  "secondEndPos" : 13564
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -18148,6 +18324,17 @@
   "secondPos" : 13640,
   "firstEndPos" : 13774,
   "secondEndPos" : 13775
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//slower bike speed for bike sharing, based on empirical evidence from DC.",
+  "secondLabel" : "//slower bike speed for bike sharing, based on empirical evidence from DC.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13653,
+  "secondPos" : 13654,
+  "firstEndPos" : 13727,
+  "secondEndPos" : 13728
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20074,6 +20261,17 @@
   "firstEndPos" : 14738,
   "secondEndPos" : 14739
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO the same thing for GTFS-RT",
+  "secondLabel" : "// TODO the same thing for GTFS-RT",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14741,
+  "secondPos" : 14742,
+  "firstEndPos" : 14775,
+  "secondEndPos" : 14776
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -20249,6 +20447,39 @@
   "secondPos" : 14877,
   "firstEndPos" : 14877,
   "secondEndPos" : 14878
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"includePlannedCancellations\", (Boolean v) -> request.includePlannedCancellations = v);",
+  "secondLabel" : "//callWith.argument(\"includePlannedCancellations\", (Boolean v) -> request.includePlannedCancellations = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14888,
+  "secondPos" : 14889,
+  "firstEndPos" : 14995,
+  "secondEndPos" : 14996
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//callWith.argument(\"ignoreInterchanges\", (Boolean v) -> request.ignoreInterchanges = v);",
+  "secondLabel" : "//callWith.argument(\"ignoreInterchanges\", (Boolean v) -> request.ignoreInterchanges = v);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15004,
+  "secondPos" : 15005,
+  "firstEndPos" : 15093,
+  "secondEndPos" : 15094
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n        if (!request.modes.isTransit() && request.modes.getCar()) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.kissAndRide) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.rideAndKiss) {\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.parkAndRide) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.useFlexService) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        }\n         */",
+  "secondLabel" : "/*\n        if (!request.modes.isTransit() && request.modes.getCar()) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.kissAndRide) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.rideAndKiss) {\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.parkAndRide) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n        } else if (request.useFlexService) {\n            request.from.vertexId = getLocationOfFirstQuay(request.from.vertexId, ((Router)environment.getContext()).graph.index);\n            request.to.vertexId = getLocationOfFirstQuay(request.to.vertexId, ((Router)environment.getContext()).graph.index);\n        }\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15103,
+  "secondPos" : 15104,
+  "firstEndPos" : 16271,
+  "secondEndPos" : 16272
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -20953,6 +21184,17 @@
   "secondPos" : 16624,
   "firstEndPos" : 16633,
   "secondEndPos" : 16635
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    private String getLocationOfFirstQuay(String vertexId, GraphIndex graphIndex) {\n        // TODO THIS DOES NOT WORK !!\n        Vertex vertex = graphIndex.stopVertexForStop.get(vertexId);\n        if (vertex instanceof TransitStopVertex) {\n            TransitStopVertex stopVertex = (TransitStopVertex) vertex;\n\n            FeedScopedId stopId = stopVertex.getStop().getId();\n\n            return stopId.getFeedId().concat(\":\").concat(stopId.getId());\n        } else {\n            return vertexId;\n        }\n    }\n    */",
+  "secondLabel" : "/*\n    private String getLocationOfFirstQuay(String vertexId, GraphIndex graphIndex) {\n        // TODO THIS DOES NOT WORK !!\n        Vertex vertex = graphIndex.stopVertexForStop.get(vertexId);\n        if (vertex instanceof TransitStopVertex) {\n            TransitStopVertex stopVertex = (TransitStopVertex) vertex;\n\n            FeedScopedId stopId = stopVertex.getStop().getId();\n\n            return stopId.getFeedId().concat(\":\").concat(stopId.getId());\n        } else {\n            return vertexId;\n        }\n    }\n    */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 16647,
+  "secondPos" : 16649,
+  "firstEndPos" : 17170,
+  "secondEndPos" : 17172
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

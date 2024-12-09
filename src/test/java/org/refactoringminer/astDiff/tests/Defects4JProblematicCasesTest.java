@@ -28,7 +28,6 @@ import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 /**
  * @author  Pourya Alikhani Fard pouryafard75@gmail.com
  */
-@Disabled("For CI purposes (temporary)")
 public class Defects4JProblematicCasesTest extends IgnoringCommentsVisitorTest {
     private static final String dir = getDefects4jMappingPath();
     @ParameterizedTest(name= "{index}: {0}")

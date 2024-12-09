@@ -22,7 +22,7 @@ import static org.refactoringminer.astDiff.utils.ExportUtils.*;
 import static org.refactoringminer.astDiff.utils.UtilMethods.*;
 
 /* Created by pourya on 2024-02-17*/
-public class RefactoringOracleProblematicCasesTest extends IgnoringCommentsVisitorTest {
+public class RefactoringOracleProblematicCasesTest extends ConsideringCommentsVisitorTest {
     private static final String dir = getCommitsMappingsPath();
     @ParameterizedTest(name= "{index}: {0}")
     @JsonFileSource(resources = {"/astDiff/commits/cases-problematic.json"})

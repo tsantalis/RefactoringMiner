@@ -373,6 +373,17 @@
   "firstEndPos" : 754,
   "secondEndPos" : 754
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 734,
+  "secondPos" : 734,
+  "firstEndPos" : 741,
+  "secondEndPos" : 741
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dan Berindei",
@@ -394,6 +405,17 @@
   "secondPos" : 758,
   "firstEndPos" : 768,
   "secondEndPos" : 768
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 758,
+  "secondPos" : 758,
+  "firstEndPos" : 764,
+  "secondEndPos" : 764
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1582,6 +1604,17 @@
   "secondPos" : 1550,
   "firstEndPos" : 1551,
   "secondEndPos" : 1551
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start a second node and wait for the rebalance to end",
+  "secondLabel" : "// start a second node and wait for the rebalance to end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1561,
+  "secondPos" : 1561,
+  "firstEndPos" : 1617,
+  "secondEndPos" : 1617
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2914,6 +2947,17 @@
   "firstEndPos" : 2225,
   "secondEndPos" : 2225
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "secondLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2234,
+  "secondPos" : 2234,
+  "firstEndPos" : 2327,
+  "secondEndPos" : 2327
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3419,6 +3463,17 @@
   "secondPos" : 2591,
   "firstEndPos" : 2599,
   "secondEndPos" : 2599
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start a third node and wait for the rebalance to end",
+  "secondLabel" : "// start a third node and wait for the rebalance to end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2609,
+  "secondPos" : 2609,
+  "firstEndPos" : 2664,
+  "secondEndPos" : 2664
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4564,6 +4619,17 @@
   "firstEndPos" : 3175,
   "secondEndPos" : 3175
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "secondLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3184,
+  "secondPos" : 3184,
+  "firstEndPos" : 3277,
+  "secondEndPos" : 3277
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5070,6 +5136,17 @@
   "firstEndPos" : 3550,
   "secondEndPos" : 3550
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// stop cache 2 and wait for the rebalance to end",
+  "secondLabel" : "// stop cache 2 and wait for the rebalance to end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3560,
+  "secondPos" : 3560,
+  "firstEndPos" : 3609,
+  "secondEndPos" : 3609
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5124,6 +5201,17 @@
   "secondPos" : 3627,
   "firstEndPos" : 3628,
   "secondEndPos" : 3628
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this CH might be different than the CH before the 3rd node joined",
+  "secondLabel" : "// this CH might be different than the CH before the 3rd node joined",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3638,
+  "secondPos" : 3638,
+  "firstEndPos" : 3706,
+  "secondEndPos" : 3706
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5862,6 +5950,17 @@
   "firstEndPos" : 4015,
   "secondEndPos" : 4015
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "secondLabel" : "// we could get this \"intermediate\" CH with TopologyChanged events, but this should be enough",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4026,
+  "secondPos" : 4026,
+  "firstEndPos" : 4119,
+  "secondEndPos" : 4119
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6533,6 +6632,17 @@
   "firstEndPos" : 4504,
   "secondEndPos" : 4504
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// stop cache 1 and wait for the rebalance to end",
+  "secondLabel" : "// stop cache 1 and wait for the rebalance to end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4516,
+  "secondPos" : 4516,
+  "firstEndPos" : 4565,
+  "secondEndPos" : 4565
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6587,6 +6697,17 @@
   "secondPos" : 4583,
   "firstEndPos" : 4584,
   "secondEndPos" : 4584
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cache 0 was already an owner for all the segments, so there shouldn't be any rebalance",
+  "secondLabel" : "// cache 0 was already an owner for all the segments, so there shouldn't be any rebalance",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4594,
+  "secondPos" : 4594,
+  "firstEndPos" : 4683,
+  "secondEndPos" : 4683
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

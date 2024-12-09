@@ -10,6 +10,17 @@
   "firstEndPos" : 12279,
   "secondEndPos" : 12605
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "secondLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU Affero General Public License as\n * published by the Free Software Foundation, either version 3 of the\n * License, or (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU Affero General Public License for more details.\n *\n * You should have received a copy of the GNU Affero General Public License\n * along with VoltDB.  If not, see <http://www.gnu.org/licenses/>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 738,
+  "secondEndPos" : 738
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -494,6 +505,17 @@
   "firstEndPos" : 1524,
   "secondEndPos" : 1524
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Avoid unecessary sync with this flag",
+  "secondLabel" : "//Avoid unecessary sync with this flag",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1532,
+  "secondPos" : 1532,
+  "firstEndPos" : 1570,
+  "secondEndPos" : 1570
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -835,6 +857,17 @@
   "firstEndPos" : 1753,
   "secondEndPos" : 1753
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Index of the next object to read, not an offset into the file",
+  "secondLabel" : "//Index of the next object to read, not an offset into the file",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1760,
+  "secondPos" : 1760,
+  "firstEndPos" : 1823,
+  "secondEndPos" : 1823
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -967,6 +1000,17 @@
   "firstEndPos" : 1894,
   "secondEndPos" : 1894
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Maintains the read byte offset",
+  "secondLabel" : "// Maintains the read byte offset",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1900,
+  "secondPos" : 1900,
+  "firstEndPos" : 1933,
+  "secondEndPos" : 1933
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1032,6 +1076,17 @@
   "secondPos" : 1966,
   "firstEndPos" : 1986,
   "secondEndPos" : 1986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//ID of this segment",
+  "secondLabel" : "//ID of this segment",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1993,
+  "secondPos" : 1993,
+  "firstEndPos" : 2013,
+  "secondEndPos" : 2013
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -6291,6 +6346,17 @@
   "firstEndPos" : 5135,
   "secondEndPos" : 5461
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5143,
+  "secondPos" : 5469,
+  "firstEndPos" : 5150,
+  "secondEndPos" : 5476
+}, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
   "firstLabel" : "",
@@ -6367,6 +6433,17 @@
   "secondPos" : 5532,
   "firstEndPos" : 5351,
   "secondEndPos" : 5677
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Subtract 8 for the length and size prefix",
+  "secondLabel" : "//Subtract 8 for the length and size prefix",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5216,
+  "secondPos" : 5542,
+  "firstEndPos" : 5259,
+  "secondEndPos" : 5585
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -12901,6 +12978,17 @@
   "secondPos" : 9648,
   "firstEndPos" : 12000,
   "secondEndPos" : 12326
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Get the length and size prefix and then read the object",
+  "secondLabel" : "//Get the length and size prefix and then read the object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9336,
+  "secondPos" : 9662,
+  "firstEndPos" : 9393,
+  "secondEndPos" : 9719
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

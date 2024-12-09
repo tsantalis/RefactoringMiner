@@ -2639,6 +2639,39 @@
   "firstEndPos" : 2278,
   "secondEndPos" : 2719
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DISCONNECT. EVERYTHING.",
+  "secondLabel" : "// DISCONNECT. EVERYTHING.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2290,
+  "secondPos" : 2240,
+  "firstEndPos" : 2316,
+  "secondEndPos" : 2266
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should not get any data after this point...",
+  "secondLabel" : "// should not get any data after this point...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2325,
+  "secondPos" : 2275,
+  "firstEndPos" : 2371,
+  "secondEndPos" : 2321
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if so, eat it and disconnect.",
+  "secondLabel" : "// if so, eat it and disconnect.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2380,
+  "secondPos" : 2330,
+  "firstEndPos" : 2412,
+  "secondEndPos" : 2362
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

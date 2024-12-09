@@ -10,6 +10,17 @@
   "firstEndPos" : 13151,
   "secondEndPos" : 15367
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2002-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2002-2015 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -703,6 +714,17 @@
   "firstEndPos" : 1995,
   "secondEndPos" : 2054
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1976,
+  "secondPos" : 2035,
+  "firstEndPos" : 1983,
+  "secondEndPos" : 2042
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Mark Fisher",
@@ -724,6 +746,17 @@
   "secondPos" : 2058,
   "firstEndPos" : 2017,
   "secondEndPos" : 2076
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1999,
+  "secondPos" : 2058,
+  "firstEndPos" : 2006,
+  "secondEndPos" : 2065
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -747,6 +780,17 @@
   "firstEndPos" : 2040,
   "secondEndPos" : 2099
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2021,
+  "secondPos" : 2080,
+  "firstEndPos" : 2028,
+  "secondEndPos" : 2087
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Alex Peters",
@@ -769,6 +813,17 @@
   "firstEndPos" : 2064,
   "secondEndPos" : 2123
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2044,
+  "secondPos" : 2103,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2110
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Gary Russell",
@@ -790,6 +845,17 @@
   "secondPos" : 2127,
   "firstEndPos" : 2090,
   "secondEndPos" : 2149
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2068,
+  "secondPos" : 2127,
+  "firstEndPos" : 2075,
+  "secondEndPos" : 2134
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2253,6 +2319,17 @@
   "secondPos" : 2991,
   "firstEndPos" : 2971,
   "secondEndPos" : 3056
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//don't tamper with temp files here, Rule is applied later",
+  "secondLabel" : "//don't tamper with temp files here, Rule is applied later",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2910,
+  "secondPos" : 2995,
+  "firstEndPos" : 2968,
+  "secondEndPos" : 3053
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -8424,6 +8501,17 @@
   "secondPos" : 6916,
   "firstEndPos" : 5968,
   "secondEndPos" : 6922
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// INT-3289 ignored because it won't fail on all OS",
+  "secondLabel" : "// INT-3289 ignored because it won't fail on all OS",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5969,
+  "secondPos" : 6923,
+  "firstEndPos" : 6020,
+  "secondEndPos" : 6974
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",

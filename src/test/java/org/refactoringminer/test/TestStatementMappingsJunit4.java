@@ -3188,7 +3188,9 @@ public class TestStatementMappingsJunit4 {
 				if(mapper.getContainer1().getName().equals("convertsTagFilterOption") && mapper.getContainer2().getName().equals("convertsTagFilterOption")) {
 					mapperInfo(mapper, actual);
 				}
-				//TODO add junit-console/src/main/java/org/junit/gen5/console/tasks/DiscoveryRequestCreator.java applyFilters()
+				if(mapper.getContainer1().getName().equals("applyFilters") && mapper.getContainer2().getName().equals("applyFilters")) {
+					mapperInfo(mapper, actual);
+				}
 			}
 		}
 		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "junit5-48dd35c9002c80eeb666f56489785d1bf47f9aa4.txt"));

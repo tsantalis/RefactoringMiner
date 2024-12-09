@@ -10,6 +10,17 @@
   "firstEndPos" : 4556,
   "secondEndPos" : 4570
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2013 Brett Wooldridge\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2013 Brett Wooldridge\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -372,6 +383,17 @@
   "secondPos" : 1177,
   "firstEndPos" : 1187,
   "secondEndPos" : 1201
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1163,
+  "secondPos" : 1177,
+  "firstEndPos" : 1170,
+  "secondEndPos" : 1184
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3156,6 +3178,17 @@
   "firstEndPos" : 3173,
   "secondEndPos" : 3187
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reserved",
+  "secondLabel" : "// reserved",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3181,
+  "secondPos" : 3195,
+  "firstEndPos" : 3192,
+  "secondEndPos" : 3206
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3442,6 +3475,17 @@
   "firstEndPos" : 3317,
   "secondEndPos" : 3331
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in use",
+  "secondLabel" : "// in use",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3320,
+  "secondPos" : 3334,
+  "firstEndPos" : 3329,
+  "secondEndPos" : 3343
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3639,6 +3683,17 @@
   "secondPos" : 3428,
   "firstEndPos" : 3422,
   "secondEndPos" : 3436
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not in use",
+  "secondLabel" : "// not in use",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3425,
+  "secondPos" : 3439,
+  "firstEndPos" : 3438,
+  "secondEndPos" : 3452
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

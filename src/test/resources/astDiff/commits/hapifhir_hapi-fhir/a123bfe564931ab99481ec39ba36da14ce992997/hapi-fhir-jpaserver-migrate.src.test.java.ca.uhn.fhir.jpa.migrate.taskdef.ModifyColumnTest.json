@@ -1319,6 +1319,17 @@
   "firstEndPos" : 918,
   "secondEndPos" : 926
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 926,
+  "secondPos" : 934,
+  "firstEndPos" : 972,
+  "secondEndPos" : 980
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2561,6 +2572,17 @@
   "secondPos" : 1724,
   "firstEndPos" : 1712,
   "secondEndPos" : 1728
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1720,
+  "secondPos" : 1736,
+  "firstEndPos" : 1766,
+  "secondEndPos" : 1782
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3893,6 +3915,17 @@
   "firstEndPos" : 2550,
   "secondEndPos" : 2574
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2557,
+  "secondPos" : 2581,
+  "firstEndPos" : 2603,
+  "secondEndPos" : 2627
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4861,6 +4894,17 @@
   "firstEndPos" : 3336,
   "secondEndPos" : 3360
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// PID",
+  "secondLabel" : "// PID",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3343,
+  "secondPos" : 3367,
+  "firstEndPos" : 3349,
+  "secondEndPos" : 3373
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5344,6 +5388,17 @@
   "secondPos" : 3602,
   "firstEndPos" : 3574,
   "secondEndPos" : 3606
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// STRING",
+  "secondLabel" : "// STRING",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3580,
+  "secondPos" : 3612,
+  "firstEndPos" : 3589,
+  "secondEndPos" : 3621
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5894,6 +5949,17 @@
   "secondPos" : 3868,
   "firstEndPos" : 3832,
   "secondEndPos" : 3872
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do migration",
+  "secondLabel" : "// Do migration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3838,
+  "secondPos" : 3878,
+  "firstEndPos" : 3853,
+  "secondEndPos" : 3893
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6642,6 +6708,17 @@
   "secondPos" : 4424,
   "firstEndPos" : 4393,
   "secondEndPos" : 4433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4400,
+  "secondPos" : 4440,
+  "firstEndPos" : 4446,
+  "secondEndPos" : 4486
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7699,6 +7776,17 @@
   "firstEndPos" : 5240,
   "secondEndPos" : 5280
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// PID",
+  "secondLabel" : "// PID",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5246,
+  "secondPos" : 5286,
+  "firstEndPos" : 5252,
+  "secondEndPos" : 5292
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8183,6 +8271,17 @@
   "firstEndPos" : 5477,
   "secondEndPos" : 5525
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// STRING",
+  "secondLabel" : "// STRING",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5483,
+  "secondPos" : 5531,
+  "firstEndPos" : 5492,
+  "secondEndPos" : 5540
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8655,6 +8754,17 @@
   "secondPos" : 5766,
   "firstEndPos" : 5714,
   "secondEndPos" : 5770
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do migration",
+  "secondLabel" : "// Do migration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5720,
+  "secondPos" : 5776,
+  "firstEndPos" : 5735,
+  "secondEndPos" : 5791
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9403,6 +9513,17 @@
   "secondPos" : 6329,
   "firstEndPos" : 6282,
   "secondEndPos" : 6338
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6289,
+  "secondPos" : 6345,
+  "firstEndPos" : 6335,
+  "secondEndPos" : 6391
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10372,6 +10493,17 @@
   "firstEndPos" : 7050,
   "secondEndPos" : 7106
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// PID",
+  "secondLabel" : "// PID",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7057,
+  "secondPos" : 7113,
+  "firstEndPos" : 7063,
+  "secondEndPos" : 7119
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10855,6 +10987,17 @@
   "secondPos" : 7349,
   "firstEndPos" : 7289,
   "secondEndPos" : 7353
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// STRING",
+  "secondLabel" : "// STRING",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7295,
+  "secondPos" : 7359,
+  "firstEndPos" : 7304,
+  "secondEndPos" : 7368
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11405,6 +11548,17 @@
   "secondPos" : 7616,
   "firstEndPos" : 7548,
   "secondEndPos" : 7620
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do migration",
+  "secondLabel" : "// Do migration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7554,
+  "secondPos" : 7626,
+  "firstEndPos" : 7569,
+  "secondEndPos" : 7641
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12153,6 +12307,17 @@
   "secondPos" : 8174,
   "firstEndPos" : 8111,
   "secondEndPos" : 8183
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure additional migrations don't crash",
+  "secondLabel" : "// Make sure additional migrations don't crash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8118,
+  "secondPos" : 8190,
+  "firstEndPos" : 8164,
+  "secondEndPos" : 8236
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

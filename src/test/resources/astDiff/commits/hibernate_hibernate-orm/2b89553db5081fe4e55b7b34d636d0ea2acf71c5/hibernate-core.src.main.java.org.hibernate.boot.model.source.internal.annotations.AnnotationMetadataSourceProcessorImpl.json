@@ -10,6 +10,17 @@
   "firstEndPos" : 11427,
   "secondEndPos" : 11617
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "secondLabel" : "/*\n * Hibernate, Relational Persistence for Idiomatic Java\n *\n * License: GNU Lesser General Public License (LGPL), version 2.1 or later.\n * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 236,
+  "secondEndPos" : 236
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -724,6 +735,17 @@
   "secondPos" : 1917,
   "firstEndPos" : 1896,
   "secondEndPos" : 1939
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1874,
+  "secondPos" : 1917,
+  "firstEndPos" : 1881,
+  "secondEndPos" : 1924
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2408,6 +2430,28 @@
   "firstEndPos" : 3081,
   "secondEndPos" : 3124
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "secondLabel" : "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3088,
+  "secondPos" : 3131,
+  "firstEndPos" : 3200,
+  "secondEndPos" : 3243
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ewww.  This is temporary until we migrate to Jandex + StAX for annotation binding",
+  "secondLabel" : "// Ewww.  This is temporary until we migrate to Jandex + StAX for annotation binding",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3203,
+  "secondPos" : 3246,
+  "firstEndPos" : 3287,
+  "secondEndPos" : 3330
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2704,6 +2748,83 @@
   "secondPos" : 3532,
   "firstEndPos" : 4294,
   "secondEndPos" : 4337
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\tif ( !MappingBinder.DelayedOrmXmlData.class.isInstance( xmlBinding.getRoot() ) ) {",
+  "secondLabel" : "//\t\t\tif ( !MappingBinder.DelayedOrmXmlData.class.isInstance( xmlBinding.getRoot() ) ) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3491,
+  "secondPos" : 3534,
+  "firstEndPos" : 3578,
+  "secondEndPos" : 3621
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\tcontinue;",
+  "secondLabel" : "//\t\t\t\tcontinue;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3579,
+  "secondPos" : 3622,
+  "firstEndPos" : 3594,
+  "secondEndPos" : 3637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t}",
+  "secondLabel" : "//\t\t\t}",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3595,
+  "secondPos" : 3638,
+  "firstEndPos" : 3601,
+  "secondEndPos" : 3644
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3602,
+  "secondPos" : 3645,
+  "firstEndPos" : 3604,
+  "secondEndPos" : 3647
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t// convert the StAX representation in delayedOrmXmlData to DOM because that's what commons-annotations needs",
+  "secondLabel" : "//\t\t\t// convert the StAX representation in delayedOrmXmlData to DOM because that's what commons-annotations needs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3605,
+  "secondPos" : 3648,
+  "firstEndPos" : 3718,
+  "secondEndPos" : 3761
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\tfinal MappingBinder.DelayedOrmXmlData delayedOrmXmlData = (MappingBinder.DelayedOrmXmlData) xmlBinding.getRoot();",
+  "secondLabel" : "//\t\t\tfinal MappingBinder.DelayedOrmXmlData delayedOrmXmlData = (MappingBinder.DelayedOrmXmlData) xmlBinding.getRoot();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3719,
+  "secondPos" : 3762,
+  "firstEndPos" : 3837,
+  "secondEndPos" : 3880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\torg.dom4j.Document dom4jDocument = toDom4jDocument( delayedOrmXmlData );",
+  "secondLabel" : "//\t\t\torg.dom4j.Document dom4jDocument = toDom4jDocument( delayedOrmXmlData );",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3838,
+  "secondPos" : 3881,
+  "firstEndPos" : 3915,
+  "secondEndPos" : 3958
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3519,6 +3640,17 @@
   "firstEndPos" : 4394,
   "secondEndPos" : 4437
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "secondLabel" : "// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4400,
+  "secondPos" : 4443,
+  "firstEndPos" : 4512,
+  "secondEndPos" : 4555
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4113,6 +4245,17 @@
   "firstEndPos" : 4833,
   "secondEndPos" : 5235
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// categorize it, based on assumption it is either an AttributeConverter or an entity",
+  "secondLabel" : "// categorize it, based on assumption it does not fall into multiple categories",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4840,
+  "secondPos" : 5241,
+  "firstEndPos" : 4925,
+  "secondEndPos" : 5320
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4222,6 +4365,17 @@
   "secondPos" : 5376,
   "firstEndPos" : 5079,
   "secondEndPos" : 5479
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection unchecked",
+  "secondLabel" : "//noinspection unchecked",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4988,
+  "secondPos" : 5381,
+  "firstEndPos" : 5012,
+  "secondEndPos" : 5405
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4630,6 +4784,17 @@
   "firstEndPos" : 5258,
   "secondEndPos" : 5235
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// categorize it, based on assumption it is either an AttributeConverter or an entity",
+  "secondLabel" : "// categorize it, based on assumption it does not fall into multiple categories",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5265,
+  "secondPos" : 5241,
+  "firstEndPos" : 5350,
+  "secondEndPos" : 5320
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4739,6 +4904,17 @@
   "secondPos" : 5376,
   "firstEndPos" : 5512,
   "secondEndPos" : 5479
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection unchecked",
+  "secondLabel" : "//noinspection unchecked",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5413,
+  "secondPos" : 5381,
+  "firstEndPos" : 5437,
+  "secondEndPos" : 5405
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5356,6 +5532,171 @@
   "firstEndPos" : 5873,
   "secondEndPos" : 6063
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\tprivate Document toDom4jDocument(MappingBinder.DelayedOrmXmlData delayedOrmXmlData) {",
+  "secondLabel" : "//\tprivate Document toDom4jDocument(MappingBinder.DelayedOrmXmlData delayedOrmXmlData) {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5885,
+  "secondPos" : 6075,
+  "firstEndPos" : 5973,
+  "secondEndPos" : 6163
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t// todo : do we need to build a DocumentFactory instance for use here?",
+  "secondLabel" : "//\t\t// todo : do we need to build a DocumentFactory instance for use here?",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5974,
+  "secondPos" : 6164,
+  "firstEndPos" : 6048,
+  "secondEndPos" : 6238
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t//\t\thistorically we did that to set TCCL since, iirc, dom4j uses TCCL",
+  "secondLabel" : "//\t\t//\t\thistorically we did that to set TCCL since, iirc, dom4j uses TCCL",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6049,
+  "secondPos" : 6239,
+  "firstEndPos" : 6122,
+  "secondEndPos" : 6312
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\torg.dom4j.io.STAXEventReader staxToDom4jReader = new STAXEventReader();",
+  "secondLabel" : "//\t\torg.dom4j.io.STAXEventReader staxToDom4jReader = new STAXEventReader();",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6123,
+  "secondPos" : 6313,
+  "firstEndPos" : 6198,
+  "secondEndPos" : 6388
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\ttry {",
+  "secondLabel" : "//\t\ttry {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6199,
+  "secondPos" : 6389,
+  "firstEndPos" : 6208,
+  "secondEndPos" : 6398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\treturn staxToDom4jReader.readDocument( delayedOrmXmlData.getStaxEventReader() );",
+  "secondLabel" : "//\t\t\treturn staxToDom4jReader.readDocument( delayedOrmXmlData.getStaxEventReader() );",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6209,
+  "secondPos" : 6399,
+  "firstEndPos" : 6294,
+  "secondEndPos" : 6484
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t}",
+  "secondLabel" : "//\t\t}",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6295,
+  "secondPos" : 6485,
+  "firstEndPos" : 6300,
+  "secondEndPos" : 6490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\tcatch (XMLStreamException e) {",
+  "secondLabel" : "//\t\tcatch (XMLStreamException e) {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6301,
+  "secondPos" : 6491,
+  "firstEndPos" : 6335,
+  "secondEndPos" : 6525
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\tthrow new MappingException(",
+  "secondLabel" : "//\t\t\tthrow new MappingException(",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6336,
+  "secondPos" : 6526,
+  "firstEndPos" : 6368,
+  "secondEndPos" : 6558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\t\t\"An error occurred transforming orm.xml document from StAX to dom4j representation \",",
+  "secondLabel" : "//\t\t\t\t\t\"An error occurred transforming orm.xml document from StAX to dom4j representation \",",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6369,
+  "secondPos" : 6559,
+  "firstEndPos" : 6461,
+  "secondEndPos" : 6651
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\t\te,",
+  "secondLabel" : "//\t\t\t\t\te,",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6462,
+  "secondPos" : 6652,
+  "firstEndPos" : 6471,
+  "secondEndPos" : 6661
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t\t\tdelayedOrmXmlData.getOrigin()",
+  "secondLabel" : "//\t\t\t\t\tdelayedOrmXmlData.getOrigin()",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6472,
+  "secondPos" : 6662,
+  "firstEndPos" : 6508,
+  "secondEndPos" : 6698
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t\t);",
+  "secondLabel" : "//\t\t\t);",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6509,
+  "secondPos" : 6699,
+  "firstEndPos" : 6516,
+  "secondEndPos" : 6706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t\t}",
+  "secondLabel" : "//\t\t}",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6517,
+  "secondPos" : 6707,
+  "firstEndPos" : 6522,
+  "secondEndPos" : 6712
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//\t}",
+  "secondLabel" : "//\t}",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6523,
+  "secondPos" : 6713,
+  "firstEndPos" : 6527,
+  "secondEndPos" : 6717
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5432,6 +5773,17 @@
   "secondPos" : 6753,
   "firstEndPos" : 7899,
   "secondEndPos" : 8089
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// use any persistence-unit-defaults defined in orm.xml",
+  "secondLabel" : "// use any persistence-unit-defaults defined in orm.xml",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6567,
+  "secondPos" : 6757,
+  "firstEndPos" : 6622,
+  "secondEndPos" : 6812
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9173,6 +9525,17 @@
   "firstEndPos" : 9252,
   "secondEndPos" : 9442
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// order the hierarchy",
+  "secondLabel" : "// order the hierarchy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9259,
+  "secondPos" : 9449,
+  "firstEndPos" : 9281,
+  "secondEndPos" : 9471
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11482,6 +11845,17 @@
   "secondPos" : 10477,
   "firstEndPos" : 10294,
   "secondEndPos" : 10484
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//process superclass first",
+  "secondLabel" : "//process superclass first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10301,
+  "secondPos" : 10491,
+  "firstEndPos" : 10327,
+  "secondEndPos" : 10517
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

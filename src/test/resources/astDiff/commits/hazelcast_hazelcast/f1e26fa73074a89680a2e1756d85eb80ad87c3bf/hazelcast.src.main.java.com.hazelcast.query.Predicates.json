@@ -10,6 +10,17 @@
   "firstEndPos" : 29089,
   "secondEndPos" : 3561
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2008-2015, Hazelcast, Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2008-2015, Hazelcast, Inc. All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 625,
+  "secondEndPos" : 625
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -87,6 +98,17 @@
   "firstEndPos" : 1519,
   "secondEndPos" : 1441
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1482,
+  "secondPos" : 1404,
+  "firstEndPos" : 1487,
+  "secondEndPos" : 1409
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.hazelcast.query.Predicate",
@@ -152,6 +174,17 @@
   "secondPos" : 1476,
   "firstEndPos" : 1564,
   "secondEndPos" : 1486
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//we don't want instances. private constructor.",
+  "secondLabel" : "//we don't want instances. private constructor.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1572,
+  "secondPos" : 1494,
+  "firstEndPos" : 1619,
+  "secondEndPos" : 1541
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -1297,6 +1330,17 @@
   "firstEndPos" : 2359,
   "secondEndPos" : 1966
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2342,
+  "secondPos" : 1949,
+  "firstEndPos" : 2348,
+  "secondEndPos" : 1955
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "predicates",
@@ -1307,6 +1351,17 @@
   "secondPos" : 1956,
   "firstEndPos" : 2359,
   "secondEndPos" : 1966
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2367,
+  "secondPos" : 1974,
+  "firstEndPos" : 2374,
+  "secondEndPos" : 1981
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -16257,6 +16312,28 @@
   "firstEndPos" : 12305,
   "secondEndPos" : 2654
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we quote the input string then escape then replace % and _",
+  "secondLabel" : "// we quote the input string then escape then replace % and _",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11461,
+  "secondPos" : 1866,
+  "firstEndPos" : 11522,
+  "secondEndPos" : 1927
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// at the end we have a regex pattern look like : \\QSOME_STRING\\E.*\\QSOME_OTHER_STRING\\E",
+  "secondLabel" : "// at the end we have a regex pattern look like : \\QSOME_STRING\\E.*\\QSOME_OTHER_STRING\\E",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11543,
+  "secondPos" : 1944,
+  "firstEndPos" : 11631,
+  "secondEndPos" : 2032
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16543,6 +16620,17 @@
   "firstEndPos" : 11738,
   "secondEndPos" : 2131
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//escaped %",
+  "secondLabel" : "//escaped %",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 11767,
+  "secondPos" : 2156,
+  "firstEndPos" : 11778,
+  "secondEndPos" : 2167
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "replaceAll",
@@ -16586,6 +16674,17 @@
   "secondPos" : 2220,
   "firstEndPos" : 11849,
   "secondEndPos" : 2234
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//escaped _",
+  "secondLabel" : "//escaped _",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 11887,
+  "secondPos" : 2268,
+  "firstEndPos" : 11898,
+  "secondEndPos" : 2279
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -16631,6 +16730,17 @@
   "firstEndPos" : 11968,
   "secondEndPos" : 2345
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//non escaped %",
+  "secondLabel" : "//non escaped %",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 12006,
+  "secondPos" : 2379,
+  "firstEndPos" : 12021,
+  "secondEndPos" : 2394
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "replaceAll",
@@ -16674,6 +16784,17 @@
   "secondPos" : 2440,
   "firstEndPos" : 12074,
   "secondEndPos" : 2443
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//non escaped _",
+  "secondLabel" : "//non escaped _",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 12112,
+  "secondPos" : 2477,
+  "firstEndPos" : 12127,
+  "secondEndPos" : 2492
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17752,6 +17873,17 @@
   "secondPos" : 3090,
   "firstEndPos" : 12859,
   "secondEndPos" : 3136
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//no addFlag",
+  "secondLabel" : "//no addFlag",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12815,
+  "secondPos" : 3100,
+  "firstEndPos" : 12827,
+  "secondEndPos" : 3112
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -36937,6 +37069,17 @@
   "firstEndPos" : 26430,
   "secondEndPos" : 2318
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if attribute type is enum, convert given attribute to enum string",
+  "secondLabel" : "// if attribute type is enum, convert given attribute to enum string",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26280,
+  "secondPos" : 2176,
+  "firstEndPos" : 26348,
+  "secondEndPos" : 2244
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -37057,6 +37200,17 @@
   "secondPos" : 2324,
   "firstEndPos" : 27045,
   "secondEndPos" : 2893
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if given attribute value is already in expected type then there's no need for conversion.",
+  "secondLabel" : "// if given attribute value is already in expected type then there's no need for conversion.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26454,
+  "secondPos" : 2338,
+  "firstEndPos" : 26546,
+  "secondEndPos" : 2430
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

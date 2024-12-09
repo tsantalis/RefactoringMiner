@@ -7391,6 +7391,17 @@
   "firstEndPos" : 7998,
   "secondEndPos" : 7998
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7945,
+  "secondPos" : 7945,
+  "firstEndPos" : 7951,
+  "secondEndPos" : 7951
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "isOriginal",
@@ -7423,6 +7434,17 @@
   "secondPos" : 8004,
   "firstEndPos" : 8050,
   "secondEndPos" : 8050
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8004,
+  "secondPos" : 8004,
+  "firstEndPos" : 8011,
+  "secondEndPos" : 8011
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8810,6 +8832,17 @@
   "firstEndPos" : 9033,
   "secondEndPos" : 9033
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8999,
+  "secondPos" : 8999,
+  "firstEndPos" : 9005,
+  "secondEndPos" : 9005
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "types",
@@ -8842,6 +8875,17 @@
   "secondPos" : 9039,
   "firstEndPos" : 9103,
   "secondEndPos" : 9103
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9039,
+  "secondPos" : 9039,
+  "firstEndPos" : 9045,
+  "secondEndPos" : 9045
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -8876,6 +8920,17 @@
   "firstEndPos" : 9149,
   "secondEndPos" : 9149
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9109,
+  "secondPos" : 9109,
+  "firstEndPos" : 9115,
+  "secondEndPos" : 9115
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "typeId",
@@ -8908,6 +8963,17 @@
   "secondPos" : 9155,
   "firstEndPos" : 9187,
   "secondEndPos" : 9187
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9155,
+  "secondPos" : 9155,
+  "firstEndPos" : 9161,
+  "secondEndPos" : 9161
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11098,6 +11164,17 @@
   "firstEndPos" : 10382,
   "secondEndPos" : 10382
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10347,
+  "secondPos" : 10347,
+  "firstEndPos" : 10353,
+  "secondEndPos" : 10353
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "types",
@@ -11131,6 +11208,17 @@
   "firstEndPos" : 10417,
   "secondEndPos" : 10417
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10388,
+  "secondPos" : 10388,
+  "firstEndPos" : 10394,
+  "secondEndPos" : 10394
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "conf",
@@ -11163,6 +11251,17 @@
   "secondPos" : 10423,
   "firstEndPos" : 10476,
   "secondEndPos" : 10476
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10423,
+  "secondPos" : 10423,
+  "firstEndPos" : 10429,
+  "secondEndPos" : 10429
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12780,6 +12879,28 @@
   "secondPos" : 11271,
   "firstEndPos" : 11471,
   "secondEndPos" : 11471
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is guaranteed to be positive because types only have children",
+  "secondLabel" : "// this is guaranteed to be positive because types only have children",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11281,
+  "secondPos" : 11281,
+  "firstEndPos" : 11350,
+  "secondEndPos" : 11350
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ids greater than their own id.",
+  "secondLabel" : "// ids greater than their own id.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11359,
+  "secondPos" : 11359,
+  "firstEndPos" : 11392,
+  "secondEndPos" : 11392
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15377,6 +15498,17 @@
   "firstEndPos" : 13022,
   "secondEndPos" : 13022
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13010,
+  "secondPos" : 13010,
+  "firstEndPos" : 13015,
+  "secondEndPos" : 13015
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Path",
@@ -15409,6 +15541,17 @@
   "secondPos" : 13058,
   "firstEndPos" : 13098,
   "secondEndPos" : 13098
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13058,
+  "secondPos" : 13058,
+  "firstEndPos" : 13064,
+  "secondEndPos" : 13064
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -15443,6 +15586,17 @@
   "firstEndPos" : 13167,
   "secondEndPos" : 13167
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13104,
+  "secondPos" : 13104,
+  "firstEndPos" : 13111,
+  "secondEndPos" : 13111
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the list of input ",
@@ -15464,6 +15618,17 @@
   "secondPos" : 13130,
   "firstEndPos" : 13142,
   "secondEndPos" : 13142
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13130,
+  "secondPos" : 13130,
+  "firstEndPos" : 13135,
+  "secondEndPos" : 13135
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -24650,6 +24815,17 @@
   "firstEndPos" : 18413,
   "secondEndPos" : 18598
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Cached copy is valid",
+  "secondLabel" : "// Cached copy is valid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18300,
+  "secondPos" : 18485,
+  "firstEndPos" : 18323,
+  "secondEndPos" : 18508
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -24737,6 +24913,17 @@
   "secondPos" : 18604,
   "firstEndPos" : 18905,
   "secondEndPos" : 19090
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Invalidate",
+  "secondLabel" : "// Invalidate",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18431,
+  "secondPos" : 18616,
+  "firstEndPos" : 18444,
+  "secondEndPos" : 18629
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25991,6 +26178,17 @@
   "secondPos" : 19529,
   "firstEndPos" : 19348,
   "secondEndPos" : 19533
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore files of 0 length",
+  "secondLabel" : "// ignore files of 0 length",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19369,
+  "secondPos" : 19554,
+  "firstEndPos" : 19396,
+  "secondEndPos" : 19581
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -28918,6 +29116,17 @@
   "firstEndPos" : 20984,
   "secondEndPos" : 21169
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add uncovered ACID delta splits",
+  "secondLabel" : "// add uncovered ACID delta splits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21002,
+  "secondPos" : 21187,
+  "firstEndPos" : 21036,
+  "secondEndPos" : 21221
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30325,6 +30534,39 @@
   "secondPos" : 21973,
   "firstEndPos" : 22252,
   "secondEndPos" : 22437
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Generate a split for any buckets that weren't covered.",
+  "secondLabel" : "// Generate a split for any buckets that weren't covered.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21796,
+  "secondPos" : 21981,
+  "firstEndPos" : 21853,
+  "secondEndPos" : 22038
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This happens in the case where a bucket just has deltas and no",
+  "secondLabel" : "// This happens in the case where a bucket just has deltas and no",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21860,
+  "secondPos" : 22045,
+  "firstEndPos" : 21925,
+  "secondEndPos" : 22110
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// base.",
+  "secondLabel" : "// base.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21932,
+  "secondPos" : 22117,
+  "firstEndPos" : 21940,
+  "secondEndPos" : 22125
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -33010,6 +33252,17 @@
   "firstEndPos" : 23395,
   "secondEndPos" : 23580
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we have a base to work from",
+  "secondLabel" : "// if we have a base to work from",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23404,
+  "secondPos" : 23589,
+  "firstEndPos" : 23437,
+  "secondEndPos" : 23622
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -33163,6 +33416,17 @@
   "secondPos" : 23670,
   "firstEndPos" : 25231,
   "secondEndPos" : 25449
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// find the base files (original or new style)",
+  "secondLabel" : "// find the base files (original or new style)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23496,
+  "secondPos" : 23681,
+  "firstEndPos" : 23542,
+  "secondEndPos" : 23727
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -33934,6 +34198,28 @@
   "firstEndPos" : 24000,
   "secondEndPos" : 24185
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the bucket is in the valid range, mark it as covered.",
+  "secondLabel" : "// If the bucket is in the valid range, mark it as covered.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24014,
+  "secondPos" : 24199,
+  "firstEndPos" : 24073,
+  "secondEndPos" : 24258
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// I wish Hive actually enforced bucketing all of the time.",
+  "secondLabel" : "// I wish Hive actually enforced bucketing all of the time.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24084,
+  "secondPos" : 24269,
+  "firstEndPos" : 24143,
+  "secondEndPos" : 24328
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -34363,6 +34649,17 @@
   "firstEndPos" : 24398,
   "secondEndPos" : 24583
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// BI strategy requested through config",
+  "secondLabel" : "// BI strategy requested through config",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 24412,
+  "secondPos" : 24597,
+  "firstEndPos" : 24451,
+  "secondEndPos" : 24636
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34550,6 +34847,17 @@
   "firstEndPos" : 24611,
   "secondEndPos" : 24796
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ETL strategy requested through config",
+  "secondLabel" : "// ETL strategy requested through config",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 24625,
+  "secondPos" : 24810,
+  "firstEndPos" : 24665,
+  "secondEndPos" : 24850
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34725,6 +35033,17 @@
   "secondPos" : 25003,
   "firstEndPos" : 24826,
   "secondEndPos" : 25011
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// HYBRID strategy",
+  "secondLabel" : "// HYBRID strategy",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 24839,
+  "secondPos" : 25024,
+  "firstEndPos" : 24857,
+  "secondEndPos" : 25042
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -35132,6 +35451,17 @@
   "secondPos" : 25455,
   "firstEndPos" : 25367,
   "secondEndPos" : 25585
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no base, only deltas",
+  "secondLabel" : "// no base, only deltas",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25247,
+  "secondPos" : 25465,
+  "firstEndPos" : 25270,
+  "secondEndPos" : 25488
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -38202,6 +38532,17 @@
   "firstEndPos" : 27041,
   "secondEndPos" : 27259
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27011,
+  "secondPos" : 27229,
+  "firstEndPos" : 27017,
+  "secondEndPos" : 27235
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "offset1",
@@ -38234,6 +38575,17 @@
   "secondPos" : 27267,
   "firstEndPos" : 27080,
   "secondEndPos" : 27298
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27049,
+  "secondPos" : 27267,
+  "firstEndPos" : 27055,
+  "secondEndPos" : 27273
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -38268,6 +38620,17 @@
   "firstEndPos" : 27118,
   "secondEndPos" : 27336
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27088,
+  "secondPos" : 27306,
+  "firstEndPos" : 27094,
+  "secondEndPos" : 27312
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "offset2",
@@ -38301,6 +38664,17 @@
   "firstEndPos" : 27157,
   "secondEndPos" : 27375
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27126,
+  "secondPos" : 27344,
+  "firstEndPos" : 27132,
+  "secondEndPos" : 27350
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "length2",
@@ -38333,6 +38707,17 @@
   "secondPos" : 27383,
   "firstEndPos" : 27213,
   "secondEndPos" : 27431
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27165,
+  "secondPos" : 27383,
+  "firstEndPos" : 27172,
+  "secondEndPos" : 27390
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -39137,6 +39522,17 @@
   "firstEndPos" : 27901,
   "secondEndPos" : 28119
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27865,
+  "secondPos" : 28083,
+  "firstEndPos" : 27871,
+  "secondEndPos" : 28089
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "offset",
@@ -39169,6 +39565,17 @@
   "secondPos" : 28127,
   "firstEndPos" : 27946,
   "secondEndPos" : 28164
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27909,
+  "secondPos" : 28127,
+  "firstEndPos" : 27915,
+  "secondEndPos" : 28133
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -39203,6 +39610,17 @@
   "firstEndPos" : 28014,
   "secondEndPos" : 28232
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 27954,
+  "secondPos" : 28172,
+  "firstEndPos" : 27960,
+  "secondEndPos" : 28178
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "fileMetaInfo",
@@ -39235,6 +39653,17 @@
   "secondPos" : 28240,
   "firstEndPos" : 28041,
   "secondEndPos" : 28259
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 28022,
+  "secondPos" : 28240,
+  "firstEndPos" : 28029,
+  "secondEndPos" : 28247
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -39973,6 +40402,17 @@
   "firstEndPos" : 28485,
   "secondEndPos" : 28703
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handle the single block case",
+  "secondLabel" : "// handle the single block case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28412,
+  "secondPos" : 28630,
+  "firstEndPos" : 28443,
+  "secondEndPos" : 28661
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -40380,6 +40820,17 @@
   "firstEndPos" : 28627,
   "secondEndPos" : 28845
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//get the submap",
+  "secondLabel" : "//get the submap",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28639,
+  "secondPos" : 28857,
+  "firstEndPos" : 28655,
+  "secondEndPos" : 28873
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -40654,6 +41105,28 @@
   "secondPos" : 29012,
   "firstEndPos" : 28798,
   "secondEndPos" : 29016
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Calculate the number of bytes in the split that are local to each",
+  "secondLabel" : "// Calculate the number of bytes in the split that are local to each",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28809,
+  "secondPos" : 29027,
+  "firstEndPos" : 28877,
+  "secondEndPos" : 29095
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// host.",
+  "secondLabel" : "// host.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28886,
+  "secondPos" : 29104,
+  "firstEndPos" : 28894,
+  "secondEndPos" : 29112
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -42250,6 +42723,28 @@
   "firstEndPos" : 29711,
   "secondEndPos" : 29929
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// filter the list of locations to those that have at least 80% of the",
+  "secondLabel" : "// filter the list of locations to those that have at least 80% of the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29746,
+  "secondPos" : 29964,
+  "firstEndPos" : 29816,
+  "secondEndPos" : 30034
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// max",
+  "secondLabel" : "// max",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29825,
+  "secondPos" : 30043,
+  "firstEndPos" : 29831,
+  "secondEndPos" : 30049
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -42524,6 +43019,17 @@
   "secondPos" : 30163,
   "firstEndPos" : 29951,
   "secondEndPos" : 30169
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// build the locations in a predictable order to simplify testing",
+  "secondLabel" : "// build the locations in a predictable order to simplify testing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29964,
+  "secondPos" : 30182,
+  "firstEndPos" : 30029,
+  "secondEndPos" : 30247
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -43889,6 +44395,17 @@
   "firstEndPos" : 30907,
   "secondEndPos" : 31125
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// figure out which stripes we need to read",
+  "secondLabel" : "// figure out which stripes we need to read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30918,
+  "secondPos" : 31136,
+  "firstEndPos" : 30961,
+  "secondEndPos" : 31179
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -43965,6 +44482,28 @@
   "secondPos" : 31212,
   "firstEndPos" : 30998,
   "secondEndPos" : 31216
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we can't eliminate stripes if there are deltas because the",
+  "secondLabel" : "// we can't eliminate stripes if there are deltas because the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31006,
+  "secondPos" : 31224,
+  "firstEndPos" : 31067,
+  "secondEndPos" : 31285
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// deltas may change the rows making them match the predicate.",
+  "secondLabel" : "// deltas may change the rows making them match the predicate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31074,
+  "secondPos" : 31292,
+  "firstEndPos" : 31136,
+  "secondEndPos" : 31354
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -44339,6 +44878,17 @@
   "secondPos" : 31574,
   "firstEndPos" : 31366,
   "secondEndPos" : 31584
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only do split pruning if HIVE-8732 has been fixed in the writer",
+  "secondLabel" : "// only do split pruning if HIVE-8732 has been fixed in the writer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31377,
+  "secondPos" : 31595,
+  "firstEndPos" : 31443,
+  "secondEndPos" : 31661
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -45153,6 +45703,17 @@
   "secondPos" : 32157,
   "firstEndPos" : 32589,
   "secondEndPos" : 32807
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// eliminate stripes that doesn't satisfy the predicate condition",
+  "secondLabel" : "// eliminate stripes that doesn't satisfy the predicate condition",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31953,
+  "secondPos" : 32171,
+  "firstEndPos" : 32018,
+  "secondEndPos" : 32236
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -46100,6 +46661,17 @@
   "firstEndPos" : 32545,
   "secondEndPos" : 32763
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we didn't have predicate pushdown, read everything",
+  "secondLabel" : "// if we didn't have predicate pushdown, read everything",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32615,
+  "secondPos" : 32833,
+  "firstEndPos" : 32671,
+  "secondEndPos" : 32889
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -46793,6 +47365,17 @@
   "firstEndPos" : 33244,
   "secondEndPos" : 33462
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create split for the previous unfinished stripe",
+  "secondLabel" : "// create split for the previous unfinished stripe",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33002,
+  "secondPos" : 33220,
+  "firstEndPos" : 33052,
+  "secondEndPos" : 33270
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -47100,6 +47683,28 @@
   "secondPos" : 33443,
   "firstEndPos" : 33234,
   "secondEndPos" : 33452
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we are working on a stripe, over the min stripe size, and",
+  "secondLabel" : "// if we are working on a stripe, over the min stripe size, and",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33254,
+  "secondPos" : 33472,
+  "firstEndPos" : 33317,
+  "secondEndPos" : 33535
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// crossed a block boundary, cut the input split here.",
+  "secondLabel" : "// crossed a block boundary, cut the input split here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33326,
+  "secondPos" : 33544,
+  "firstEndPos" : 33380,
+  "secondEndPos" : 33598
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -47639,6 +48244,17 @@
   "secondPos" : 33852,
   "firstEndPos" : 33635,
   "secondEndPos" : 33853
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we aren't building a split, start a new one.",
+  "secondLabel" : "// if we aren't building a split, start a new one.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33655,
+  "secondPos" : 33873,
+  "firstEndPos" : 33705,
+  "secondEndPos" : 33923
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -48607,6 +49223,17 @@
   "secondPos" : 34446,
   "firstEndPos" : 34240,
   "secondEndPos" : 34458
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add uncovered ACID delta splits",
+  "secondLabel" : "// add uncovered ACID delta splits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34259,
+  "secondPos" : 34477,
+  "firstEndPos" : 34293,
+  "secondEndPos" : 34511
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -49664,6 +50291,17 @@
   "firstEndPos" : 34947,
   "secondEndPos" : 35165
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For multiple runs, in case sendSplitsInFooter changes",
+  "secondLabel" : "// For multiple runs, in case sendSplitsInFooter changes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34957,
+  "secondPos" : 35175,
+  "firstEndPos" : 35013,
+  "secondEndPos" : 35231
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -50719,6 +51357,17 @@
   "secondPos" : 35895,
   "firstEndPos" : 35917,
   "secondEndPos" : 36135
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate into cache.",
+  "secondLabel" : "// Populate into cache.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35689,
+  "secondPos" : 35907,
+  "firstEndPos" : 35712,
+  "secondEndPos" : 35930
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -51776,6 +52425,17 @@
   "firstEndPos" : 36657,
   "secondEndPos" : 36875
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// column statistics at index 0 contains only the number of rows",
+  "secondLabel" : "// column statistics at index 0 contains only the number of rows",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36386,
+  "secondPos" : 36604,
+  "firstEndPos" : 36450,
+  "secondEndPos" : 36668
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -52139,6 +52799,39 @@
   "firstEndPos" : 36892,
   "secondEndPos" : 37110
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parition column case.",
+  "secondLabel" : "// parition column case.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36676,
+  "secondPos" : 36894,
+  "firstEndPos" : 36700,
+  "secondEndPos" : 36918
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// partition filter will be evaluated by partition pruner so",
+  "secondLabel" : "// partition filter will be evaluated by partition pruner so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36711,
+  "secondPos" : 36929,
+  "firstEndPos" : 36771,
+  "secondEndPos" : 36989
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we will not evaluate partition filter here.",
+  "secondLabel" : "// we will not evaluate partition filter here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36782,
+  "secondPos" : 37000,
+  "firstEndPos" : 36828,
+  "secondEndPos" : 37046
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -52490,6 +53183,17 @@
   "secondPos" : 37270,
   "firstEndPos" : 38952,
   "secondEndPos" : 37316
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// use threads to resolve directories into splits",
+  "secondLabel" : "// use threads to resolve directories into splits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37058,
+  "secondPos" : 37427,
+  "firstEndPos" : 37107,
+  "secondEndPos" : 37476
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -53030,6 +53734,17 @@
   "firstEndPos" : 37308,
   "secondEndPos" : 37688
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// multi-threaded file statuses and split strategy",
+  "secondLabel" : "// multi-threaded file statuses and split strategy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37317,
+  "secondPos" : 37697,
+  "firstEndPos" : 37367,
+  "secondEndPos" : 37747
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -53513,6 +54228,17 @@
   "secondPos" : 37959,
   "firstEndPos" : 37592,
   "secondEndPos" : 37972
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// complete path futures and schedule split generation",
+  "secondLabel" : "// complete path futures and schedule split generation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37607,
+  "secondPos" : 37987,
+  "firstEndPos" : 37661,
+  "secondEndPos" : 38041
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -54437,6 +55163,17 @@
   "secondPos" : 38580,
   "firstEndPos" : 38209,
   "secondEndPos" : 38589
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// complete split futures",
+  "secondLabel" : "// complete split futures",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38239,
+  "secondPos" : 38619,
+  "firstEndPos" : 38264,
+  "secondEndPos" : 38644
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -58816,6 +59553,28 @@
   "firstEndPos" : 40972,
   "secondEndPos" : 41363
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if HiveCombineInputFormat gives us FileSplits instead of OrcSplits,",
+  "secondLabel" : "// if HiveCombineInputFormat gives us FileSplits instead of OrcSplits,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40980,
+  "secondPos" : 41371,
+  "firstEndPos" : 41050,
+  "secondEndPos" : 41441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we know it is not ACID. (see a check in CombineHiveInputFormat.getSplits() that assures this)",
+  "secondLabel" : "// we know it is not ACID. (see a check in CombineHiveInputFormat.getSplits() that assures this)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41055,
+  "secondPos" : 41446,
+  "firstEndPos" : 41151,
+  "secondEndPos" : 41542
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -59871,6 +60630,17 @@
   "secondPos" : 42086,
   "firstEndPos" : 41702,
   "secondEndPos" : 42093
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*Even though there are no delta files, we still need to produce row ids so that an\n    * UPDATE or DELETE statement would work on a table which didn't have any previous updates*/",
+  "secondLabel" : "/*Even though there are no delta files, we still need to produce row ids so that an\n    * UPDATE or DELETE statement would work on a table which didn't have any previous updates*/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41711,
+  "secondPos" : 42102,
+  "firstEndPos" : 41890,
+  "secondEndPos" : 42281
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -66120,6 +66890,17 @@
   "firstEndPos" : 45650,
   "secondEndPos" : 46041
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// filter out the deleted records",
+  "secondLabel" : "// filter out the deleted records",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45660,
+  "secondPos" : 46051,
+  "firstEndPos" : 45693,
+  "secondEndPos" : 46084
+}, {
   "firstType" : "DoStatement",
   "secondType" : "DoStatement",
   "firstLabel" : "",
@@ -66427,6 +67208,17 @@
   "secondPos" : 46319,
   "firstEndPos" : 46067,
   "secondEndPos" : 46458
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swap the fields with the passed in orcStruct",
+  "secondLabel" : "// swap the fields with the passed in orcStruct",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 45940,
+  "secondPos" : 46331,
+  "firstEndPos" : 45987,
+  "secondEndPos" : 46378
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 9608,
   "secondEndPos" : 9802
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2015 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1010,6 +1021,17 @@
   "secondPos" : 1669,
   "firstEndPos" : 1699,
   "secondEndPos" : 1699
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// absoluteLocalPathToSourceIndex contains canonical paths too, but this map contains only used (specified in the source map) path",
+  "secondLabel" : "// absoluteLocalPathToSourceIndex contains canonical paths too, but this map contains only used (specified in the source map) path",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1703,
+  "secondPos" : 1703,
+  "firstEndPos" : 1833,
+  "secondEndPos" : 1833
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3650,6 +3672,17 @@
   "secondPos" : 3156,
   "firstEndPos" : 3159,
   "secondEndPos" : 3159
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// see canonicalizeUri kotlin impl and https://trac.webkit.org/browser/trunk/Source/WebCore/inspector/front-end/ParsedURL.js completeURL",
+  "secondLabel" : "// see canonicalizeUri kotlin impl and https://trac.webkit.org/browser/trunk/Source/WebCore/inspector/front-end/ParsedURL.js completeURL",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3171,
+  "secondPos" : 3171,
+  "firstEndPos" : 3307,
+  "secondEndPos" : 3307
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6302,6 +6335,17 @@
   "firstEndPos" : 4597,
   "secondEndPos" : 4083
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// browserify produces absolute path in the local filesystem",
+  "secondLabel" : "// browserify produces absolute path in the local filesystem",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4611,
+  "secondPos" : 4097,
+  "firstEndPos" : 4671,
+  "secondEndPos" : 4157
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6620,6 +6664,17 @@
   "secondPos" : 4321,
   "firstEndPos" : 5070,
   "secondEndPos" : 4556
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// must be linked, on iterate original path must be first",
+  "secondLabel" : "// must be linked, on iterate original path must be first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4847,
+  "secondPos" : 4333,
+  "firstEndPos" : 4904,
+  "secondEndPos" : 4390
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

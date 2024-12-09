@@ -391,7 +391,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
             ImmutablePair<String, String> refactoringClassBefore = involvedClassesBeforeRefactoring.iterator().next();
             ImmutablePair<String, String> refactoringClassAfter = involvedClassesAfterRefactoring.iterator().next();
             if (umlClassBefore.getLocationInfo().getFilePath().equals(refactoringClassBefore.getLeft())
-                    && umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft())) {
+                    || umlClassAfter.getLocationInfo().getFilePath().equals(refactoringClassAfter.getLeft())) {
                 String refactoringClassNameBefore = refactoringClassBefore.getRight();
                 String refactoringClassNameAfter = refactoringClassAfter.getRight();
                 // Relied on || in order to ascertain at least one class involves (handling move to anonymous and vice versa)

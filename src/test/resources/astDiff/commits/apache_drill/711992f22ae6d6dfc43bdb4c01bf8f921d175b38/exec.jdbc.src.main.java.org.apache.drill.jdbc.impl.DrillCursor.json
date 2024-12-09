@@ -868,6 +868,17 @@
   "firstEndPos" : 1686,
   "secondEndPos" : 1686
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1660,
+  "secondPos" : 1660,
+  "firstEndPos" : 1665,
+  "secondEndPos" : 1665
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.sql.ResultSet",
@@ -1682,6 +1693,17 @@
   "firstEndPos" : 2556,
   "secondEndPos" : 2504
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2544,
+  "secondPos" : 2492,
+  "firstEndPos" : 2549,
+  "secondEndPos" : 2497
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true",
@@ -2143,6 +2165,17 @@
   "secondPos" : 3273,
   "firstEndPos" : 3359,
   "secondEndPos" : 3331
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3301,
+  "secondPos" : 3273,
+  "firstEndPos" : 3307,
+  "secondEndPos" : 3279
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3552,6 +3585,17 @@
   "firstEndPos" : 4525,
   "secondEndPos" : 4341
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4489,
+  "secondPos" : 4305,
+  "firstEndPos" : 4494,
+  "secondEndPos" : 4310
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -3606,6 +3650,17 @@
   "secondPos" : 4397,
   "firstEndPos" : 4579,
   "secondEndPos" : 4428
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4548,
+  "secondPos" : 4397,
+  "firstEndPos" : 4553,
+  "secondEndPos" : 4402
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -3683,6 +3738,28 @@
   "secondPos" : 9434,
   "firstEndPos" : 4688,
   "secondEndPos" : 9521
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4601,
+  "secondPos" : 4450,
+  "firstEndPos" : 4608,
+  "secondEndPos" : 4457
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4601,
+  "secondPos" : 9434,
+  "firstEndPos" : 4608,
+  "secondEndPos" : 9441
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4014,6 +4091,17 @@
   "firstEndPos" : 5069,
   "secondEndPos" : 10126
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We have a deferred \"not after end\" to report--reset and report that.",
+  "secondLabel" : "// We have a deferred \"not after end\" to report--reset and report that.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4930,
+  "secondPos" : 9987,
+  "firstEndPos" : 5001,
+  "secondEndPos" : 10058
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4123,6 +4211,17 @@
   "secondPos" : 9829,
   "firstEndPos" : 5198,
   "secondEndPos" : 9934
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We're already after end of rows/records--just report that after end.",
+  "secondLabel" : "// We're already after end of rows/records--just report that after end.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5101,
+  "secondPos" : 9837,
+  "firstEndPos" : 5172,
+  "secondEndPos" : 9908
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4278,6 +4377,17 @@
   "firstEndPos" : 5409,
   "secondEndPos" : 4813
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Have next row in current batch--just advance index and report \"at a row.\"",
+  "secondLabel" : "// Have next row in current batch--just advance index and report \"at a row.\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5279,
+  "secondPos" : 4683,
+  "firstEndPos" : 5355,
+  "secondEndPos" : 4759
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4354,6 +4464,28 @@
   "secondPos" : 4819,
   "firstEndPos" : 8829,
   "secondEndPos" : 8276
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No (more) records in any current batch--try to get first or next batch.",
+  "secondLabel" : "// No (more) records in any current batch--try to get first or next batch.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5423,
+  "secondPos" : 4827,
+  "firstEndPos" : 5497,
+  "secondEndPos" : 4901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (First call always takes this branch.)",
+  "secondLabel" : "// (First call always takes this branch.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5504,
+  "secondPos" : 4908,
+  "firstEndPos" : 5545,
+  "secondEndPos" : 4949
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -4475,6 +4607,39 @@
   "secondPos" : 5008,
   "firstEndPos" : 5611,
   "secondEndPos" : 5015
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (Apparently:)  Skip any spurious empty batches (batches that have",
+  "secondLabel" : "// (Apparently:)  Skip any spurious empty batches (batches that have",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5624,
+  "secondPos" : 5028,
+  "firstEndPos" : 5692,
+  "secondEndPos" : 5096
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// zero rows and/or null data, other than the first batch (which carries",
+  "secondLabel" : "// zero rows and/or null data, other than the first batch (which carries",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5701,
+  "secondPos" : 5105,
+  "firstEndPos" : 5773,
+  "secondEndPos" : 5177
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the (initial) schema but no rows)).",
+  "secondLabel" : "// the (initial) schema but no rows)).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5782,
+  "secondPos" : 5186,
+  "firstEndPos" : 5820,
+  "secondEndPos" : 5224
 }, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
@@ -4795,6 +4960,17 @@
   "firstEndPos" : 6687,
   "secondEndPos" : 6124
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Empty message--dispose of and try to get another.",
+  "secondLabel" : "// Empty message--dispose of and try to get another.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6002,
+  "secondPos" : 5411,
+  "firstEndPos" : 6054,
+  "secondEndPos" : 5463
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5026,6 +5202,28 @@
   "firstEndPos" : 6178,
   "secondEndPos" : 5593
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE:  It is unclear why this check does not check getRowCount()",
+  "secondLabel" : "// NOTE:  It is unclear why this check does not check getRowCount()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6193,
+  "secondPos" : 5610,
+  "firstEndPos" : 6260,
+  "secondEndPos" : 5677
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// as the loop condition above does.",
+  "secondLabel" : "// as the loop condition above does.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6271,
+  "secondPos" : 5690,
+  "firstEndPos" : 6307,
+  "secondEndPos" : 5726
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5191,6 +5389,28 @@
   "firstEndPos" : 6677,
   "secondEndPos" : 6112
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Got another batch with null data--dispose of and report \"no more",
+  "secondLabel" : "// Got another batch with null data--dispose of and report \"no more",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6376,
+  "secondPos" : 5799,
+  "firstEndPos" : 6443,
+  "secondEndPos" : 5866
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// rows\".",
+  "secondLabel" : "// rows\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6456,
+  "secondPos" : 5881,
+  "firstEndPos" : 6465,
+  "secondEndPos" : 5890
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5245,6 +5465,28 @@
   "secondPos" : 5910,
   "firstEndPos" : 6490,
   "secondEndPos" : 5917
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE:  It is unclear why this returns false but doesn't set",
+  "secondLabel" : "// NOTE:  It is unclear why this returns false but doesn't set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6507,
+  "secondPos" : 5936,
+  "firstEndPos" : 6569,
+  "secondEndPos" : 5998
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// afterLastRow (as we do when we normally return false).",
+  "secondLabel" : "// afterLastRow (as we do when we normally return false).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6582,
+  "secondPos" : 6013,
+  "firstEndPos" : 6639,
+  "secondEndPos" : 6070
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -5389,6 +5631,17 @@
   "firstEndPos" : 6966,
   "secondEndPos" : 6413
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// End of batches--clean up, set state to done, report after last row.",
+  "secondLabel" : "// End of batches--clean up, set state to done, report after last row.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6759,
+  "secondPos" : 6206,
+  "firstEndPos" : 6829,
+  "secondEndPos" : 6276
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5443,6 +5696,17 @@
   "secondPos" : 6307,
   "firstEndPos" : 6865,
   "secondEndPos" : 6312
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (We load it so we clear it.)",
+  "secondLabel" : "// (We load it so we clear it.)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6870,
+  "secondPos" : 6317,
+  "firstEndPos" : 6901,
+  "secondEndPos" : 6348
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5531,6 +5795,28 @@
   "secondPos" : 6419,
   "firstEndPos" : 7728,
   "secondEndPos" : 7175
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Got next (or first) batch--reset record offset to beginning,",
+  "secondLabel" : "// Got next (or first) batch--reset record offset to beginning,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6984,
+  "secondPos" : 6431,
+  "firstEndPos" : 7047,
+  "secondEndPos" : 6494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assimilate schema if changed, ... ???",
+  "secondLabel" : "// assimilate schema if changed, ... ???",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7058,
+  "secondPos" : 6505,
+  "firstEndPos" : 7098,
+  "secondEndPos" : 6545
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6379,6 +6665,61 @@
   "firstEndPos" : 8152,
   "secondEndPos" : 7599
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A normally expected case--for any server-side error (e.g., syntax",
+  "secondLabel" : "// A normally expected case--for any server-side error (e.g., syntax",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7779,
+  "secondPos" : 7226,
+  "firstEndPos" : 7847,
+  "secondEndPos" : 7294
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// error in SQL statement).",
+  "secondLabel" : "// error in SQL statement).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7856,
+  "secondPos" : 7303,
+  "firstEndPos" : 7883,
+  "secondEndPos" : 7330
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Construct SQLException with message text from the UserException.",
+  "secondLabel" : "// Construct SQLException with message text from the UserException.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7892,
+  "secondPos" : 7339,
+  "firstEndPos" : 7959,
+  "secondEndPos" : 7406
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO:  Map UserException error type to SQLException subclass (once",
+  "secondLabel" : "// TODO:  Map UserException error type to SQLException subclass (once",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7968,
+  "secondPos" : 7415,
+  "firstEndPos" : 8037,
+  "secondEndPos" : 7484
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// error type is accessible, of course. :-( )",
+  "secondLabel" : "// error type is accessible, of course. :-( )",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8046,
+  "secondPos" : 7493,
+  "firstEndPos" : 8091,
+  "secondEndPos" : 7538
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -6544,6 +6885,28 @@
   "firstEndPos" : 8380,
   "secondEndPos" : 7827
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not normally expected--Drill doesn't interrupt in this area (right?)--",
+  "secondLabel" : "// Not normally expected--Drill doesn't interrupt in this area (right?)--",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8202,
+  "secondPos" : 7649,
+  "firstEndPos" : 8275,
+  "secondEndPos" : 7722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but JDBC client certainly could.",
+  "secondLabel" : "// but JDBC client certainly could.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8284,
+  "secondPos" : 7731,
+  "firstEndPos" : 8319,
+  "secondEndPos" : 7766
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -6675,6 +7038,28 @@
   "secondPos" : 7868,
   "firstEndPos" : 8692,
   "secondEndPos" : 8139
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO:  Clean:  DRILL-2933:  RecordBatchLoader.load(...) no longer",
+  "secondLabel" : "// TODO:  Clean:  DRILL-2933:  RecordBatchLoader.load(...) no longer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8431,
+  "secondPos" : 7878,
+  "firstEndPos" : 8499,
+  "secondEndPos" : 7946
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// throws SchemaChangeException, so check/clean catch clause.",
+  "secondLabel" : "// throws SchemaChangeException, so check/clean catch clause.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8508,
+  "secondPos" : 7955,
+  "firstEndPos" : 8569,
+  "secondEndPos" : 8016
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -7006,6 +7391,61 @@
   "firstEndPos" : 9377,
   "secondEndPos" : 10725
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// currentBatchHolder is owned by resultSet and cleaned up by",
+  "secondLabel" : "// currentBatchHolder is owned by resultSet and cleaned up by",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8875,
+  "secondPos" : 10223,
+  "firstEndPos" : 8936,
+  "secondEndPos" : 10284
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DrillResultSet.cleanup()",
+  "secondLabel" : "// DrillResultSet.cleanup()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8941,
+  "secondPos" : 10289,
+  "firstEndPos" : 8968,
+  "secondEndPos" : 10316
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// listener is owned by resultSet and cleaned up by",
+  "secondLabel" : "// listener is owned by resultSet and cleaned up by",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8974,
+  "secondPos" : 10322,
+  "firstEndPos" : 9025,
+  "secondEndPos" : 10373
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DrillResultSet.cleanup()",
+  "secondLabel" : "// DrillResultSet.cleanup()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9030,
+  "secondPos" : 10378,
+  "firstEndPos" : 9057,
+  "secondEndPos" : 10405
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Clean up result set (to deallocate any buffers).",
+  "secondLabel" : "// Clean up result set (to deallocate any buffers).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9063,
+  "secondPos" : 10411,
+  "firstEndPos" : 9114,
+  "secondEndPos" : 10462
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7071,6 +7511,39 @@
   "secondPos" : 10482,
   "firstEndPos" : 9141,
   "secondEndPos" : 10489
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO:  CHECK:  Something might need to set statement.openResultSet to",
+  "secondLabel" : "// TODO:  CHECK:  Something might need to set statement.openResultSet to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9149,
+  "secondPos" : 10497,
+  "firstEndPos" : 9221,
+  "secondEndPos" : 10569
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// null.  Also, AvaticaResultSet.close() doesn't check whether already",
+  "secondLabel" : "// null.  Also, AvaticaResultSet.close() doesn't check whether already",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9226,
+  "secondPos" : 10574,
+  "firstEndPos" : 9296,
+  "secondEndPos" : 10644
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// closed and skip calls to cursor.close(), statement.onResultSetClose()",
+  "secondLabel" : "// closed and skip calls to cursor.close(), statement.onResultSetClose()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9301,
+  "secondPos" : 10649,
+  "firstEndPos" : 9373,
+  "secondEndPos" : 10721
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

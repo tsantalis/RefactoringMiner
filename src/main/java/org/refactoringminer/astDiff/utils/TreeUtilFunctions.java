@@ -153,6 +153,23 @@ public class TreeUtilFunctions {
 		return copy;
 	}
 
+	public static org.apache.commons.lang3.tuple.Pair<Tree, Tree> populateLeftAndRightBasedOnTheFirstChildOfType(Tree srcTree, Tree dstTree, String[] types)
+	{
+		Tree srcRes = null;
+		Tree dstRes = null;
+		for (String type : types) {
+			srcRes = TreeUtilFunctions.findFirstByType(srcTree, type);
+			dstRes = TreeUtilFunctions.findFirstByType(dstTree, type);
+			if (srcRes != null && dstRes != null)
+				break;
+			else {
+				//In case, only one of them is null. We want to avoid this scenario (unless we get more examples)
+				srcRes = null;
+				dstRes = null;
+			}
+		}
+		return org.apache.commons.lang3.tuple.Pair.of(srcRes,dstRes);
+	}
 	public static FakeTree getFakeTreeInstance()
 	{
 		if (_instance == null)

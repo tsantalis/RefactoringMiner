@@ -1121,6 +1121,17 @@
   "firstEndPos" : 1770,
   "secondEndPos" : 1577
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1490,
+  "secondPos" : 1297,
+  "firstEndPos" : 1496,
+  "secondEndPos" : 1303
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "entities",
@@ -1175,6 +1186,17 @@
   "secondPos" : 1585,
   "firstEndPos" : 1834,
   "secondEndPos" : 1641
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1778,
+  "secondPos" : 1585,
+  "firstEndPos" : 1785,
+  "secondEndPos" : 1592
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1428,6 +1450,17 @@
   "secondPos" : 1776,
   "firstEndPos" : 1983,
   "secondEndPos" : 1790
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Count each feedId",
+  "secondLabel" : "// Count each feedId",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1994,
+  "secondPos" : 1801,
+  "firstEndPos" : 2014,
+  "secondEndPos" : 1821
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2429,6 +2462,17 @@
   "secondPos" : 2398,
   "firstEndPos" : 2993,
   "secondEndPos" : 2800
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection OptionalGetWithoutIsPresent",
+  "secondLabel" : "//noinspection OptionalGetWithoutIsPresent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2605,
+  "secondPos" : 2412,
+  "firstEndPos" : 2647,
+  "secondEndPos" : 2454
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3606,6 +3650,17 @@
   "secondPos" : 3819,
   "firstEndPos" : 3637,
   "secondEndPos" : 3876
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* TODO OTP2\n    public String preparePlaceRef(String input) {\n        if (fixedAgencyId != null && input != null) {\n            GenericLocation location = GenericLocation.fromOldStyleString(input);\n\n            if (location.hasVertexId()) {\n                String prefixedPlace = prepareFeedScopedId(location.place, GTFS_LIBRARY_ID_SEPARATOR);\n                return new GenericLocation(location.name, prefixedPlace).toString();\n            }\n\n        }\n        return input;\n    }\n     */",
+  "secondLabel" : "/* TODO OTP2\n    public String preparePlaceRef(String input) {\n        if (fixedAgencyId != null && input != null) {\n            GenericLocation location = GenericLocation.fromOldStyleString(input);\n\n            if (location.hasVertexId()) {\n                String prefixedPlace = prepareFeedScopedId(location.place, GTFS_LIBRARY_ID_SEPARATOR);\n                return new GenericLocation(location.name, prefixedPlace).toString();\n            }\n\n        }\n        return input;\n    }\n     */",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3650,
+  "secondPos" : 3889,
+  "firstEndPos" : 4140,
+  "secondEndPos" : 4379
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",

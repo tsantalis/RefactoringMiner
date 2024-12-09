@@ -7,24 +7,8 @@ import java.util.List;
 
 public class BenchmarkUtilityRunner {
     public static void main(String[] args) {
-//        System.setProperty("rm.jdt.comments", "false");
+        System.setProperty("rm.jdt.comments", "true");
         // Create instances of command classes
-        String url;
-        url = "https://github.com/kuujo/copycat/commit/19a49f8f36b2f6d82534dc13504d672e41a3a8d1";
-        url = "https://github.com/mockito/mockito/commit/2d036ecf1d7170b4ec7346579a1ef8904109530a";
-        url = "https://github.com/JetBrains/MPS/commit/ce4b0e22659c16ae83d421f9621fd3e922750764";
-
-
-
-
-
-
-        //insert url to args
-        String[] temp = new String[args.length + 1];
-        System.arraycopy(args, 0, temp, 0, args.length);
-        temp[temp.length - 1] = url;
-
-        args = temp;
         AddCommand addCommand = new AddCommand();
         RemoveCommand removeCommand = new RemoveCommand();
 

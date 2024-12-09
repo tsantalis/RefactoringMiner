@@ -32,6 +32,17 @@
   "firstEndPos" : 39,
   "secondEndPos" : 39
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "secondLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 42,
+  "secondPos" : 42,
+  "firstEndPos" : 722,
+  "secondEndPos" : 722
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -5565,6 +5576,17 @@
   "firstEndPos" : 5760,
   "secondEndPos" : 5813
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Loop through rows",
+  "secondLabel" : "// Loop through rows",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4336,
+  "secondPos" : 4389,
+  "firstEndPos" : 4356,
+  "secondEndPos" : 4409
+}, {
   "firstType" : "AssertStatement",
   "secondType" : "AssertStatement",
   "firstLabel" : "",
@@ -6070,6 +6092,17 @@
   "secondPos" : 4625,
   "firstEndPos" : 4579,
   "secondEndPos" : 4632
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Apply calculators",
+  "secondLabel" : "// Apply calculators",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4588,
+  "secondPos" : 4641,
+  "firstEndPos" : 4608,
+  "secondEndPos" : 4661
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -6862,6 +6895,17 @@
   "secondPos" : 5045,
   "firstEndPos" : 4997,
   "secondEndPos" : 5050
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Generate update SQL",
+  "secondLabel" : "// Generate update SQL",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5013,
+  "secondPos" : 5066,
+  "firstEndPos" : 5035,
+  "secondEndPos" : 5088
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8182,6 +8226,17 @@
   "secondPos" : 5661,
   "firstEndPos" : 5615,
   "secondEndPos" : 5668
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Apply update SQL",
+  "secondLabel" : "// Apply update SQL",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5625,
+  "secondPos" : 5678,
+  "firstEndPos" : 5644,
+  "secondEndPos" : 5697
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

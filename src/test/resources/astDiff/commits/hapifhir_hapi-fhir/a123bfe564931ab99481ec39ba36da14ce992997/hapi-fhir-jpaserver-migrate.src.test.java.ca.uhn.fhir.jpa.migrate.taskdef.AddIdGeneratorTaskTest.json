@@ -989,6 +989,17 @@
   "firstEndPos" : 842,
   "secondEndPos" : 842
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Second time, should produce no action",
+  "secondLabel" : "// Second time, should produce no action",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 849,
+  "secondPos" : 849,
+  "firstEndPos" : 889,
+  "secondEndPos" : 889
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",

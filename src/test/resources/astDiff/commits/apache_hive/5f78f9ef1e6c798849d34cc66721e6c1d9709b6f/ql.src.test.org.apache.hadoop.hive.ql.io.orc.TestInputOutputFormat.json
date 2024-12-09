@@ -26080,6 +26080,17 @@
   "firstEndPos" : 18494,
   "secondEndPos" : 23247
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18462,
+  "secondPos" : 23215,
+  "firstEndPos" : 18468,
+  "secondEndPos" : 23221
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "blocks",
@@ -28136,6 +28147,17 @@
   "secondPos" : 24236,
   "firstEndPos" : 19505,
   "secondEndPos" : 24258
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty",
+  "secondLabel" : "// empty",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19491,
+  "secondPos" : 24244,
+  "firstEndPos" : 19499,
+  "secondEndPos" : 24252
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -33593,6 +33615,17 @@
   "firstEndPos" : 22474,
   "secondEndPos" : 27227
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for each directory add it once",
+  "secondLabel" : "// for each directory add it once",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22514,
+  "secondPos" : 27267,
+  "firstEndPos" : 22547,
+  "secondEndPos" : 27300
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -38994,6 +39027,17 @@
   "firstEndPos" : 25529,
   "secondEndPos" : 30282
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 25483,
+  "secondPos" : 30236,
+  "firstEndPos" : 25489,
+  "secondEndPos" : 30242
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stripeLengths",
@@ -39027,6 +39071,17 @@
   "firstEndPos" : 25564,
   "secondEndPos" : 30317
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 25535,
+  "secondPos" : 30288,
+  "firstEndPos" : 25542,
+  "secondEndPos" : 30295
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the bytes of the file",
@@ -39048,6 +39103,17 @@
   "secondPos" : 30323,
   "firstEndPos" : 25589,
   "secondEndPos" : 30342
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 25570,
+  "secondPos" : 30323,
+  "firstEndPos" : 25577,
+  "secondEndPos" : 30330
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -42018,6 +42084,17 @@
   "secondPos" : 32009,
   "firstEndPos" : 28878,
   "secondEndPos" : 33631
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create a file with 5 blocks spread around the cluster",
+  "secondLabel" : "// create a file with 5 blocks spread around the cluster",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27262,
+  "secondPos" : 32015,
+  "firstEndPos" : 27318,
+  "secondEndPos" : 32071
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -45054,6 +45131,17 @@
   "secondPos" : 33693,
   "firstEndPos" : 31165,
   "secondEndPos" : 35918
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create a file with 5 blocks spread around the cluster",
+  "secondLabel" : "// create a file with 5 blocks spread around the cluster",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28946,
+  "secondPos" : 33699,
+  "firstEndPos" : 29002,
+  "secondEndPos" : 33755
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -48134,6 +48222,17 @@
   "secondPos" : 35308,
   "firstEndPos" : 30564,
   "secondEndPos" : 35317
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test min = 0, max = 0 generates each stripe",
+  "secondLabel" : "// test min = 0, max = 0 generates each stripe",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30573,
+  "secondPos" : 35326,
+  "firstEndPos" : 30619,
+  "secondEndPos" : 35372
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -51941,6 +52040,17 @@
   "firstEndPos" : 32677,
   "secondEndPos" : 37430
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the the validate input method",
+  "secondLabel" : "// the the validate input method",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32685,
+  "secondPos" : 37438,
+  "firstEndPos" : 32717,
+  "secondEndPos" : 37470
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -52985,6 +53095,17 @@
   "secondPos" : 37931,
   "firstEndPos" : 33186,
   "secondEndPos" : 37939
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// read the whole file",
+  "secondLabel" : "// read the whole file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33196,
+  "secondPos" : 37949,
+  "firstEndPos" : 33218,
+  "secondEndPos" : 37971
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -54823,6 +54944,17 @@
   "firstEndPos" : 34072,
   "secondEndPos" : 38825
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// read just the first column",
+  "secondLabel" : "// read just the first column",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34081,
+  "secondPos" : 38834,
+  "firstEndPos" : 34110,
+  "secondEndPos" : 38863
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -56142,6 +56274,17 @@
   "secondPos" : 39422,
   "firstEndPos" : 34674,
   "secondEndPos" : 39427
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test the mapping of empty string to all columns",
+  "secondLabel" : "// test the mapping of empty string to all columns",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34683,
+  "secondPos" : 39436,
+  "firstEndPos" : 34733,
+  "secondEndPos" : 39486
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -69552,6 +69695,17 @@
   "firstEndPos" : 41722,
   "secondEndPos" : 46475
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// read the whole file",
+  "secondLabel" : "// read the whole file",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 41730,
+  "secondPos" : 46483,
+  "firstEndPos" : 41752,
+  "secondEndPos" : 46505
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -72786,6 +72940,17 @@
   "firstEndPos" : 43479,
   "secondEndPos" : 48232
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43431,
+  "secondPos" : 48184,
+  "firstEndPos" : 43437,
+  "secondEndPos" : 48190
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "workDir",
@@ -72818,6 +72983,17 @@
   "secondPos" : 48238,
   "firstEndPos" : 43542,
   "secondEndPos" : 48295
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43485,
+  "secondPos" : 48238,
+  "firstEndPos" : 43491,
+  "secondEndPos" : 48244
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -72852,6 +73028,17 @@
   "firstEndPos" : 43579,
   "secondEndPos" : 48332
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43548,
+  "secondPos" : 48301,
+  "firstEndPos" : 43554,
+  "secondEndPos" : 48307
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "tableName",
@@ -72884,6 +73071,17 @@
   "secondPos" : 48338,
   "firstEndPos" : 43636,
   "secondEndPos" : 48389
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43585,
+  "secondPos" : 48338,
+  "firstEndPos" : 43591,
+  "secondEndPos" : 48344
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -72918,6 +73116,17 @@
   "firstEndPos" : 43683,
   "secondEndPos" : 48436
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43642,
+  "secondPos" : 48395,
+  "firstEndPos" : 43648,
+  "secondEndPos" : 48401
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "isVectorized",
@@ -72951,6 +73160,17 @@
   "firstEndPos" : 43746,
   "secondEndPos" : 48499
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43689,
+  "secondPos" : 48442,
+  "firstEndPos" : 43696,
+  "secondEndPos" : 48449
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a JobConf that contains the necessary information",
@@ -72972,6 +73192,17 @@
   "secondPos" : 48505,
   "firstEndPos" : 43771,
   "secondEndPos" : 48524
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 43752,
+  "secondPos" : 48505,
+  "firstEndPos" : 43759,
+  "secondEndPos" : 48512
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -74183,6 +74414,17 @@
   "firstEndPos" : 44628,
   "secondEndPos" : 49381
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// clean out previous contents",
+  "secondLabel" : "// clean out previous contents",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44635,
+  "secondPos" : 49388,
+  "firstEndPos" : 44665,
+  "secondEndPos" : 49418
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -74336,6 +74578,17 @@
   "secondPos" : 49467,
   "firstEndPos" : 44719,
   "secondEndPos" : 49472
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// build partition strings",
+  "secondLabel" : "// build partition strings",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 44727,
+  "secondPos" : 49480,
+  "firstEndPos" : 44753,
+  "secondEndPos" : 49506
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -79914,6 +80167,17 @@
   "firstEndPos" : 47259,
   "secondEndPos" : 52012
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the plan out",
+  "secondLabel" : "// write the plan out",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47267,
+  "secondPos" : 52020,
+  "firstEndPos" : 47288,
+  "secondEndPos" : 52041
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -80618,6 +80882,17 @@
   "firstEndPos" : 47670,
   "secondEndPos" : 52423
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 47653,
+  "secondPos" : 52406,
+  "firstEndPos" : 47660,
+  "secondEndPos" : 52413
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Exception",
@@ -80749,6 +81024,17 @@
   "secondPos" : 52522,
   "firstEndPos" : 49447,
   "secondEndPos" : 54200
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get the object inspector for MyRow",
+  "secondLabel" : "// get the object inspector for MyRow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 47775,
+  "secondPos" : 52528,
+  "firstEndPos" : 47812,
+  "secondEndPos" : 52565
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -81222,6 +81508,17 @@
   "secondPos" : 52955,
   "firstEndPos" : 48203,
   "secondEndPos" : 52956
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the orc file to the mock file system",
+  "secondLabel" : "// write the orc file to the mock file system",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 48211,
+  "secondPos" : 52964,
+  "firstEndPos" : 48256,
+  "secondEndPos" : 53009
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -82300,6 +82597,17 @@
   "secondPos" : 53425,
   "firstEndPos" : 48679,
   "secondEndPos" : 53432
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call getsplits",
+  "secondLabel" : "// call getsplits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 48688,
+  "secondPos" : 53441,
+  "firstEndPos" : 48705,
+  "secondEndPos" : 53458
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -83940,6 +84248,17 @@
   "firstEndPos" : 49525,
   "secondEndPos" : 54278
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 49508,
+  "secondPos" : 54261,
+  "firstEndPos" : 49515,
+  "secondEndPos" : 54268
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Exception",
@@ -84071,6 +84390,17 @@
   "secondPos" : 54388,
   "firstEndPos" : 51370,
   "secondEndPos" : 56123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get the object inspector for MyRow",
+  "secondLabel" : "// get the object inspector for MyRow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 49641,
+  "secondPos" : 54394,
+  "firstEndPos" : 49678,
+  "secondEndPos" : 54431
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -84544,6 +84874,17 @@
   "secondPos" : 54821,
   "firstEndPos" : 50069,
   "secondEndPos" : 54822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the orc file to the mock file system",
+  "secondLabel" : "// write the orc file to the mock file system",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50077,
+  "secondPos" : 54830,
+  "firstEndPos" : 50122,
+  "secondEndPos" : 54875
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -85622,6 +85963,17 @@
   "secondPos" : 55290,
   "firstEndPos" : 50544,
   "secondEndPos" : 55297
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call getsplits",
+  "secondLabel" : "// call getsplits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 50553,
+  "secondPos" : 55306,
+  "firstEndPos" : 50570,
+  "secondEndPos" : 55323
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -87295,6 +87647,17 @@
   "firstEndPos" : 51363,
   "secondEndPos" : 56116
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test acid with vectorization, no combine",
+  "secondLabel" : "// test acid with vectorization, no combine",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 51374,
+  "secondPos" : 56127,
+  "firstEndPos" : 51417,
+  "secondEndPos" : 56170
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -87701,6 +88064,17 @@
   "secondPos" : 56461,
   "firstEndPos" : 51709,
   "secondEndPos" : 56462
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the orc file to the mock file system",
+  "secondLabel" : "// write the orc file to the mock file system",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 51717,
+  "secondPos" : 56470,
+  "firstEndPos" : 51762,
+  "secondEndPos" : 56515
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -88966,6 +89340,17 @@
   "secondPos" : 57046,
   "firstEndPos" : 52300,
   "secondEndPos" : 57053
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call getsplits",
+  "secondLabel" : "// call getsplits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 52309,
+  "secondPos" : 57062,
+  "firstEndPos" : 52326,
+  "secondEndPos" : 57079
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -93708,6 +94093,17 @@
   "firstEndPos" : 54783,
   "secondEndPos" : 59536
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test non-vectorized, non-acid, combine",
+  "secondLabel" : "// test non-vectorized, non-acid, combine",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 54794,
+  "secondPos" : 59547,
+  "firstEndPos" : 54835,
+  "secondEndPos" : 59588
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -93839,6 +94235,17 @@
   "secondPos" : 59690,
   "firstEndPos" : 57734,
   "secondEndPos" : 62487
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get the object inspector for MyRow",
+  "secondLabel" : "// get the object inspector for MyRow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 54943,
+  "secondPos" : 59696,
+  "firstEndPos" : 54980,
+  "secondEndPos" : 59733
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -94312,6 +94719,17 @@
   "secondPos" : 60122,
   "firstEndPos" : 55370,
   "secondEndPos" : 60123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the orc file to the mock file system",
+  "secondLabel" : "// write the orc file to the mock file system",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 55378,
+  "secondPos" : 60131,
+  "firstEndPos" : 55423,
+  "secondEndPos" : 60176
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -96612,6 +97030,17 @@
   "firstEndPos" : 56382,
   "secondEndPos" : 61135
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call getsplits",
+  "secondLabel" : "// call getsplits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56391,
+  "secondPos" : 61144,
+  "firstEndPos" : 56408,
+  "secondEndPos" : 61161
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -97128,6 +97557,17 @@
   "secondPos" : 61482,
   "firstEndPos" : 56730,
   "secondEndPos" : 61483
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check split",
+  "secondLabel" : "// check split",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 56738,
+  "secondPos" : 61491,
+  "firstEndPos" : 56752,
+  "secondEndPos" : 61505
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -98152,6 +98592,28 @@
   "firstEndPos" : 57136,
   "secondEndPos" : 61889
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hadoop-1 gets 3 and hadoop-2 gets 0. *sigh*",
+  "secondLabel" : "// hadoop-1 gets 3 and hadoop-2 gets 0. *sigh*",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57144,
+  "secondPos" : 61897,
+  "firstEndPos" : 57190,
+  "secondEndPos" : 61943
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// best answer would be 1.",
+  "secondLabel" : "// best answer would be 1.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57195,
+  "secondPos" : 61948,
+  "firstEndPos" : 57221,
+  "secondEndPos" : 61974
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -98294,6 +98756,17 @@
   "secondPos" : 62016,
   "firstEndPos" : 57269,
   "secondEndPos" : 62022
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// read split",
+  "secondLabel" : "// read split",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57277,
+  "secondPos" : 62030,
+  "firstEndPos" : 57290,
+  "secondEndPos" : 62043
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -99307,6 +99780,17 @@
   "firstEndPos" : 57727,
   "secondEndPos" : 62480
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test non-vectorized, acid, combine",
+  "secondLabel" : "// test non-vectorized, acid, combine",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 57738,
+  "secondPos" : 62491,
+  "firstEndPos" : 57775,
+  "secondEndPos" : 62528
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -99405,6 +99889,17 @@
   "secondPos" : 62605,
   "firstEndPos" : 61783,
   "secondEndPos" : 66536
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get the object inspector for MyRow",
+  "secondLabel" : "// get the object inspector for MyRow",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 57858,
+  "secondPos" : 62611,
+  "firstEndPos" : 57895,
+  "secondEndPos" : 62648
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -100011,6 +100506,17 @@
   "firstEndPos" : 58355,
   "secondEndPos" : 63108
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write the orc file to the mock file system",
+  "secondLabel" : "// write the orc file to the mock file system",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58363,
+  "secondPos" : 63116,
+  "firstEndPos" : 58408,
+  "secondEndPos" : 63161
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -100582,6 +101088,17 @@
   "secondPos" : 63337,
   "firstEndPos" : 58585,
   "secondEndPos" : 63338
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write a base file in partition 0",
+  "secondLabel" : "// write a base file in partition 0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 58600,
+  "secondPos" : 63353,
+  "firstEndPos" : 58635,
+  "secondEndPos" : 63388
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -101749,6 +102266,17 @@
   "firstEndPos" : 59138,
   "secondEndPos" : 63891
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write a delta file in partition 0",
+  "secondLabel" : "// write a delta file in partition 0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 59147,
+  "secondPos" : 63900,
+  "firstEndPos" : 59183,
+  "secondEndPos" : 63936
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -102893,6 +103421,17 @@
   "firstEndPos" : 59652,
   "secondEndPos" : 64405
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write three files in partition 1",
+  "secondLabel" : "// write three files in partition 1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 59661,
+  "secondPos" : 64414,
+  "firstEndPos" : 59696,
+  "secondEndPos" : 64449
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -103970,6 +104509,17 @@
   "secondPos" : 64921,
   "firstEndPos" : 60175,
   "secondEndPos" : 64928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// call getsplits",
+  "secondLabel" : "// call getsplits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 60190,
+  "secondPos" : 64943,
+  "firstEndPos" : 60207,
+  "secondEndPos" : 64960
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

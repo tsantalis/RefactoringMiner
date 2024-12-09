@@ -32,6 +32,17 @@
   "firstEndPos" : 41,
   "secondEndPos" : 41
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "secondLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 44,
+  "secondPos" : 44,
+  "firstEndPos" : 724,
+  "secondEndPos" : 724
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -11912,6 +11923,17 @@
   "firstEndPos" : 7718,
   "secondEndPos" : 7748
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7654,
+  "secondPos" : 7684,
+  "firstEndPos" : 7660,
+  "secondEndPos" : 7690
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "theOldName",
@@ -11944,6 +11966,17 @@
   "secondPos" : 7755,
   "firstEndPos" : 7789,
   "secondEndPos" : 7819
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7725,
+  "secondPos" : 7755,
+  "firstEndPos" : 7731,
+  "secondEndPos" : 7761
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11978,6 +12011,17 @@
   "firstEndPos" : 7915,
   "secondEndPos" : 7945
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7796,
+  "secondPos" : 7826,
+  "firstEndPos" : 7802,
+  "secondEndPos" : 7832
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "theAllowNeitherColumnToExist",
@@ -12010,6 +12054,17 @@
   "secondPos" : 7952,
   "firstEndPos" : 8230,
   "secondEndPos" : 8260
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7922,
+  "secondPos" : 7952,
+  "firstEndPos" : 7928,
+  "secondEndPos" : 7958
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12891,6 +12946,17 @@
   "firstEndPos" : 8862,
   "secondEndPos" : 8892
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8818,
+  "secondPos" : 8848,
+  "firstEndPos" : 8824,
+  "secondEndPos" : 8854
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "theFkName",
@@ -12923,6 +12989,17 @@
   "secondPos" : 8899,
   "firstEndPos" : 8945,
   "secondEndPos" : 8975
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8869,
+  "secondPos" : 8899,
+  "firstEndPos" : 8875,
+  "secondEndPos" : 8905
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

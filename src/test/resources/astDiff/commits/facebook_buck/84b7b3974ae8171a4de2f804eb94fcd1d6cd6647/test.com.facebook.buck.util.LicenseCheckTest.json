@@ -10,6 +10,17 @@
   "firstEndPos" : 3424,
   "secondEndPos" : 3433
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2013-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2013-present Facebook, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\"); you may\n * not use this file except in compliance with the License. You may obtain\n * a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the\n * License for the specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 605,
+  "secondEndPos" : 605
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -362,6 +373,28 @@
   "firstEndPos" : 1103,
   "secondEndPos" : 1103
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Files where we're okay with the license not being the normal Facebook apache one. We also",
+  "secondLabel" : "// Files where we're okay with the license not being the normal Facebook apache one. We also",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1109,
+  "secondPos" : 1109,
+  "firstEndPos" : 1201,
+  "secondEndPos" : 1201
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// exclude all files under \"test/**/testdata/\"",
+  "secondLabel" : "// exclude all files under \"test/**/testdata/\"",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1204,
+  "secondPos" : 1204,
+  "firstEndPos" : 1250,
+  "secondEndPos" : 1250
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -526,6 +559,17 @@
   "secondPos" : 1330,
   "firstEndPos" : 1332,
   "secondEndPos" : 1332
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Because it's not originally our code.",
+  "secondLabel" : "// Because it's not originally our code.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1340,
+  "secondPos" : 1340,
+  "firstEndPos" : 1380,
+  "secondEndPos" : 1380
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -1142,6 +1186,39 @@
   "secondPos" : 1934,
   "firstEndPos" : 1932,
   "secondEndPos" : 1941
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(simons): This is very lame.",
+  "secondLabel" : "// TODO(simons): This is very lame.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1942,
+  "secondPos" : 1951,
+  "firstEndPos" : 1977,
+  "secondEndPos" : 1986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The newline character doesn't match \"\\w\", \"\\\\n\" so do a non-greedy match until the next",
+  "secondLabel" : "// The newline character doesn't match \"\\w\", \"\\\\n\" so do a non-greedy match until the next",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 1986,
+  "secondPos" : 1995,
+  "firstEndPos" : 2076,
+  "secondEndPos" : 2085
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// part of the copyright.",
+  "secondLabel" : "// part of the copyright.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 2085,
+  "secondPos" : 2094,
+  "firstEndPos" : 2110,
+  "secondEndPos" : 2119
 }, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
@@ -2033,6 +2110,17 @@
   "secondPos" : 2734,
   "firstEndPos" : 2727,
   "secondEndPos" : 2736
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ignore dangling symlinks.",
+  "secondLabel" : "// Ignore dangling symlinks.",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 2738,
+  "secondPos" : 2747,
+  "firstEndPos" : 2766,
+  "secondEndPos" : 2775
 }, {
   "firstType" : "PrefixExpression",
   "secondType" : "PrefixExpression",

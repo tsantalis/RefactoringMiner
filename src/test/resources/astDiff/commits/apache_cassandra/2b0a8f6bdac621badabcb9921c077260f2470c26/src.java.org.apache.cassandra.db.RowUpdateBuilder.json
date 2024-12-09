@@ -10,6 +10,17 @@
   "firstEndPos" : 14773,
   "secondEndPos" : 15087
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1737,6 +1748,28 @@
   "firstEndPos" : 2372,
   "secondEndPos" : 2372
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note that the created mutation may get further update later on, so we don't use the ctor that create a singletonMap",
+  "secondLabel" : "// note that the created mutation may get further update later on, so we don't use the ctor that create a singletonMap",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2384,
+  "secondPos" : 2384,
+  "firstEndPos" : 2502,
+  "secondEndPos" : 2502
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// underneath (this class if for convenience, not performance)",
+  "secondLabel" : "// underneath (this class if for convenience, not performance)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2511,
+  "secondPos" : 2511,
+  "firstEndPos" : 2573,
+  "secondEndPos" : 2573
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2881,6 +2914,17 @@
   "firstEndPos" : 3324,
   "secondEndPos" : 3324
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a CQL table, add the \"row marker\"",
+  "secondLabel" : "// If a CQL table, add the \"row marker\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3336,
+  "secondPos" : 3336,
+  "firstEndPos" : 3375,
+  "secondEndPos" : 3375
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3397,6 +3441,17 @@
   "secondPos" : 3785,
   "firstEndPos" : 4041,
   "secondEndPos" : 4041
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we don't force people to call clustering() if the table has no clustering, so call it ourselves",
+  "secondLabel" : "// we don't force people to call clustering() if the table has no clustering, so call it ourselves",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3799,
+  "secondPos" : 3799,
+  "firstEndPos" : 3897,
+  "secondEndPos" : 3897
 }, {
   "firstType" : "AssertStatement",
   "secondType" : "AssertStatement",
@@ -6367,6 +6422,17 @@
   "secondPos" : 5980,
   "firstEndPos" : 5984,
   "secondEndPos" : 5984
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This must be called before any addition or deletion if used.",
+  "secondLabel" : "// This must be called before any addition or deletion if used.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5998,
+  "secondPos" : 5998,
+  "firstEndPos" : 6061,
+  "secondEndPos" : 6061
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -10305,6 +10371,28 @@
   "secondPos" : 8592,
   "firstEndPos" : 8294,
   "secondEndPos" : 8608
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note that the created mutation may get further update later on, so we don't use the ctor that create a singletonMap",
+  "secondLabel" : "// note that the created mutation may get further update later on, so we don't use the ctor that create a singletonMap",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8305,
+  "secondPos" : 8619,
+  "firstEndPos" : 8423,
+  "secondEndPos" : 8737
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// underneath (this class if for convenience, not performance)",
+  "secondLabel" : "// underneath (this class if for convenience, not performance)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8432,
+  "secondPos" : 8746,
+  "firstEndPos" : 8494,
+  "secondEndPos" : 8808
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -16641,6 +16729,17 @@
   "secondPos" : 12375,
   "firstEndPos" : 12320,
   "secondEndPos" : 12634
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See UpdateParameters.addCounter()",
+  "secondLabel" : "// See UpdateParameters.addCounter()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12075,
+  "secondPos" : 12389,
+  "firstEndPos" : 12111,
+  "secondEndPos" : 12425
 }, {
   "firstType" : "AssertStatement",
   "secondType" : "AssertStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 13664,
   "secondEndPos" : 13657
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2015 MongoDB, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *  http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2015 MongoDB, Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *  http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 593,
+  "secondEndPos" : 593
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -713,6 +724,17 @@
   "secondPos" : 1780,
   "firstEndPos" : 1814,
   "secondEndPos" : 1807
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See https://github.com/mongodb/specifications/tree/master/source/crud/tests",
+  "secondLabel" : "// See https://github.com/mongodb/specifications/tree/master/source/crud/tests",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 1817,
+  "secondPos" : 1810,
+  "firstEndPos" : 1895,
+  "secondEndPos" : 1888
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -4718,6 +4740,17 @@
   "firstEndPos" : 4157,
   "secondEndPos" : 4150
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We don't return any id's for insert commands",
+  "secondLabel" : "// We don't return any id's for insert commands",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4074,
+  "secondPos" : 4067,
+  "firstEndPos" : 4121,
+  "secondEndPos" : 4114
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4970,6 +5003,17 @@
   "secondPos" : 4322,
   "firstEndPos" : 4453,
   "secondEndPos" : 4446
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pre 3.0 versions of MongoDB return an empty document rather than a null",
+  "secondLabel" : "// Pre 3.0 versions of MongoDB return an empty document rather than a null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4343,
+  "secondPos" : 4336,
+  "firstEndPos" : 4417,
+  "secondEndPos" : 4410
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -8501,6 +8545,17 @@
   "secondPos" : 6593,
   "firstEndPos" : 6601,
   "secondEndPos" : 6594
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ModifiedCount is not accessible pre 2.6",
+  "secondLabel" : "// ModifiedCount is not accessible pre 2.6",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6606,
+  "secondPos" : 6599,
+  "firstEndPos" : 6648,
+  "secondEndPos" : 6641
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14859,6 +14914,17 @@
   "secondPos" : 10134,
   "firstEndPos" : 10142,
   "secondEndPos" : 10135
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in 2.4 the server can ignore the supplied _id and creates an ObjectID",
+  "secondLabel" : "// in 2.4 the server can ignore the supplied _id and creates an ObjectID",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10147,
+  "secondPos" : 10140,
+  "firstEndPos" : 10219,
+  "secondEndPos" : 10212
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

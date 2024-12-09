@@ -10,6 +10,17 @@
   "firstEndPos" : 14764,
   "secondEndPos" : 14840
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2014 The Linux Foundation. All rights reserved.\n * Not a Contribution.\n * Copyright (C) 2012 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2014 The Linux Foundation. All rights reserved.\n * Not a Contribution.\n * Copyright (C) 2012 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 707,
+  "secondEndPos" : 707
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1869,6 +1880,17 @@
   "firstEndPos" : 2526,
   "secondEndPos" : 2526
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//subId updated, handle sub info changed.",
+  "secondLabel" : "//subId updated, handle sub info changed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2544,
+  "secondPos" : 2544,
+  "firstEndPos" : 2585,
+  "secondEndPos" : 2585
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2352,6 +2374,17 @@
   "secondPos" : 2921,
   "firstEndPos" : 3040,
   "secondEndPos" : 3040
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//display name changed, handle sub info changed.",
+  "secondLabel" : "//display name changed, handle sub info changed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2939,
+  "secondPos" : 2939,
+  "firstEndPos" : 2987,
+  "secondEndPos" : 2987
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4806,6 +4839,17 @@
   "firstEndPos" : 5117,
   "secondEndPos" : 5117
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SIM PIN doesn't have a timed lockout",
+  "secondLabel" : "// SIM PIN doesn't have a timed lockout",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5050,
+  "secondPos" : 5050,
+  "firstEndPos" : 5089,
+  "secondEndPos" : 5089
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -5653,6 +5697,17 @@
   "firstEndPos" : 5687,
   "secondEndPos" : 5687
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// don't show ownerinfo/charging status by default",
+  "secondLabel" : "// don't show ownerinfo/charging status by default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5690,
+  "secondPos" : 5690,
+  "firstEndPos" : 5740,
+  "secondEndPos" : 5740
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6357,6 +6412,17 @@
   "firstEndPos" : 6332,
   "secondEndPos" : 6332
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dismiss the dialog.",
+  "secondLabel" : "// dismiss the dialog.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6343,
+  "secondPos" : 6343,
+  "firstEndPos" : 6365,
+  "secondEndPos" : 6365
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6686,6 +6752,17 @@
   "secondPos" : 6623,
   "firstEndPos" : 6812,
   "secondEndPos" : 6812
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dismiss the dialog.",
+  "secondLabel" : "// dismiss the dialog.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6633,
+  "secondPos" : 6633,
+  "firstEndPos" : 6655,
+  "secondEndPos" : 6655
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10988,6 +11065,17 @@
   "firstEndPos" : 10227,
   "secondEndPos" : 10303
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise, display a message to the user, and don't submit.",
+  "secondLabel" : "// otherwise, display a message to the user, and don't submit.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9972,
+  "secondPos" : 10048,
+  "firstEndPos" : 10034,
+  "secondEndPos" : 10110
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12143,6 +12231,17 @@
   "firstEndPos" : 11993,
   "secondEndPos" : 12069
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show message",
+  "secondLabel" : "// show message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11149,
+  "secondPos" : 11225,
+  "firstEndPos" : 11164,
+  "secondEndPos" : 11240
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12341,6 +12440,17 @@
   "firstEndPos" : 11624,
   "secondEndPos" : 11700
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is getting critical - show dialog",
+  "secondLabel" : "// this is getting critical - show dialog",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11448,
+  "secondPos" : 11524,
+  "firstEndPos" : 11489,
+  "secondEndPos" : 11565
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12439,6 +12549,17 @@
   "secondPos" : 11706,
   "firstEndPos" : 11959,
   "secondEndPos" : 12035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// show message",
+  "secondLabel" : "// show message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11672,
+  "secondPos" : 11748,
+  "firstEndPos" : 11687,
+  "secondEndPos" : 11763
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12582,6 +12703,28 @@
   "secondPos" : 12075,
   "firstEndPos" : 12367,
   "secondEndPos" : 12443
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"PIN operation failed!\" - no idea what this was and no way to",
+  "secondLabel" : "// \"PIN operation failed!\" - no idea what this was and no way to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12037,
+  "secondPos" : 12113,
+  "firstEndPos" : 12101,
+  "secondEndPos" : 12177
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// find out. :/",
+  "secondLabel" : "// find out. :/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12138,
+  "secondPos" : 12214,
+  "firstEndPos" : 12153,
+  "secondEndPos" : 12229
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12990,6 +13133,17 @@
   "firstEndPos" : 12680,
   "secondEndPos" : 12756
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* animate */",
+  "secondLabel" : "/* animate */",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 12681,
+  "secondPos" : 12757,
+  "firstEndPos" : 12694,
+  "secondEndPos" : 12770
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13231,6 +13385,17 @@
   "secondPos" : 13105,
   "firstEndPos" : 13053,
   "secondEndPos" : 13129
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// noop.",
+  "secondLabel" : "// noop.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13039,
+  "secondPos" : 13115,
+  "firstEndPos" : 13047,
+  "secondEndPos" : 13123
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

@@ -32,6 +32,17 @@
   "firstEndPos" : 39,
   "secondEndPos" : 39
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "secondLabel" : "/*-\n * #%L\n * HAPI FHIR JPA Server - Migration\n * %%\n * Copyright (C) 2014 - 2019 University Health Network\n * %%\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n * #L%\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 42,
+  "secondPos" : 42,
+  "firstEndPos" : 722,
+  "secondEndPos" : 722
+}, {
   "firstType" : "ImportDeclaration",
   "secondType" : "ImportDeclaration",
   "firstLabel" : "",
@@ -2463,6 +2474,17 @@
   "firstEndPos" : 2471,
   "secondEndPos" : 2471
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2412,
+  "secondPos" : 2412,
+  "firstEndPos" : 2418,
+  "secondEndPos" : 2418
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "theTableName",
@@ -2496,6 +2518,17 @@
   "firstEndPos" : 2513,
   "secondEndPos" : 2513
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2476,
+  "secondPos" : 2476,
+  "firstEndPos" : 2482,
+  "secondEndPos" : 2482
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "theSql",
@@ -2528,6 +2561,17 @@
   "secondPos" : 2518,
   "firstEndPos" : 2565,
   "secondEndPos" : 2565
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2518,
+  "secondPos" : 2518,
+  "firstEndPos" : 2524,
+  "secondEndPos" : 2524
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

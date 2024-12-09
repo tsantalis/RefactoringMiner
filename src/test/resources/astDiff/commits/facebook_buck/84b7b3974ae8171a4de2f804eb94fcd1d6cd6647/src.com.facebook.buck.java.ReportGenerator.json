@@ -2364,6 +2364,17 @@
   "firstEndPos" : 2932,
   "secondEndPos" : 2941
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2913,
+  "secondPos" : 2922,
+  "firstEndPos" : 2920,
+  "secondEndPos" : 2929
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -2441,6 +2452,28 @@
   "firstEndPos" : 3725,
   "secondEndPos" : 3734
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Read the jacoco.exec file. Multiple data files could be merged",
+  "secondLabel" : "// Read the jacoco.exec file. Multiple data files could be merged",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3012,
+  "secondPos" : 3021,
+  "firstEndPos" : 3077,
+  "secondEndPos" : 3086
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// at this point",
+  "secondLabel" : "// at this point",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3094,
+  "secondPos" : 3103,
+  "firstEndPos" : 3110,
+  "secondEndPos" : 3119
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2473,6 +2506,72 @@
   "secondPos" : 3136,
   "firstEndPos" : 3144,
   "secondEndPos" : 3153
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Run the structure analyzer on a single class folder to build up",
+  "secondLabel" : "// Run the structure analyzer on a single class folder to build up",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3165,
+  "secondPos" : 3174,
+  "firstEndPos" : 3231,
+  "secondEndPos" : 3240
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the coverage model. The process would be similar if your classes",
+  "secondLabel" : "// the coverage model. The process would be similar if your classes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3248,
+  "secondPos" : 3257,
+  "firstEndPos" : 3315,
+  "secondEndPos" : 3324
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// were in a jar file. Typically you would create a bundle for each",
+  "secondLabel" : "// were in a jar file. Typically you would create a bundle for each",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3332,
+  "secondPos" : 3341,
+  "firstEndPos" : 3399,
+  "secondEndPos" : 3408
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// class folder and each jar you want in your report. If you have",
+  "secondLabel" : "// class folder and each jar you want in your report. If you have",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3416,
+  "secondPos" : 3425,
+  "firstEndPos" : 3481,
+  "secondEndPos" : 3490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// more than one bundle you will need to add a grouping node to your",
+  "secondLabel" : "// more than one bundle you will need to add a grouping node to your",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3498,
+  "secondPos" : 3507,
+  "firstEndPos" : 3566,
+  "secondEndPos" : 3575
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// report",
+  "secondLabel" : "// report",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3583,
+  "secondPos" : 3592,
+  "firstEndPos" : 3592,
+  "secondEndPos" : 3601
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2748,6 +2847,28 @@
   "secondPos" : 3851,
   "firstEndPos" : 5960,
   "secondEndPos" : 5969
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create a concrete report visitor based on some supplied",
+  "secondLabel" : "// Create a concrete report visitor based on some supplied",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3861,
+  "secondPos" : 3870,
+  "firstEndPos" : 3919,
+  "secondEndPos" : 3928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// configuration. In this case we use the defaults",
+  "secondLabel" : "// configuration. In this case we use the defaults",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3936,
+  "secondPos" : 3945,
+  "firstEndPos" : 3986,
+  "secondEndPos" : 3995
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3915,6 +4036,39 @@
   "firstEndPos" : 5148,
   "secondEndPos" : 5157
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Initialize the report with all of the execution and session",
+  "secondLabel" : "// Initialize the report with all of the execution and session",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5186,
+  "secondPos" : 5195,
+  "firstEndPos" : 5248,
+  "secondEndPos" : 5257
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// information. At this point the report doesn't know about the",
+  "secondLabel" : "// information. At this point the report doesn't know about the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5265,
+  "secondPos" : 5274,
+  "firstEndPos" : 5328,
+  "secondEndPos" : 5337
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// structure of the report being created",
+  "secondLabel" : "// structure of the report being created",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5345,
+  "secondPos" : 5354,
+  "firstEndPos" : 5385,
+  "secondEndPos" : 5394
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4135,6 +4289,28 @@
   "firstEndPos" : 5551,
   "secondEndPos" : 5560
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Populate the report structure with the bundle coverage information.",
+  "secondLabel" : "// Populate the report structure with the bundle coverage information.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5573,
+  "secondPos" : 5582,
+  "firstEndPos" : 5643,
+  "secondEndPos" : 5652
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Call visitGroup if you need groups in your report.",
+  "secondLabel" : "// Call visitGroup if you need groups in your report.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5660,
+  "secondPos" : 5669,
+  "firstEndPos" : 5713,
+  "secondEndPos" : 5722
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4233,6 +4409,28 @@
   "secondPos" : 5775,
   "firstEndPos" : 5789,
   "secondEndPos" : 5798
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Signal end of structure information to allow report to write all",
+  "secondLabel" : "// Signal end of structure information to allow report to write all",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5811,
+  "secondPos" : 5820,
+  "firstEndPos" : 5878,
+  "secondEndPos" : 5887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// information out",
+  "secondLabel" : "// information out",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5895,
+  "secondPos" : 5904,
+  "firstEndPos" : 5913,
+  "secondEndPos" : 5922
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5950,6 +6148,17 @@
   "firstEndPos" : 7441,
   "secondEndPos" : 7450
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7264,
+  "secondPos" : 7273,
+  "firstEndPos" : 7270,
+  "secondEndPos" : 7279
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "args",
@@ -5993,6 +6202,17 @@
   "secondPos" : 7462,
   "firstEndPos" : 7472,
   "secondEndPos" : 7481
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7453,
+  "secondPos" : 7462,
+  "firstEndPos" : 7460,
+  "secondEndPos" : 7469
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

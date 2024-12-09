@@ -10,6 +10,17 @@
   "firstEndPos" : 28634,
   "secondEndPos" : 29549
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2077,6 +2088,17 @@
   "secondPos" : 5384,
   "firstEndPos" : 5358,
   "secondEndPos" : 5398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO Make OrcInputFormat.SARG_PUSHDOWN visible",
+  "secondLabel" : "//TODO Make OrcInputFormat.SARG_PUSHDOWN visible",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5366,
+  "secondPos" : 5406,
+  "firstEndPos" : 5414,
+  "secondEndPos" : 5454
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -14178,6 +14200,17 @@
   "firstEndPos" : 13548,
   "secondEndPos" : 13588
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Bug in setSearchArgument which always expects READ_COLUMN_NAMES_CONF_STR to be set",
+  "secondLabel" : "// Bug in setSearchArgument which always expects READ_COLUMN_NAMES_CONF_STR to be set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13246,
+  "secondPos" : 13286,
+  "firstEndPos" : 13331,
+  "secondEndPos" : 13371
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14540,6 +14573,17 @@
   "secondPos" : 13665,
   "firstEndPos" : 13915,
   "secondEndPos" : 13955
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Bug in setSearchArgument which always expects READ_COLUMN_NAMES_CONF_STR to be set",
+  "secondLabel" : "// Bug in setSearchArgument which always expects READ_COLUMN_NAMES_CONF_STR to be set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13643,
+  "secondPos" : 13683,
+  "firstEndPos" : 13728,
+  "secondEndPos" : 13768
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -22956,6 +23000,17 @@
   "firstEndPos" : 18324,
   "secondEndPos" : 18391
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// still null means case of multiple load store",
+  "secondLabel" : "// still null means case of multiple load store",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18339,
+  "secondPos" : 18406,
+  "firstEndPos" : 18386,
+  "secondEndPos" : 18453
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -28521,6 +28576,17 @@
   "secondPos" : 22964,
   "firstEndPos" : 22057,
   "secondEndPos" : 22972
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Skip DataType.BYTEARRAY, DataType.TUPLE, DataType.MAP and DataType.BAG",
+  "secondLabel" : "// Skip DataType.BYTEARRAY, DataType.TUPLE, DataType.MAP and DataType.BAG",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 22074,
+  "secondPos" : 22989,
+  "firstEndPos" : 22147,
+  "secondEndPos" : 23062
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",

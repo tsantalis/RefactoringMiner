@@ -10,6 +10,17 @@
   "firstEndPos" : 16135,
   "secondEndPos" : 12671
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2000-2012 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2000-2012 JetBrains s.r.o.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 600,
+  "secondEndPos" : 600
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -636,6 +647,17 @@
   "secondPos" : 1893,
   "firstEndPos" : 2196,
   "secondEndPos" : 1942
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2147,
+  "secondPos" : 1893,
+  "firstEndPos" : 2154,
+  "secondEndPos" : 1900
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3552,6 +3574,17 @@
   "firstEndPos" : 3850,
   "secondEndPos" : 3316
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// IDEA-123132, let's try again",
+  "secondLabel" : "// IDEA-123132, let's try again",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3858,
+  "secondPos" : 3324,
+  "firstEndPos" : 3889,
+  "secondEndPos" : 3355
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -4244,6 +4277,17 @@
   "secondPos" : 3770,
   "firstEndPos" : 4399,
   "secondEndPos" : 3865
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection BusyWait",
+  "secondLabel" : "//noinspection BusyWait",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4318,
+  "secondPos" : 3784,
+  "firstEndPos" : 4341,
+  "secondEndPos" : 3807
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6588,6 +6632,17 @@
   "firstEndPos" : 5898,
   "secondEndPos" : 5364
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this will pre-load all FS optimizations",
+  "secondLabel" : "// this will pre-load all FS optimizations",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5901,
+  "secondPos" : 5367,
+  "firstEndPos" : 5943,
+  "secondEndPos" : 5409
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8238,6 +8293,17 @@
   "firstEndPos" : 7017,
   "secondEndPos" : 6483
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// must skip \"has-work-to-do\" flag",
+  "secondLabel" : "// must skip \"has-work-to-do\" flag",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7020,
+  "secondPos" : 6486,
+  "firstEndPos" : 7054,
+  "secondEndPos" : 6520
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8897,6 +8963,17 @@
   "secondPos" : 6976,
   "firstEndPos" : 7518,
   "secondEndPos" : 6984
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// preloading target configurations",
+  "secondLabel" : "// preloading target configurations",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7545,
+  "secondPos" : 7011,
+  "firstEndPos" : 7580,
+  "secondEndPos" : 7046
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9689,6 +9766,17 @@
   "secondPos" : 7532,
   "firstEndPos" : 8067,
   "secondEndPos" : 7533
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// just failed to preload the project, the situation will be handled later, when real build starts",
+  "secondLabel" : "// just failed to preload the project, the situation will be handled later, when real build starts",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8080,
+  "secondPos" : 7546,
+  "firstEndPos" : 8178,
+  "secondEndPos" : 7644
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12792,6 +12880,17 @@
   "firstEndPos" : 10651,
   "secondEndPos" : 10117
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection finally",
+  "secondLabel" : "//noinspection finally",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10307,
+  "secondPos" : 9773,
+  "firstEndPos" : 10329,
+  "secondEndPos" : 9795
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -14651,6 +14750,17 @@
   "firstEndPos" : 12138,
   "secondEndPos" : 11604
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to clear 'interrupted' flag",
+  "secondLabel" : "// to clear 'interrupted' flag",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12142,
+  "secondPos" : 11608,
+  "firstEndPos" : 12172,
+  "secondEndPos" : 11638
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15772,6 +15882,17 @@
   "secondPos" : 12407,
   "firstEndPos" : 13164,
   "secondEndPos" : 12630
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection finally",
+  "secondLabel" : "//noinspection finally",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12955,
+  "secondPos" : 12421,
+  "firstEndPos" : 12977,
+  "secondEndPos" : 12443
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -17356,6 +17477,28 @@
   "secondPos" : 2169,
   "firstEndPos" : 13934,
   "secondEndPos" : 2200
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection UseOfSystemOutOrSystemErr",
+  "secondLabel" : "//noinspection UseOfSystemOutOrSystemErr",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13943,
+  "secondPos" : 2103,
+  "firstEndPos" : 13983,
+  "secondEndPos" : 2143
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//noinspection UseOfSystemOutOrSystemErr",
+  "secondLabel" : "//noinspection UseOfSystemOutOrSystemErr",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13943,
+  "secondPos" : 2209,
+  "firstEndPos" : 13983,
+  "secondEndPos" : 2249
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

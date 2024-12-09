@@ -3596,6 +3596,17 @@
   "firstEndPos" : 5080,
   "secondEndPos" : 5080
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5026,
+  "secondPos" : 5026,
+  "firstEndPos" : 5031,
+  "secondEndPos" : 5031
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -3661,6 +3672,17 @@
   "secondPos" : 5134,
   "firstEndPos" : 5176,
   "secondEndPos" : 5176
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5134,
+  "secondPos" : 5134,
+  "firstEndPos" : 5139,
+  "secondEndPos" : 5139
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -5355,6 +5377,17 @@
   "secondPos" : 6579,
   "firstEndPos" : 6614,
   "secondEndPos" : 6614
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Hadoop property names (set by templeton logic)",
+  "secondLabel" : "//Hadoop property names (set by templeton logic)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6619,
+  "secondPos" : 6619,
+  "firstEndPos" : 6667,
+  "secondEndPos" : 6667
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8205,6 +8238,17 @@
   "firstEndPos" : 9006,
   "secondEndPos" : 9006
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8982,
+  "secondPos" : 8982,
+  "firstEndPos" : 8987,
+  "secondEndPos" : 8987
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -8392,6 +8436,17 @@
   "firstEndPos" : 9231,
   "secondEndPos" : 9231
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//load hive-site.xml from classpath",
+  "secondLabel" : "//load hive-site.xml from classpath",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9234,
+  "secondPos" : 9234,
+  "firstEndPos" : 9269,
+  "secondEndPos" : 9269
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8578,6 +8633,17 @@
   "secondPos" : 9422,
   "firstEndPos" : 9445,
   "secondEndPos" : 9445
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//each items is a \"key=value\" format",
+  "secondLabel" : "//each items is a \"key=value\" format",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9453,
+  "secondPos" : 9453,
+  "firstEndPos" : 9489,
+  "secondEndPos" : 9489
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9678,6 +9744,17 @@
   "secondPos" : 10117,
   "firstEndPos" : 10282,
   "secondEndPos" : 10282
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//make sure to escape separator char in prop values",
+  "secondLabel" : "//make sure to escape separator char in prop values",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10125,
+  "secondPos" : 10125,
+  "firstEndPos" : 10176,
+  "secondEndPos" : 10176
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11944,6 +12021,17 @@
   "secondPos" : 12256,
   "firstEndPos" : 11950,
   "secondEndPos" : 12785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//use get() to make sure variable substitution works",
+  "secondLabel" : "//use get() to make sure variable substitution works",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11439,
+  "secondPos" : 12264,
+  "firstEndPos" : 11491,
+  "secondEndPos" : 12316
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -17797,6 +17885,17 @@
   "firstEndPos" : 14623,
   "secondEndPos" : 15246
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14601,
+  "secondPos" : 15224,
+  "firstEndPos" : 14605,
+  "secondEndPos" : 15228
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -18082,6 +18181,28 @@
   "secondPos" : 15337,
   "firstEndPos" : 14729,
   "secondEndPos" : 15352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//since raw data was (possibly) escaped to make split work,",
+  "secondLabel" : "//since raw data was (possibly) escaped to make split work,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14737,
+  "secondPos" : 15360,
+  "firstEndPos" : 14796,
+  "secondEndPos" : 15419
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//now need to remove escape chars so they don't interfere with downstream processing",
+  "secondLabel" : "//now need to remove escape chars so they don't interfere with downstream processing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14801,
+  "secondPos" : 15424,
+  "firstEndPos" : 14885,
+  "secondEndPos" : 15508
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

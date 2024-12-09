@@ -1715,6 +1715,17 @@
   "firstEndPos" : 2137,
   "secondEndPos" : 2137
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Currently available schemes are:\n         * smtp\n         * smtp+tls+\n         * smtp+ssl+\n         *\n         * The following are obsolete schemes that may be found in pre-existing\n         * settings from earlier versions or that may be found when imported. We\n         * continue to recognize them and re-map them appropriately:\n         * smtp+tls\n         * smtp+ssl\n         */",
+  "secondLabel" : "/*\n         * Currently available schemes are:\n         * smtp\n         * smtp+tls+\n         * smtp+ssl+\n         *\n         * The following are obsolete schemes that may be found in pre-existing\n         * settings from earlier versions or that may be found when imported. We\n         * continue to recognize them and re-map them appropriately:\n         * smtp+tls\n         * smtp+ssl\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2149,
+  "secondPos" : 2149,
+  "firstEndPos" : 2546,
+  "secondEndPos" : 2546
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3629,6 +3640,17 @@
   "firstEndPos" : 4261,
   "secondEndPos" : 4261
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE: In SmptTransport URIs, the authType comes last!",
+  "secondLabel" : "// NOTE: In SmptTransport URIs, the authType comes last!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3839,
+  "secondPos" : 3839,
+  "firstEndPos" : 3895,
+  "secondEndPos" : 3895
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4355,6 +4377,17 @@
   "firstEndPos" : 4622,
   "secondEndPos" : 4622
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4528,
+  "secondPos" : 4528,
+  "firstEndPos" : 4534,
+  "secondEndPos" : 4534
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "server",
@@ -4387,6 +4420,17 @@
   "secondPos" : 4561,
   "firstEndPos" : 4583,
   "secondEndPos" : 4583
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4561,
+  "secondPos" : 4561,
+  "firstEndPos" : 4566,
+  "secondEndPos" : 4566
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4421,6 +4465,17 @@
   "firstEndPos" : 4729,
   "secondEndPos" : 4729
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4637,
+  "secondPos" : 4637,
+  "firstEndPos" : 4644,
+  "secondEndPos" : 4644
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " A SmtpTransport URI that holds the same information as the ",
@@ -4442,6 +4497,17 @@
   "secondPos" : 4704,
   "firstEndPos" : 4718,
   "secondEndPos" : 4718
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4704,
+  "secondPos" : 4704,
+  "firstEndPos" : 4709,
+  "secondEndPos" : 4709
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4475,6 +4541,17 @@
   "secondPos" : 4744,
   "firstEndPos" : 4801,
   "secondEndPos" : 4801
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4744,
+  "secondPos" : 4744,
+  "firstEndPos" : 4748,
+  "secondEndPos" : 4748
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -4519,6 +4596,17 @@
   "secondPos" : 4809,
   "firstEndPos" : 4845,
   "secondEndPos" : 4845
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4809,
+  "secondPos" : 4809,
+  "firstEndPos" : 4813,
+  "secondEndPos" : 4813
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -5696,6 +5784,17 @@
   "secondPos" : 5699,
   "firstEndPos" : 5724,
   "secondEndPos" : 5724
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE: authType is append at last item, in contrast to ImapStore and Pop3Store!",
+  "secondLabel" : "// NOTE: authType is append at last item, in contrast to ImapStore and Pop3Store!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5734,
+  "secondPos" : 5734,
+  "firstEndPos" : 5815,
+  "secondEndPos" : 5815
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9580,6 +9679,17 @@
   "firstEndPos" : 8760,
   "secondEndPos" : 8760
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// there are still other addresses for that host to try",
+  "secondLabel" : "// there are still other addresses for that host to try",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8649,
+  "secondPos" : 8649,
+  "firstEndPos" : 8704,
+  "secondEndPos" : 8704
+}, {
   "firstType" : "ContinueStatement",
   "secondType" : "ContinueStatement",
   "firstLabel" : "",
@@ -9667,6 +9777,28 @@
   "secondPos" : 8874,
   "firstEndPos" : 8880,
   "secondEndPos" : 8880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// connection success",
+  "secondLabel" : "// connection success",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8881,
+  "secondPos" : 8881,
+  "firstEndPos" : 8902,
+  "secondEndPos" : 8902
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// RFC 1047",
+  "secondLabel" : "// RFC 1047",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8930,
+  "secondPos" : 8930,
+  "firstEndPos" : 8941,
+  "secondEndPos" : 8941
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10041,6 +10173,17 @@
   "secondPos" : 9169,
   "firstEndPos" : 9173,
   "secondEndPos" : 9173
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Eat the banner",
+  "secondLabel" : "// Eat the banner",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9189,
+  "secondPos" : 9189,
+  "firstEndPos" : 9206,
+  "secondEndPos" : 9206
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10636,6 +10779,28 @@
   "firstEndPos" : 10140,
   "secondEndPos" : 10140
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We don't have a FQDN or the hostname contains invalid",
+  "secondLabel" : "// We don't have a FQDN or the hostname contains invalid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9553,
+  "secondPos" : 9553,
+  "firstEndPos" : 9609,
+  "secondEndPos" : 9609
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// characters (see issue 2143), so use IP address.",
+  "secondLabel" : "// characters (see issue 2143), so use IP address.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9626,
+  "secondPos" : 9626,
+  "firstEndPos" : 9676,
+  "secondEndPos" : 9676
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11031,6 +11196,17 @@
   "secondPos" : 9974,
   "firstEndPos" : 10126,
   "secondEndPos" : 10126
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the IP address is no good, set a sane default (see issue 2750).",
+  "secondLabel" : "// If the IP address is no good, set a sane default (see issue 2750).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9996,
+  "secondPos" : 9996,
+  "firstEndPos" : 10065,
+  "secondEndPos" : 10065
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12000,6 +12176,17 @@
   "firstEndPos" : 10943,
   "secondEndPos" : 10943
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                     * Now resend the EHLO. Required by RFC2487 Sec. 5.2, and more specifically,\n                     * Exim.\n                     */",
+  "secondLabel" : "/*\n                     * Now resend the EHLO. Required by RFC2487 Sec. 5.2, and more specifically,\n                     * Exim.\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10966,
+  "secondPos" : 10966,
+  "firstEndPos" : 11118,
+  "secondEndPos" : 11118
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12153,6 +12340,17 @@
   "secondPos" : 11242,
   "firstEndPos" : 11786,
   "secondEndPos" : 11786
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                     * This exception triggers a \"Certificate error\"\n                     * notification that takes the user to the incoming\n                     * server settings for review. This might be needed if\n                     * the account was configured with an obsolete\n                     * \"STARTTLS (if available)\" setting.\n                     */",
+  "secondLabel" : "/*\n                     * This exception triggers a \"Certificate error\"\n                     * notification that takes the user to the incoming\n                     * server settings for review. This might be needed if\n                     * the account was configured with an obsolete\n                     * \"STARTTLS (if available)\" setting.\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11264,
+  "secondPos" : 11264,
+  "firstEndPos" : 11631,
+  "secondEndPos" : 11631
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -14288,6 +14486,17 @@
   "firstEndPos" : 13078,
   "secondEndPos" : 13078
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                 * LOGIN is an obsolete option which is unavailable to users,\n                 * but it still may exist in a user's settings from a previous\n                 * version, or it may have been imported.\n                 */",
+  "secondLabel" : "/*\n                 * LOGIN is an obsolete option which is unavailable to users,\n                 * but it still may exist in a user's settings from a previous\n                 * version, or it may have been imported.\n                 */",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 13099,
+  "secondPos" : 13099,
+  "firstEndPos" : 13336,
+  "secondEndPos" : 13336
+}, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
   "firstLabel" : "",
@@ -14331,6 +14540,17 @@
   "secondPos" : 13386,
   "firstEndPos" : 13391,
   "secondEndPos" : 13391
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try saslAuthPlain first, because it supports UTF-8 explicitly",
+  "secondLabel" : "// try saslAuthPlain first, because it supports UTF-8 explicitly",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 13413,
+  "secondPos" : 13413,
+  "firstEndPos" : 13477,
+  "secondEndPos" : 13477
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14926,6 +15146,17 @@
   "firstEndPos" : 15075,
   "secondEndPos" : 15075
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                         * Some SMTP servers are known to provide no error\n                         * indication when a client certificate fails to\n                         * validate, other than to not offer the AUTH EXTERNAL\n                         * capability.\n                         *\n                         * So, we treat it is an error to not offer AUTH\n                         * EXTERNAL when using client certificates. That way, the\n                         * user can be notified of a problem during account setup.\n                         */",
+  "secondLabel" : "/*\n                         * Some SMTP servers are known to provide no error\n                         * indication when a client certificate fails to\n                         * validate, other than to not offer the AUTH EXTERNAL\n                         * capability.\n                         *\n                         * So, we treat it is an error to not offer AUTH\n                         * EXTERNAL when using client certificates. That way, the\n                         * user can be notified of a problem during account setup.\n                         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14407,
+  "secondPos" : 14407,
+  "firstEndPos" : 14968,
+  "secondEndPos" : 14968
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -14992,6 +15223,17 @@
   "firstEndPos" : 15102,
   "secondEndPos" : 15102
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                 * AUTOMATIC is an obsolete option which is unavailable to users,\n                 * but it still may exist in a user's settings from a previous\n                 * version, or it may have been imported.\n                 */",
+  "secondLabel" : "/*\n                 * AUTOMATIC is an obsolete option which is unavailable to users,\n                 * but it still may exist in a user's settings from a previous\n                 * version, or it may have been imported.\n                 */",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15120,
+  "secondPos" : 15120,
+  "firstEndPos" : 15361,
+  "secondEndPos" : 15361
+}, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
   "firstLabel" : "",
@@ -15046,6 +15288,17 @@
   "secondPos" : 15436,
   "firstEndPos" : 16078,
   "secondEndPos" : 16078
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try saslAuthPlain first, because it supports UTF-8 explicitly",
+  "secondLabel" : "// try saslAuthPlain first, because it supports UTF-8 explicitly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15462,
+  "secondPos" : 15462,
+  "firstEndPos" : 15526,
+  "secondEndPos" : 15526
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15530,6 +15783,17 @@
   "secondPos" : 16236,
   "firstEndPos" : 16807,
   "secondEndPos" : 16807
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n                             * We refuse to insecurely transmit the password\n                             * using the obsolete AUTOMATIC setting because of\n                             * the potential for a MITM attack. Affected users\n                             * must choose a different setting.\n                             */",
+  "secondLabel" : "/*\n                             * We refuse to insecurely transmit the password\n                             * using the obsolete AUTOMATIC setting because of\n                             * the potential for a MITM attack. Affected users\n                             * must choose a different setting.\n                             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16266,
+  "secondPos" : 16266,
+  "firstEndPos" : 16599,
+  "secondEndPos" : 16599
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -16202,6 +16466,17 @@
   "firstEndPos" : 17946,
   "secondEndPos" : 17946
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17873,
+  "secondPos" : 17873,
+  "firstEndPos" : 17879,
+  "secondEndPos" : 17879
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "host",
@@ -16235,6 +16510,17 @@
   "firstEndPos" : 18121,
   "secondEndPos" : 18121
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17961,
+  "secondPos" : 17961,
+  "firstEndPos" : 17968,
+  "secondEndPos" : 17968
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " A (possibly empty) ",
@@ -16256,6 +16542,17 @@
   "secondPos" : 17988,
   "firstEndPos" : 18014,
   "secondEndPos" : 18014
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17988,
+  "secondPos" : 17988,
+  "firstEndPos" : 17993,
+  "secondEndPos" : 17993
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -16301,6 +16598,17 @@
   "firstEndPos" : 18199,
   "secondEndPos" : 18199
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18136,
+  "secondPos" : 18136,
+  "firstEndPos" : 18143,
+  "secondEndPos" : 18143
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -16333,6 +16641,17 @@
   "secondPos" : 18207,
   "firstEndPos" : 18282,
   "secondEndPos" : 18282
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18207,
+  "secondPos" : 18207,
+  "firstEndPos" : 18214,
+  "secondEndPos" : 18214
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -16938,6 +17257,17 @@
   "secondPos" : 18538,
   "firstEndPos" : 18542,
   "secondEndPos" : 18542
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove the EHLO greeting response",
+  "secondLabel" : "// Remove the EHLO greeting response",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18557,
+  "secondPos" : 18557,
+  "firstEndPos" : 18593,
+  "secondEndPos" : 18593
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21020,6 +21350,28 @@
   "firstEndPos" : 21050,
   "secondEndPos" : 21012
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the message has attachments and our server has told us about a limit on",
+  "secondLabel" : "// If the message has attachments and our server has told us about a limit on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21072,
+  "secondPos" : 21034,
+  "firstEndPos" : 21149,
+  "secondEndPos" : 21111
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the size of messages, count the message's size before sending it",
+  "secondLabel" : "// the size of messages, count the message's size before sending it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21158,
+  "secondPos" : 21120,
+  "firstEndPos" : 21225,
+  "secondEndPos" : 21187
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22208,6 +22560,17 @@
   "firstEndPos" : 22228,
   "secondEndPos" : 22064
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We use BufferedOutputStream. So make sure to call flush() !",
+  "secondLabel" : "// We use BufferedOutputStream. So make sure to call flush() !",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22244,
+  "secondPos" : 22080,
+  "firstEndPos" : 22306,
+  "secondEndPos" : 22142
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -22317,6 +22680,17 @@
   "secondPos" : 22204,
   "firstEndPos" : 22367,
   "secondEndPos" : 22208
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// After the \"\\r\\n.\" is attempted, we may have sent the message",
+  "secondLabel" : "// After the \"\\r\\n.\" is attempted, we may have sent the message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22369,
+  "secondPos" : 22210,
+  "firstEndPos" : 22432,
+  "secondEndPos" : 22273
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25398,6 +25772,17 @@
   "firstEndPos" : 24630,
   "secondEndPos" : 24114
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Important: Send command + CRLF using just one write() call. Using\n         * multiple calls will likely result in multiple TCP packets and some\n         * SMTP servers misbehave if CR and LF arrive in separate pakets.\n         * See issue 799.\n         */",
+  "secondLabel" : "/*\n         * Important: Send command + CRLF using just one write() call. Using\n         * multiple calls will likely result in multiple TCP packets and some\n         * SMTP servers misbehave if CR and LF arrive in separate pakets.\n         * See issue 799.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24643,
+  "secondPos" : 24127,
+  "firstEndPos" : 24912,
+  "secondEndPos" : 24396
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26597,6 +26982,17 @@
   "firstEndPos" : 25511,
   "secondEndPos" : 24995
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ignore */",
+  "secondLabel" : "/* ignore */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25497,
+  "secondPos" : 24981,
+  "firstEndPos" : 25509,
+  "secondEndPos" : 24993
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -27664,6 +28060,17 @@
   "firstEndPos" : 26191,
   "secondEndPos" : 25675
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n         * Read lines as long as the length is 4 or larger, e.g. \"220-banner text here\".\n         * Shorter lines are either errors of contain only a reply code. Those cases will\n         * be handled by checkLine() below.\n         *\n         * TODO:  All responses should be checked to confirm that they start with a valid\n         * reply code, and that the reply code is appropriate for the command being executed.\n         * That means it should either be a 2xx code (generally) or a 3xx code in special cases\n         * (e.g., DATA & AUTH LOGIN commands).  Reply codes should be made available as part of\n         * the returned object.\n         */",
+  "secondLabel" : "/*\n         * Read lines as long as the length is 4 or larger, e.g. \"220-banner text here\".\n         * Shorter lines are either errors of contain only a reply code. Those cases will\n         * be handled by checkLine() below.\n         *\n         * TODO:  All responses should be checked to confirm that they start with a valid\n         * reply code, and that the reply code is appropriate for the command being executed.\n         * That means it should either be a 2xx code (generally) or a 3xx code in special cases\n         * (e.g., DATA & AUTH LOGIN commands).  Reply codes should be made available as part of\n         * the returned object.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26213,
+  "secondPos" : 25697,
+  "firstEndPos" : 26869,
+  "secondEndPos" : 26353
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27939,6 +28346,17 @@
   "firstEndPos" : 27130,
   "secondEndPos" : 26614
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Everything after the first four characters goes into the results array.",
+  "secondLabel" : "// Everything after the first four characters goes into the results array.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26994,
+  "secondPos" : 26478,
+  "firstEndPos" : 27068,
+  "secondEndPos" : 26552
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28192,6 +28610,17 @@
   "firstEndPos" : 27301,
   "secondEndPos" : 26785
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the fourth character isn't \"-\" this is the last line of the response.",
+  "secondLabel" : "// If the fourth character isn't \"-\" this is the last line of the response.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27189,
+  "secondPos" : 26673,
+  "firstEndPos" : 27264,
+  "secondEndPos" : 26748
+}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -28269,6 +28698,17 @@
   "firstEndPos" : 27329,
   "secondEndPos" : 26813
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if the reply code indicates an error.",
+  "secondLabel" : "// Check if the reply code indicates an error.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27352,
+  "secondPos" : 26836,
+  "firstEndPos" : 27398,
+  "secondEndPos" : 26882
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -28345,6 +28785,182 @@
   "secondPos" : 26924,
   "firstEndPos" : 27447,
   "secondEndPos" : 26931
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: AUTH LOGIN",
+  "secondLabel" : "//    C: AUTH LOGIN",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27457,
+  "secondPos" : 26941,
+  "firstEndPos" : 27476,
+  "secondEndPos" : 26960
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 334 VXNlcm5hbWU6",
+  "secondLabel" : "//    S: 334 VXNlcm5hbWU6",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27477,
+  "secondPos" : 26961,
+  "firstEndPos" : 27502,
+  "secondEndPos" : 26986
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: d2VsZG9u",
+  "secondLabel" : "//    C: d2VsZG9u",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27503,
+  "secondPos" : 26987,
+  "firstEndPos" : 27520,
+  "secondEndPos" : 27004
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 334 UGFzc3dvcmQ6",
+  "secondLabel" : "//    S: 334 UGFzc3dvcmQ6",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27521,
+  "secondPos" : 27005,
+  "firstEndPos" : 27546,
+  "secondEndPos" : 27030
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: dzNsZDBu",
+  "secondLabel" : "//    C: dzNsZDBu",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27547,
+  "secondPos" : 27031,
+  "firstEndPos" : 27564,
+  "secondEndPos" : 27048
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 235 2.0.0 OK Authenticated",
+  "secondLabel" : "//    S: 235 2.0.0 OK Authenticated",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27565,
+  "secondPos" : 27049,
+  "firstEndPos" : 27600,
+  "secondEndPos" : 27084
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27601,
+  "secondPos" : 27085,
+  "firstEndPos" : 27603,
+  "secondEndPos" : 27087
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    Lines 2-5 of the conversation contain base64-encoded information. The same conversation, with base64 strings decoded, reads:",
+  "secondLabel" : "//    Lines 2-5 of the conversation contain base64-encoded information. The same conversation, with base64 strings decoded, reads:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27604,
+  "secondPos" : 27088,
+  "firstEndPos" : 27734,
+  "secondEndPos" : 27218
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27735,
+  "secondPos" : 27219,
+  "firstEndPos" : 27737,
+  "secondEndPos" : 27221
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27738,
+  "secondPos" : 27222,
+  "firstEndPos" : 27740,
+  "secondEndPos" : 27224
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: AUTH LOGIN",
+  "secondLabel" : "//    C: AUTH LOGIN",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27741,
+  "secondPos" : 27225,
+  "firstEndPos" : 27760,
+  "secondEndPos" : 27244
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 334 Username:",
+  "secondLabel" : "//    S: 334 Username:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27761,
+  "secondPos" : 27245,
+  "firstEndPos" : 27783,
+  "secondEndPos" : 27267
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: weldon",
+  "secondLabel" : "//    C: weldon",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27784,
+  "secondPos" : 27268,
+  "firstEndPos" : 27799,
+  "secondEndPos" : 27283
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 334 Password:",
+  "secondLabel" : "//    S: 334 Password:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27800,
+  "secondPos" : 27284,
+  "firstEndPos" : 27822,
+  "secondEndPos" : 27306
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    C: w3ld0n",
+  "secondLabel" : "//    C: w3ld0n",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27823,
+  "secondPos" : 27307,
+  "firstEndPos" : 27838,
+  "secondEndPos" : 27322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    S: 235 2.0.0 OK Authenticated",
+  "secondLabel" : "//    S: 235 2.0.0 OK Authenticated",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 27839,
+  "secondPos" : 27323,
+  "firstEndPos" : 27874,
+  "secondEndPos" : 27358
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -29038,6 +29654,17 @@
   "secondPos" : 27803,
   "firstEndPos" : 28523,
   "secondEndPos" : 28007
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Authentication credentials invalid",
+  "secondLabel" : "// Authentication credentials invalid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28337,
+  "secondPos" : 27821,
+  "firstEndPos" : 28374,
+  "secondEndPos" : 27858
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -29874,6 +30501,17 @@
   "secondPos" : 28482,
   "firstEndPos" : 29202,
   "secondEndPos" : 28686
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Authentication credentials invalid",
+  "secondLabel" : "// Authentication credentials invalid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29016,
+  "secondPos" : 28500,
+  "firstEndPos" : 29053,
+  "secondEndPos" : 28537
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -31051,6 +31689,17 @@
   "secondPos" : 29411,
   "firstEndPos" : 30088,
   "secondEndPos" : 29572
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Authentication credentials invalid",
+  "secondLabel" : "// Authentication credentials invalid",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29945,
+  "secondPos" : 29429,
+  "firstEndPos" : 29982,
+  "secondEndPos" : 29466
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

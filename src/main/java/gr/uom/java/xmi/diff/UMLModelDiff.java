@@ -1269,17 +1269,34 @@ public class UMLModelDiff {
 	}
 
 	private static String matches(String s, Set<String> classNames, AbstractCodeFragment fragment) {
+		Set<String> matches = new LinkedHashSet<String>();
 		for(String className : classNames) {
 			for(LeafExpression expr : fragment.getStringLiterals()) {
 				if(expr.getString().equals(s) && s.contains(className)) {
-					return className;
+					matches.add(className);
 				}
 			}
 			for(AbstractCall call : fragment.getMethodInvocations()) {
 				if(call.actualString().equals(s) && s.contains(className)) {
-					return className;
+					matches.add(className);
 				}
 			}
+		}
+		if(matches.size() == 1) {
+			return matches.iterator().next();
+		}
+		else if(matches.size() > 1) {
+			//return the longest match
+			String longest = null;
+			for(String match : matches) {
+				if(longest == null) {
+					longest = match;
+				}
+				else if(match.length() > longest.length()) {
+					longest = match;
+				}
+			}
+			return longest;
 		}
 		return null;
 	}

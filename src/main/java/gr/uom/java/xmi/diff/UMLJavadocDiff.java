@@ -80,6 +80,7 @@ public class UMLJavadocDiff {
 	private void process(UMLJavadoc javadocBefore, UMLJavadoc javadocAfter) {
 		List<UMLTagElement> tagsBefore = javadocBefore.getTags();
 		List<UMLTagElement> tagsAfter = javadocAfter.getTags();
+		boolean singleTagJavadoc = tagsBefore.size() == 1 && tagsAfter.size() == 1;
 		List<UMLTagElement> deletedTags = new ArrayList<UMLTagElement>(tagsBefore);
 		List<UMLTagElement> addedTags = new ArrayList<UMLTagElement>(tagsAfter);
 		if(tagsBefore.size() <= tagsAfter.size()) {
@@ -207,6 +208,15 @@ public class UMLJavadocDiff {
 					}
 				}
 			}
+		}
+		if(singleTagJavadoc && commonTags.isEmpty()) {
+			UMLTagElement tagBefore = deletedTags.get(0);
+			UMLTagElement tagAfter = addedTags.get(0);
+			deletedToBeDeleted.add(tagBefore);
+			addedToBeDeleted.add(tagAfter);
+			Pair<UMLTagElement, UMLTagElement> pair = Pair.of(tagBefore, tagAfter);
+			commonTags.add(pair);
+			matchNestedTags(tagBefore, tagAfter);
 		}
 		deletedTags.removeAll(deletedToBeDeleted);
 		addedTags.removeAll(addedToBeDeleted);

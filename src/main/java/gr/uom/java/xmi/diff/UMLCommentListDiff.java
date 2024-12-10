@@ -427,7 +427,7 @@ public class UMLCommentListDiff {
 				for(int i=0; i<deletedTokenSequence.size(); i++) {
 					for(int j=i+1; j<deletedTokenSequence.size(); j++) {
 						List<String> subList = deletedTokenSequence.subList(i,j+1);
-						if(subList.size() > 2) {
+						if(subList.size() > 2 || subListInQuotes(addedTokenSequence, subList)) {
 							int indexOfSubList = Collections.indexOfSubList(addedTokenSequence, subList);
 							if(indexOfSubList != -1) {
 								if(longestSubSequence == null) {
@@ -480,7 +480,7 @@ public class UMLCommentListDiff {
 				for(int i=0; i<addedTokenSequence.size(); i++) {
 					for(int j=i+1; j<addedTokenSequence.size(); j++) {
 						List<String> subList = addedTokenSequence.subList(i,j+1);
-						if(subList.size() > 2) {
+						if(subList.size() > 2 || subListInQuotes(deletedTokenSequence, subList)) {
 							int indexOfSubList = Collections.indexOfSubList(deletedTokenSequence, subList);
 							if(indexOfSubList != -1) {
 								if(longestSubSequence == null) {
@@ -600,6 +600,18 @@ public class UMLCommentListDiff {
 				}
 			}
 		}
+	}
+
+	private boolean subListInQuotes(List<String> tokenSequence, List<String> subList) {
+		int indexOfSubList = Collections.indexOfSubList(tokenSequence, subList);
+		if(indexOfSubList != -1 && indexOfSubList > 0 && indexOfSubList + subList.size() < tokenSequence.size()) {
+			String previous = tokenSequence.get(indexOfSubList - 1);
+			String next = tokenSequence.get(indexOfSubList + subList.size());
+			if(previous.equals("\"") && next.equals("\"")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int nonPunctuationWords(List<String> longestSubSequence) {

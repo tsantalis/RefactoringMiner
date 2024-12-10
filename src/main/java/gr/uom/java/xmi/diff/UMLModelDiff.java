@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.AbstractCall;
 import gr.uom.java.xmi.decomposition.AbstractCodeFragment;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.AbstractExpression;
+import gr.uom.java.xmi.decomposition.AbstractStatement;
 import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.CompositeStatementObjectMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
@@ -1111,18 +1112,37 @@ public class UMLModelDiff {
 	private TreeSet<UMLClassRenameDiff> optimize(TreeSet<UMLClassRenameDiff> diffSet) {
 		if(diffSet.size() > 1) {
 			TreeSet<UMLClassRenameDiff> identicalBodyDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			TreeSet<UMLClassRenameDiff> identicalStatementDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			for(UMLClassRenameDiff diff : diffSet) {
 				List<UMLOperation> operations1 = diff.getOriginalClass().getOperations();
 				List<UMLOperation> operations2 = diff.getNextClass().getOperations();
 				int identicalBodies = 0;
 				int identicalSignatures = 0;
+				int identicalStatementSignatures = 0;
+				int totalStatements = 0;
 				if(operations1.size() == operations2.size()) {
 					for(int i=0; i<operations1.size(); i++) {
 						UMLOperation op1 = operations1.get(i);
 						UMLOperation op2 = operations2.get(i);
 						if(op1.getBodyHashCode() == op2.getBodyHashCode()) {
 							identicalBodies++;
+							if(op1.getBody() != null && op2.getBody() != null) {
+								List<AbstractStatement> statements1 = op1.getBody().getCompositeStatement().getAllStatements();
+								List<AbstractStatement> statements2 = op2.getBody().getCompositeStatement().getAllStatements();
+								if(statements1.size() == statements2.size()) {
+									totalStatements += statements1.size();
+									for(int j=0; j<statements1.size(); j++) {
+										AbstractStatement statement1 = statements1.get(j);
+										AbstractStatement statement2 = statements2.get(j);
+										String actualSignature1 = statement1.getActualSignature();
+										String actualSignature2 = statement2.getActualSignature();
+										if(actualSignature1 != null && actualSignature2 != null && actualSignature1.equals(actualSignature2)) {
+											identicalStatementSignatures++;
+										}
+									}
+								}
+							}
 						}
 						String actualSignature1 = op1.getActualSignature();
 						String actualSignature2 = op2.getActualSignature();
@@ -1134,12 +1154,18 @@ public class UMLModelDiff {
 				if(identicalBodies == operations1.size()) {
 					identicalBodyDiffSet.add(diff);
 				}
+				if(totalStatements > 0 && totalStatements == identicalStatementSignatures) {
+					identicalStatementDiffSet.add(diff);
+				}
 				if(identicalSignatures == operations1.size()) {
 					identicalSignatureDiffSet.add(diff);
 				}
 			}
 			if(identicalBodyDiffSet.size() == 1) {
 				return identicalBodyDiffSet;
+			}
+			else if(identicalBodyDiffSet.size() < diffSet.size() && identicalStatementDiffSet.size() == 1) {
+				return identicalStatementDiffSet;
 			}
 			if(identicalSignatureDiffSet.size() == 1) {
 				return identicalSignatureDiffSet;

@@ -7611,6 +7611,17 @@
   "firstEndPos" : 9775,
   "secondEndPos" : 8274
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unless we use if exists",
+  "secondLabel" : "// with \"if exists\" clause",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9791,
+  "secondPos" : 8365,
+  "firstEndPos" : 9817,
+  "secondEndPos" : 8391
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",

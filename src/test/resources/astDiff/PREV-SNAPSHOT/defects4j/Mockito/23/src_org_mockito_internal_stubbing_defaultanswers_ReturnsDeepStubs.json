@@ -10,6 +10,17 @@
   "firstEndPos" : 5301,
   "secondEndPos" : 5800
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "secondLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -439,6 +450,17 @@
   "firstEndPos" : 1416,
   "secondEndPos" : 1416
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1373,
+  "secondPos" : 1373,
+  "firstEndPos" : 1377,
+  "secondEndPos" : 1377
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -482,6 +504,17 @@
   "secondPos" : 1421,
   "firstEndPos" : 1464,
   "secondEndPos" : 1464
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1421,
+  "secondPos" : 1421,
+  "firstEndPos" : 1425,
+  "secondEndPos" : 1425
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -2177,6 +2210,17 @@
   "firstEndPos" : 2585,
   "secondEndPos" : 2971
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// matches invocation for verification",
+  "secondLabel" : "// matches invocation for verification",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2600,
+  "secondPos" : 2986,
+  "firstEndPos" : 2638,
+  "secondEndPos" : 3024
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -2518,6 +2562,17 @@
   "firstEndPos" : 2899,
   "secondEndPos" : 3285
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// deep stub",
+  "secondLabel" : "// deep stub",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2927,
+  "secondPos" : 3313,
+  "firstEndPos" : 2939,
+  "secondEndPos" : 3325
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2694,6 +2749,17 @@
   "firstEndPos" : 3381,
   "secondEndPos" : 3767
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3357,
+  "secondPos" : 3743,
+  "firstEndPos" : 3362,
+  "secondEndPos" : 3748
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ReturnsDeepStubs",
@@ -2727,6 +2793,17 @@
   "firstEndPos" : 3540,
   "secondEndPos" : 3926
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3464,
+  "secondPos" : 3850,
+  "firstEndPos" : 3470,
+  "secondEndPos" : 3856
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "returnTypeGenericMetadata",
@@ -2759,6 +2836,17 @@
   "secondPos" : 3935,
   "firstEndPos" : 3565,
   "secondEndPos" : 3951
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3549,
+  "secondPos" : 3935,
+  "firstEndPos" : 3556,
+  "secondEndPos" : 3942
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

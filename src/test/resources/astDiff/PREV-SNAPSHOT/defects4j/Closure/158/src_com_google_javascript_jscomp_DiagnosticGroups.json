@@ -10,6 +10,17 @@
   "firstEndPos" : 7270,
   "secondEndPos" : 7179
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -174,6 +185,17 @@
   "secondPos" : 871,
   "firstEndPos" : 937,
   "secondEndPos" : 914
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 894,
+  "secondPos" : 871,
+  "firstEndPos" : 901,
+  "secondEndPos" : 878
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1956,6 +1978,72 @@
   "secondPos" : 1960,
   "firstEndPos" : 1987,
   "secondEndPos" : 1964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A bit of a hack to display the available groups on the command-line.",
+  "secondLabel" : "// A bit of a hack to display the available groups on the command-line.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1997,
+  "secondPos" : 1974,
+  "firstEndPos" : 2068,
+  "secondEndPos" : 2045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// New groups should be added to this list if they are public and should",
+  "secondLabel" : "// New groups should be added to this list if they are public and should",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2071,
+  "secondPos" : 2048,
+  "firstEndPos" : 2143,
+  "secondEndPos" : 2120
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// be listed on the command-line as an available option.",
+  "secondLabel" : "// be listed on the command-line as an available option.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2146,
+  "secondPos" : 2123,
+  "firstEndPos" : 2202,
+  "secondEndPos" : 2179
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2205,
+  "secondPos" : 2182,
+  "firstEndPos" : 2207,
+  "secondEndPos" : 2184
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a group is suppressable on a per-file basis, it should be added",
+  "secondLabel" : "// If a group is suppressable on a per-file basis, it should be added",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2210,
+  "secondPos" : 2187,
+  "firstEndPos" : 2279,
+  "secondEndPos" : 2256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to parser/ParserConfig.properties",
+  "secondLabel" : "// to parser/ParserConfig.properties",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2282,
+  "secondPos" : 2259,
+  "firstEndPos" : 2318,
+  "secondEndPos" : 2295
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4442,6 +4530,17 @@
   "secondPos" : 5593,
   "firstEndPos" : 5645,
   "secondEndPos" : 5622
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: add more IE specific checks here.",
+  "secondLabel" : "// TODO: add more IE specific checks here.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5651,
+  "secondPos" : 5628,
+  "firstEndPos" : 5693,
+  "secondEndPos" : 5670
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

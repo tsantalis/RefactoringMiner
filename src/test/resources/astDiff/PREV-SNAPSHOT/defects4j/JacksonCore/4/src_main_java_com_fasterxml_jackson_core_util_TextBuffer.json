@@ -175,6 +175,17 @@
   "firstEndPos" : 236,
   "secondEndPos" : 236
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 216,
+  "secondPos" : 216,
+  "firstEndPos" : 221,
+  "secondEndPos" : 221
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "StringBuffer",
@@ -780,6 +791,17 @@
   "firstEndPos" : 1224,
   "secondEndPos" : 1224
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Configuration:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Configuration:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1235,
+  "secondPos" : 1235,
+  "firstEndPos" : 1395,
+  "secondEndPos" : 1395
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -856,6 +878,17 @@
   "secondPos" : 1430,
   "firstEndPos" : 1440,
   "secondEndPos" : 1440
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Shared input buffers\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Shared input buffers\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1447,
+  "secondPos" : 1447,
+  "firstEndPos" : 1613,
+  "secondEndPos" : 1613
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1143,6 +1176,17 @@
   "firstEndPos" : 2069,
   "secondEndPos" : 2069
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Aggregation segments (when not using input buf)\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Aggregation segments (when not using input buf)\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2076,
+  "secondPos" : 2076,
+  "firstEndPos" : 2269,
+  "secondEndPos" : 2269
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1385,6 +1429,17 @@
   "firstEndPos" : 2502,
   "secondEndPos" : 2502
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // // Currently used segment; not (yet) contained in _seqments",
+  "secondLabel" : "// // // Currently used segment; not (yet) contained in _seqments",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2509,
+  "secondPos" : 2509,
+  "firstEndPos" : 2574,
+  "secondEndPos" : 2574
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1439,6 +1494,17 @@
   "secondPos" : 2627,
   "firstEndPos" : 2644,
   "secondEndPos" : 2644
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2627,
+  "secondPos" : 2627,
+  "firstEndPos" : 2632,
+  "secondEndPos" : 2632
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1660,6 +1726,17 @@
   "firstEndPos" : 2828,
   "secondEndPos" : 2828
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Caching of results\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Caching of results\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2835,
+  "secondPos" : 2835,
+  "firstEndPos" : 2999,
+  "secondEndPos" : 2999
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1846,6 +1923,17 @@
   "secondPos" : 3205,
   "firstEndPos" : 3217,
   "secondEndPos" : 3217
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3224,
+  "secondPos" : 3224,
+  "firstEndPos" : 3380,
+  "secondEndPos" : 3380
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2320,6 +2408,17 @@
   "firstEndPos" : 4396,
   "secondEndPos" : 4396
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First, let's get rid of all but the largest char array",
+  "secondLabel" : "// First, let's get rid of all but the largest char array",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4075,
+  "secondPos" : 4075,
+  "firstEndPos" : 4132,
+  "secondEndPos" : 4132
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2352,6 +2451,17 @@
   "secondPos" : 4149,
   "firstEndPos" : 4163,
   "secondEndPos" : 4163
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then return that array",
+  "secondLabel" : "// And then return that array",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4183,
+  "secondPos" : 4183,
+  "firstEndPos" : 4212,
+  "secondEndPos" : 4212
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2749,6 +2859,17 @@
   "firstEndPos" : 4615,
   "secondEndPos" : 4615
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// indicates shared buffer not used",
+  "secondLabel" : "// indicates shared buffer not used",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4617,
+  "secondPos" : 4617,
+  "firstEndPos" : 4652,
+  "secondEndPos" : 4652
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3023,6 +3144,17 @@
   "secondPos" : 4785,
   "firstEndPos" : 4789,
   "secondEndPos" : 4789
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then reset internal input buffers, if necessary:",
+  "secondLabel" : "// And then reset internal input buffers, if necessary:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4800,
+  "secondPos" : 4800,
+  "firstEndPos" : 4855,
+  "secondEndPos" : 4855
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3332,6 +3464,17 @@
   "firstEndPos" : 5691,
   "secondEndPos" : 5691
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First, let's clear intermediate values, if any:",
+  "secondLabel" : "// First, let's clear intermediate values, if any:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5300,
+  "secondPos" : 5300,
+  "firstEndPos" : 5350,
+  "secondEndPos" : 5350
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3441,6 +3584,17 @@
   "secondPos" : 5404,
   "firstEndPos" : 5408,
   "secondEndPos" : 5408
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Then let's mark things we need about input buffer",
+  "secondLabel" : "// Then let's mark things we need about input buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5419,
+  "secondPos" : 5419,
+  "firstEndPos" : 5471,
+  "secondEndPos" : 5471
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3606,6 +3760,17 @@
   "secondPos" : 5549,
   "firstEndPos" : 5552,
   "secondEndPos" : 5552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then reset internal input buffers, if necessary:",
+  "secondLabel" : "// And then reset internal input buffers, if necessary:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5563,
+  "secondPos" : 5563,
+  "firstEndPos" : 5618,
+  "secondEndPos" : 5618
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3981,6 +4146,17 @@
   "firstEndPos" : 5814,
   "secondEndPos" : 5814
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// indicates shared buffer not used",
+  "secondLabel" : "// indicates shared buffer not used",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5816,
+  "secondPos" : 5816,
+  "firstEndPos" : 5851,
+  "secondEndPos" : 5851
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4145,6 +4321,17 @@
   "secondPos" : 5929,
   "firstEndPos" : 5933,
   "secondEndPos" : 5933
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then reset internal input buffers, if necessary:",
+  "secondLabel" : "// And then reset internal input buffers, if necessary:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5944,
+  "secondPos" : 5944,
+  "firstEndPos" : 5999,
+  "secondEndPos" : 5999
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5598,6 +5785,39 @@
   "firstEndPos" : 6950,
   "secondEndPos" : 6950
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Let's start using _last_ segment from list; for one, it's\n         * the biggest one, and it's also most likely to be cached\n         */",
+  "secondLabel" : "/* Let's start using _last_ segment from list; for one, it's\n         * the biggest one, and it's also most likely to be cached\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6960,
+  "secondPos" : 6960,
+  "firstEndPos" : 7099,
+  "secondEndPos" : 7099
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 28-Aug-2009, tatu: Actually, the current segment should\n         *   be the biggest one, already\n         */",
+  "secondLabel" : "/* 28-Aug-2009, tatu: Actually, the current segment should\n         *   be the biggest one, already\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7108,
+  "secondPos" : 7108,
+  "firstEndPos" : 7219,
+  "secondEndPos" : 7219
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//_currentSegment = _segments.get(_segments.size() - 1);",
+  "secondLabel" : "//_currentSegment = _segments.get(_segments.size() - 1);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7228,
+  "secondPos" : 7228,
+  "firstEndPos" : 7284,
+  "secondEndPos" : 7284
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5741,6 +5961,17 @@
   "firstEndPos" : 7351,
   "secondEndPos" : 7351
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Accessors for implementing public interface\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Accessors for implementing public interface\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7364,
+  "secondPos" : 7364,
+  "firstEndPos" : 7553,
+  "secondEndPos" : 7553
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5773,6 +6004,17 @@
   "secondPos" : 7570,
   "firstEndPos" : 7633,
   "secondEndPos" : 7633
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7570,
+  "secondPos" : 7570,
+  "firstEndPos" : 7577,
+  "secondEndPos" : 7577
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5894,6 +6136,17 @@
   "secondPos" : 7696,
   "firstEndPos" : 7767,
   "secondEndPos" : 7767
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// shared copy from input buf",
+  "secondLabel" : "// shared copy from input buf",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7698,
+  "secondPos" : 7698,
+  "firstEndPos" : 7727,
+  "secondEndPos" : 7727
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -6126,6 +6379,17 @@
   "firstEndPos" : 7930,
   "secondEndPos" : 7930
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// local segmented buffers",
+  "secondLabel" : "// local segmented buffers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7952,
+  "secondPos" : 7952,
+  "firstEndPos" : 7978,
+  "secondEndPos" : 7978
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -6235,6 +6499,17 @@
   "secondPos" : 8061,
   "firstEndPos" : 8335,
   "secondEndPos" : 8335
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Only shared input buffer can have non-zero offset; buffer\n         * segments start at 0, and if we have to create a combo buffer,\n         * that too will start from beginning of the buffer\n         */",
+  "secondLabel" : "/* Only shared input buffer can have non-zero offset; buffer\n         * segments start at 0, and if we have to create a combo buffer,\n         * that too will start from beginning of the buffer\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8071,
+  "secondPos" : 8071,
+  "firstEndPos" : 8276,
+  "secondEndPos" : 8276
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -6401,6 +6676,17 @@
   "firstEndPos" : 8473,
   "secondEndPos" : 8473
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8451,
+  "secondPos" : 8451,
+  "firstEndPos" : 8456,
+  "secondEndPos" : 8456
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -6477,6 +6763,17 @@
   "secondPos" : 8528,
   "firstEndPos" : 8762,
   "secondEndPos" : 8762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if we have array in some form, sure",
+  "secondLabel" : "// if we have array in some form, sure",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8538,
+  "secondPos" : 8538,
+  "firstEndPos" : 8576,
+  "secondEndPos" : 8576
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6620,6 +6917,17 @@
   "secondPos" : 8639,
   "firstEndPos" : 8643,
   "secondEndPos" : 8643
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not if we have String as value",
+  "secondLabel" : "// not if we have String as value",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8653,
+  "secondPos" : 8653,
+  "firstEndPos" : 8686,
+  "secondEndPos" : 8686
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6796,6 +7104,17 @@
   "secondPos" : 8806,
   "firstEndPos" : 9295,
   "secondEndPos" : 9295
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Are we just using shared input buffer?",
+  "secondLabel" : "// Are we just using shared input buffer?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8816,
+  "secondPos" : 8816,
+  "firstEndPos" : 8857,
+  "secondEndPos" : 8857
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7116,6 +7435,17 @@
   "firstEndPos" : 9062,
   "secondEndPos" : 9062
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Nope; but does it fit in just one segment?",
+  "secondLabel" : "// Nope; but does it fit in just one segment?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9085,
+  "secondPos" : 9085,
+  "firstEndPos" : 9130,
+  "secondEndPos" : 9130
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7182,6 +7512,17 @@
   "firstEndPos" : 9181,
   "secondEndPos" : 9181
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Nope, need to have/create a non-segmented array and return it",
+  "secondLabel" : "// Nope, need to have/create a non-segmented array and return it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9191,
+  "secondPos" : 9191,
+  "firstEndPos" : 9255,
+  "secondEndPos" : 9255
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -7214,6 +7555,17 @@
   "secondPos" : 9271,
   "firstEndPos" : 9286,
   "secondEndPos" : 9286
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Other accessors:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Other accessors:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9301,
+  "secondPos" : 9301,
+  "firstEndPos" : 9463,
+  "secondEndPos" : 9463
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7346,6 +7698,17 @@
   "secondPos" : 9543,
   "firstEndPos" : 11146,
   "secondEndPos" : 11146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Has array been requested? Can make a shortcut, if so:",
+  "secondLabel" : "// Has array been requested? Can make a shortcut, if so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9557,
+  "secondPos" : 9557,
+  "firstEndPos" : 9613,
+  "secondEndPos" : 9613
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7511,6 +7874,17 @@
   "secondPos" : 9731,
   "firstEndPos" : 11136,
   "secondEndPos" : 11136
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we use shared array?",
+  "secondLabel" : "// Do we use shared array?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9749,
+  "secondPos" : 9749,
+  "firstEndPos" : 9775,
+  "secondEndPos" : 9775
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7831,6 +8205,28 @@
   "firstEndPos" : 11122,
   "secondEndPos" : 11122
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nope... need to copy",
+  "secondLabel" : "// nope... need to copy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10043,
+  "secondPos" : 10043,
+  "firstEndPos" : 10066,
+  "secondEndPos" : 10066
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// But first, let's see if we have just one buffer",
+  "secondLabel" : "// But first, let's see if we have just one buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10087,
+  "secondPos" : 10087,
+  "firstEndPos" : 10137,
+  "secondEndPos" : 10137
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8006,6 +8402,17 @@
   "secondPos" : 10291,
   "firstEndPos" : 10424,
   "secondEndPos" : 10424
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yup",
+  "secondLabel" : "// yup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10293,
+  "secondPos" : 10293,
+  "firstEndPos" : 10299,
+  "secondEndPos" : 10299
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8205,6 +8612,17 @@
   "firstEndPos" : 11104,
   "secondEndPos" : 11104
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no, need to combine",
+  "secondLabel" : "// no, need to combine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10432,
+  "secondPos" : 10432,
+  "firstEndPos" : 10454,
+  "secondEndPos" : 10454
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8336,6 +8754,17 @@
   "secondPos" : 10525,
   "firstEndPos" : 10532,
   "secondEndPos" : 10532
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First stored segments",
+  "secondLabel" : "// First stored segments",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10559,
+  "secondPos" : 10559,
+  "firstEndPos" : 10583,
+  "secondEndPos" : 10583
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8853,6 +9282,17 @@
   "secondPos" : 10832,
   "firstEndPos" : 10843,
   "secondEndPos" : 10843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And finally, current segment:",
+  "secondLabel" : "// And finally, current segment:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10926,
+  "secondPos" : 10926,
+  "firstEndPos" : 10958,
+  "secondEndPos" : 10958
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9470,6 +9910,17 @@
   "firstEndPos" : 11486,
   "secondEndPos" : 11486
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11468,
+  "secondPos" : 11468,
+  "firstEndPos" : 11473,
+  "secondEndPos" : 11473
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BigDecimal",
@@ -9568,6 +10019,17 @@
   "secondPos" : 11571,
   "firstEndPos" : 12243,
   "secondEndPos" : 12243
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Already got a pre-cut array?",
+  "secondLabel" : "// Already got a pre-cut array?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11581,
+  "secondPos" : 11581,
+  "firstEndPos" : 11612,
+  "secondEndPos" : 11612
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9711,6 +10173,17 @@
   "secondPos" : 11696,
   "firstEndPos" : 11708,
   "secondEndPos" : 11708
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Or a shared buffer?",
+  "secondLabel" : "// Or a shared buffer?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11729,
+  "secondPos" : 11729,
+  "firstEndPos" : 11751,
+  "secondEndPos" : 11751
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9965,6 +10438,17 @@
   "firstEndPos" : 11895,
   "secondEndPos" : 11895
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Or if not, just a single buffer (the usual case)",
+  "secondLabel" : "// Or if not, just a single buffer (the usual case)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11916,
+  "secondPos" : 11916,
+  "firstEndPos" : 11967,
+  "secondEndPos" : 11967
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10217,6 +10701,17 @@
   "secondPos" : 12099,
   "firstEndPos" : 12111,
   "secondEndPos" : 12111
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If not, let's just get it aggregated...",
+  "secondLabel" : "// If not, let's just get it aggregated...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12132,
+  "secondPos" : 12132,
+  "firstEndPos" : 12174,
+  "secondEndPos" : 12174
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -10514,6 +11009,17 @@
   "secondPos" : 12460,
   "firstEndPos" : 12476,
   "secondEndPos" : 12476
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public mutators:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public mutators:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12492,
+  "secondPos" : 12492,
+  "firstEndPos" : 12654,
+  "secondEndPos" : 12654
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -10823,6 +11329,17 @@
   "firstEndPos" : 13349,
   "secondEndPos" : 13349
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Using shared buffer so far?",
+  "secondLabel" : "// Using shared buffer so far?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12966,
+  "secondPos" : 12966,
+  "firstEndPos" : 12996,
+  "secondEndPos" : 12996
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11053,6 +11570,17 @@
   "secondPos" : 13117,
   "firstEndPos" : 13121,
   "secondEndPos" : 13121
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Room in current segment?",
+  "secondLabel" : "// Room in current segment?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13131,
+  "secondPos" : 13131,
+  "firstEndPos" : 13158,
+  "secondEndPos" : 13158
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -11582,6 +12110,17 @@
   "firstEndPos" : 14556,
   "secondEndPos" : 14556
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can't append to shared buf (sanity check)",
+  "secondLabel" : "// Can't append to shared buf (sanity check)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13418,
+  "secondPos" : 13418,
+  "firstEndPos" : 13462,
+  "secondEndPos" : 13462
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11812,6 +12351,17 @@
   "secondPos" : 13584,
   "firstEndPos" : 13588,
   "secondEndPos" : 13588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Room in current segment?",
+  "secondLabel" : "// Room in current segment?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13599,
+  "secondPos" : 13599,
+  "firstEndPos" : 13626,
+  "secondEndPos" : 13626
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12231,6 +12781,17 @@
   "firstEndPos" : 13868,
   "secondEndPos" : 13868
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No room for all, need to copy part(s):",
+  "secondLabel" : "// No room for all, need to copy part(s):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13887,
+  "secondPos" : 13887,
+  "firstEndPos" : 13928,
+  "secondEndPos" : 13928
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12527,6 +13088,28 @@
   "secondPos" : 14062,
   "firstEndPos" : 14065,
   "secondEndPos" : 14065
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* And then allocate new segment; we are guaranteed to now\n         * have enough room in segment.\n         */",
+  "secondLabel" : "/* And then allocate new segment; we are guaranteed to now\n         * have enough room in segment.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14085,
+  "secondPos" : 14085,
+  "firstEndPos" : 14195,
+  "secondEndPos" : 14195
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Except, as per [Issue-24], not for HUGE appends... so:",
+  "secondLabel" : "// Except, as per [Issue-24], not for HUGE appends... so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14204,
+  "secondPos" : 14204,
+  "firstEndPos" : 14261,
+  "secondEndPos" : 14261
 }, {
   "firstType" : "DoStatement",
   "secondType" : "DoStatement",
@@ -13221,6 +13804,17 @@
   "firstEndPos" : 15758,
   "secondEndPos" : 15758
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can't append to shared buf (sanity check)",
+  "secondLabel" : "// Can't append to shared buf (sanity check)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14628,
+  "secondPos" : 14628,
+  "firstEndPos" : 14672,
+  "secondEndPos" : 14672
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -13451,6 +14045,17 @@
   "secondPos" : 14794,
   "firstEndPos" : 14798,
   "secondEndPos" : 14798
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Room in current segment?",
+  "secondLabel" : "// Room in current segment?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14809,
+  "secondPos" : 14809,
+  "firstEndPos" : 14836,
+  "secondEndPos" : 14836
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13892,6 +14497,17 @@
   "firstEndPos" : 15066,
   "secondEndPos" : 15066
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No room for all, need to copy part(s):",
+  "secondLabel" : "// No room for all, need to copy part(s):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15085,
+  "secondPos" : 15085,
+  "firstEndPos" : 15126,
+  "secondEndPos" : 15126
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14210,6 +14826,28 @@
   "secondPos" : 15262,
   "firstEndPos" : 15265,
   "secondEndPos" : 15265
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* And then allocate new segment; we are guaranteed to now\n         * have enough room in segment.\n         */",
+  "secondLabel" : "/* And then allocate new segment; we are guaranteed to now\n         * have enough room in segment.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15285,
+  "secondPos" : 15285,
+  "firstEndPos" : 15395,
+  "secondEndPos" : 15395
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Except, as per [Issue-24], not for HUGE appends... so:",
+  "secondLabel" : "// Except, as per [Issue-24], not for HUGE appends... so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15404,
+  "secondPos" : 15404,
+  "firstEndPos" : 15461,
+  "secondEndPos" : 15461
 }, {
   "firstType" : "DoStatement",
   "secondType" : "DoStatement",
@@ -14761,6 +15399,17 @@
   "firstEndPos" : 15750,
   "secondEndPos" : 15750
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Raw access, for high-performance use:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Raw access, for high-performance use:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15764,
+  "secondPos" : 15764,
+  "firstEndPos" : 15947,
+  "secondEndPos" : 15947
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -14837,6 +15486,17 @@
   "secondPos" : 15991,
   "firstEndPos" : 16597,
   "secondEndPos" : 16597
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Since the intention of the caller is to directly add stuff into\n         * buffers, we should NOT have anything in shared buffer... ie. may\n         * need to unshare contents.\n         */",
+  "secondLabel" : "/* Since the intention of the caller is to directly add stuff into\n         * buffers, we should NOT have anything in shared buffer... ie. may\n         * need to unshare contents.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16001,
+  "secondPos" : 16001,
+  "firstEndPos" : 16192,
+  "secondEndPos" : 16192
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15267,6 +15927,17 @@
   "firstEndPos" : 16549,
   "secondEndPos" : 16549
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Plus, we better have room for at least one more char",
+  "secondLabel" : "// Plus, we better have room for at least one more char",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16453,
+  "secondPos" : 16453,
+  "firstEndPos" : 16508,
+  "secondEndPos" : 16508
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15421,6 +16092,17 @@
   "firstEndPos" : 17169,
   "secondEndPos" : 17169
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// inlined 'resetWithEmpty()'",
+  "secondLabel" : "// inlined 'resetWithEmpty()'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16659,
+  "secondPos" : 16659,
+  "firstEndPos" : 16688,
+  "secondEndPos" : 16688
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15497,6 +16179,17 @@
   "secondPos" : 16712,
   "firstEndPos" : 16713,
   "secondEndPos" : 16713
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// indicates shared buffer not used",
+  "secondLabel" : "// indicates shared buffer not used",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16715,
+  "secondPos" : 16715,
+  "firstEndPos" : 16750,
+  "secondEndPos" : 16750
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15772,6 +16465,17 @@
   "secondPos" : 16883,
   "firstEndPos" : 16887,
   "secondEndPos" : 16887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then reset internal input buffers, if necessary:",
+  "secondLabel" : "// And then reset internal input buffers, if necessary:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16898,
+  "secondPos" : 16898,
+  "firstEndPos" : 16953,
+  "secondEndPos" : 16953
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16906,6 +17610,17 @@
   "firstEndPos" : 17607,
   "secondEndPos" : 17607
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's grow segments by 50%",
+  "secondLabel" : "// Let's grow segments by 50%",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17618,
+  "secondPos" : 17618,
+  "firstEndPos" : 17647,
+  "secondEndPos" : 17647
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -17687,6 +18402,17 @@
   "firstEndPos" : 18249,
   "secondEndPos" : 18249
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's grow by 50% by default",
+  "secondLabel" : "// Let's grow by 50% by default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18259,
+  "secondPos" : 18259,
+  "firstEndPos" : 18290,
+  "secondEndPos" : 18290
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -17752,6 +18478,17 @@
   "secondPos" : 18315,
   "firstEndPos" : 18326,
   "secondEndPos" : 18326
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but above intended maximum, slow to increase by 25%",
+  "secondLabel" : "// but above intended maximum, slow to increase by 25%",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18336,
+  "secondPos" : 18375,
+  "firstEndPos" : 18390,
+  "secondEndPos" : 18429
 }, {
   "firstType" : "InfixExpression",
   "secondType" : "InfixExpression",
@@ -18050,6 +18787,17 @@
   "firstEndPos" : 18844,
   "secondEndPos" : 18857
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18781,
+  "secondPos" : 18794,
+  "firstEndPos" : 18787,
+  "secondEndPos" : 18800
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "minSize",
@@ -18082,6 +18830,17 @@
   "secondPos" : 18872,
   "firstEndPos" : 18871,
   "secondEndPos" : 18884
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18859,
+  "secondPos" : 18872,
+  "firstEndPos" : 18865,
+  "secondEndPos" : 18878
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18523,6 +19282,17 @@
   "firstEndPos" : 19104,
   "secondEndPos" : 19117
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Standard methods:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Standard methods:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 19117,
+  "secondPos" : 19130,
+  "firstEndPos" : 19280,
+  "secondEndPos" : 19293
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -18577,6 +19347,17 @@
   "secondPos" : 19378,
   "firstEndPos" : 19390,
   "secondEndPos" : 19403
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19365,
+  "secondPos" : 19378,
+  "firstEndPos" : 19370,
+  "secondEndPos" : 19383
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -18731,6 +19512,17 @@
   "secondPos" : 19527,
   "firstEndPos" : 19530,
   "secondEndPos" : 19543
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Internal methods:\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Internal methods:\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 19541,
+  "secondPos" : 19554,
+  "firstEndPos" : 19704,
+  "secondEndPos" : 19717
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -19237,6 +20029,17 @@
   "secondPos" : 20078,
   "firstEndPos" : 20066,
   "secondEndPos" : 20079
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Is buffer big enough, or do we need to reallocate?",
+  "secondLabel" : "// Is buffer big enough, or do we need to reallocate?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20077,
+  "secondPos" : 20090,
+  "firstEndPos" : 20130,
+  "secondEndPos" : 20143
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19975,6 +20778,17 @@
   "firstEndPos" : 21302,
   "secondEndPos" : 21315
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First, let's move current segment to segment list:",
+  "secondLabel" : "// First, let's move current segment to segment list:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20644,
+  "secondPos" : 20657,
+  "firstEndPos" : 20697,
+  "secondEndPos" : 20710
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -20535,6 +21349,17 @@
   "secondPos" : 20984,
   "firstEndPos" : 20982,
   "secondEndPos" : 20995
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's grow segments by 50% minimum",
+  "secondLabel" : "// Let's grow segments by 50% minimum",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21001,
+  "secondPos" : 21014,
+  "firstEndPos" : 21038,
+  "secondEndPos" : 21051
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -21141,6 +21966,17 @@
   "firstEndPos" : 21463,
   "secondEndPos" : 21476
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can take a shortcut...",
+  "secondLabel" : "// Can take a shortcut...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21380,
+  "secondPos" : 21393,
+  "firstEndPos" : 21405,
+  "secondEndPos" : 21418
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -21195,6 +22031,17 @@
   "secondPos" : 21452,
   "firstEndPos" : 21450,
   "secondEndPos" : 21463
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do we use shared array?",
+  "secondLabel" : "// Do we use shared array?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21472,
+  "secondPos" : 21485,
+  "firstEndPos" : 21498,
+  "secondEndPos" : 21511
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21767,6 +22614,17 @@
   "secondPos" : 21866,
   "firstEndPos" : 21856,
   "secondEndPos" : 21869
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nope, not shared",
+  "secondLabel" : "// nope, not shared",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21877,
+  "secondPos" : 21890,
+  "firstEndPos" : 21896,
+  "secondEndPos" : 21909
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

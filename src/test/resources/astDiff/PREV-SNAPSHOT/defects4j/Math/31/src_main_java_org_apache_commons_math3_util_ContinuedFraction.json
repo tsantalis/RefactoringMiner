@@ -10,6 +10,17 @@
   "firstEndPos" : 7379,
   "secondEndPos" : 6314
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -240,6 +251,17 @@
   "secondPos" : 1356,
   "firstEndPos" : 1369,
   "secondEndPos" : 1369
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1356,
+  "secondPos" : 1356,
+  "firstEndPos" : 1364,
+  "secondEndPos" : 1364
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -571,6 +593,17 @@
   "firstEndPos" : 1833,
   "secondEndPos" : 1833
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1790,
+  "secondPos" : 1790,
+  "firstEndPos" : 1796,
+  "secondEndPos" : 1796
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "n",
@@ -604,6 +637,17 @@
   "firstEndPos" : 1871,
   "secondEndPos" : 1871
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1841,
+  "secondPos" : 1841,
+  "firstEndPos" : 1847,
+  "secondEndPos" : 1847
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -636,6 +680,17 @@
   "secondPos" : 1879,
   "firstEndPos" : 1910,
   "secondEndPos" : 1910
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1879,
+  "secondPos" : 1879,
+  "firstEndPos" : 1886,
+  "secondEndPos" : 1886
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -824,6 +879,17 @@
   "firstEndPos" : 2184,
   "secondEndPos" : 2184
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2141,
+  "secondPos" : 2141,
+  "firstEndPos" : 2147,
+  "secondEndPos" : 2147
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "n",
@@ -857,6 +923,17 @@
   "firstEndPos" : 2222,
   "secondEndPos" : 2222
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2192,
+  "secondPos" : 2192,
+  "firstEndPos" : 2198,
+  "secondEndPos" : 2198
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -889,6 +966,17 @@
   "secondPos" : 2230,
   "firstEndPos" : 2261,
   "secondEndPos" : 2261
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2230,
+  "secondPos" : 2230,
+  "firstEndPos" : 2237,
+  "secondEndPos" : 2237
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1066,6 +1154,17 @@
   "firstEndPos" : 2425,
   "secondEndPos" : 2425
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2395,
+  "secondPos" : 2395,
+  "firstEndPos" : 2401,
+  "secondEndPos" : 2401
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -1099,6 +1198,17 @@
   "firstEndPos" : 2492,
   "secondEndPos" : 2492
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2433,
+  "secondPos" : 2433,
+  "firstEndPos" : 2440,
+  "secondEndPos" : 2440
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the value of the continued fraction evaluated at x.",
@@ -1120,6 +1230,17 @@
   "secondPos" : 2500,
   "firstEndPos" : 2564,
   "secondEndPos" : 2564
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2500,
+  "secondPos" : 2500,
+  "firstEndPos" : 2507,
+  "secondEndPos" : 2507
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1352,6 +1473,17 @@
   "firstEndPos" : 2784,
   "secondEndPos" : 2784
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2754,
+  "secondPos" : 2754,
+  "firstEndPos" : 2760,
+  "secondEndPos" : 2760
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -1384,6 +1516,17 @@
   "secondPos" : 2792,
   "firstEndPos" : 2829,
   "secondEndPos" : 2829
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2792,
+  "secondPos" : 2792,
+  "firstEndPos" : 2798,
+  "secondEndPos" : 2798
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1418,6 +1561,17 @@
   "firstEndPos" : 2896,
   "secondEndPos" : 2896
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2837,
+  "secondPos" : 2837,
+  "firstEndPos" : 2844,
+  "secondEndPos" : 2844
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the value of the continued fraction evaluated at x.",
@@ -1439,6 +1593,17 @@
   "secondPos" : 2904,
   "firstEndPos" : 2968,
   "secondEndPos" : 2968
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2904,
+  "secondPos" : 2904,
+  "firstEndPos" : 2911,
+  "secondEndPos" : 2911
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1704,6 +1869,17 @@
   "firstEndPos" : 3196,
   "secondEndPos" : 3196
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3166,
+  "secondPos" : 3166,
+  "firstEndPos" : 3172,
+  "secondEndPos" : 3172
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -1736,6 +1912,17 @@
   "secondPos" : 3204,
   "firstEndPos" : 3254,
   "secondEndPos" : 3254
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3204,
+  "secondPos" : 3204,
+  "firstEndPos" : 3210,
+  "secondEndPos" : 3210
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1770,6 +1957,17 @@
   "firstEndPos" : 3321,
   "secondEndPos" : 3321
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3262,
+  "secondPos" : 3262,
+  "firstEndPos" : 3269,
+  "secondEndPos" : 3269
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the value of the continued fraction evaluated at x.",
@@ -1791,6 +1989,17 @@
   "secondPos" : 3329,
   "firstEndPos" : 3393,
   "secondEndPos" : 3393
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3329,
+  "secondPos" : 3329,
+  "firstEndPos" : 3336,
+  "secondEndPos" : 3336
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2221,6 +2430,17 @@
   "firstEndPos" : 4320,
   "secondEndPos" : 4320
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4290,
+  "secondPos" : 4290,
+  "firstEndPos" : 4296,
+  "secondEndPos" : 4296
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "x",
@@ -2253,6 +2473,17 @@
   "secondPos" : 4328,
   "firstEndPos" : 4365,
   "secondEndPos" : 4365
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4328,
+  "secondPos" : 4328,
+  "firstEndPos" : 4334,
+  "secondEndPos" : 4334
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2287,6 +2518,17 @@
   "firstEndPos" : 4423,
   "secondEndPos" : 4423
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4373,
+  "secondPos" : 4373,
+  "firstEndPos" : 4379,
+  "secondEndPos" : 4379
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "maxIterations",
@@ -2320,6 +2562,17 @@
   "firstEndPos" : 4490,
   "secondEndPos" : 4490
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4431,
+  "secondPos" : 4431,
+  "firstEndPos" : 4438,
+  "secondEndPos" : 4438
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the value of the continued fraction evaluated at x.",
@@ -2341,6 +2594,17 @@
   "secondPos" : 4498,
   "firstEndPos" : 4562,
   "secondEndPos" : 4562
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4498,
+  "secondPos" : 4498,
+  "firstEndPos" : 4505,
+  "secondEndPos" : 4505
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2671,6 +2935,17 @@
   "secondPos" : 4712,
   "firstEndPos" : 4713,
   "secondEndPos" : 4713
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// use the value of small as epsilon criteria for zero checks",
+  "secondLabel" : "// use the value of small as epsilon criteria for zero checks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4725,
+  "secondPos" : 4725,
+  "firstEndPos" : 4786,
+  "secondEndPos" : 4786
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

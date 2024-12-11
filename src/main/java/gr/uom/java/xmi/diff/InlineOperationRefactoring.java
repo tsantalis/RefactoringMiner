@@ -23,6 +23,7 @@ import gr.uom.java.xmi.decomposition.CompositeStatementObject;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.decomposition.LeafMapping;
 import gr.uom.java.xmi.decomposition.ObjectCreation;
+import gr.uom.java.xmi.decomposition.OperationInvocation;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
@@ -56,6 +57,69 @@ public class InlineOperationRefactoring implements Refactoring {
 			this.inlinedCodeFragmentsFromInlinedOperation.add(mapping.getFragment1());
 			this.inlinedCodeFragmentsInTargetOperation.add(mapping.getFragment2());
 			createArgumentMappings(mapping);
+			checkForMatchingCallChain(mapping);
+		}
+	}
+
+	private void checkForMatchingCallChain(AbstractCodeMapping mapping) {
+		Set<AbstractCodeMapping> leafMappingsToBeAdded = new LinkedHashSet<AbstractCodeMapping>();
+		AbstractCall invocation2 = mapping.getFragment2().invocationCoveringEntireFragment();
+		if(invocation2 == null) {
+			invocation2 = mapping.getFragment2().assignmentInvocationCoveringEntireStatement();
+		}
+		if(invocation2 instanceof OperationInvocation && ((OperationInvocation)invocation2).numberOfSubExpressions() > 0) {
+			for(AbstractCodeMapping m : this.bodyMapper.getParentMapper().getMappings()) {
+				if(m.getFragment1().getLocationInfo().subsumes(this.bodyMapper.getOperationInvocation().getLocationInfo())) {
+					AbstractCall invocation1 = m.getFragment1().invocationCoveringEntireFragment();
+					if(invocation1 == null) {
+						invocation1 = m.getFragment1().assignmentInvocationCoveringEntireStatement();
+					}
+					if(invocation1 != null && invocation1.equals(invocation2)) {
+						LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, this.targetOperationBeforeInline, this.targetOperationAfterInline);
+						leafMappingsToBeAdded.add(leafMapping);
+						break;
+					}
+				}
+			}
+		}
+		else if(invocation2 instanceof OperationInvocation && invocation2.arguments().size() > 0) {
+			for(AbstractCodeMapping m : this.bodyMapper.getParentMapper().getMappings()) {
+				if(m.getFragment1().getLocationInfo().subsumes(this.bodyMapper.getOperationInvocation().getLocationInfo())) {
+					AbstractCall invocation1 = m.getFragment1().invocationCoveringEntireFragment();
+					if(invocation1 == null) {
+						invocation1 = m.getFragment1().assignmentInvocationCoveringEntireStatement();
+					}
+					if(invocation1 != null && invocation1.arguments().size() > 0) {
+						for(String arg1 : invocation1.arguments()) {
+							for(String arg2 : invocation2.arguments()) {
+								if(arg1.startsWith(arg2)) {
+									List<LeafExpression> expressions1 = m.getFragment1().findExpression(arg2);
+									List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(arg2);
+									if(expressions1.size() == expressions2.size()) {
+										for(int i=0; i<expressions1.size(); i++) {
+											LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), this.targetOperationBeforeInline, this.targetOperationAfterInline);
+											leafMappingsToBeAdded.add(leafMapping);
+										}
+									}
+								}
+								else if(arg2.startsWith(arg1)) {
+									List<LeafExpression> expressions1 = m.getFragment1().findExpression(arg1);
+									List<LeafExpression> expressions2 = mapping.getFragment2().findExpression(arg1);
+									if(expressions1.size() == expressions2.size()) {
+										for(int i=0; i<expressions1.size(); i++) {
+											LeafMapping leafMapping = new LeafMapping(expressions1.get(i), expressions2.get(i), this.targetOperationBeforeInline, this.targetOperationAfterInline);
+											leafMappingsToBeAdded.add(leafMapping);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		for(AbstractCodeMapping m : leafMappingsToBeAdded) {
+			this.bodyMapper.getParentMapper().getMappings().add(m);
 		}
 	}
 

@@ -10,6 +10,17 @@
   "firstEndPos" : 5368,
   "secondEndPos" : 6246
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -163,6 +174,17 @@
   "secondPos" : 1046,
   "firstEndPos" : 1100,
   "secondEndPos" : 1100
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@NotThreadSafe",
+  "secondLabel" : "@NotThreadSafe",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1108,
+  "secondPos" : 1108,
+  "firstEndPos" : 1122,
+  "secondEndPos" : 1122
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -692,6 +714,17 @@
   "firstEndPos" : 1718,
   "secondEndPos" : 1801
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1692,
+  "secondPos" : 1775,
+  "firstEndPos" : 1699,
+  "secondEndPos" : 1782
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the next AR entry.",
@@ -713,6 +746,17 @@
   "secondPos" : 1809,
   "firstEndPos" : 1795,
   "secondEndPos" : 1878
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1726,
+  "secondPos" : 1809,
+  "firstEndPos" : 1733,
+  "secondEndPos" : 1816
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -812,6 +856,28 @@
   "secondPos" : 1949,
   "firstEndPos" : 3889,
   "secondEndPos" : 4413
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hit EOF before previous entry was complete",
+  "secondLabel" : "// hit EOF before previous entry was complete",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1888,
+  "secondPos" : 2184,
+  "firstEndPos" : 1933,
+  "secondEndPos" : 2229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: throw an exception instead?",
+  "secondLabel" : "// TODO: throw an exception instead?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1954,
+  "secondPos" : 2250,
+  "firstEndPos" : 1990,
+  "secondEndPos" : 2286
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -1736,6 +1802,17 @@
   "secondPos" : 2902,
   "firstEndPos" : 2506,
   "secondEndPos" : 2910
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hit eof",
+  "secondLabel" : "// hit eof",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2569,
+  "secondPos" : 3034,
+  "firstEndPos" : 2579,
+  "secondEndPos" : 3044
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5553,6 +5630,17 @@
   "secondPos" : 5543,
   "firstEndPos" : 5364,
   "secondEndPos" : 6242
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 3c21 7261 6863 0a3e",
+  "secondLabel" : "// 3c21 7261 6863 0a3e",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4675,
+  "secondPos" : 5553,
+  "firstEndPos" : 4697,
+  "secondEndPos" : 5575
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

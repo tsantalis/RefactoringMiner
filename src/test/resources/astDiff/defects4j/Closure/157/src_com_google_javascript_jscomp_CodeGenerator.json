@@ -10,6 +10,17 @@
   "firstEndPos" : 36518,
   "secondEndPos" : 37334
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2004 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2004 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1054,6 +1065,50 @@
   "secondPos" : 1556,
   "firstEndPos" : 1880,
   "secondEndPos" : 1880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we want our default (pretending to be UTF-8, but escaping anything",
+  "secondLabel" : "// If we want our default (pretending to be UTF-8, but escaping anything",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1564,
+  "secondPos" : 1564,
+  "firstEndPos" : 1636,
+  "secondEndPos" : 1636
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// outside of straight ASCII), then don't use the encoder, but",
+  "secondLabel" : "// outside of straight ASCII), then don't use the encoder, but",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1643,
+  "secondPos" : 1643,
+  "firstEndPos" : 1705,
+  "secondEndPos" : 1705
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// just special-case the code.  This keeps the normal path through",
+  "secondLabel" : "// just special-case the code.  This keeps the normal path through",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1712,
+  "secondPos" : 1712,
+  "firstEndPos" : 1778,
+  "secondEndPos" : 1778
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the code identical to how it's been for years.",
+  "secondLabel" : "// the code identical to how it's been for years.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1785,
+  "secondPos" : 1785,
+  "firstEndPos" : 1834,
+  "secondEndPos" : 1834
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2760,6 +2815,17 @@
   "firstEndPos" : 2631,
   "secondEndPos" : 2631
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Handle all binary operators",
+  "secondLabel" : "// Handle all binary operators",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2640,
+  "secondPos" : 2640,
+  "firstEndPos" : 2670,
+  "secondEndPos" : 2670
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3310,6 +3376,28 @@
   "firstEndPos" : 2980,
   "secondEndPos" : 2980
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For right-hand-side of operations, only pass context if it's",
+  "secondLabel" : "// For right-hand-side of operations, only pass context if it's",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2990,
+  "secondPos" : 2990,
+  "firstEndPos" : 3053,
+  "secondEndPos" : 3053
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the IN_FOR_INIT_CLAUSE one.",
+  "secondLabel" : "// the IN_FOR_INIT_CLAUSE one.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3060,
+  "secondPos" : 3060,
+  "firstEndPos" : 3090,
+  "secondEndPos" : 3090
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3408,6 +3496,39 @@
   "secondPos" : 3144,
   "firstEndPos" : 3151,
   "secondEndPos" : 3151
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Handle associativity.",
+  "secondLabel" : "// Handle associativity.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3161,
+  "secondPos" : 3161,
+  "firstEndPos" : 3185,
+  "secondEndPos" : 3185
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// e.g. if the parse tree is a * (b * c),",
+  "secondLabel" : "// e.g. if the parse tree is a * (b * c),",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3192,
+  "secondPos" : 3192,
+  "firstEndPos" : 3233,
+  "secondEndPos" : 3233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we can simply generate a * b * c.",
+  "secondLabel" : "// we can simply generate a * b * c.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3240,
+  "secondPos" : 3240,
+  "firstEndPos" : 3276,
+  "secondEndPos" : 3276
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3848,6 +3969,17 @@
   "secondPos" : 3471,
   "firstEndPos" : 3589,
   "secondEndPos" : 3589
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Assignments are the only right-associative binary operators",
+  "secondLabel" : "// Assignments are the only right-associative binary operators",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3481,
+  "secondPos" : 3481,
+  "firstEndPos" : 3543,
+  "secondEndPos" : 3543
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4783,6 +4915,28 @@
   "secondPos" : 3987,
   "firstEndPos" : 4009,
   "secondEndPos" : 4009
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// second child contains the catch block, or nothing if there",
+  "secondLabel" : "// second child contains the catch block, or nothing if there",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4021,
+  "secondPos" : 4021,
+  "firstEndPos" : 4082,
+  "secondEndPos" : 4082
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// isn't a catch block",
+  "secondLabel" : "// isn't a catch block",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4091,
+  "secondPos" : 4091,
+  "firstEndPos" : 4113,
+  "secondEndPos" : 4113
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5850,6 +6004,28 @@
   "secondPos" : 4685,
   "firstEndPos" : 4690,
   "secondEndPos" : 4690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Must have a ';' after a throw statement, otherwise safari can't",
+  "secondLabel" : "// Must have a ';' after a throw statement, otherwise safari can't",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 4702,
+  "secondPos" : 4702,
+  "firstEndPos" : 4768,
+  "secondEndPos" : 4768
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parse this.",
+  "secondLabel" : "// parse this.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 4777,
+  "secondPos" : 4777,
+  "firstEndPos" : 4791,
+  "secondEndPos" : 4791
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7677,6 +7853,28 @@
   "firstEndPos" : 5948,
   "secondEndPos" : 5948
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add expression, consider nearby code at lowest level of",
+  "secondLabel" : "// Add expression, consider nearby code at lowest level of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5784,
+  "secondPos" : 5784,
+  "firstEndPos" : 5842,
+  "secondEndPos" : 5842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// precedence.",
+  "secondLabel" : "// precedence.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5855,
+  "secondPos" : 5855,
+  "firstEndPos" : 5869,
+  "secondEndPos" : 5869
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9041,6 +9239,17 @@
   "firstEndPos" : 6917,
   "secondEndPos" : 6917
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// All of these unary operators are right-associative",
+  "secondLabel" : "// All of these unary operators are right-associative",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6684,
+  "secondPos" : 6684,
+  "firstEndPos" : 6737,
+  "secondEndPos" : 6737
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9568,6 +9777,39 @@
   "secondPos" : 6990,
   "firstEndPos" : 6991,
   "secondEndPos" : 6991
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It's important to our sanity checker that the code",
+  "secondLabel" : "// It's important to our sanity checker that the code",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7003,
+  "secondPos" : 7003,
+  "firstEndPos" : 7056,
+  "secondEndPos" : 7056
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we print produces the same AST as the code we parse back.",
+  "secondLabel" : "// we print produces the same AST as the code we parse back.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7065,
+  "secondPos" : 7065,
+  "firstEndPos" : 7125,
+  "secondEndPos" : 7125
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NEG is a weird case because Rhino parses \"- -2\" as \"2\".",
+  "secondLabel" : "// NEG is a weird case because Rhino parses \"- -2\" as \"2\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7134,
+  "secondPos" : 7134,
+  "firstEndPos" : 7192,
+  "secondEndPos" : 7192
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11284,6 +11526,17 @@
   "secondPos" : 8025,
   "firstEndPos" : 8045,
   "secondEndPos" : 8045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// I only use one .add because whitespace matters",
+  "secondLabel" : "// I only use one .add because whitespace matters",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8057,
+  "secondPos" : 8057,
+  "firstEndPos" : 8106,
+  "secondEndPos" : 8106
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13584,6 +13837,17 @@
   "firstEndPos" : 9353,
   "secondEndPos" : 9353
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get methods are unnamed",
+  "secondLabel" : "// Get methods are unnamed",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 9365,
+  "secondPos" : 9365,
+  "firstEndPos" : 9391,
+  "secondEndPos" : 9391
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13825,6 +14089,17 @@
   "secondPos" : 9502,
   "firstEndPos" : 9658,
   "secondEndPos" : 9658
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Get methods have no parameters.",
+  "secondLabel" : "// Get methods have no parameters.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9514,
+  "secondPos" : 9514,
+  "firstEndPos" : 9548,
+  "secondEndPos" : 9548
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14079,6 +14354,17 @@
   "firstEndPos" : 9819,
   "secondEndPos" : 9819
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set methods have one parameter.",
+  "secondLabel" : "// Set methods have one parameter.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9676,
+  "secondPos" : 9676,
+  "firstEndPos" : 9710,
+  "secondEndPos" : 9710
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14298,6 +14584,17 @@
   "secondPos" : 9801,
   "firstEndPos" : 9807,
   "secondEndPos" : 9807
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The name is on the GET or SET node.",
+  "secondLabel" : "// The name is on the GET or SET node.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 9829,
+  "secondPos" : 9829,
+  "firstEndPos" : 9867,
+  "secondEndPos" : 9867
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14684,6 +14981,17 @@
   "firstEndPos" : 10014,
   "secondEndPos" : 10014
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add the property name.",
+  "secondLabel" : "// Add the property name.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 10027,
+  "secondPos" : 10027,
+  "firstEndPos" : 10052,
+  "secondEndPos" : 10052
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14782,6 +15090,28 @@
   "secondPos" : 10085,
   "firstEndPos" : 10100,
   "secondEndPos" : 10087
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not encode literally any non-literal characters that were",
+  "secondLabel" : "// do not encode literally any non-literal characters that were",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 10113,
+  "secondPos" : 10148,
+  "firstEndPos" : 10176,
+  "secondEndPos" : 10211
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unicode escaped.",
+  "secondLabel" : "// unicode escaped.",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 10189,
+  "secondPos" : 10224,
+  "firstEndPos" : 10208,
+  "secondEndPos" : 10243
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
@@ -14925,6 +15255,17 @@
   "secondPos" : 10318,
   "firstEndPos" : 10413,
   "secondEndPos" : 10588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Determine if the string is a simple number.",
+  "secondLabel" : "// Determine if the string is a simple number.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10295,
+  "secondPos" : 10330,
+  "firstEndPos" : 10341,
+  "secondEndPos" : 10376
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16323,6 +16664,17 @@
   "firstEndPos" : 11125,
   "secondEndPos" : 11300
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// VAR doesn't include ';' since it gets used in expressions",
+  "secondLabel" : "// VAR doesn't include ';' since it gets used in expressions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11139,
+  "secondPos" : 11314,
+  "firstEndPos" : 11199,
+  "secondEndPos" : 11374
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16630,6 +16982,28 @@
   "secondPos" : 11523,
   "firstEndPos" : 11362,
   "secondEndPos" : 11537
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Prefer to break lines in between top-level statements",
+  "secondLabel" : "// Prefer to break lines in between top-level statements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11389,
+  "secondPos" : 11564,
+  "firstEndPos" : 11445,
+  "secondEndPos" : 11620
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because top level statements are more homogeneous.",
+  "secondLabel" : "// because top level statements are more homogeneous.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11456,
+  "secondPos" : 11631,
+  "firstEndPos" : 11509,
+  "secondEndPos" : 11684
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21658,6 +22032,28 @@
   "firstEndPos" : 14535,
   "secondEndPos" : 14710
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A non-zero post-prop value indicates a post inc/dec, default of zero",
+  "secondLabel" : "// A non-zero post-prop value indicates a post inc/dec, default of zero",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14546,
+  "secondPos" : 14721,
+  "firstEndPos" : 14617,
+  "secondEndPos" : 14792
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is a pre-inc/dec.",
+  "secondLabel" : "// is a pre-inc/dec.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14626,
+  "secondPos" : 14801,
+  "firstEndPos" : 14646,
+  "secondEndPos" : 14821
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22130,6 +22526,105 @@
   "secondPos" : 15061,
   "firstEndPos" : 14896,
   "secondEndPos" : 15071
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We have two special cases here:",
+  "secondLabel" : "// We have two special cases here:",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14906,
+  "secondPos" : 15081,
+  "firstEndPos" : 14940,
+  "secondEndPos" : 15115
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1) If the left hand side of the call is a direct reference to eval,",
+  "secondLabel" : "// 1) If the left hand side of the call is a direct reference to eval,",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14949,
+  "secondPos" : 15124,
+  "firstEndPos" : 15019,
+  "secondEndPos" : 15194
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then it must have a DIRECT_EVAL annotation. If it does not, then",
+  "secondLabel" : "// then it must have a DIRECT_EVAL annotation. If it does not, then",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15028,
+  "secondPos" : 15203,
+  "firstEndPos" : 15095,
+  "secondEndPos" : 15270
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that means it was originally an indirect call to eval, and that",
+  "secondLabel" : "// that means it was originally an indirect call to eval, and that",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15104,
+  "secondPos" : 15279,
+  "firstEndPos" : 15170,
+  "secondEndPos" : 15345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// indirectness must be preserved.",
+  "secondLabel" : "// indirectness must be preserved.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15179,
+  "secondPos" : 15354,
+  "firstEndPos" : 15213,
+  "secondEndPos" : 15388
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2) If the left hand side of the call is a property reference,",
+  "secondLabel" : "// 2) If the left hand side of the call is a property reference,",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15222,
+  "secondPos" : 15397,
+  "firstEndPos" : 15286,
+  "secondEndPos" : 15461
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then the call must not a FREE_CALL annotation. If it does, then",
+  "secondLabel" : "// then the call must not a FREE_CALL annotation. If it does, then",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15295,
+  "secondPos" : 15470,
+  "firstEndPos" : 15361,
+  "secondEndPos" : 15536
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that means it was originally an call without an explicit this and",
+  "secondLabel" : "// that means it was originally an call without an explicit this and",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15370,
+  "secondPos" : 15545,
+  "firstEndPos" : 15438,
+  "secondEndPos" : 15613
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that must be preserved.",
+  "secondLabel" : "// that must be preserved.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15447,
+  "secondPos" : 15622,
+  "firstEndPos" : 15473,
+  "secondEndPos" : 15648
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -26366,6 +26861,39 @@
   "firstEndPos" : 18091,
   "secondEndPos" : 18266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the first child contains a CALL, then claim higher precedence",
+  "secondLabel" : "// If the first child contains a CALL, then claim higher precedence",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 18103,
+  "secondPos" : 18278,
+  "firstEndPos" : 18170,
+  "secondEndPos" : 18345
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to force parentheses. Otherwise, when parsed, NEW will bind to the",
+  "secondLabel" : "// to force parentheses. Otherwise, when parsed, NEW will bind to the",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 18179,
+  "secondPos" : 18354,
+  "firstEndPos" : 18248,
+  "secondEndPos" : 18423
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first viable parentheses (don't traverse into functions).",
+  "secondLabel" : "// first viable parentheses (don't traverse into functions).",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 18257,
+  "secondPos" : 18432,
+  "firstEndPos" : 18317,
+  "secondEndPos" : 18492
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26739,6 +27267,17 @@
   "secondPos" : 18671,
   "firstEndPos" : 18506,
   "secondEndPos" : 18681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// '()' is optional when no arguments are present",
+  "secondLabel" : "// '()' is optional when no arguments are present",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 18518,
+  "secondPos" : 18693,
+  "firstEndPos" : 18567,
+  "secondEndPos" : 18742
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -28841,6 +29380,28 @@
   "firstEndPos" : 20366,
   "secondEndPos" : 20720
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Object literal property names don't have to be quoted if they",
+  "secondLabel" : "// Object literal property names don't have to be quoted if they",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19652,
+  "secondPos" : 19934,
+  "firstEndPos" : 19716,
+  "secondEndPos" : 19998
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are not JavaScript keywords",
+  "secondLabel" : "// are not JavaScript keywords",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19729,
+  "secondPos" : 20011,
+  "firstEndPos" : 19759,
+  "secondEndPos" : 20041
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -29237,6 +29798,28 @@
   "firstEndPos" : 19963,
   "secondEndPos" : 20080
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do not encode literally any non-literal characters that",
+  "secondLabel" : "// do not encode literally any non-literal characters that",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 19980,
+  "secondPos" : 20195,
+  "firstEndPos" : 20038,
+  "secondEndPos" : 20253
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// were unicode escaped.",
+  "secondLabel" : "// were unicode escaped.",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 20055,
+  "secondPos" : 20270,
+  "firstEndPos" : 20079,
+  "secondEndPos" : 20294
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -29445,6 +30028,17 @@
   "secondPos" : 20379,
   "firstEndPos" : 20289,
   "secondEndPos" : 20643
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Determine if the string is a simple number.",
+  "secondLabel" : "// Determine if the string is a simple number.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20200,
+  "secondPos" : 20395,
+  "firstEndPos" : 20246,
+  "secondEndPos" : 20441
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31349,6 +31943,28 @@
   "firstEndPos" : 21360,
   "secondEndPos" : 21714
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This node is auto generated in anonymous functions and should just get",
+  "secondLabel" : "// This node is auto generated in anonymous functions and should just get",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 21368,
+  "secondPos" : 21722,
+  "firstEndPos" : 21441,
+  "secondEndPos" : 21795
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignored for our purposes.",
+  "secondLabel" : "// ignored for our purposes.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 21448,
+  "secondPos" : 21802,
+  "firstEndPos" : 21476,
+  "secondEndPos" : 21830
+}, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
   "firstLabel" : "",
@@ -31645,6 +32261,17 @@
   "secondPos" : 22478,
   "firstEndPos" : 21707,
   "secondEndPos" : 22523
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21662,
+  "secondPos" : 22478,
+  "firstEndPos" : 21669,
+  "secondEndPos" : 22485
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -32130,6 +32757,17 @@
   "firstEndPos" : 22068,
   "secondEndPos" : 22884
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22041,
+  "secondPos" : 22857,
+  "firstEndPos" : 22047,
+  "secondEndPos" : 22863
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "n",
@@ -32162,6 +32800,17 @@
   "secondPos" : 22890,
   "firstEndPos" : 22145,
   "secondEndPos" : 22961
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22074,
+  "secondPos" : 22890,
+  "firstEndPos" : 22080,
+  "secondEndPos" : 22896
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -32624,6 +33273,28 @@
   "secondPos" : 23178,
   "firstEndPos" : 22384,
   "secondEndPos" : 23200
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Strip unneeded blocks, that is blocks with <2 children unless",
+  "secondLabel" : "// Strip unneeded blocks, that is blocks with <2 children unless",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22398,
+  "secondPos" : 23214,
+  "firstEndPos" : 22462,
+  "secondEndPos" : 23278
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the CodePrinter specifically wants to keep them.",
+  "secondLabel" : "// the CodePrinter specifically wants to keep them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22467,
+  "secondPos" : 23283,
+  "firstEndPos" : 22518,
+  "secondEndPos" : 23334
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -33351,6 +34022,39 @@
   "firstEndPos" : 23584,
   "secondEndPos" : 24400
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Hack around a couple of browser bugs:",
+  "secondLabel" : "// Hack around a couple of browser bugs:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22897,
+  "secondPos" : 23713,
+  "firstEndPos" : 22937,
+  "secondEndPos" : 23753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   Safari needs a block around function declarations.",
+  "secondLabel" : "//   Safari needs a block around function declarations.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22946,
+  "secondPos" : 23762,
+  "firstEndPos" : 23001,
+  "secondEndPos" : 23817
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   IE6/7 needs a block around DOs.",
+  "secondLabel" : "//   IE6/7 needs a block around DOs.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23010,
+  "secondPos" : 23826,
+  "firstEndPos" : 23046,
+  "secondEndPos" : 23862
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -34011,6 +34715,17 @@
   "firstEndPos" : 23576,
   "secondEndPos" : 24392
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Continue with the only child.",
+  "secondLabel" : "// Continue with the only child.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23489,
+  "secondPos" : 24305,
+  "firstEndPos" : 23521,
+  "secondEndPos" : 24337
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -34440,6 +35155,28 @@
   "firstEndPos" : 23790,
   "secondEndPos" : 24606
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// VAR doesn't include ';' since it gets used in expressions - so any",
+  "secondLabel" : "// VAR doesn't include ';' since it gets used in expressions - so any",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23800,
+  "secondPos" : 24616,
+  "firstEndPos" : 23869,
+  "secondEndPos" : 24685
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// VAR in a statement context needs a call to endStatement() here.",
+  "secondLabel" : "// VAR in a statement context needs a call to endStatement() here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23876,
+  "secondPos" : 24692,
+  "firstEndPos" : 23942,
+  "secondEndPos" : 24758
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -34626,6 +35363,17 @@
   "secondPos" : 24866,
   "firstEndPos" : 24125,
   "secondEndPos" : 24941
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 24050,
+  "secondPos" : 24866,
+  "firstEndPos" : 24057,
+  "secondEndPos" : 24873
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -35100,6 +35848,39 @@
   "firstEndPos" : 24860,
   "secondEndPos" : 25676
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For labels with block children, we need to ensure that a",
+  "secondLabel" : "// For labels with block children, we need to ensure that a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24408,
+  "secondPos" : 25224,
+  "firstEndPos" : 24467,
+  "secondEndPos" : 25283
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// labeled FUNCTION or DO isn't generated when extraneous BLOCKs",
+  "secondLabel" : "// labeled FUNCTION or DO isn't generated when extraneous BLOCKs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24476,
+  "secondPos" : 25292,
+  "firstEndPos" : 24540,
+  "secondEndPos" : 25356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are skipped.",
+  "secondLabel" : "// are skipped.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24549,
+  "secondPos" : 25365,
+  "firstEndPos" : 24564,
+  "secondEndPos" : 25380
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -35308,6 +36089,28 @@
   "secondPos" : 25513,
   "firstEndPos" : 24852,
   "secondEndPos" : 25668
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Either a empty statement or an block with more than one child,",
+  "secondLabel" : "// Either a empty statement or an block with more than one child,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24709,
+  "secondPos" : 25525,
+  "firstEndPos" : 24774,
+  "secondEndPos" : 25590
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// way it isn't a FUNCTION or DO.",
+  "secondLabel" : "// way it isn't a FUNCTION or DO.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24785,
+  "secondPos" : 25601,
+  "firstEndPos" : 24818,
+  "secondEndPos" : 25634
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -35594,6 +36397,17 @@
   "secondPos" : 25849,
   "firstEndPos" : 25059,
   "secondEndPos" : 25875
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 25033,
+  "secondPos" : 25849,
+  "firstEndPos" : 25038,
+  "secondEndPos" : 25854
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -38202,6 +39016,17 @@
   "firstEndPos" : 26939,
   "secondEndPos" : 27755
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26852,
+  "secondPos" : 27668,
+  "firstEndPos" : 26858,
+  "secondEndPos" : 27674
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "firstInList",
@@ -39852,6 +40677,17 @@
   "firstEndPos" : 27685,
   "secondEndPos" : 28501
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// could count the quotes and pick the optimal quote character",
+  "secondLabel" : "// could count the quotes and pick the optimal quote character",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27692,
+  "secondPos" : 28508,
+  "firstEndPos" : 27754,
+  "secondEndPos" : 28570
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -40457,6 +41293,17 @@
   "firstEndPos" : 28132,
   "secondEndPos" : 28948
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// more double quotes so escape the single quotes",
+  "secondLabel" : "// more double quotes so escape the single quotes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28003,
+  "secondPos" : 28819,
+  "firstEndPos" : 28052,
+  "secondEndPos" : 28868
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -40632,6 +41479,17 @@
   "secondPos" : 28954,
   "firstEndPos" : 28269,
   "secondEndPos" : 29085
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// more single quotes so escape the doubles",
+  "secondLabel" : "// more single quotes so escape the doubles",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28146,
+  "secondPos" : 28962,
+  "firstEndPos" : 28189,
+  "secondEndPos" : 29005
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -41457,6 +42315,17 @@
   "secondPos" : 29573,
   "firstEndPos" : 28761,
   "secondEndPos" : 29577
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* If the user doesn't want to specify an output charset encoder, assume\n     they want Latin/ASCII characters only.\n   */",
+  "secondLabel" : "/* If the user doesn't want to specify an output charset encoder, assume\n     they want Latin/ASCII characters only.\n   */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 28771,
+  "secondPos" : 29587,
+  "firstEndPos" : 28893,
+  "secondEndPos" : 29709
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -43339,6 +44208,17 @@
   "firstEndPos" : 29843,
   "secondEndPos" : 30659
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Break --> into --\\> or ]]> into ]]\\>",
+  "secondLabel" : "// Break --> into --\\> or ]]> into ]]\\>",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 29867,
+  "secondPos" : 30683,
+  "firstEndPos" : 29906,
+  "secondEndPos" : 30722
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -44252,6 +45132,17 @@
   "firstEndPos" : 30190,
   "secondEndPos" : 31006
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Break </script into <\\/script",
+  "secondLabel" : "// Break </script into <\\/script",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 30202,
+  "secondPos" : 31018,
+  "firstEndPos" : 30234,
+  "secondEndPos" : 31050
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -44328,6 +45219,17 @@
   "secondPos" : 31087,
   "firstEndPos" : 30280,
   "secondEndPos" : 31096
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Break <!-- into <\\!--",
+  "secondLabel" : "// Break <!-- into <\\!--",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 30293,
+  "secondPos" : 31109,
+  "firstEndPos" : 30317,
+  "secondEndPos" : 31133
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -45066,6 +45968,28 @@
   "firstEndPos" : 30760,
   "secondEndPos" : 31576
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we're given an outputCharsetEncoder, then check if the",
+  "secondLabel" : "// If we're given an outputCharsetEncoder, then check if the",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 30771,
+  "secondPos" : 31587,
+  "firstEndPos" : 30831,
+  "secondEndPos" : 31647
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  character can be represented in this character set.",
+  "secondLabel" : "//  character can be represented in this character set.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 30842,
+  "secondPos" : 31658,
+  "firstEndPos" : 30897,
+  "secondEndPos" : 31713
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -45308,6 +46232,17 @@
   "firstEndPos" : 31162,
   "secondEndPos" : 31978
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Unicode-escape the character.",
+  "secondLabel" : "// Unicode-escape the character.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31060,
+  "secondPos" : 31876,
+  "firstEndPos" : 31092,
+  "secondEndPos" : 31908
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -45384,6 +46319,39 @@
   "secondPos" : 31996,
   "firstEndPos" : 31775,
   "secondEndPos" : 32591
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// No charsetEncoder provided - pass straight latin characters",
+  "secondLabel" : "// No charsetEncoder provided - pass straight latin characters",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31194,
+  "secondPos" : 32010,
+  "firstEndPos" : 31256,
+  "secondEndPos" : 32072
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// through, and escape the rest.  Doing the explicit character",
+  "secondLabel" : "// through, and escape the rest.  Doing the explicit character",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31269,
+  "secondPos" : 32085,
+  "firstEndPos" : 31331,
+  "secondEndPos" : 32147
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check is measurably faster than using the CharsetEncoder.",
+  "secondLabel" : "// check is measurably faster than using the CharsetEncoder.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31344,
+  "secondPos" : 32160,
+  "firstEndPos" : 31404,
+  "secondEndPos" : 32220
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -45604,6 +46572,39 @@
   "secondPos" : 32309,
   "firstEndPos" : 31763,
   "secondEndPos" : 32579
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Other characters can be misinterpreted by some js parsers,",
+  "secondLabel" : "// Other characters can be misinterpreted by some js parsers,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31509,
+  "secondPos" : 32325,
+  "firstEndPos" : 31570,
+  "secondEndPos" : 32386
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// or perhaps mangled by proxies along the way,",
+  "secondLabel" : "// or perhaps mangled by proxies along the way,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31585,
+  "secondPos" : 32401,
+  "firstEndPos" : 31632,
+  "secondEndPos" : 32448
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we play it safe and unicode escape them.",
+  "secondLabel" : "// so we play it safe and unicode escape them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31647,
+  "secondPos" : 32463,
+  "firstEndPos" : 31693,
+  "secondEndPos" : 32509
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -45913,6 +46914,17 @@
   "firstEndPos" : 32535,
   "secondEndPos" : 33351
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First check if escaping is needed at all -- in most cases it isn't.",
+  "secondLabel" : "// First check if escaping is needed at all -- in most cases it isn't.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31892,
+  "secondPos" : 32708,
+  "firstEndPos" : 31962,
+  "secondEndPos" : 32778
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -46022,6 +47034,17 @@
   "secondPos" : 32823,
   "firstEndPos" : 32008,
   "secondEndPos" : 32824
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Now going through the string to escape non-latin characters if needed.",
+  "secondLabel" : "// Now going through the string to escape non-latin characters if needed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32021,
+  "secondPos" : 32837,
+  "firstEndPos" : 32094,
+  "secondEndPos" : 32910
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -46408,6 +47431,39 @@
   "firstEndPos" : 32207,
   "secondEndPos" : 33023
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Identifiers should always go to Latin1/ ASCII characters because",
+  "secondLabel" : "// Identifiers should always go to Latin1/ ASCII characters because",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32216,
+  "secondPos" : 33032,
+  "firstEndPos" : 32283,
+  "secondEndPos" : 33099
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// different browser's rules for valid identifier characters are",
+  "secondLabel" : "// different browser's rules for valid identifier characters are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32290,
+  "secondPos" : 33106,
+  "firstEndPos" : 32354,
+  "secondEndPos" : 33170
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// crazy.",
+  "secondLabel" : "// crazy.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32361,
+  "secondPos" : 33177,
+  "firstEndPos" : 32370,
+  "secondEndPos" : 33186
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -46782,6 +47838,17 @@
   "firstEndPos" : 32606,
   "secondEndPos" : 33422
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32547,
+  "secondPos" : 33363,
+  "firstEndPos" : 32553,
+  "secondEndPos" : 33369
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "maxCount",
@@ -46814,6 +47881,17 @@
   "secondPos" : 33428,
   "firstEndPos" : 32695,
   "secondEndPos" : 33511
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32612,
+  "secondPos" : 33428,
+  "firstEndPos" : 32619,
+  "secondEndPos" : 33435
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -48553,6 +49631,39 @@
   "firstEndPos" : 33484,
   "secondEndPos" : 34300
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Information on the current context. Used for disambiguating special cases.",
+  "secondLabel" : "// Information on the current context. Used for disambiguating special cases.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 33493,
+  "secondPos" : 34309,
+  "firstEndPos" : 33570,
+  "secondEndPos" : 34386
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For example, a \"{\" could indicate the start of an object literal or a",
+  "secondLabel" : "// For example, a \"{\" could indicate the start of an object literal or a",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 33573,
+  "secondPos" : 34389,
+  "firstEndPos" : 33645,
+  "secondEndPos" : 34461
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// block, depending on the current context.",
+  "secondLabel" : "// block, depending on the current context.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 33648,
+  "secondPos" : 34464,
+  "firstEndPos" : 33691,
+  "secondEndPos" : 34507
+}, {
   "firstType" : "EnumDeclaration",
   "secondType" : "EnumDeclaration",
   "firstLabel" : "",
@@ -49466,6 +50577,17 @@
   "firstEndPos" : 35140,
   "secondEndPos" : 35956
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35084,
+  "secondPos" : 35900,
+  "firstEndPos" : 35088,
+  "secondEndPos" : 35904
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -49829,6 +50951,17 @@
   "firstEndPos" : 35421,
   "secondEndPos" : 36237
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// StringBuilder does not throw IOException.",
+  "secondLabel" : "// StringBuilder does not throw IOException.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35333,
+  "secondPos" : 36149,
+  "firstEndPos" : 35377,
+  "secondEndPos" : 36193
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -49950,6 +51083,17 @@
   "firstEndPos" : 35572,
   "secondEndPos" : 36388
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35531,
+  "secondPos" : 36347,
+  "firstEndPos" : 35537,
+  "secondEndPos" : 36353
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "codePoint",
@@ -49982,6 +51126,17 @@
   "secondPos" : 36394,
   "firstEndPos" : 35651,
   "secondEndPos" : 36467
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35578,
+  "secondPos" : 36394,
+  "firstEndPos" : 35584,
+  "secondEndPos" : 36400
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -50246,6 +51401,50 @@
   "secondPos" : 36650,
   "firstEndPos" : 36287,
   "secondEndPos" : 37103
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Handle supplementary unicode values which are not representable in",
+  "secondLabel" : "// Handle supplementary unicode values which are not representable in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35842,
+  "secondPos" : 36658,
+  "firstEndPos" : 35911,
+  "secondEndPos" : 36727
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// javascript.  We deal with these by escaping them as two 4B sequences",
+  "secondLabel" : "// javascript.  We deal with these by escaping them as two 4B sequences",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35918,
+  "secondPos" : 36734,
+  "firstEndPos" : 35989,
+  "secondEndPos" : 36805
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so that they will round-trip properly when sent from java to javascript",
+  "secondLabel" : "// so that they will round-trip properly when sent from java to javascript",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35996,
+  "secondPos" : 36812,
+  "firstEndPos" : 36070,
+  "secondEndPos" : 36886
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and back.",
+  "secondLabel" : "// and back.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36077,
+  "secondPos" : 36893,
+  "firstEndPos" : 36089,
+  "secondEndPos" : 36905
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

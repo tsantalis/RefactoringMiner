@@ -1781,6 +1781,17 @@
   "firstEndPos" : 1378,
   "secondEndPos" : 1378
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1321,
+  "secondPos" : 1321,
+  "firstEndPos" : 1327,
+  "secondEndPos" : 1327
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "name",
@@ -1813,6 +1824,17 @@
   "secondPos" : 1386,
   "firstEndPos" : 1422,
   "secondEndPos" : 1422
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1386,
+  "secondPos" : 1386,
+  "firstEndPos" : 1393,
+  "secondEndPos" : 1393
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2056,6 +2078,17 @@
   "firstEndPos" : 1678,
   "secondEndPos" : 1678
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1621,
+  "secondPos" : 1621,
+  "firstEndPos" : 1627,
+  "secondEndPos" : 1627
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "name",
@@ -2089,6 +2122,17 @@
   "firstEndPos" : 1738,
   "secondEndPos" : 1738
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1686,
+  "secondPos" : 1686,
+  "firstEndPos" : 1693,
+  "secondEndPos" : 1693
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " true if a known named entity in the base set",
@@ -2110,6 +2154,17 @@
   "secondPos" : 1746,
   "firstEndPos" : 1773,
   "secondEndPos" : 1773
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1746,
+  "secondPos" : 1746,
+  "firstEndPos" : 1750,
+  "secondEndPos" : 1750
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -2397,6 +2452,17 @@
   "firstEndPos" : 1998,
   "secondEndPos" : 1998
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1953,
+  "secondPos" : 1953,
+  "firstEndPos" : 1959,
+  "secondEndPos" : 1959
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "name",
@@ -2430,6 +2496,17 @@
   "firstEndPos" : 2093,
   "secondEndPos" : 2093
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2006,
+  "secondPos" : 2006,
+  "firstEndPos" : 2013,
+  "secondEndPos" : 2013
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the Character value of the named entity (e.g. '",
@@ -2451,6 +2528,17 @@
   "secondPos" : 2061,
   "firstEndPos" : 2073,
   "secondEndPos" : 2073
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@literal",
+  "secondLabel" : "@literal",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2061,
+  "secondPos" : 2061,
+  "firstEndPos" : 2069,
+  "secondEndPos" : 2069
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2484,6 +2572,17 @@
   "secondPos" : 2079,
   "firstEndPos" : 2091,
   "secondEndPos" : 2091
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@literal",
+  "secondLabel" : "@literal",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2079,
+  "secondPos" : 2079,
+  "firstEndPos" : 2087,
+  "secondEndPos" : 2087
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3177,6 +3276,17 @@
   "secondPos" : 2425,
   "firstEndPos" : 2433,
   "secondEndPos" : 2433
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this method is ugly, and does a lot. but other breakups cause rescanning and stringbuilder generations",
+  "secondLabel" : "// this method is ugly, and does a lot. but other breakups cause rescanning and stringbuilder generations",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2448,
+  "secondPos" : 2448,
+  "firstEndPos" : 2553,
+  "secondEndPos" : 2553
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -5147,6 +5257,17 @@
   "firstEndPos" : 3716,
   "secondEndPos" : 3716
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// surrogate pairs, split implementation for efficiency on single char common case (saves creating strings, char[]):",
+  "secondLabel" : "// surrogate pairs, split implementation for efficiency on single char common case (saves creating strings, char[]):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3762,
+  "secondPos" : 3762,
+  "firstEndPos" : 3878,
+  "secondEndPos" : 3878
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5300,6 +5421,17 @@
   "secondPos" : 3987,
   "firstEndPos" : 3996,
   "secondEndPos" : 3996
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// html specific and required escapes:",
+  "secondLabel" : "// html specific and required escapes:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4014,
+  "secondPos" : 4014,
+  "firstEndPos" : 4052,
+  "secondEndPos" : 4052
 }, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",
@@ -5696,6 +5828,17 @@
   "secondPos" : 4470,
   "firstEndPos" : 4473,
   "secondEndPos" : 4473
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// escape when in character data or when in a xml attribue val; not needed in html attr val",
+  "secondLabel" : "// escape when in character data or when in a xml attribue val; not needed in html attr val",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 4499,
+  "secondPos" : 4499,
+  "firstEndPos" : 4590,
+  "secondEndPos" : 4590
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7325,6 +7468,17 @@
   "firstEndPos" : 5794,
   "secondEndPos" : 5828
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// uses fallback encoder for simplicity",
+  "secondLabel" : "// uses fallback encoder for simplicity",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 5797,
+  "secondPos" : 5831,
+  "firstEndPos" : 5836,
+  "secondEndPos" : 5870
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7875,6 +8029,17 @@
   "firstEndPos" : 6189,
   "secondEndPos" : 6223
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6158,
+  "secondPos" : 6192,
+  "firstEndPos" : 6164,
+  "secondEndPos" : 6198
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "string",
@@ -7908,6 +8073,17 @@
   "firstEndPos" : 6287,
   "secondEndPos" : 6321
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6197,
+  "secondPos" : 6231,
+  "firstEndPos" : 6203,
+  "secondEndPos" : 6237
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "strict",
@@ -7940,6 +8116,17 @@
   "secondPos" : 6329,
   "firstEndPos" : 6319,
   "secondEndPos" : 6353
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6295,
+  "secondPos" : 6329,
+  "firstEndPos" : 6302,
+  "secondEndPos" : 6336
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8172,6 +8359,17 @@
   "firstEndPos" : 6441,
   "secondEndPos" : 6475
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * Provides a fast-path for Encoder.canEncode, which drastically improves performance on Android post JellyBean.\n     * After KitKat, the implementation of canEncode degrades to the point of being useless. For non ASCII or UTF,\n     * performance may be bad. We can add more encoders for common character sets that are impacted by performance\n     * issues on Android if required.\n     *\n     * Benchmarks:     *\n     * OLD toHtml() impl v New (fastpath) in millis\n     * Wiki: 1895, 16\n     * CNN: 6378, 55\n     * Alterslash: 3013, 28\n     * Jsoup: 167, 2\n     */",
+  "secondLabel" : "/*\n     * Provides a fast-path for Encoder.canEncode, which drastically improves performance on Android post JellyBean.\n     * After KitKat, the implementation of canEncode degrades to the point of being useless. For non ASCII or UTF,\n     * performance may be bad. We can add more encoders for common character sets that are impacted by performance\n     * issues on Android if required.\n     *\n     * Benchmarks:     *\n     * OLD toHtml() impl v New (fastpath) in millis\n     * Wiki: 1895, 16\n     * CNN: 6378, 55\n     * Alterslash: 3013, 28\n     * Jsoup: 167, 2\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6455,
+  "secondPos" : 6489,
+  "firstEndPos" : 7026,
+  "secondEndPos" : 7060
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -8392,6 +8590,17 @@
   "firstEndPos" : 7543,
   "secondEndPos" : 7577
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo add more charset tests if impacted by Android's bad perf in canEncode",
+  "secondLabel" : "// todo add more charset tests if impacted by Android's bad perf in canEncode",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7147,
+  "secondPos" : 7181,
+  "firstEndPos" : 7224,
+  "secondEndPos" : 7258
+}, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",
   "firstLabel" : "",
@@ -8534,6 +8743,17 @@
   "secondPos" : 7388,
   "firstEndPos" : 7358,
   "secondEndPos" : 7392
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// real is:!(Character.isLowSurrogate(c) || Character.isHighSurrogate(c)); - but already check above",
+  "secondLabel" : "// real is:!(Character.isLowSurrogate(c) || Character.isHighSurrogate(c)); - but already check above",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7360,
+  "secondPos" : 7394,
+  "firstEndPos" : 7460,
+  "secondEndPos" : 7494
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
@@ -9019,6 +9239,17 @@
   "firstEndPos" : 7773,
   "secondEndPos" : 7807
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// covers UTF-8, UTF-16, et al",
+  "secondLabel" : "// covers UTF-8, UTF-16, et al",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 7776,
+  "secondPos" : 7810,
+  "firstEndPos" : 7806,
+  "secondEndPos" : 7840
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -9062,6 +9293,17 @@
   "secondPos" : 7888,
   "firstEndPos" : 7862,
   "secondEndPos" : 7896
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// xhtml has restricted entities",
+  "secondLabel" : "// xhtml has restricted entities",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7886,
+  "secondPos" : 7920,
+  "firstEndPos" : 7918,
+  "secondEndPos" : 7952
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -9580,6 +9822,17 @@
   "firstEndPos" : 8218,
   "secondEndPos" : 8252
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// most common / default",
+  "secondLabel" : "// most common / default",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8222,
+  "secondPos" : 8256,
+  "firstEndPos" : 8246,
+  "secondEndPos" : 8280
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9755,6 +10008,17 @@
   "secondPos" : 8351,
   "firstEndPos" : 8343,
   "secondEndPos" : 8377
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// extended and overblown.",
+  "secondLabel" : "// extended and overblown.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8346,
+  "secondPos" : 8380,
+  "firstEndPos" : 8372,
+  "secondEndPos" : 8406
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12813,6 +13077,17 @@
   "secondPos" : 9828,
   "firstEndPos" : 9966,
   "secondEndPos" : 10000
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dupe, prefer the lower case version",
+  "secondLabel" : "// dupe, prefer the lower case version",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9812,
+  "secondPos" : 9846,
+  "firstEndPos" : 9850,
+  "secondEndPos" : 9884
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

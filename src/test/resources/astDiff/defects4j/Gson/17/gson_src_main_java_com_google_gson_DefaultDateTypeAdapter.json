@@ -10,6 +10,17 @@
   "firstEndPos" : 4720,
   "secondEndPos" : 4685
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -362,6 +373,17 @@
   "firstEndPos" : 1165,
   "secondEndPos" : 1165
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1142,
+  "secondPos" : 1142,
+  "firstEndPos" : 1149,
+  "secondEndPos" : 1149
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Inderjeet Singh",
@@ -383,6 +405,17 @@
   "secondPos" : 1169,
   "firstEndPos" : 1188,
   "secondEndPos" : 1188
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1169,
+  "secondPos" : 1169,
+  "firstEndPos" : 1176,
+  "secondEndPos" : 1176
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3409,6 +3442,28 @@
   "firstEndPos" : 3040,
   "secondEndPos" : 3040
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// These methods need to be synchronized since JDK DateFormat classes are not thread-safe",
+  "secondLabel" : "// These methods need to be synchronized since JDK DateFormat classes are not thread-safe",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3049,
+  "secondPos" : 3049,
+  "firstEndPos" : 3138,
+  "secondEndPos" : 3138
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// See issue 162",
+  "secondLabel" : "// See issue 162",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3141,
+  "secondPos" : 3141,
+  "firstEndPos" : 3157,
+  "secondEndPos" : 3157
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4816,6 +4871,17 @@
   "secondPos" : 3904,
   "firstEndPos" : 4060,
   "secondEndPos" : 4025
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This must never happen: dateType is guarded in the primary constructor",
+  "secondLabel" : "// This must never happen: dateType is guarded in the primary constructor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3947,
+  "secondPos" : 3912,
+  "firstEndPos" : 4020,
+  "secondEndPos" : 3985
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

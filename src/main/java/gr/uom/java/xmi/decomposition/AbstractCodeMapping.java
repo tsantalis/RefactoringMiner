@@ -135,7 +135,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		if(longestCommonSuffix.startsWith(").")) {
 			longestCommonSuffix = longestCommonSuffix.substring(2);
 		}
-		if(longestCommonPrefix.endsWith(".") && !longestCommonSuffix.contains(longestCommonPrefix) &&
+		if(longestCommonPrefix.endsWith(".") && !longestCommonPrefix.contains(JAVA.ASSIGNMENT) && !longestCommonPrefix.startsWith("if(") &&
+				!longestCommonSuffix.startsWith(longestCommonPrefix) &&
 				(s1.equals(longestCommonPrefix + longestCommonSuffix) || s2.equals(longestCommonPrefix + longestCommonSuffix))) {
 			return true;
 		}

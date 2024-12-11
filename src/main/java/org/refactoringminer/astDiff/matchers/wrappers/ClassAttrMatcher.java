@@ -58,5 +58,6 @@ public class ClassAttrMatcher extends OptimizationAwareMatcher {
             UMLAnonymousClassDiff anonymousClassDiff = umlEnumConstantDiff.getAnonymousClassDiff().get();
             new AnonymousClassDiffMatcher(optimizationData, anonymousClassDiff).match(srcTree, dstTree, mappingStore);
         }
+        new CommentMatcher(optimizationData, umlEnumConstantDiff.getCommentListDiff()).match(srcTree, dstTree, mappingStore);
     }
 }

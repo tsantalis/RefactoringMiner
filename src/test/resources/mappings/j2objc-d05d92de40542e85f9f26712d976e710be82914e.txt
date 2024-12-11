@@ -22,11 +22,12 @@ line range:661-661==line range:773-773
 line range:662-662==line range:774-774
 line range:663-663==line range:775-775
 line range:665-665==line range:777-777
+line range:654-654==line range:766-766
 line range:658-664==line range:770-776
 line range:658-664==line range:770-776
 public visit(node LambdaExpression) : boolean -> public printBlockCallWrapper(binding IMethodBinding) : void
 line range:642-642==line range:704-704
-line range:641-641==line range:705-705
+line range:641-641==line range:698-698
 public visit(node LambdaExpression) : boolean -> public printLambdaCall(functionalInterface IMethodBinding, functionalTypeBinding ITypeBinding, methodBinding IMethodBinding, parameters List<VariableDeclaration>, isCapturing boolean) : void
 line range:638-638==line range:729-729
 public visit(node LambdaExpression) : boolean -> public visit(node LambdaExpression) : boolean

@@ -2501,14 +2501,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					else {
-						leavesT2.add(fragment);
+						if(!leavesT2.contains(fragment))
+							leavesT2.add(fragment);
 					}
 				}
 			}
 			leavesT2.addAll(operationBodyMapper.getNonMappedLeavesT2());
 			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT2()) {
 				for(AbstractExpression expression : composite.getExpressions()) {
-					expressionsT2.add(expression);
+					if(!expressionsT2.contains(expression))
+						expressionsT2.add(expression);
 				}
 			}
 			this.callsToExtractedMethod = callsToExtractedMethod(leavesT2);
@@ -3073,14 +3075,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 					}
 					else {
-						leavesT1.add(fragment);
+						if(!leavesT1.contains(fragment))
+							leavesT1.add(fragment);
 					}
 				}
 			}
 			leavesT1.addAll(operationBodyMapper.getNonMappedLeavesT1());
 			for(CompositeStatementObject composite : operationBodyMapper.getNonMappedInnerNodesT1()) {
 				for(AbstractExpression expression : composite.getExpressions()) {
-					expressionsT1.add(expression);
+					if(!expressionsT1.contains(expression))
+						expressionsT1.add(expression);
 				}
 			}
 			this.callsToInlinedMethod = callsToInlinedMethod(leavesT1);

@@ -123,8 +123,23 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	public boolean isExact() {
-		return (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) || argumentizedStringExactAfterTypeReplacement() ||
-				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement()) && !fragment1.isKeyword();
+		return  !fragment1.isKeyword() && (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) || argumentizedStringExactAfterTypeReplacement() ||
+				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement() || callChainMatch());
+	}
+
+	private boolean callChainMatch() {
+		String s1 = fragment1.getArgumentizedString();
+		String s2 = fragment2.getArgumentizedString();
+		String longestCommonPrefix = PrefixSuffixUtils.longestCommonPrefix(s1, s2);
+		String longestCommonSuffix = PrefixSuffixUtils.longestCommonSuffix(s1, s2);
+		if(longestCommonSuffix.startsWith(").")) {
+			longestCommonSuffix = longestCommonSuffix.substring(2);
+		}
+		if(longestCommonPrefix.endsWith(".") && !longestCommonSuffix.contains(longestCommonPrefix) &&
+				(s1.equals(longestCommonPrefix + longestCommonSuffix) || s2.equals(longestCommonPrefix + longestCommonSuffix))) {
+			return true;
+		}
+		return false;
 	}
 
 	private boolean argumentizedStringExactAfterTypeReplacement() {

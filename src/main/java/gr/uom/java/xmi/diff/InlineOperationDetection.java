@@ -279,6 +279,28 @@ public class InlineOperationDetection {
 		}
 		int mappings = operationBodyMapper.mappingsWithoutBlocks();
 		int nonMappedElementsT1 = operationBodyMapper.nonMappedElementsT1()-delegateStatements;
+		int nonMappedElementsT2 = operationBodyMapper.nonMappedElementsT2();
+		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
+			List<VariableDeclaration> variableDeclarations = mapping.getFragment1().getVariableDeclarations();
+			if(variableDeclarations.size() > 0) {
+				for(VariableDeclaration variableDeclaration : variableDeclarations) {
+					for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
+						if(leaf1.countableStatement() && leaf1.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+							nonMappedElementsT1--;
+							break;
+						}
+					}
+	 			}
+			}
+		}
+		for(VariableDeclaration variableDeclaration : operationBodyMapper.getContainer1().getParameterDeclarationList()) {
+			for(AbstractCodeFragment leaf1 : operationBodyMapper.getNonMappedLeavesT1()) {
+				if(leaf1.countableStatement() && leaf1.getString().equals(JAVA.RETURN_SPACE + variableDeclaration.getVariableName() + JAVA.STATEMENT_TERMINATION)) {
+					nonMappedElementsT1--;
+					break;
+				}
+			}
+		}
 		if(nonMappedElementsT1 == 1) {
 			for(AbstractCodeFragment fragment1 : operationBodyMapper.getNonMappedLeavesT1()) {
 				List<VariableDeclaration> variableDeclarations = fragment1.getVariableDeclarations();
@@ -305,6 +327,7 @@ public class InlineOperationDetection {
 		int exactMatches = exactMatchList.size();
 		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
 		return mappings > 0 && (mappings > nonMappedElementsT1 ||
+				(exactMatches >= mappings && nonMappedElementsT2 == 0) ||
 				(exactMatchesWithoutMatchesInNestedContainers == 1 && !exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException() && nonMappedElementsT1-exactMatchesWithoutMatchesInNestedContainers < 10) ||
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}

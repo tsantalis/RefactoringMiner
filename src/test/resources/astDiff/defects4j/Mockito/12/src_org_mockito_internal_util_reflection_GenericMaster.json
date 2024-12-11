@@ -230,6 +230,17 @@
   "firstEndPos" : 381,
   "secondEndPos" : 381
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 369,
+  "secondPos" : 369,
+  "firstEndPos" : 375,
+  "secondEndPos" : 375
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "field",
@@ -240,6 +251,17 @@
   "secondPos" : 376,
   "firstEndPos" : 381,
   "secondEndPos" : 381
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 390,
+  "secondPos" : 390,
+  "firstEndPos" : 397,
+  "secondEndPos" : 397
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -801,6 +823,17 @@
   "secondPos" : 745,
   "firstEndPos" : 707,
   "secondEndPos" : 751
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//in case of nested generics we don't go deep",
+  "secondLabel" : "//in case of nested generics we don't go deep",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 726,
+  "secondPos" : 833,
+  "firstEndPos" : 771,
+  "secondEndPos" : 878
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

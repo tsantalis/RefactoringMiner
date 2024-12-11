@@ -10,6 +10,17 @@
   "firstEndPos" : 10039,
   "secondEndPos" : 10072
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2004 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2004 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1649,6 +1660,39 @@
   "firstEndPos" : 2706,
   "secondEndPos" : 2706
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Vars that still need to be declared in externs. These will be declared",
+  "secondLabel" : "// Vars that still need to be declared in externs. These will be declared",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2711,
+  "secondPos" : 2711,
+  "firstEndPos" : 2784,
+  "secondEndPos" : 2784
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// at the end of the pass, or when we see the equivalent var declared",
+  "secondLabel" : "// at the end of the pass, or when we see the equivalent var declared",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2787,
+  "secondPos" : 2787,
+  "firstEndPos" : 2856,
+  "secondEndPos" : 2856
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in the normal code.",
+  "secondLabel" : "// in the normal code.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2859,
+  "secondPos" : 2859,
+  "firstEndPos" : 2881,
+  "secondEndPos" : 2881
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1869,6 +1913,17 @@
   "firstEndPos" : 2990,
   "secondEndPos" : 2990
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Whether this is the post-processing sanity check.",
+  "secondLabel" : "// Whether this is the post-processing sanity check.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2995,
+  "secondPos" : 2995,
+  "firstEndPos" : 3047,
+  "secondEndPos" : 3047
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1934,6 +1989,17 @@
   "secondPos" : 3072,
   "firstEndPos" : 3083,
   "secondEndPos" : 3083
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Whether extern checks emit error.",
+  "secondLabel" : "// Whether extern checks emit error.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3088,
+  "secondPos" : 3088,
+  "firstEndPos" : 3124,
+  "secondEndPos" : 3124
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2781,6 +2847,39 @@
   "secondPos" : 3560,
   "firstEndPos" : 4045,
   "secondEndPos" : 4045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't run externs-checking in sanity check mode. Normalization will",
+  "secondLabel" : "// Don't run externs-checking in sanity check mode. Normalization will",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3566,
+  "secondPos" : 3566,
+  "firstEndPos" : 3636,
+  "secondEndPos" : 3636
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove duplicate VAR declarations, which will make",
+  "secondLabel" : "// remove duplicate VAR declarations, which will make",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3641,
+  "secondPos" : 3641,
+  "firstEndPos" : 3694,
+  "secondEndPos" : 3694
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// externs look like they have assigns.",
+  "secondLabel" : "// externs look like they have assigns.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3699,
+  "secondPos" : 3699,
+  "firstEndPos" : 3738,
+  "secondEndPos" : 3738
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3673,6 +3772,17 @@
   "firstEndPos" : 4209,
   "secondEndPos" : 4209
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only a function can have an empty name.",
+  "secondLabel" : "// Only a function can have an empty name.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4218,
+  "secondPos" : 4218,
+  "firstEndPos" : 4260,
+  "secondEndPos" : 4260
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3870,6 +3980,28 @@
   "secondPos" : 4341,
   "firstEndPos" : 4347,
   "secondEndPos" : 4347
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A function declaration with an empty name passes Rhino,",
+  "secondLabel" : "// A function declaration with an empty name passes Rhino,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4358,
+  "secondPos" : 4358,
+  "firstEndPos" : 4416,
+  "secondEndPos" : 4416
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but is supposed to be a syntax error according to the spec.",
+  "secondLabel" : "// but is supposed to be a syntax error according to the spec.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4423,
+  "secondPos" : 4423,
+  "firstEndPos" : 4485,
+  "secondEndPos" : 4485
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4079,6 +4211,28 @@
   "secondPos" : 4596,
   "firstEndPos" : 4603,
   "secondEndPos" : 4603
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if this is a declaration for a var that has been declared",
+  "secondLabel" : "// Check if this is a declaration for a var that has been declared",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4615,
+  "secondPos" : 4615,
+  "firstEndPos" : 4681,
+  "secondEndPos" : 4681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// elsewhere. If so, mark it as a duplicate.",
+  "secondLabel" : "// elsewhere. If so, mark it as a duplicate.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4686,
+  "secondPos" : 4686,
+  "firstEndPos" : 4730,
+  "secondEndPos" : 4730
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4498,6 +4652,17 @@
   "firstEndPos" : 4955,
   "secondEndPos" : 4955
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check that the var has been declared.",
+  "secondLabel" : "// Check that the var has been declared.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4969,
+  "secondPos" : 4969,
+  "firstEndPos" : 5009,
+  "secondEndPos" : 5009
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4872,6 +5037,28 @@
   "firstEndPos" : 5271,
   "secondEndPos" : 5271
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// e.g. [ function foo() {} ], it's okay if \"foo\" isn't defined in the",
+  "secondLabel" : "// e.g. [ function foo() {} ], it's okay if \"foo\" isn't defined in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5167,
+  "secondPos" : 5167,
+  "firstEndPos" : 5237,
+  "secondEndPos" : 5237
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// current scope.",
+  "secondLabel" : "// current scope.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5246,
+  "secondPos" : 5246,
+  "firstEndPos" : 5263,
+  "secondEndPos" : 5263
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -4882,6 +5069,17 @@
   "secondPos" : 5277,
   "firstEndPos" : 5766,
   "secondEndPos" : 5766
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The extern checks are stricter, don't report a second error.",
+  "secondLabel" : "// The extern checks are stricter, don't report a second error.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5287,
+  "secondPos" : 5287,
+  "firstEndPos" : 5350,
+  "secondEndPos" : 5350
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5873,6 +6071,17 @@
   "firstEndPos" : 6031,
   "secondEndPos" : 6031
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The variable was defined in the same file. This is fine.",
+  "secondLabel" : "// The variable was defined in the same file. This is fine.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5952,
+  "secondPos" : 5952,
+  "firstEndPos" : 6011,
+  "secondEndPos" : 6011
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -5883,6 +6092,17 @@
   "secondPos" : 6018,
   "firstEndPos" : 6025,
   "secondEndPos" : 6025
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check module dependencies.",
+  "secondLabel" : "// Check module dependencies.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6037,
+  "secondPos" : 6037,
+  "firstEndPos" : 6066,
+  "secondEndPos" : 6066
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6478,6 +6698,17 @@
   "firstEndPos" : 6421,
   "secondEndPos" : 6421
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The module dependency was properly declared.",
+  "secondLabel" : "// The module dependency was properly declared.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6366,
+  "secondPos" : 6366,
+  "firstEndPos" : 6413,
+  "secondEndPos" : 6413
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -6709,6 +6940,17 @@
   "firstEndPos" : 6752,
   "secondEndPos" : 6752
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The variable reference violates a declared module dependency.",
+  "secondLabel" : "// The variable reference violates a declared module dependency.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6551,
+  "secondPos" : 6551,
+  "firstEndPos" : 6615,
+  "secondEndPos" : 6615
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6906,6 +7148,39 @@
   "secondPos" : 6758,
   "firstEndPos" : 7103,
   "secondEndPos" : 7103
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The variable reference is between two modules that have no",
+  "secondLabel" : "// The variable reference is between two modules that have no",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6772,
+  "secondPos" : 6772,
+  "firstEndPos" : 6833,
+  "secondEndPos" : 6833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dependency relationship. This should probably be considered an",
+  "secondLabel" : "// dependency relationship. This should probably be considered an",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6846,
+  "secondPos" : 6846,
+  "firstEndPos" : 6911,
+  "secondEndPos" : 6911
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// error, but just issue a warning for now.",
+  "secondLabel" : "// error, but just issue a warning for now.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6924,
+  "secondPos" : 6924,
+  "firstEndPos" : 6967,
+  "secondEndPos" : 6967
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7566,6 +7841,72 @@
   "secondPos" : 7503,
   "firstEndPos" : 7510,
   "secondEndPos" : 7510
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mark the variable as constant if it matches the coding convention",
+  "secondLabel" : "// Mark the variable as constant if it matches the coding convention",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7518,
+  "secondPos" : 7518,
+  "firstEndPos" : 7586,
+  "secondEndPos" : 7586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for constant vars.",
+  "secondLabel" : "// for constant vars.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7591,
+  "secondPos" : 7591,
+  "firstEndPos" : 7612,
+  "secondEndPos" : 7612
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE(nicksantos): honestly, i'm not sure how much this matters.",
+  "secondLabel" : "// NOTE(nicksantos): honestly, i'm not sure how much this matters.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7617,
+  "secondPos" : 7617,
+  "firstEndPos" : 7683,
+  "secondEndPos" : 7683
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// AFAIK, all people who use the CONST coding convention also",
+  "secondLabel" : "// AFAIK, all people who use the CONST coding convention also",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7688,
+  "secondPos" : 7688,
+  "firstEndPos" : 7749,
+  "secondEndPos" : 7749
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compile with undeclaredVars as errors. We have some test",
+  "secondLabel" : "// compile with undeclaredVars as errors. We have some test",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7754,
+  "secondPos" : 7754,
+  "firstEndPos" : 7813,
+  "secondEndPos" : 7813
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cases for this configuration though, and it makes them happier.",
+  "secondLabel" : "// cases for this configuration though, and it makes them happier.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7818,
+  "secondPos" : 7818,
+  "firstEndPos" : 7884,
+  "secondEndPos" : 7884
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8501,6 +8842,17 @@
   "secondPos" : 8626,
   "firstEndPos" : 8601,
   "secondEndPos" : 8634
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// These are okay.",
+  "secondLabel" : "// These are okay.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8615,
+  "secondPos" : 8648,
+  "firstEndPos" : 8633,
+  "secondEndPos" : 8666
 }, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",

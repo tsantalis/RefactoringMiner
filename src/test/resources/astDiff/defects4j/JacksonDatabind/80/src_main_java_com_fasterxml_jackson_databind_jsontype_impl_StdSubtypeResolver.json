@@ -263,6 +263,17 @@
   "firstEndPos" : 491,
   "secondEndPos" : 491
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 468,
+  "secondPos" : 468,
+  "firstEndPos" : 473,
+  "secondEndPos" : 473
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SubtypeResolver",
@@ -592,6 +603,17 @@
   "secondPos" : 757,
   "firstEndPos" : 760,
   "secondEndPos" : 760
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Subtype registration\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Subtype registration\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 766,
+  "secondPos" : 766,
+  "firstEndPos" : 932,
+  "secondEndPos" : 932
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -1748,6 +1770,17 @@
   "firstEndPos" : 1506,
   "secondEndPos" : 1506
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Resolution by class (serialization)\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Resolution by class (serialization)\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1520,
+  "secondPos" : 1520,
+  "firstEndPos" : 1701,
+  "secondEndPos" : 1701
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2132,6 +2165,17 @@
   "secondPos" : 1920,
   "firstEndPos" : 1945,
   "secondEndPos" : 1945
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for backwards compatibility, must allow null here:",
+  "secondLabel" : "// for backwards compatibility, must allow null here:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1957,
+  "secondPos" : 1957,
+  "firstEndPos" : 2010,
+  "secondEndPos" : 2010
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2562,6 +2606,17 @@
   "firstEndPos" : 2198,
   "secondEndPos" : 2198
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start with registered subtypes (which have precedence)",
+  "secondLabel" : "// start with registered subtypes (which have precedence)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2211,
+  "secondPos" : 2211,
+  "firstEndPos" : 2268,
+  "secondEndPos" : 2268
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2705,6 +2760,17 @@
   "firstEndPos" : 2750,
   "secondEndPos" : 2750
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is it a subtype of root type?",
+  "secondLabel" : "// is it a subtype of root type?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2388,
+  "secondPos" : 2388,
+  "firstEndPos" : 2420,
+  "secondEndPos" : 2420
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2825,6 +2891,17 @@
   "secondPos" : 2486,
   "firstEndPos" : 2736,
   "secondEndPos" : 2736
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yes",
+  "secondLabel" : "// yes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2488,
+  "secondPos" : 2488,
+  "firstEndPos" : 2494,
+  "secondEndPos" : 2494
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3089,6 +3166,17 @@
   "secondPos" : 2707,
   "firstEndPos" : 2716,
   "secondEndPos" : 2716
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then annotated types for property itself",
+  "secondLabel" : "// then annotated types for property itself",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2778,
+  "secondPos" : 2778,
+  "firstEndPos" : 2821,
+  "secondEndPos" : 2821
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3893,6 +3981,17 @@
   "firstEndPos" : 3361,
   "secondEndPos" : 3407
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and finally subtypes via annotations from base type (recursively)",
+  "secondLabel" : "// and finally subtypes via annotations from base type (recursively)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3385,
+  "secondPos" : 3431,
+  "firstEndPos" : 3453,
+  "secondEndPos" : 3499
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4652,6 +4751,17 @@
   "firstEndPos" : 3890,
   "secondEndPos" : 3936
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then consider registered subtypes (which have precedence over annotations)",
+  "secondLabel" : "// then consider registered subtypes (which have precedence over annotations)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3903,
+  "secondPos" : 3949,
+  "firstEndPos" : 3980,
+  "secondEndPos" : 4026
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4916,6 +5026,17 @@
   "firstEndPos" : 4511,
   "secondEndPos" : 4557
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is it a subtype of root type?",
+  "secondLabel" : "// is it a subtype of root type?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4150,
+  "secondPos" : 4196,
+  "firstEndPos" : 4182,
+  "secondEndPos" : 4228
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5036,6 +5157,17 @@
   "secondPos" : 4294,
   "firstEndPos" : 4497,
   "secondEndPos" : 4543
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yes",
+  "secondLabel" : "// yes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4250,
+  "secondPos" : 4296,
+  "firstEndPos" : 4256,
+  "secondEndPos" : 4302
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5300,6 +5432,17 @@
   "secondPos" : 4515,
   "firstEndPos" : 4477,
   "secondEndPos" : 4523
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and then check subtypes via annotations from base type (recursively)",
+  "secondLabel" : "// and then check subtypes via annotations from base type (recursively)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4530,
+  "secondPos" : 4576,
+  "firstEndPos" : 4601,
+  "secondEndPos" : 4647
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5663,6 +5806,17 @@
   "secondPos" : 4832,
   "firstEndPos" : 4792,
   "secondEndPos" : 4838
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Resolution by class (deserialization)\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Resolution by class (deserialization)\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4808,
+  "secondPos" : 4854,
+  "firstEndPos" : 4991,
+  "secondEndPos" : 5037
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6170,6 +6324,17 @@
   "firstEndPos" : 5287,
   "secondEndPos" : 5333
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need to keep track of classes that have been handled already ",
+  "secondLabel" : "// Need to keep track of classes that have been handled already ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5300,
+  "secondPos" : 5346,
+  "firstEndPos" : 5364,
+  "secondEndPos" : 5410
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6566,6 +6731,17 @@
   "firstEndPos" : 5500,
   "secondEndPos" : 5546
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start with lowest-precedence, which is from type hierarchy",
+  "secondLabel" : "// start with lowest-precedence, which is from type hierarchy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5514,
+  "secondPos" : 5560,
+  "firstEndPos" : 5575,
+  "secondEndPos" : 5621
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6906,6 +7082,17 @@
   "secondPos" : 5862,
   "firstEndPos" : 5822,
   "secondEndPos" : 5868
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then with definitions from property",
+  "secondLabel" : "// then with definitions from property",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5842,
+  "secondPos" : 5888,
+  "firstEndPos" : 5880,
+  "secondEndPos" : 5926
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7457,6 +7644,17 @@
   "firstEndPos" : 6198,
   "secondEndPos" : 6276
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and finally explicit type registrations (highest precedence)",
+  "secondLabel" : "// and finally explicit type registrations (highest precedence)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6249,
+  "secondPos" : 6341,
+  "firstEndPos" : 6312,
+  "secondEndPos" : 6404
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7600,6 +7798,17 @@
   "firstEndPos" : 6809,
   "secondEndPos" : 6901
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is it a subtype of root type?",
+  "secondLabel" : "// is it a subtype of root type?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6432,
+  "secondPos" : 6524,
+  "firstEndPos" : 6464,
+  "secondEndPos" : 6556
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7720,6 +7929,17 @@
   "secondPos" : 6622,
   "firstEndPos" : 6795,
   "secondEndPos" : 6887
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yes",
+  "secondLabel" : "// yes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6532,
+  "secondPos" : 6624,
+  "firstEndPos" : 6538,
+  "secondEndPos" : 6630
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9173,6 +9393,17 @@
   "firstEndPos" : 7893,
   "secondEndPos" : 7985
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is it a subtype of root type?",
+  "secondLabel" : "// is it a subtype of root type?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7516,
+  "secondPos" : 7608,
+  "firstEndPos" : 7548,
+  "secondEndPos" : 7640
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -9293,6 +9524,17 @@
   "secondPos" : 7706,
   "firstEndPos" : 7879,
   "secondEndPos" : 7971
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yes",
+  "secondLabel" : "// yes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7616,
+  "secondPos" : 7708,
+  "firstEndPos" : 7622,
+  "secondEndPos" : 7714
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -9634,6 +9876,17 @@
   "secondPos" : 8058,
   "firstEndPos" : 7972,
   "secondEndPos" : 8064
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Internal methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Internal methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7986,
+  "secondPos" : 8078,
+  "firstEndPos" : 8148,
+  "secondEndPos" : 8240
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -10438,6 +10691,17 @@
   "firstEndPos" : 8713,
   "secondEndPos" : 8805
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First things first: is base type itself included?",
+  "secondLabel" : "// First things first: is base type itself included?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8749,
+  "secondPos" : 8841,
+  "firstEndPos" : 8801,
+  "secondEndPos" : 8893
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10525,6 +10789,17 @@
   "secondPos" : 8948,
   "firstEndPos" : 9199,
   "secondEndPos" : 9291
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if so, no recursion; however, may need to update name?",
+  "secondLabel" : "// if so, no recursion; however, may need to update name?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8870,
+  "secondPos" : 8962,
+  "firstEndPos" : 8927,
+  "secondEndPos" : 9019
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10899,6 +11174,17 @@
   "secondPos" : 9274,
   "firstEndPos" : 9189,
   "secondEndPos" : 9281
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if it wasn't, add and check subtypes recursively",
+  "secondLabel" : "// if it wasn't, add and check subtypes recursively",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9208,
+  "secondPos" : 9300,
+  "firstEndPos" : 9259,
+  "secondEndPos" : 9351
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12792,6 +13078,17 @@
   "firstEndPos" : 10474,
   "secondEndPos" : 10566
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only check subtypes if this type hadn't yet been handled",
+  "secondLabel" : "// only check subtypes if this type hadn't yet been handled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10496,
+  "secondPos" : 10588,
+  "firstEndPos" : 10555,
+  "secondEndPos" : 10647
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14167,6 +14464,39 @@
   "firstEndPos" : 11436,
   "secondEndPos" : 11528
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok, so... we will figure out which classes have no explicitly assigned name,",
+  "secondLabel" : "// Ok, so... we will figure out which classes have no explicitly assigned name,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11450,
+  "secondPos" : 11542,
+  "firstEndPos" : 11529,
+  "secondEndPos" : 11621
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// by removing Classes from Set. And for remaining classes, add an anonymous",
+  "secondLabel" : "// by removing Classes from Set. And for remaining classes, add an anonymous",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11538,
+  "secondPos" : 11630,
+  "firstEndPos" : 11614,
+  "secondEndPos" : 11706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// marker",
+  "secondLabel" : "// marker",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11623,
+  "secondPos" : 11715,
+  "firstEndPos" : 11632,
+  "secondEndPos" : 11724
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -14485,6 +14815,28 @@
   "secondPos" : 11869,
   "firstEndPos" : 12098,
   "secondEndPos" : 12190
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 27-Apr-2017, tatu: [databind#1616] Do not add base type itself unless",
+  "secondLabel" : "// 27-Apr-2017, tatu: [databind#1616] Do not add base type itself unless",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11791,
+  "secondPos" : 11883,
+  "firstEndPos" : 11863,
+  "secondEndPos" : 11955
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     it is concrete (or has explicit type name)",
+  "secondLabel" : "//     it is concrete (or has explicit type name)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11876,
+  "secondPos" : 11968,
+  "firstEndPos" : 11925,
+  "secondEndPos" : 12017
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

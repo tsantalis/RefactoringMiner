@@ -10,6 +10,17 @@
   "firstEndPos" : 2678,
   "secondEndPos" : 2753
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -109,6 +120,17 @@
   "firstEndPos" : 794,
   "secondEndPos" : 794
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 776,
+  "secondPos" : 776,
+  "firstEndPos" : 780,
+  "secondEndPos" : 780
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CodeGenerator",
@@ -130,6 +152,17 @@
   "secondPos" : 798,
   "firstEndPos" : 814,
   "secondEndPos" : 814
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 798,
+  "secondPos" : 798,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -163,6 +196,17 @@
   "secondPos" : 825,
   "firstEndPos" : 844,
   "secondEndPos" : 844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For now simply assume identifiers are 2 characters.",
+  "secondLabel" : "// For now simply assume identifiers are 2 characters.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 849,
+  "secondPos" : 849,
+  "firstEndPos" : 903,
+  "secondEndPos" : 903
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2693,4 +2737,48 @@
   "secondPos" : 2488,
   "firstEndPos" : 2508,
   "secondEndPos" : 2508
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2522,
+  "secondPos" : 2522,
+  "firstEndPos" : 2671,
+  "secondEndPos" : 2671
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2533,
+  "secondPos" : 2533,
+  "firstEndPos" : 2663,
+  "secondEndPos" : 2663
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Constants (true, false, null) are considered basically free,",
+  "secondLabel" : "Constants (true, false, null) are considered basically free,",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2533,
+  "secondPos" : 2533,
+  "firstEndPos" : 2593,
+  "secondEndPos" : 2593
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "because it's likely that they will get folded when we're done.",
+  "secondLabel" : "because it's likely that they will get folded when we're done.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2601,
+  "secondPos" : 2601,
+  "firstEndPos" : 2663,
+  "secondEndPos" : 2663
 } ]

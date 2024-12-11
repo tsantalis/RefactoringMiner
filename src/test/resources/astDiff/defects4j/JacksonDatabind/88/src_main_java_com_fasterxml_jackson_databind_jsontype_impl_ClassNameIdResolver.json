@@ -208,6 +208,17 @@
   "firstEndPos" : 379,
   "secondEndPos" : 379
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 317,
+  "secondPos" : 317,
+  "firstEndPos" : 322,
+  "secondEndPos" : 322
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.fasterxml.jackson.databind.jsontype.TypeIdResolver",
@@ -746,6 +757,17 @@
   "secondPos" : 819,
   "firstEndPos" : 880,
   "secondEndPos" : 880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not used with class name - based resolvers",
+  "secondLabel" : "// not used with class name - based resolvers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 829,
+  "secondPos" : 829,
+  "firstEndPos" : 874,
+  "secondEndPos" : 874
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -1704,6 +1726,17 @@
   "firstEndPos" : 3066,
   "secondEndPos" : 3305
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 30-Jan-2010, tatu: Most ids are basic class names; so let's first\n         *    check if any generics info is added; and only then ask factory\n         *    to do translation when necessary\n         */",
+  "secondLabel" : "/* 30-Jan-2010, tatu: Most ids are basic class names; so let's first\n         *    check if any generics info is added; and only then ask factory\n         *    to do translation when necessary\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1407,
+  "secondPos" : 1407,
+  "firstEndPos" : 1611,
+  "secondEndPos" : 1611
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -1924,6 +1957,50 @@
   "firstEndPos" : 2161,
   "secondEndPos" : 2400
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: may want to try combining with specialization (esp for EnumMap)?",
+  "secondLabel" : "// note: may want to try combining with specialization (esp for EnumMap)?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1707,
+  "secondPos" : 1707,
+  "firstEndPos" : 1780,
+  "secondEndPos" : 1780
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 17-Aug-2017, tatu: As per [databind#1735] need to ensure assignment",
+  "secondLabel" : "// 17-Aug-2017, tatu: As per [databind#1735] need to ensure assignment",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1793,
+  "secondPos" : 1793,
+  "firstEndPos" : 1863,
+  "secondEndPos" : 1863
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    compatibility -- needed later anyway, and not doing so may open",
+  "secondLabel" : "//    compatibility -- needed later anyway, and not doing so may open",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1876,
+  "secondPos" : 1876,
+  "firstEndPos" : 1945,
+  "secondEndPos" : 1945
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    security issues.",
+  "secondLabel" : "//    security issues.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1958,
+  "secondPos" : 1958,
+  "firstEndPos" : 1980,
+  "secondEndPos" : 1980
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2044,6 +2121,17 @@
   "secondPos" : 2032,
   "firstEndPos" : 2034,
   "secondEndPos" : 2034
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Probably cleaner to have a method in `TypeFactory` but can't add in patch",
+  "secondLabel" : "// Probably cleaner to have a method in `TypeFactory` but can't add in patch",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2053,
+  "secondPos" : 2118,
+  "firstEndPos" : 2129,
+  "secondEndPos" : 2194
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -2342,6 +2430,28 @@
   "firstEndPos" : 2847,
   "secondEndPos" : 3086
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 24-May-2016, tatu: Ok, this is pretty ugly, but we should always get",
+  "secondLabel" : "// 24-May-2016, tatu: Ok, this is pretty ugly, but we should always get",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2292,
+  "secondPos" : 2531,
+  "firstEndPos" : 2363,
+  "secondEndPos" : 2602
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   DeserializationContext, just playing it safe",
+  "secondLabel" : "//   DeserializationContext, just playing it safe",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2376,
+  "secondPos" : 2615,
+  "firstEndPos" : 2425,
+  "secondEndPos" : 2664
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2507,6 +2617,17 @@
   "firstEndPos" : 2560,
   "secondEndPos" : 2799
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First: we may have problem handlers that can deal with it?",
+  "secondLabel" : "// First: we may have problem handlers that can deal with it?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2578,
+  "secondPos" : 2817,
+  "firstEndPos" : 2639,
+  "secondEndPos" : 2878
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2616,6 +2737,17 @@
   "secondPos" : 2949,
   "firstEndPos" : 2731,
   "secondEndPos" : 2970
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ... meaning that we really should never get here.",
+  "secondLabel" : "// ... meaning that we really should never get here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2760,
+  "secondPos" : 2999,
+  "firstEndPos" : 2812,
+  "secondEndPos" : 3051
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -2947,6 +3079,17 @@
   "firstEndPos" : 3058,
   "secondEndPos" : 3297
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Internal methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Internal methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3076,
+  "secondPos" : 3315,
+  "firstEndPos" : 3238,
+  "secondEndPos" : 3477
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3178,6 +3321,17 @@
   "firstEndPos" : 6665,
   "secondEndPos" : 6904
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need to ensure that \"enum subtypes\" work too",
+  "secondLabel" : "// Need to ensure that \"enum subtypes\" work too",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3346,
+  "secondPos" : 3585,
+  "firstEndPos" : 3393,
+  "secondEndPos" : 3632
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3375,6 +3529,17 @@
   "secondPos" : 3712,
   "firstEndPos" : 3578,
   "secondEndPos" : 3817
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// means that it's sub-class of base enum, so:",
+  "secondLabel" : "// means that it's sub-class of base enum, so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3475,
+  "secondPos" : 3714,
+  "firstEndPos" : 3521,
+  "secondEndPos" : 3760
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3651,6 +3816,61 @@
   "firstEndPos" : 5466,
   "secondEndPos" : 5705
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 25-Jan-2009, tatu: There are some internal classes that we can not access as is.",
+  "secondLabel" : "// 25-Jan-2009, tatu: There are some internal classes that we can not access as is.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3680,
+  "secondPos" : 3919,
+  "firstEndPos" : 3763,
+  "secondEndPos" : 4002
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     We need better mechanism; for now this has to do...",
+  "secondLabel" : "//     We need better mechanism; for now this has to do...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3776,
+  "secondPos" : 4015,
+  "firstEndPos" : 3834,
+  "secondEndPos" : 4073
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Enum sets and maps are problematic since we MUST know type of",
+  "secondLabel" : "// Enum sets and maps are problematic since we MUST know type of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3848,
+  "secondPos" : 4087,
+  "firstEndPos" : 3912,
+  "secondEndPos" : 4151
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// contained enums, to be able to deserialize.",
+  "secondLabel" : "// contained enums, to be able to deserialize.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3925,
+  "secondPos" : 4164,
+  "firstEndPos" : 3971,
+  "secondEndPos" : 4210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In addition, EnumSet is not a concrete type either",
+  "secondLabel" : "// In addition, EnumSet is not a concrete type either",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3984,
+  "secondPos" : 4223,
+  "firstEndPos" : 4037,
+  "secondEndPos" : 4276
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3738,6 +3958,17 @@
   "secondPos" : 4322,
   "firstEndPos" : 4402,
   "secondEndPos" : 4641
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Regular- and JumboEnumSet...",
+  "secondLabel" : "// Regular- and JumboEnumSet...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4085,
+  "secondPos" : 4324,
+  "firstEndPos" : 4116,
+  "secondEndPos" : 4355
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3936,6 +4167,17 @@
   "secondPos" : 4429,
   "firstEndPos" : 4195,
   "secondEndPos" : 4434
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not optimal: but EnumSet is not a customizable type so this is sort of ok",
+  "secondLabel" : "// not optimal: but EnumSet is not a customizable type so this is sort of ok",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4214,
+  "secondPos" : 4453,
+  "firstEndPos" : 4290,
+  "secondEndPos" : 4529
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4530,6 +4772,17 @@
   "secondPos" : 4805,
   "firstEndPos" : 4572,
   "secondEndPos" : 4811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not optimal: but EnumMap is not a customizable type so this is sort of ok",
+  "secondLabel" : "// not optimal: but EnumMap is not a customizable type so this is sort of ok",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4596,
+  "secondPos" : 4835,
+  "firstEndPos" : 4672,
+  "secondEndPos" : 4911
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5158,6 +5411,17 @@
   "firstEndPos" : 5442,
   "secondEndPos" : 5681
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 17-Feb-2010, tatus: Another such case: result of\n                     *    Arrays.asList() is named like so in Sun JDK...\n                     *   Let's just plain old ArrayList in its place\n                     * NOTE: chances are there are plenty of similar cases\n                     * for other wrappers... (immutable, singleton, synced etc)\n                     */",
+  "secondLabel" : "/* 17-Feb-2010, tatus: Another such case: result of\n                     *    Arrays.asList() is named like so in Sun JDK...\n                     *   Let's just plain old ArrayList in its place\n                     * NOTE: chances are there are plenty of similar cases\n                     * for other wrappers... (immutable, singleton, synced etc)\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5003,
+  "secondPos" : 5242,
+  "firstEndPos" : 5375,
+  "secondEndPos" : 5614
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5333,6 +5597,17 @@
   "secondPos" : 5738,
   "firstEndPos" : 6639,
   "secondEndPos" : 6878
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Other special handling may be needed for inner classes, [JACKSON-584].\n             * The best way to handle would be to find 'hidden' constructor; pass parent\n             * value etc (which is actually done for non-anonymous static classes!),\n             * but that is just not possible due to various things. So, we will instead\n             * try to generalize type into something we will be more likely to be able\n             * construct.\n             */",
+  "secondLabel" : "/* Other special handling may be needed for inner classes, [JACKSON-584].\n             * The best way to handle would be to find 'hidden' constructor; pass parent\n             * value etc (which is actually done for non-anonymous static classes!),\n             * but that is just not possible due to various things. So, we will instead\n             * try to generalize type into something we will be more likely to be able\n             * construct.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5513,
+  "secondPos" : 5752,
+  "firstEndPos" : 5977,
+  "secondEndPos" : 6216
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5542,6 +5817,17 @@
   "secondPos" : 6307,
   "firstEndPos" : 6629,
   "secondEndPos" : 6868
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* one more check: let's actually not worry if the declared\n                 * static type is non-static as well; if so, deserializer does\n                 * have a chance at figuring it all out.\n                 */",
+  "secondLabel" : "/* one more check: let's actually not worry if the declared\n                 * static type is non-static as well; if so, deserializer does\n                 * have a chance at figuring it all out.\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6086,
+  "secondPos" : 6325,
+  "firstEndPos" : 6301,
+  "secondEndPos" : 6540
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5784,6 +6070,17 @@
   "secondPos" : 6669,
   "firstEndPos" : 6615,
   "secondEndPos" : 6854
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Is this always correct? Seems like it should be...",
+  "secondLabel" : "// Is this always correct? Seems like it should be...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6452,
+  "secondPos" : 6691,
+  "firstEndPos" : 6505,
+  "secondEndPos" : 6744
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

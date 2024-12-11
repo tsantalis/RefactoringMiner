@@ -1550,6 +1550,17 @@
   "firstEndPos" : 1161,
   "secondEndPos" : 1161
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// attribute names are generally caught in one hop, not accumulated",
+  "secondLabel" : "// attribute names are generally caught in one hop, not accumulated",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1163,
+  "secondPos" : 1163,
+  "firstEndPos" : 1230,
+  "secondEndPos" : 1230
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1615,6 +1626,17 @@
   "secondPos" : 1261,
   "firstEndPos" : 1282,
   "secondEndPos" : 1282
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but values are accumulated, from e.g. & in hrefs",
+  "secondLabel" : "// but values are accumulated, from e.g. & in hrefs",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1284,
+  "secondPos" : 1284,
+  "firstEndPos" : 1335,
+  "secondEndPos" : 1335
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1725,6 +1747,17 @@
   "secondPos" : 1393,
   "firstEndPos" : 1403,
   "secondEndPos" : 1403
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start tags get attributes on construction. End tags get attributes on first new attribute (but only for parser convenience, not used).",
+  "secondLabel" : "// start tags get attributes on construction. End tags get attributes on first new attribute (but only for parser convenience, not used).",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1405,
+  "secondPos" : 1405,
+  "firstEndPos" : 1542,
+  "secondEndPos" : 1542
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2661,6 +2694,17 @@
   "firstEndPos" : 2473,
   "secondEndPos" : 2473
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// finalises for emit",
+  "secondLabel" : "// finalises for emit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2269,
+  "secondPos" : 2269,
+  "firstEndPos" : 2290,
+  "secondEndPos" : 2290
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2726,6 +2770,17 @@
   "secondPos" : 2337,
   "firstEndPos" : 2463,
   "secondEndPos" : 2463
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo: check if attribute name exists; if so, drop and error",
+  "secondLabel" : "// todo: check if attribute name exists; if so, drop and error",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2355,
+  "secondPos" : 2355,
+  "firstEndPos" : 2417,
+  "secondEndPos" : 2417
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3342,6 +3397,17 @@
   "secondPos" : 2869,
   "firstEndPos" : 2879,
   "secondEndPos" : 2879
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these appenders are rarely hit in not null state-- caused by null chars.",
+  "secondLabel" : "// these appenders are rarely hit in not null state-- caused by null chars.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2900,
+  "secondPos" : 2900,
+  "firstEndPos" : 2975,
+  "secondEndPos" : 2975
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

@@ -10,6 +10,17 @@
   "firstEndPos" : 5071,
   "secondEndPos" : 5294
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -285,6 +296,17 @@
   "firstEndPos" : 1247,
   "secondEndPos" : 1302
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1223,
+  "secondPos" : 1278,
+  "firstEndPos" : 1230,
+  "secondEndPos" : 1285
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -306,6 +328,17 @@
   "secondPos" : 1306,
   "firstEndPos" : 1277,
   "secondEndPos" : 1332
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1251,
+  "secondPos" : 1306,
+  "firstEndPos" : 1259,
+  "secondEndPos" : 1314
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5344,6 +5377,39 @@
   "secondPos" : 4167,
   "firstEndPos" : 3948,
   "secondEndPos" : 4171
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This may mean that the parser does not support NS for",
+  "secondLabel" : "// This may mean that the parser does not support NS for",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3977,
+  "secondPos" : 4200,
+  "firstEndPos" : 4033,
+  "secondEndPos" : 4256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// attributes, example - the version of Crimson bundled",
+  "secondLabel" : "// attributes, example - the version of Crimson bundled",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4046,
+  "secondPos" : 4269,
+  "firstEndPos" : 4101,
+  "secondEndPos" : 4324
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with JDK 1.4.0",
+  "secondLabel" : "// with JDK 1.4.0",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4114,
+  "secondPos" : 4337,
+  "firstEndPos" : 4131,
+  "secondEndPos" : 4354
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

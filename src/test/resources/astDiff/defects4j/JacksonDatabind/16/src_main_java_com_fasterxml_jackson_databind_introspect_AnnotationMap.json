@@ -1165,6 +1165,17 @@
   "firstEndPos" : 937,
   "secondEndPos" : 937
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 927,
+  "secondPos" : 927,
+  "firstEndPos" : 933,
+  "secondEndPos" : 933
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.3",
@@ -2430,6 +2441,17 @@
   "firstEndPos" : 1663,
   "secondEndPos" : 1663
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add secondary ones first",
+  "secondLabel" : "// add secondary ones first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1676,
+  "secondPos" : 1676,
+  "firstEndPos" : 1703,
+  "secondEndPos" : 1703
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -2660,6 +2682,17 @@
   "secondPos" : 1819,
   "firstEndPos" : 1822,
   "secondEndPos" : 1822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to be overridden by primary ones",
+  "secondLabel" : "// to be overridden by primary ones",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1843,
+  "secondPos" : 1843,
+  "firstEndPos" : 1878,
+  "secondEndPos" : 1878
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -3662,6 +3695,17 @@
   "firstEndPos" : 2727,
   "secondEndPos" : 2727
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2608,
+  "secondPos" : 2608,
+  "firstEndPos" : 2615,
+  "secondEndPos" : 2615
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " True if the addition changed the contents, that is, this map did not",
@@ -4057,6 +4101,17 @@
   "secondPos" : 2958,
   "firstEndPos" : 2966,
   "secondEndPos" : 2966
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2981,
+  "secondPos" : 2981,
+  "firstEndPos" : 3141,
+  "secondEndPos" : 3141
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

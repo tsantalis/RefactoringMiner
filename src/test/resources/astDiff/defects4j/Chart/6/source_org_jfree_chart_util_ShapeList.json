@@ -10,6 +10,17 @@
   "firstEndPos" : 4616,
   "secondEndPos" : 4850
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ===========================================================\n * JFreeChart : a free chart library for the Java(tm) platform\n * ===========================================================\n *\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\n *\n * Project Info:  http://www.jfree.org/jfreechart/index.html\n *\n * This library is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation; either version 2.1 of the License, or\n * (at your option) any later version.\n *\n * This library is distributed in the hope that it will be useful, but\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\n * License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this library; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\n * USA.\n *\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\n * in the United States and other countries.]\n *\n * --------------\n * ShapeList.java\n * --------------\n * (C) Copyright 2003-2008, by Object Refinery Limited.\n *\n * Original Author:  David Gilbert (for Object Refinery Limited);\n * Contributor(s):   -;\n *\n * Changes\n * -------\n * 13-Aug-2003 : Version 1 (DG);\n * 21-Jun-2007 : Copied from JCommon (DG);\n * 17-Jun-2008 : Fixed bug in equals() (DG);\n *\n */",
+  "secondLabel" : "/* ===========================================================\n * JFreeChart : a free chart library for the Java(tm) platform\n * ===========================================================\n *\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\n *\n * Project Info:  http://www.jfree.org/jfreechart/index.html\n *\n * This library is free software; you can redistribute it and/or modify it\n * under the terms of the GNU Lesser General Public License as published by\n * the Free Software Foundation; either version 2.1 of the License, or\n * (at your option) any later version.\n *\n * This library is distributed in the hope that it will be useful, but\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\n * License for more details.\n *\n * You should have received a copy of the GNU Lesser General Public\n * License along with this library; if not, write to the Free Software\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\n * USA.\n *\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\n * in the United States and other countries.]\n *\n * --------------\n * ShapeList.java\n * --------------\n * (C) Copyright 2003-2008, by Object Refinery Limited.\n *\n * Original Author:  David Gilbert (for Object Refinery Limited);\n * Contributor(s):   -;\n *\n * Changes\n * -------\n * 13-Aug-2003 : Version 1 (DG);\n * 21-Jun-2007 : Copied from JCommon (DG);\n * 17-Jun-2008 : Fixed bug in equals() (DG);\n *\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1557,
+  "secondEndPos" : 1557
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -174,6 +185,17 @@
   "secondPos" : 1729,
   "firstEndPos" : 1742,
   "secondEndPos" : 1742
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1729,
+  "secondPos" : 1729,
+  "firstEndPos" : 1734,
+  "secondEndPos" : 1734
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -395,6 +417,17 @@
   "firstEndPos" : 1939,
   "secondEndPos" : 1939
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1926,
+  "secondPos" : 1926,
+  "firstEndPos" : 1931,
+  "secondEndPos" : 1931
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Shape",
@@ -428,6 +461,17 @@
   "firstEndPos" : 2012,
   "secondEndPos" : 2012
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1976,
+  "secondPos" : 1976,
+  "firstEndPos" : 1982,
+  "secondEndPos" : 1982
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "index",
@@ -460,6 +504,17 @@
   "secondPos" : 2027,
   "firstEndPos" : 2046,
   "secondEndPos" : 2046
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2027,
+  "secondPos" : 2027,
+  "firstEndPos" : 2034,
+  "secondEndPos" : 2034
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -703,6 +758,17 @@
   "firstEndPos" : 2173,
   "secondEndPos" : 2173
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2160,
+  "secondPos" : 2160,
+  "firstEndPos" : 2165,
+  "secondEndPos" : 2165
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Shape",
@@ -747,6 +813,17 @@
   "firstEndPos" : 2291,
   "secondEndPos" : 2291
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2254,
+  "secondPos" : 2254,
+  "firstEndPos" : 2260,
+  "secondEndPos" : 2260
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "index",
@@ -780,6 +857,17 @@
   "firstEndPos" : 2331,
   "secondEndPos" : 2331
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2299,
+  "secondPos" : 2299,
+  "firstEndPos" : 2305,
+  "secondEndPos" : 2305
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "shape",
@@ -812,6 +900,17 @@
   "secondPos" : 2317,
   "firstEndPos" : 2330,
   "secondEndPos" : 2330
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2317,
+  "secondPos" : 2317,
+  "firstEndPos" : 2322,
+  "secondEndPos" : 2322
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1077,6 +1176,17 @@
   "firstEndPos" : 2511,
   "secondEndPos" : 2511
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2495,
+  "secondPos" : 2495,
+  "firstEndPos" : 2502,
+  "secondEndPos" : 2502
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " A clone.",
@@ -1098,6 +1208,17 @@
   "secondPos" : 2526,
   "firstEndPos" : 2624,
   "secondEndPos" : 2624
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2526,
+  "secondPos" : 2526,
+  "firstEndPos" : 2533,
+  "secondEndPos" : 2533
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1297,6 +1418,17 @@
   "firstEndPos" : 2893,
   "secondEndPos" : 2893
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2834,
+  "secondPos" : 2834,
+  "firstEndPos" : 2840,
+  "secondEndPos" : 2840
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "obj",
@@ -1329,6 +1461,17 @@
   "secondPos" : 2908,
   "firstEndPos" : 2926,
   "secondEndPos" : 2926
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2908,
+  "secondPos" : 2908,
+  "firstEndPos" : 2915,
+  "secondEndPos" : 2915
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1704,6 +1847,17 @@
   "firstEndPos" : 3250,
   "secondEndPos" : 3484
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3230,
+  "secondPos" : 3464,
+  "firstEndPos" : 3237,
+  "secondEndPos" : 3471
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the hashcode",
@@ -1847,6 +2001,17 @@
   "firstEndPos" : 3421,
   "secondEndPos" : 3655
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3388,
+  "secondPos" : 3622,
+  "firstEndPos" : 3394,
+  "secondEndPos" : 3628
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stream",
@@ -1879,6 +2044,17 @@
   "secondPos" : 3670,
   "firstEndPos" : 3482,
   "secondEndPos" : 3716
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3436,
+  "secondPos" : 3670,
+  "firstEndPos" : 3443,
+  "secondEndPos" : 3677
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2859,6 +3035,17 @@
   "firstEndPos" : 4070,
   "secondEndPos" : 4304
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4038,
+  "secondPos" : 4272,
+  "firstEndPos" : 4044,
+  "secondEndPos" : 4278
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stream",
@@ -2892,6 +3079,17 @@
   "firstEndPos" : 4131,
   "secondEndPos" : 4365
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4085,
+  "secondPos" : 4319,
+  "firstEndPos" : 4092,
+  "secondEndPos" : 4326
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -2924,6 +3122,17 @@
   "secondPos" : 4373,
   "firstEndPos" : 4203,
   "secondEndPos" : 4437
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4139,
+  "secondPos" : 4373,
+  "firstEndPos" : 4146,
+  "secondEndPos" : 4380
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

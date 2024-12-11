@@ -505,6 +505,17 @@
   "firstEndPos" : 1345,
   "secondEndPos" : 1345
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.1",
+  "secondLabel" : "// since 2.1",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1346,
+  "secondPos" : 1346,
+  "firstEndPos" : 1358,
+  "secondEndPos" : 1358
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1099,6 +1110,160 @@
   "firstEndPos" : 1639,
   "secondEndPos" : 1639
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 1647,
+  "secondPos" : 1647,
+  "firstEndPos" : 1825,
+  "secondEndPos" : 1825
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1658,
+  "secondPos" : 1658,
+  "firstEndPos" : 1790,
+  "secondEndPos" : 1790
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Set of well-known \"nasty classes\", deserialization of which is considered dangerous",
+  "secondLabel" : "Set of well-known \"nasty classes\", deserialization of which is considered dangerous",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1658,
+  "secondPos" : 1658,
+  "firstEndPos" : 1741,
+  "secondEndPos" : 1741
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "and should (and is) prevented by default.",
+  "secondLabel" : "and should (and is) prevented by default.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1749,
+  "secondPos" : 1749,
+  "firstEndPos" : 1790,
+  "secondEndPos" : 1790
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1805,
+  "secondPos" : 1805,
+  "firstEndPos" : 1817,
+  "secondEndPos" : 1817
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1805,
+  "secondPos" : 1805,
+  "firstEndPos" : 1811,
+  "secondEndPos" : 1811
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " 2.8.9",
+  "secondLabel" : " 2.8.9",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1811,
+  "secondPos" : 1811,
+  "firstEndPos" : 1817,
+  "secondEndPos" : 1817
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 1932,
+  "secondPos" : 2716,
+  "firstEndPos" : 2040,
+  "secondEndPos" : 2824
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1943,
+  "secondPos" : 2727,
+  "firstEndPos" : 2005,
+  "secondEndPos" : 2789
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Set of class names of types that are never to be deserialized.",
+  "secondLabel" : "Set of class names of types that are never to be deserialized.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1943,
+  "secondPos" : 2727,
+  "firstEndPos" : 2005,
+  "secondEndPos" : 2789
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 2020,
+  "secondPos" : 2804,
+  "firstEndPos" : 2032,
+  "secondEndPos" : 2816
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2020,
+  "secondPos" : 2804,
+  "firstEndPos" : 2026,
+  "secondEndPos" : 2810
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " 2.8.9",
+  "secondLabel" : " 2.8.9",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2026,
+  "secondPos" : 2810,
+  "firstEndPos" : 2032,
+  "secondEndPos" : 2816
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2046,
+  "secondPos" : 2910,
+  "firstEndPos" : 2202,
+  "secondEndPos" : 3066
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1682,6 +1847,17 @@
   "firstEndPos" : 2904,
   "secondEndPos" : 3768
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 22-Nov-2010, tatu: Handling of subtypes is tricky if we do immutable-with-copy-ctor;\n         *    and we pretty much have to here either choose between losing subtype instance\n         *    when registering additional deserializers, or losing deserializers.\n         *    Instead, let's actually just throw an error if this method is called when subtype\n         *    has not properly overridden this method; this to indicate problem as soon as possible.\n         */",
+  "secondLabel" : "/* 22-Nov-2010, tatu: Handling of subtypes is tricky if we do immutable-with-copy-ctor;\n         *    and we pretty much have to here either choose between losing subtype instance\n         *    when registering additional deserializers, or losing deserializers.\n         *    Instead, let's actually just throw an error if this method is called when subtype\n         *    has not properly overridden this method; this to indicate problem as soon as possible.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2924,
+  "secondPos" : 3788,
+  "firstEndPos" : 3394,
+  "secondEndPos" : 4258
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -1990,6 +2166,17 @@
   "firstEndPos" : 3803,
   "secondEndPos" : 4667
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* DeserializerFactory API implementation\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* DeserializerFactory API implementation\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3821,
+  "secondPos" : 4685,
+  "firstEndPos" : 4005,
+  "secondEndPos" : 4869
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2044,6 +2231,17 @@
   "secondPos" : 4898,
   "firstEndPos" : 4059,
   "secondEndPos" : 4923
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4034,
+  "secondPos" : 4898,
+  "firstEndPos" : 4039,
+  "secondEndPos" : 4903
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2463,6 +2661,17 @@
   "firstEndPos" : 4431,
   "secondEndPos" : 5295
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We may also have custom overrides:",
+  "secondLabel" : "// We may also have custom overrides:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4443,
+  "secondPos" : 5307,
+  "firstEndPos" : 4480,
+  "secondEndPos" : 5344
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2705,6 +2914,17 @@
   "firstEndPos" : 4631,
   "secondEndPos" : 5495
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* One more thing to check: do we have an exception type\n         * (Throwable or its sub-classes)? If so, need slightly\n         * different handling.\n         */",
+  "secondLabel" : "/* One more thing to check: do we have an exception type\n         * (Throwable or its sub-classes)? If so, need slightly\n         * different handling.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4651,
+  "secondPos" : 5515,
+  "firstEndPos" : 4814,
+  "secondEndPos" : 5678
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2847,6 +3067,39 @@
   "secondPos" : 5771,
   "firstEndPos" : 4915,
   "secondEndPos" : 5779
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Or, for abstract types, may have alternate means for resolution\n         * (defaulting, materialization)\n         */",
+  "secondLabel" : "/* Or, for abstract types, may have alternate means for resolution\n         * (defaulting, materialization)\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4936,
+  "secondPos" : 5800,
+  "firstEndPos" : 5055,
+  "secondEndPos" : 5919
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 29-Nov-2015, tatu: Also, filter out calls to primitive types, they are",
+  "secondLabel" : "// 29-Nov-2015, tatu: Also, filter out calls to primitive types, they are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5064,
+  "secondPos" : 5928,
+  "firstEndPos" : 5137,
+  "secondEndPos" : 6001
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    not something we could materialize anything for",
+  "secondLabel" : "//    not something we could materialize anything for",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5146,
+  "secondPos" : 6010,
+  "firstEndPos" : 5199,
+  "secondEndPos" : 6063
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3068,6 +3321,17 @@
   "firstEndPos" : 5796,
   "secondEndPos" : 6660
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's make it possible to materialize abstract types.",
+  "secondLabel" : "// Let's make it possible to materialize abstract types.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5290,
+  "secondPos" : 6154,
+  "firstEndPos" : 5346,
+  "secondEndPos" : 6210
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3255,6 +3519,17 @@
   "firstEndPos" : 5786,
   "secondEndPos" : 6650
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* important: introspect actual implementation (abstract class or\n                 * interface doesn't have constructors, for one)\n                 */",
+  "secondLabel" : "/* important: introspect actual implementation (abstract class or\n                 * interface doesn't have constructors, for one)\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5486,
+  "secondPos" : 6350,
+  "firstEndPos" : 5636,
+  "secondEndPos" : 6500
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3441,6 +3716,17 @@
   "secondPos" : 6626,
   "firstEndPos" : 5770,
   "secondEndPos" : 6634
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, may want to check handlers for standard types, from superclass:",
+  "secondLabel" : "// Otherwise, may want to check handlers for standard types, from superclass:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5805,
+  "secondPos" : 6669,
+  "firstEndPos" : 5882,
+  "secondEndPos" : 6746
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3783,6 +4069,17 @@
   "firstEndPos" : 6086,
   "secondEndPos" : 6950
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise: could the class be a Bean class? If not, bail out",
+  "secondLabel" : "// Otherwise: could the class be a Bean class? If not, bail out",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6107,
+  "secondPos" : 6971,
+  "firstEndPos" : 6170,
+  "secondEndPos" : 7034
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3925,6 +4222,28 @@
   "secondPos" : 7110,
   "firstEndPos" : 6250,
   "secondEndPos" : 7114
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For checks like [databind#1599]",
+  "secondLabel" : "// For checks like [databind#1599]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6270,
+  "secondPos" : 7134,
+  "firstEndPos" : 6304,
+  "secondEndPos" : 7168
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use generic bean introspection to build deserializer",
+  "secondLabel" : "// Use generic bean introspection to build deserializer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6313,
+  "secondPos" : 7226,
+  "firstEndPos" : 6368,
+  "secondEndPos" : 7281
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4344,6 +4663,17 @@
   "firstEndPos" : 6965,
   "secondEndPos" : 7878
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First: need a BeanDescription for builder class",
+  "secondLabel" : "// First: need a BeanDescription for builder class",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6678,
+  "secondPos" : 7591,
+  "firstEndPos" : 6728,
+  "secondEndPos" : 7641
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4751,6 +5081,17 @@
   "firstEndPos" : 7034,
   "secondEndPos" : 7947
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7003,
+  "secondPos" : 7916,
+  "firstEndPos" : 7008,
+  "secondEndPos" : 7921
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanDeserializerFactory",
@@ -5015,6 +5356,28 @@
   "firstEndPos" : 7890,
   "secondEndPos" : 8803
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: we do NOT check for custom deserializers here, caller has already",
+  "secondLabel" : "// note: we do NOT check for custom deserializers here, caller has already",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7312,
+  "secondPos" : 8225,
+  "firstEndPos" : 7386,
+  "secondEndPos" : 8299
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// done that",
+  "secondLabel" : "// done that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7395,
+  "secondPos" : 8308,
+  "firstEndPos" : 7407,
+  "secondEndPos" : 8320
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5157,6 +5520,17 @@
   "secondPos" : 8393,
   "firstEndPos" : 7488,
   "secondEndPos" : 8401
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also: better ensure these are post-processable?",
+  "secondLabel" : "// Also: better ensure these are post-processable?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7499,
+  "secondPos" : 8412,
+  "firstEndPos" : 7549,
+  "secondEndPos" : 8462
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5807,6 +6181,17 @@
   "firstEndPos" : 8441,
   "secondEndPos" : 9354
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// May have multiple resolvers, call in precedence order until one returns non-null",
+  "secondLabel" : "// May have multiple resolvers, call in precedence order until one returns non-null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8075,
+  "secondPos" : 8988,
+  "firstEndPos" : 8158,
+  "secondEndPos" : 9071
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -6192,6 +6577,17 @@
   "firstEndPos" : 8434,
   "secondEndPos" : 9347
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public construction method beyond DeserializerFactory API:\n    /* can be called from outside as well as overridden by\n    /* sub-classes\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public construction method beyond DeserializerFactory API:\n    /* can be called from outside as well as overridden by\n    /* sub-classes\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8447,
+  "secondPos" : 9360,
+  "firstEndPos" : 8729,
+  "secondEndPos" : 9642
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6544,6 +6940,17 @@
   "firstEndPos" : 11468,
   "secondEndPos" : 12381
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First: check what creators we can use, if any",
+  "secondLabel" : "// First: check what creators we can use, if any",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9206,
+  "secondPos" : 10119,
+  "firstEndPos" : 9254,
+  "secondEndPos" : 10167
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6598,6 +7005,17 @@
   "secondPos" : 10194,
   "firstEndPos" : 9298,
   "secondEndPos" : 10211
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 04-Jun-2015, tatu: To work around [databind#636], need to catch the\n         *    issue, defer; this seems like a reasonable good place for now.\n         *   Note, however, that for non-Bean types (Collections, Maps) this\n         *   probably won't work and needs to be added elsewhere.\n         */",
+  "secondLabel" : "/* 04-Jun-2015, tatu: To work around [databind#636], need to catch the\n         *    issue, defer; this seems like a reasonable good place for now.\n         *   Note, however, that for non-Bean types (Collections, Maps) this\n         *   probably won't work and needs to be added elsewhere.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9308,
+  "secondPos" : 10221,
+  "firstEndPos" : 9610,
+  "secondEndPos" : 10523
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -7028,6 +7446,17 @@
   "firstEndPos" : 9956,
   "secondEndPos" : 10869
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then setters for deserializing from JSON Object",
+  "secondLabel" : "// And then setters for deserializing from JSON Object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9968,
+  "secondPos" : 10881,
+  "firstEndPos" : 10022,
+  "secondEndPos" : 10935
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7181,6 +7610,17 @@
   "secondPos" : 11025,
   "firstEndPos" : 10119,
   "secondEndPos" : 11032
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// managed/back reference fields/setters need special handling... first part",
+  "secondLabel" : "// managed/back reference fields/setters need special handling... first part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10131,
+  "secondPos" : 11044,
+  "firstEndPos" : 10207,
+  "secondEndPos" : 11120
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7831,6 +8271,17 @@
   "firstEndPos" : 10669,
   "secondEndPos" : 11582
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 19-Mar-2012, tatu: This check used to be done earlier; but we have to defer\n         *   it a bit to collect information on ObjectIdReader, for example.\n         */",
+  "secondLabel" : "/* 19-Mar-2012, tatu: This check used to be done earlier; but we have to defer\n         *   it a bit to collect information on ObjectIdReader, for example.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10680,
+  "secondPos" : 11593,
+  "firstEndPos" : 10847,
+  "secondEndPos" : 11760
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8171,6 +8622,17 @@
   "secondPos" : 11937,
   "firstEndPos" : 11029,
   "secondEndPos" : 11942
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [JACKSON-440]: may have modifier(s) that wants to modify or replace serializer we just built:",
+  "secondLabel" : "// [JACKSON-440]: may have modifier(s) that wants to modify or replace serializer we just built:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11052,
+  "secondPos" : 11965,
+  "firstEndPos" : 11148,
+  "secondEndPos" : 12061
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8931,6 +9393,17 @@
   "firstEndPos" : 14272,
   "secondEndPos" : 15185
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Creators, anyone? (to create builder itself)",
+  "secondLabel" : "// Creators, anyone? (to create builder itself)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11994,
+  "secondPos" : 12907,
+  "firstEndPos" : 12041,
+  "secondEndPos" : 12954
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9338,6 +9811,17 @@
   "firstEndPos" : 12342,
   "secondEndPos" : 13255
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then \"with methods\" for deserializing from JSON Object",
+  "secondLabel" : "// And then \"with methods\" for deserializing from JSON Object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12354,
+  "secondPos" : 13267,
+  "firstEndPos" : 12415,
+  "secondEndPos" : 13328
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9491,6 +9975,17 @@
   "secondPos" : 13424,
   "firstEndPos" : 12518,
   "secondEndPos" : 13431
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// managed/back reference fields/setters need special handling... first part",
+  "secondLabel" : "// managed/back reference fields/setters need special handling... first part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12538,
+  "secondPos" : 13451,
+  "firstEndPos" : 12614,
+  "secondEndPos" : 13527
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9899,6 +10394,17 @@
   "firstEndPos" : 12931,
   "secondEndPos" : 13844
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and lastly, find build method to use:",
+  "secondLabel" : "// and lastly, find build method to use:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12950,
+  "secondPos" : 13863,
+  "firstEndPos" : 12990,
+  "secondEndPos" : 13903
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10096,6 +10602,17 @@
   "secondPos" : 14022,
   "firstEndPos" : 13380,
   "secondEndPos" : 14293
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: can't yet throw error; may be given build method",
+  "secondLabel" : "// note: can't yet throw error; may be given build method",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13111,
+  "secondPos" : 14024,
+  "firstEndPos" : 13168,
+  "secondEndPos" : 14081
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10426,6 +10943,17 @@
   "secondPos" : 14338,
   "firstEndPos" : 13438,
   "secondEndPos" : 14351
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this may give us more information...",
+  "secondLabel" : "// this may give us more information...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13449,
+  "secondPos" : 14362,
+  "firstEndPos" : 13488,
+  "secondEndPos" : 14401
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10888,6 +11416,17 @@
   "secondPos" : 14739,
   "firstEndPos" : 13841,
   "secondEndPos" : 14754
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [JACKSON-440]: may have modifier(s) that wants to modify or replace serializer we just built:",
+  "secondLabel" : "// [JACKSON-440]: may have modifier(s) that wants to modify or replace serializer we just built:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13853,
+  "secondPos" : 14766,
+  "firstEndPos" : 13949,
+  "secondEndPos" : 14862
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12143,6 +12682,17 @@
   "firstEndPos" : 14849,
   "secondEndPos" : 15762
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Just one special case: Property-based generator is trickier",
+  "secondLabel" : "// Just one special case: Property-based generator is trickier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14861,
+  "secondPos" : 15774,
+  "firstEndPos" : 14923,
+  "secondEndPos" : 15836
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12230,6 +12780,17 @@
   "secondPos" : 15906,
   "firstEndPos" : 15528,
   "secondEndPos" : 16441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// most special one, needs extra work",
+  "secondLabel" : "// most special one, needs extra work",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14995,
+  "secondPos" : 15908,
+  "firstEndPos" : 15032,
+  "secondEndPos" : 15945
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13441,6 +14002,17 @@
   "firstEndPos" : 15805,
   "secondEndPos" : 16718
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: unlike with value deserializers, let's just resolve one we need here",
+  "secondLabel" : "// also: unlike with value deserializers, let's just resolve one we need here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15826,
+  "secondPos" : 16739,
+  "firstEndPos" : 15903,
+  "secondEndPos" : 16816
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14200,6 +14772,17 @@
   "firstEndPos" : 16419,
   "secondEndPos" : 17332
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first: construct like a regular bean deserializer...",
+  "secondLabel" : "// first: construct like a regular bean deserializer...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16431,
+  "secondPos" : 17344,
+  "firstEndPos" : 16486,
+  "secondEndPos" : 17399
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14508,6 +15091,39 @@
   "firstEndPos" : 16701,
   "secondEndPos" : 17614
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (and assume there won't be any back references)",
+  "secondLabel" : "// (and assume there won't be any back references)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16712,
+  "secondPos" : 17625,
+  "firstEndPos" : 16762,
+  "secondEndPos" : 17675
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// But then let's decorate things a bit",
+  "secondLabel" : "// But then let's decorate things a bit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16772,
+  "secondPos" : 17685,
+  "firstEndPos" : 16811,
+  "secondEndPos" : 17724
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* To resolve [JACKSON-95], need to add \"initCause\" as setter\n         * for exceptions (sub-classes of Throwable).\n         */",
+  "secondLabel" : "/* To resolve [JACKSON-95], need to add \"initCause\" as setter\n         * for exceptions (sub-classes of Throwable).\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16820,
+  "secondPos" : 17733,
+  "firstEndPos" : 16947,
+  "secondEndPos" : 17860
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14705,6 +15321,17 @@
   "secondPos" : 17967,
   "firstEndPos" : 17717,
   "secondEndPos" : 18630
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should never be null",
+  "secondLabel" : "// should never be null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17056,
+  "secondPos" : 17969,
+  "firstEndPos" : 17079,
+  "secondEndPos" : 17992
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15168,6 +15795,17 @@
   "firstEndPos" : 17707,
   "secondEndPos" : 18620
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 21-Aug-2011, tatus: We may actually have found 'cause' property\n                 *   to set... but let's replace it just in case,\n                 *   otherwise can end up with odd errors.\n                 */",
+  "secondLabel" : "/* 21-Aug-2011, tatus: We may actually have found 'cause' property\n                 *   to set... but let's replace it just in case,\n                 *   otherwise can end up with odd errors.\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17424,
+  "secondPos" : 18337,
+  "firstEndPos" : 17635,
+  "secondEndPos" : 18548
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15256,6 +15894,17 @@
   "firstEndPos" : 17691,
   "secondEndPos" : 18604
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And also need to ignore \"localizedMessage\"",
+  "secondLabel" : "// And also need to ignore \"localizedMessage\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17727,
+  "secondPos" : 18640,
+  "firstEndPos" : 17772,
+  "secondEndPos" : 18685
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15332,6 +15981,17 @@
   "secondPos" : 18715,
   "firstEndPos" : 17820,
   "secondEndPos" : 18733
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Java 7 also added \"getSuppressed\", skip if we have such data:",
+  "secondLabel" : "// Java 7 also added \"getSuppressed\", skip if we have such data:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17831,
+  "secondPos" : 18744,
+  "firstEndPos" : 17895,
+  "secondEndPos" : 18808
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15410,6 +16070,17 @@
   "firstEndPos" : 17937,
   "secondEndPos" : 18850
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* As well as \"message\": it will be passed via constructor,\n         * as there's no 'setMessage()' method\n        */",
+  "secondLabel" : "/* As well as \"message\": it will be passed via constructor,\n         * as there's no 'setMessage()' method\n        */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17948,
+  "secondPos" : 18861,
+  "firstEndPos" : 18065,
+  "secondEndPos" : 18978
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15486,6 +16157,17 @@
   "secondPos" : 19008,
   "firstEndPos" : 18104,
   "secondEndPos" : 19017
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update builder now that all information is in?",
+  "secondLabel" : "// update builder now that all information is in?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18116,
+  "secondPos" : 19029,
+  "firstEndPos" : 18165,
+  "secondEndPos" : 19078
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15916,6 +16598,17 @@
   "firstEndPos" : 18465,
   "secondEndPos" : 19378
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* At this point it ought to be a BeanDeserializer; if not, must assume\n         * it's some other thing that can handle deserialization ok...\n         */",
+  "secondLabel" : "/* At this point it ought to be a BeanDeserializer; if not, must assume\n         * it's some other thing that can handle deserialization ok...\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18486,
+  "secondPos" : 19399,
+  "firstEndPos" : 18640,
+  "secondEndPos" : 19553
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16102,6 +16795,17 @@
   "secondPos" : 19682,
   "firstEndPos" : 18781,
   "secondEndPos" : 19694
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// may have modifier(s) that wants to modify or replace serializer we just built:",
+  "secondLabel" : "// may have modifier(s) that wants to modify or replace serializer we just built:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18803,
+  "secondPos" : 19716,
+  "firstEndPos" : 18884,
+  "secondEndPos" : 19797
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16499,6 +17203,17 @@
   "firstEndPos" : 19197,
   "secondEndPos" : 20110
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods for Bean deserializer construction,\n    /* overridable by sub-classes\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods for Bean deserializer construction,\n    /* overridable by sub-classes\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 19210,
+  "secondPos" : 20123,
+  "firstEndPos" : 19440,
+  "secondEndPos" : 20353
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -16553,6 +17268,17 @@
   "secondPos" : 20407,
   "firstEndPos" : 19525,
   "secondEndPos" : 20438
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19494,
+  "secondPos" : 20407,
+  "firstEndPos" : 19499,
+  "secondEndPos" : 20412
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -17632,6 +18358,50 @@
   "firstEndPos" : 20565,
   "secondEndPos" : 21478
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 01-May-2016, tatu: Which base type to use here gets tricky, since",
+  "secondLabel" : "// 01-May-2016, tatu: Which base type to use here gets tricky, since",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20585,
+  "secondPos" : 21498,
+  "firstEndPos" : 20653,
+  "secondEndPos" : 21566
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   it may often make most sense to use general type for overrides,",
+  "secondLabel" : "//   it may often make most sense to use general type for overrides,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20662,
+  "secondPos" : 21575,
+  "firstEndPos" : 20730,
+  "secondEndPos" : 21643
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   but what we have here may be more specific impl type. But for now",
+  "secondLabel" : "//   but what we have here may be more specific impl type. But for now",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20739,
+  "secondPos" : 21652,
+  "firstEndPos" : 20809,
+  "secondEndPos" : 21722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   just use it as is.",
+  "secondLabel" : "//   just use it as is.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20818,
+  "secondPos" : 21731,
+  "firstEndPos" : 20841,
+  "secondEndPos" : 21754
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -18182,6 +18952,17 @@
   "firstEndPos" : 21203,
   "secondEndPos" : 22116
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Or explicit/implicit definitions?",
+  "secondLabel" : "// Or explicit/implicit definitions?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21218,
+  "secondPos" : 22131,
+  "firstEndPos" : 21254,
+  "secondEndPos" : 22167
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18522,6 +19303,17 @@
   "secondPos" : 22372,
   "firstEndPos" : 21467,
   "secondEndPos" : 22380
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also, do we have a fallback \"any\" setter?",
+  "secondLabel" : "// Also, do we have a fallback \"any\" setter?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21490,
+  "secondPos" : 22403,
+  "firstEndPos" : 21534,
+  "secondEndPos" : 22447
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19183,6 +19975,28 @@
   "firstEndPos" : 21976,
   "secondEndPos" : 22889
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE: we do NOT add @JsonIgnore'd properties into blocked ones if there's any-setter",
+  "secondLabel" : "// NOTE: we do NOT add @JsonIgnore'd properties into blocked ones if there's any-setter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22009,
+  "secondPos" : 22922,
+  "firstEndPos" : 22096,
+  "secondEndPos" : 23009
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Implicit ones via @JsonIgnore and equivalent?",
+  "secondLabel" : "// Implicit ones via @JsonIgnore and equivalent?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22105,
+  "secondPos" : 23018,
+  "firstEndPos" : 22153,
+  "secondEndPos" : 23066
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -19590,6 +20404,28 @@
   "firstEndPos" : 22608,
   "secondEndPos" : 23521
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// allow ignoral of similarly named JSON property, but do not force;",
+  "secondLabel" : "// allow ignoral of similarly named JSON property, but do not force;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22404,
+  "secondPos" : 23317,
+  "firstEndPos" : 22472,
+  "secondEndPos" : 23385
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// latter means NOT adding this to 'ignored':",
+  "secondLabel" : "// latter means NOT adding this to 'ignored':",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22493,
+  "secondPos" : 23406,
+  "firstEndPos" : 22538,
+  "secondEndPos" : 23451
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -19876,6 +20712,17 @@
   "firstEndPos" : 22797,
   "secondEndPos" : 23710
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: let's then filter out property definitions",
+  "secondLabel" : "// Ok: let's then filter out property definitions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22809,
+  "secondPos" : 23722,
+  "firstEndPos" : 22858,
+  "secondEndPos" : 23771
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -20084,6 +20931,17 @@
   "secondPos" : 23904,
   "firstEndPos" : 22998,
   "secondEndPos" : 23911
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// After which we can let custom code change the set",
+  "secondLabel" : "// After which we can let custom code change the set",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23010,
+  "secondPos" : 23923,
+  "firstEndPos" : 23062,
+  "secondEndPos" : 23975
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -20426,6 +21284,17 @@
   "firstEndPos" : 23294,
   "secondEndPos" : 24207
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// At which point we still have all kinds of properties; not all with mutators:",
+  "secondLabel" : "// At which point we still have all kinds of properties; not all with mutators:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23338,
+  "secondPos" : 24251,
+  "firstEndPos" : 23417,
+  "secondEndPos" : 24330
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -20568,6 +21437,17 @@
   "secondPos" : 24429,
   "firstEndPos" : 23520,
   "secondEndPos" : 24433
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 18-Oct-2013, tatu: Although constructor parameters have highest precedence,\n             *   we need to do linkage (as per [databind#318]), and so need to start with\n             *   other types, and only then create constructor parameter, if any.\n             */",
+  "secondLabel" : "/* 18-Oct-2013, tatu: Although constructor parameters have highest precedence,\n             *   we need to do linkage (as per [databind#318]), and so need to start with\n             *   other types, and only then create constructor parameter, if any.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23534,
+  "secondPos" : 24447,
+  "firstEndPos" : 23800,
+  "secondEndPos" : 24713
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21328,6 +22208,17 @@
   "firstEndPos" : 24887,
   "secondEndPos" : 25800
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* May also need to consider getters\n                 * for Map/Collection properties; but with lowest precedence\n                 */",
+  "secondLabel" : "/* May also need to consider getters\n                 * for Map/Collection properties; but with lowest precedence\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24299,
+  "secondPos" : 25212,
+  "firstEndPos" : 24432,
+  "secondEndPos" : 25345
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -21426,6 +22317,17 @@
   "secondPos" : 25395,
   "firstEndPos" : 24491,
   "secondEndPos" : 25404
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should only consider Collections and Maps, for now?",
+  "secondLabel" : "// should only consider Collections and Maps, for now?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24511,
+  "secondPos" : 25424,
+  "firstEndPos" : 24565,
+  "secondEndPos" : 25478
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -21878,6 +22780,28 @@
   "firstEndPos" : 24853,
   "secondEndPos" : 25766
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 25-Sep-2014, tatu: No point in finding constructor parameters for abstract types",
+  "secondLabel" : "// 25-Sep-2014, tatu: No point in finding constructor parameters for abstract types",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24900,
+  "secondPos" : 25813,
+  "firstEndPos" : 24983,
+  "secondEndPos" : 25896
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   (since they are never used anyway)",
+  "secondLabel" : "//   (since they are never used anyway)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24996,
+  "secondPos" : 25909,
+  "firstEndPos" : 25035,
+  "secondEndPos" : 25948
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -21976,6 +22900,28 @@
   "secondPos" : 26019,
   "firstEndPos" : 26655,
   "secondEndPos" : 27568
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* If property is passed via constructor parameter, we must\n                 * handle things in special way. Not sure what is the most optimal way...\n                 * for now, let's just call a (new) method in builder, which does nothing.\n                 */",
+  "secondLabel" : "/* If property is passed via constructor parameter, we must\n                 * handle things in special way. Not sure what is the most optimal way...\n                 * for now, let's just call a (new) method in builder, which does nothing.\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25124,
+  "secondPos" : 26037,
+  "firstEndPos" : 25384,
+  "secondEndPos" : 26297
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but let's call a method just to allow custom builders to be aware...",
+  "secondLabel" : "// but let's call a method just to allow custom builders to be aware...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25401,
+  "secondPos" : 26314,
+  "firstEndPos" : 25472,
+  "secondEndPos" : 26385
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -23671,6 +24617,17 @@
   "firstEndPos" : 27047,
   "secondEndPos" : 27960
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// one more twist: if default inclusion disabled, need to force empty set of views",
+  "secondLabel" : "// one more twist: if default inclusion disabled, need to force empty set of views",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26802,
+  "secondPos" : 27715,
+  "firstEndPos" : 26884,
+  "secondEndPos" : 27797
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -23835,6 +24792,17 @@
   "secondPos" : 27911,
   "firstEndPos" : 27006,
   "secondEndPos" : 27919
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// one more thing before adding to builder: copy any metadata",
+  "secondLabel" : "// one more thing before adding to builder: copy any metadata",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27064,
+  "secondPos" : 27977,
+  "firstEndPos" : 27125,
+  "secondEndPos" : 28038
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -24969,6 +25937,17 @@
   "firstEndPos" : 27968,
   "secondEndPos" : 28881
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// These are all valid setters, but we do need to introspect bit more",
+  "secondLabel" : "// These are all valid setters, but we do need to introspect bit more",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27981,
+  "secondPos" : 28894,
+  "firstEndPos" : 28050,
+  "secondEndPos" : 28963
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -25233,6 +26212,17 @@
   "firstEndPos" : 28310,
   "secondEndPos" : 29223
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// explicit ignoral using @JsonIgnoreProperties needs to block entries",
+  "secondLabel" : "// explicit ignoral using @JsonIgnoreProperties needs to block entries",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28200,
+  "secondPos" : 29113,
+  "firstEndPos" : 28270,
+  "secondEndPos" : 29183
+}, {
   "firstType" : "ContinueStatement",
   "secondType" : "ContinueStatement",
   "firstLabel" : "",
@@ -25331,6 +26321,17 @@
   "secondPos" : 29277,
   "firstEndPos" : 29132,
   "secondEndPos" : 30045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// never skip constructor params",
+  "secondLabel" : "// never skip constructor params",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28366,
+  "secondPos" : 29279,
+  "firstEndPos" : 28398,
+  "secondEndPos" : 29311
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25816,6 +26817,17 @@
   "firstEndPos" : 28693,
   "secondEndPos" : 29606
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Some types are declared as ignorable as well",
+  "secondLabel" : "// Some types are declared as ignorable as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28732,
+  "secondPos" : 29645,
+  "firstEndPos" : 28779,
+  "secondEndPos" : 29692
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26024,6 +27036,17 @@
   "secondPos" : 29842,
   "firstEndPos" : 29118,
   "secondEndPos" : 30031
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// important: make ignorable, to avoid errors if value is actually seen",
+  "secondLabel" : "// important: make ignorable, to avoid errors if value is actually seen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28951,
+  "secondPos" : 29864,
+  "firstEndPos" : 29022,
+  "secondEndPos" : 29935
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -26464,6 +27487,17 @@
   "secondPos" : 30475,
   "firstEndPos" : 31020,
   "secondEndPos" : 31933
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and then back references, not necessarily found as regular properties",
+  "secondLabel" : "// and then back references, not necessarily found as regular properties",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29572,
+  "secondPos" : 30485,
+  "firstEndPos" : 29644,
+  "secondEndPos" : 30557
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -27422,6 +28456,28 @@
   "firstEndPos" : 30140,
   "secondEndPos" : 31053
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 30-Mar-2017, tatu: Unfortunately it is not yet possible to make back-refs",
+  "secondLabel" : "// 30-Mar-2017, tatu: Unfortunately it is not yet possible to make back-refs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30164,
+  "secondPos" : 31077,
+  "firstEndPos" : 30240,
+  "secondEndPos" : 31153
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    work through constructors; but let's at least indicate the issue for now",
+  "secondLabel" : "//    work through constructors; but let's at least indicate the issue for now",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30261,
+  "secondPos" : 31174,
+  "firstEndPos" : 30339,
+  "secondEndPos" : 31252
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -28202,6 +29258,17 @@
   "secondPos" : 32037,
   "firstEndPos" : 31187,
   "secondEndPos" : 32100
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31124,
+  "secondPos" : 32037,
+  "firstEndPos" : 31129,
+  "secondEndPos" : 32042
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -29270,6 +30337,17 @@
   "firstEndPos" : 31935,
   "secondEndPos" : 32848
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 31908,
+  "secondPos" : 32821,
+  "firstEndPos" : 31913,
+  "secondEndPos" : 32826
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SettableAnyProperty",
@@ -29313,6 +30391,17 @@
   "secondPos" : 32972,
   "firstEndPos" : 32217,
   "secondEndPos" : 33130
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32059,
+  "secondPos" : 32972,
+  "firstEndPos" : 32065,
+  "secondEndPos" : 32978
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -29589,6 +30678,17 @@
   "firstEndPos" : 33990,
   "secondEndPos" : 34903
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//find the java type based on the annotated setter method or setter field ",
+  "secondLabel" : "//find the java type based on the annotated setter method or setter field ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32456,
+  "secondPos" : 33369,
+  "firstEndPos" : 32530,
+  "secondEndPos" : 33443
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -29720,6 +30820,17 @@
   "secondPos" : 33522,
   "firstEndPos" : 32756,
   "secondEndPos" : 33669
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we know it's a 2-arg method, second arg is the value",
+  "secondLabel" : "// we know it's a 2-arg method, second arg is the value",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32623,
+  "secondPos" : 33536,
+  "firstEndPos" : 32678,
+  "secondEndPos" : 33591
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -29941,6 +31052,17 @@
   "firstEndPos" : 32954,
   "secondEndPos" : 33867
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// get the type from the content type of the map object",
+  "secondLabel" : "// get the type from the content type of the map object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32815,
+  "secondPos" : 33728,
+  "firstEndPos" : 32870,
+  "secondEndPos" : 33783
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -30105,6 +31227,28 @@
   "secondPos" : 33840,
   "firstEndPos" : 32941,
   "secondEndPos" : 33854
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First: various annotations on type itself, as well as type-overrides",
+  "secondLabel" : "// First: various annotations on type itself, as well as type-overrides",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32963,
+  "secondPos" : 33876,
+  "firstEndPos" : 33034,
+  "secondEndPos" : 33947
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// on accessor need to be resolved",
+  "secondLabel" : "// on accessor need to be resolved",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33043,
+  "secondPos" : 33956,
+  "firstEndPos" : 33077,
+  "secondEndPos" : 33990
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -30491,6 +31635,17 @@
   "firstEndPos" : 33357,
   "secondEndPos" : 34270
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and then possible direct deserializer override on accessor",
+  "secondLabel" : "// and then possible direct deserializer override on accessor",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33368,
+  "secondPos" : 34281,
+  "firstEndPos" : 33429,
+  "secondEndPos" : 34342
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -30853,6 +32008,17 @@
   "secondPos" : 34541,
   "firstEndPos" : 33845,
   "secondEndPos" : 34758
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As per [databind#462] need to ensure we contextualize deserializer before passing it on",
+  "secondLabel" : "// As per [databind#462] need to ensure we contextualize deserializer before passing it on",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33642,
+  "secondPos" : 34555,
+  "firstEndPos" : 33732,
+  "secondEndPos" : 34645
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -31316,6 +32482,17 @@
   "firstEndPos" : 34244,
   "secondEndPos" : 35157
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 34117,
+  "secondPos" : 35030,
+  "firstEndPos" : 34124,
+  "secondEndPos" : 35037
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Property constructed, if any; or null to indicate that",
@@ -31591,6 +32768,17 @@
   "firstEndPos" : 36478,
   "secondEndPos" : 37391
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to ensure method is callable (for non-public)",
+  "secondLabel" : "// need to ensure method is callable (for non-public)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34495,
+  "secondPos" : 35408,
+  "firstEndPos" : 34548,
+  "secondEndPos" : 35461
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -31689,6 +32877,39 @@
   "secondPos" : 35504,
   "firstEndPos" : 34615,
   "secondEndPos" : 35528
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 08-Sep-2016, tatu: issues like [databind#1342] suggest something fishy",
+  "secondLabel" : "// 08-Sep-2016, tatu: issues like [databind#1342] suggest something fishy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34627,
+  "secondPos" : 35540,
+  "firstEndPos" : 34700,
+  "secondEndPos" : 35613
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   going on; add sanity checks to try to pin down actual problem...",
+  "secondLabel" : "//   going on; add sanity checks to try to pin down actual problem...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34709,
+  "secondPos" : 35622,
+  "firstEndPos" : 34778,
+  "secondEndPos" : 35691
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   Possibly passing creator parameter?",
+  "secondLabel" : "//   Possibly passing creator parameter?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 34787,
+  "secondPos" : 35700,
+  "firstEndPos" : 34827,
+  "secondEndPos" : 35740
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -31975,6 +33196,17 @@
   "secondPos" : 35958,
   "firstEndPos" : 35054,
   "secondEndPos" : 35967
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Does the Method specify the deserializer to use? If so, let's use it.",
+  "secondLabel" : "// Does the Method specify the deserializer to use? If so, let's use it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35065,
+  "secondPos" : 35978,
+  "firstEndPos" : 35137,
+  "secondEndPos" : 36050
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -32404,6 +33636,17 @@
   "secondPos" : 36355,
   "firstEndPos" : 35691,
   "secondEndPos" : 36604
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 08-Sep-2016, tatu: wonder if we should verify it is `AnnotatedField` to be safe?",
+  "secondLabel" : "// 08-Sep-2016, tatu: wonder if we should verify it is `AnnotatedField` to be safe?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 35456,
+  "secondPos" : 36369,
+  "firstEndPos" : 35539,
+  "secondEndPos" : 36452
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -33196,6 +34439,17 @@
   "secondPos" : 36922,
   "firstEndPos" : 36014,
   "secondEndPos" : 36927
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to retain name of managed forward references:",
+  "secondLabel" : "// need to retain name of managed forward references:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 36035,
+  "secondPos" : 36948,
+  "firstEndPos" : 36088,
+  "secondEndPos" : 37001
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -35221,6 +36475,17 @@
   "firstEndPos" : 37507,
   "secondEndPos" : 38420
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods for Bean deserializer, other\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods for Bean deserializer, other\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 37520,
+  "secondPos" : 38433,
+  "firstEndPos" : 37709,
+  "secondEndPos" : 38622
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -35990,6 +37255,17 @@
   "secondPos" : 39387,
   "firstEndPos" : 38486,
   "secondEndPos" : 39399
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* also: can't deserialize some local classes: static are ok; in-method not;\n         * other non-static inner classes are ok\n         */",
+  "secondLabel" : "/* also: can't deserialize some local classes: static are ok; in-method not;\n         * other non-static inner classes are ok\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38507,
+  "secondPos" : 39420,
+  "firstEndPos" : 38644,
+  "secondEndPos" : 39557
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -36970,6 +38246,17 @@
   "firstEndPos" : 39335,
   "secondEndPos" : 40248
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 21-Apr-2016, tatu: For 2.8, can specify config overrides",
+  "secondLabel" : "// 21-Apr-2016, tatu: For 2.8, can specify config overrides",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39357,
+  "secondPos" : 40270,
+  "firstEndPos" : 39416,
+  "secondEndPos" : 40329
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -37608,6 +38895,17 @@
   "firstEndPos" : 39771,
   "secondEndPos" : 40684
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We default to 'false', i.e. not ignorable",
+  "secondLabel" : "// We default to 'false', i.e. not ignorable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39788,
+  "secondPos" : 40701,
+  "firstEndPos" : 39832,
+  "secondEndPos" : 40745
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -37871,4 +39169,48 @@
   "secondPos" : 40906,
   "firstEndPos" : 40005,
   "secondEndPos" : 40918
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 40020,
+  "secondPos" : 40933,
+  "firstEndPos" : 40051,
+  "secondEndPos" : 40964
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 40031,
+  "secondPos" : 40944,
+  "firstEndPos" : 40043,
+  "secondEndPos" : 40956
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40031,
+  "secondPos" : 40944,
+  "firstEndPos" : 40037,
+  "secondEndPos" : 40950
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " 2.8.9",
+  "secondLabel" : " 2.8.9",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 40037,
+  "secondPos" : 40950,
+  "firstEndPos" : 40043,
+  "secondEndPos" : 40956
 } ]

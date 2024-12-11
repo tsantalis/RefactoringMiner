@@ -10,6 +10,17 @@
   "firstEndPos" : 5282,
   "secondEndPos" : 5283
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1649,6 +1660,17 @@
   "firstEndPos" : 3436,
   "secondEndPos" : 3437
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// extract source excerpt",
+  "secondLabel" : "// extract source excerpt",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2121,
+  "secondPos" : 2121,
+  "firstEndPos" : 2146,
+  "secondEndPos" : 2146
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -1945,6 +1967,17 @@
   "secondPos" : 2323,
   "firstEndPos" : 2339,
   "secondEndPos" : 2339
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// formatting the message",
+  "secondLabel" : "// formatting the message",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2347,
+  "secondPos" : 2347,
+  "firstEndPos" : 2372,
+  "secondEndPos" : 2372
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3155,6 +3188,39 @@
   "secondPos" : 2879,
   "firstEndPos" : 2888,
   "secondEndPos" : 2888
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// padding equal to the excerpt and arrow at the end",
+  "secondLabel" : "// padding equal to the excerpt and arrow at the end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2899,
+  "secondPos" : 2899,
+  "firstEndPos" : 2951,
+  "secondEndPos" : 2951
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// charno == sourceExpert.length() means something is missing",
+  "secondLabel" : "// charno == sourceExpert.length() means something is missing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2958,
+  "secondPos" : 2958,
+  "firstEndPos" : 3019,
+  "secondEndPos" : 3019
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// at the end of the line",
+  "secondLabel" : "// at the end of the line",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3026,
+  "secondPos" : 3026,
+  "firstEndPos" : 3051,
+  "secondEndPos" : 3051
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4784,6 +4850,17 @@
   "firstEndPos" : 3998,
   "secondEndPos" : 3999
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// max length of the number display",
+  "secondLabel" : "// max length of the number display",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4015,
+  "secondPos" : 4016,
+  "firstEndPos" : 4050,
+  "secondEndPos" : 4051
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4959,6 +5036,17 @@
   "secondPos" : 4135,
   "firstEndPos" : 4140,
   "secondEndPos" : 4141
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// formatting",
+  "secondLabel" : "// formatting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4151,
+  "secondPos" : 4152,
+  "firstEndPos" : 4164,
+  "secondEndPos" : 4165
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5454,6 +5542,17 @@
   "secondPos" : 4379,
   "firstEndPos" : 5236,
   "secondEndPos" : 5237
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// line extraction",
+  "secondLabel" : "// line extraction",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4388,
+  "secondPos" : 4389,
+  "firstEndPos" : 4406,
+  "secondEndPos" : 4407
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6148,6 +6247,17 @@
   "firstEndPos" : 4701,
   "secondEndPos" : 4702
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// nice spaces for the line number",
+  "secondLabel" : "// nice spaces for the line number",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4713,
+  "secondPos" : 4714,
+  "firstEndPos" : 4747,
+  "secondEndPos" : 4748
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6620,6 +6730,17 @@
   "secondPos" : 4936,
   "firstEndPos" : 4939,
   "secondEndPos" : 4940
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// end & update",
+  "secondLabel" : "// end & update",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4951,
+  "secondPos" : 4952,
+  "firstEndPos" : 4966,
+  "secondEndPos" : 4967
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

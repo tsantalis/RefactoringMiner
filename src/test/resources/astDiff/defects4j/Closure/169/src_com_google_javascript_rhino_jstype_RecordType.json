@@ -10,6 +10,17 @@
   "firstEndPos" : 10590,
   "secondEndPos" : 10428
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   Bob Jervis\n *   Google Inc.\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "secondLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   Bob Jervis\n *   Google Inc.\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1581,
+  "secondEndPos" : 1581
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1033,6 +1044,17 @@
   "firstEndPos" : 2976,
   "secondEndPos" : 2976
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2914,
+  "secondPos" : 2914,
+  "firstEndPos" : 2920,
+  "secondEndPos" : 2920
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "registry",
@@ -1066,6 +1088,17 @@
   "firstEndPos" : 3048,
   "secondEndPos" : 3048
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2982,
+  "secondPos" : 2982,
+  "firstEndPos" : 2988,
+  "secondEndPos" : 2988
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "properties",
@@ -1098,6 +1131,17 @@
   "secondPos" : 3054,
   "firstEndPos" : 3283,
   "secondEndPos" : 3283
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3054,
+  "secondPos" : 3054,
+  "firstEndPos" : 3060,
+  "secondEndPos" : 3060
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1165,6 +1209,17 @@
   "firstEndPos" : 3397,
   "secondEndPos" : 3397
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3289,
+  "secondPos" : 3289,
+  "firstEndPos" : 3296,
+  "secondEndPos" : 3296
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -1197,6 +1252,17 @@
   "secondPos" : 3326,
   "firstEndPos" : 3348,
   "secondEndPos" : 3348
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3326,
+  "secondPos" : 3326,
+  "firstEndPos" : 3331,
+  "secondEndPos" : 3331
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2287,6 +2353,17 @@
   "firstEndPos" : 4080,
   "secondEndPos" : 4080
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Freeze the record type.",
+  "secondLabel" : "// Freeze the record type.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4104,
+  "secondPos" : 4104,
+  "firstEndPos" : 4130,
+  "secondEndPos" : 4130
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2374,6 +2451,17 @@
   "secondPos" : 4163,
   "firstEndPos" : 4217,
   "secondEndPos" : 4217
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4163,
+  "secondPos" : 4163,
+  "firstEndPos" : 4170,
+  "secondEndPos" : 4170
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4454,6 +4542,39 @@
   "firstEndPos" : 5440,
   "secondEndPos" : 5434
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The greatest subtype consists of those *unique* properties of both",
+  "secondLabel" : "// The greatest subtype consists of those *unique* properties of both",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5450,
+  "secondPos" : 5444,
+  "firstEndPos" : 5519,
+  "secondEndPos" : 5513
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// record types. If any property conflicts, then the NO_TYPE type",
+  "secondLabel" : "// record types. If any property conflicts, then the NO_TYPE type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5526,
+  "secondPos" : 5520,
+  "firstEndPos" : 5591,
+  "secondEndPos" : 5585
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is returned.",
+  "secondLabel" : "// is returned.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5598,
+  "secondPos" : 5592,
+  "firstEndPos" : 5613,
+  "secondEndPos" : 5607
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -5938,6 +6059,72 @@
   "secondPos" : 6559,
   "firstEndPos" : 7732,
   "secondEndPos" : 7644
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In this branch, the other type is some object type. We find",
+  "secondLabel" : "// In this branch, the other type is some object type. We find",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6573,
+  "secondPos" : 6567,
+  "firstEndPos" : 6635,
+  "secondEndPos" : 6629
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the greatest subtype with the following algorithm:",
+  "secondLabel" : "// the greatest subtype with the following algorithm:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6642,
+  "secondPos" : 6636,
+  "firstEndPos" : 6695,
+  "secondEndPos" : 6689
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1) For each property \"x\" of this record type, take the union",
+  "secondLabel" : "// 1) For each property \"x\" of this record type, take the union",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6702,
+  "secondPos" : 6696,
+  "firstEndPos" : 6765,
+  "secondEndPos" : 6759
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    of all classes with a property \"x\" with a compatible property type.",
+  "secondLabel" : "//    of all classes with a property \"x\" with a compatible property type.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6772,
+  "secondPos" : 6766,
+  "firstEndPos" : 6845,
+  "secondEndPos" : 6839
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    and which are a subtype of {@code that}.",
+  "secondLabel" : "//    and which are a subtype of {@code that}.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6852,
+  "secondPos" : 6846,
+  "firstEndPos" : 6898,
+  "secondEndPos" : 6892
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2) Take the intersection of all of these unions.",
+  "secondLabel" : "// 2) Take the intersection of all of these unions.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6905,
+  "secondPos" : 6899,
+  "firstEndPos" : 6956,
+  "secondEndPos" : 6950
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -7567,6 +7754,17 @@
   "firstEndPos" : 7952,
   "secondEndPos" : 7864
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Top of the record types is the empty record, or OBJECT_TYPE.",
+  "secondLabel" : "// Top of the record types is the empty record, or OBJECT_TYPE.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7965,
+  "secondPos" : 7877,
+  "firstEndPos" : 8028,
+  "secondEndPos" : 7940
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7731,6 +7929,39 @@
   "secondPos" : 8049,
   "firstEndPos" : 8141,
   "secondEndPos" : 8053
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// A type is a subtype of a record type if it itself is a record",
+  "secondLabel" : "// A type is a subtype of a record type if it itself is a record",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8154,
+  "secondPos" : 8066,
+  "firstEndPos" : 8218,
+  "secondEndPos" : 8130
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// type and it has at least the same members as the parent record type",
+  "secondLabel" : "// type and it has at least the same members as the parent record type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8223,
+  "secondPos" : 8135,
+  "firstEndPos" : 8293,
+  "secondEndPos" : 8205
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with the same types.",
+  "secondLabel" : "// with the same types.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8298,
+  "secondPos" : 8210,
+  "firstEndPos" : 8321,
+  "secondEndPos" : 8233
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8138,6 +8369,193 @@
   "secondPos" : 8477,
   "firstEndPos" : 10195,
   "secondEndPos" : 10033
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// typeA is a subtype of record type typeB iff:",
+  "secondLabel" : "// typeA is a subtype of record type typeB iff:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8571,
+  "secondPos" : 8483,
+  "firstEndPos" : 8618,
+  "secondEndPos" : 8530
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1) typeA has all the properties declared in typeB.",
+  "secondLabel" : "// 1) typeA has all the properties declared in typeB.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8623,
+  "secondPos" : 8535,
+  "firstEndPos" : 8676,
+  "secondEndPos" : 8588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2) And for each property of typeB,",
+  "secondLabel" : "// 2) And for each property of typeB,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8681,
+  "secondPos" : 8593,
+  "firstEndPos" : 8718,
+  "secondEndPos" : 8630
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    2a) if the property of typeA is declared, it must be equal",
+  "secondLabel" : "//    2a) if the property of typeA is declared, it must be equal",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8723,
+  "secondPos" : 8635,
+  "firstEndPos" : 8787,
+  "secondEndPos" : 8699
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        to the type of the property of typeB,",
+  "secondLabel" : "//        to the type of the property of typeB,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8792,
+  "secondPos" : 8704,
+  "firstEndPos" : 8839,
+  "secondEndPos" : 8751
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    2b) otherwise, it must be a subtype of the property of typeB.",
+  "secondLabel" : "//    2b) otherwise, it must be a subtype of the property of typeB.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8844,
+  "secondPos" : 8756,
+  "firstEndPos" : 8911,
+  "secondEndPos" : 8823
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8916,
+  "secondPos" : 8828,
+  "firstEndPos" : 8918,
+  "secondEndPos" : 8830
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// To figure out why this is true, consider the following pseudo-code:",
+  "secondLabel" : "// To figure out why this is true, consider the following pseudo-code:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8923,
+  "secondPos" : 8835,
+  "firstEndPos" : 8993,
+  "secondEndPos" : 8905
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// /** @type {{a: (Object,null)}} */ var x;",
+  "secondLabel" : "// /** @type {{a: (Object,null)}} */ var x;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8998,
+  "secondPos" : 8910,
+  "firstEndPos" : 9041,
+  "secondEndPos" : 8953
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// /** @type {{a: !Object}} */ var y;",
+  "secondLabel" : "// /** @type {{a: !Object}} */ var y;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9046,
+  "secondPos" : 8958,
+  "firstEndPos" : 9083,
+  "secondEndPos" : 8995
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// var z = {a: {}};",
+  "secondLabel" : "// var z = {a: {}};",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9088,
+  "secondPos" : 9000,
+  "firstEndPos" : 9107,
+  "secondEndPos" : 9019
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// x.a = null;",
+  "secondLabel" : "// x.a = null;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9112,
+  "secondPos" : 9024,
+  "firstEndPos" : 9126,
+  "secondEndPos" : 9038
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9131,
+  "secondPos" : 9043,
+  "firstEndPos" : 9133,
+  "secondEndPos" : 9045
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// y cannot be assigned to x, because line 4 would violate y's declared",
+  "secondLabel" : "// y cannot be assigned to x, because line 4 would violate y's declared",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9138,
+  "secondPos" : 9050,
+  "firstEndPos" : 9209,
+  "secondEndPos" : 9121
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// properties. But z can be assigned to x. Even though z and y are the",
+  "secondLabel" : "// properties. But z can be assigned to x. Even though z and y are the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9214,
+  "secondPos" : 9126,
+  "firstEndPos" : 9284,
+  "secondEndPos" : 9196
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// same type, the properties of z are inferred--and so an assignment",
+  "secondLabel" : "// same type, the properties of z are inferred--and so an assignment",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9289,
+  "secondPos" : 9201,
+  "firstEndPos" : 9357,
+  "secondEndPos" : 9269
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to the property of z would not violate any restrictions on it.",
+  "secondLabel" : "// to the property of z would not violate any restrictions on it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9362,
+  "secondPos" : 9274,
+  "firstEndPos" : 9427,
+  "secondEndPos" : 9339
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -8711,6 +9129,28 @@
   "firstEndPos" : 9964,
   "secondEndPos" : 9814
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If one declared property isn't invariant,",
+  "secondLabel" : "// If one declared property isn't invariant,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9787,
+  "secondPos" : 9637,
+  "firstEndPos" : 9831,
+  "secondEndPos" : 9681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then the whole record isn't covariant.",
+  "secondLabel" : "// then the whole record isn't covariant.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9840,
+  "secondPos" : 9690,
+  "firstEndPos" : 9881,
+  "secondEndPos" : 9731
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8853,6 +9293,28 @@
   "secondPos" : 9820,
   "firstEndPos" : 10159,
   "secondEndPos" : 10005
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If one inferred property isn't a subtype,",
+  "secondLabel" : "// If one inferred property isn't a subtype,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9980,
+  "secondPos" : 9830,
+  "firstEndPos" : 10024,
+  "secondEndPos" : 9874
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then the whole record isn't covariant.",
+  "secondLabel" : "// then the whole record isn't covariant.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10033,
+  "secondPos" : 9883,
+  "firstEndPos" : 10074,
+  "secondEndPos" : 9924
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

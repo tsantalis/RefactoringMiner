@@ -10,6 +10,17 @@
   "firstEndPos" : 11430,
   "secondEndPos" : 11590
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -329,6 +340,17 @@
   "firstEndPos" : 1356,
   "secondEndPos" : 1356
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1323,
+  "secondPos" : 1323,
+  "firstEndPos" : 1328,
+  "secondEndPos" : 1328
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -417,6 +439,17 @@
   "firstEndPos" : 1495,
   "secondEndPos" : 1495
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1480,
+  "secondPos" : 1480,
+  "firstEndPos" : 1485,
+  "secondEndPos" : 1485
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ZipFile",
@@ -450,6 +483,17 @@
   "firstEndPos" : 1560,
   "secondEndPos" : 1560
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1548,
+  "secondPos" : 1548,
+  "firstEndPos" : 1552,
+  "secondEndPos" : 1552
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ZipFile",
@@ -460,6 +504,17 @@
   "secondPos" : 1553,
   "firstEndPos" : 1560,
   "secondEndPos" : 1560
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@NotThreadSafe",
+  "secondLabel" : "@NotThreadSafe",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1564,
+  "secondPos" : 1564,
+  "firstEndPos" : 1578,
+  "secondEndPos" : 1578
 }, {
   "firstType" : "TagElement",
   "secondType" : "TagElement",
@@ -1957,6 +2012,17 @@
   "firstEndPos" : 2543,
   "secondEndPos" : 2543
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n      local file header signature     4 bytes  (0x04034b50)\n      version needed to extract       2 bytes\n      general purpose bit flag        2 bytes\n      compression method              2 bytes\n      last mod file time              2 bytes\n      last mod file date              2 bytes\n      crc-32                          4 bytes\n      compressed size                 4 bytes\n      uncompressed size               4 bytes\n      file name length                2 bytes\n      extra field length              2 bytes\n    */",
+  "secondLabel" : "/*\n      local file header signature     4 bytes  (0x04034b50)\n      version needed to extract       2 bytes\n      general purpose bit flag        2 bytes\n      compression method              2 bytes\n      last mod file time              2 bytes\n      last mod file date              2 bytes\n      crc-32                          4 bytes\n      compressed size                 4 bytes\n      uncompressed size               4 bytes\n      file name length                2 bytes\n      extra field length              2 bytes\n    */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2549,
+  "secondPos" : 2549,
+  "firstEndPos" : 3078,
+  "secondEndPos" : 3078
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2122,6 +2188,17 @@
   "firstEndPos" : 3322,
   "secondEndPos" : 3322
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3219,
+  "secondPos" : 3219,
+  "firstEndPos" : 3225,
+  "secondEndPos" : 3225
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "encoding",
@@ -2165,6 +2242,17 @@
   "secondPos" : 3330,
   "firstEndPos" : 3445,
   "secondEndPos" : 3445
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3330,
+  "secondPos" : 3330,
+  "firstEndPos" : 3336,
+  "secondEndPos" : 3336
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7589,6 +7677,17 @@
   "firstEndPos" : 6526,
   "secondEndPos" : 6526
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avoid int overflow, check null buffer",
+  "secondLabel" : "// avoid int overflow, check null buffer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6547,
+  "secondPos" : 6547,
+  "firstEndPos" : 6587,
+  "secondEndPos" : 6587
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -11461,6 +11560,17 @@
   "firstEndPos" : 9101,
   "secondEndPos" : 9261
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     *  This test assumes that the zip file does not have any additional leading content,\n     *  which is something that is allowed by the specification (e.g. self-extracting zips)\n     */",
+  "secondLabel" : "/*\n     *  This test assumes that the zip file does not have any additional leading content,\n     *  which is something that is allowed by the specification (e.g. self-extracting zips)\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9116,
+  "secondPos" : 9276,
+  "firstEndPos" : 9308,
+  "secondEndPos" : 9468
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -11791,6 +11901,17 @@
   "firstEndPos" : 9556,
   "secondEndPos" : 9716
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// normal file",
+  "secondLabel" : "// normal file",
+  "firstParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstPos" : 9541,
+  "secondPos" : 9701,
+  "firstEndPos" : 9555,
+  "secondEndPos" : 9715
+}, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",
   "firstLabel" : "",
@@ -11845,6 +11966,17 @@
   "secondPos" : 9751,
   "firstEndPos" : 9622,
   "secondEndPos" : 9782
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty zip",
+  "secondLabel" : "// empty zip",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9625,
+  "secondPos" : 9785,
+  "firstEndPos" : 9637,
+  "secondEndPos" : 9797
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -12572,6 +12704,17 @@
   "firstEndPos" : 10098,
   "secondEndPos" : 10258
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ensure all entry bytes are read",
+  "secondLabel" : "// Ensure all entry bytes are read",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10117,
+  "secondPos" : 10277,
+  "firstEndPos" : 10151,
+  "secondEndPos" : 10311
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12978,6 +13121,17 @@
   "secondPos" : 10547,
   "firstEndPos" : 10388,
   "secondEndPos" : 10548
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Pushback any required bytes",
+  "secondLabel" : "// Pushback any required bytes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10399,
+  "secondPos" : 10559,
+  "firstEndPos" : 10429,
+  "secondEndPos" : 10589
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 1920,
   "secondEndPos" : 1954
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -75,6 +86,17 @@
   "secondPos" : 865,
   "firstEndPos" : 903,
   "secondEndPos" : 903
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CheckStyle:InterfaceIsTypeCheck OFF - backward compatible",
+  "secondLabel" : "// CheckStyle:InterfaceIsTypeCheck OFF - backward compatible",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 908,
+  "secondPos" : 908,
+  "firstEndPos" : 968,
+  "secondEndPos" : 968
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -196,6 +218,72 @@
   "secondPos" : 1084,
   "firstEndPos" : 1089,
   "secondEndPos" : 1089
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 1095,
+  "secondPos" : 1095,
+  "firstEndPos" : 1182,
+  "secondEndPos" : 1182
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1106,
+  "secondPos" : 1106,
+  "firstEndPos" : 1155,
+  "secondEndPos" : 1155
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Bits used to indicate the filesystem object type.",
+  "secondLabel" : "Bits used to indicate the filesystem object type.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1106,
+  "secondPos" : 1106,
+  "firstEndPos" : 1155,
+  "secondEndPos" : 1155
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 1163,
+  "secondPos" : 1163,
+  "firstEndPos" : 1174,
+  "secondEndPos" : 1174
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1163,
+  "secondPos" : 1163,
+  "firstEndPos" : 1169,
+  "secondEndPos" : 1169
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " 1.14",
+  "secondLabel" : " 1.14",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1169,
+  "secondPos" : 1169,
+  "firstEndPos" : 1174,
+  "secondEndPos" : 1174
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -460,6 +548,50 @@
   "secondPos" : 1435,
   "firstEndPos" : 1407,
   "secondEndPos" : 1441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ----------------------------------------------------------",
+  "secondLabel" : "// ----------------------------------------------------------",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1414,
+  "secondPos" : 1448,
+  "firstEndPos" : 1475,
+  "secondEndPos" : 1509
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// somewhat arbitrary choices that are quite common for shared",
+  "secondLabel" : "// somewhat arbitrary choices that are quite common for shared",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1480,
+  "secondPos" : 1514,
+  "firstEndPos" : 1542,
+  "secondEndPos" : 1576
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// installations",
+  "secondLabel" : "// installations",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1547,
+  "secondPos" : 1581,
+  "firstEndPos" : 1563,
+  "secondEndPos" : 1597
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -----------------------------------------------------------",
+  "secondLabel" : "// -----------------------------------------------------------",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1568,
+  "secondPos" : 1602,
+  "firstEndPos" : 1630,
+  "secondEndPos" : 1664
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

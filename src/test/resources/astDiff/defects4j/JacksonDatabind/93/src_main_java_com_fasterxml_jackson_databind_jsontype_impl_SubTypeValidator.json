@@ -252,6 +252,17 @@
   "firstEndPos" : 532,
   "secondEndPos" : 532
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 519,
+  "secondPos" : 519,
+  "firstEndPos" : 525,
+  "secondEndPos" : 525
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.8.11",
@@ -746,6 +757,28 @@
   "secondPos" : 917,
   "firstEndPos" : 923,
   "secondEndPos" : 923
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Courtesy of [https://github.com/kantega/notsoserial]:",
+  "secondLabel" : "// Courtesy of [https://github.com/kantega/notsoserial]:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 936,
+  "secondPos" : 936,
+  "firstEndPos" : 992,
+  "secondEndPos" : 992
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (and wrt [databind#1599])",
+  "secondLabel" : "// (and wrt [databind#1599])",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1001,
+  "secondPos" : 1001,
+  "firstEndPos" : 1029,
+  "secondEndPos" : 1029
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1440,6 +1473,17 @@
   "firstEndPos" : 1671,
   "secondEndPos" : 1671
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1680]: may or may not be problem, take no chance",
+  "secondLabel" : "// [databind#1680]: may or may not be problem, take no chance",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1682,
+  "secondPos" : 1682,
+  "firstEndPos" : 1743,
+  "secondEndPos" : 1743
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -1516,6 +1560,17 @@
   "secondPos" : 1758,
   "firstEndPos" : 1789,
   "secondEndPos" : 1789
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1737]; JDK provided",
+  "secondLabel" : "// [databind#1737]; JDK provided",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1800,
+  "secondPos" : 1800,
+  "firstEndPos" : 1832,
+  "secondEndPos" : 1832
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1670,6 +1725,28 @@
   "secondPos" : 1895,
   "firstEndPos" : 1932,
   "secondEndPos" : 1932
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1737]; 3rd party",
+  "secondLabel" : "// [databind#1737]; 3rd party",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1943,
+  "secondPos" : 1943,
+  "firstEndPos" : 1972,
+  "secondEndPos" : 1972
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//s.add(\"org.springframework.aop.support.AbstractBeanFactoryPointcutAdvisor\"); // deprecated by [databind#1855]",
+  "secondLabel" : "//s.add(\"org.springframework.aop.support.AbstractBeanFactoryPointcutAdvisor\"); // deprecated by [databind#1855]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1973,
+  "secondPos" : 1973,
+  "firstEndPos" : 2084,
+  "secondEndPos" : 2084
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1901,6 +1978,17 @@
   "secondPos" : 2248,
   "firstEndPos" : 2301,
   "secondEndPos" : 2301
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1855]: more 3rd party",
+  "secondLabel" : "// [databind#1855]: more 3rd party",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2312,
+  "secondPos" : 2312,
+  "firstEndPos" : 2346,
+  "secondEndPos" : 2346
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2738,6 +2826,28 @@
   "firstEndPos" : 4436,
   "secondEndPos" : 4477
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There are certain nasty classes that could cause problems, mostly",
+  "secondLabel" : "// There are certain nasty classes that could cause problems, mostly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3025,
+  "secondPos" : 3025,
+  "firstEndPos" : 3093,
+  "secondEndPos" : 3093
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// via default typing -- catch them here.",
+  "secondLabel" : "// via default typing -- catch them here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3102,
+  "secondPos" : 3102,
+  "firstEndPos" : 3143,
+  "secondEndPos" : 3143
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3111,6 +3221,39 @@
   "secondPos" : 3336,
   "firstEndPos" : 3342,
   "secondEndPos" : 3342
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 18-Dec-2017, tatu: As per [databind#1855], need bit more sophisticated handling",
+  "secondLabel" : "// 18-Dec-2017, tatu: As per [databind#1855], need bit more sophisticated handling",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3370,
+  "secondPos" : 3370,
+  "firstEndPos" : 3452,
+  "secondEndPos" : 3452
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    for some Spring framework types",
+  "secondLabel" : "//    for some Spring framework types",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3465,
+  "secondPos" : 3465,
+  "firstEndPos" : 3502,
+  "secondEndPos" : 3502
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 05-Jan-2017, tatu: ... also, only applies to classes, not interfaces",
+  "secondLabel" : "// 05-Jan-2017, tatu: ... also, only applies to classes, not interfaces",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3515,
+  "secondPos" : 3515,
+  "firstEndPos" : 3586,
+  "secondEndPos" : 3586
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3552,6 +3695,17 @@
   "firstEndPos" : 3779,
   "secondEndPos" : 3820
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// looking for \"AbstractBeanFactoryPointcutAdvisor\" but no point to allow any is there?",
+  "secondLabel" : "// looking for \"AbstractBeanFactoryPointcutAdvisor\" but no point to allow any is there?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3803,
+  "secondPos" : 3844,
+  "firstEndPos" : 3890,
+  "secondEndPos" : 3931
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3650,6 +3804,17 @@
   "secondPos" : 4023,
   "firstEndPos" : 4061,
   "secondEndPos" : 4102
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ditto  for \"FileSystemXmlApplicationContext\": block all ApplicationContexts",
+  "secondLabel" : "// ditto  for \"FileSystemXmlApplicationContext\": block all ApplicationContexts",
+  "firstParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstPos" : 3982,
+  "secondPos" : 4023,
+  "firstEndPos" : 4060,
+  "secondEndPos" : 4101
 }, {
   "firstType" : "MethodInvocation",
   "secondType" : "MethodInvocation",

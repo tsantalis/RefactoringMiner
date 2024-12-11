@@ -175,6 +175,17 @@
   "firstEndPos" : 221,
   "secondEndPos" : 221
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 198,
+  "secondPos" : 198,
+  "firstEndPos" : 205,
+  "secondEndPos" : 205
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Jonathan Hedley",
@@ -395,6 +406,17 @@
   "firstEndPos" : 334,
   "secondEndPos" : 334
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// current doc we are building into",
+  "secondLabel" : "// current doc we are building into",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 336,
+  "secondPos" : 336,
+  "firstEndPos" : 371,
+  "secondEndPos" : 371
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -494,6 +516,17 @@
   "firstEndPos" : 410,
   "secondEndPos" : 410
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the stack of open elements",
+  "secondLabel" : "// the stack of open elements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 412,
+  "secondPos" : 412,
+  "firstEndPos" : 441,
+  "secondEndPos" : 441
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -559,6 +592,17 @@
   "secondPos" : 463,
   "firstEndPos" : 470,
   "secondEndPos" : 470
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// current base uri, for creating new elements",
+  "secondLabel" : "// current base uri, for creating new elements",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 472,
+  "secondPos" : 472,
+  "firstEndPos" : 518,
+  "secondEndPos" : 518
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -626,6 +670,17 @@
   "firstEndPos" : 551,
   "secondEndPos" : 551
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// currentToken is used only for error tracking.",
+  "secondLabel" : "// currentToken is used only for error tracking.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 553,
+  "secondPos" : 553,
+  "firstEndPos" : 601,
+  "secondEndPos" : 601
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -691,6 +746,17 @@
   "secondPos" : 631,
   "firstEndPos" : 637,
   "secondEndPos" : 637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// null when not tracking errors",
+  "secondLabel" : "// null when not tracking errors",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 639,
+  "secondPos" : 639,
+  "firstEndPos" : 671,
+  "secondEndPos" : 671
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -790,6 +856,17 @@
   "secondPos" : 712,
   "firstEndPos" : 726,
   "secondEndPos" : 726
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start tag to process",
+  "secondLabel" : "// start tag to process",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 730,
+  "secondPos" : 730,
+  "firstEndPos" : 753,
+  "secondEndPos" : 753
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

@@ -10,6 +10,17 @@
   "firstEndPos" : 6791,
   "secondEndPos" : 6969
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2243,6 +2254,28 @@
   "firstEndPos" : 1811,
   "secondEndPos" : 1851
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// expands array varArgs that are given by runtime (1, [a, b]) into true",
+  "secondLabel" : "// expands array varArgs that are given by runtime (1, [a, b]) into true",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1826,
+  "secondPos" : 1866,
+  "firstEndPos" : 1898,
+  "secondEndPos" : 1938
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// varArgs (1, a, b);",
+  "secondLabel" : "// varArgs (1, a, b);",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1903,
+  "secondPos" : 1943,
+  "firstEndPos" : 1924,
+  "secondEndPos" : 1964
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3221,6 +3254,17 @@
   "secondPos" : 2350,
   "firstEndPos" : 2435,
   "secondEndPos" : 2475
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in case someone deliberately passed null varArg array",
+  "secondLabel" : "// in case someone deliberately passed null varArg array",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2324,
+  "secondPos" : 2364,
+  "firstEndPos" : 2380,
+  "secondEndPos" : 2420
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

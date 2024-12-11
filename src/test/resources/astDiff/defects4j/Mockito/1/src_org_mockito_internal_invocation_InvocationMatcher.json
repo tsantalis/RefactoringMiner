@@ -10,6 +10,17 @@
   "firstEndPos" : 6629,
   "secondEndPos" : 7234
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1483,6 +1494,28 @@
   "secondPos" : 1416,
   "firstEndPos" : 1427,
   "secondEndPos" : 1427
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Matcher",
+  "secondLabel" : "Matcher",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 1429,
+  "secondPos" : 1429,
+  "firstEndPos" : 1436,
+  "secondEndPos" : 1436
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 1429,
+  "secondPos" : 1429,
+  "firstEndPos" : 1436,
+  "secondEndPos" : 1436
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4190,6 +4223,28 @@
   "firstEndPos" : 4008,
   "secondEndPos" : 4008
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//not using method.equals() for 1 good reason:",
+  "secondLabel" : "//not using method.equals() for 1 good reason:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3233,
+  "secondPos" : 3233,
+  "firstEndPos" : 3279,
+  "secondEndPos" : 3279
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sometimes java generates forwarding methods when generics are in play see JavaGenericsForwardingMethodsTest",
+  "secondLabel" : "//sometimes java generates forwarding methods when generics are in play see JavaGenericsForwardingMethodsTest",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3288,
+  "secondPos" : 3288,
+  "firstEndPos" : 3397,
+  "secondEndPos" : 3397
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4640,6 +4695,17 @@
   "secondPos" : 3565,
   "firstEndPos" : 3980,
   "secondEndPos" : 3980
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Avoid unnecessary cloning */",
+  "secondLabel" : "/* Avoid unnecessary cloning */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3579,
+  "secondPos" : 3579,
+  "firstEndPos" : 3610,
+  "secondEndPos" : 3610
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6323,6 +6389,182 @@
   "secondPos" : 5235,
   "firstEndPos" : 4636,
   "secondEndPos" : 5241
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        for (int position = 0; position < matchers.size(); position++) {",
+  "secondLabel" : "//        for (int position = 0; position < matchers.size(); position++) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4689,
+  "secondPos" : 5294,
+  "firstEndPos" : 4763,
+  "secondEndPos" : 5368
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            Matcher m = matchers.get(position);",
+  "secondLabel" : "//            Matcher m = matchers.get(position);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4764,
+  "secondPos" : 5369,
+  "firstEndPos" : 4813,
+  "secondEndPos" : 5418
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            if (m instanceof CapturesArguments && invocation.getRawArguments().length > position) {",
+  "secondLabel" : "//            if (m instanceof CapturesArguments && invocation.getRawArguments().length > position) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4814,
+  "secondPos" : 5419,
+  "firstEndPos" : 4915,
+  "secondEndPos" : 5520
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                //TODO SF - this whole lot can be moved captureFrom implementation",
+  "secondLabel" : "//                //TODO SF - this whole lot can be moved captureFrom implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4916,
+  "secondPos" : 5521,
+  "firstEndPos" : 5000,
+  "secondEndPos" : 5605
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                if(isVariableArgument(invocation, position) && isVarargMatcher(m)) {",
+  "secondLabel" : "//                if(isVariableArgument(invocation, position) && isVarargMatcher(m)) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5001,
+  "secondPos" : 5606,
+  "firstEndPos" : 5087,
+  "secondEndPos" : 5692
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    Object array = invocation.getRawArguments()[position];",
+  "secondLabel" : "//                    Object array = invocation.getRawArguments()[position];",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5088,
+  "secondPos" : 5693,
+  "firstEndPos" : 5164,
+  "secondEndPos" : 5769
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    for (int i = 0; i < Array.getLength(array); i++) {",
+  "secondLabel" : "//                    for (int i = 0; i < Array.getLength(array); i++) {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5165,
+  "secondPos" : 5770,
+  "firstEndPos" : 5237,
+  "secondEndPos" : 5842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                        ((CapturesArguments) m).captureFrom(Array.get(array, i));",
+  "secondLabel" : "//                        ((CapturesArguments) m).captureFrom(Array.get(array, i));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5238,
+  "secondPos" : 5843,
+  "firstEndPos" : 5321,
+  "secondEndPos" : 5926
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    }",
+  "secondLabel" : "//                    }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5322,
+  "secondPos" : 5927,
+  "firstEndPos" : 5345,
+  "secondEndPos" : 5950
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    //since we've captured all varargs already, it does not make sense to process other matchers.",
+  "secondLabel" : "//                    //since we've captured all varargs already, it does not make sense to process other matchers.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5346,
+  "secondPos" : 5951,
+  "firstEndPos" : 5461,
+  "secondEndPos" : 6066
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    return;",
+  "secondLabel" : "//                    return;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5462,
+  "secondPos" : 6067,
+  "firstEndPos" : 5491,
+  "secondEndPos" : 6096
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                } else {",
+  "secondLabel" : "//                } else {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5492,
+  "secondPos" : 6097,
+  "firstEndPos" : 5518,
+  "secondEndPos" : 6123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                    ((CapturesArguments) m).captureFrom(invocation.getRawArguments()[position]);",
+  "secondLabel" : "//                    ((CapturesArguments) m).captureFrom(invocation.getRawArguments()[position]);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5519,
+  "secondPos" : 6124,
+  "firstEndPos" : 5617,
+  "secondEndPos" : 6222
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                }",
+  "secondLabel" : "//                }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5618,
+  "secondPos" : 6223,
+  "firstEndPos" : 5637,
+  "secondEndPos" : 6242
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            }",
+  "secondLabel" : "//            }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5638,
+  "secondPos" : 6243,
+  "firstEndPos" : 5653,
+  "secondEndPos" : 6258
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        }",
+  "secondLabel" : "//        }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5654,
+  "secondPos" : 6259,
+  "firstEndPos" : 5665,
+  "secondEndPos" : 6270
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

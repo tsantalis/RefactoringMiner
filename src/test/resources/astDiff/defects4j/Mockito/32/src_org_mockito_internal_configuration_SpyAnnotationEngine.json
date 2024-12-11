@@ -10,6 +10,17 @@
   "firstEndPos" : 2884,
   "secondEndPos" : 3151
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "secondLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1891,6 +1902,17 @@
   "firstEndPos" : 2069,
   "secondEndPos" : 2118
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// instance has been spied earlier",
+  "secondLabel" : "// instance has been spied earlier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1962,
+  "secondPos" : 2011,
+  "firstEndPos" : 1996,
+  "secondEndPos" : 2045
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2407,6 +2429,17 @@
   "secondPos" : 2667,
   "firstEndPos" : 2413,
   "secondEndPos" : 2680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//TODO duplicated elsewhere",
+  "secondLabel" : "//TODO duplicated elsewhere",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2479,
+  "secondPos" : 2746,
+  "firstEndPos" : 2506,
+  "secondEndPos" : 2773
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

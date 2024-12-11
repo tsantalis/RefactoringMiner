@@ -2045,6 +2045,17 @@
   "firstEndPos" : 1212,
   "secondEndPos" : 1212
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1192,
+  "secondPos" : 1192,
+  "firstEndPos" : 1198,
+  "secondEndPos" : 1198
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "c",
@@ -2077,6 +2088,17 @@
   "secondPos" : 1220,
   "firstEndPos" : 1305,
   "secondEndPos" : 1305
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1220,
+  "secondPos" : 1220,
+  "firstEndPos" : 1227,
+  "secondEndPos" : 1227
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2154,6 +2176,17 @@
   "secondPos" : 1342,
   "firstEndPos" : 1536,
   "secondEndPos" : 1536
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doesn't handle scanning for surrogates",
+  "secondLabel" : "// doesn't handle scanning for surrogates",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1352,
+  "secondPos" : 1352,
+  "firstEndPos" : 1393,
+  "secondEndPos" : 1393
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -2540,6 +2573,17 @@
   "firstEndPos" : 1695,
   "secondEndPos" : 1695
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1673,
+  "secondPos" : 1673,
+  "firstEndPos" : 1679,
+  "secondEndPos" : 1679
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "seq",
@@ -2572,6 +2616,17 @@
   "secondPos" : 1703,
   "firstEndPos" : 1788,
   "secondEndPos" : 1788
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1703,
+  "secondPos" : 1703,
+  "firstEndPos" : 1710,
+  "secondEndPos" : 1710
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2660,6 +2715,17 @@
   "secondPos" : 1835,
   "firstEndPos" : 2490,
   "secondEndPos" : 2508
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doesn't handle scanning for surrogates",
+  "secondLabel" : "// doesn't handle scanning for surrogates",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1845,
+  "secondPos" : 1845,
+  "firstEndPos" : 1886,
+  "secondEndPos" : 1886
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2924,6 +2990,17 @@
   "secondPos" : 1985,
   "firstEndPos" : 2465,
   "secondEndPos" : 2483
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// scan to first instance of startchar:",
+  "secondLabel" : "// scan to first instance of startchar:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1999,
+  "secondPos" : 1999,
+  "firstEndPos" : 2038,
+  "secondEndPos" : 2038
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3870,6 +3947,17 @@
   "secondPos" : 2390,
   "firstEndPos" : 2376,
   "secondEndPos" : 2394
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// found full sequence",
+  "secondLabel" : "// found full sequence",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 2378,
+  "secondPos" : 2396,
+  "firstEndPos" : 2400,
+  "secondEndPos" : 2418
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -12648,6 +12736,17 @@
   "secondPos" : 6927,
   "firstEndPos" : 7188,
   "secondEndPos" : 7206
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// used to check presence of </title>, </style>. only finds consistent case.",
+  "secondLabel" : "// used to check presence of </title>, </style>. only finds consistent case.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6919,
+  "secondPos" : 6937,
+  "firstEndPos" : 6995,
+  "secondEndPos" : 7013
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

@@ -241,6 +241,17 @@
   "firstEndPos" : 414,
   "secondEndPos" : 414
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 386,
+  "secondPos" : 386,
+  "firstEndPos" : 391,
+  "secondEndPos" : 391
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SettableBeanProperty",
@@ -1781,6 +1792,17 @@
   "firstEndPos" : 1708,
   "secondEndPos" : 1708
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "secondLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1728,
+  "secondPos" : 1728,
+  "firstEndPos" : 1811,
+  "secondEndPos" : 1811
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2066,6 +2088,17 @@
   "secondPos" : 2129,
   "firstEndPos" : 2047,
   "secondEndPos" : 2132
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // // BeanProperty impl",
+  "secondLabel" : "// // // BeanProperty impl",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2061,
+  "secondPos" : 2146,
+  "firstEndPos" : 2087,
+  "secondEndPos" : 2172
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2407,6 +2440,17 @@
   "secondPos" : 2346,
   "firstEndPos" : 2265,
   "secondEndPos" : 2350
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2274,
+  "secondPos" : 2359,
+  "firstEndPos" : 2443,
+  "secondEndPos" : 2528
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2958,6 +3002,28 @@
   "firstEndPos" : 3724,
   "secondEndPos" : 3809
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "secondLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2804,
+  "secondPos" : 2889,
+  "firstEndPos" : 3102,
+  "secondEndPos" : 3187
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "secondLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3111,
+  "secondPos" : 3196,
+  "firstEndPos" : 3190,
+  "secondEndPos" : 3275
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3419,6 +3485,17 @@
   "secondPos" : 3550,
   "firstEndPos" : 3473,
   "secondEndPos" : 3558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: may need to set a property value as well",
+  "secondLabel" : "// also: may need to set a property value as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3484,
+  "secondPos" : 3569,
+  "firstEndPos" : 3533,
+  "secondEndPos" : 3618
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

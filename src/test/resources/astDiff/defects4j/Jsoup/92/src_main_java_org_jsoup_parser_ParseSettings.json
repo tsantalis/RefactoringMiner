@@ -868,6 +868,39 @@
   "firstEndPos" : 868,
   "secondEndPos" : 868
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 881,
+  "secondPos" : 881,
+  "firstEndPos" : 942,
+  "secondEndPos" : 942
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 892,
+  "secondPos" : 892,
+  "firstEndPos" : 934,
+  "secondEndPos" : 934
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Returns true if preserving attribute case.",
+  "secondLabel" : "Returns true if preserving attribute case.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 892,
+  "secondPos" : 892,
+  "firstEndPos" : 934,
+  "secondEndPos" : 934
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -923,6 +956,17 @@
   "firstEndPos" : 1018,
   "secondEndPos" : 1107
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 989,
+  "secondPos" : 1078,
+  "firstEndPos" : 995,
+  "secondEndPos" : 1084
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "tag",
@@ -955,6 +999,17 @@
   "secondPos" : 1115,
   "firstEndPos" : 1072,
   "secondEndPos" : 1161
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1026,
+  "secondPos" : 1115,
+  "firstEndPos" : 1032,
+  "secondEndPos" : 1121
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

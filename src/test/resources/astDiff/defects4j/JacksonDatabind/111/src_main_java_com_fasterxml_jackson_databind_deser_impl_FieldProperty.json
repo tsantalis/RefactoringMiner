@@ -802,6 +802,17 @@
   "firstEndPos" : 1316,
   "secondEndPos" : 1316
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1306,
+  "secondPos" : 1306,
+  "firstEndPos" : 1312,
+  "secondEndPos" : 1312
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.9",
@@ -3200,6 +3211,17 @@
   "firstEndPos" : 2968,
   "secondEndPos" : 2968
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "secondLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2988,
+  "secondPos" : 2988,
+  "firstEndPos" : 3071,
+  "secondEndPos" : 3071
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -3750,6 +3772,17 @@
   "firstEndPos" : 3496,
   "secondEndPos" : 3581
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* BeanProperty impl\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* BeanProperty impl\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3511,
+  "secondPos" : 3596,
+  "firstEndPos" : 3674,
+  "secondEndPos" : 3759
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4222,6 +4255,17 @@
   "secondPos" : 3989,
   "firstEndPos" : 3914,
   "secondEndPos" : 3999
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Overridden methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Overridden methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3923,
+  "secondPos" : 4008,
+  "firstEndPos" : 4087,
+  "secondEndPos" : 4172
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4937,6 +4981,17 @@
   "secondPos" : 4612,
   "firstEndPos" : 4531,
   "secondEndPos" : 4616
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 04-May-2018, tatu: [databind#2023] Coercion from String (mostly) can give null",
+  "secondLabel" : "// 04-May-2018, tatu: [databind#2023] Coercion from String (mostly) can give null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4546,
+  "secondPos" : 4631,
+  "firstEndPos" : 4627,
+  "secondEndPos" : 4712
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6291,6 +6346,17 @@
   "firstEndPos" : 5534,
   "secondEndPos" : 5619
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 04-May-2018, tatu: [databind#2023] Coercion from String (mostly) can give null",
+  "secondLabel" : "// 04-May-2018, tatu: [databind#2023] Coercion from String (mostly) can give null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5549,
+  "secondPos" : 5634,
+  "firstEndPos" : 5630,
+  "secondEndPos" : 5715
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7303,6 +7369,17 @@
   "firstEndPos" : 6405,
   "secondEndPos" : 6490
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 15-Sep-2015, tatu: How could we get a ref to JsonParser?",
+  "secondLabel" : "// 15-Sep-2015, tatu: How could we get a ref to JsonParser?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6301,
+  "secondPos" : 6386,
+  "firstEndPos" : 6360,
+  "secondEndPos" : 6445
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7743,6 +7820,17 @@
   "firstEndPos" : 6717,
   "secondEndPos" : 6802
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 15-Sep-2015, tatu: How could we get a ref to JsonParser?",
+  "secondLabel" : "// 15-Sep-2015, tatu: How could we get a ref to JsonParser?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6613,
+  "secondPos" : 6698,
+  "firstEndPos" : 6672,
+  "secondEndPos" : 6757
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7830,6 +7918,17 @@
   "secondPos" : 6818,
   "firstEndPos" : 6741,
   "secondEndPos" : 6826
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* JDK serialization handling\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* JDK serialization handling\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6754,
+  "secondPos" : 6839,
+  "firstEndPos" : 6926,
+  "secondEndPos" : 7011
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

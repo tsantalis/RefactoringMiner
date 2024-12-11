@@ -340,6 +340,17 @@
   "firstEndPos" : 431,
   "secondEndPos" : 431
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 438,
+  "secondPos" : 438,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -372,6 +383,17 @@
   "secondPos" : 611,
   "firstEndPos" : 621,
   "secondEndPos" : 621
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 611,
+  "secondPos" : 611,
+  "firstEndPos" : 617,
+  "secondEndPos" : 617
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -669,6 +691,17 @@
   "secondPos" : 826,
   "firstEndPos" : 831,
   "secondEndPos" : 831
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Abstract method implementations\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Abstract method implementations\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 845,
+  "secondPos" : 845,
+  "firstEndPos" : 1022,
+  "secondEndPos" : 1022
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -1935,6 +1968,17 @@
   "firstEndPos" : 1864,
   "secondEndPos" : 1901
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.9",
+  "secondLabel" : "// since 2.9",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1865,
+  "secondPos" : 1902,
+  "firstEndPos" : 1877,
+  "secondEndPos" : 1914
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -2276,6 +2320,17 @@
   "firstEndPos" : 2062,
   "secondEndPos" : 2099
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.9",
+  "secondLabel" : "// since 2.9",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 2063,
+  "secondPos" : 2100,
+  "firstEndPos" : 2075,
+  "secondEndPos" : 2112
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -2374,6 +2429,17 @@
   "secondPos" : 2177,
   "firstEndPos" : 2257,
   "secondEndPos" : 2294
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// yes; regardless of value deserializer reference itself may be updated",
+  "secondLabel" : "// yes; regardless of value deserializer reference itself may be updated",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2150,
+  "secondPos" : 2187,
+  "firstEndPos" : 2222,
+  "secondEndPos" : 2259
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

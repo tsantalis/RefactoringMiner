@@ -10,6 +10,17 @@
   "firstEndPos" : 22609,
   "secondEndPos" : 22449
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -384,6 +395,17 @@
   "firstEndPos" : 1766,
   "secondEndPos" : 1766
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1742,
+  "secondPos" : 1742,
+  "firstEndPos" : 1749,
+  "secondEndPos" : 1749
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -405,6 +427,17 @@
   "secondPos" : 1770,
   "firstEndPos" : 1796,
   "secondEndPos" : 1796
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1770,
+  "secondPos" : 1770,
+  "firstEndPos" : 1778,
+  "secondEndPos" : 1778
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3123,6 +3156,17 @@
   "firstEndPos" : 3939,
   "secondEndPos" : 3939
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    private NamespaceManager namespaceManager;",
+  "secondLabel" : "//    private NamespaceManager namespaceManager;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3941,
+  "secondPos" : 3941,
+  "firstEndPos" : 3989,
+  "secondEndPos" : 3989
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5092,6 +5136,17 @@
   "firstEndPos" : 5520,
   "secondEndPos" : 5520
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5483,
+  "secondPos" : 5483,
+  "firstEndPos" : 5494,
+  "secondEndPos" : 5494
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Please use !isContainer()",
@@ -6170,6 +6225,17 @@
   "firstEndPos" : 6990,
   "secondEndPos" : 6990
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Default behavior is to return the same as getNode() ",
+  "secondLabel" : "// Default behavior is to return the same as getNode() ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7012,
+  "secondPos" : 7012,
+  "firstEndPos" : 7067,
+  "secondEndPos" : 7067
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -6687,6 +6753,17 @@
   "firstEndPos" : 8264,
   "secondEndPos" : 8264
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8241,
+  "secondPos" : 8241,
+  "firstEndPos" : 8245,
+  "secondEndPos" : 8245
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -6719,6 +6796,17 @@
   "secondPos" : 8280,
   "firstEndPos" : 8386,
   "secondEndPos" : 8386
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8280,
+  "secondPos" : 8280,
+  "firstEndPos" : 8287,
+  "secondEndPos" : 8287
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7500,6 +7588,17 @@
   "secondPos" : 9735,
   "firstEndPos" : 9771,
   "secondEndPos" : 9771
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9735,
+  "secondPos" : 9735,
+  "firstEndPos" : 9746,
+  "secondEndPos" : 9746
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -11076,6 +11175,39 @@
   "firstEndPos" : 12799,
   "secondEndPos" : 12799
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It is a no-op",
+  "secondLabel" : "// It is a no-op",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12671,
+  "secondPos" : 12671,
+  "firstEndPos" : 12687,
+  "secondEndPos" : 12687
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        System.err.println(\"REMOVING: \" + asPath() + \" \" + getClass());",
+  "secondLabel" : "//        System.err.println(\"REMOVING: \" + asPath() + \" \" + getClass());",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12689,
+  "secondPos" : 12689,
+  "firstEndPos" : 12762,
+  "secondEndPos" : 12762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        printPointerChain();",
+  "secondLabel" : "//        printPointerChain();",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12763,
+  "secondPos" : 12763,
+  "firstEndPos" : 12793,
+  "secondEndPos" : 12793
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -13429,6 +13561,237 @@
   "secondPos" : 15305,
   "firstEndPos" : 15316,
   "secondEndPos" : 15316
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    /**",
+  "secondLabel" : "//    /**",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15328,
+  "secondPos" : 15328,
+  "firstEndPos" : 15337,
+  "secondEndPos" : 15337
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     * Installs the supplied manager as the namespace manager for this node",
+  "secondLabel" : "//     * Installs the supplied manager as the namespace manager for this node",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15338,
+  "secondPos" : 15338,
+  "firstEndPos" : 15415,
+  "secondEndPos" : 15415
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     * pointer. The {@link #getNamespaceURI(String) getNamespaceURI(prefix)}",
+  "secondLabel" : "//     * pointer. The {@link #getNamespaceURI(String) getNamespaceURI(prefix)}",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15416,
+  "secondPos" : 15416,
+  "firstEndPos" : 15494,
+  "secondEndPos" : 15494
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     * uses this manager to resolve namespace prefixes.",
+  "secondLabel" : "//     * uses this manager to resolve namespace prefixes.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15495,
+  "secondPos" : 15495,
+  "firstEndPos" : 15552,
+  "secondEndPos" : 15552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     * ",
+  "secondLabel" : "//     * ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15553,
+  "secondPos" : 15553,
+  "firstEndPos" : 15562,
+  "secondEndPos" : 15562
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     * @param namespaceManager",
+  "secondLabel" : "//     * @param namespaceManager",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15563,
+  "secondPos" : 15563,
+  "firstEndPos" : 15595,
+  "secondEndPos" : 15595
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     */",
+  "secondLabel" : "//     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15596,
+  "secondPos" : 15596,
+  "firstEndPos" : 15605,
+  "secondEndPos" : 15605
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    public void setNamespaceManager(NamespaceManager namespaceManager) {",
+  "secondLabel" : "//    public void setNamespaceManager(NamespaceManager namespaceManager) {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15606,
+  "secondPos" : 15606,
+  "firstEndPos" : 15680,
+  "secondEndPos" : 15680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        this.namespaceManager = namespaceManager;",
+  "secondLabel" : "//        this.namespaceManager = namespaceManager;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15681,
+  "secondPos" : 15681,
+  "firstEndPos" : 15732,
+  "secondEndPos" : 15732
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15733,
+  "secondPos" : 15733,
+  "firstEndPos" : 15740,
+  "secondEndPos" : 15740
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    ",
+  "secondLabel" : "//    ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15741,
+  "secondPos" : 15741,
+  "firstEndPos" : 15747,
+  "secondEndPos" : 15747
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    public NamespaceManager getNamespaceManager() {",
+  "secondLabel" : "//    public NamespaceManager getNamespaceManager() {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15748,
+  "secondPos" : 15748,
+  "firstEndPos" : 15801,
+  "secondEndPos" : 15801
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        if (namespaceManager != null) {",
+  "secondLabel" : "//        if (namespaceManager != null) {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15802,
+  "secondPos" : 15802,
+  "firstEndPos" : 15843,
+  "secondEndPos" : 15843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            return namespaceManager;",
+  "secondLabel" : "//            return namespaceManager;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15844,
+  "secondPos" : 15844,
+  "firstEndPos" : 15882,
+  "secondEndPos" : 15882
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        }",
+  "secondLabel" : "//        }",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15883,
+  "secondPos" : 15883,
+  "firstEndPos" : 15894,
+  "secondEndPos" : 15894
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        if (parent != null) {",
+  "secondLabel" : "//        if (parent != null) {",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15895,
+  "secondPos" : 15895,
+  "firstEndPos" : 15926,
+  "secondEndPos" : 15926
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            return parent.getNamespaceManager();",
+  "secondLabel" : "//            return parent.getNamespaceManager();",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15927,
+  "secondPos" : 15927,
+  "firstEndPos" : 15977,
+  "secondEndPos" : 15977
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        }        ",
+  "secondLabel" : "//        }        ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15978,
+  "secondPos" : 15978,
+  "firstEndPos" : 15997,
+  "secondEndPos" : 15997
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        return null;",
+  "secondLabel" : "//        return null;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 15998,
+  "secondPos" : 15998,
+  "firstEndPos" : 16020,
+  "secondEndPos" : 16020
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    }",
+  "secondLabel" : "//    }",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 16021,
+  "secondPos" : 16021,
+  "firstEndPos" : 16028,
+  "secondEndPos" : 16028
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    ",
+  "secondLabel" : "//    ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 16029,
+  "secondPos" : 16029,
+  "firstEndPos" : 16035,
+  "secondEndPos" : 16035
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -16290,6 +16653,28 @@
   "firstEndPos" : 19590,
   "secondEndPos" : 19590
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the parent of this node is a container, it is responsible",
+  "secondLabel" : "// If the parent of this node is a container, it is responsible",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18829,
+  "secondPos" : 18829,
+  "firstEndPos" : 18892,
+  "secondEndPos" : 18892
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for appended this node's part of the path.",
+  "secondLabel" : "// for appended this node's part of the path.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18901,
+  "secondPos" : 18901,
+  "firstEndPos" : 18946,
+  "secondEndPos" : 18946
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -18160,6 +18545,17 @@
   "firstEndPos" : 19966,
   "secondEndPos" : 19966
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Of course it is supported",
+  "secondLabel" : "// Of course it is supported",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19894,
+  "secondPos" : 19894,
+  "firstEndPos" : 19922,
+  "secondEndPos" : 19922
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18434,6 +18830,17 @@
   "secondPos" : 20098,
   "firstEndPos" : 20741,
   "secondEndPos" : 20741
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let it throw a ClassCastException",
+  "secondLabel" : "// Let it throw a ClassCastException",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20108,
+  "secondPos" : 20108,
+  "firstEndPos" : 20144,
+  "secondEndPos" : 20144
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -18753,6 +19160,17 @@
   "secondPos" : 20315,
   "firstEndPos" : 20322,
   "secondEndPos" : 20322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Task 1: find the common parent",
+  "secondLabel" : "// Task 1: find the common parent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20344,
+  "secondPos" : 20344,
+  "firstEndPos" : 20377,
+  "secondEndPos" : 20377
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

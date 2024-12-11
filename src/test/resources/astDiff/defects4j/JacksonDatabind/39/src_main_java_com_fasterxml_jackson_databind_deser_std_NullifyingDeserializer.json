@@ -186,6 +186,17 @@
   "firstEndPos" : 353,
   "secondEndPos" : 353
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 343,
+  "secondPos" : 343,
+  "firstEndPos" : 349,
+  "secondEndPos" : 349
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.2",
@@ -582,6 +593,17 @@
   "firstEndPos" : 629,
   "secondEndPos" : 629
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Deserializer API\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Deserializer API\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 645,
+  "secondPos" : 645,
+  "firstEndPos" : 807,
+  "secondEndPos" : 807
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -779,6 +801,28 @@
   "secondPos" : 923,
   "firstEndPos" : 1104,
   "secondEndPos" : 1410
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 29-Jan-2016, tatu: Simple skipping for all other tokens, but FIELD_NAME bit",
+  "secondLabel" : "// 29-Jan-2016, tatu: Simple skipping for all other tokens, but FIELD_NAME bit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 933,
+  "secondPos" : 933,
+  "firstEndPos" : 1011,
+  "secondEndPos" : 1011
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    special unfortunately",
+  "secondLabel" : "//    special unfortunately",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1020,
+  "secondPos" : 1020,
+  "firstEndPos" : 1047,
+  "secondEndPos" : 1047
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1098,6 +1142,17 @@
   "secondPos" : 1577,
   "firstEndPos" : 1611,
   "secondEndPos" : 1917
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not sure if we need to bother but:",
+  "secondLabel" : "// Not sure if we need to bother but:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1281,
+  "secondPos" : 1587,
+  "firstEndPos" : 1318,
+  "secondEndPos" : 1624
 }, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",

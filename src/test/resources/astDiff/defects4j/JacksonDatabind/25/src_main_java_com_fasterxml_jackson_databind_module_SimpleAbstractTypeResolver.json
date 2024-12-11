@@ -219,6 +219,17 @@
   "firstEndPos" : 370,
   "secondEndPos" : 370
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 342,
+  "secondPos" : 342,
+  "firstEndPos" : 347,
+  "secondEndPos" : 347
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "AbstractTypeResolver",
@@ -295,6 +306,17 @@
   "secondPos" : 603,
   "firstEndPos" : 631,
   "secondEndPos" : 631
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 603,
+  "secondPos" : 603,
+  "firstEndPos" : 608,
+  "secondEndPos" : 608
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -978,6 +1000,17 @@
   "firstEndPos" : 1886,
   "secondEndPos" : 1886
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1845,
+  "secondPos" : 1845,
+  "firstEndPos" : 1851,
+  "secondEndPos" : 1851
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "superType",
@@ -1011,6 +1044,17 @@
   "firstEndPos" : 1950,
   "secondEndPos" : 1950
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1894,
+  "secondPos" : 1894,
+  "firstEndPos" : 1900,
+  "secondEndPos" : 1900
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "subType",
@@ -1043,6 +1087,17 @@
   "secondPos" : 1966,
   "firstEndPos" : 2025,
   "secondEndPos" : 2025
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1966,
+  "secondPos" : 1966,
+  "firstEndPos" : 1973,
+  "secondEndPos" : 1973
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1296,6 +1351,17 @@
   "secondPos" : 2139,
   "firstEndPos" : 2910,
   "secondEndPos" : 2910
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Sanity checks, just in case someone tries to force typing...",
+  "secondLabel" : "// Sanity checks, just in case someone tries to force typing...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2149,
+  "secondPos" : 2149,
+  "firstEndPos" : 2212,
+  "secondEndPos" : 2212
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -2309,6 +2375,17 @@
   "firstEndPos" : 3357,
   "secondEndPos" : 3398
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is the main mapping base, so let's ",
+  "secondLabel" : "// this is the main mapping base, so let's ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3021,
+  "secondPos" : 3021,
+  "firstEndPos" : 3064,
+  "secondEndPos" : 3064
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2694,6 +2771,17 @@
   "firstEndPos" : 3215,
   "secondEndPos" : 3215
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 09-Aug-2015, tatu: Instead of direct call via JavaType, better use TypeFactory",
+  "secondLabel" : "// 09-Aug-2015, tatu: Instead of direct call via JavaType, better use TypeFactory",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3235,
+  "secondPos" : 3235,
+  "firstEndPos" : 3316,
+  "secondEndPos" : 3316
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2946,6 +3034,17 @@
   "secondPos" : 3508,
   "firstEndPos" : 3538,
   "secondEndPos" : 3579
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// never materialize anything, so:",
+  "secondLabel" : "// never materialize anything, so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3477,
+  "secondPos" : 3518,
+  "firstEndPos" : 3511,
+  "secondEndPos" : 3552
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

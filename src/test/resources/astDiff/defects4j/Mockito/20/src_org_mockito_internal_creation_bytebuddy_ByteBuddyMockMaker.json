@@ -2804,6 +2804,39 @@
   "firstEndPos" : 3114,
   "secondEndPos" : 3194
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Force explicit cast to mocked type here, instead of",
+  "secondLabel" : "// Force explicit cast to mocked type here, instead of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2820,
+  "secondPos" : 2900,
+  "firstEndPos" : 2874,
+  "secondEndPos" : 2954
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// relying on the JVM to implicitly cast on the client call site.",
+  "secondLabel" : "// relying on the JVM to implicitly cast on the client call site.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2883,
+  "secondPos" : 2963,
+  "firstEndPos" : 2948,
+  "secondEndPos" : 3028
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This allows us to catch the ClassCastException earlier",
+  "secondLabel" : "// This allows us to catch the ClassCastException earlier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2957,
+  "secondPos" : 3037,
+  "firstEndPos" : 3014,
+  "secondEndPos" : 3094
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5047,6 +5080,17 @@
   "secondPos" : 4573,
   "firstEndPos" : 4932,
   "secondEndPos" : 5012
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// MockitoException cannot be used at this point as we are early in the classloading chain and necessary dependencies may not yet be loadable by the classloader",
+  "secondLabel" : "// MockitoException cannot be used at this point as we are early in the classloading chain and necessary dependencies may not yet be loadable by the classloader",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4507,
+  "secondPos" : 4587,
+  "firstEndPos" : 4667,
+  "secondEndPos" : 4747
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

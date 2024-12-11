@@ -10,6 +10,17 @@
   "firstEndPos" : 24476,
   "secondEndPos" : 24563
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -659,6 +670,17 @@
   "firstEndPos" : 2049,
   "secondEndPos" : 2049
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2025,
+  "secondPos" : 2025,
+  "firstEndPos" : 2032,
+  "secondEndPos" : 2032
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -680,6 +702,17 @@
   "secondPos" : 2053,
   "firstEndPos" : 2079,
   "secondEndPos" : 2079
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2053,
+  "secondPos" : 2053,
+  "firstEndPos" : 2061,
+  "secondEndPos" : 2061
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9646,6 +9679,17 @@
   "firstEndPos" : 7845,
   "secondEndPos" : 7932
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TBD: We are supposed to resolve relative URIs to absolute ones.",
+  "secondLabel" : "// TBD: We are supposed to resolve relative URIs to absolute ones.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7874,
+  "secondPos" : 7961,
+  "firstEndPos" : 7940,
+  "secondEndPos" : 8027
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -10767,6 +10811,17 @@
   "secondPos" : 8791,
   "firstEndPos" : 8706,
   "secondEndPos" : 8793
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TBD: We are supposed to resolve relative URIs to absolute ones.",
+  "secondLabel" : "// TBD: We are supposed to resolve relative URIs to absolute ones.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8726,
+  "secondPos" : 8813,
+  "firstEndPos" : 8792,
+  "secondEndPos" : 8879
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -20305,6 +20360,39 @@
   "firstEndPos" : 14888,
   "secondEndPos" : 14975
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the parent pointer is not a DOMNodePointer, it is",
+  "secondLabel" : "// If the parent pointer is not a DOMNodePointer, it is",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14907,
+  "secondPos" : 14994,
+  "firstEndPos" : 14962,
+  "secondEndPos" : 15049
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the parent's responsibility to produce the node test part",
+  "secondLabel" : "// the parent's responsibility to produce the node test part",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14979,
+  "secondPos" : 15066,
+  "firstEndPos" : 15039,
+  "secondEndPos" : 15126
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// of the path",
+  "secondLabel" : "// of the path",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15056,
+  "secondPos" : 15143,
+  "firstEndPos" : 15070,
+  "secondEndPos" : 15157
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -23318,6 +23406,17 @@
   "secondPos" : 17233,
   "firstEndPos" : 17164,
   "secondEndPos" : 17251
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// That'll be empty",
+  "secondLabel" : "// That'll be empty",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 17183,
+  "secondPos" : 17270,
+  "firstEndPos" : 17202,
+  "secondEndPos" : 17289
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -36034,6 +36133,17 @@
   "secondPos" : 24212,
   "firstEndPos" : 24126,
   "secondEndPos" : 24213
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should not happen",
+  "secondLabel" : "// Should not happen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24128,
+  "secondPos" : 24215,
+  "firstEndPos" : 24148,
+  "secondEndPos" : 24235
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

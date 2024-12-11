@@ -3200,6 +3200,17 @@
   "firstEndPos" : 1771,
   "secondEndPos" : 1771
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// &(#(x|X)?([0-9a-fA-F]+)|[a-zA-Z]+);?",
+  "secondLabel" : "// &(#(x|X)?([0-9a-fA-F]+)|[a-zA-Z]+);?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1774,
+  "secondPos" : 1774,
+  "firstEndPos" : 1813,
+  "secondEndPos" : 1813
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3331,6 +3342,17 @@
   "secondPos" : 1867,
   "firstEndPos" : 1873,
   "secondEndPos" : 1873
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pity matcher can't use stringbuilder, avoid syncs",
+  "secondLabel" : "// pity matcher can't use stringbuilder, avoid syncs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1878,
+  "secondPos" : 1878,
+  "firstEndPos" : 1930,
+  "secondEndPos" : 1930
 }, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
@@ -3860,6 +3882,17 @@
   "firstEndPos" : 2138,
   "secondEndPos" : 2138
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2 is hex indicator",
+  "secondLabel" : "// 2 is hex indicator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2140,
+  "secondPos" : 2140,
+  "firstEndPos" : 2161,
+  "secondEndPos" : 2161
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4046,6 +4079,17 @@
   "secondPos" : 2270,
   "firstEndPos" : 2289,
   "secondEndPos" : 2289
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip",
+  "secondLabel" : "// skip",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2290,
+  "secondPos" : 2290,
+  "firstEndPos" : 2297,
+  "secondEndPos" : 2297
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -4520,6 +4564,17 @@
   "firstEndPos" : 2672,
   "secondEndPos" : 2658
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// out of range",
+  "secondLabel" : "// out of range",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2533,
+  "secondPos" : 2519,
+  "firstEndPos" : 2548,
+  "secondEndPos" : 2534
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4905,6 +4960,17 @@
   "firstEndPos" : 2732,
   "secondEndPos" : 2718
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// replace with original string",
+  "secondLabel" : "// replace with original string",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2736,
+  "secondPos" : 2722,
+  "firstEndPos" : 2767,
+  "secondEndPos" : 2753
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5036,6 +5102,28 @@
   "secondPos" : 2828,
   "firstEndPos" : 2850,
   "secondEndPos" : 2836
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// most common, base entities can be unescaped without trailing ;",
+  "secondLabel" : "// most common, base entities can be unescaped without trailing ;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2865,
+  "secondPos" : 2851,
+  "firstEndPos" : 2930,
+  "secondEndPos" : 2916
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// e.g. &amp",
+  "secondLabel" : "// e.g. &amp",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2935,
+  "secondPos" : 2921,
+  "firstEndPos" : 2947,
+  "secondEndPos" : 2933
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8666,6 +8754,28 @@
   "secondPos" : 6348,
   "firstEndPos" : 6369,
   "secondEndPos" : 6355
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in most situations, will be better to use UTF8 and use the character directly, or use the numerical escape.",
+  "secondLabel" : "// in most situations, will be better to use UTF8 and use the character directly, or use the numerical escape.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6383,
+  "secondPos" : 6369,
+  "firstEndPos" : 6493,
+  "secondEndPos" : 6479
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are people really likely to remember \"&CounterClockwiseContourIntegral;\"? good grief.",
+  "secondLabel" : "// are people really likely to remember \"&CounterClockwiseContourIntegral;\"? good grief.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6498,
+  "secondPos" : 6484,
+  "firstEndPos" : 6586,
+  "secondEndPos" : 6572
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

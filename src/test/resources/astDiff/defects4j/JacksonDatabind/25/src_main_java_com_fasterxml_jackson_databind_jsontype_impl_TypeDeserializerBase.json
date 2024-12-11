@@ -395,6 +395,17 @@
   "firstEndPos" : 846,
   "secondEndPos" : 846
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 822,
+  "secondPos" : 822,
+  "firstEndPos" : 827,
+  "secondEndPos" : 827
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TypeDeserializer",
@@ -834,6 +845,17 @@
   "secondPos" : 1321,
   "firstEndPos" : 1341,
   "secondEndPos" : 1341
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1321,
+  "secondPos" : 1321,
+  "firstEndPos" : 1326,
+  "secondEndPos" : 1326
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -1561,6 +1583,17 @@
   "firstEndPos" : 2119,
   "secondEndPos" : 2119
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2126,
+  "secondPos" : 2126,
+  "firstEndPos" : 2282,
+  "secondEndPos" : 2282
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2056,6 +2089,17 @@
   "firstEndPos" : 2591,
   "secondEndPos" : 2591
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// defaults are fine, although concurrency of 4 bit more frugal than 16:",
+  "secondLabel" : "// defaults are fine, although concurrency of 4 bit more frugal than 16:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2601,
+  "secondPos" : 2601,
+  "firstEndPos" : 2673,
+  "secondEndPos" : 2673
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2385,6 +2429,17 @@
   "secondPos" : 2853,
   "firstEndPos" : 3154,
   "secondEndPos" : 3154
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 16-Oct-2011, tatu: should call this via TypeFactory; this is\n             *    not entirely safe... however, since Collections/Maps are\n             *    seldom (if ever) base types, may be ok.\n             */",
+  "secondLabel" : "/* 16-Oct-2011, tatu: should call this via TypeFactory; this is\n             *    not entirely safe... however, since Collections/Maps are\n             *    seldom (if ever) base types, may be ok.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2867,
+  "secondPos" : 2867,
+  "firstEndPos" : 3079,
+  "secondEndPos" : 3079
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3254,6 +3309,17 @@
   "secondPos" : 3712,
   "firstEndPos" : 3716,
   "secondEndPos" : 3716
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3724,
+  "secondPos" : 3724,
+  "firstEndPos" : 3879,
+  "secondEndPos" : 3879
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4718,6 +4784,17 @@
   "firstEndPos" : 4672,
   "secondEndPos" : 4672
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods for sub-classes\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods for sub-classes\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4691,
+  "secondPos" : 4691,
+  "firstEndPos" : 4867,
+  "secondEndPos" : 4867
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5158,6 +5235,17 @@
   "firstEndPos" : 7147,
   "secondEndPos" : 7186
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* As per [Databind#305], need to provide contextual info. But for\n             * backwards compatibility, let's start by only supporting this\n             * for base class, not via interface. Later on we can add this\n             * to the interface, assuming deprecation at base class helps.\n             */",
+  "secondLabel" : "/* As per [Databind#305], need to provide contextual info. But for\n             * backwards compatibility, let's start by only supporting this\n             * for base class, not via interface. Later on we can add this\n             * to the interface, assuming deprecation at base class helps.\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5123,
+  "secondPos" : 5123,
+  "firstEndPos" : 5431,
+  "secondEndPos" : 5431
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5355,6 +5443,17 @@
   "secondPos" : 5528,
   "firstEndPos" : 5833,
   "secondEndPos" : 5833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As per [JACKSON-614], use the default impl if no type id available:",
+  "secondLabel" : "// As per [JACKSON-614], use the default impl if no type id available:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5546,
+  "secondPos" : 5546,
+  "firstEndPos" : 5616,
+  "secondEndPos" : 5616
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5642,6 +5741,17 @@
   "firstEndPos" : 7090,
   "secondEndPos" : 7129
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 16-Dec-2010, tatu: Since nominal type we get here has no (generic) type parameters,\n                 *   we actually now need to explicitly narrow from base type (which may have parameterization)\n                 *   using raw type.\n                 *\n                 *   One complication, though; can not change 'type class' (simple type to container); otherwise\n                 *   we may try to narrow a SimpleType (Object.class) into MapType (Map.class), losing actual\n                 *   type in process (getting SimpleType of Map.class which will not work as expected)\n                 */",
+  "secondLabel" : "/* 16-Dec-2010, tatu: Since nominal type we get here has no (generic) type parameters,\n                 *   we actually now need to explicitly narrow from base type (which may have parameterization)\n                 *   using raw type.\n                 *\n                 *   One complication, though; can not change 'type class' (simple type to container); otherwise\n                 *   we may try to narrow a SimpleType (Object.class) into MapType (Map.class), losing actual\n                 *   type in process (getting SimpleType of Map.class which will not work as expected)\n                 */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5857,
+  "secondPos" : 5857,
+  "firstEndPos" : 6457,
+  "secondEndPos" : 6457
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5850,6 +5960,17 @@
   "secondPos" : 6566,
   "firstEndPos" : 6997,
   "secondEndPos" : 7036
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 09-Aug-2015, tatu: Not sure if the second part of the check makes sense;\n                     *   but it appears to check that JavaType impl class is the same which is\n                     *   important for some reason?\n                     *   Disabling the check will break 2 Enum-related tests.\n                     */",
+  "secondLabel" : "/* 09-Aug-2015, tatu: Not sure if the second part of the check makes sense;\n                     *   but it appears to check that JavaType impl class is the same which is\n                     *   important for some reason?\n                     *   Disabling the check will break 2 Enum-related tests.\n                     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6588,
+  "secondPos" : 6588,
+  "firstEndPos" : 6912,
+  "secondEndPos" : 6912
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6400,6 +6521,17 @@
   "secondPos" : 7342,
   "firstEndPos" : 8232,
   "secondEndPos" : 8271
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 06-Feb-2013, tatu: As per [Issue#148], consider default implementation value of\n         *   {@link java.lang.Void} to mean \"serialize as null\"; as well as DeserializationFeature\n         *   to do swift mapping to null\n         */",
+  "secondLabel" : "/* 06-Feb-2013, tatu: As per [Issue#148], consider default implementation value of\n         *   {@link java.lang.Void} to mean \"serialize as null\"; as well as DeserializationFeature\n         *   to do swift mapping to null\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7313,
+  "secondPos" : 7352,
+  "firstEndPos" : 7547,
+  "secondEndPos" : 7586
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7149,6 +7281,17 @@
   "firstEndPos" : 8293,
   "secondEndPos" : 8332
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8275,
+  "secondPos" : 8314,
+  "firstEndPos" : 8280,
+  "secondEndPos" : 8319
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonParser",
@@ -7203,6 +7346,17 @@
   "secondPos" : 8482,
   "firstEndPos" : 8453,
   "secondEndPos" : 8492
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8443,
+  "secondPos" : 8482,
+  "firstEndPos" : 8449,
+  "secondEndPos" : 8488
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7567,6 +7721,17 @@
   "firstEndPos" : 8730,
   "secondEndPos" : 8769
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8712,
+  "secondPos" : 8751,
+  "firstEndPos" : 8717,
+  "secondEndPos" : 8756
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonParser",
@@ -7610,6 +7775,17 @@
   "secondPos" : 8878,
   "firstEndPos" : 8849,
   "secondEndPos" : 8888
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8839,
+  "secondPos" : 8878,
+  "firstEndPos" : 8845,
+  "secondEndPos" : 8884
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7984,6 +8160,17 @@
   "secondPos" : 9107,
   "firstEndPos" : 9483,
   "secondEndPos" : 9522
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 04-May-2014, tatu: Should error be obligatory, or should there be another method\n             *   for \"try to deserialize with native tpye id\"?\n             */",
+  "secondLabel" : "/* 04-May-2014, tatu: Should error be obligatory, or should there be another method\n             *   for \"try to deserialize with native tpye id\"?\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9082,
+  "secondPos" : 9121,
+  "firstEndPos" : 9244,
+  "secondEndPos" : 9283
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8711,6 +8898,17 @@
   "firstEndPos" : 9872,
   "secondEndPos" : 9911
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9849,
+  "secondPos" : 9888,
+  "firstEndPos" : 9854,
+  "secondEndPos" : 9893
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "TypeIdResolver",
@@ -8766,6 +8964,17 @@
   "firstEndPos" : 10010,
   "secondEndPos" : 10049
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9951,
+  "secondPos" : 9990,
+  "firstEndPos" : 9956,
+  "secondEndPos" : 9995
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.fasterxml.jackson.databind.JsonMappingException",
@@ -8810,6 +9019,17 @@
   "firstEndPos" : 10261,
   "secondEndPos" : 10300
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10080,
+  "secondPos" : 10119,
+  "firstEndPos" : 10087,
+  "secondEndPos" : 10126
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " If it is possible to resolve type id into a ",
@@ -8831,6 +9051,17 @@
   "secondPos" : 10171,
   "firstEndPos" : 10156,
   "secondEndPos" : 10195
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10132,
+  "secondPos" : 10171,
+  "firstEndPos" : 10137,
+  "secondEndPos" : 10176
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -8875,6 +9106,17 @@
   "secondPos" : 10315,
   "firstEndPos" : 10286,
   "secondEndPos" : 10325
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10276,
+  "secondPos" : 10315,
+  "firstEndPos" : 10282,
+  "secondEndPos" : 10321
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

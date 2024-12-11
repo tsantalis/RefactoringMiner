@@ -362,6 +362,17 @@
   "firstEndPos" : 824,
   "secondEndPos" : 824
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 796,
+  "secondPos" : 796,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.Collection",
@@ -428,6 +439,17 @@
   "firstEndPos" : 980,
   "secondEndPos" : 980
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 947,
+  "secondPos" : 947,
+  "firstEndPos" : 952,
+  "secondEndPos" : 952
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "UntypedObjectDeserializer",
@@ -471,6 +493,17 @@
   "secondPos" : 1023,
   "firstEndPos" : 1045,
   "secondEndPos" : 1045
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1023,
+  "secondPos" : 1023,
+  "firstEndPos" : 1028,
+  "secondEndPos" : 1028
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -779,6 +812,28 @@
   "secondPos" : 1336,
   "firstEndPos" : 1338,
   "secondEndPos" : 1338
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.5",
+  "secondLabel" : "// since 2.5",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1340,
+  "secondPos" : 1340,
+  "firstEndPos" : 1352,
+  "secondEndPos" : 1352
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // Configuration",
+  "secondLabel" : "// // Configuration",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1358,
+  "secondPos" : 1358,
+  "firstEndPos" : 1377,
+  "secondEndPos" : 1377
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1121,6 +1176,17 @@
   "firstEndPos" : 1733,
   "secondEndPos" : 1733
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // Instance construction settings:",
+  "secondLabel" : "// // Instance construction settings:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1740,
+  "secondPos" : 1740,
+  "firstEndPos" : 1777,
+  "secondEndPos" : 1777
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1429,6 +1495,17 @@
   "firstEndPos" : 2300,
   "secondEndPos" : 2300
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2290,
+  "secondPos" : 2290,
+  "firstEndPos" : 2296,
+  "secondEndPos" : 2296
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.7",
@@ -1505,6 +1582,28 @@
   "secondPos" : 2337,
   "firstEndPos" : 2350,
   "secondEndPos" : 2350
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE: no PropertyBasedCreator, as JSON Arrays have no properties",
+  "secondLabel" : "// NOTE: no PropertyBasedCreator, as JSON Arrays have no properties",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2357,
+  "secondPos" : 2357,
+  "firstEndPos" : 2424,
+  "secondEndPos" : 2424
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2430,
+  "secondPos" : 2430,
+  "firstEndPos" : 2586,
+  "secondEndPos" : 2586
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3178,6 +3277,17 @@
   "firstEndPos" : 4371,
   "secondEndPos" : 4371
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4361,
+  "secondPos" : 4361,
+  "firstEndPos" : 4367,
+  "secondEndPos" : 4367
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.7",
@@ -4058,6 +4168,17 @@
   "firstEndPos" : 5054,
   "secondEndPos" : 5054
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4998,
+  "secondPos" : 4998,
+  "firstEndPos" : 5009,
+  "secondEndPos" : 5009
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Since 2.7 as it does not pass `unwrapSingle`",
@@ -4090,6 +4211,17 @@
   "secondPos" : 5068,
   "firstEndPos" : 5078,
   "secondEndPos" : 5078
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.7 -- will not retain \"unwrapSingle\" setting",
+  "secondLabel" : "// since 2.7 -- will not retain \"unwrapSingle\" setting",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5079,
+  "secondPos" : 5079,
+  "firstEndPos" : 5133,
+  "secondEndPos" : 5133
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -4410,6 +4542,17 @@
   "firstEndPos" : 5326,
   "secondEndPos" : 5326
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Important: do NOT cache if polymorphic values",
+  "secondLabel" : "// Important: do NOT cache if polymorphic values",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5340,
+  "secondPos" : 5340,
+  "firstEndPos" : 5388,
+  "secondEndPos" : 5388
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4442,6 +4585,17 @@
   "secondPos" : 5394,
   "firstEndPos" : 5402,
   "secondEndPos" : 5402
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.5",
+  "secondLabel" : "// since 2.5",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5403,
+  "secondPos" : 5403,
+  "firstEndPos" : 5415,
+  "secondEndPos" : 5415
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -4486,6 +4640,17 @@
   "secondPos" : 5448,
   "firstEndPos" : 5692,
   "secondEndPos" : 5692
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 26-Mar-2015, tatu: As per [databind#735], need to be careful",
+  "secondLabel" : "// 26-Mar-2015, tatu: As per [databind#735], need to be careful",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5458,
+  "secondPos" : 5458,
+  "firstEndPos" : 5521,
+  "secondEndPos" : 5521
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4684,6 +4849,17 @@
   "secondPos" : 5663,
   "firstEndPos" : 5667,
   "secondEndPos" : 5667
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Validation, post-processing (ResolvableDeserializer)\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Validation, post-processing (ResolvableDeserializer)\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5698,
+  "secondPos" : 5698,
+  "firstEndPos" : 5896,
+  "secondEndPos" : 5896
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4937,6 +5113,17 @@
   "secondPos" : 6214,
   "firstEndPos" : 8375,
   "secondEndPos" : 9029
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// May need to resolve types for delegate-based creators:",
+  "secondLabel" : "// May need to resolve types for delegate-based creators:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6224,
+  "secondPos" : 6224,
+  "firstEndPos" : 6281,
+  "secondEndPos" : 6281
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5686,6 +5873,39 @@
   "firstEndPos" : 6997,
   "secondEndPos" : 6997
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1043]: allow per-property allow-wrapping of single overrides:",
+  "secondLabel" : "// [databind#1043]: allow per-property allow-wrapping of single overrides:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7032,
+  "secondPos" : 7686,
+  "firstEndPos" : 7106,
+  "secondEndPos" : 7760
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 11-Dec-2015, tatu: Should we pass basic `Collection.class`, or more refined? Mostly",
+  "secondLabel" : "// 11-Dec-2015, tatu: Should we pass basic `Collection.class`, or more refined? Mostly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7115,
+  "secondPos" : 7769,
+  "firstEndPos" : 7201,
+  "secondEndPos" : 7855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   comes down to \"List vs Collection\" I suppose... for now, pass Collection",
+  "secondLabel" : "//   comes down to \"List vs Collection\" I suppose... for now, pass Collection",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7210,
+  "secondPos" : 7864,
+  "firstEndPos" : 7287,
+  "secondEndPos" : 7941
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5840,6 +6060,17 @@
   "firstEndPos" : 7434,
   "secondEndPos" : 8088
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also, often value deserializer is resolved here:",
+  "secondLabel" : "// also, often value deserializer is resolved here:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7445,
+  "secondPos" : 8099,
+  "firstEndPos" : 7496,
+  "secondEndPos" : 8150
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5927,6 +6158,17 @@
   "secondPos" : 8192,
   "firstEndPos" : 7556,
   "secondEndPos" : 8210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// May have a content converter",
+  "secondLabel" : "// May have a content converter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7575,
+  "secondPos" : 8229,
+  "firstEndPos" : 7606,
+  "secondEndPos" : 8260
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6346,6 +6588,17 @@
   "firstEndPos" : 8038,
   "secondEndPos" : 8692
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if directly assigned, probably not yet contextual, so:",
+  "secondLabel" : "// if directly assigned, probably not yet contextual, so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7881,
+  "secondPos" : 8535,
+  "firstEndPos" : 7938,
+  "secondEndPos" : 8592
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6477,6 +6730,17 @@
   "secondPos" : 8678,
   "firstEndPos" : 8026,
   "secondEndPos" : 8680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and finally, type deserializer needs context as well",
+  "secondLabel" : "// and finally, type deserializer needs context as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8047,
+  "secondPos" : 8701,
+  "firstEndPos" : 8102,
+  "secondEndPos" : 8756
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6808,6 +7072,17 @@
   "firstEndPos" : 8367,
   "secondEndPos" : 9021
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* ContainerDeserializerBase API\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* ContainerDeserializerBase API\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8381,
+  "secondPos" : 9035,
+  "firstEndPos" : 8556,
+  "secondEndPos" : 9210
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -7093,6 +7368,17 @@
   "secondPos" : 9413,
   "firstEndPos" : 8777,
   "secondEndPos" : 9431
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* JsonDeserializer API\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* JsonDeserializer API\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8794,
+  "secondPos" : 9448,
+  "firstEndPos" : 8960,
+  "secondEndPos" : 9614
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7643,6 +7929,17 @@
   "secondPos" : 9974,
   "firstEndPos" : 9324,
   "secondEndPos" : 9978
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Empty String may be ok; bit tricky to check, however, since\n         * there is also possibility of \"auto-wrapping\" of single-element arrays.\n         * Hence we only accept empty String here.\n         */",
+  "secondLabel" : "/* Empty String may be ok; bit tricky to check, however, since\n         * there is also possibility of \"auto-wrapping\" of single-element arrays.\n         * Hence we only accept empty String here.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9346,
+  "secondPos" : 10000,
+  "firstEndPos" : 9553,
+  "secondEndPos" : 10207
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8590,6 +8887,17 @@
   "firstEndPos" : 12210,
   "secondEndPos" : 12864
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: must point to START_ARRAY (or equivalent)",
+  "secondLabel" : "// Ok: must point to START_ARRAY (or equivalent)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10084,
+  "secondPos" : 10738,
+  "firstEndPos" : 10132,
+  "secondEndPos" : 10786
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8754,6 +9062,17 @@
   "secondPos" : 10876,
   "firstEndPos" : 10228,
   "secondEndPos" : 10882
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#631]: Assign current value, to be accessible by custom serializers",
+  "secondLabel" : "// [databind#631]: Assign current value, to be accessible by custom serializers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10249,
+  "secondPos" : 10903,
+  "firstEndPos" : 10328,
+  "secondEndPos" : 10982
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11593,6 +11912,17 @@
   "firstEndPos" : 12543,
   "secondEndPos" : 13197
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In future could check current token... for now this should be enough:",
+  "secondLabel" : "// In future could check current token... for now this should be enough:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12396,
+  "secondPos" : 13050,
+  "firstEndPos" : 12468,
+  "secondEndPos" : 13122
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -12032,6 +12362,17 @@
   "secondPos" : 13577,
   "firstEndPos" : 14076,
   "secondEndPos" : 14730
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Implicit arrays from single values?",
+  "secondLabel" : "// Implicit arrays from single values?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12933,
+  "secondPos" : 13587,
+  "firstEndPos" : 12971,
+  "secondEndPos" : 13625
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13397,6 +13738,17 @@
   "firstEndPos" : 14020,
   "secondEndPos" : 14674
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: pass Object.class, not Object[].class, as we need element type for error info",
+  "secondLabel" : "// note: pass Object.class, not Object[].class, as we need element type for error info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13839,
+  "secondPos" : 14493,
+  "firstEndPos" : 13925,
+  "secondEndPos" : 14579
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -13979,6 +14331,17 @@
   "secondPos" : 14924,
   "firstEndPos" : 14297,
   "secondEndPos" : 14951
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14270,
+  "secondPos" : 14924,
+  "firstEndPos" : 14275,
+  "secondEndPos" : 14929
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -15597,6 +15960,39 @@
   "firstEndPos" : 15332,
   "secondEndPos" : 15986
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Resolve ordering after resolution of an id. This mean either:",
+  "secondLabel" : "// Resolve ordering after resolution of an id. This mean either:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15348,
+  "secondPos" : 16002,
+  "firstEndPos" : 15412,
+  "secondEndPos" : 16066
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1- adding to the result collection in case of the first unresolved id.",
+  "secondLabel" : "// 1- adding to the result collection in case of the first unresolved id.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15425,
+  "secondPos" : 16079,
+  "firstEndPos" : 15498,
+  "secondEndPos" : 16152
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2- merge the content of the resolved id with its previous unresolved id.",
+  "secondLabel" : "// 2- merge the content of the resolved id with its previous unresolved id.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15511,
+  "secondPos" : 16165,
+  "firstEndPos" : 15586,
+  "secondEndPos" : 16240
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16389,6 +16785,17 @@
   "firstEndPos" : 16312,
   "secondEndPos" : 16966
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16300,
+  "secondPos" : 16954,
+  "firstEndPos" : 16305,
+  "secondEndPos" : 16959
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -16432,6 +16839,17 @@
   "secondPos" : 17001,
   "firstEndPos" : 16360,
   "secondEndPos" : 17014
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16347,
+  "secondPos" : 17001,
+  "firstEndPos" : 16352,
+  "secondEndPos" : 17006
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",

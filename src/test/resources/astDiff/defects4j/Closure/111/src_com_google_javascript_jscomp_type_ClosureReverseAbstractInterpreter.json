@@ -10,6 +10,17 @@
   "firstEndPos" : 8964,
   "secondEndPos" : 9028
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -461,6 +472,17 @@
   "firstEndPos" : 1768,
   "secondEndPos" : 1768
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1750,
+  "secondPos" : 1750,
+  "firstEndPos" : 1755,
+  "secondEndPos" : 1755
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " goog.isDef",
@@ -592,6 +614,17 @@
   "secondPos" : 1895,
   "firstEndPos" : 1915,
   "secondEndPos" : 1915
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1895,
+  "secondPos" : 1895,
+  "firstEndPos" : 1900,
+  "secondEndPos" : 1900
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1308,6 +1341,17 @@
   "firstEndPos" : 2404,
   "secondEndPos" : 2468
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2384,
+  "secondPos" : 2448,
+  "firstEndPos" : 2389,
+  "secondEndPos" : 2453
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " goog.isArray",
@@ -1803,6 +1847,17 @@
   "firstEndPos" : 2744,
   "secondEndPos" : 2808
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2723,
+  "secondPos" : 2787,
+  "firstEndPos" : 2728,
+  "secondEndPos" : 2792
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " goog.isObject",
@@ -1846,6 +1901,17 @@
   "secondPos" : 2861,
   "firstEndPos" : 2809,
   "secondEndPos" : 2873
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2797,
+  "secondPos" : 2861,
+  "firstEndPos" : 2802,
+  "secondEndPos" : 2866
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2561,6 +2627,17 @@
   "secondPos" : 3368,
   "firstEndPos" : 3325,
   "secondEndPos" : 3389
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3304,
+  "secondPos" : 3368,
+  "firstEndPos" : 3309,
+  "secondEndPos" : 3373
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3540,6 +3617,17 @@
   "secondPos" : 4079,
   "firstEndPos" : 4056,
   "secondEndPos" : 4120
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4015,
+  "secondPos" : 4079,
+  "firstEndPos" : 4020,
+  "secondEndPos" : 4084
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -10460,6 +10548,17 @@
   "firstEndPos" : 8728,
   "secondEndPos" : 8792
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// restricting",
+  "secondLabel" : "// restricting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8411,
+  "secondPos" : 8475,
+  "firstEndPos" : 8425,
+  "secondEndPos" : 8489
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10613,6 +10712,17 @@
   "secondPos" : 8545,
   "firstEndPos" : 8488,
   "secondEndPos" : 8552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// changing the scope",
+  "secondLabel" : "// changing the scope",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8497,
+  "secondPos" : 8561,
+  "firstEndPos" : 8518,
+  "secondEndPos" : 8582
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

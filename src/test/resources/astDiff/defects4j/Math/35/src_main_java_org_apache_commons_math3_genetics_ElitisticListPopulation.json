@@ -10,6 +10,17 @@
   "firstEndPos" : 4424,
   "secondEndPos" : 4418
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -208,6 +219,17 @@
   "firstEndPos" : 1239,
   "secondEndPos" : 1239
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1226,
+  "secondPos" : 1226,
+  "firstEndPos" : 1234,
+  "secondEndPos" : 1234
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " $Id$",
@@ -229,6 +251,17 @@
   "secondPos" : 1243,
   "firstEndPos" : 1253,
   "secondEndPos" : 1253
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1243,
+  "secondPos" : 1243,
+  "firstEndPos" : 1249,
+  "secondEndPos" : 1249
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -450,6 +483,17 @@
   "firstEndPos" : 1560,
   "secondEndPos" : 1560
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1504,
+  "secondPos" : 1504,
+  "firstEndPos" : 1510,
+  "secondEndPos" : 1510
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "chromosomes",
@@ -483,6 +527,17 @@
   "firstEndPos" : 1621,
   "secondEndPos" : 1621
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1568,
+  "secondPos" : 1568,
+  "firstEndPos" : 1574,
+  "secondEndPos" : 1574
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "populationLimit",
@@ -515,6 +570,17 @@
   "secondPos" : 1629,
   "firstEndPos" : 1758,
   "secondEndPos" : 1758
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1629,
+  "secondPos" : 1629,
+  "firstEndPos" : 1635,
+  "secondEndPos" : 1635
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -559,6 +625,17 @@
   "secondPos" : 1766,
   "firstEndPos" : 1841,
   "secondEndPos" : 1841
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1766,
+  "secondPos" : 1766,
+  "firstEndPos" : 1773,
+  "secondEndPos" : 1773
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -912,6 +989,17 @@
   "firstEndPos" : 2308,
   "secondEndPos" : 2305
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2255,
+  "secondPos" : 2252,
+  "firstEndPos" : 2261,
+  "secondEndPos" : 2258
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "populationLimit",
@@ -944,6 +1032,17 @@
   "secondPos" : 2313,
   "firstEndPos" : 2445,
   "secondEndPos" : 2442
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2316,
+  "secondPos" : 2313,
+  "firstEndPos" : 2322,
+  "secondEndPos" : 2319
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -988,6 +1087,17 @@
   "secondPos" : 2450,
   "firstEndPos" : 2528,
   "secondEndPos" : 2525
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2453,
+  "secondPos" : 2450,
+  "firstEndPos" : 2460,
+  "secondEndPos" : 2457
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1231,6 +1341,17 @@
   "firstEndPos" : 2797,
   "secondEndPos" : 2791
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2777,
+  "secondPos" : 2771,
+  "firstEndPos" : 2782,
+  "secondEndPos" : 2776
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -1285,6 +1406,17 @@
   "secondPos" : 2897,
   "firstEndPos" : 2949,
   "secondEndPos" : 2943
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2903,
+  "secondPos" : 2897,
+  "firstEndPos" : 2910,
+  "secondEndPos" : 2904
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1351,6 +1483,17 @@
   "secondPos" : 2991,
   "firstEndPos" : 3633,
   "secondEndPos" : 3627
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// initialize a new generation with the same parameters",
+  "secondLabel" : "// initialize a new generation with the same parameters",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3007,
+  "secondPos" : 3001,
+  "firstEndPos" : 3062,
+  "secondEndPos" : 3056
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -1736,6 +1879,17 @@
   "secondPos" : 3276,
   "firstEndPos" : 3296,
   "secondEndPos" : 3290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// index of the last \"not good enough\" chromosome",
+  "secondLabel" : "// index of the last \"not good enough\" chromosome",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3308,
+  "secondPos" : 3302,
+  "firstEndPos" : 3357,
+  "secondEndPos" : 3351
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2419,6 +2573,17 @@
   "firstEndPos" : 3914,
   "secondEndPos" : 3908
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3785,
+  "secondPos" : 3779,
+  "firstEndPos" : 3791,
+  "secondEndPos" : 3785
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "elitismRate",
@@ -2462,6 +2627,17 @@
   "secondPos" : 3916,
   "firstEndPos" : 3997,
   "secondEndPos" : 3991
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3922,
+  "secondPos" : 3916,
+  "firstEndPos" : 3929,
+  "secondEndPos" : 3923
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2924,6 +3100,17 @@
   "secondPos" : 4306,
   "firstEndPos" : 4336,
   "secondEndPos" : 4330
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4312,
+  "secondPos" : 4306,
+  "firstEndPos" : 4319,
+  "secondEndPos" : 4313
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

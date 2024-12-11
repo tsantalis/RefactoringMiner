@@ -417,6 +417,17 @@
   "firstEndPos" : 943,
   "secondEndPos" : 943
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 886,
+  "secondPos" : 886,
+  "firstEndPos" : 891,
+  "secondEndPos" : 891
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.fasterxml.jackson.databind.SerializerProvider",
@@ -493,6 +504,17 @@
   "secondPos" : 1070,
   "firstEndPos" : 1095,
   "secondEndPos" : 1095
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As of 2.7",
+  "secondLabel" : "// As of 2.7",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1102,
+  "secondPos" : 1102,
+  "firstEndPos" : 1114,
+  "secondEndPos" : 1114
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1263,6 +1285,17 @@
   "secondPos" : 1785,
   "firstEndPos" : 1804,
   "secondEndPos" : 1804
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************************\n    /* Overridden methods\n    /**********************************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************************\n    /* Overridden methods\n    /**********************************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1817,
+  "secondPos" : 1817,
+  "firstEndPos" : 2005,
+  "secondEndPos" : 2005
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2232,6 +2265,17 @@
   "firstEndPos" : 2668,
   "secondEndPos" : 2668
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// called by convertValue()",
+  "secondLabel" : "// called by convertValue()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2602,
+  "secondPos" : 2602,
+  "firstEndPos" : 2629,
+  "secondEndPos" : 2629
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2837,6 +2881,17 @@
   "firstEndPos" : 3020,
   "secondEndPos" : 3020
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From super-class implementation",
+  "secondLabel" : "// From super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3064,
+  "secondPos" : 3064,
+  "firstEndPos" : 3098,
+  "secondEndPos" : 3098
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3189,6 +3244,17 @@
   "firstEndPos" : 3372,
   "secondEndPos" : 3372
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As per [JACKSON-99], pass IOException and subtypes as-is",
+  "secondLabel" : "// As per [JACKSON-99], pass IOException and subtypes as-is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3280,
+  "secondPos" : 3280,
+  "firstEndPos" : 3339,
+  "secondEndPos" : 3339
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -3276,6 +3342,17 @@
   "secondPos" : 3393,
   "firstEndPos" : 3672,
   "secondEndPos" : 3672
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but wrap RuntimeExceptions, to get path information",
+  "secondLabel" : "// but wrap RuntimeExceptions, to get path information",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3395,
+  "secondPos" : 3395,
+  "firstEndPos" : 3449,
+  "secondEndPos" : 3449
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3705,6 +3782,17 @@
   "secondPos" : 3659,
   "firstEndPos" : 3660,
   "secondEndPos" : 3660
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// end of super-class implementation",
+  "secondLabel" : "// end of super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3681,
+  "secondPos" : 3681,
+  "firstEndPos" : 3717,
+  "secondEndPos" : 3717
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4420,6 +4508,17 @@
   "secondPos" : 4167,
   "firstEndPos" : 4235,
   "secondEndPos" : 4235
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// called by convertValue()",
+  "secondLabel" : "// called by convertValue()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4169,
+  "secondPos" : 4169,
+  "firstEndPos" : 4196,
+  "secondEndPos" : 4196
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5191,6 +5290,17 @@
   "firstEndPos" : 4713,
   "secondEndPos" : 4713
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From super-class implementation",
+  "secondLabel" : "// From super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4724,
+  "secondPos" : 4724,
+  "firstEndPos" : 4758,
+  "secondEndPos" : 4758
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -5378,6 +5488,17 @@
   "firstEndPos" : 4922,
   "secondEndPos" : 4922
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no wrapping for IO (and derived)",
+  "secondLabel" : "// no wrapping for IO (and derived)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4854,
+  "secondPos" : 4854,
+  "firstEndPos" : 4889,
+  "secondEndPos" : 4889
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -5465,6 +5586,17 @@
   "secondPos" : 4943,
   "firstEndPos" : 5212,
   "secondEndPos" : 5212
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but others do need to be, to get path etc",
+  "secondLabel" : "// but others do need to be, to get path etc",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4945,
+  "secondPos" : 4945,
+  "firstEndPos" : 4989,
+  "secondEndPos" : 4989
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5895,6 +6027,17 @@
   "firstEndPos" : 5200,
   "secondEndPos" : 5200
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// end of super-class implementation",
+  "secondLabel" : "// end of super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5221,
+  "secondPos" : 5221,
+  "firstEndPos" : 5257,
+  "secondEndPos" : 5257
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5982,6 +6125,17 @@
   "secondPos" : 5298,
   "firstEndPos" : 5312,
   "secondEndPos" : 5312
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// @since 2.1",
+  "secondLabel" : "// @since 2.1",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5341,
+  "secondPos" : 5341,
+  "firstEndPos" : 5354,
+  "secondEndPos" : 5354
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6686,6 +6840,17 @@
   "secondPos" : 5761,
   "firstEndPos" : 5829,
   "secondEndPos" : 5829
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// called by convertValue()",
+  "secondLabel" : "// called by convertValue()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5763,
+  "secondPos" : 5763,
+  "firstEndPos" : 5790,
+  "secondEndPos" : 5790
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7468,6 +7633,17 @@
   "firstEndPos" : 6308,
   "secondEndPos" : 6308
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// From super-class implementation",
+  "secondLabel" : "// From super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6329,
+  "secondPos" : 6329,
+  "firstEndPos" : 6363,
+  "secondEndPos" : 6363
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -7655,6 +7831,17 @@
   "firstEndPos" : 6527,
   "secondEndPos" : 6527
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no wrapping for IO (and derived)",
+  "secondLabel" : "// no wrapping for IO (and derived)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6459,
+  "secondPos" : 6459,
+  "firstEndPos" : 6494,
+  "secondEndPos" : 6494
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -7742,6 +7929,17 @@
   "secondPos" : 6548,
   "firstEndPos" : 6817,
   "secondEndPos" : 6817
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but others do need to be, to get path etc",
+  "secondLabel" : "// but others do need to be, to get path etc",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6550,
+  "secondPos" : 6550,
+  "firstEndPos" : 6594,
+  "secondEndPos" : 6594
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8172,6 +8370,17 @@
   "firstEndPos" : 6805,
   "secondEndPos" : 6805
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// end of super-class implementation",
+  "secondLabel" : "// end of super-class implementation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6826,
+  "secondPos" : 6826,
+  "firstEndPos" : 6862,
+  "secondEndPos" : 6862
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8380,6 +8589,28 @@
   "secondPos" : 7017,
   "firstEndPos" : 7316,
   "secondEndPos" : 7439
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 14-Nov-2016, tatu: As per [dataformat-xml#213], we may have explicitly",
+  "secondLabel" : "// 14-Nov-2016, tatu: As per [dataformat-xml#213], we may have explicitly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7027,
+  "secondPos" : 7027,
+  "firstEndPos" : 7100,
+  "secondEndPos" : 7100
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    configured root name...",
+  "secondLabel" : "//    configured root name...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7109,
+  "secondPos" : 7109,
+  "firstEndPos" : 7138,
+  "secondEndPos" : 7138
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8821,6 +9052,17 @@
   "firstEndPos" : 7448,
   "secondEndPos" : 7571
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Could repeat root name, but what's the point? How to customize?",
+  "secondLabel" : "// Could repeat root name, but what's the point? How to customize?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7460,
+  "secondPos" : 7583,
+  "firstEndPos" : 7526,
+  "secondEndPos" : 7649
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9063,6 +9305,17 @@
   "firstEndPos" : 8628,
   "secondEndPos" : 8751
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 28-Nov-2012, tatu: We should only initialize the root\n         *  name if no name has been set, as per [dataformat-xml#42],\n         *  to allow for custom serializers to work.\n         */",
+  "secondLabel" : "/* 28-Nov-2012, tatu: We should only initialize the root\n         *  name if no name has been set, as per [dataformat-xml#42],\n         *  to allow for custom serializers to work.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7682,
+  "secondPos" : 7805,
+  "firstEndPos" : 7873,
+  "secondEndPos" : 7996
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -9172,6 +9425,17 @@
   "secondPos" : 8047,
   "firstEndPos" : 8079,
   "secondEndPos" : 8202
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// however, if we are root, we... insist",
+  "secondLabel" : "// however, if we are root, we... insist",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7938,
+  "secondPos" : 8061,
+  "firstEndPos" : 7978,
+  "secondEndPos" : 8101
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -9469,6 +9733,17 @@
   "secondPos" : 8262,
   "firstEndPos" : 8154,
   "secondEndPos" : 8277
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* [dataformat-xml#26] If we just try writing root element with namespace,\n         * we will get an explicit prefix. But we'd rather use the default\n         * namespace, so let's try to force that.\n         */",
+  "secondLabel" : "/* [dataformat-xml#26] If we just try writing root element with namespace,\n         * we will get an explicit prefix. But we'd rather use the default\n         * namespace, so let's try to force that.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8166,
+  "secondPos" : 8289,
+  "firstEndPos" : 8377,
+  "secondEndPos" : 8500
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10713,6 +10988,17 @@
   "firstEndPos" : 9585,
   "secondEndPos" : 9708
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [Issue#71]: When converting, we actually get TokenBuffer, which is fine",
+  "secondLabel" : "// [Issue#71]: When converting, we actually get TokenBuffer, which is fine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9114,
+  "secondPos" : 9237,
+  "firstEndPos" : 9188,
+  "secondEndPos" : 9311
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10811,6 +11097,17 @@
   "secondPos" : 9358,
   "firstEndPos" : 9542,
   "secondEndPos" : 9665
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but verify",
+  "secondLabel" : "// but verify",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9249,
+  "secondPos" : 9372,
+  "firstEndPos" : 9262,
+  "secondEndPos" : 9385
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

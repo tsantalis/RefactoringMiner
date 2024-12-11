@@ -10,6 +10,17 @@
   "firstEndPos" : 9274,
   "secondEndPos" : 8598
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2007 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2007 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -3200,6 +3211,17 @@
   "firstEndPos" : 3483,
   "secondEndPos" : 3418
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The node we're looking at is a function, so we can add it directly",
+  "secondLabel" : "// The node we're looking at is a function, so we can add it directly",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3328,
+  "secondPos" : 3292,
+  "firstEndPos" : 3397,
+  "secondEndPos" : 3361
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4641,6 +4663,72 @@
   "firstEndPos" : 5040,
   "secondEndPos" : 4364
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We have a signature. Parse tree of the form:",
+  "secondLabel" : "// We have a signature. Parse tree of the form:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5055,
+  "secondPos" : 4379,
+  "firstEndPos" : 5102,
+  "secondEndPos" : 4426
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign                       <- parent",
+  "secondLabel" : "// assign                       <- parent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5113,
+  "secondPos" : 4437,
+  "firstEndPos" : 5154,
+  "secondEndPos" : 4478
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      getprop                 <- n",
+  "secondLabel" : "//      getprop                 <- n",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5165,
+  "secondPos" : 4489,
+  "firstEndPos" : 5201,
+  "secondEndPos" : 4525
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          name methods",
+  "secondLabel" : "//          name methods",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5212,
+  "secondPos" : 4536,
+  "firstEndPos" : 5236,
+  "secondEndPos" : 4560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          string setTimeout",
+  "secondLabel" : "//          string setTimeout",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5247,
+  "secondPos" : 4571,
+  "firstEndPos" : 5276,
+  "secondEndPos" : 4600
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      function",
+  "secondLabel" : "//      function",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5287,
+  "secondPos" : 4611,
+  "firstEndPos" : 5303,
+  "secondEndPos" : 4627
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5410,6 +5498,28 @@
   "secondPos" : 5068,
   "firstEndPos" : 6436,
   "secondEndPos" : 5760
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assumes the object literal is well formed",
+  "secondLabel" : "// assumes the object literal is well formed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5756,
+  "secondPos" : 5080,
+  "firstEndPos" : 5800,
+  "secondEndPos" : 5124
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (has an even number of children)",
+  "secondLabel" : "// (has an even number of children)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5811,
+  "secondPos" : 5135,
+  "firstEndPos" : 5846,
+  "secondEndPos" : 5170
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -7270,6 +7380,94 @@
   "firstEndPos" : 7600,
   "secondEndPos" : 6924
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Static methods of the form Foo.bar = function() {} or",
+  "secondLabel" : "// Static methods of the form Foo.bar = function() {} or",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6987,
+  "secondPos" : 6311,
+  "firstEndPos" : 7043,
+  "secondEndPos" : 6367
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Static methods of the form Foo.bar = baz (where baz is a",
+  "secondLabel" : "// Static methods of the form Foo.bar = baz (where baz is a",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7058,
+  "secondPos" : 6382,
+  "firstEndPos" : 7117,
+  "secondEndPos" : 6441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// function name). Parse tree looks like:",
+  "secondLabel" : "// function name). Parse tree looks like:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7132,
+  "secondPos" : 6456,
+  "firstEndPos" : 7173,
+  "secondEndPos" : 6497
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign                 <- parent",
+  "secondLabel" : "// assign                 <- parent",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7188,
+  "secondPos" : 6512,
+  "firstEndPos" : 7223,
+  "secondEndPos" : 6547
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      getprop           <- n",
+  "secondLabel" : "//      getprop           <- n",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7238,
+  "secondPos" : 6562,
+  "firstEndPos" : 7268,
+  "secondEndPos" : 6592
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          name Foo",
+  "secondLabel" : "//          name Foo",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7283,
+  "secondPos" : 6607,
+  "firstEndPos" : 7303,
+  "secondEndPos" : 6627
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//          string bar",
+  "secondLabel" : "//          string bar",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7318,
+  "secondPos" : 6642,
+  "firstEndPos" : 7340,
+  "secondEndPos" : 6664
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      function or name  <- n.getNext()",
+  "secondLabel" : "//      function or name  <- n.getNext()",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7355,
+  "secondPos" : 6679,
+  "firstEndPos" : 7395,
+  "secondEndPos" : 6719
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7643,6 +7841,28 @@
   "secondPos" : 6968,
   "firstEndPos" : 7659,
   "secondEndPos" : 6983
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assumes the object literal is well formed",
+  "secondLabel" : "// assumes the object literal is well formed",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7671,
+  "secondPos" : 6995,
+  "firstEndPos" : 7715,
+  "secondEndPos" : 7039
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (has an even number of children)",
+  "secondLabel" : "// (has an even number of children)",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7726,
+  "secondPos" : 7050,
+  "firstEndPos" : 7761,
+  "secondEndPos" : 7085
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -8490,6 +8710,116 @@
   "secondPos" : 7703,
   "firstEndPos" : 8386,
   "secondEndPos" : 7710
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Foo.prototype.getBar = function() { ... } or",
+  "secondLabel" : "// Foo.prototype.getBar = function() { ... } or",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8400,
+  "secondPos" : 7724,
+  "firstEndPos" : 8447,
+  "secondEndPos" : 7771
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Foo.prototype.getBar = getBaz (where getBaz is a function)",
+  "secondLabel" : "// Foo.prototype.getBar = getBaz (where getBaz is a function)",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8456,
+  "secondPos" : 7780,
+  "firstEndPos" : 8517,
+  "secondEndPos" : 7841
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parse tree looks like:",
+  "secondLabel" : "// parse tree looks like:",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8526,
+  "secondPos" : 7850,
+  "firstEndPos" : 8551,
+  "secondEndPos" : 7875
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assign                          <- parent",
+  "secondLabel" : "// assign                          <- parent",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8560,
+  "secondPos" : 7884,
+  "firstEndPos" : 8604,
+  "secondEndPos" : 7928
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     getprop                     <- n",
+  "secondLabel" : "//     getprop                     <- n",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8613,
+  "secondPos" : 7937,
+  "firstEndPos" : 8652,
+  "secondEndPos" : 7976
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//         getprop",
+  "secondLabel" : "//         getprop",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8661,
+  "secondPos" : 7985,
+  "firstEndPos" : 8679,
+  "secondEndPos" : 8003
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//             name Foo",
+  "secondLabel" : "//             name Foo",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8688,
+  "secondPos" : 8012,
+  "firstEndPos" : 8711,
+  "secondEndPos" : 8035
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//             string prototype",
+  "secondLabel" : "//             string prototype",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8720,
+  "secondPos" : 8044,
+  "firstEndPos" : 8751,
+  "secondEndPos" : 8075
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//         string getBar",
+  "secondLabel" : "//         string getBar",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8760,
+  "secondPos" : 8084,
+  "firstEndPos" : 8784,
+  "secondEndPos" : 8108
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     function or name            <- assignee",
+  "secondLabel" : "//     function or name            <- assignee",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8793,
+  "secondPos" : 8117,
+  "firstEndPos" : 8839,
+  "secondEndPos" : 8163
 }, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",

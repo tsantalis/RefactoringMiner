@@ -10,6 +10,17 @@
   "firstEndPos" : 4679,
   "secondEndPos" : 4769
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1132,6 +1143,17 @@
   "firstEndPos" : 1790,
   "secondEndPos" : 1790
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* (non-Javadoc)\n     * @see org.mockito.stubbing.Answer#answer(org.mockito.invocation.InvocationOnMock)\n     */",
+  "secondLabel" : "/* (non-Javadoc)\n     * @see org.mockito.stubbing.Answer#answer(org.mockito.invocation.InvocationOnMock)\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1799,
+  "secondPos" : 1799,
+  "firstEndPos" : 1911,
+  "secondEndPos" : 1911
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2067,6 +2089,39 @@
   "firstEndPos" : 2823,
   "secondEndPos" : 2823
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//see issue 184.",
+  "secondLabel" : "//see issue 184.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2469,
+  "secondPos" : 2469,
+  "firstEndPos" : 2485,
+  "secondEndPos" : 2485
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//mocks by default should return 0 if references are the same, otherwise some other value because they are not the same. Hence we return 1 (anything but 0 is good).",
+  "secondLabel" : "//mocks by default should return 0 if references are the same, otherwise some other value because they are not the same. Hence we return 1 (anything but 0 is good).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2498,
+  "secondPos" : 2498,
+  "firstEndPos" : 2662,
+  "secondEndPos" : 2662
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Only for compareTo() method by the Comparable interface",
+  "secondLabel" : "//Only for compareTo() method by the Comparable interface",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2675,
+  "secondPos" : 2675,
+  "firstEndPos" : 2732,
+  "secondEndPos" : 2732
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2737,6 +2792,28 @@
   "secondPos" : 3117,
   "firstEndPos" : 3121,
   "secondEndPos" : 3121
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//new instances are used instead of Collections.emptyList(), etc.",
+  "secondLabel" : "//new instances are used instead of Collections.emptyList(), etc.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3136,
+  "secondPos" : 3136,
+  "firstEndPos" : 3201,
+  "secondEndPos" : 3201
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//to avoid UnsupportedOperationException if code under test modifies returned collection",
+  "secondLabel" : "//to avoid UnsupportedOperationException if code under test modifies returned collection",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3214,
+  "secondPos" : 3214,
+  "firstEndPos" : 3302,
+  "secondEndPos" : 3302
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5157,6 +5234,17 @@
   "secondPos" : 4662,
   "firstEndPos" : 4578,
   "secondEndPos" : 4668
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//Let's not care about the rest of collections.",
+  "secondLabel" : "//Let's not care about the rest of collections.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4601,
+  "secondPos" : 4691,
+  "firstEndPos" : 4648,
+  "secondEndPos" : 4738
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 5514,
   "secondEndPos" : 5551
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "secondLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -460,6 +471,17 @@
   "secondPos" : 1164,
   "firstEndPos" : 1219,
   "secondEndPos" : 1219
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1164,
+  "secondPos" : 1164,
+  "firstEndPos" : 1170,
+  "secondEndPos" : 1170
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1528,6 +1550,17 @@
   "firstEndPos" : 1934,
   "secondEndPos" : 1934
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for tests",
+  "secondLabel" : "// for tests",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1951,
+  "secondPos" : 1951,
+  "firstEndPos" : 1963,
+  "secondEndPos" : 1963
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -1978,6 +2011,17 @@
   "secondPos" : 2287,
   "firstEndPos" : 2637,
   "secondEndPos" : 2637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// stubbing voids with stubVoid() or doAnswer() style",
+  "secondLabel" : "// stubbing voids with stubVoid() or doAnswer() style",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2302,
+  "secondPos" : 2302,
+  "firstEndPos" : 2355,
+  "secondEndPos" : 2355
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2562,6 +2606,17 @@
   "firstEndPos" : 2923,
   "secondEndPos" : 2923
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//if verificationMode is not null then someone is doing verify()        ",
+  "secondLabel" : "//if verificationMode is not null then someone is doing verify()        ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2938,
+  "secondPos" : 2938,
+  "firstEndPos" : 3010,
+  "secondEndPos" : 3010
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2627,6 +2682,28 @@
   "secondPos" : 3050,
   "firstEndPos" : 3799,
   "secondEndPos" : 3836
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//We need to check if verification was started on the correct mock ",
+  "secondLabel" : "//We need to check if verification was started on the correct mock ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3065,
+  "secondPos" : 3065,
+  "firstEndPos" : 3132,
+  "secondEndPos" : 3132
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - see VerifyingWithAnExtraCallToADifferentMockTest (bug 138)",
+  "secondLabel" : "// - see VerifyingWithAnExtraCallToADifferentMockTest (bug 138)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3146,
+  "secondPos" : 3146,
+  "firstEndPos" : 3209,
+  "secondEndPos" : 3209
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3012,6 +3089,28 @@
   "secondPos" : 3526,
   "firstEndPos" : 3587,
   "secondEndPos" : 3530
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this means there is an invocation on a different mock. Re-adding verification mode ",
+  "secondLabel" : "// this means there is an invocation on a different mock. Re-adding verification mode ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3606,
+  "secondPos" : 3571,
+  "firstEndPos" : 3692,
+  "secondEndPos" : 3657
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// - see VerifyingWithAnExtraCallToADifferentMockTest (bug 138)",
+  "secondLabel" : "// - see VerifyingWithAnExtraCallToADifferentMockTest (bug 138)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3710,
+  "secondPos" : 3675,
+  "firstEndPos" : 3773,
+  "secondEndPos" : 3738
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3837,6 +3936,61 @@
   "secondPos" : 4459,
   "firstEndPos" : 4432,
   "secondEndPos" : 4469
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// redo setting invocation for potential stubbing in case of partial",
+  "secondLabel" : "// redo setting invocation for potential stubbing in case of partial",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4450,
+  "secondPos" : 4487,
+  "firstEndPos" : 4518,
+  "secondEndPos" : 4555
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// mocks / spies.",
+  "secondLabel" : "// mocks / spies.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4532,
+  "secondPos" : 4569,
+  "firstEndPos" : 4549,
+  "secondEndPos" : 4586
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Without it, the real method inside 'when' might have delegated",
+  "secondLabel" : "// Without it, the real method inside 'when' might have delegated",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4563,
+  "secondPos" : 4600,
+  "firstEndPos" : 4628,
+  "secondEndPos" : 4665
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to other self method and overwrite the intended stubbed method",
+  "secondLabel" : "// to other self method and overwrite the intended stubbed method",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4642,
+  "secondPos" : 4679,
+  "firstEndPos" : 4707,
+  "secondEndPos" : 4744
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with a different one. The reset is required to avoid runtime exception that validates return type with stubbed method signature.",
+  "secondLabel" : "// with a different one. The reset is required to avoid runtime exception that validates return type with stubbed method signature.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4721,
+  "secondPos" : 4758,
+  "firstEndPos" : 4852,
+  "secondEndPos" : 4889
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

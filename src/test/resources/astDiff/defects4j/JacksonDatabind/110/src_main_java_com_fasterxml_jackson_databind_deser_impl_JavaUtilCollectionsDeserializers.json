@@ -274,6 +274,17 @@
   "firstEndPos" : 603,
   "secondEndPos" : 603
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 574,
+  "secondPos" : 574,
+  "firstEndPos" : 579,
+  "secondEndPos" : 579
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " java.util.Collections",
@@ -306,6 +317,17 @@
   "secondPos" : 608,
   "firstEndPos" : 632,
   "secondEndPos" : 632
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 608,
+  "secondPos" : 608,
+  "firstEndPos" : 613,
+  "secondEndPos" : 613
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -361,6 +383,17 @@
   "secondPos" : 790,
   "firstEndPos" : 802,
   "secondEndPos" : 802
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 790,
+  "secondPos" : 790,
+  "firstEndPos" : 796,
+  "secondEndPos" : 796
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1032,6 +1065,17 @@
   "secondPos" : 1238,
   "firstEndPos" : 1239,
   "secondEndPos" : 1239
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 10-Jan-2018, tatu: There are a few \"well-known\" special containers in JDK too:",
+  "secondLabel" : "// 10-Jan-2018, tatu: There are a few \"well-known\" special containers in JDK too:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1246,
+  "secondPos" : 1246,
+  "firstEndPos" : 1327,
+  "secondEndPos" : 1327
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2694,6 +2738,17 @@
   "firstEndPos" : 2310,
   "secondEndPos" : 2375
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for [databind#2265]",
+  "secondLabel" : "// for [databind#2265]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2322,
+  "secondPos" : 2387,
+  "firstEndPos" : 2344,
+  "secondEndPos" : 2409
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3354,6 +3409,17 @@
   "firstEndPos" : 2739,
   "secondEndPos" : 2911
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 10-Jan-2017, tatu: Some types from `java.util.Collections`/`java.util.Arrays` need bit of help...",
+  "secondLabel" : "// 10-Jan-2017, tatu: Some types from `java.util.Collections`/`java.util.Arrays` need bit of help...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2750,
+  "secondPos" : 2922,
+  "firstEndPos" : 2850,
+  "secondEndPos" : 3022
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4013,6 +4079,17 @@
   "secondPos" : 3384,
   "firstEndPos" : 3215,
   "secondEndPos" : 3387
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#2265]: we may have another impl type for unmodifiable Lists, check both",
+  "secondLabel" : "// [databind#2265]: we may have another impl type for unmodifiable Lists, check both",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3232,
+  "secondPos" : 3404,
+  "firstEndPos" : 3316,
+  "secondEndPos" : 3488
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4838,6 +4915,17 @@
   "secondPos" : 4112,
   "firstEndPos" : 3893,
   "secondEndPos" : 4116
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 10-Jan-2017, tatu: Some types from `java.util.Collections`/`java.util.Arrays` need bit of help...",
+  "secondLabel" : "// 10-Jan-2017, tatu: Some types from `java.util.Collections`/`java.util.Arrays` need bit of help...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3904,
+  "secondPos" : 4127,
+  "firstEndPos" : 4004,
+  "secondEndPos" : 4227
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5796,6 +5884,17 @@
   "firstEndPos" : 4717,
   "secondEndPos" : 4940
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4696,
+  "secondPos" : 4919,
+  "firstEndPos" : 4701,
+  "secondEndPos" : 4924
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.Set",
@@ -5829,6 +5928,17 @@
   "firstEndPos" : 4741,
   "secondEndPos" : 4964
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4719,
+  "secondPos" : 4942,
+  "firstEndPos" : 4724,
+  "secondEndPos" : 4947
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.util.List",
@@ -5861,6 +5971,17 @@
   "secondPos" : 4966,
   "firstEndPos" : 4764,
   "secondEndPos" : 4987
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4743,
+  "secondPos" : 4966,
+  "firstEndPos" : 4748,
+  "secondEndPos" : 4971
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -5905,6 +6026,17 @@
   "secondPos" : 5046,
   "firstEndPos" : 4852,
   "secondEndPos" : 5075
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4823,
+  "secondPos" : 5046,
+  "firstEndPos" : 4828,
+  "secondEndPos" : 5051
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6620,6 +6752,17 @@
   "secondPos" : 5512,
   "firstEndPos" : 5358,
   "secondEndPos" : 5581
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is this legal to get?",
+  "secondLabel" : "// is this legal to get?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5291,
+  "secondPos" : 5514,
+  "firstEndPos" : 5315,
+  "secondEndPos" : 5538
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -8612,6 +8755,17 @@
   "firstEndPos" : 6609,
   "secondEndPos" : 6832
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Here we do not actually care about impl type, just return List as-is:",
+  "secondLabel" : "// Here we do not actually care about impl type, just return List as-is:",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 6626,
+  "secondPos" : 6849,
+  "firstEndPos" : 6698,
+  "secondEndPos" : 6921
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -8920,6 +9074,17 @@
   "firstEndPos" : 7044,
   "secondEndPos" : 7267
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we don't actually care, so:",
+  "secondLabel" : "// we don't actually care, so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6973,
+  "secondPos" : 7196,
+  "firstEndPos" : 7003,
+  "secondEndPos" : 7226
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -9095,6 +9260,17 @@
   "secondPos" : 7345,
   "firstEndPos" : 7314,
   "secondEndPos" : 7537
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not the best error ever but... has to do",
+  "secondLabel" : "// not the best error ever but... has to do",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7140,
+  "secondPos" : 7363,
+  "firstEndPos" : 7183,
+  "secondEndPos" : 7406
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

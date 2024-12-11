@@ -10,6 +10,17 @@
   "firstEndPos" : 25434,
   "secondEndPos" : 25395
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -450,6 +461,17 @@
   "firstEndPos" : 1923,
   "secondEndPos" : 1923
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1889,
+  "secondPos" : 1889,
+  "firstEndPos" : 1894,
+  "secondEndPos" : 1894
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -582,6 +604,17 @@
   "firstEndPos" : 2115,
   "secondEndPos" : 2115
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2079,
+  "secondPos" : 2079,
+  "firstEndPos" : 2084,
+  "secondEndPos" : 2084
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "StorelessUnivariateStatistic",
@@ -636,6 +669,17 @@
   "secondPos" : 2305,
   "firstEndPos" : 2359,
   "secondEndPos" : 2359
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2305,
+  "secondPos" : 2305,
+  "firstEndPos" : 2310,
+  "secondEndPos" : 2310
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -725,6 +769,17 @@
   "firstEndPos" : 2454,
   "secondEndPos" : 2454
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2418,
+  "secondPos" : 2418,
+  "firstEndPos" : 2423,
+  "secondEndPos" : 2423
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "StorelessUnivariateStatistic",
@@ -813,6 +868,17 @@
   "firstEndPos" : 2738,
   "secondEndPos" : 2738
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2701,
+  "secondPos" : 2701,
+  "firstEndPos" : 2706,
+  "secondEndPos" : 2706
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SynchronizedSummaryStatistics",
@@ -867,6 +933,17 @@
   "secondPos" : 2809,
   "firstEndPos" : 2822,
   "secondEndPos" : 2822
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2809,
+  "secondPos" : 2809,
+  "firstEndPos" : 2817,
+  "secondEndPos" : 2817
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3431,6 +3508,17 @@
   "firstEndPos" : 5240,
   "secondEndPos" : 5240
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5224,
+  "secondPos" : 5224,
+  "firstEndPos" : 5229,
+  "secondEndPos" : 5229
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " original",
@@ -3464,6 +3552,17 @@
   "firstEndPos" : 5318,
   "secondEndPos" : 5318
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5256,
+  "secondPos" : 5256,
+  "firstEndPos" : 5262,
+  "secondEndPos" : 5262
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "original",
@@ -3496,6 +3595,17 @@
   "secondPos" : 5276,
   "firstEndPos" : 5301,
   "secondEndPos" : 5301
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5276,
+  "secondPos" : 5276,
+  "firstEndPos" : 5281,
+  "secondEndPos" : 5281
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3717,6 +3827,17 @@
   "firstEndPos" : 5479,
   "secondEndPos" : 5479
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5447,
+  "secondPos" : 5447,
+  "firstEndPos" : 5452,
+  "secondEndPos" : 5452
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "StatisticalSummaryValues",
@@ -3760,6 +3881,17 @@
   "secondPos" : 5533,
   "firstEndPos" : 5569,
   "secondEndPos" : 5569
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5533,
+  "secondPos" : 5533,
+  "firstEndPos" : 5540,
+  "secondEndPos" : 5540
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4057,6 +4189,17 @@
   "secondPos" : 5801,
   "firstEndPos" : 5830,
   "secondEndPos" : 5830
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5801,
+  "secondPos" : 5801,
+  "firstEndPos" : 5807,
+  "secondEndPos" : 5807
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4619,6 +4762,28 @@
   "firstEndPos" : 6091,
   "secondEndPos" : 6091
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If mean, variance or geomean have been overridden,",
+  "secondLabel" : "// If mean, variance or geomean have been overridden,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6102,
+  "secondPos" : 6102,
+  "firstEndPos" : 6155,
+  "secondEndPos" : 6155
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to increment these",
+  "secondLabel" : "// need to increment these",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6164,
+  "secondPos" : 6164,
+  "firstEndPos" : 6190,
+  "secondEndPos" : 6190
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5048,6 +5213,17 @@
   "firstEndPos" : 6613,
   "secondEndPos" : 6574
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6575,
+  "secondPos" : 6536,
+  "firstEndPos" : 6582,
+  "secondEndPos" : 6543
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The number of available values",
@@ -5179,6 +5355,17 @@
   "secondPos" : 6706,
   "firstEndPos" : 6816,
   "secondEndPos" : 6777
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6745,
+  "secondPos" : 6706,
+  "firstEndPos" : 6752,
+  "secondEndPos" : 6713
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5378,6 +5565,17 @@
   "firstEndPos" : 7095,
   "secondEndPos" : 7056
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7069,
+  "secondPos" : 7030,
+  "firstEndPos" : 7076,
+  "secondEndPos" : 7037
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The sum of squares",
@@ -5576,6 +5774,17 @@
   "firstEndPos" : 7354,
   "secondEndPos" : 7315
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7338,
+  "secondPos" : 7299,
+  "firstEndPos" : 7345,
+  "secondEndPos" : 7306
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the mean",
@@ -5773,6 +5982,17 @@
   "secondPos" : 7570,
   "firstEndPos" : 7639,
   "secondEndPos" : 7600
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7609,
+  "secondPos" : 7570,
+  "firstEndPos" : 7616,
+  "secondEndPos" : 7577
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6313,6 +6533,17 @@
   "firstEndPos" : 8105,
   "secondEndPos" : 8066
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8092,
+  "secondPos" : 8053,
+  "firstEndPos" : 8097,
+  "secondEndPos" : 8058
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " n - 1",
@@ -6356,6 +6587,17 @@
   "secondPos" : 8100,
   "firstEndPos" : 8171,
   "secondEndPos" : 8132
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8139,
+  "secondPos" : 8100,
+  "firstEndPos" : 8144,
+  "secondEndPos" : 8105
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -6422,6 +6664,17 @@
   "secondPos" : 8280,
   "firstEndPos" : 8339,
   "secondEndPos" : 8300
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8319,
+  "secondPos" : 8280,
+  "firstEndPos" : 8326,
+  "secondEndPos" : 8287
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6609,6 +6862,17 @@
   "secondPos" : 8641,
   "firstEndPos" : 8711,
   "secondEndPos" : 8672
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8680,
+  "secondPos" : 8641,
+  "firstEndPos" : 8687,
+  "secondEndPos" : 8648
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6984,6 +7248,17 @@
   "firstEndPos" : 9116,
   "secondEndPos" : 9077
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9097,
+  "secondPos" : 9058,
+  "firstEndPos" : 9104,
+  "secondEndPos" : 9065
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the maximum",
@@ -7181,6 +7456,17 @@
   "secondPos" : 9319,
   "firstEndPos" : 9377,
   "secondEndPos" : 9338
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9358,
+  "secondPos" : 9319,
+  "firstEndPos" : 9365,
+  "secondEndPos" : 9326
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7380,6 +7666,17 @@
   "firstEndPos" : 9652,
   "secondEndPos" : 9613
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9626,
+  "secondPos" : 9587,
+  "firstEndPos" : 9633,
+  "secondEndPos" : 9594
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the geometric mean",
@@ -7578,6 +7875,17 @@
   "firstEndPos" : 9939,
   "secondEndPos" : 9900
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9916,
+  "secondPos" : 9877,
+  "firstEndPos" : 9923,
+  "secondEndPos" : 9884
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the sum of logs",
@@ -7599,6 +7907,17 @@
   "secondPos" : 9908,
   "firstEndPos" : 9957,
   "secondEndPos" : 9918
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9947,
+  "secondPos" : 9908,
+  "firstEndPos" : 9953,
+  "secondEndPos" : 9914
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7831,6 +8150,17 @@
   "firstEndPos" : 10482,
   "secondEndPos" : 10443
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10443,
+  "secondPos" : 10404,
+  "firstEndPos" : 10450,
+  "secondEndPos" : 10411
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " second central moment statistic",
@@ -7852,6 +8182,17 @@
   "secondPos" : 10451,
   "firstEndPos" : 10500,
   "secondEndPos" : 10461
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10490,
+  "secondPos" : 10451,
+  "firstEndPos" : 10496,
+  "secondEndPos" : 10457
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8029,6 +8370,17 @@
   "firstEndPos" : 10764,
   "secondEndPos" : 10725
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10712,
+  "secondPos" : 10673,
+  "firstEndPos" : 10719,
+  "secondEndPos" : 10680
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " String with line feeds displaying statistics",
@@ -8050,6 +8402,17 @@
   "secondPos" : 10733,
   "firstEndPos" : 10782,
   "secondEndPos" : 10743
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10772,
+  "secondPos" : 10733,
+  "firstEndPos" : 10778,
+  "secondEndPos" : 10739
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -11131,6 +11494,17 @@
   "firstEndPos" : 12392,
   "secondEndPos" : 12353
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12342,
+  "secondPos" : 12303,
+  "firstEndPos" : 12348,
+  "secondEndPos" : 12309
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "object",
@@ -11163,6 +11537,17 @@
   "secondPos" : 12361,
   "firstEndPos" : 12434,
   "secondEndPos" : 12395
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12400,
+  "secondPos" : 12361,
+  "firstEndPos" : 12407,
+  "secondEndPos" : 12368
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -12648,6 +13033,17 @@
   "secondPos" : 13488,
   "firstEndPos" : 13544,
   "secondEndPos" : 13505
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13527,
+  "secondPos" : 13488,
+  "firstEndPos" : 13534,
+  "secondEndPos" : 13495
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14398,6 +14794,17 @@
   "firstEndPos" : 14150,
   "secondEndPos" : 14111
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Getters and setters for statistics implementations",
+  "secondLabel" : "// Getters and setters for statistics implementations",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14163,
+  "secondPos" : 14124,
+  "firstEndPos" : 14216,
+  "secondEndPos" : 14177
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -14453,6 +14860,17 @@
   "firstEndPos" : 14352,
   "secondEndPos" : 14313
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14291,
+  "secondPos" : 14252,
+  "firstEndPos" : 14298,
+  "secondEndPos" : 14259
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the sum",
@@ -14474,6 +14892,17 @@
   "secondPos" : 14321,
   "firstEndPos" : 14370,
   "secondEndPos" : 14331
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14360,
+  "secondPos" : 14321,
+  "firstEndPos" : 14366,
+  "secondEndPos" : 14327
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14673,6 +15102,17 @@
   "firstEndPos" : 14675,
   "secondEndPos" : 14636
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14641,
+  "secondPos" : 14602,
+  "firstEndPos" : 14646,
+  "secondEndPos" : 14607
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -14772,6 +15212,17 @@
   "firstEndPos" : 14879,
   "secondEndPos" : 14840
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14780,
+  "secondPos" : 14741,
+  "firstEndPos" : 14786,
+  "secondEndPos" : 14747
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sumImpl",
@@ -14816,6 +15267,17 @@
   "firstEndPos" : 14977,
   "secondEndPos" : 14938
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14887,
+  "secondPos" : 14848,
+  "firstEndPos" : 14894,
+  "secondEndPos" : 14855
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -14859,6 +15321,17 @@
   "secondPos" : 14946,
   "firstEndPos" : 14995,
   "secondEndPos" : 14956
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14985,
+  "secondPos" : 14946,
+  "firstEndPos" : 14991,
+  "secondEndPos" : 14952
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -15124,6 +15597,17 @@
   "firstEndPos" : 15289,
   "secondEndPos" : 15250
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15217,
+  "secondPos" : 15178,
+  "firstEndPos" : 15224,
+  "secondEndPos" : 15185
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the sum of squares",
@@ -15145,6 +15629,17 @@
   "secondPos" : 15258,
   "firstEndPos" : 15307,
   "secondEndPos" : 15268
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15297,
+  "secondPos" : 15258,
+  "firstEndPos" : 15303,
+  "secondEndPos" : 15264
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -15344,6 +15839,17 @@
   "firstEndPos" : 15627,
   "secondEndPos" : 15588
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15593,
+  "secondPos" : 15554,
+  "firstEndPos" : 15598,
+  "secondEndPos" : 15559
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -15443,6 +15949,17 @@
   "firstEndPos" : 15844,
   "secondEndPos" : 15805
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15732,
+  "secondPos" : 15693,
+  "firstEndPos" : 15738,
+  "secondEndPos" : 15699
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sumsqImpl",
@@ -15487,6 +16004,17 @@
   "firstEndPos" : 15942,
   "secondEndPos" : 15903
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15852,
+  "secondPos" : 15813,
+  "firstEndPos" : 15859,
+  "secondEndPos" : 15820
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -15530,6 +16058,17 @@
   "secondPos" : 15911,
   "firstEndPos" : 15960,
   "secondEndPos" : 15921
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15950,
+  "secondPos" : 15911,
+  "firstEndPos" : 15956,
+  "secondEndPos" : 15917
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -15795,6 +16334,17 @@
   "firstEndPos" : 16248,
   "secondEndPos" : 16209
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16183,
+  "secondPos" : 16144,
+  "firstEndPos" : 16190,
+  "secondEndPos" : 16151
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the minimum",
@@ -15816,6 +16366,17 @@
   "secondPos" : 16217,
   "firstEndPos" : 16266,
   "secondEndPos" : 16227
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16256,
+  "secondPos" : 16217,
+  "firstEndPos" : 16262,
+  "secondEndPos" : 16223
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -16015,6 +16576,17 @@
   "firstEndPos" : 16575,
   "secondEndPos" : 16536
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16541,
+  "secondPos" : 16502,
+  "firstEndPos" : 16546,
+  "secondEndPos" : 16507
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -16114,6 +16686,17 @@
   "firstEndPos" : 16783,
   "secondEndPos" : 16744
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16680,
+  "secondPos" : 16641,
+  "firstEndPos" : 16686,
+  "secondEndPos" : 16647
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "minImpl",
@@ -16158,6 +16741,17 @@
   "firstEndPos" : 16881,
   "secondEndPos" : 16842
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16791,
+  "secondPos" : 16752,
+  "firstEndPos" : 16798,
+  "secondEndPos" : 16759
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -16201,6 +16795,17 @@
   "secondPos" : 16850,
   "firstEndPos" : 16899,
   "secondEndPos" : 16860
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16889,
+  "secondPos" : 16850,
+  "firstEndPos" : 16895,
+  "secondEndPos" : 16856
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -16466,6 +17071,17 @@
   "firstEndPos" : 17179,
   "secondEndPos" : 17140
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17114,
+  "secondPos" : 17075,
+  "firstEndPos" : 17121,
+  "secondEndPos" : 17082
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the maximum",
@@ -16487,6 +17103,17 @@
   "secondPos" : 17148,
   "firstEndPos" : 17197,
   "secondEndPos" : 17158
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17187,
+  "secondPos" : 17148,
+  "firstEndPos" : 17193,
+  "secondEndPos" : 17154
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -16686,6 +17313,17 @@
   "firstEndPos" : 17506,
   "secondEndPos" : 17467
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17472,
+  "secondPos" : 17433,
+  "firstEndPos" : 17477,
+  "secondEndPos" : 17438
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -16785,6 +17423,17 @@
   "firstEndPos" : 17714,
   "secondEndPos" : 17675
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17611,
+  "secondPos" : 17572,
+  "firstEndPos" : 17617,
+  "secondEndPos" : 17578
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "maxImpl",
@@ -16829,6 +17478,17 @@
   "firstEndPos" : 17812,
   "secondEndPos" : 17773
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17722,
+  "secondPos" : 17683,
+  "firstEndPos" : 17729,
+  "secondEndPos" : 17690
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -16872,6 +17532,17 @@
   "secondPos" : 17781,
   "firstEndPos" : 17830,
   "secondEndPos" : 17791
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17820,
+  "secondPos" : 17781,
+  "firstEndPos" : 17826,
+  "secondEndPos" : 17787
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -17137,6 +17808,17 @@
   "firstEndPos" : 18114,
   "secondEndPos" : 18075
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18049,
+  "secondPos" : 18010,
+  "firstEndPos" : 18056,
+  "secondEndPos" : 18017
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the log sum",
@@ -17158,6 +17840,17 @@
   "secondPos" : 18083,
   "firstEndPos" : 18132,
   "secondEndPos" : 18093
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18122,
+  "secondPos" : 18083,
+  "firstEndPos" : 18128,
+  "secondEndPos" : 18089
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -17357,6 +18050,17 @@
   "firstEndPos" : 18451,
   "secondEndPos" : 18412
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18417,
+  "secondPos" : 18378,
+  "firstEndPos" : 18422,
+  "secondEndPos" : 18383
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -17456,6 +18160,17 @@
   "firstEndPos" : 18662,
   "secondEndPos" : 18623
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18556,
+  "secondPos" : 18517,
+  "firstEndPos" : 18562,
+  "secondEndPos" : 18523
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "sumLogImpl",
@@ -17500,6 +18215,17 @@
   "firstEndPos" : 18760,
   "secondEndPos" : 18721
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18670,
+  "secondPos" : 18631,
+  "firstEndPos" : 18677,
+  "secondEndPos" : 18638
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -17543,6 +18269,17 @@
   "secondPos" : 18729,
   "firstEndPos" : 18778,
   "secondEndPos" : 18739
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18768,
+  "secondPos" : 18729,
+  "firstEndPos" : 18774,
+  "secondEndPos" : 18735
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -17885,6 +18622,17 @@
   "firstEndPos" : 19127,
   "secondEndPos" : 19088
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19055,
+  "secondPos" : 19016,
+  "firstEndPos" : 19062,
+  "secondEndPos" : 19023
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the geometric mean",
@@ -17906,6 +18654,17 @@
   "secondPos" : 19096,
   "firstEndPos" : 19145,
   "secondEndPos" : 19106
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19135,
+  "secondPos" : 19096,
+  "firstEndPos" : 19141,
+  "secondEndPos" : 19102
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18105,6 +18864,17 @@
   "firstEndPos" : 19469,
   "secondEndPos" : 19430
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19435,
+  "secondPos" : 19396,
+  "firstEndPos" : 19440,
+  "secondEndPos" : 19401
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -18204,6 +18974,17 @@
   "firstEndPos" : 19688,
   "secondEndPos" : 19649
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19574,
+  "secondPos" : 19535,
+  "firstEndPos" : 19580,
+  "secondEndPos" : 19541
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "geoMeanImpl",
@@ -18248,6 +19029,17 @@
   "firstEndPos" : 19786,
   "secondEndPos" : 19747
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19696,
+  "secondPos" : 19657,
+  "firstEndPos" : 19703,
+  "secondEndPos" : 19664
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -18291,6 +19083,17 @@
   "secondPos" : 19755,
   "firstEndPos" : 19804,
   "secondEndPos" : 19765
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19794,
+  "secondPos" : 19755,
+  "firstEndPos" : 19800,
+  "secondEndPos" : 19761
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18556,6 +19359,17 @@
   "firstEndPos" : 20094,
   "secondEndPos" : 20055
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20032,
+  "secondPos" : 19993,
+  "firstEndPos" : 20039,
+  "secondEndPos" : 20000
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the mean",
@@ -18577,6 +19391,17 @@
   "secondPos" : 20063,
   "firstEndPos" : 20112,
   "secondEndPos" : 20073
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20102,
+  "secondPos" : 20063,
+  "firstEndPos" : 20108,
+  "secondEndPos" : 20069
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18776,6 +19601,17 @@
   "firstEndPos" : 20420,
   "secondEndPos" : 20381
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20386,
+  "secondPos" : 20347,
+  "firstEndPos" : 20391,
+  "secondEndPos" : 20352
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -18875,6 +19711,17 @@
   "firstEndPos" : 20626,
   "secondEndPos" : 20587
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20525,
+  "secondPos" : 20486,
+  "firstEndPos" : 20531,
+  "secondEndPos" : 20492
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "meanImpl",
@@ -18919,6 +19766,17 @@
   "firstEndPos" : 20724,
   "secondEndPos" : 20685
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20634,
+  "secondPos" : 20595,
+  "firstEndPos" : 20641,
+  "secondEndPos" : 20602
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -18962,6 +19820,17 @@
   "secondPos" : 20693,
   "firstEndPos" : 20742,
   "secondEndPos" : 20703
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20732,
+  "secondPos" : 20693,
+  "firstEndPos" : 20738,
+  "secondEndPos" : 20699
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -19227,6 +20096,17 @@
   "firstEndPos" : 21028,
   "secondEndPos" : 20989
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20962,
+  "secondPos" : 20923,
+  "firstEndPos" : 20969,
+  "secondEndPos" : 20930
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the StorelessUnivariateStatistic implementing the variance",
@@ -19248,6 +20128,17 @@
   "secondPos" : 20997,
   "firstEndPos" : 21046,
   "secondEndPos" : 21007
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21036,
+  "secondPos" : 20997,
+  "firstEndPos" : 21042,
+  "secondEndPos" : 21003
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -19447,6 +20338,17 @@
   "firstEndPos" : 21366,
   "secondEndPos" : 21327
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21332,
+  "secondPos" : 21293,
+  "firstEndPos" : 21337,
+  "secondEndPos" : 21298
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -19546,6 +20448,17 @@
   "firstEndPos" : 21580,
   "secondEndPos" : 21541
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21471,
+  "secondPos" : 21432,
+  "firstEndPos" : 21477,
+  "secondEndPos" : 21438
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "varianceImpl",
@@ -19590,6 +20503,17 @@
   "firstEndPos" : 21678,
   "secondEndPos" : 21639
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21588,
+  "secondPos" : 21549,
+  "firstEndPos" : 21595,
+  "secondEndPos" : 21556
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IllegalStateException",
@@ -19633,6 +20557,17 @@
   "secondPos" : 21647,
   "firstEndPos" : 21696,
   "secondEndPos" : 21657
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21686,
+  "secondPos" : 21647,
+  "firstEndPos" : 21692,
+  "secondEndPos" : 21653
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -20118,6 +21053,17 @@
   "firstEndPos" : 22245,
   "secondEndPos" : 22206
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22223,
+  "secondPos" : 22184,
+  "firstEndPos" : 22230,
+  "secondEndPos" : 22191
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a copy of this",
@@ -20426,6 +21372,17 @@
   "firstEndPos" : 22552,
   "secondEndPos" : 22513
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22513,
+  "secondPos" : 22474,
+  "firstEndPos" : 22519,
+  "secondEndPos" : 22480
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "source",
@@ -20459,6 +21416,17 @@
   "firstEndPos" : 22600,
   "secondEndPos" : 22561
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22560,
+  "secondPos" : 22521,
+  "firstEndPos" : 22566,
+  "secondEndPos" : 22527
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "dest",
@@ -20491,6 +21459,17 @@
   "secondPos" : 22569,
   "firstEndPos" : 22670,
   "secondEndPos" : 22631
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 22608,
+  "secondPos" : 22569,
+  "firstEndPos" : 22615,
+  "secondEndPos" : 22576
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -21416,6 +22395,17 @@
   "firstEndPos" : 23195,
   "secondEndPos" : 23156
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Keep commons-math supplied statistics with embedded moments in synch",
+  "secondLabel" : "// Keep commons-math supplied statistics with embedded moments in synch",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23206,
+  "secondPos" : 23167,
+  "firstEndPos" : 23277,
+  "secondEndPos" : 23238
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -22273,6 +23263,28 @@
   "secondPos" : 23844,
   "firstEndPos" : 23887,
   "secondEndPos" : 23848
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure that if stat == statImpl in source, same",
+  "secondLabel" : "// Make sure that if stat == statImpl in source, same",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23910,
+  "secondPos" : 23871,
+  "firstEndPos" : 23963,
+  "secondEndPos" : 23924
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// holds in dest; otherwise copy stat",
+  "secondLabel" : "// holds in dest; otherwise copy stat",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23972,
+  "secondPos" : 23933,
+  "firstEndPos" : 24009,
+  "secondEndPos" : 23970
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

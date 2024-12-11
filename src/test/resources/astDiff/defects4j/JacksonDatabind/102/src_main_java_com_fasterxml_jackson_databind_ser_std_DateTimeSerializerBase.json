@@ -747,6 +747,17 @@
   "firstEndPos" : 1208,
   "secondEndPos" : 1208
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1186,
+  "secondPos" : 1186,
+  "firstEndPos" : 1191,
+  "secondEndPos" : 1191
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -901,6 +912,17 @@
   "firstEndPos" : 1313,
   "secondEndPos" : 1313
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1291,
+  "secondPos" : 1291,
+  "firstEndPos" : 1296,
+  "secondEndPos" : 1296
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -977,6 +999,17 @@
   "secondPos" : 1608,
   "firstEndPos" : 1618,
   "secondEndPos" : 1618
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1608,
+  "secondPos" : 1608,
+  "firstEndPos" : 1614,
+  "secondEndPos" : 1614
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2023,6 +2056,28 @@
   "firstEndPos" : 5339,
   "secondEndPos" : 5272
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note! Should not skip if `property` null since that'd skip check",
+  "secondLabel" : "// Note! Should not skip if `property` null since that'd skip check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2287,
+  "secondPos" : 2287,
+  "firstEndPos" : 2354,
+  "secondEndPos" : 2354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for config overrides, in case of root value",
+  "secondLabel" : "// for config overrides, in case of root value",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2363,
+  "secondPos" : 2363,
+  "firstEndPos" : 2409,
+  "secondEndPos" : 2409
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2242,6 +2297,17 @@
   "secondPos" : 2552,
   "firstEndPos" : 2623,
   "secondEndPos" : 2556
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Simple case first: serialize as numeric timestamp?",
+  "secondLabel" : "// Simple case first: serialize as numeric timestamp?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2643,
+  "secondPos" : 2576,
+  "firstEndPos" : 2696,
+  "secondEndPos" : 2629
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2473,6 +2539,28 @@
   "secondPos" : 2759,
   "firstEndPos" : 2830,
   "secondEndPos" : 2763
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 08-Jun-2017, tatu: With [databind#1648], this gets bit tricky..",
+  "secondLabel" : "// 08-Jun-2017, tatu: With [databind#1648], this gets bit tricky..",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2852,
+  "secondPos" : 2785,
+  "firstEndPos" : 2918,
+  "secondEndPos" : 2851
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First: custom pattern will override things",
+  "secondLabel" : "// First: custom pattern will override things",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2927,
+  "secondPos" : 2860,
+  "firstEndPos" : 2972,
+  "secondEndPos" : 2905
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3233,6 +3321,17 @@
   "firstEndPos" : 3442,
   "secondEndPos" : 3375
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, need one of these changes:",
+  "secondLabel" : "// Otherwise, need one of these changes:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3464,
+  "secondPos" : 3397,
+  "firstEndPos" : 3504,
+  "secondEndPos" : 3437
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3837,6 +3936,17 @@
   "secondPos" : 3748,
   "firstEndPos" : 3828,
   "secondEndPos" : 3761
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Jackson's own `StdDateFormat` is quite easy to deal with...",
+  "secondLabel" : "// Jackson's own `StdDateFormat` is quite easy to deal with...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3840,
+  "secondPos" : 3773,
+  "firstEndPos" : 3902,
+  "secondEndPos" : 3835
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4487,6 +4597,39 @@
   "firstEndPos" : 4274,
   "secondEndPos" : 4207
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 08-Jun-2017, tatu: Unfortunately there's no generally usable",
+  "secondLabel" : "// 08-Jun-2017, tatu: Unfortunately there's no generally usable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4296,
+  "secondPos" : 4229,
+  "firstEndPos" : 4359,
+  "secondEndPos" : 4292
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    mechanism for changing `DateFormat` instances (or even clone()ing)",
+  "secondLabel" : "//    mechanism for changing `DateFormat` instances (or even clone()ing)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4368,
+  "secondPos" : 4301,
+  "firstEndPos" : 4440,
+  "secondEndPos" : 4373
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    So: require it be `SimpleDateFormat`; can't config other types",
+  "secondLabel" : "//    So: require it be `SimpleDateFormat`; can't config other types",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4449,
+  "secondPos" : 4382,
+  "firstEndPos" : 4517,
+  "secondEndPos" : 4450
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4948,6 +5091,17 @@
   "secondPos" : 4788,
   "firstEndPos" : 5027,
   "secondEndPos" : 4960
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ugh. No way to change `Locale`, create copy; must re-crete completely:",
+  "secondLabel" : "// Ugh. No way to change `Locale`, create copy; must re-crete completely:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4869,
+  "secondPos" : 4802,
+  "firstEndPos" : 4942,
+  "secondEndPos" : 4875
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5763,6 +5917,17 @@
   "firstEndPos" : 5331,
   "secondEndPos" : 5264
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5345,
+  "secondPos" : 5278,
+  "firstEndPos" : 5500,
+  "secondEndPos" : 5433
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -5927,6 +6092,39 @@
   "secondPos" : 5517,
   "firstEndPos" : 5813,
   "secondEndPos" : 5746
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 09-Mar-2017, tatu: as per [databind#1550] timestamp 0 is NOT \"empty\"; but",
+  "secondLabel" : "// 09-Mar-2017, tatu: as per [databind#1550] timestamp 0 is NOT \"empty\"; but",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5594,
+  "secondPos" : 5527,
+  "firstEndPos" : 5670,
+  "secondEndPos" : 5603
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   with versions up to 2.8.x this was the case. Fixed for 2.9.",
+  "secondLabel" : "//   with versions up to 2.8.x this was the case. Fixed for 2.9.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5679,
+  "secondPos" : 5612,
+  "firstEndPos" : 5743,
+  "secondEndPos" : 5676
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//        return _timestamp(value) == 0L;",
+  "secondLabel" : "//        return _timestamp(value) == 0L;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5744,
+  "secondPos" : 5677,
+  "firstEndPos" : 5785,
+  "secondEndPos" : 5718
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -6224,6 +6422,17 @@
   "secondPos" : 5889,
   "firstEndPos" : 6115,
   "secondEndPos" : 6048
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//todo: (ryan) add a format for the date in the schema?",
+  "secondLabel" : "//todo: (ryan) add a format for the date in the schema?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5966,
+  "secondPos" : 5899,
+  "firstEndPos" : 6021,
+  "secondEndPos" : 5954
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -6687,6 +6896,17 @@
   "firstEndPos" : 6342,
   "secondEndPos" : 6275
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Actual serialization\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Actual serialization\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6359,
+  "secondPos" : 6292,
+  "firstEndPos" : 6525,
+  "secondEndPos" : 6458
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6917,6 +7137,17 @@
   "secondPos" : 6584,
   "firstEndPos" : 6662,
   "secondEndPos" : 6595
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6669,
+  "secondPos" : 6602,
+  "firstEndPos" : 6829,
+  "secondEndPos" : 6762
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7346,6 +7577,17 @@
   "secondPos" : 7058,
   "firstEndPos" : 7171,
   "secondEndPos" : 7104
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 12-Jun-2014, tatu: Is it legal not to have provider? Was NPE:ing earlier so leave a check",
+  "secondLabel" : "// 12-Jun-2014, tatu: Is it legal not to have provider? Was NPE:ing earlier so leave a check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7200,
+  "secondPos" : 7133,
+  "firstEndPos" : 7292,
+  "secondEndPos" : 7225
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -7941,6 +8183,17 @@
   "firstEndPos" : 7879,
   "secondEndPos" : 7812
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7869,
+  "secondPos" : 7802,
+  "firstEndPos" : 7875,
+  "secondEndPos" : 7808
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.9",
@@ -8314,6 +8567,72 @@
   "secondPos" : 8049,
   "firstEndPos" : 8123,
   "secondEndPos" : 8056
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 19-Jul-2017, tatu: Here we will try a simple but (hopefully) effective mechanism for",
+  "secondLabel" : "// 19-Jul-2017, tatu: Here we will try a simple but (hopefully) effective mechanism for",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8143,
+  "secondPos" : 8076,
+  "firstEndPos" : 8230,
+  "secondEndPos" : 8163
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    reusing formatter instance. This is our second attempt, after initially trying simple",
+  "secondLabel" : "//    reusing formatter instance. This is our second attempt, after initially trying simple",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8239,
+  "secondPos" : 8172,
+  "firstEndPos" : 8330,
+  "secondEndPos" : 8263
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    synchronization (which turned out to be bottleneck for some users in production...).",
+  "secondLabel" : "//    synchronization (which turned out to be bottleneck for some users in production...).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8339,
+  "secondPos" : 8272,
+  "firstEndPos" : 8429,
+  "secondEndPos" : 8362
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    While `ThreadLocal` could alternatively be used, it is likely that it would lead to",
+  "secondLabel" : "//    While `ThreadLocal` could alternatively be used, it is likely that it would lead to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8438,
+  "secondPos" : 8371,
+  "firstEndPos" : 8527,
+  "secondEndPos" : 8460
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    higher memory footprint, but without much upside -- if we can not reuse, we'll just",
+  "secondLabel" : "//    higher memory footprint, but without much upside -- if we can not reuse, we'll just",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8536,
+  "secondPos" : 8469,
+  "firstEndPos" : 8625,
+  "secondEndPos" : 8558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    clone(), which has some overhead but not drastic one.",
+  "secondLabel" : "//    clone(), which has some overhead but not drastic one.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8634,
+  "secondPos" : 8567,
+  "firstEndPos" : 8693,
+  "secondEndPos" : 8626
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

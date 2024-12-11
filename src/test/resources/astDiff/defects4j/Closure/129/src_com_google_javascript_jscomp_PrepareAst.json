@@ -10,6 +10,17 @@
   "firstEndPos" : 6509,
   "secondEndPos" : 6587
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -218,6 +229,17 @@
   "secondPos" : 1156,
   "firstEndPos" : 1195,
   "secondEndPos" : 1195
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1156,
+  "secondPos" : 1156,
+  "firstEndPos" : 1163,
+  "secondEndPos" : 1163
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1231,6 +1253,50 @@
   "firstEndPos" : 2281,
   "secondEndPos" : 2281
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't perform \"PrepareAnnotations\" when doing checks as",
+  "secondLabel" : "// Don't perform \"PrepareAnnotations\" when doing checks as",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1803,
+  "secondPos" : 1803,
+  "firstEndPos" : 1861,
+  "secondEndPos" : 1861
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// they currently aren't valid during sanity checks.  In particular,",
+  "secondLabel" : "// they currently aren't valid during sanity checks.  In particular,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1868,
+  "secondPos" : 1868,
+  "firstEndPos" : 1936,
+  "secondEndPos" : 1936
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// they DIRECT_EVAL shouldn't be applied after inlining has been",
+  "secondLabel" : "// they DIRECT_EVAL shouldn't be applied after inlining has been",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1943,
+  "secondPos" : 1943,
+  "firstEndPos" : 2007,
+  "secondEndPos" : 2007
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// performed.",
+  "secondLabel" : "// performed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2014,
+  "secondPos" : 2014,
+  "firstEndPos" : 2027,
+  "secondEndPos" : 2027
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2033,6 +2099,28 @@
   "secondPos" : 2529,
   "firstEndPos" : 2762,
   "secondEndPos" : 2762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This pass is run during the CompilerTestCase validation, so this",
+  "secondLabel" : "// This pass is run during the CompilerTestCase validation, so this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2537,
+  "secondPos" : 2537,
+  "firstEndPos" : 2604,
+  "secondEndPos" : 2604
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parent pointer check serves as a more general check.",
+  "secondLabel" : "// parent pointer check serves as a more general check.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2611,
+  "secondPos" : 2611,
+  "firstEndPos" : 2666,
+  "secondEndPos" : 2666
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5444,6 +5532,28 @@
   "firstEndPos" : 4740,
   "secondEndPos" : 4740
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Keep track of of the \"this\" context of a call.  A call without an",
+  "secondLabel" : "// Keep track of of the \"this\" context of a call.  A call without an",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4752,
+  "secondPos" : 4752,
+  "firstEndPos" : 4820,
+  "secondEndPos" : 4820
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// explicit \"this\" is a free call.",
+  "secondLabel" : "// explicit \"this\" is a free call.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4827,
+  "secondPos" : 4827,
+  "firstEndPos" : 4861,
+  "secondEndPos" : 4861
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5542,6 +5652,17 @@
   "secondPos" : 4883,
   "firstEndPos" : 4896,
   "secondEndPos" : 4896
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore cast nodes.",
+  "secondLabel" : "// ignore cast nodes.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4907,
+  "secondPos" : 4907,
+  "firstEndPos" : 4928,
+  "secondEndPos" : 4928
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5740,6 +5861,28 @@
   "secondPos" : 5085,
   "firstEndPos" : 5011,
   "secondEndPos" : 5089
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Keep track of the context in which eval is called. It is important",
+  "secondLabel" : "// Keep track of the context in which eval is called. It is important",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5029,
+  "secondPos" : 5107,
+  "firstEndPos" : 5098,
+  "secondEndPos" : 5176
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to distinguish between \"(0, eval)()\" and \"eval()\".",
+  "secondLabel" : "// to distinguish between \"(0, eval)()\" and \"eval()\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5105,
+  "secondPos" : 5183,
+  "firstEndPos" : 5158,
+  "secondEndPos" : 5236
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

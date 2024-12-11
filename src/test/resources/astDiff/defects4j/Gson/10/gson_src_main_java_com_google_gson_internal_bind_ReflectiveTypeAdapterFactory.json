@@ -10,6 +10,17 @@
   "firstEndPos" : 9274,
   "secondEndPos" : 9311
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -3948,6 +3959,17 @@
   "firstEndPos" : 3485,
   "secondEndPos" : 3485
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it's a primitive!",
+  "secondLabel" : "// it's a primitive!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3487,
+  "secondPos" : 3487,
+  "firstEndPos" : 3507,
+  "secondEndPos" : 3507
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4783,6 +4805,17 @@
   "secondPos" : 3941,
   "firstEndPos" : 3951,
   "secondEndPos" : 3951
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// special casing primitives here saves ~5% on Android...",
+  "secondLabel" : "// special casing primitives here saves ~5% on Android...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3960,
+  "secondPos" : 3960,
+  "firstEndPos" : 4017,
+  "secondEndPos" : 4017
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5718,6 +5751,17 @@
   "secondPos" : 4536,
   "firstEndPos" : 4546,
   "secondEndPos" : 4546
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the type adapter and field type always agree",
+  "secondLabel" : "// the type adapter and field type always agree",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4549,
+  "secondPos" : 4549,
+  "firstEndPos" : 4596,
+  "secondEndPos" : 4596
 }, {
   "firstType" : "MarkerAnnotation",
   "secondType" : "MarkerAnnotation",
@@ -7203,6 +7247,17 @@
   "secondPos" : 5443,
   "firstEndPos" : 5411,
   "secondEndPos" : 5448
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// avoid recursion for example for Throwable.cause",
+  "secondLabel" : "// avoid recursion for example for Throwable.cause",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5413,
+  "secondPos" : 5450,
+  "firstEndPos" : 5463,
+  "secondEndPos" : 5500
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -9392,6 +9447,17 @@
   "secondPos" : 6445,
   "firstEndPos" : 6413,
   "secondEndPos" : 6450
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// only serialize the default name",
+  "secondLabel" : "// only serialize the default name",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6415,
+  "secondPos" : 6452,
+  "firstEndPos" : 6449,
+  "secondEndPos" : 6486
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

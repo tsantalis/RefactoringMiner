@@ -10,6 +10,17 @@
   "firstEndPos" : 8486,
   "secondEndPos" : 8439
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2007 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2007 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -461,6 +472,17 @@
   "firstEndPos" : 1681,
   "secondEndPos" : 1681
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1663,
+  "secondPos" : 1663,
+  "firstEndPos" : 1668,
+  "secondEndPos" : 1668
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " goog.isDef",
@@ -581,6 +603,17 @@
   "secondPos" : 1803,
   "firstEndPos" : 1823,
   "secondEndPos" : 1823
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1803,
+  "secondPos" : 1803,
+  "firstEndPos" : 1808,
+  "secondEndPos" : 1808
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -878,6 +911,28 @@
   "secondPos" : 2020,
   "firstEndPos" : 2193,
   "secondEndPos" : 2193
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ideally, we would like to return any subtype of Array.",
+  "secondLabel" : "// Ideally, we would like to return any subtype of Array.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2032,
+  "secondPos" : 2032,
+  "firstEndPos" : 2089,
+  "secondEndPos" : 2089
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since that's not possible, we don't restrict the type.",
+  "secondLabel" : "// Since that's not possible, we don't restrict the type.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2100,
+  "secondPos" : 2100,
+  "firstEndPos" : 2157,
+  "secondEndPos" : 2157
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -1296,6 +1351,17 @@
   "secondPos" : 2428,
   "firstEndPos" : 2448,
   "secondEndPos" : 2448
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2428,
+  "secondPos" : 2428,
+  "firstEndPos" : 2433,
+  "secondEndPos" : 2433
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1792,6 +1858,17 @@
   "firstEndPos" : 2788,
   "secondEndPos" : 2788
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2767,
+  "secondPos" : 2767,
+  "firstEndPos" : 2772,
+  "secondEndPos" : 2772
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " goog.isObject",
@@ -1835,6 +1912,17 @@
   "secondPos" : 2841,
   "firstEndPos" : 2853,
   "secondEndPos" : 2853
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2841,
+  "secondPos" : 2841,
+  "firstEndPos" : 2846,
+  "secondEndPos" : 2846
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2550,6 +2638,17 @@
   "secondPos" : 3348,
   "firstEndPos" : 3369,
   "secondEndPos" : 3369
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3348,
+  "secondPos" : 3348,
+  "firstEndPos" : 3353,
+  "secondEndPos" : 3353
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3287,6 +3386,17 @@
   "secondPos" : 3865,
   "firstEndPos" : 3906,
   "secondEndPos" : 3906
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3865,
+  "secondPos" : 3865,
+  "firstEndPos" : 3870,
+  "secondEndPos" : 3870
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -9723,6 +9833,17 @@
   "firstEndPos" : 8250,
   "secondEndPos" : 8203
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// restricting",
+  "secondLabel" : "// restricting",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7933,
+  "secondPos" : 7886,
+  "firstEndPos" : 7947,
+  "secondEndPos" : 7900
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9876,6 +9997,17 @@
   "secondPos" : 7956,
   "firstEndPos" : 8010,
   "secondEndPos" : 7963
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// changing the scope",
+  "secondLabel" : "// changing the scope",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8019,
+  "secondPos" : 7972,
+  "firstEndPos" : 8040,
+  "secondEndPos" : 7993
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

@@ -3915,6 +3915,17 @@
   "firstEndPos" : 2199,
   "secondEndPos" : 2203
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// &(#(x|X)?([0-9a-fA-F]+)|[a-zA-Z]\\\\d*);?",
+  "secondLabel" : "// &(#(x|X)?([0-9a-fA-F]+)|[a-zA-Z]\\\\d*);?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2202,
+  "secondPos" : 2206,
+  "firstEndPos" : 2244,
+  "secondEndPos" : 2248
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4046,6 +4057,28 @@
   "secondPos" : 2302,
   "firstEndPos" : 2304,
   "secondEndPos" : 2308
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pity matcher can't use stringbuilder, avoid syncs",
+  "secondLabel" : "// pity matcher can't use stringbuilder, avoid syncs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2309,
+  "secondPos" : 2313,
+  "firstEndPos" : 2361,
+  "secondEndPos" : 2365
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo: replace m.appendReplacement with own impl, so StringBuilder and quoteReplacement not required",
+  "secondLabel" : "// todo: replace m.appendReplacement with own impl, so StringBuilder and quoteReplacement not required",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2370,
+  "secondPos" : 2374,
+  "firstEndPos" : 2472,
+  "secondEndPos" : 2476
 }, {
   "firstType" : "WhileStatement",
   "secondType" : "WhileStatement",
@@ -4575,6 +4608,17 @@
   "firstEndPos" : 2680,
   "secondEndPos" : 2684
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2 is hex indicator",
+  "secondLabel" : "// 2 is hex indicator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2682,
+  "secondPos" : 2686,
+  "firstEndPos" : 2703,
+  "secondEndPos" : 2707
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4761,6 +4805,17 @@
   "secondPos" : 2816,
   "firstEndPos" : 2831,
   "secondEndPos" : 2835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip",
+  "secondLabel" : "// skip",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2832,
+  "secondPos" : 2836,
+  "firstEndPos" : 2839,
+  "secondEndPos" : 2843
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -5234,6 +5289,17 @@
   "secondPos" : 3063,
   "firstEndPos" : 3226,
   "secondEndPos" : 3230
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// out of range",
+  "secondLabel" : "// out of range",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3061,
+  "secondPos" : 3065,
+  "firstEndPos" : 3076,
+  "secondEndPos" : 3080
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5730,6 +5796,17 @@
   "firstEndPos" : 3311,
   "secondEndPos" : 3315
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// replace with original string",
+  "secondLabel" : "// replace with original string",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3316,
+  "secondPos" : 3320,
+  "firstEndPos" : 3347,
+  "secondEndPos" : 3351
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5861,6 +5938,17 @@
   "secondPos" : 3426,
   "firstEndPos" : 3430,
   "secondEndPos" : 3434
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// xhtml has restricted entities",
+  "secondLabel" : "// xhtml has restricted entities",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3445,
+  "secondPos" : 3449,
+  "firstEndPos" : 3477,
+  "secondEndPos" : 3481
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -6158,6 +6246,28 @@
   "secondPos" : 3673,
   "firstEndPos" : 3676,
   "secondEndPos" : 3680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// most common, base entities can be unescaped without trailing ;",
+  "secondLabel" : "// most common, base entities can be unescaped without trailing ;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3690,
+  "secondPos" : 3694,
+  "firstEndPos" : 3755,
+  "secondEndPos" : 3759
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// e.g. &amp",
+  "secondLabel" : "// e.g. &amp",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3760,
+  "secondPos" : 3764,
+  "firstEndPos" : 3772,
+  "secondEndPos" : 3776
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -9788,6 +9898,28 @@
   "secondPos" : 7191,
   "firstEndPos" : 7194,
   "secondEndPos" : 7198
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in most situations, will be better to use UTF8 and use the character directly, or use the numerical escape.",
+  "secondLabel" : "// in most situations, will be better to use UTF8 and use the character directly, or use the numerical escape.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7208,
+  "secondPos" : 7212,
+  "firstEndPos" : 7318,
+  "secondEndPos" : 7322
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// are people really likely to remember \"&CounterClockwiseContourIntegral;\"? good grief.",
+  "secondLabel" : "// are people really likely to remember \"&CounterClockwiseContourIntegral;\"? good grief.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7323,
+  "secondPos" : 7327,
+  "firstEndPos" : 7411,
+  "secondEndPos" : 7415
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",

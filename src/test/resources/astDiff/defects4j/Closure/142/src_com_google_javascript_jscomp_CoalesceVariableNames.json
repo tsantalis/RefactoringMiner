@@ -10,6 +10,17 @@
   "firstEndPos" : 15779,
   "secondEndPos" : 15906
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -670,6 +681,17 @@
   "firstEndPos" : 2355,
   "secondEndPos" : 2355
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2326,
+  "secondPos" : 2326,
+  "firstEndPos" : 2331,
+  "secondEndPos" : 2331
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "LiveVariablesAnalysis",
@@ -713,6 +735,17 @@
   "secondPos" : 2425,
   "firstEndPos" : 2446,
   "secondEndPos" : 2446
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2425,
+  "secondPos" : 2425,
+  "firstEndPos" : 2430,
+  "secondEndPos" : 2430
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1572,6 +1605,17 @@
   "firstEndPos" : 3083,
   "secondEndPos" : 3083
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2962,
+  "secondPos" : 2962,
+  "firstEndPos" : 2968,
+  "secondEndPos" : 2968
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "usePseudoNames",
@@ -2331,6 +2375,50 @@
   "firstEndPos" : 4587,
   "secondEndPos" : 4714
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(user): We CAN do this in the global scope, just need to be",
+  "secondLabel" : "// TODO(user): We CAN do this in the global scope, just need to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3459,
+  "secondPos" : 3459,
+  "firstEndPos" : 3525,
+  "secondEndPos" : 3525
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// careful when something is exported. Liveness uses bit-vector for live",
+  "secondLabel" : "// careful when something is exported. Liveness uses bit-vector for live",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3530,
+  "secondPos" : 3530,
+  "firstEndPos" : 3602,
+  "secondEndPos" : 3602
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sets so I don't see compilation time will be a problem for running this",
+  "secondLabel" : "// sets so I don't see compilation time will be a problem for running this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3607,
+  "secondPos" : 3607,
+  "firstEndPos" : 3681,
+  "secondEndPos" : 3681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pass in the global scope.",
+  "secondLabel" : "// pass in the global scope.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3686,
+  "secondPos" : 3686,
+  "firstEndPos" : 3714,
+  "secondEndPos" : 3714
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2759,6 +2847,50 @@
   "secondPos" : 3937,
   "firstEndPos" : 3945,
   "secondEndPos" : 3945
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the function has exactly 2 params, mark them as escaped. This is",
+  "secondLabel" : "// If the function has exactly 2 params, mark them as escaped. This is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3952,
+  "secondPos" : 3952,
+  "firstEndPos" : 4022,
+  "secondEndPos" : 4022
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a work-around for an IE bug where it throws an exception if you",
+  "secondLabel" : "// a work-around for an IE bug where it throws an exception if you",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4027,
+  "secondPos" : 4027,
+  "firstEndPos" : 4093,
+  "secondEndPos" : 4093
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// write to the parameters of the callback in a sort(). See:",
+  "secondLabel" : "// write to the parameters of the callback in a sort(). See:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4098,
+  "secondPos" : 4098,
+  "firstEndPos" : 4158,
+  "secondEndPos" : 4158
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// http://code.google.com/p/closure-compiler/issues/detail?id=58",
+  "secondLabel" : "// http://code.google.com/p/closure-compiler/issues/detail?id=58",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4163,
+  "secondPos" : 4163,
+  "firstEndPos" : 4227,
+  "secondEndPos" : 4227
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4080,6 +4212,17 @@
   "firstEndPos" : 4942,
   "secondEndPos" : 5069
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Don't rename named functions.",
+  "secondLabel" : "// Don't rename named functions.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4890,
+  "secondPos" : 5017,
+  "firstEndPos" : 4922,
+  "secondEndPos" : 5049
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4575,6 +4718,17 @@
   "firstEndPos" : 5139,
   "secondEndPos" : 5266
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is not a local.",
+  "secondLabel" : "// This is not a local.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5096,
+  "secondPos" : 5223,
+  "firstEndPos" : 5119,
+  "secondEndPos" : 5246
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4916,6 +5070,17 @@
   "firstEndPos" : 5366,
   "secondEndPos" : 5493
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The coalesced name is itself, nothing to do.",
+  "secondLabel" : "// The coalesced name is itself, nothing to do.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5295,
+  "secondPos" : 5422,
+  "firstEndPos" : 5342,
+  "secondEndPos" : 5469
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4926,6 +5091,17 @@
   "secondPos" : 5478,
   "firstEndPos" : 5358,
   "secondEndPos" : 5485
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Rename.",
+  "secondLabel" : "// Rename.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5374,
+  "secondPos" : 5501,
+  "firstEndPos" : 5384,
+  "secondEndPos" : 5511
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5212,6 +5388,39 @@
   "secondPos" : 5674,
   "firstEndPos" : 6695,
   "secondEndPos" : 6822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This code block is slow but since usePseudoName is for debugging,",
+  "secondLabel" : "// This code block is slow but since usePseudoName is for debugging,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5555,
+  "secondPos" : 5682,
+  "firstEndPos" : 5623,
+  "secondEndPos" : 5750
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we should not sacrifice performance for non-debugging compilation to",
+  "secondLabel" : "// we should not sacrifice performance for non-debugging compilation to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5630,
+  "secondPos" : 5757,
+  "firstEndPos" : 5701,
+  "secondEndPos" : 5828
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make this fast.",
+  "secondLabel" : "// make this fast.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5708,
+  "secondPos" : 5835,
+  "firstEndPos" : 5726,
+  "secondEndPos" : 5853
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5741,6 +5950,28 @@
   "firstEndPos" : 5907,
   "secondEndPos" : 6034
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Look for all the variables that can be merged (in the graph by now)",
+  "secondLabel" : "// Look for all the variables that can be merged (in the graph by now)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5920,
+  "secondPos" : 6047,
+  "firstEndPos" : 5990,
+  "secondEndPos" : 6117
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and it is merged with the current coalscedVar.",
+  "secondLabel" : "// and it is merged with the current coalscedVar.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5999,
+  "secondPos" : 6126,
+  "firstEndPos" : 6048,
+  "secondEndPos" : 6175
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6180,6 +6411,17 @@
   "secondPos" : 6351,
   "firstEndPos" : 6233,
   "secondEndPos" : 6360
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Keep its original name.",
+  "secondLabel" : "// Keep its original name.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6261,
+  "secondPos" : 6388,
+  "firstEndPos" : 6287,
+  "secondEndPos" : 6414
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7677,6 +7919,17 @@
   "firstEndPos" : 6963,
   "secondEndPos" : 7090
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First create a node for each non-escaped variable.",
+  "secondLabel" : "// First create a node for each non-escaped variable.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6972,
+  "secondPos" : 7099,
+  "firstEndPos" : 7025,
+  "secondEndPos" : 7152
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -8084,6 +8337,72 @@
   "firstEndPos" : 7674,
   "secondEndPos" : 7801
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(user): In theory, we CAN coalesce function names just like",
+  "secondLabel" : "// TODO(user): In theory, we CAN coalesce function names just like",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7153,
+  "secondPos" : 7280,
+  "firstEndPos" : 7219,
+  "secondEndPos" : 7346
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// any variables. Our Liveness analysis captures this just like it as",
+  "secondLabel" : "// any variables. Our Liveness analysis captures this just like it as",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7228,
+  "secondPos" : 7355,
+  "firstEndPos" : 7297,
+  "secondEndPos" : 7424
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// described in the specification. However, we saw some zipped and",
+  "secondLabel" : "// described in the specification. However, we saw some zipped and",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7306,
+  "secondPos" : 7433,
+  "firstEndPos" : 7372,
+  "secondEndPos" : 7499
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and unzipped size increase after this. We are not totally sure why",
+  "secondLabel" : "// and unzipped size increase after this. We are not totally sure why",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7381,
+  "secondPos" : 7508,
+  "firstEndPos" : 7450,
+  "secondEndPos" : 7577
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that is but, for now, we will respect the dead functions and not play",
+  "secondLabel" : "// that is but, for now, we will respect the dead functions and not play",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7459,
+  "secondPos" : 7586,
+  "firstEndPos" : 7531,
+  "secondEndPos" : 7658
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// around with it.",
+  "secondLabel" : "// around with it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7540,
+  "secondPos" : 7667,
+  "firstEndPos" : 7558,
+  "secondEndPos" : 7685
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8303,6 +8622,28 @@
   "secondPos" : 7780,
   "firstEndPos" : 7654,
   "secondEndPos" : 7781
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Go through every single point of the program and look at each variable",
+  "secondLabel" : "// Go through every single point of the program and look at each variable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7686,
+  "secondPos" : 7813,
+  "firstEndPos" : 7759,
+  "secondEndPos" : 7886
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pairs. If they are both live at the same time, at an edge between them.",
+  "secondLabel" : "// pairs. If they are both live at the same time, at an edge between them.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7764,
+  "secondPos" : 7891,
+  "firstEndPos" : 7838,
+  "secondEndPos" : 7965
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -9866,6 +10207,28 @@
   "firstEndPos" : 8724,
   "secondEndPos" : 8851
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Skip nodes that were not added. They are globals and escaped",
+  "secondLabel" : "// Skip nodes that were not added. They are globals and escaped",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8561,
+  "secondPos" : 8688,
+  "firstEndPos" : 8624,
+  "secondEndPos" : 8751
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// locals. Also avoid merging a variable with itself.",
+  "secondLabel" : "// locals. Also avoid merging a variable with itself.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8637,
+  "secondPos" : 8764,
+  "firstEndPos" : 8690,
+  "secondEndPos" : 8817
+}, {
   "firstType" : "ContinueStatement",
   "secondType" : "ContinueStatement",
   "firstLabel" : "",
@@ -10162,6 +10525,17 @@
   "secondPos" : 8962,
   "firstEndPos" : 8837,
   "secondEndPos" : 8964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Finally, check the live states and add edge when possible.",
+  "secondLabel" : "// Finally, check the live states and add edge when possible.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8850,
+  "secondPos" : 8977,
+  "firstEndPos" : 8911,
+  "secondEndPos" : 9038
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11373,6 +11747,17 @@
   "firstEndPos" : 9581,
   "secondEndPos" : 9708
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do the collected live range checks.",
+  "secondLabel" : "// Do the collected live range checks.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9622,
+  "secondPos" : 9749,
+  "firstEndPos" : 9660,
+  "secondEndPos" : 9787
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11714,6 +12099,17 @@
   "firstEndPos" : 10047,
   "secondEndPos" : 10174
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10031,
+  "secondPos" : 10158,
+  "firstEndPos" : 10036,
+  "secondEndPos" : 10163
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "def",
@@ -11746,6 +12142,17 @@
   "secondPos" : 10223,
   "firstEndPos" : 10107,
   "secondEndPos" : 10234
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10096,
+  "secondPos" : 10223,
+  "firstEndPos" : 10101,
+  "secondEndPos" : 10228
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -11812,6 +12219,17 @@
   "secondPos" : 10409,
   "firstEndPos" : 10353,
   "secondEndPos" : 10480
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10282,
+  "secondPos" : 10409,
+  "firstEndPos" : 10288,
+  "secondEndPos" : 10415
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13694,6 +14112,17 @@
   "firstEndPos" : 12055,
   "secondEndPos" : 12182
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11971,
+  "secondPos" : 12098,
+  "firstEndPos" : 11978,
+  "secondEndPos" : 12105
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Whether any CombinedLiveRangeChecker would be interested in the",
@@ -15146,6 +15575,17 @@
   "firstEndPos" : 12855,
   "secondEndPos" : 12982
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Special case when we are in FOR-IN loop.",
+  "secondLabel" : "// Special case when we are in FOR-IN loop.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12864,
+  "secondPos" : 12991,
+  "firstEndPos" : 12907,
+  "secondEndPos" : 13034
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15497,6 +15937,17 @@
   "secondPos" : 13179,
   "firstEndPos" : 13703,
   "secondEndPos" : 13830
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The removal is easy when there is only one variable in the VAR node.",
+  "secondLabel" : "// The removal is easy when there is only one variable in the VAR node.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13060,
+  "secondPos" : 13187,
+  "firstEndPos" : 13131,
+  "secondEndPos" : 13258
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15861,6 +16312,17 @@
   "firstEndPos" : 13297,
   "secondEndPos" : 13424
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We don't need to wrapped it with EXPR node if it is within a FOR.",
+  "secondLabel" : "// We don't need to wrapped it with EXPR node if it is within a FOR.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13309,
+  "secondPos" : 13436,
+  "firstEndPos" : 13377,
+  "secondEndPos" : 13504
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16169,6 +16631,28 @@
   "firstEndPos" : 13697,
   "secondEndPos" : 13824
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In a FOR( ; ; ) node, we must replace it with an EMPTY or else it",
+  "secondLabel" : "// In a FOR( ; ; ) node, we must replace it with an EMPTY or else it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13544,
+  "secondPos" : 13671,
+  "firstEndPos" : 13612,
+  "secondEndPos" : 13739
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// becomes a FOR-IN node.",
+  "secondLabel" : "// becomes a FOR-IN node.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13621,
+  "secondPos" : 13748,
+  "firstEndPos" : 13646,
+  "secondEndPos" : 13773
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16432,6 +16916,17 @@
   "secondPos" : 13895,
   "firstEndPos" : 13772,
   "secondEndPos" : 13899
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We are going to leave duplicated declaration otherwise.",
+  "secondLabel" : "// We are going to leave duplicated declaration otherwise.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13789,
+  "secondPos" : 13916,
+  "firstEndPos" : 13847,
+  "secondEndPos" : 13974
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -17169,6 +17664,17 @@
   "secondPos" : 14347,
   "firstEndPos" : 14289,
   "secondEndPos" : 14416
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14220,
+  "secondPos" : 14347,
+  "firstEndPos" : 14227,
+  "secondEndPos" : 14354
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18798,6 +19304,17 @@
   "firstEndPos" : 15039,
   "secondEndPos" : 15166
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In a function declaration, the formal parameters are assigned.",
+  "secondLabel" : "// In a function declaration, the formal parameters are assigned.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14941,
+  "secondPos" : 15068,
+  "firstEndPos" : 15006,
+  "secondEndPos" : 15133
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -18908,6 +19425,28 @@
   "firstEndPos" : 15235,
   "secondEndPos" : 15362
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this is a VAR declaration, if the name node has a child, we are",
+  "secondLabel" : "// If this is a VAR declaration, if the name node has a child, we are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15085,
+  "secondPos" : 15212,
+  "firstEndPos" : 15154,
+  "secondEndPos" : 15281
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// assigning to that name.",
+  "secondLabel" : "// assigning to that name.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15165,
+  "secondPos" : 15292,
+  "firstEndPos" : 15191,
+  "secondEndPos" : 15318
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -18985,6 +19524,17 @@
   "firstEndPos" : 15256,
   "secondEndPos" : 15383
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Definitely a read.",
+  "secondLabel" : "// Definitely a read.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15258,
+  "secondPos" : 15385,
+  "firstEndPos" : 15279,
+  "secondEndPos" : 15406
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -18995,6 +19545,17 @@
   "secondPos" : 15420,
   "firstEndPos" : 15542,
   "secondEndPos" : 15669
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Lastly, any assignmentOP is also an assign.",
+  "secondLabel" : "// Lastly, any assignmentOP is also an assign.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15303,
+  "secondPos" : 15430,
+  "firstEndPos" : 15349,
+  "secondEndPos" : 15476
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

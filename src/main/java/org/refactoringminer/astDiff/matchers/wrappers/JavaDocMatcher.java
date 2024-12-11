@@ -96,9 +96,19 @@ public class JavaDocMatcher extends OptimizationAwareMatcher implements TreeMatc
                                 optimizationData.getSubtreeMappings().addMapping(srcTag, dstTag);
                                 Tree srcTagName = findFirstByType(srcTag, Constants.TAG_NAME);
                                 Tree dstTagName = findFirstByType(dstTag, Constants.TAG_NAME);
-                                if (srcTagName != null && dstTagName != null)
+                                if (srcTagName != null && dstTagName != null) {
                                     if (srcTagName.isIsoStructuralTo(dstTagName))
                                         optimizationData.getSubtreeMappings().addMapping(srcTagName, dstTagName);
+                                }
+                                else if (diff.getCommonTags().size() == 1)  {
+                                    Tree srcTxtElement = findFirstByType(srcTag, Constants.TEXT_ELEMENT);
+                                    Tree dstTextElement = findFirstByType(dstTag, Constants.TEXT_ELEMENT);
+                                    if (srcTxtElement != null && dstTextElement != null) {
+                                        if (srcTxtElement.isIsoStructuralTo(dstTextElement))
+                                            optimizationData.getSubtreeMappings().addMapping(srcTxtElement, dstTextElement);
+                                    }
+                                }
+
                             }
                         }
                     }

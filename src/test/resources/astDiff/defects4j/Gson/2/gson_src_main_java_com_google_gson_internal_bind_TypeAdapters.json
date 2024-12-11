@@ -10,6 +10,17 @@
   "firstEndPos" : 27521,
   "secondEndPos" : 28072
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -5872,6 +5883,17 @@
   "secondPos" : 4675,
   "firstEndPos" : 4797,
   "secondEndPos" : 4797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// support strings for compatibility with GSON 1.7",
+  "secondLabel" : "// support strings for compatibility with GSON 1.7",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4685,
+  "secondPos" : 4685,
+  "firstEndPos" : 4735,
+  "secondEndPos" : 4735
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -17269,6 +17291,17 @@
   "firstEndPos" : 10615,
   "secondEndPos" : 10615
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* coerce booleans to strings for backwards compatibility */",
+  "secondLabel" : "/* coerce booleans to strings for backwards compatibility */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10631,
+  "secondPos" : 10631,
+  "firstEndPos" : 10691,
+  "secondEndPos" : 10691
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -25530,6 +25563,17 @@
   "firstEndPos" : 14889,
   "secondEndPos" : 14889
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// regrettably, this should have included both the host name and the host address",
+  "secondLabel" : "// regrettably, this should have included both the host name and the host address",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14905,
+  "secondPos" : 14905,
+  "firstEndPos" : 14986,
+  "secondEndPos" : 14986
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -27509,6 +27553,17 @@
   "secondPos" : 15993,
   "firstEndPos" : 16004,
   "secondEndPos" : 16004
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "secondLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 16006,
+  "secondPos" : 16006,
+  "firstEndPos" : 16059,
+  "secondEndPos" : 16059
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -43757,6 +43812,17 @@
   "firstEndPos" : 24181,
   "secondEndPos" : 24181
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// handle anonymous subclasses",
+  "secondLabel" : "// handle anonymous subclasses",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24185,
+  "secondPos" : 24185,
+  "firstEndPos" : 24215,
+  "secondEndPos" : 24215
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -44251,6 +44317,17 @@
   "secondPos" : 24479,
   "firstEndPos" : 24490,
   "secondEndPos" : 24490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "secondLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 24492,
+  "secondPos" : 24492,
+  "firstEndPos" : 24545,
+  "secondEndPos" : 24545
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -45032,6 +45109,17 @@
   "secondPos" : 24898,
   "firstEndPos" : 24909,
   "secondEndPos" : 24909
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "secondLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 24911,
+  "secondPos" : 24911,
+  "firstEndPos" : 24964,
+  "secondEndPos" : 24964
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -46132,6 +46220,17 @@
   "secondPos" : 25493,
   "firstEndPos" : 25504,
   "secondEndPos" : 25504
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "secondLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 25506,
+  "secondPos" : 25506,
+  "firstEndPos" : 25559,
+  "secondEndPos" : 25559
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -47486,6 +47585,17 @@
   "firstEndPos" : 26227,
   "secondEndPos" : 26227
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "secondLabel" : "// we use a runtime check to make sure the 'T's equal",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 26229,
+  "secondPos" : 26229,
+  "firstEndPos" : 26282,
+  "secondEndPos" : 26282
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -48409,6 +48519,17 @@
   "secondPos" : 26745,
   "firstEndPos" : 26764,
   "secondEndPos" : 26764
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 26745,
+  "secondPos" : 26745,
+  "firstEndPos" : 26750,
+  "secondEndPos" : 26750
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

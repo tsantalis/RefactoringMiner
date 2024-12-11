@@ -208,6 +208,17 @@
   "firstEndPos" : 446,
   "secondEndPos" : 446
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 422,
+  "secondPos" : 422,
+  "firstEndPos" : 427,
+  "secondEndPos" : 427
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "JsonIdentityInfo",
@@ -813,6 +824,17 @@
   "firstEndPos" : 809,
   "secondEndPos" : 809
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 797,
+  "secondPos" : 797,
+  "firstEndPos" : 803,
+  "secondEndPos" : 803
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.8.9",
@@ -1264,6 +1286,17 @@
   "firstEndPos" : 1054,
   "secondEndPos" : 1173
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.4",
+  "secondLabel" : "// since 2.4",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1055,
+  "secondPos" : 1174,
+  "firstEndPos" : 1067,
+  "secondEndPos" : 1186
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -1604,6 +1637,17 @@
   "secondPos" : 1346,
   "firstEndPos" : 1237,
   "secondEndPos" : 1356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.3",
+  "secondLabel" : "// since 2.3",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1238,
+  "secondPos" : 1357,
+  "firstEndPos" : 1250,
+  "secondEndPos" : 1369
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",

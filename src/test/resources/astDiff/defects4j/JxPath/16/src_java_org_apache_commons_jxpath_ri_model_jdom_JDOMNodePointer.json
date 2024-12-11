@@ -10,6 +10,17 @@
   "firstEndPos" : 25726,
   "secondEndPos" : 25675
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -615,6 +626,17 @@
   "firstEndPos" : 1952,
   "secondEndPos" : 1952
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1928,
+  "secondPos" : 1928,
+  "firstEndPos" : 1935,
+  "secondEndPos" : 1935
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -636,6 +658,17 @@
   "secondPos" : 1956,
   "firstEndPos" : 1982,
   "secondEndPos" : 1982
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1956,
+  "secondPos" : 1956,
+  "firstEndPos" : 1964,
+  "secondEndPos" : 1964
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3551,6 +3584,17 @@
   "secondPos" : 3754,
   "firstEndPos" : 3758,
   "secondEndPos" : 3758
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* (non-Javadoc)\n     * @see org.apache.commons.jxpath.ri.model.NodePointer#getNamespaceResolver()\n     */",
+  "secondLabel" : "/* (non-Javadoc)\n     * @see org.apache.commons.jxpath.ri.model.NodePointer#getNamespaceResolver()\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3771,
+  "secondPos" : 3771,
+  "firstEndPos" : 3877,
+  "secondEndPos" : 3877
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -6632,6 +6676,17 @@
   "firstEndPos" : 5736,
   "secondEndPos" : 5736
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should not happen",
+  "secondLabel" : "// Should not happen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5738,
+  "secondPos" : 5738,
+  "firstEndPos" : 5758,
+  "secondEndPos" : 5758
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7589,6 +7644,17 @@
   "firstEndPos" : 6423,
   "secondEndPos" : 6423
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6357,
+  "secondPos" : 6357,
+  "firstEndPos" : 6361,
+  "secondEndPos" : 6361
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -8424,6 +8490,17 @@
   "secondPos" : 6911,
   "firstEndPos" : 6972,
   "secondEndPos" : 6972
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6911,
+  "secondPos" : 6911,
+  "firstEndPos" : 6915,
+  "secondEndPos" : 6915
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -9480,6 +9557,17 @@
   "secondPos" : 7485,
   "firstEndPos" : 7546,
   "secondEndPos" : 7546
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7485,
+  "secondPos" : 7485,
+  "firstEndPos" : 7489,
+  "secondEndPos" : 7489
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -29467,6 +29555,39 @@
   "secondPos" : 19349,
   "firstEndPos" : 20869,
   "secondEndPos" : 20818
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the parent pointer is not a JDOMNodePointer, it is",
+  "secondLabel" : "// If the parent pointer is not a JDOMNodePointer, it is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19414,
+  "secondPos" : 19363,
+  "firstEndPos" : 19470,
+  "secondEndPos" : 19419
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the parent's responsibility to produce the node test part",
+  "secondLabel" : "// the parent's responsibility to produce the node test part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19483,
+  "secondPos" : 19432,
+  "firstEndPos" : 19543,
+  "secondEndPos" : 19492
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// of the path",
+  "secondLabel" : "// of the path",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19556,
+  "secondPos" : 19505,
+  "firstEndPos" : 19570,
+  "secondEndPos" : 19519
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

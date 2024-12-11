@@ -10,6 +10,17 @@
   "firstEndPos" : 9441,
   "secondEndPos" : 9472
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -703,6 +714,17 @@
   "firstEndPos" : 2808,
   "secondEndPos" : 2808
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2798,
+  "secondPos" : 2798,
+  "firstEndPos" : 2804,
+  "secondEndPos" : 2804
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 1.6",
@@ -724,6 +746,17 @@
   "secondPos" : 2812,
   "firstEndPos" : 2825,
   "secondEndPos" : 2825
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2812,
+  "secondPos" : 2812,
+  "firstEndPos" : 2820,
+  "secondEndPos" : 2820
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -768,6 +801,83 @@
   "secondPos" : 2843,
   "firstEndPos" : 2847,
   "secondEndPos" : 2847
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Implementation note: This class is divided into two sections. The first part is a static factory interface that",
+  "secondLabel" : "// Implementation note: This class is divided into two sections. The first part is a static factory interface that",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2854,
+  "secondPos" : 2854,
+  "firstEndPos" : 2968,
+  "secondEndPos" : 2968
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// exposes the LANGUAGE_RULES_RN resource as a Lang instance. The second part is the Lang instance methods that",
+  "secondLabel" : "// exposes the LANGUAGE_RULES_RN resource as a Lang instance. The second part is the Lang instance methods that",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2973,
+  "secondPos" : 2973,
+  "firstEndPos" : 3084,
+  "secondEndPos" : 3084
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// encapsulate a particular language-guessing rule table and the language guessing itself.",
+  "secondLabel" : "// encapsulate a particular language-guessing rule table and the language guessing itself.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3089,
+  "secondPos" : 3089,
+  "firstEndPos" : 3179,
+  "secondEndPos" : 3179
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3184,
+  "secondPos" : 3184,
+  "firstEndPos" : 3186,
+  "secondEndPos" : 3186
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It may make sense in the future to expose the private constructor to allow power users to build custom language-",
+  "secondLabel" : "// It may make sense in the future to expose the private constructor to allow power users to build custom language-",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3191,
+  "secondPos" : 3191,
+  "firstEndPos" : 3306,
+  "secondEndPos" : 3306
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// guessing rules, perhaps by marking it protected and allowing sub-classing. However, the vast majority of users",
+  "secondLabel" : "// guessing rules, perhaps by marking it protected and allowing sub-classing. However, the vast majority of users",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3311,
+  "secondPos" : 3311,
+  "firstEndPos" : 3424,
+  "secondEndPos" : 3424
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should be strongly encouraged to use the static factory <code>instance</code> method to get their Lang instances.",
+  "secondLabel" : "// should be strongly encouraged to use the static factory <code>instance</code> method to get their Lang instances.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3429,
+  "secondPos" : 3429,
+  "firstEndPos" : 3545,
+  "secondEndPos" : 3545
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -2551,6 +2661,17 @@
   "firstEndPos" : 4599,
   "secondEndPos" : 4630
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4542,
+  "secondPos" : 4573,
+  "firstEndPos" : 4548,
+  "secondEndPos" : 4579
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "nameType",
@@ -2583,6 +2704,17 @@
   "secondPos" : 4638,
   "firstEndPos" : 4682,
   "secondEndPos" : 4713
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4607,
+  "secondPos" : 4638,
+  "firstEndPos" : 4614,
+  "secondEndPos" : 4645
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2870,6 +3002,17 @@
   "firstEndPos" : 4952,
   "secondEndPos" : 4983
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4925,
+  "secondPos" : 4956,
+  "firstEndPos" : 4930,
+  "secondEndPos" : 4961
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -2958,6 +3101,17 @@
   "firstEndPos" : 5168,
   "secondEndPos" : 5199
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5076,
+  "secondPos" : 5107,
+  "firstEndPos" : 5082,
+  "secondEndPos" : 5113
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "languageRulesResourceName",
@@ -2991,6 +3145,17 @@
   "firstEndPos" : 5254,
   "secondEndPos" : 5285
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5176,
+  "secondPos" : 5207,
+  "firstEndPos" : 5182,
+  "secondEndPos" : 5213
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "languages",
@@ -3023,6 +3188,17 @@
   "secondPos" : 5293,
   "firstEndPos" : 5326,
   "secondEndPos" : 5357
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5262,
+  "secondPos" : 5293,
+  "firstEndPos" : 5269,
+  "secondEndPos" : 5300
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4190,6 +4366,17 @@
   "firstEndPos" : 6351,
   "secondEndPos" : 6382
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check for closing comment marker, otherwise discard doc comment line",
+  "secondLabel" : "// check for closing comment marker, otherwise discard doc comment line",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6117,
+  "secondPos" : 6148,
+  "firstEndPos" : 6188,
+  "secondEndPos" : 6219
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4497,6 +4684,17 @@
   "secondPos" : 6543,
   "firstEndPos" : 7745,
   "secondEndPos" : 7776
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// discard comments",
+  "secondLabel" : "// discard comments",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6538,
+  "secondPos" : 6569,
+  "firstEndPos" : 6557,
+  "secondEndPos" : 6588
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -4806,6 +5004,17 @@
   "firstEndPos" : 6734,
   "secondEndPos" : 6765
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// trim leading-trailing whitespace",
+  "secondLabel" : "// trim leading-trailing whitespace",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6788,
+  "secondPos" : 6819,
+  "firstEndPos" : 6823,
+  "secondEndPos" : 6854
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -5003,6 +5212,28 @@
   "secondPos" : 6978,
   "firstEndPos" : 6956,
   "secondEndPos" : 6987
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty lines can be safely skipped",
+  "secondLabel" : "// empty lines can be safely skipped",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6957,
+  "secondPos" : 6988,
+  "firstEndPos" : 6993,
+  "secondEndPos" : 7024
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// split it up",
+  "secondLabel" : "// split it up",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7045,
+  "secondPos" : 7076,
+  "firstEndPos" : 7059,
+  "secondEndPos" : 7090
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6841,6 +7072,17 @@
   "firstEndPos" : 8241,
   "secondEndPos" : 8272
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8203,
+  "secondPos" : 8234,
+  "firstEndPos" : 8209,
+  "secondEndPos" : 8240
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "text",
@@ -6874,6 +7116,17 @@
   "firstEndPos" : 8353,
   "secondEndPos" : 8384
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8249,
+  "secondPos" : 8280,
+  "firstEndPos" : 8256,
+  "secondEndPos" : 8287
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the language that the word originates from or ",
@@ -6895,6 +7148,17 @@
   "secondPos" : 8334,
   "firstEndPos" : 8324,
   "secondEndPos" : 8355
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8303,
+  "secondPos" : 8334,
+  "firstEndPos" : 8308,
+  "secondEndPos" : 8339
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -7336,6 +7600,17 @@
   "firstEndPos" : 8649,
   "secondEndPos" : 8680
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8610,
+  "secondPos" : 8641,
+  "firstEndPos" : 8616,
+  "secondEndPos" : 8647
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "input",
@@ -7368,6 +7643,17 @@
   "secondPos" : 8688,
   "firstEndPos" : 8745,
   "secondEndPos" : 8776
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8657,
+  "secondPos" : 8688,
+  "firstEndPos" : 8664,
+  "secondEndPos" : 8695
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

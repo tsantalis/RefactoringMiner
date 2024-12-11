@@ -10,6 +10,17 @@
   "firstEndPos" : 11836,
   "secondEndPos" : 11844
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n *  Licensed to the Apache Software Foundation (ASF) under one or more\n *  contributor license agreements.  See the NOTICE file distributed with\n *  this work for additional information regarding copyright ownership.\n *  The ASF licenses this file to You under the Apache License, Version 2.0\n *  (the \"License\"); you may not use this file except in compliance with\n *  the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n *  Unless required by applicable law or agreed to in writing, software\n *  distributed under the License is distributed on an \"AS IS\" BASIS,\n *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *  See the License for the specific language governing permissions and\n *  limitations under the License.\n *\n */",
+  "secondLabel" : "/*\n *  Licensed to the Apache Software Foundation (ASF) under one or more\n *  contributor license agreements.  See the NOTICE file distributed with\n *  this work for additional information regarding copyright ownership.\n *  The ASF licenses this file to You under the Apache License, Version 2.0\n *  (the \"License\"); you may not use this file except in compliance with\n *  the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n *  Unless required by applicable law or agreed to in writing, software\n *  distributed under the License is distributed on an \"AS IS\" BASIS,\n *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n *  See the License for the specific language governing permissions and\n *  limitations under the License.\n *\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 816,
+  "secondEndPos" : 816
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -9954,6 +9965,39 @@
   "firstEndPos" : 8162,
   "secondEndPos" : 8170
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: simplify when Compress requires Java 1.6                ",
+  "secondLabel" : "// TODO: simplify when Compress requires Java 1.6                ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8172,
+  "secondPos" : 8180,
+  "firstEndPos" : 8237,
+  "secondEndPos" : 8245
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                            throw new IOException(\"SHA-256 is unsupported by your Java implementation\",",
+  "secondLabel" : "//                            throw new IOException(\"SHA-256 is unsupported by your Java implementation\",",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8238,
+  "secondPos" : 8246,
+  "firstEndPos" : 8343,
+  "secondEndPos" : 8351
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                    noSuchAlgorithmException);",
+  "secondLabel" : "//                                    noSuchAlgorithmException);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8344,
+  "secondPos" : 8352,
+  "firstEndPos" : 8408,
+  "secondEndPos" : 8416
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -11802,6 +11846,50 @@
   "firstEndPos" : 9960,
   "secondEndPos" : 9968
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: simplify when Compress requires Java 1.6                ",
+  "secondLabel" : "// TODO: simplify when Compress requires Java 1.6                ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9970,
+  "secondPos" : 9978,
+  "firstEndPos" : 10035,
+  "secondEndPos" : 10043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                        throw new IOException(\"Decryption error \" +",
+  "secondLabel" : "//                        throw new IOException(\"Decryption error \" +",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10036,
+  "secondPos" : 10044,
+  "firstEndPos" : 10105,
+  "secondEndPos" : 10113
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                \"(do you have the JCE Unlimited Strength Jurisdiction Policy Files installed?)\",",
+  "secondLabel" : "//                                \"(do you have the JCE Unlimited Strength Jurisdiction Policy Files installed?)\",",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10106,
+  "secondPos" : 10114,
+  "firstEndPos" : 10220,
+  "secondEndPos" : 10228
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//                                generalSecurityException);",
+  "secondLabel" : "//                                generalSecurityException);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10221,
+  "secondPos" : 10229,
+  "firstEndPos" : 10281,
+  "secondEndPos" : 10289
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -12429,6 +12517,17 @@
   "firstEndPos" : 10915,
   "secondEndPos" : 10923
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10870,
+  "secondPos" : 10878,
+  "firstEndPos" : 10874,
+  "secondEndPos" : 10882
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -12494,6 +12593,17 @@
   "secondPos" : 10931,
   "firstEndPos" : 10996,
   "secondEndPos" : 11004
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10923,
+  "secondPos" : 10931,
+  "firstEndPos" : 10927,
+  "secondEndPos" : 10935
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",

@@ -340,6 +340,17 @@
   "firstEndPos" : 820,
   "secondEndPos" : 820
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 803,
+  "secondPos" : 803,
+  "firstEndPos" : 808,
+  "secondEndPos" : 808
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Converter",
@@ -405,6 +416,17 @@
   "secondPos" : 1006,
   "firstEndPos" : 1016,
   "secondEndPos" : 1016
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1006,
+  "secondPos" : 1006,
+  "firstEndPos" : 1012,
+  "secondEndPos" : 1012
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -999,6 +1021,17 @@
   "secondPos" : 1533,
   "firstEndPos" : 1552,
   "secondEndPos" : 1552
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life-cycle\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1563,
+  "secondPos" : 1563,
+  "firstEndPos" : 1719,
+  "secondEndPos" : 1719
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3134,6 +3167,17 @@
   "firstEndPos" : 3168,
   "secondEndPos" : 3168
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Contextualization\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Contextualization\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3186,
+  "secondPos" : 3186,
+  "firstEndPos" : 3349,
+  "secondEndPos" : 3349
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3992,6 +4036,17 @@
   "firstEndPos" : 4446,
   "secondEndPos" : 4512
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, need to locate serializer to delegate to. For that we need type information...",
+  "secondLabel" : "// Otherwise, need to locate serializer to delegate to. For that we need type information...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3963,
+  "secondPos" : 3963,
+  "firstEndPos" : 4055,
+  "secondEndPos" : 4055
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4200,6 +4255,17 @@
   "secondPos" : 4161,
   "firstEndPos" : 4175,
   "secondEndPos" : 4175
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 02-Apr-2015, tatu: For \"dynamic case\", where type is only specified as\n             *    java.lang.Object (or missing generic), [databind#731]\n             */",
+  "secondLabel" : "/* 02-Apr-2015, tatu: For \"dynamic case\", where type is only specified as\n             *    java.lang.Object (or missing generic), [databind#731]\n             */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4206,
+  "secondPos" : 4206,
+  "firstEndPos" : 4367,
+  "secondEndPos" : 4367
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4619,6 +4685,17 @@
   "firstEndPos" : 4710,
   "secondEndPos" : 4832
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4724,
+  "secondPos" : 4846,
+  "firstEndPos" : 4879,
+  "secondEndPos" : 5001
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4882,6 +4959,17 @@
   "secondPos" : 5164,
   "firstEndPos" : 5061,
   "secondEndPos" : 5183
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Serialization\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Serialization\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5078,
+  "secondPos" : 5200,
+  "firstEndPos" : 5237,
+  "secondEndPos" : 5359
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -5213,6 +5301,17 @@
   "firstEndPos" : 5415,
   "secondEndPos" : 5537
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should we accept nulls?",
+  "secondLabel" : "// should we accept nulls?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5426,
+  "secondPos" : 5548,
+  "firstEndPos" : 5452,
+  "secondEndPos" : 5574
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5366,6 +5465,17 @@
   "secondPos" : 5672,
   "firstEndPos" : 5557,
   "secondEndPos" : 5679
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 02-Apr-2015, tatu: As per [databind#731] may need to do dynamic lookup",
+  "secondLabel" : "// 02-Apr-2015, tatu: As per [databind#731] may need to do dynamic lookup",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5576,
+  "secondPos" : 5698,
+  "firstEndPos" : 5649,
+  "secondEndPos" : 5771
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5741,6 +5851,17 @@
   "firstEndPos" : 6173,
   "secondEndPos" : 6565
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 03-Oct-2012, tatu: This is actually unlikely to work ok... but for now,\n         *    let's give it a chance?\n         */",
+  "secondLabel" : "/* 03-Oct-2012, tatu: This is actually unlikely to work ok... but for now,\n         *    let's give it a chance?\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5905,
+  "secondPos" : 6166,
+  "firstEndPos" : 6029,
+  "secondEndPos" : 6290
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6004,6 +6125,17 @@
   "secondPos" : 6586,
   "firstEndPos" : 6204,
   "secondEndPos" : 6596
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.5",
+  "secondLabel" : "// since 2.5",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 6205,
+  "secondPos" : 6597,
+  "firstEndPos" : 6217,
+  "secondEndPos" : 6609
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -6620,6 +6752,17 @@
   "secondPos" : 7238,
   "firstEndPos" : 6583,
   "secondEndPos" : 7251
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Schema functionality\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Schema functionality\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6597,
+  "secondPos" : 7265,
+  "firstEndPos" : 6763,
+  "secondEndPos" : 7431
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7754,6 +7897,28 @@
   "firstEndPos" : 7914,
   "secondEndPos" : 8639
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 03-Sep-2012, tatu: Not sure if this can be made to really work\n         *    properly... but for now, try this:\n         */",
+  "secondLabel" : "/* 03-Sep-2012, tatu: Not sure if this can be made to really work\n         *    properly... but for now, try this:\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7640,
+  "secondPos" : 8308,
+  "firstEndPos" : 7766,
+  "secondEndPos" : 8434
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 02-Apr-2015, tatu: For dynamic case, very little we can do",
+  "secondLabel" : "// 02-Apr-2015, tatu: For dynamic case, very little we can do",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7775,
+  "secondPos" : 8443,
+  "firstEndPos" : 7836,
+  "secondEndPos" : 8504
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7841,6 +8006,17 @@
   "secondPos" : 8613,
   "firstEndPos" : 7906,
   "secondEndPos" : 8621
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Overridable methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Overridable methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7920,
+  "secondPos" : 8645,
+  "firstEndPos" : 8085,
+  "secondEndPos" : 8810
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7930,6 +8106,17 @@
   "firstEndPos" : 8333,
   "secondEndPos" : 9058
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8316,
+  "secondPos" : 9041,
+  "firstEndPos" : 8321,
+  "secondEndPos" : 9046
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Converter",
@@ -7974,6 +8161,17 @@
   "firstEndPos" : 8403,
   "secondEndPos" : 9128
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8374,
+  "secondPos" : 9099,
+  "firstEndPos" : 8380,
+  "secondEndPos" : 9105
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -8006,6 +8204,17 @@
   "secondPos" : 9144,
   "firstEndPos" : 8447,
   "secondEndPos" : 9172
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8419,
+  "secondPos" : 9144,
+  "firstEndPos" : 8426,
+  "secondEndPos" : 9151
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8193,4 +8402,136 @@
   "secondPos" : 9265,
   "firstEndPos" : 8545,
   "secondEndPos" : 9270
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 8559,
+  "secondPos" : 9284,
+  "firstEndPos" : 8873,
+  "secondEndPos" : 9598
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 8570,
+  "secondPos" : 9295,
+  "firstEndPos" : 8840,
+  "secondEndPos" : 9565
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Helper method used for locating serializer to use in dynamic use case, where",
+  "secondLabel" : "Helper method used for locating serializer to use in dynamic use case, where",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8570,
+  "secondPos" : 9295,
+  "firstEndPos" : 8646,
+  "secondEndPos" : 9371
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "actual type value gets converted to is not specified beyond basic",
+  "secondLabel" : "actual type value gets converted to is not specified beyond basic",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8654,
+  "secondPos" : 9379,
+  "firstEndPos" : 8719,
+  "secondEndPos" : 9444
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8727,
+  "secondPos" : 9452,
+  "firstEndPos" : 8751,
+  "secondEndPos" : 9476
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8727,
+  "secondPos" : 9452,
+  "firstEndPos" : 8732,
+  "secondEndPos" : 9457
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "java.lang.Object",
+  "secondLabel" : "java.lang.Object",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8734,
+  "secondPos" : 9459,
+  "firstEndPos" : 8750,
+  "secondEndPos" : 9475
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : ", and where serializer needs to be located dynamically",
+  "secondLabel" : ", and where serializer needs to be located dynamically",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8751,
+  "secondPos" : 9476,
+  "firstEndPos" : 8805,
+  "secondEndPos" : 9530
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "based on actual value type.",
+  "secondLabel" : "based on actual value type.",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8813,
+  "secondPos" : 9538,
+  "firstEndPos" : 8840,
+  "secondEndPos" : 9565
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 8855,
+  "secondPos" : 9580,
+  "firstEndPos" : 8865,
+  "secondEndPos" : 9590
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8855,
+  "secondPos" : 9580,
+  "firstEndPos" : 8861,
+  "secondEndPos" : 9586
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " 2.6",
+  "secondLabel" : " 2.6",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8861,
+  "secondPos" : 9586,
+  "firstEndPos" : 8865,
+  "secondEndPos" : 9590
 } ]

@@ -10,6 +10,17 @@
   "firstEndPos" : 18196,
   "secondEndPos" : 18172
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2009 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2009 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -637,6 +648,17 @@
   "firstEndPos" : 1926,
   "secondEndPos" : 1926
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1909,
+  "secondPos" : 1909,
+  "firstEndPos" : 1914,
+  "secondEndPos" : 1914
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " @Override",
@@ -812,6 +834,17 @@
   "secondPos" : 2327,
   "firstEndPos" : 2371,
   "secondEndPos" : 2371
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2327,
+  "secondPos" : 2327,
+  "firstEndPos" : 2334,
+  "secondEndPos" : 2334
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2077,6 +2110,17 @@
   "secondPos" : 3545,
   "firstEndPos" : 3572,
   "secondEndPos" : 3572
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(nicksantos): Make the next 2 flags package-private.",
+  "secondLabel" : "// TODO(nicksantos): Make the next 2 flags package-private.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3579,
+  "secondPos" : 3579,
+  "firstEndPos" : 3638,
+  "secondEndPos" : 3638
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -8623,6 +8667,28 @@
   "firstEndPos" : 11189,
   "secondEndPos" : 11189
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Our own option parser to be backwards-compatible.",
+  "secondLabel" : "// Our own option parser to be backwards-compatible.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11196,
+  "secondPos" : 11196,
+  "firstEndPos" : 11248,
+  "secondEndPos" : 11248
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It needs to be public because of the crazy reflection that args4j does.",
+  "secondLabel" : "// It needs to be public because of the crazy reflection that args4j does.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11253,
+  "secondPos" : 11253,
+  "firstEndPos" : 11327,
+  "secondEndPos" : 11327
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -11944,6 +12010,39 @@
   "secondPos" : 13709,
   "firstEndPos" : 16141,
   "secondEndPos" : 16141
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Args4j has a different format that the old command-line parser.",
+  "secondLabel" : "// Args4j has a different format that the old command-line parser.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13715,
+  "secondPos" : 13715,
+  "firstEndPos" : 13781,
+  "secondEndPos" : 13781
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// So we use some voodoo to get the args into the format that args4j",
+  "secondLabel" : "// So we use some voodoo to get the args into the format that args4j",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13786,
+  "secondPos" : 13786,
+  "firstEndPos" : 13854,
+  "secondEndPos" : 13854
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// expects.",
+  "secondLabel" : "// expects.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13859,
+  "secondPos" : 13859,
+  "firstEndPos" : 13870,
+  "secondEndPos" : 13870
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17093,6 +17192,17 @@
   "firstEndPos" : 17385,
   "secondEndPos" : 17361
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17363,
+  "secondPos" : 17339,
+  "firstEndPos" : 17370,
+  "secondEndPos" : 17346
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a mutable list",
@@ -17114,6 +17224,17 @@
   "secondPos" : 17367,
   "firstEndPos" : 17410,
   "secondEndPos" : 17386
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17391,
+  "secondPos" : 17367,
+  "firstEndPos" : 17398,
+  "secondEndPos" : 17374
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

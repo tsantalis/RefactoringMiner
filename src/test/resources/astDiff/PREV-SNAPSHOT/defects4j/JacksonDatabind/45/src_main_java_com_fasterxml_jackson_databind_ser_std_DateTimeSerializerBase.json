@@ -725,6 +725,17 @@
   "firstEndPos" : 1197,
   "secondEndPos" : 1197
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1175,
+  "secondPos" : 1175,
+  "firstEndPos" : 1180,
+  "secondEndPos" : 1180
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -1923,6 +1934,17 @@
   "secondPos" : 1934,
   "firstEndPos" : 3006,
   "secondEndPos" : 3097
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Simple case first: serialize as numeric timestamp?",
+  "secondLabel" : "// Simple case first: serialize as numeric timestamp?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1950,
+  "secondPos" : 1950,
+  "firstEndPos" : 2003,
+  "secondEndPos" : 2003
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3167,6 +3189,17 @@
   "firstEndPos" : 3036,
   "secondEndPos" : 3127
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Accessors\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3049,
+  "secondPos" : 3140,
+  "firstEndPos" : 3204,
+  "secondEndPos" : 3295
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3309,6 +3342,17 @@
   "secondPos" : 3363,
   "firstEndPos" : 3410,
   "secondEndPos" : 3501
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's assume \"null date\" (timestamp 0) qualifies for empty",
+  "secondLabel" : "// let's assume \"null date\" (timestamp 0) qualifies for empty",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3282,
+  "secondPos" : 3373,
+  "firstEndPos" : 3343,
+  "secondEndPos" : 3434
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -3650,6 +3694,17 @@
   "secondPos" : 3585,
   "firstEndPos" : 3632,
   "secondEndPos" : 3723
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's assume \"null date\" (timestamp 0) qualifies for empty",
+  "secondLabel" : "// let's assume \"null date\" (timestamp 0) qualifies for empty",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3504,
+  "secondPos" : 3595,
+  "firstEndPos" : 3565,
+  "secondEndPos" : 3656
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4101,6 +4156,17 @@
   "secondPos" : 3874,
   "firstEndPos" : 3942,
   "secondEndPos" : 4033
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//todo: (ryan) add a format for the date in the schema?",
+  "secondLabel" : "//todo: (ryan) add a format for the date in the schema?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3793,
+  "secondPos" : 3884,
+  "firstEndPos" : 3848,
+  "secondEndPos" : 3939
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -4564,6 +4630,17 @@
   "firstEndPos" : 4169,
   "secondEndPos" : 4260
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Actual serialization\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Actual serialization\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4186,
+  "secondPos" : 4277,
+  "firstEndPos" : 4352,
+  "secondEndPos" : 4443
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -4794,6 +4871,17 @@
   "secondPos" : 4569,
   "firstEndPos" : 4489,
   "secondEndPos" : 4580
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4496,
+  "secondPos" : 4587,
+  "firstEndPos" : 4656,
+  "secondEndPos" : 4747
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -5223,6 +5311,17 @@
   "secondPos" : 5043,
   "firstEndPos" : 4998,
   "secondEndPos" : 5089
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 12-Jun-2014, tatu: Is it legal not to have provider? Was NPE:ing earlier so leave a check",
+  "secondLabel" : "// 12-Jun-2014, tatu: Is it legal not to have provider? Was NPE:ing earlier so leave a check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5027,
+  "secondPos" : 5118,
+  "firstEndPos" : 5119,
+  "secondEndPos" : 5210
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

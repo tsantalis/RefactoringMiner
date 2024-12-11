@@ -10,6 +10,17 @@
   "firstEndPos" : 5445,
   "secondEndPos" : 6018
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1417,6 +1428,28 @@
   "secondPos" : 1303,
   "firstEndPos" : 1314,
   "secondEndPos" : 1314
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "Matcher",
+  "secondLabel" : "Matcher",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 1316,
+  "secondPos" : 1316,
+  "firstEndPos" : 1323,
+  "secondEndPos" : 1323
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 1316,
+  "secondPos" : 1316,
+  "firstEndPos" : 1323,
+  "secondEndPos" : 1323
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4124,6 +4157,28 @@
   "firstEndPos" : 3859,
   "secondEndPos" : 3859
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//not using method.equals() for 1 good reason:",
+  "secondLabel" : "//not using method.equals() for 1 good reason:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3120,
+  "secondPos" : 3120,
+  "firstEndPos" : 3166,
+  "secondEndPos" : 3166
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//sometimes java generates forwarding methods when generics are in play see JavaGenericsForwardingMethodsTest",
+  "secondLabel" : "//sometimes java generates forwarding methods when generics are in play see JavaGenericsForwardingMethodsTest",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3175,
+  "secondPos" : 3175,
+  "firstEndPos" : 3284,
+  "secondEndPos" : 3284
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4574,6 +4629,17 @@
   "secondPos" : 3452,
   "firstEndPos" : 3831,
   "secondEndPos" : 3831
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Avoid unnecessary cloning */",
+  "secondLabel" : "/* Avoid unnecessary cloning */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3463,
+  "secondPos" : 3463,
+  "firstEndPos" : 3494,
+  "secondEndPos" : 3494
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

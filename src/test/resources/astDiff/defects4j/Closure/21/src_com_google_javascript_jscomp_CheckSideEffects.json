@@ -10,6 +10,17 @@
   "firstEndPos" : 7162,
   "secondEndPos" : 6505
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2006 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2006 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1671,6 +1682,61 @@
   "firstEndPos" : 2161,
   "secondEndPos" : 2161
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Code with hidden side-effect code is common, for example",
+  "secondLabel" : "// Code with hidden side-effect code is common, for example",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2169,
+  "secondPos" : 2169,
+  "firstEndPos" : 2228,
+  "secondEndPos" : 2228
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// accessing \"el.offsetWidth\" forces a reflow in browsers, to allow this",
+  "secondLabel" : "// accessing \"el.offsetWidth\" forces a reflow in browsers, to allow this",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2233,
+  "secondPos" : 2233,
+  "firstEndPos" : 2305,
+  "secondEndPos" : 2305
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// will still allowing local dead code removal in general,",
+  "secondLabel" : "// will still allowing local dead code removal in general,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2310,
+  "secondPos" : 2310,
+  "firstEndPos" : 2368,
+  "secondEndPos" : 2368
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// protect the \"side-effect free\" code in the source.",
+  "secondLabel" : "// protect the \"side-effect free\" code in the source.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2373,
+  "secondPos" : 2373,
+  "firstEndPos" : 2426,
+  "secondEndPos" : 2426
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2431,
+  "secondPos" : 2431,
+  "firstEndPos" : 2433,
+  "secondEndPos" : 2433
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2210,6 +2276,50 @@
   "firstEndPos" : 5084,
   "secondEndPos" : 4427
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// VOID nodes appear when there are extra semicolons at the BLOCK level.",
+  "secondLabel" : "// VOID nodes appear when there are extra semicolons at the BLOCK level.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2725,
+  "secondPos" : 2725,
+  "firstEndPos" : 2797,
+  "secondEndPos" : 2797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// I've been unable to think of any cases where this indicates a bug,",
+  "secondLabel" : "// I've been unable to think of any cases where this indicates a bug,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2802,
+  "secondPos" : 2802,
+  "firstEndPos" : 2871,
+  "secondEndPos" : 2871
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and apparently some people like keeping these semicolons around,",
+  "secondLabel" : "// and apparently some people like keeping these semicolons around,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2876,
+  "secondPos" : 2876,
+  "firstEndPos" : 2943,
+  "secondEndPos" : 2943
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we'll allow it.",
+  "secondLabel" : "// so we'll allow it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2948,
+  "secondPos" : 2948,
+  "firstEndPos" : 2969,
+  "secondEndPos" : 2969
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2430,6 +2540,39 @@
   "firstEndPos" : 3076,
   "secondEndPos" : 3076
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not try to remove a block or an expr result. We already handle",
+  "secondLabel" : "// Do not try to remove a block or an expr result. We already handle",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3088,
+  "secondPos" : 3088,
+  "firstEndPos" : 3156,
+  "secondEndPos" : 3156
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these cases when we visit the child, and the peephole passes will",
+  "secondLabel" : "// these cases when we visit the child, and the peephole passes will",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3161,
+  "secondPos" : 3161,
+  "firstEndPos" : 3229,
+  "secondEndPos" : 3229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fix up the tree in more clever ways when these are removed.",
+  "secondLabel" : "// fix up the tree in more clever ways when these are removed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3234,
+  "secondPos" : 3234,
+  "firstEndPos" : 3296,
+  "secondEndPos" : 3296
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2506,6 +2649,28 @@
   "secondPos" : 3346,
   "firstEndPos" : 3338,
   "secondEndPos" : 3353
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This no-op statement was there so that JSDoc information could",
+  "secondLabel" : "// This no-op statement was there so that JSDoc information could",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3350,
+  "secondPos" : 3365,
+  "firstEndPos" : 3415,
+  "secondEndPos" : 3430
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// be attached to the name. This check should not complain about it.",
+  "secondLabel" : "// be attached to the name. This check should not complain about it.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3420,
+  "secondPos" : 3435,
+  "firstEndPos" : 3488,
+  "secondEndPos" : 3503
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3771,6 +3936,28 @@
   "secondPos" : 4218,
   "firstEndPos" : 4878,
   "secondEndPos" : 4221
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): determine if it is necessary to",
+  "secondLabel" : "// TODO(johnlenz): determine if it is necessary to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4888,
+  "secondPos" : 4231,
+  "firstEndPos" : 4938,
+  "secondEndPos" : 4281
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try to protect side-effect free statements as well.",
+  "secondLabel" : "// try to protect side-effect free statements as well.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4945,
+  "secondPos" : 4288,
+  "firstEndPos" : 4999,
+  "secondEndPos" : 4342
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5433,6 +5620,17 @@
   "firstEndPos" : 5911,
   "secondEndPos" : 5254
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add \"@noalias\" so we can strip the method when AliasExternals is enabled.",
+  "secondLabel" : "// Add \"@noalias\" so we can strip the method when AliasExternals is enabled.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5918,
+  "secondPos" : 5261,
+  "firstEndPos" : 5994,
+  "secondEndPos" : 5337
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6994,6 +7192,28 @@
   "secondPos" : 6153,
   "firstEndPos" : 6823,
   "secondEndPos" : 6166
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): add this to the coding convention",
+  "secondLabel" : "// TODO(johnlenz): add this to the coding convention",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6835,
+  "secondPos" : 6178,
+  "firstEndPos" : 6887,
+  "secondEndPos" : 6230
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we can remove goog.reflect.sinkValue as well.",
+  "secondLabel" : "// so we can remove goog.reflect.sinkValue as well.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6896,
+  "secondPos" : 6239,
+  "firstEndPos" : 6947,
+  "secondEndPos" : 6290
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

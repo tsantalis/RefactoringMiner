@@ -10,6 +10,17 @@
   "firstEndPos" : 2395,
   "secondEndPos" : 2426
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it \r\n * under the terms of the GNU Lesser General Public License as published by \r\n * the Free Software Foundation; either version 2.1 of the License, or \r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but \r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY \r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public \r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, \r\n * USA.  \r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc. \r\n * in the United States and other countries.]\r\n *\r\n * ----------------------------------------\r\n * StandardToolTipTagFragmentGenerator.java\r\n * ----------------------------------------\r\n * (C) Copyright 2003-2008, by Richard Atkinson and Contributors.\r\n *\r\n * Original Author:  Richard Atkinson;\r\n * Contributors:     David Gilbert (for Object Refinery Limited);\r\n *\r\n * Changes\r\n * -------\r\n * 12-Aug-2003 : Version 1 (RA);\r\n * 04-Dec-2007 : Escape tool tip text to fix bug 1400917 (DG);\r\n * \r\n */",
+  "secondLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it \r\n * under the terms of the GNU Lesser General Public License as published by \r\n * the Free Software Foundation; either version 2.1 of the License, or \r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but \r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY \r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public \r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, \r\n * USA.  \r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc. \r\n * in the United States and other countries.]\r\n *\r\n * ----------------------------------------\r\n * StandardToolTipTagFragmentGenerator.java\r\n * ----------------------------------------\r\n * (C) Copyright 2003-2008, by Richard Atkinson and Contributors.\r\n *\r\n * Original Author:  Richard Atkinson;\r\n * Contributors:     David Gilbert (for Object Refinery Limited);\r\n *\r\n * Changes\r\n * -------\r\n * 12-Aug-2003 : Version 1 (RA);\r\n * 04-Dec-2007 : Escape tool tip text to fix bug 1400917 (DG);\r\n * \r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1685,
+  "secondEndPos" : 1685
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -274,6 +285,17 @@
   "firstEndPos" : 2168,
   "secondEndPos" : 2168
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2136,
+  "secondPos" : 2136,
+  "firstEndPos" : 2142,
+  "secondEndPos" : 2142
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "toolTipText",
@@ -306,6 +328,17 @@
   "secondPos" : 2186,
   "firstEndPos" : 2235,
   "secondEndPos" : 2235
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2186,
+  "secondPos" : 2186,
+  "firstEndPos" : 2193,
+  "secondEndPos" : 2193
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

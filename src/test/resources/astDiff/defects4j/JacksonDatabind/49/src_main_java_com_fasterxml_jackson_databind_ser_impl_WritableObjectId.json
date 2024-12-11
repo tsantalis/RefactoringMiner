@@ -1066,6 +1066,17 @@
   "firstEndPos" : 1308,
   "secondEndPos" : 1308
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 03-Aug-2013, tatu: Prefer Native Object Ids if available",
+  "secondLabel" : "// 03-Aug-2013, tatu: Prefer Native Object Ids if available",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1022,
+  "secondPos" : 1022,
+  "firstEndPos" : 1081,
+  "secondEndPos" : 1081
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -1528,6 +1539,39 @@
   "firstEndPos" : 1696,
   "secondEndPos" : 1732
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 04-Jun-2016, tatu: As per [databind#1255], need to consider possibility of",
+  "secondLabel" : "// 04-Jun-2016, tatu: As per [databind#1255], need to consider possibility of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1397,
+  "secondPos" : 1397,
+  "firstEndPos" : 1474,
+  "secondEndPos" : 1474
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    id being generated for \"alwaysAsId\", but not being written as POJO; regardless,",
+  "secondLabel" : "//    id being generated for \"alwaysAsId\", but not being written as POJO; regardless,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1483,
+  "secondPos" : 1483,
+  "firstEndPos" : 1568,
+  "secondEndPos" : 1568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    need to use existing id if there is one:",
+  "secondLabel" : "//    need to use existing id if there is one:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1577,
+  "secondPos" : 1577,
+  "firstEndPos" : 1623,
+  "secondEndPos" : 1623
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -1957,6 +2001,17 @@
   "firstEndPos" : 1925,
   "secondEndPos" : 1961
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 03-Aug-2013, tatu: Prefer Native Object Ids if available",
+  "secondLabel" : "// 03-Aug-2013, tatu: Prefer Native Object Ids if available",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1936,
+  "secondPos" : 1972,
+  "firstEndPos" : 1995,
+  "secondEndPos" : 2031
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2022,6 +2077,17 @@
   "secondPos" : 2068,
   "firstEndPos" : 2200,
   "secondEndPos" : 2236
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need to assume String(ified) ids, for now... could add 'long' variant?",
+  "secondLabel" : "// Need to assume String(ified) ids, for now... could add 'long' variant?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2046,
+  "secondPos" : 2082,
+  "firstEndPos" : 2119,
+  "secondEndPos" : 2155
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

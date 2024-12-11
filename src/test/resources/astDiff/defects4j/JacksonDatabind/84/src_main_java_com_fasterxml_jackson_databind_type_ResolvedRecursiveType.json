@@ -109,6 +109,17 @@
   "firstEndPos" : 170,
   "secondEndPos" : 170
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 160,
+  "secondPos" : 160,
+  "firstEndPos" : 166,
+  "secondEndPos" : 166
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.7",
@@ -680,6 +691,17 @@
   "secondPos" : 528,
   "firstEndPos" : 801,
   "secondEndPos" : 801
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sanity check; should not be called multiple times",
+  "secondLabel" : "// sanity check; should not be called multiple times",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 538,
+  "secondPos" : 538,
+  "firstEndPos" : 590,
+  "secondEndPos" : 590
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -2331,6 +2353,17 @@
   "firstEndPos" : 1742,
   "secondEndPos" : 1924
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.7",
+  "secondLabel" : "// since 2.7",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1743,
+  "secondPos" : 1925,
+  "firstEndPos" : 1755,
+  "secondEndPos" : 1937
+}, {
   "firstType" : "MarkerAnnotation",
   "secondType" : "MarkerAnnotation",
   "firstLabel" : "",
@@ -3321,6 +3354,28 @@
   "firstEndPos" : 2537,
   "secondEndPos" : 2719
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#1301]: Typically resolves to a loop so short-cut",
+  "secondLabel" : "// [databind#1301]: Typically resolves to a loop so short-cut",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2350,
+  "secondPos" : 2532,
+  "firstEndPos" : 2411,
+  "secondEndPos" : 2593
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   and only include type-erased class",
+  "secondLabel" : "//   and only include type-erased class",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2424,
+  "secondPos" : 2606,
+  "firstEndPos" : 2463,
+  "secondEndPos" : 2645
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3793,6 +3848,17 @@
   "secondPos" : 2875,
   "firstEndPos" : 2698,
   "secondEndPos" : 2880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do NOT ever match unresolved references",
+  "secondLabel" : "// Do NOT ever match unresolved references",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2708,
+  "secondPos" : 2890,
+  "firstEndPos" : 2750,
+  "secondEndPos" : 2932
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 21344,
   "secondEndPos" : 21524
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2010 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -714,6 +725,17 @@
   "firstEndPos" : 2318,
   "secondEndPos" : 2318
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2278,
+  "secondPos" : 2278,
+  "firstEndPos" : 2285,
+  "secondEndPos" : 2285
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " robbyw@google.com (Robby Walker)",
@@ -1120,6 +1142,17 @@
   "secondPos" : 2659,
   "firstEndPos" : 2680,
   "secondEndPos" : 2680
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Errors",
+  "secondLabel" : "// Errors",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2685,
+  "secondPos" : 2685,
+  "firstEndPos" : 2694,
+  "secondEndPos" : 2694
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3618,6 +3651,17 @@
   "firstEndPos" : 6785,
   "secondEndPos" : 6785
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Apply the aliases.",
+  "secondLabel" : "// Apply the aliases.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4955,
+  "secondPos" : 4955,
+  "firstEndPos" : 4976,
+  "secondEndPos" : 4976
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4311,6 +4355,17 @@
   "firstEndPos" : 5371,
   "secondEndPos" : 5371
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Prevent an infinite loop.",
+  "secondLabel" : "// Prevent an infinite loop.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5406,
+  "secondPos" : 5406,
+  "firstEndPos" : 5434,
+  "secondEndPos" : 5434
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4883,6 +4938,17 @@
   "firstEndPos" : 5731,
   "secondEndPos" : 5731
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Remove the alias definitions.",
+  "secondLabel" : "// Remove the alias definitions.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5758,
+  "secondPos" : 5758,
+  "firstEndPos" : 5790,
+  "secondEndPos" : 5790
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -5344,6 +5410,17 @@
   "secondPos" : 6076,
   "firstEndPos" : 6092,
   "secondEndPos" : 6092
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Collapse the scopes.",
+  "secondLabel" : "// Collapse the scopes.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6121,
+  "secondPos" : 6121,
+  "firstEndPos" : 6144,
+  "secondEndPos" : 6144
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -9217,6 +9294,28 @@
   "firstEndPos" : 8513,
   "secondEndPos" : 8513
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The job of this class is to collect these three data sets.",
+  "secondLabel" : "// The job of this class is to collect these three data sets.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8520,
+  "secondPos" : 8520,
+  "firstEndPos" : 8581,
+  "secondEndPos" : 8581
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The order of this list determines the order that aliases are applied.",
+  "secondLabel" : "// The order of this list determines the order that aliases are applied.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8587,
+  "secondPos" : 8587,
+  "firstEndPos" : 8659,
+  "secondEndPos" : 8659
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -9679,6 +9778,17 @@
   "firstEndPos" : 8870,
   "secondEndPos" : 8870
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This map is temporary and cleared for each scope.",
+  "secondLabel" : "// This map is temporary and cleared for each scope.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8879,
+  "secondPos" : 8879,
+  "firstEndPos" : 8931,
+  "secondEndPos" : 8931
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -9854,6 +9964,116 @@
   "secondPos" : 8982,
   "firstEndPos" : 8992,
   "secondEndPos" : 8992
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Suppose you create an alias.",
+  "secondLabel" : "// Suppose you create an alias.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9052,
+  "secondPos" : 9115,
+  "firstEndPos" : 9083,
+  "secondEndPos" : 9146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// var x = goog.x;",
+  "secondLabel" : "// var x = goog.x;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9088,
+  "secondPos" : 9151,
+  "firstEndPos" : 9106,
+  "secondEndPos" : 9169
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// As a side-effect, this means you can shadow the namespace 'goog'",
+  "secondLabel" : "// As a side-effect, this means you can shadow the namespace 'goog'",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9111,
+  "secondPos" : 9174,
+  "firstEndPos" : 9178,
+  "secondEndPos" : 9241
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in inner scopes. When we inline the namespaces, we have to rename",
+  "secondLabel" : "// in inner scopes. When we inline the namespaces, we have to rename",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9183,
+  "secondPos" : 9246,
+  "firstEndPos" : 9251,
+  "secondEndPos" : 9314
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these shadows.",
+  "secondLabel" : "// these shadows.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9256,
+  "secondPos" : 9319,
+  "firstEndPos" : 9273,
+  "secondEndPos" : 9336
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9278,
+  "secondPos" : 9341,
+  "firstEndPos" : 9280,
+  "secondEndPos" : 9343
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Fortunately, we already have a name uniquifier that runs during tree",
+  "secondLabel" : "// Fortunately, we already have a name uniquifier that runs during tree",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9285,
+  "secondPos" : 9348,
+  "firstEndPos" : 9356,
+  "secondEndPos" : 9419
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// normalization (before optimizations). We run it here on a limited",
+  "secondLabel" : "// normalization (before optimizations). We run it here on a limited",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9361,
+  "secondPos" : 9424,
+  "firstEndPos" : 9429,
+  "secondEndPos" : 9492
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set of variables, but only as a last resort (because this will screw",
+  "secondLabel" : "// set of variables, but only as a last resort (because this will screw",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9434,
+  "secondPos" : 9497,
+  "firstEndPos" : 9505,
+  "secondEndPos" : 9568
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// up warning messages downstream).",
+  "secondLabel" : "// up warning messages downstream).",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9510,
+  "secondPos" : 9573,
+  "firstEndPos" : 9545,
+  "secondEndPos" : 9608
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -12582,6 +12802,17 @@
   "secondPos" : 11133,
   "firstEndPos" : 11220,
   "secondEndPos" : 11314
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not traverse in to functions except for goog.scope functions.",
+  "secondLabel" : "// Do not traverse in to functions except for goog.scope functions.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11049,
+  "secondPos" : 11143,
+  "firstEndPos" : 11116,
+  "secondEndPos" : 11210
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -15553,6 +15784,28 @@
   "firstEndPos" : 12643,
   "secondEndPos" : 12737
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Bleeding functions already get a BAD_PARAMETERS error, so just",
+  "secondLabel" : "// Bleeding functions already get a BAD_PARAMETERS error, so just",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12543,
+  "secondPos" : 12637,
+  "firstEndPos" : 12608,
+  "secondEndPos" : 12702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// do nothing.",
+  "secondLabel" : "// do nothing.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12619,
+  "secondPos" : 12713,
+  "firstEndPos" : 12633,
+  "secondEndPos" : 12727
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15651,6 +15904,28 @@
   "secondPos" : 12777,
   "firstEndPos" : 12786,
   "secondEndPos" : 12880
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Parameters of the scope function also get a BAD_PARAMETERS",
+  "secondLabel" : "// Parameters of the scope function also get a BAD_PARAMETERS",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12695,
+  "secondPos" : 12789,
+  "firstEndPos" : 12756,
+  "secondEndPos" : 12850
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// error.",
+  "secondLabel" : "// error.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12767,
+  "secondPos" : 12861,
+  "firstEndPos" : 12776,
+  "secondEndPos" : 12870
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -16785,6 +17060,28 @@
   "firstEndPos" : 13384,
   "secondEndPos" : 13478
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// First, we need to free up the function expression (EXPR)",
+  "secondLabel" : "// First, we need to free up the function expression (EXPR)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13398,
+  "secondPos" : 13492,
+  "firstEndPos" : 13457,
+  "secondEndPos" : 13551
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to be used in another expression.",
+  "secondLabel" : "// to be used in another expression.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13468,
+  "secondPos" : 13562,
+  "firstEndPos" : 13504,
+  "secondEndPos" : 13598
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -16817,6 +17114,17 @@
   "secondPos" : 13629,
   "firstEndPos" : 14428,
   "secondEndPos" : 14522
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Replace \"function NAME() { ... }\" with \"var NAME;\".",
+  "secondLabel" : "// Replace \"function NAME() { ... }\" with \"var NAME;\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13549,
+  "secondPos" : 13643,
+  "firstEndPos" : 13603,
+  "secondEndPos" : 13697
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -16916,6 +17224,83 @@
   "secondPos" : 13732,
   "firstEndPos" : 13649,
   "secondEndPos" : 13743
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We can't keep the local name on the function expression,",
+  "secondLabel" : "// We can't keep the local name on the function expression,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13666,
+  "secondPos" : 13760,
+  "firstEndPos" : 13725,
+  "secondEndPos" : 13819
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because IE is buggy and will leak the name into the global",
+  "secondLabel" : "// because IE is buggy and will leak the name into the global",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13738,
+  "secondPos" : 13832,
+  "firstEndPos" : 13799,
+  "secondEndPos" : 13893
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// scope. This is covered in more detail here:",
+  "secondLabel" : "// scope. This is covered in more detail here:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13812,
+  "secondPos" : 13906,
+  "firstEndPos" : 13858,
+  "secondEndPos" : 13952
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// http://wiki.ecmascript.org/lib/exe/fetch.php?id=resources:resources&cache=cache&media=resources:jscriptdeviationsfromes3.pdf",
+  "secondLabel" : "// http://wiki.ecmascript.org/lib/exe/fetch.php?id=resources:resources&cache=cache&media=resources:jscriptdeviationsfromes3.pdf",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13871,
+  "secondPos" : 13965,
+  "firstEndPos" : 13998,
+  "secondEndPos" : 14092
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14011,
+  "secondPos" : 14105,
+  "firstEndPos" : 14013,
+  "secondEndPos" : 14107
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This will only cause problems if this is a hoisted, recursive",
+  "secondLabel" : "// This will only cause problems if this is a hoisted, recursive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14026,
+  "secondPos" : 14120,
+  "firstEndPos" : 14090,
+  "secondEndPos" : 14184
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// function, and the programmer is using the hoisting.",
+  "secondLabel" : "// function, and the programmer is using the hoisting.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14103,
+  "secondPos" : 14197,
+  "firstEndPos" : 14157,
+  "secondEndPos" : 14251
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17511,6 +17896,28 @@
   "firstEndPos" : 14642,
   "secondEndPos" : 14736
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this is a VAR, we can just detach the expression and",
+  "secondLabel" : "// If this is a VAR, we can just detach the expression and",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14483,
+  "secondPos" : 14577,
+  "firstEndPos" : 14541,
+  "secondEndPos" : 14635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the tree will still be valid.",
+  "secondLabel" : "// the tree will still be valid.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14556,
+  "secondPos" : 14650,
+  "firstEndPos" : 14588,
+  "secondEndPos" : 14682
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17620,6 +18027,28 @@
   "secondPos" : 14759,
   "firstEndPos" : 14671,
   "secondEndPos" : 14765
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add $jscomp.scope.name = EXPR;",
+  "secondLabel" : "// Add $jscomp.scope.name = EXPR;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14696,
+  "secondPos" : 14790,
+  "firstEndPos" : 14729,
+  "secondEndPos" : 14823
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Make sure we copy over all the jsdoc and debug info.",
+  "secondLabel" : "// Make sure we copy over all the jsdoc and debug info.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14740,
+  "secondPos" : 14834,
+  "firstEndPos" : 14795,
+  "secondEndPos" : 14889
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -18435,6 +18864,17 @@
   "firstEndPos" : 15381,
   "secondEndPos" : 15475
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Rewrite \"var name = EXPR;\" to \"var name = $jscomp.scope.name;\"",
+  "secondLabel" : "// Rewrite \"var name = EXPR;\" to \"var name = $jscomp.scope.name;\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15421,
+  "secondPos" : 15571,
+  "firstEndPos" : 15486,
+  "secondEndPos" : 15636
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -18731,6 +19171,17 @@
   "secondPos" : 15840,
   "firstEndPos" : 15837,
   "secondEndPos" : 15987
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do not other kinds of local symbols, like catch params.",
+  "secondLabel" : "// Do not other kinds of local symbols, like catch params.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15702,
+  "secondPos" : 15852,
+  "firstEndPos" : 15760,
+  "secondEndPos" : 15910
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21779,6 +22230,28 @@
   "firstEndPos" : 18043,
   "secondEndPos" : 18193
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The goog.scope call should have exactly 1 parameter.  The first",
+  "secondLabel" : "// The goog.scope call should have exactly 1 parameter.  The first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17839,
+  "secondPos" : 17989,
+  "firstEndPos" : 17905,
+  "secondEndPos" : 18055
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// child is the \"goog.scope\" and the second should be the parameter.",
+  "secondLabel" : "// child is the \"goog.scope\" and the second should be the parameter.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17914,
+  "secondPos" : 18064,
+  "firstEndPos" : 17982,
+  "secondEndPos" : 18132
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -23726,6 +24199,17 @@
   "firstEndPos" : 18947,
   "secondEndPos" : 19097
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Validate the top-level of the goog.scope block.",
+  "secondLabel" : "// Validate the top-level of the goog.scope block.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18974,
+  "secondPos" : 19124,
+  "firstEndPos" : 19024,
+  "secondEndPos" : 19174
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -24154,6 +24638,28 @@
   "secondPos" : 19348,
   "firstEndPos" : 19199,
   "secondEndPos" : 19349
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Return early, to ensure that we don't record a definition",
+  "secondLabel" : "// Return early, to ensure that we don't record a definition",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19215,
+  "secondPos" : 19365,
+  "firstEndPos" : 19275,
+  "secondEndPos" : 19425
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// twice.",
+  "secondLabel" : "// twice.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19288,
+  "secondPos" : 19438,
+  "firstEndPos" : 19297,
+  "secondEndPos" : 19447
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -24727,6 +25233,17 @@
   "firstEndPos" : 19692,
   "secondEndPos" : 19842
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Validate all descendent scopes of the goog.scope block.",
+  "secondLabel" : "// Validate all descendent scopes of the goog.scope block.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19720,
+  "secondPos" : 19870,
+  "firstEndPos" : 19778,
+  "secondEndPos" : 19928
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -24826,6 +25343,17 @@
   "firstEndPos" : 20724,
   "secondEndPos" : 20904
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if this name points to an alias.",
+  "secondLabel" : "// Check if this name points to an alias.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19823,
+  "secondPos" : 19973,
+  "firstEndPos" : 19864,
+  "secondEndPos" : 20014
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -24891,6 +25419,72 @@
   "secondPos" : 20045,
   "firstEndPos" : 20367,
   "secondEndPos" : 20517
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note, to support the transitive case, it's important we don't",
+  "secondLabel" : "// Note, to support the transitive case, it's important we don't",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19907,
+  "secondPos" : 20057,
+  "firstEndPos" : 19971,
+  "secondEndPos" : 20121
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// clone aliasedNode here.  For example,",
+  "secondLabel" : "// clone aliasedNode here.  For example,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19982,
+  "secondPos" : 20132,
+  "firstEndPos" : 20022,
+  "secondEndPos" : 20172
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// var g = goog; var d = g.dom; d.createElement('DIV');",
+  "secondLabel" : "// var g = goog; var d = g.dom; d.createElement('DIV');",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20033,
+  "secondPos" : 20183,
+  "firstEndPos" : 20088,
+  "secondEndPos" : 20238
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The node in aliasedNode (which is \"g\") will be replaced in the",
+  "secondLabel" : "// The node in aliasedNode (which is \"g\") will be replaced in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20099,
+  "secondPos" : 20249,
+  "firstEndPos" : 20164,
+  "secondEndPos" : 20314
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// changes pass above with \"goog\".  If we cloned here, we'd end up",
+  "secondLabel" : "// changes pass above with \"goog\".  If we cloned here, we'd end up",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20175,
+  "secondPos" : 20325,
+  "firstEndPos" : 20241,
+  "secondEndPos" : 20391
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with <code>g.dom.createElement('DIV')</code>.",
+  "secondLabel" : "// with <code>g.dom.createElement('DIV')</code>.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20252,
+  "secondPos" : 20402,
+  "firstEndPos" : 20300,
+  "secondEndPos" : 20450
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25012,6 +25606,28 @@
   "secondPos" : 20503,
   "firstEndPos" : 20354,
   "secondEndPos" : 20504
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When we inject declarations, we duplicate jsdoc. Make sure",
+  "secondLabel" : "// When we inject declarations, we duplicate jsdoc. Make sure",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20377,
+  "secondPos" : 20527,
+  "firstEndPos" : 20438,
+  "secondEndPos" : 20588
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we only process that jsdoc once.",
+  "secondLabel" : "// we only process that jsdoc once.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20447,
+  "secondPos" : 20597,
+  "firstEndPos" : 20482,
+  "secondEndPos" : 20632
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25342,6 +25958,17 @@
   "secondPos" : 20808,
   "firstEndPos" : 20632,
   "secondEndPos" : 20812
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(robbyw): Error for goog.scope not at root.",
+  "secondLabel" : "// TODO(robbyw): Error for goog.scope not at root.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20666,
+  "secondPos" : 20846,
+  "firstEndPos" : 20716,
+  "secondEndPos" : 20896
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

@@ -10,6 +10,17 @@
   "firstEndPos" : 4977,
   "secondEndPos" : 4991
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2007, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it \r\n * under the terms of the GNU Lesser General Public License as published by \r\n * the Free Software Foundation; either version 2.1 of the License, or \r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but \r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY \r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public \r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, \r\n * USA.  \r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc. \r\n * in the United States and other countries.]\r\n *\r\n * ----------------\r\n * ValueMarker.java\r\n * ----------------\r\n * (C) Copyright 2004-2007, by Object Refinery Limited.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   -;\r\n *\r\n * Changes\r\n * -------\r\n * 09-Feb-2004 : Version 1 (DG);\r\n * 16-Feb-2005 : Added new constructor (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 05-Sep-2006 : Added setValue() method (DG);\r\n * 08-Oct-2007 : Fixed bug 1808376, constructor calling super with incorrect\r\n *               values (DG);\r\n * \r\n */",
+  "secondLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2007, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it \r\n * under the terms of the GNU Lesser General Public License as published by \r\n * the Free Software Foundation; either version 2.1 of the License, or \r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but \r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY \r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public \r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, \r\n * USA.  \r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc. \r\n * in the United States and other countries.]\r\n *\r\n * ----------------\r\n * ValueMarker.java\r\n * ----------------\r\n * (C) Copyright 2004-2007, by Object Refinery Limited.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   -;\r\n *\r\n * Changes\r\n * -------\r\n * 09-Feb-2004 : Version 1 (DG);\r\n * 16-Feb-2005 : Added new constructor (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 05-Sep-2006 : Added setValue() method (DG);\r\n * 08-Oct-2007 : Fixed bug 1808376, constructor calling super with incorrect\r\n *               values (DG);\r\n * \r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1808,
+  "secondEndPos" : 1808
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -351,6 +362,17 @@
   "firstEndPos" : 2247,
   "secondEndPos" : 2247
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2223,
+  "secondPos" : 2223,
+  "firstEndPos" : 2229,
+  "secondEndPos" : 2229
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -582,6 +604,17 @@
   "firstEndPos" : 2437,
   "secondEndPos" : 2437
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2413,
+  "secondPos" : 2413,
+  "firstEndPos" : 2419,
+  "secondEndPos" : 2419
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -615,6 +648,17 @@
   "firstEndPos" : 2504,
   "secondEndPos" : 2504
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2446,
+  "secondPos" : 2446,
+  "firstEndPos" : 2452,
+  "secondEndPos" : 2452
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "paint",
@@ -647,6 +691,17 @@
   "secondPos" : 2513,
   "firstEndPos" : 2573,
   "secondEndPos" : 2573
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2513,
+  "secondPos" : 2513,
+  "firstEndPos" : 2519,
+  "secondEndPos" : 2519
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -956,6 +1011,17 @@
   "firstEndPos" : 2808,
   "secondEndPos" : 2808
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2784,
+  "secondPos" : 2784,
+  "firstEndPos" : 2790,
+  "secondEndPos" : 2790
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -988,6 +1054,17 @@
   "secondPos" : 2817,
   "firstEndPos" : 2875,
   "secondEndPos" : 2875
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2817,
+  "secondPos" : 2817,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2823
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1022,6 +1099,17 @@
   "firstEndPos" : 2944,
   "secondEndPos" : 2944
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2884,
+  "secondPos" : 2884,
+  "firstEndPos" : 2890,
+  "secondEndPos" : 2890
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stroke",
@@ -1054,6 +1142,17 @@
   "secondPos" : 2953,
   "firstEndPos" : 3022,
   "secondEndPos" : 3022
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2953,
+  "secondPos" : 2953,
+  "firstEndPos" : 2959,
+  "secondEndPos" : 2959
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1088,6 +1187,17 @@
   "firstEndPos" : 3102,
   "secondEndPos" : 3102
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3031,
+  "secondPos" : 3031,
+  "firstEndPos" : 3037,
+  "secondEndPos" : 3037
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "outlineStroke",
@@ -1120,6 +1230,17 @@
   "secondPos" : 3111,
   "firstEndPos" : 3176,
   "secondEndPos" : 3176
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3111,
+  "secondPos" : 3111,
+  "firstEndPos" : 3117,
+  "secondEndPos" : 3117
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1616,6 +1737,17 @@
   "firstEndPos" : 3499,
   "secondEndPos" : 3513
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3481,
+  "secondPos" : 3495,
+  "firstEndPos" : 3488,
+  "secondEndPos" : 3502
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The value.",
@@ -1637,6 +1769,17 @@
   "secondPos" : 3531,
   "firstEndPos" : 3539,
   "secondEndPos" : 3553
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3517,
+  "secondPos" : 3531,
+  "firstEndPos" : 3521,
+  "secondEndPos" : 3535
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -1825,6 +1968,17 @@
   "firstEndPos" : 3706,
   "secondEndPos" : 3720
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3681,
+  "secondPos" : 3695,
+  "firstEndPos" : 3686,
+  "secondEndPos" : 3700
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "MarkerChangeEvent",
@@ -1869,6 +2023,17 @@
   "firstEndPos" : 3786,
   "secondEndPos" : 3800
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3762,
+  "secondPos" : 3776,
+  "firstEndPos" : 3768,
+  "secondEndPos" : 3782
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -1902,6 +2067,17 @@
   "firstEndPos" : 3820,
   "secondEndPos" : 3834
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3804,
+  "secondPos" : 3818,
+  "firstEndPos" : 3808,
+  "secondEndPos" : 3822
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -1934,6 +2110,17 @@
   "secondPos" : 3852,
   "firstEndPos" : 3850,
   "secondEndPos" : 3864
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3838,
+  "secondPos" : 3852,
+  "firstEndPos" : 3844,
+  "secondEndPos" : 3858
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2320,6 +2507,17 @@
   "firstEndPos" : 4509,
   "secondEndPos" : 4523
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4456,
+  "secondPos" : 4470,
+  "firstEndPos" : 4462,
+  "secondEndPos" : 4476
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "obj",
@@ -2352,6 +2550,17 @@
   "secondPos" : 4541,
   "firstEndPos" : 4545,
   "secondEndPos" : 4559
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4527,
+  "secondPos" : 4541,
+  "firstEndPos" : 4534,
+  "secondEndPos" : 4548
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

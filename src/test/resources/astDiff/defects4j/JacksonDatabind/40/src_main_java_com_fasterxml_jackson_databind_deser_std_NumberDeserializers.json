@@ -285,6 +285,17 @@
   "firstEndPos" : 585,
   "secondEndPos" : 585
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 560,
+  "secondPos" : 560,
+  "firstEndPos" : 565,
+  "secondEndPos" : 565
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Boolean",
@@ -317,6 +328,17 @@
   "secondPos" : 593,
   "firstEndPos" : 620,
   "secondEndPos" : 620
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 593,
+  "secondPos" : 593,
+  "firstEndPos" : 598,
+  "secondEndPos" : 598
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -603,6 +625,17 @@
   "secondPos" : 825,
   "firstEndPos" : 1364,
   "secondEndPos" : 1364
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: can skip primitive types; other ways to check them:",
+  "secondLabel" : "// note: can skip primitive types; other ways to check them:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 835,
+  "secondPos" : 835,
+  "firstEndPos" : 895,
+  "secondEndPos" : 895
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -1054,6 +1087,17 @@
   "secondPos" : 1139,
   "firstEndPos" : 1145,
   "secondEndPos" : 1145
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and more generic ones",
+  "secondLabel" : "// and more generic ones",
+  "firstParentType" : "ArrayInitializer",
+  "secondParentType" : "ArrayInitializer",
+  "firstPos" : 1165,
+  "secondPos" : 1165,
+  "firstEndPos" : 1189,
+  "secondEndPos" : 1189
 }, {
   "firstType" : "TypeLiteral",
   "secondType" : "TypeLiteral",
@@ -2430,6 +2474,17 @@
   "firstEndPos" : 3818,
   "secondEndPos" : 3818
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Start with most common types; int, boolean, long, double",
+  "secondLabel" : "// Start with most common types; int, boolean, long, double",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2480,
+  "secondPos" : 2480,
+  "firstEndPos" : 2539,
+  "secondEndPos" : 2539
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3673,6 +3728,17 @@
   "firstEndPos" : 3849,
   "secondEndPos" : 3849
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should never occur",
+  "secondLabel" : "// should never occur",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3869,
+  "secondPos" : 3869,
+  "firstEndPos" : 3890,
+  "secondEndPos" : 3890
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -3793,6 +3859,17 @@
   "secondPos" : 3989,
   "firstEndPos" : 3996,
   "secondEndPos" : 3996
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Then one intermediate base class for things that have\n    /* both primitive and wrapper types\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Then one intermediate base class for things that have\n    /* both primitive and wrapper types\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4016,
+  "secondPos" : 4016,
+  "firstEndPos" : 4255,
+  "secondEndPos" : 4255
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -4993,6 +5070,17 @@
   "firstEndPos" : 5264,
   "secondEndPos" : 5264
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove in 2.7",
+  "secondLabel" : "// remove in 2.7",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 5265,
+  "secondPos" : 5265,
+  "firstEndPos" : 5281,
+  "secondEndPos" : 5281
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "public",
@@ -5080,6 +5168,17 @@
   "secondPos" : 5341,
   "firstEndPos" : 5351,
   "secondEndPos" : 5351
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Then primitive/wrapper types\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Then primitive/wrapper types\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5511,
+  "secondPos" : 6042,
+  "firstEndPos" : 5685,
+  "secondEndPos" : 6216
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -6059,6 +6158,28 @@
   "secondPos" : 6916,
   "firstEndPos" : 6389,
   "secondEndPos" : 6920
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "secondLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6411,
+  "secondPos" : 6942,
+  "firstEndPos" : 6499,
+  "secondEndPos" : 7030
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (is it an error to even call this version?)",
+  "secondLabel" : "// (is it an error to even call this version?)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 6508,
+  "secondPos" : 7039,
+  "firstEndPos" : 6554,
+  "secondEndPos" : 7085
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -9382,6 +9503,17 @@
   "firstEndPos" : 8967,
   "secondEndPos" : 9498
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ok iff ascii value",
+  "secondLabel" : "// ok iff ascii value",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 8969,
+  "secondPos" : 9500,
+  "firstEndPos" : 8990,
+  "secondEndPos" : 9521
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9734,6 +9866,28 @@
   "firstEndPos" : 9228,
   "secondEndPos" : 9759
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is the usual type",
+  "secondLabel" : "// this is the usual type",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 9230,
+  "secondPos" : 9761,
+  "firstEndPos" : 9255,
+  "secondEndPos" : 9786
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// But does it have to be exactly one char?",
+  "secondLabel" : "// But does it have to be exactly one char?",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 9272,
+  "secondPos" : 9803,
+  "firstEndPos" : 9315,
+  "secondEndPos" : 9846
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10063,6 +10217,17 @@
   "secondPos" : 9989,
   "firstEndPos" : 9459,
   "secondEndPos" : 9990
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actually, empty should become null?",
+  "secondLabel" : "// actually, empty should become null?",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 9497,
+  "secondPos" : 10028,
+  "firstEndPos" : 9535,
+  "secondEndPos" : 10066
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11736,6 +11901,17 @@
   "firstEndPos" : 10974,
   "secondEndPos" : 11505
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.6, slightly faster lookups for this very common type",
+  "secondLabel" : "// since 2.6, slightly faster lookups for this very common type",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10996,
+  "secondPos" : 11527,
+  "firstEndPos" : 11059,
+  "secondEndPos" : 11590
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -12241,6 +12417,28 @@
   "secondPos" : 11928,
   "firstEndPos" : 11401,
   "secondEndPos" : 11932
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "secondLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11423,
+  "secondPos" : 11954,
+  "firstEndPos" : 11511,
+  "secondEndPos" : 12042
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (is it an error to even call this version?)",
+  "secondLabel" : "// (is it an error to even call this version?)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11520,
+  "secondPos" : 12051,
+  "firstEndPos" : 11566,
+  "secondEndPos" : 12097
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -13462,6 +13660,17 @@
   "secondPos" : 12936,
   "firstEndPos" : 12408,
   "secondEndPos" : 12939
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.6, slightly faster lookups for this very common type",
+  "secondLabel" : "// since 2.6, slightly faster lookups for this very common type",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12430,
+  "secondPos" : 12961,
+  "firstEndPos" : 12493,
+  "secondEndPos" : 13024
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -15905,6 +16114,28 @@
   "firstEndPos" : 14189,
   "secondEndPos" : 14720
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "secondLabel" : "// Since we can never have type info (\"natural type\"; String, Boolean, Integer, Double):",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14211,
+  "secondPos" : 14742,
+  "firstEndPos" : 14299,
+  "secondEndPos" : 14830
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (is it an error to even call this version?)",
+  "secondLabel" : "// (is it an error to even call this version?)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14308,
+  "secondPos" : 14839,
+  "firstEndPos" : 14354,
+  "secondEndPos" : 14885
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -16279,6 +16510,17 @@
   "firstEndPos" : 14735,
   "secondEndPos" : 15266
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14702,
+  "secondPos" : 15233,
+  "firstEndPos" : 14707,
+  "secondEndPos" : 15238
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -16399,6 +16641,17 @@
   "secondPos" : 15571,
   "firstEndPos" : 15068,
   "secondEndPos" : 15599
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15040,
+  "secondPos" : 15571,
+  "firstEndPos" : 15045,
+  "secondEndPos" : 15576
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -17576,6 +17829,17 @@
   "secondPos" : 16624,
   "firstEndPos" : 16114,
   "secondEndPos" : 16645
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Textual values are more difficult... not parsing itself, but figuring\n                 * out 'minimal' type to use \n                 */",
+  "secondLabel" : "/* Textual values are more difficult... not parsing itself, but figuring\n                 * out 'minimal' type to use \n                 */",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16132,
+  "secondPos" : 16663,
+  "firstEndPos" : 16270,
+  "secondEndPos" : 16801
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -19986,6 +20250,17 @@
   "firstEndPos" : 18577,
   "secondEndPos" : 19108
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, no can do:",
+  "secondLabel" : "// Otherwise, no can do:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18604,
+  "secondPos" : 19135,
+  "firstEndPos" : 18628,
+  "secondEndPos" : 19159
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -20536,6 +20811,17 @@
   "firstEndPos" : 19406,
   "secondEndPos" : 19937
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// can not point to type information: hence must be non-typed (int/double)",
+  "secondLabel" : "// can not point to type information: hence must be non-typed (int/double)",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 19424,
+  "secondPos" : 19955,
+  "firstEndPos" : 19498,
+  "secondEndPos" : 20029
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -20689,6 +20975,17 @@
   "secondPos" : 20157,
   "firstEndPos" : 19630,
   "secondEndPos" : 20161
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* And then bit more complicated (but non-structured) number\n    /* types\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* And then bit more complicated (but non-structured) number\n    /* types\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 19654,
+  "secondPos" : 20185,
+  "firstEndPos" : 19870,
+  "secondEndPos" : 20401
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -22439,6 +22736,17 @@
   "firstEndPos" : 21766,
   "secondEndPos" : 22297
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's do implicit re-parse",
+  "secondLabel" : "// let's do implicit re-parse",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 21768,
+  "secondPos" : 22299,
+  "firstEndPos" : 21797,
+  "secondEndPos" : 22328
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -22933,6 +23241,17 @@
   "secondPos" : 22671,
   "firstEndPos" : 22168,
   "secondEndPos" : 22699
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// String is ok too, can easily convert; otherwise, no can do:",
+  "secondLabel" : "// String is ok too, can easily convert; otherwise, no can do:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22215,
+  "secondPos" : 22746,
+  "firstEndPos" : 22277,
+  "secondEndPos" : 22808
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
@@ -24814,6 +25133,17 @@
   "secondPos" : 24621,
   "firstEndPos" : 24096,
   "secondEndPos" : 24627
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, no can do:",
+  "secondLabel" : "// Otherwise, no can do:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24123,
+  "secondPos" : 24654,
+  "firstEndPos" : 24147,
+  "secondEndPos" : 24678
 }, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",

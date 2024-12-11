@@ -10,6 +10,17 @@
   "firstEndPos" : 21480,
   "secondEndPos" : 22192
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2009 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2009 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -923,6 +934,17 @@
   "firstEndPos" : 2457,
   "secondEndPos" : 2457
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Function node -> function side effects map",
+  "secondLabel" : "// Function node -> function side effects map",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2462,
+  "secondPos" : 2462,
+  "firstEndPos" : 2507,
+  "secondEndPos" : 2507
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1055,6 +1077,17 @@
   "firstEndPos" : 2576,
   "secondEndPos" : 2576
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// List of all function call sites; used to iterate in markPureFunctionCalls.",
+  "secondLabel" : "// List of all function call sites; used to iterate in markPureFunctionCalls.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2581,
+  "secondPos" : 2581,
+  "firstEndPos" : 2658,
+  "secondEndPos" : 2658
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1164,6 +1197,28 @@
   "secondPos" : 2686,
   "firstEndPos" : 2702,
   "secondEndPos" : 2702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Externs and ast tree root, for use in getDebugReport.  These two",
+  "secondLabel" : "// Externs and ast tree root, for use in getDebugReport.  These two",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2707,
+  "secondPos" : 2707,
+  "firstEndPos" : 2774,
+  "secondEndPos" : 2774
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fields are null until process is called.",
+  "secondLabel" : "// fields are null until process is called.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2777,
+  "secondPos" : 2777,
+  "firstEndPos" : 2820,
+  "secondEndPos" : 2820
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -5895,6 +5950,17 @@
   "firstEndPos" : 6084,
   "secondEndPos" : 6084
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6034,
+  "secondPos" : 6034,
+  "firstEndPos" : 6040,
+  "secondEndPos" : 6040
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "definitionProvider",
@@ -5928,6 +5994,17 @@
   "firstEndPos" : 6112,
   "secondEndPos" : 6112
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6090,
+  "secondPos" : 6090,
+  "firstEndPos" : 6096,
+  "secondEndPos" : 6096
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "name",
@@ -5960,6 +6037,17 @@
   "secondPos" : 6118,
   "firstEndPos" : 6159,
   "secondEndPos" : 6159
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6118,
+  "secondPos" : 6118,
+  "firstEndPos" : 6125,
+  "secondEndPos" : 6125
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7325,6 +7413,17 @@
   "firstEndPos" : 9062,
   "secondEndPos" : 9774
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Nodes are function declarations; Edges are function call sites.",
+  "secondLabel" : "// Nodes are function declarations; Edges are function call sites.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7168,
+  "secondPos" : 7880,
+  "firstEndPos" : 7234,
+  "secondEndPos" : 7946
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7523,6 +7622,17 @@
   "firstEndPos" : 7349,
   "secondEndPos" : 8061
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create graph nodes",
+  "secondLabel" : "// create graph nodes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7359,
+  "secondPos" : 8071,
+  "firstEndPos" : 7380,
+  "secondEndPos" : 8092
+}, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
   "firstLabel" : "",
@@ -7709,6 +7819,17 @@
   "secondPos" : 8204,
   "firstEndPos" : 7504,
   "secondEndPos" : 8216
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// add connections to called functions and side effect root.",
+  "secondLabel" : "// add connections to called functions and side effect root.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7518,
+  "secondPos" : 8230,
+  "firstEndPos" : 7578,
+  "secondEndPos" : 8290
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -8337,6 +8458,72 @@
   "firstEndPos" : 8383,
   "secondEndPos" : 9095
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Definition set is not complete or eligible.  Possible",
+  "secondLabel" : "// Definition set is not complete or eligible.  Possible",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7988,
+  "secondPos" : 8700,
+  "firstEndPos" : 8044,
+  "secondEndPos" : 8756
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// causes include:",
+  "secondLabel" : "// causes include:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8055,
+  "secondPos" : 8767,
+  "firstEndPos" : 8073,
+  "secondEndPos" : 8785
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  * \"callee\" is not of type NAME or GETPROP.",
+  "secondLabel" : "//  * \"callee\" is not of type NAME or GETPROP.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8084,
+  "secondPos" : 8796,
+  "firstEndPos" : 8130,
+  "secondEndPos" : 8842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  * One or more definitions are not functions.",
+  "secondLabel" : "//  * One or more definitions are not functions.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8141,
+  "secondPos" : 8853,
+  "firstEndPos" : 8189,
+  "secondEndPos" : 8901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  * One or more definitions are complex.",
+  "secondLabel" : "//  * One or more definitions are complex.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8200,
+  "secondPos" : 8912,
+  "firstEndPos" : 8242,
+  "secondEndPos" : 8954
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    (e.i. return value of a call that returns a function).",
+  "secondLabel" : "//    (e.i. return value of a call that returns a function).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8253,
+  "secondPos" : 8965,
+  "firstEndPos" : 8313,
+  "secondEndPos" : 9025
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8876,6 +9063,17 @@
   "firstEndPos" : 8643,
   "secondEndPos" : 9355
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Propagate side effect information to a fixed point.",
+  "secondLabel" : "// Propagate side effect information to a fixed point.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8675,
+  "secondPos" : 9387,
+  "firstEndPos" : 8729,
+  "secondEndPos" : 9441
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9029,6 +9227,17 @@
   "secondPos" : 9548,
   "firstEndPos" : 8851,
   "secondEndPos" : 9563
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mark remaining functions \"pure\".",
+  "secondLabel" : "// Mark remaining functions \"pure\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8859,
+  "secondPos" : 9571,
+  "firstEndPos" : 8894,
+  "secondEndPos" : 9606
 }, {
   "firstType" : "EnhancedForStatement",
   "secondType" : "EnhancedForStatement",
@@ -11230,6 +11439,50 @@
   "firstEndPos" : 10949,
   "secondEndPos" : 11661
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Functions need to be processed as part of pre-traversal so an",
+  "secondLabel" : "// Functions need to be processed as part of pre-traversal so an",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10566,
+  "secondPos" : 11278,
+  "firstEndPos" : 10630,
+  "secondEndPos" : 11342
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// entry for the enclosing function exists in the",
+  "secondLabel" : "// entry for the enclosing function exists in the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10637,
+  "secondPos" : 11349,
+  "firstEndPos" : 10686,
+  "secondEndPos" : 11398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// FunctionInformation map when processing assignments and calls",
+  "secondLabel" : "// FunctionInformation map when processing assignments and calls",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10693,
+  "secondPos" : 11405,
+  "firstEndPos" : 10757,
+  "secondEndPos" : 11469
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// inside visit.",
+  "secondLabel" : "// inside visit.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10764,
+  "secondPos" : 11476,
+  "firstEndPos" : 10780,
+  "secondEndPos" : 11492
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -13176,6 +13429,39 @@
   "secondPos" : 12840,
   "firstEndPos" : 12138,
   "secondEndPos" : 12850
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Variable definition are not side effects.",
+  "secondLabel" : "// Variable definition are not side effects.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 12155,
+  "secondPos" : 12867,
+  "firstEndPos" : 12199,
+  "secondEndPos" : 12911
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Just check that the name appears in the context of a",
+  "secondLabel" : "// Just check that the name appears in the context of a",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 12214,
+  "secondPos" : 12926,
+  "firstEndPos" : 12269,
+  "secondEndPos" : 12981
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// variable declaration.",
+  "secondLabel" : "// variable declaration.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 12284,
+  "secondPos" : 12996,
+  "firstEndPos" : 12308,
+  "secondEndPos" : 13020
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18534,6 +18820,28 @@
   "firstEndPos" : 17014,
   "secondEndPos" : 17726
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Side effects only propagate via regular calls.",
+  "secondLabel" : "// Side effects only propagate via regular calls.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16442,
+  "secondPos" : 17154,
+  "firstEndPos" : 16491,
+  "secondEndPos" : 17203
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Calling a constructor that modifies \"this\" has no side effects.",
+  "secondLabel" : "// Calling a constructor that modifies \"this\" has no side effects.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16500,
+  "secondPos" : 17212,
+  "firstEndPos" : 16566,
+  "secondEndPos" : 17278
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -19403,6 +19711,17 @@
   "firstEndPos" : 17416,
   "secondEndPos" : 18128
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17366,
+  "secondPos" : 18078,
+  "firstEndPos" : 17373,
+  "secondEndPos" : 18085
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " node that will act as \"this\" for the call.",
@@ -19732,6 +20051,17 @@
   "secondPos" : 18267,
   "firstEndPos" : 17656,
   "secondEndPos" : 18368
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"this\" is not specified explicitly; call modifies global \"this\".",
+  "secondLabel" : "// \"this\" is not specified explicitly; call modifies global \"this\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17564,
+  "secondPos" : 18276,
+  "firstEndPos" : 17631,
+  "secondEndPos" : 18343
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -21207,6 +21537,17 @@
   "firstEndPos" : 18675,
   "secondEndPos" : 19387
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@returns",
+  "secondLabel" : "@returns",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18621,
+  "secondPos" : 19333,
+  "firstEndPos" : 18629,
+  "secondEndPos" : 19341
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " false if function known to have side effects.",
@@ -21393,6 +21734,17 @@
   "secondPos" : 19573,
   "firstEndPos" : 18905,
   "secondEndPos" : 19617
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@returns",
+  "secondLabel" : "@returns",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18861,
+  "secondPos" : 19573,
+  "firstEndPos" : 18869,
+  "secondEndPos" : 19581
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

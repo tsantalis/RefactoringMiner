@@ -10,6 +10,17 @@
   "firstEndPos" : 3096,
   "secondEndPos" : 3228
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "secondLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -329,6 +340,17 @@
   "firstEndPos" : 751,
   "secondEndPos" : 777
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 716,
+  "secondPos" : 742,
+  "firstEndPos" : 721,
+  "secondEndPos" : 747
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -537,6 +559,17 @@
   "secondPos" : 1305,
   "firstEndPos" : 1309,
   "secondEndPos" : 1335
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1279,
+  "secondPos" : 1305,
+  "firstEndPos" : 1284,
+  "secondEndPos" : 1310
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

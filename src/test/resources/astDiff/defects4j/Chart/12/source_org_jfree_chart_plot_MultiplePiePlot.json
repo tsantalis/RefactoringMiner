@@ -10,6 +10,17 @@
   "firstEndPos" : 21421,
   "secondEndPos" : 21418
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it\r\n * under the terms of the GNU Lesser General Public License as published by\r\n * the Free Software Foundation; either version 2.1 of the License, or\r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but\r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\r\n * USA.\r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\r\n * in the United States and other countries.]\r\n *\r\n * --------------------\r\n * MultiplePiePlot.java\r\n * --------------------\r\n * (C) Copyright 2004-2008, by Object Refinery Limited.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   Brian Cabana (patch 1943021);\r\n *\r\n * Changes\r\n * -------\r\n * 29-Jan-2004 : Version 1 (DG);\r\n * 31-Mar-2004 : Added setPieIndex() call during drawing (DG);\r\n * 20-Apr-2005 : Small change for update to LegendItem constructors (DG);\r\n * 05-May-2005 : Updated draw() method parameters (DG);\r\n * 16-Jun-2005 : Added get/setDataset() and equals() methods (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 06-Apr-2006 : Fixed bug 1190647 - legend and section colors not consistent\r\n *               when aggregation limit is specified (DG);\r\n * 27-Sep-2006 : Updated draw() method for deprecated code (DG);\r\n * 17-Jan-2007 : Updated prefetchSectionPaints() to check settings in\r\n *               underlying PiePlot (DG);\r\n * 17-May-2007 : Added argument check to setPieChart() (DG);\r\n * 18-May-2007 : Set dataset for LegendItem (DG);\r\n * 20-Jun-2007 : Removed JCommon dependencies (DG);\r\n * 18-Apr-2008 : In the constructor, register the plot as a dataset listener -\r\n *               see patch 1943021 from Brian Cabana (DG);\r\n *\r\n */",
+  "secondLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it\r\n * under the terms of the GNU Lesser General Public License as published by\r\n * the Free Software Foundation; either version 2.1 of the License, or\r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but\r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\r\n * USA.\r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\r\n * in the United States and other countries.]\r\n *\r\n * --------------------\r\n * MultiplePiePlot.java\r\n * --------------------\r\n * (C) Copyright 2004-2008, by Object Refinery Limited.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   Brian Cabana (patch 1943021);\r\n *\r\n * Changes\r\n * -------\r\n * 29-Jan-2004 : Version 1 (DG);\r\n * 31-Mar-2004 : Added setPieIndex() call during drawing (DG);\r\n * 20-Apr-2005 : Small change for update to LegendItem constructors (DG);\r\n * 05-May-2005 : Updated draw() method parameters (DG);\r\n * 16-Jun-2005 : Added get/setDataset() and equals() methods (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 06-Apr-2006 : Fixed bug 1190647 - legend and section colors not consistent\r\n *               when aggregation limit is specified (DG);\r\n * 27-Sep-2006 : Updated draw() method for deprecated code (DG);\r\n * 17-Jan-2007 : Updated prefetchSectionPaints() to check settings in\r\n *               underlying PiePlot (DG);\r\n * 17-May-2007 : Added argument check to setPieChart() (DG);\r\n * 18-May-2007 : Set dataset for LegendItem (DG);\r\n * 20-Jun-2007 : Removed JCommon dependencies (DG);\r\n * 18-Apr-2008 : In the constructor, register the plot as a dataset listener -\r\n *               see patch 1943021 from Brian Cabana (DG);\r\n *\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 2522,
+  "secondEndPos" : 2522
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -791,6 +802,17 @@
   "firstEndPos" : 3846,
   "secondEndPos" : 3846
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3823,
+  "secondPos" : 3823,
+  "firstEndPos" : 3828,
+  "secondEndPos" : 3828
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "CategoryDataset",
@@ -1506,6 +1528,17 @@
   "firstEndPos" : 4462,
   "secondEndPos" : 4462
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4450,
+  "secondPos" : 4450,
+  "firstEndPos" : 4456,
+  "secondEndPos" : 4456
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 1.0.2",
@@ -1626,6 +1659,17 @@
   "secondPos" : 4579,
   "firstEndPos" : 4591,
   "secondEndPos" : 4591
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4579,
+  "secondPos" : 4579,
+  "firstEndPos" : 4585,
+  "secondEndPos" : 4585
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1758,6 +1802,17 @@
   "secondPos" : 4715,
   "firstEndPos" : 4727,
   "secondEndPos" : 4727
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4715,
+  "secondPos" : 4715,
+  "firstEndPos" : 4721,
+  "secondEndPos" : 4721
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1989,6 +2044,17 @@
   "secondPos" : 4955,
   "firstEndPos" : 5013,
   "secondEndPos" : 5013
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4955,
+  "secondPos" : 4955,
+  "firstEndPos" : 4961,
+  "secondEndPos" : 4961
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3233,6 +3299,17 @@
   "firstEndPos" : 5861,
   "secondEndPos" : 5858
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5812,
+  "secondPos" : 5809,
+  "firstEndPos" : 5819,
+  "secondEndPos" : 5816
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The dataset (possibly <code>null</code>).",
@@ -3398,6 +3475,17 @@
   "firstEndPos" : 6039,
   "secondEndPos" : 6036
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6016,
+  "secondPos" : 6013,
+  "firstEndPos" : 6021,
+  "secondEndPos" : 6018
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PlotChangeEvent",
@@ -3430,6 +3518,17 @@
   "secondPos" : 6090,
   "firstEndPos" : 6151,
   "secondEndPos" : 6148
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6093,
+  "secondPos" : 6090,
+  "firstEndPos" : 6099,
+  "secondEndPos" : 6096
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3540,6 +3639,28 @@
   "secondPos" : 6211,
   "firstEndPos" : 6831,
   "secondEndPos" : 6828
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if there is an existing dataset, remove the plot from the list of",
+  "secondLabel" : "// if there is an existing dataset, remove the plot from the list of",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6225,
+  "secondPos" : 6222,
+  "firstEndPos" : 6293,
+  "secondEndPos" : 6290
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// change listeners...",
+  "secondLabel" : "// change listeners...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6303,
+  "secondPos" : 6300,
+  "firstEndPos" : 6325,
+  "secondEndPos" : 6322
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3727,6 +3848,17 @@
   "secondPos" : 6407,
   "firstEndPos" : 6414,
   "secondEndPos" : 6411
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// set the new dataset, and register the chart as a change listener...",
+  "secondLabel" : "// set the new dataset, and register the chart as a change listener...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6439,
+  "secondPos" : 6436,
+  "firstEndPos" : 6509,
+  "secondEndPos" : 6506
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4036,6 +4168,17 @@
   "firstEndPos" : 6668,
   "secondEndPos" : 6665
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// send a dataset change event to self to trigger plot change event",
+  "secondLabel" : "// send a dataset change event to self to trigger plot change event",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6693,
+  "secondPos" : 6690,
+  "firstEndPos" : 6760,
+  "secondEndPos" : 6757
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -4190,6 +4333,17 @@
   "firstEndPos" : 6984,
   "secondEndPos" : 6981
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6936,
+  "secondPos" : 6933,
+  "firstEndPos" : 6943,
+  "secondEndPos" : 6940
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The pie chart (never <code>null</code>).",
@@ -4211,6 +4365,17 @@
   "secondPos" : 6998,
   "firstEndPos" : 7030,
   "secondEndPos" : 7027
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7001,
+  "secondPos" : 6998,
+  "firstEndPos" : 7005,
+  "secondEndPos" : 7002
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -4432,6 +4597,17 @@
   "firstEndPos" : 7262,
   "secondEndPos" : 7259
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7247,
+  "secondPos" : 7244,
+  "firstEndPos" : 7252,
+  "secondEndPos" : 7249
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PiePlot",
@@ -4465,6 +4641,17 @@
   "firstEndPos" : 7345,
   "secondEndPos" : 7342
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7280,
+  "secondPos" : 7277,
+  "firstEndPos" : 7286,
+  "secondEndPos" : 7283
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "pieChart",
@@ -4497,6 +4684,17 @@
   "secondPos" : 7359,
   "firstEndPos" : 7381,
   "secondEndPos" : 7378
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7362,
+  "secondPos" : 7359,
+  "firstEndPos" : 7366,
+  "secondEndPos" : 7363
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -5114,6 +5312,17 @@
   "firstEndPos" : 7987,
   "secondEndPos" : 7984
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7930,
+  "secondPos" : 7927,
+  "firstEndPos" : 7937,
+  "secondEndPos" : 7934
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The data extract order (never <code>null</code>).",
@@ -5279,6 +5488,17 @@
   "firstEndPos" : 8202,
   "secondEndPos" : 8199
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8179,
+  "secondPos" : 8176,
+  "firstEndPos" : 8184,
+  "secondEndPos" : 8181
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PlotChangeEvent",
@@ -5311,6 +5531,17 @@
   "secondPos" : 8245,
   "firstEndPos" : 8306,
   "secondEndPos" : 8303
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8248,
+  "secondPos" : 8245,
+  "firstEndPos" : 8254,
+  "secondEndPos" : 8251
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5719,6 +5950,17 @@
   "firstEndPos" : 8718,
   "secondEndPos" : 8715
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8689,
+  "secondPos" : 8686,
+  "firstEndPos" : 8696,
+  "secondEndPos" : 8693
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The limit percentage.",
@@ -5883,6 +6125,17 @@
   "secondPos" : 8951,
   "firstEndPos" : 8986,
   "secondEndPos" : 8983
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8954,
+  "secondPos" : 8951,
+  "firstEndPos" : 8960,
+  "secondEndPos" : 8957
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -6159,6 +6412,17 @@
   "firstEndPos" : 9281,
   "secondEndPos" : 9278
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9248,
+  "secondPos" : 9245,
+  "firstEndPos" : 9255,
+  "secondEndPos" : 9252
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The aggregated items key.",
@@ -6180,6 +6444,17 @@
   "secondPos" : 9295,
   "firstEndPos" : 9310,
   "secondEndPos" : 9307
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9298,
+  "secondPos" : 9295,
+  "firstEndPos" : 9304,
+  "secondEndPos" : 9301
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6357,6 +6632,17 @@
   "firstEndPos" : 9637,
   "secondEndPos" : 9634
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9583,
+  "secondPos" : 9580,
+  "firstEndPos" : 9589,
+  "secondEndPos" : 9586
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "key",
@@ -6389,6 +6675,17 @@
   "secondPos" : 9651,
   "firstEndPos" : 9666,
   "secondEndPos" : 9663
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9654,
+  "secondPos" : 9651,
+  "firstEndPos" : 9660,
+  "secondEndPos" : 9657
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6786,6 +7083,17 @@
   "firstEndPos" : 10115,
   "secondEndPos" : 10112
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10097,
+  "secondPos" : 10094,
+  "firstEndPos" : 10104,
+  "secondEndPos" : 10101
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The paint.",
@@ -6807,6 +7115,17 @@
   "secondPos" : 10129,
   "firstEndPos" : 10144,
   "secondEndPos" : 10141
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10132,
+  "secondPos" : 10129,
+  "firstEndPos" : 10138,
+  "secondEndPos" : 10135
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6984,6 +7303,17 @@
   "firstEndPos" : 10390,
   "secondEndPos" : 10387
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10367,
+  "secondPos" : 10364,
+  "firstEndPos" : 10372,
+  "secondEndPos" : 10369
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "PlotChangeEvent",
@@ -7017,6 +7347,17 @@
   "firstEndPos" : 10494,
   "secondEndPos" : 10491
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10436,
+  "secondPos" : 10433,
+  "firstEndPos" : 10442,
+  "secondEndPos" : 10439
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "paint",
@@ -7049,6 +7390,17 @@
   "secondPos" : 10508,
   "firstEndPos" : 10523,
   "secondEndPos" : 10520
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10511,
+  "secondPos" : 10508,
+  "firstEndPos" : 10517,
+  "secondEndPos" : 10514
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7435,6 +7787,17 @@
   "firstEndPos" : 10893,
   "secondEndPos" : 10890
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10871,
+  "secondPos" : 10868,
+  "firstEndPos" : 10878,
+  "secondEndPos" : 10875
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The plot type.",
@@ -7523,6 +7886,17 @@
   "firstEndPos" : 10973,
   "secondEndPos" : 10970
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: need to fetch this from localised resources",
+  "secondLabel" : "// TODO: need to fetch this from localised resources",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10985,
+  "secondPos" : 10982,
+  "firstEndPos" : 11037,
+  "secondEndPos" : 11034
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -7589,6 +7963,17 @@
   "firstEndPos" : 11198,
   "secondEndPos" : 11195
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11167,
+  "secondPos" : 11164,
+  "firstEndPos" : 11173,
+  "secondEndPos" : 11170
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "g2",
@@ -7621,6 +8006,17 @@
   "secondPos" : 11204,
   "firstEndPos" : 11267,
   "secondEndPos" : 11264
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11207,
+  "secondPos" : 11204,
+  "firstEndPos" : 11213,
+  "secondEndPos" : 11210
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -7655,6 +8051,17 @@
   "firstEndPos" : 11338,
   "secondEndPos" : 11335
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11276,
+  "secondPos" : 11273,
+  "firstEndPos" : 11282,
+  "secondEndPos" : 11279
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "anchor",
@@ -7688,6 +8095,17 @@
   "firstEndPos" : 11415,
   "secondEndPos" : 11412
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11347,
+  "secondPos" : 11344,
+  "firstEndPos" : 11353,
+  "secondEndPos" : 11350
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "parentState",
@@ -7720,6 +8138,17 @@
   "secondPos" : 11421,
   "firstEndPos" : 11469,
   "secondEndPos" : 11466
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11424,
+  "secondPos" : 11421,
+  "firstEndPos" : 11430,
+  "secondEndPos" : 11427
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -8007,6 +8436,17 @@
   "firstEndPos" : 15565,
   "secondEndPos" : 15562
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// adjust the drawing area for the plot insets (if any)...",
+  "secondLabel" : "// adjust the drawing area for the plot insets (if any)...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11700,
+  "secondPos" : 11697,
+  "firstEndPos" : 11758,
+  "secondEndPos" : 11755
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8292,6 +8732,17 @@
   "secondPos" : 11891,
   "firstEndPos" : 11898,
   "secondEndPos" : 11895
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check that there is some data to display...",
+  "secondLabel" : "// check that there is some data to display...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11912,
+  "secondPos" : 11909,
+  "firstEndPos" : 11958,
+  "secondEndPos" : 11955
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8854,6 +9305,17 @@
   "firstEndPos" : 12312,
   "secondEndPos" : 12309
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the columns variable is always >= rows",
+  "secondLabel" : "// the columns variable is always >= rows",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12338,
+  "secondPos" : 12335,
+  "firstEndPos" : 12379,
+  "secondEndPos" : 12376
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9249,6 +9711,17 @@
   "secondPos" : 12527,
   "firstEndPos" : 12541,
   "secondEndPos" : 12538
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// swap rows and columns to match plotArea shape",
+  "secondLabel" : "// swap rows and columns to match plotArea shape",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12555,
+  "secondPos" : 12552,
+  "firstEndPos" : 12603,
+  "secondEndPos" : 12600
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12451,6 +12924,17 @@
   "firstEndPos" : 14320,
   "secondEndPos" : 14317
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// update the section colors to match the global colors...",
+  "secondLabel" : "// update the section colors to match the global colors...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14338,
+  "secondPos" : 14335,
+  "firstEndPos" : 14396,
+  "secondEndPos" : 14393
+}, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
   "firstLabel" : "",
@@ -14574,6 +15058,39 @@
   "firstEndPos" : 17393,
   "secondEndPos" : 17390
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pre-fetch the colors for each key...this is because the subplots",
+  "secondLabel" : "// pre-fetch the colors for each key...this is because the subplots",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15929,
+  "secondPos" : 15926,
+  "firstEndPos" : 15996,
+  "secondEndPos" : 15993
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// may not display every key, but we need the coloring to be",
+  "secondLabel" : "// may not display every key, but we need the coloring to be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16006,
+  "secondPos" : 16003,
+  "firstEndPos" : 16066,
+  "secondEndPos" : 16063
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// consistent...",
+  "secondLabel" : "// consistent...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16076,
+  "secondPos" : 16073,
+  "firstEndPos" : 16092,
+  "secondEndPos" : 16089
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14804,6 +15321,17 @@
   "secondPos" : 16213,
   "firstEndPos" : 16797,
   "secondEndPos" : 16794
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// column keys provide potential keys for individual pies",
+  "secondLabel" : "// column keys provide potential keys for individual pies",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16231,
+  "secondPos" : 16228,
+  "firstEndPos" : 16288,
+  "secondEndPos" : 16285
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -15794,6 +16322,17 @@
   "secondPos" : 16809,
   "firstEndPos" : 17384,
   "secondEndPos" : 17381
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// row keys provide potential keys for individual pies",
+  "secondLabel" : "// row keys provide potential keys for individual pies",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16827,
+  "secondPos" : 16824,
+  "firstEndPos" : 16881,
+  "secondEndPos" : 16878
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -16828,6 +17367,17 @@
   "secondPos" : 17482,
   "firstEndPos" : 17510,
   "secondEndPos" : 17507
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17485,
+  "secondPos" : 17482,
+  "firstEndPos" : 17492,
+  "secondEndPos" : 17489
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -19227,6 +19777,17 @@
   "firstEndPos" : 19493,
   "secondEndPos" : 19490
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19440,
+  "secondPos" : 19437,
+  "firstEndPos" : 19446,
+  "secondEndPos" : 19443
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "obj",
@@ -19259,6 +19820,17 @@
   "secondPos" : 19507,
   "firstEndPos" : 19624,
   "secondEndPos" : 19621
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19510,
+  "secondPos" : 19507,
+  "firstEndPos" : 19517,
+  "secondEndPos" : 19514
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -20558,6 +21130,17 @@
   "firstEndPos" : 20630,
   "secondEndPos" : 20627
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20597,
+  "secondPos" : 20594,
+  "firstEndPos" : 20603,
+  "secondEndPos" : 20600
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stream",
@@ -20590,6 +21173,17 @@
   "secondPos" : 20644,
   "firstEndPos" : 20693,
   "secondEndPos" : 20690
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20647,
+  "secondPos" : 20644,
+  "firstEndPos" : 20654,
+  "secondEndPos" : 20651
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -20943,6 +21537,17 @@
   "firstEndPos" : 20997,
   "secondEndPos" : 20994
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20965,
+  "secondPos" : 20962,
+  "firstEndPos" : 20971,
+  "secondEndPos" : 20968
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "stream",
@@ -20976,6 +21581,17 @@
   "firstEndPos" : 21060,
   "secondEndPos" : 21057
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21014,
+  "secondPos" : 21011,
+  "firstEndPos" : 21021,
+  "secondEndPos" : 21018
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IOException",
@@ -21008,6 +21624,17 @@
   "secondPos" : 21066,
   "firstEndPos" : 21133,
   "secondEndPos" : 21130
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21069,
+  "secondPos" : 21066,
+  "firstEndPos" : 21076,
+  "secondEndPos" : 21073
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",

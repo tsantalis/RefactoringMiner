@@ -1033,6 +1033,17 @@
   "firstEndPos" : 698,
   "secondEndPos" : 698
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 676,
+  "secondPos" : 676,
+  "firstEndPos" : 682,
+  "secondEndPos" : 682
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "query",
@@ -1374,6 +1385,17 @@
   "firstEndPos" : 904,
   "secondEndPos" : 904
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 882,
+  "secondPos" : 882,
+  "firstEndPos" : 888,
+  "secondEndPos" : 888
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "query",
@@ -1406,6 +1428,17 @@
   "secondPos" : 912,
   "firstEndPos" : 929,
   "secondEndPos" : 929
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 912,
+  "secondPos" : 912,
+  "firstEndPos" : 919,
+  "secondEndPos" : 919
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1737,6 +1770,17 @@
   "firstEndPos" : 1132,
   "secondEndPos" : 1274
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1115,
+  "secondPos" : 1257,
+  "firstEndPos" : 1122,
+  "secondEndPos" : 1264
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Evaluator",
@@ -1934,6 +1978,17 @@
   "secondPos" : 1380,
   "firstEndPos" : 1395,
   "secondEndPos" : 1537
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if starts with a combinator, use root as elements",
+  "secondLabel" : "// if starts with a combinator, use root as elements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1240,
+  "secondPos" : 1382,
+  "firstEndPos" : 1292,
+  "secondEndPos" : 1434
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2253,6 +2308,17 @@
   "secondPos" : 1614,
   "firstEndPos" : 1869,
   "secondEndPos" : 2011
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hierarchy and extras",
+  "secondLabel" : "// hierarchy and extras",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1486,
+  "secondPos" : 1628,
+  "firstEndPos" : 1509,
+  "secondEndPos" : 1651
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -2617,6 +2683,17 @@
   "firstEndPos" : 1859,
   "secondEndPos" : 2001
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// E.class, E#id, E[attr] etc. AND",
+  "secondLabel" : "// E.class, E#id, E[attr] etc. AND",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1745,
+  "secondPos" : 1887,
+  "firstEndPos" : 1779,
+  "secondEndPos" : 1921
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2649,6 +2726,17 @@
   "secondPos" : 1938,
   "firstEndPos" : 1808,
   "secondEndPos" : 1950
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// take next el, #. etc off queue",
+  "secondLabel" : "// take next el, #. etc off queue",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1812,
+  "secondPos" : 1954,
+  "firstEndPos" : 1845,
+  "secondEndPos" : 1987
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3090,6 +3178,17 @@
   "firstEndPos" : 2113,
   "secondEndPos" : 2255
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// support multi > childs",
+  "secondLabel" : "// support multi > childs",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2117,
+  "secondPos" : 2259,
+  "firstEndPos" : 2142,
+  "secondEndPos" : 2284
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3145,6 +3244,17 @@
   "firstEndPos" : 2170,
   "secondEndPos" : 2312
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the new topmost evaluator",
+  "secondLabel" : "// the new topmost evaluator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2172,
+  "secondPos" : 2314,
+  "firstEndPos" : 2200,
+  "secondEndPos" : 2342
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3199,6 +3309,17 @@
   "secondPos" : 2361,
   "firstEndPos" : 2230,
   "secondEndPos" : 2372
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the evaluator the new eval will be combined to. could be root, or rightmost or.",
+  "secondLabel" : "// the evaluator the new eval will be combined to. could be root, or rightmost or.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2232,
+  "secondPos" : 2374,
+  "firstEndPos" : 2314,
+  "secondEndPos" : 2456
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3298,6 +3419,17 @@
   "secondPos" : 2491,
   "firstEndPos" : 2357,
   "secondEndPos" : 2499
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the evaluator to add into target evaluator",
+  "secondLabel" : "// the evaluator to add into target evaluator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2360,
+  "secondPos" : 2502,
+  "firstEndPos" : 2405,
+  "secondEndPos" : 2547
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3595,6 +3727,17 @@
   "secondPos" : 2671,
   "firstEndPos" : 2530,
   "secondEndPos" : 2672
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// make sure OR (,) has precedence:",
+  "secondLabel" : "// make sure OR (,) has precedence:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2545,
+  "secondPos" : 2687,
+  "firstEndPos" : 2580,
+  "secondEndPos" : 2722
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4101,6 +4244,17 @@
   "secondPos" : 3071,
   "firstEndPos" : 2934,
   "secondEndPos" : 3076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for most combinators: change the current eval into an AND of the current eval and the new eval",
+  "secondLabel" : "// for most combinators: change the current eval into an AND of the current eval and the new eval",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2947,
+  "secondPos" : 3089,
+  "firstEndPos" : 3044,
+  "secondEndPos" : 3186
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4915,6 +5069,17 @@
   "secondPos" : 3830,
   "firstEndPos" : 4090,
   "secondEndPos" : 4232
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// group or.",
+  "secondLabel" : "// group or.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3690,
+  "secondPos" : 3832,
+  "firstEndPos" : 3702,
+  "secondEndPos" : 3844
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10856,6 +11021,17 @@
   "firstEndPos" : 7036,
   "secondEndPos" : 7178
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unhandled",
+  "secondLabel" : "// unhandled",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 7048,
+  "secondPos" : 7190,
+  "firstEndPos" : 7060,
+  "secondEndPos" : 7202
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -11912,6 +12088,17 @@
   "firstEndPos" : 7656,
   "secondEndPos" : 7798
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// namespaces: wildcard match equals(tagName) or ending in \":\"+tagName",
+  "secondLabel" : "// namespaces: wildcard match equals(tagName) or ending in \":\"+tagName",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7668,
+  "secondPos" : 7810,
+  "firstEndPos" : 7738,
+  "secondEndPos" : 7880
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12395,6 +12582,17 @@
   "secondPos" : 8111,
   "firstEndPos" : 8225,
   "secondEndPos" : 8367
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// namespaces: if element name is \"abc:def\", selector must be \"abc|def\", so flip:",
+  "secondLabel" : "// namespaces: if element name is \"abc:def\", selector must be \"abc|def\", so flip:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7983,
+  "secondPos" : 8125,
+  "firstEndPos" : 8064,
+  "secondEndPos" : 8206
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12957,6 +13155,17 @@
   "firstEndPos" : 8330,
   "secondEndPos" : 8472
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// content queue",
+  "secondLabel" : "// content queue",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8334,
+  "secondPos" : 8476,
+  "firstEndPos" : 8350,
+  "secondEndPos" : 8492
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13077,6 +13286,17 @@
   "secondPos" : 8530,
   "firstEndPos" : 8402,
   "secondEndPos" : 8544
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// eq, not, start, end, contain, match, (no val)",
+  "secondLabel" : "// eq, not, start, end, contain, match, (no val)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8405,
+  "secondPos" : 8547,
+  "firstEndPos" : 8453,
+  "secondEndPos" : 8595
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15344,6 +15564,17 @@
   "firstEndPos" : 9806,
   "secondEndPos" : 9948
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pseudo selectors :lt, :gt, :eq",
+  "secondLabel" : "// pseudo selectors :lt, :gt, :eq",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 9822,
+  "secondPos" : 9964,
+  "firstEndPos" : 9855,
+  "secondEndPos" : 9997
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -15871,6 +16102,17 @@
   "secondPos" : 10293,
   "firstEndPos" : 10163,
   "secondEndPos" : 10305
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//pseudo selectors :first-child, :last-child, :nth-child, ...",
+  "secondLabel" : "//pseudo selectors :first-child, :last-child, :nth-child, ...",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 10184,
+  "secondPos" : 10326,
+  "firstEndPos" : 10245,
+  "secondEndPos" : 10387
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -19381,6 +19623,17 @@
   "firstEndPos" : 11680,
   "secondEndPos" : 11822
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pseudo selector :has(el)",
+  "secondLabel" : "// pseudo selector :has(el)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11694,
+  "secondPos" : 11836,
+  "firstEndPos" : 11721,
+  "secondEndPos" : 11863
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -19875,6 +20128,17 @@
   "secondPos" : 12100,
   "firstEndPos" : 11966,
   "secondEndPos" : 12108
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pseudo selector :contains(text), containsOwn(text)",
+  "secondLabel" : "// pseudo selector :contains(text), containsOwn(text)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11982,
+  "secondPos" : 12124,
+  "firstEndPos" : 12035,
+  "secondEndPos" : 12177
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -20591,6 +20855,17 @@
   "firstEndPos" : 12447,
   "secondEndPos" : 12589
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pseudo selector :containsData(data)",
+  "secondLabel" : "// pseudo selector :containsData(data)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12462,
+  "secondPos" : 12604,
+  "firstEndPos" : 12500,
+  "secondEndPos" : 12642
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -21108,6 +21383,17 @@
   "firstEndPos" : 12790,
   "secondEndPos" : 12932
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// :matches(regex), matchesOwn(regex)",
+  "secondLabel" : "// :matches(regex), matchesOwn(regex)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12805,
+  "secondPos" : 12947,
+  "firstEndPos" : 12842,
+  "secondEndPos" : 12984
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -21437,6 +21723,17 @@
   "secondPos" : 13124,
   "firstEndPos" : 12985,
   "secondEndPos" : 13127
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// don't unescape, as regex bits will be escaped",
+  "secondLabel" : "// don't unescape, as regex bits will be escaped",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12988,
+  "secondPos" : 13130,
+  "firstEndPos" : 13036,
+  "secondEndPos" : 13178
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -21877,6 +22174,17 @@
   "secondPos" : 13420,
   "firstEndPos" : 13283,
   "secondEndPos" : 13425
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// :not(selector)",
+  "secondLabel" : "// :not(selector)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13299,
+  "secondPos" : 13441,
+  "firstEndPos" : 13316,
+  "secondEndPos" : 13458
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

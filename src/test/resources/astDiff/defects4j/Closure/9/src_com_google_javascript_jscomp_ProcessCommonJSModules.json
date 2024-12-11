@@ -10,6 +10,17 @@
   "firstEndPos" : 9629,
   "secondEndPos" : 9652
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2011 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2011 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -394,6 +405,28 @@
   "secondPos" : 1466,
   "firstEndPos" : 1478,
   "secondEndPos" : 1478
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// According to the spec, the forward slash should be the delimite on",
+  "secondLabel" : "// According to the spec, the forward slash should be the delimite on",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1483,
+  "secondPos" : 1483,
+  "firstEndPos" : 1552,
+  "secondEndPos" : 1552
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// all platforms.",
+  "secondLabel" : "// all platforms.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1555,
+  "secondPos" : 1555,
+  "firstEndPos" : 1572,
+  "secondEndPos" : 1572
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -4234,6 +4267,28 @@
   "firstEndPos" : 4411,
   "secondEndPos" : 4455
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The DOS command shell will normalize \"/\" to \"\\\", so we have to",
+  "secondLabel" : "// The DOS command shell will normalize \"/\" to \"\\\", so we have to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4178,
+  "secondPos" : 4178,
+  "firstEndPos" : 4243,
+  "secondEndPos" : 4243
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// wrestle it back.",
+  "secondLabel" : "// wrestle it back.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4248,
+  "secondPos" : 4248,
+  "firstEndPos" : 4267,
+  "secondEndPos" : 4267
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6973,6 +7028,17 @@
   "firstEndPos" : 5798,
   "secondEndPos" : 5842
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Rewrite require(\"name\").",
+  "secondLabel" : "// Rewrite require(\"name\").",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5815,
+  "secondPos" : 5859,
+  "firstEndPos" : 5842,
+  "secondEndPos" : 5886
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9260,6 +9326,17 @@
   "secondPos" : 7120,
   "firstEndPos" : 7107,
   "secondEndPos" : 7130
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Rename vars to not conflict in global scope.",
+  "secondLabel" : "// Rename vars to not conflict in global scope.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7117,
+  "secondPos" : 7140,
+  "firstEndPos" : 7164,
+  "secondEndPos" : 7187
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

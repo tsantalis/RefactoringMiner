@@ -10,6 +10,17 @@
   "firstEndPos" : 5528,
   "secondEndPos" : 7398
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2008 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -219,6 +230,17 @@
   "firstEndPos" : 952,
   "secondEndPos" : 952
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 929,
+  "secondPos" : 929,
+  "firstEndPos" : 936,
+  "secondEndPos" : 936
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Inderjeet Singh",
@@ -240,6 +262,17 @@
   "secondPos" : 956,
   "firstEndPos" : 975,
   "secondEndPos" : 975
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 956,
+  "secondPos" : 956,
+  "firstEndPos" : 963,
+  "secondEndPos" : 963
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -328,6 +361,17 @@
   "secondPos" : 1039,
   "firstEndPos" : 1108,
   "secondEndPos" : 1108
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not instantiable since it provides factory methods only.",
+  "secondLabel" : "// Not instantiable since it provides factory methods only.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1045,
+  "secondPos" : 1045,
+  "firstEndPos" : 1104,
+  "secondEndPos" : 1104
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -703,6 +747,17 @@
   "firstEndPos" : 1514,
   "secondEndPos" : 1514
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1456,
+  "secondPos" : 1456,
+  "firstEndPos" : 1462,
+  "secondEndPos" : 1462
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "f",
@@ -735,6 +790,17 @@
   "secondPos" : 1520,
   "firstEndPos" : 1583,
   "secondEndPos" : 1583
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1520,
+  "secondPos" : 1520,
+  "firstEndPos" : 1526,
+  "secondEndPos" : 1526
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -769,6 +835,17 @@
   "firstEndPos" : 1583,
   "secondEndPos" : 1583
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1574,
+  "secondPos" : 1574,
+  "firstEndPos" : 1579,
+  "secondEndPos" : 1579
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " f",
@@ -790,6 +867,17 @@
   "secondPos" : 1589,
   "firstEndPos" : 1631,
   "secondEndPos" : 1631
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1589,
+  "secondPos" : 1589,
+  "firstEndPos" : 1596,
+  "secondEndPos" : 1596
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3232,6 +3320,72 @@
   "secondPos" : 3185,
   "firstEndPos" : 4077,
   "secondEndPos" : 4075
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The class definition has the actual types used for the type variables.",
+  "secondLabel" : "// The class definition has the actual types used for the type variables.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3195,
+  "secondPos" : 3195,
+  "firstEndPos" : 3268,
+  "secondEndPos" : 3268
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Find the matching actual type for the Type Variable used for the field.",
+  "secondLabel" : "// Find the matching actual type for the Type Variable used for the field.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3277,
+  "secondPos" : 3277,
+  "firstEndPos" : 3351,
+  "secondEndPos" : 3351
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For example, class Foo<A> { A a; }",
+  "secondLabel" : "// For example, class Foo<A> { A a; }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3360,
+  "secondPos" : 3360,
+  "firstEndPos" : 3397,
+  "secondEndPos" : 3397
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// new Foo<Integer>(); defines the actual type of A to be Integer.",
+  "secondLabel" : "// new Foo<Integer>(); defines the actual type of A to be Integer.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3406,
+  "secondPos" : 3406,
+  "firstEndPos" : 3472,
+  "secondEndPos" : 3472
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// So, to find the type of the field a, we will have to look at the class'",
+  "secondLabel" : "// So, to find the type of the field a, we will have to look at the class'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3481,
+  "secondPos" : 3481,
+  "firstEndPos" : 3555,
+  "secondEndPos" : 3555
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// actual type arguments.",
+  "secondLabel" : "// actual type arguments.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3564,
+  "secondPos" : 3564,
+  "firstEndPos" : 3589,
+  "secondEndPos" : 3589
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

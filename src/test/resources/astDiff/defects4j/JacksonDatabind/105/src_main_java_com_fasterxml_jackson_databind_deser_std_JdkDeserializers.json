@@ -428,6 +428,17 @@
   "firstEndPos" : 867,
   "secondEndPos" : 895
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: can skip primitive types; other ways to check them:",
+  "secondLabel" : "// note: can skip primitive types; other ways to check them:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 440,
+  "secondPos" : 440,
+  "firstEndPos" : 500,
+  "secondEndPos" : 500
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2077,6 +2088,17 @@
   "secondPos" : 1458,
   "firstEndPos" : 1591,
   "secondEndPos" : 1619
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (note: AtomicInteger/Long work due to single-arg constructor. For now?",
+  "secondLabel" : "// (note: AtomicInteger/Long work due to single-arg constructor. For now?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1448,
+  "secondPos" : 1476,
+  "firstEndPos" : 1521,
+  "secondEndPos" : 1549
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

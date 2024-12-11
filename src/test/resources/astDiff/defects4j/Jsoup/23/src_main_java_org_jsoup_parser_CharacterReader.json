@@ -791,6 +791,17 @@
   "firstEndPos" : 440,
   "secondEndPos" : 440
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// normalise carriage returns to newlines",
+  "secondLabel" : "// normalise carriage returns to newlines",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 443,
+  "secondPos" : 443,
+  "firstEndPos" : 484,
+  "secondEndPos" : 484
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -9007,6 +9018,17 @@
   "secondPos" : 5030,
   "firstEndPos" : 4786,
   "secondEndPos" : 5295
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// used to check presence of </title>, </style>. only finds consistent case.",
+  "secondLabel" : "// used to check presence of </title>, </style>. only finds consistent case.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4531,
+  "secondPos" : 5040,
+  "firstEndPos" : 4607,
+  "secondEndPos" : 5116
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

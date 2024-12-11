@@ -10,6 +10,17 @@
   "firstEndPos" : 6853,
   "secondEndPos" : 6981
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2006 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2006 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -2892,6 +2903,50 @@
   "firstEndPos" : 3633,
   "secondEndPos" : 3633
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If a VAR is declared like",
+  "secondLabel" : "// If a VAR is declared like",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3641,
+  "secondPos" : 3641,
+  "firstEndPos" : 3669,
+  "secondEndPos" : 3669
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// var x;",
+  "secondLabel" : "// var x;",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3674,
+  "secondPos" : 3674,
+  "firstEndPos" : 3683,
+  "secondEndPos" : 3683
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then we should not create new VAR nodes for it later in the tree.",
+  "secondLabel" : "// then we should not create new VAR nodes for it later in the tree.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3688,
+  "secondPos" : 3688,
+  "firstEndPos" : 3756,
+  "secondEndPos" : 3756
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is a workaround for a bug in Firefox.",
+  "secondLabel" : "// This is a workaround for a bug in Firefox.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3761,
+  "secondPos" : 3761,
+  "firstEndPos" : 3806,
+  "secondEndPos" : 3806
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -3387,6 +3442,17 @@
   "firstEndPos" : 4001,
   "secondEndPos" : 4001
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only care about var nodes",
+  "secondLabel" : "// Only care about var nodes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4019,
+  "secondPos" : 4019,
+  "firstEndPos" : 4047,
+  "secondEndPos" : 4047
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3607,6 +3673,17 @@
   "firstEndPos" : 4114,
   "secondEndPos" : 4114
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If we've already looked at this node, skip it",
+  "secondLabel" : "// If we've already looked at this node, skip it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4122,
+  "secondPos" : 4122,
+  "firstEndPos" : 4170,
+  "secondEndPos" : 4170
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3694,6 +3771,28 @@
   "secondPos" : 4210,
   "firstEndPos" : 4217,
   "secondEndPos" : 4217
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Adjacent VAR children of an IF node are the if and else parts and can't",
+  "secondLabel" : "// Adjacent VAR children of an IF node are the if and else parts and can't",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4225,
+  "secondPos" : 4225,
+  "firstEndPos" : 4299,
+  "secondEndPos" : 4299
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// be collapsed",
+  "secondLabel" : "// be collapsed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4306,
+  "secondPos" : 4306,
+  "firstEndPos" : 4321,
+  "secondEndPos" : 4321
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3914,6 +4013,17 @@
   "secondPos" : 4406,
   "firstEndPos" : 4411,
   "secondEndPos" : 4411
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Find variable declarations that follow this one (if any)",
+  "secondLabel" : "// Find variable declarations that follow this one (if any)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4422,
+  "secondPos" : 4422,
+  "firstEndPos" : 4481,
+  "secondEndPos" : 4481
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

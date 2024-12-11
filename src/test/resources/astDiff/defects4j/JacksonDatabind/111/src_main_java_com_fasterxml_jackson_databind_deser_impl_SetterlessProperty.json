@@ -2254,6 +2254,17 @@
   "firstEndPos" : 2274,
   "secondEndPos" : 2274
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "secondLabel" : "// 07-May-2019, tatu: As per [databind#2303], must keep VD/NVP in-sync if they were",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2294,
+  "secondPos" : 2294,
+  "firstEndPos" : 2377,
+  "secondEndPos" : 2377
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2793,6 +2804,17 @@
   "firstEndPos" : 2798,
   "secondEndPos" : 2883
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* BeanProperty impl\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* BeanProperty impl\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2813,
+  "secondPos" : 2898,
+  "firstEndPos" : 2976,
+  "secondEndPos" : 3061
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3188,6 +3210,17 @@
   "secondPos" : 3261,
   "firstEndPos" : 3186,
   "secondEndPos" : 3271
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Overridden methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Overridden methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3195,
+  "secondPos" : 3280,
+  "firstEndPos" : 3359,
+  "secondEndPos" : 3444
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3596,6 +3629,28 @@
   "firstEndPos" : 3770,
   "secondEndPos" : 3855
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Hmmh. Is this a problem? We won't be setting anything, so it's",
+  "secondLabel" : "// Hmmh. Is this a problem? We won't be setting anything, so it's",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3612,
+  "secondPos" : 3697,
+  "firstEndPos" : 3677,
+  "secondEndPos" : 3762
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// equivalent of empty Collection/Map in this case",
+  "secondLabel" : "// equivalent of empty Collection/Map in this case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3690,
+  "secondPos" : 3775,
+  "firstEndPos" : 3740,
+  "secondEndPos" : 3825
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -3606,6 +3661,17 @@
   "secondPos" : 3838,
   "firstEndPos" : 3760,
   "secondEndPos" : 3845
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For [databind#501] fix we need to implement this but:",
+  "secondLabel" : "// For [databind#501] fix we need to implement this but:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3779,
+  "secondPos" : 3864,
+  "firstEndPos" : 3835,
+  "secondEndPos" : 3920
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3848,6 +3914,28 @@
   "secondPos" : 4176,
   "firstEndPos" : 4098,
   "secondEndPos" : 4183
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//            return _valueDeserializer.deserializeWithType(p, ctxt, _valueTypeDeserializer);",
+  "secondLabel" : "//            return _valueDeserializer.deserializeWithType(p, ctxt, _valueTypeDeserializer);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4104,
+  "secondPos" : 4189,
+  "firstEndPos" : 4197,
+  "secondEndPos" : 4282
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: then, need to fetch Collection/Map to modify:",
+  "secondLabel" : "// Ok: then, need to fetch Collection/Map to modify:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4216,
+  "secondPos" : 4301,
+  "firstEndPos" : 4268,
+  "secondEndPos" : 4353
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -4244,6 +4332,50 @@
   "secondPos" : 4534,
   "firstEndPos" : 4456,
   "secondEndPos" : 4541
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// never gets here",
+  "secondLabel" : "// never gets here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4457,
+  "secondPos" : 4542,
+  "firstEndPos" : 4475,
+  "secondEndPos" : 4560
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note: null won't work, since we can't then inject anything in. At least",
+  "secondLabel" : "// Note: null won't work, since we can't then inject anything in. At least",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4494,
+  "secondPos" : 4579,
+  "firstEndPos" : 4568,
+  "secondEndPos" : 4653
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that's not good in common case. However, theoretically the case where",
+  "secondLabel" : "// that's not good in common case. However, theoretically the case where",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4577,
+  "secondPos" : 4662,
+  "firstEndPos" : 4649,
+  "secondEndPos" : 4734
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we get JSON null might be compatible. If so, implementation could be changed.",
+  "secondLabel" : "// we get JSON null might be compatible. If so, implementation could be changed.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4658,
+  "secondPos" : 4743,
+  "firstEndPos" : 4738,
+  "secondEndPos" : 4823
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 10009,
   "secondEndPos" : 9989
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   Bob Jervis\n *   Google Inc.\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "secondLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   Bob Jervis\n *   Google Inc.\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1581,
+  "secondEndPos" : 1581
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -174,6 +185,17 @@
   "secondPos" : 2020,
   "firstEndPos" : 2040,
   "secondEndPos" : 2040
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2020,
+  "secondPos" : 2020,
+  "firstEndPos" : 2025,
+  "secondEndPos" : 2025
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -460,6 +482,17 @@
   "secondPos" : 2216,
   "firstEndPos" : 2226,
   "secondEndPos" : 2226
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Whether the return type is inferred.",
+  "secondLabel" : "// Whether the return type is inferred.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2231,
+  "secondPos" : 2231,
+  "firstEndPos" : 2270,
+  "secondEndPos" : 2270
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1781,6 +1814,39 @@
   "firstEndPos" : 3024,
   "secondEndPos" : 3024
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This is described in Draft 2 of the ES4 spec,",
+  "secondLabel" : "// This is described in Draft 2 of the ES4 spec,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3031,
+  "secondPos" : 3031,
+  "firstEndPos" : 3079,
+  "secondEndPos" : 3079
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Section 3.4.7: Subtyping Function Types.",
+  "secondLabel" : "// Section 3.4.7: Subtyping Function Types.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3084,
+  "secondPos" : 3084,
+  "firstEndPos" : 3127,
+  "secondEndPos" : 3127
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this.returnType <: that.returnType (covariant)",
+  "secondLabel" : "// this.returnType <: that.returnType (covariant)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3133,
+  "secondPos" : 3133,
+  "firstEndPos" : 3182,
+  "secondEndPos" : 3182
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -1934,6 +2000,215 @@
   "secondPos" : 3251,
   "firstEndPos" : 3256,
   "secondEndPos" : 3256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// that.paramType[i] <: this.paramType[i] (contravariant)",
+  "secondLabel" : "// that.paramType[i] <: this.paramType[i] (contravariant)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3269,
+  "secondPos" : 3269,
+  "firstEndPos" : 3326,
+  "secondEndPos" : 3326
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3331,
+  "secondPos" : 3331,
+  "firstEndPos" : 3333,
+  "secondEndPos" : 3333
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If this.paramType[i] is required,",
+  "secondLabel" : "// If this.paramType[i] is required,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3338,
+  "secondPos" : 3338,
+  "firstEndPos" : 3374,
+  "secondEndPos" : 3374
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then that.paramType[i] is required.",
+  "secondLabel" : "// then that.paramType[i] is required.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3379,
+  "secondPos" : 3379,
+  "firstEndPos" : 3417,
+  "secondEndPos" : 3417
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3422,
+  "secondPos" : 3422,
+  "firstEndPos" : 3424,
+  "secondEndPos" : 3424
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// In theory, the \"required-ness\" should work in the other direction as",
+  "secondLabel" : "// In theory, the \"required-ness\" should work in the other direction as",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3429,
+  "secondPos" : 3429,
+  "firstEndPos" : 3500,
+  "secondEndPos" : 3500
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// well. In other words, if we have",
+  "secondLabel" : "// well. In other words, if we have",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3505,
+  "secondPos" : 3505,
+  "firstEndPos" : 3540,
+  "secondEndPos" : 3540
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3545,
+  "secondPos" : 3545,
+  "firstEndPos" : 3547,
+  "secondEndPos" : 3547
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// function f(number, number) {}",
+  "secondLabel" : "// function f(number, number) {}",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3552,
+  "secondPos" : 3552,
+  "firstEndPos" : 3584,
+  "secondEndPos" : 3584
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// function g(number) {}",
+  "secondLabel" : "// function g(number) {}",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3589,
+  "secondPos" : 3589,
+  "firstEndPos" : 3613,
+  "secondEndPos" : 3613
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3618,
+  "secondPos" : 3618,
+  "firstEndPos" : 3620,
+  "secondEndPos" : 3620
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Then f *should* not be a subtype of g, and g *should* not be",
+  "secondLabel" : "// Then f *should* not be a subtype of g, and g *should* not be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3625,
+  "secondPos" : 3625,
+  "firstEndPos" : 3688,
+  "secondEndPos" : 3688
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a subtype of f. But in practice, we do not implement it this way.",
+  "secondLabel" : "// a subtype of f. But in practice, we do not implement it this way.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3693,
+  "secondPos" : 3693,
+  "firstEndPos" : 3761,
+  "secondEndPos" : 3761
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We want to support the use case where you can pass g where f is",
+  "secondLabel" : "// We want to support the use case where you can pass g where f is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3766,
+  "secondPos" : 3766,
+  "firstEndPos" : 3832,
+  "secondEndPos" : 3832
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// expected, and pretend that g ignores the second argument.",
+  "secondLabel" : "// expected, and pretend that g ignores the second argument.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3837,
+  "secondPos" : 3837,
+  "firstEndPos" : 3897,
+  "secondEndPos" : 3897
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// That way, you can have a single \"no-op\" function, and you don't have",
+  "secondLabel" : "// That way, you can have a single \"no-op\" function, and you don't have",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3902,
+  "secondPos" : 3902,
+  "firstEndPos" : 3973,
+  "secondEndPos" : 3973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to create a new no-op function for every possible type signature.",
+  "secondLabel" : "// to create a new no-op function for every possible type signature.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3978,
+  "secondPos" : 3978,
+  "firstEndPos" : 4046,
+  "secondEndPos" : 4046
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4051,
+  "secondPos" : 4051,
+  "firstEndPos" : 4053,
+  "secondEndPos" : 4053
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// So, in this case, g < f, but f !< g",
+  "secondLabel" : "// So, in this case, g < f, but f !< g",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4058,
+  "secondPos" : 4058,
+  "firstEndPos" : 4096,
+  "secondEndPos" : 4096
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3145,6 +3420,17 @@
   "firstEndPos" : 4779,
   "secondEndPos" : 4779
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"that\" can't be a supertype, because it's missing a required argument.",
+  "secondLabel" : "// \"that\" can't be a supertype, because it's missing a required argument.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4790,
+  "secondPos" : 4790,
+  "firstEndPos" : 4863,
+  "secondEndPos" : 4863
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3232,6 +3518,61 @@
   "secondPos" : 4909,
   "firstEndPos" : 5529,
   "secondEndPos" : 5529
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE(nicksantos): In our type system, we use {function(...?)} and",
+  "secondLabel" : "// NOTE(nicksantos): In our type system, we use {function(...?)} and",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4919,
+  "secondPos" : 4919,
+  "firstEndPos" : 4987,
+  "secondEndPos" : 4987
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// {function(...NoType)} to to indicate that arity should not be",
+  "secondLabel" : "// {function(...NoType)} to to indicate that arity should not be",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4996,
+  "secondPos" : 4996,
+  "firstEndPos" : 5060,
+  "secondEndPos" : 5060
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// checked. Strictly speaking, this is not a correct formulation,",
+  "secondLabel" : "// checked. Strictly speaking, this is not a correct formulation,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5069,
+  "secondPos" : 5069,
+  "firstEndPos" : 5134,
+  "secondEndPos" : 5134
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// because now a sub-function can required arguments that are var_args",
+  "secondLabel" : "// because now a sub-function can required arguments that are var_args",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5143,
+  "secondPos" : 5143,
+  "firstEndPos" : 5213,
+  "secondEndPos" : 5213
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in the super-function. So we special-case this.",
+  "secondLabel" : "// in the super-function. So we special-case this.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5222,
+  "secondPos" : 5222,
+  "firstEndPos" : 5272,
+  "secondEndPos" : 5272
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3574,6 +3915,17 @@
   "firstEndPos" : 5510,
   "secondEndPos" : 5510
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// don't advance if we have variable arguments",
+  "secondLabel" : "// don't advance if we have variable arguments",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5537,
+  "secondPos" : 5537,
+  "firstEndPos" : 5583,
+  "secondEndPos" : 5583
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3860,6 +4212,17 @@
   "firstEndPos" : 5726,
   "secondEndPos" : 5726
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// both var_args indicates the end",
+  "secondLabel" : "// both var_args indicates the end",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5745,
+  "secondPos" : 5745,
+  "firstEndPos" : 5779,
+  "secondEndPos" : 5779
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4035,6 +4398,17 @@
   "secondPos" : 5870,
   "firstEndPos" : 5874,
   "secondEndPos" : 5874
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// \"that\" can't be a supertype, because it's missing a required argument.",
+  "secondLabel" : "// \"that\" can't be a supertype, because it's missing a required argument.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5895,
+  "secondPos" : 5895,
+  "firstEndPos" : 5968,
+  "secondEndPos" : 5968
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4421,6 +4795,17 @@
   "firstEndPos" : 6237,
   "secondEndPos" : 6237
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6151,
+  "secondPos" : 6151,
+  "firstEndPos" : 6158,
+  "secondEndPos" : 6158
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " True if our parameter spec is equal to ",
@@ -4442,6 +4827,17 @@
   "secondPos" : 6198,
   "firstEndPos" : 6210,
   "secondEndPos" : 6210
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6198,
+  "secondPos" : 6198,
+  "firstEndPos" : 6203,
+  "secondEndPos" : 6203
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5169,6 +5565,17 @@
   "firstEndPos" : 6878,
   "secondEndPos" : 6872
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Both parameter lists give a type for this param, it should be equal",
+  "secondLabel" : "// Both parameter lists give a type for this param, it should be equal",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6624,
+  "secondPos" : 6626,
+  "firstEndPos" : 6694,
+  "secondEndPos" : 6696
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5653,6 +6060,28 @@
   "firstEndPos" : 7042,
   "secondEndPos" : 7036
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// One of the parameters is null, so the types are only equal if both",
+  "secondLabel" : "// One of the parameters is null, so the types are only equal if both",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7056,
+  "secondPos" : 7050,
+  "firstEndPos" : 7125,
+  "secondEndPos" : 7119
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parameter lists are null (they are equal).",
+  "secondLabel" : "// parameter lists are null (they are equal).",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7130,
+  "secondPos" : 7124,
+  "firstEndPos" : 7175,
+  "secondEndPos" : 7169
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -5817,6 +6246,17 @@
   "secondPos" : 7300,
   "firstEndPos" : 7544,
   "secondEndPos" : 7524
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Please keep this method in sync with the hashCode() method below.",
+  "secondLabel" : "// Please keep this method in sync with the hashCode() method below.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7310,
+  "secondPos" : 7306,
+  "firstEndPos" : 7378,
+  "secondEndPos" : 7374
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 24844,
   "secondEndPos" : 25132
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -428,6 +439,17 @@
   "firstEndPos" : 1657,
   "secondEndPos" : 1657
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1633,
+  "secondPos" : 1633,
+  "firstEndPos" : 1640,
+  "secondEndPos" : 1640
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -449,6 +471,17 @@
   "secondPos" : 1661,
   "firstEndPos" : 1687,
   "secondEndPos" : 1687
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1661,
+  "secondPos" : 1661,
+  "firstEndPos" : 1669,
+  "secondEndPos" : 1669
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7886,6 +7919,28 @@
   "firstEndPos" : 10375,
   "secondEndPos" : 10375
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Move the position to the beginning and iterate through",
+  "secondLabel" : "// Move the position to the beginning and iterate through",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10386,
+  "secondPos" : 10386,
+  "firstEndPos" : 10443,
+  "secondEndPos" : 10443
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the context to count nodes.",
+  "secondLabel" : "// the context to count nodes.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10452,
+  "secondPos" : 10452,
+  "firstEndPos" : 10482,
+  "secondEndPos" : 10482
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -8193,6 +8248,17 @@
   "secondPos" : 10633,
   "firstEndPos" : 10635,
   "secondEndPos" : 10635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Restore the current position.",
+  "secondLabel" : "// Restore the current position.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10656,
+  "secondPos" : 10656,
+  "firstEndPos" : 10688,
+  "secondEndPos" : 10688
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12329,6 +12395,17 @@
   "secondPos" : 12928,
   "firstEndPos" : 13020,
   "secondEndPos" : 13020
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty context -> empty results",
+  "secondLabel" : "// empty context -> empty results",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12930,
+  "secondPos" : 12930,
+  "firstEndPos" : 12963,
+  "secondEndPos" : 12963
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -25442,6 +25519,17 @@
   "firstEndPos" : 19687,
   "secondEndPos" : 19687
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// beginning",
+  "secondLabel" : "// beginning",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19627,
+  "secondPos" : 19627,
+  "firstEndPos" : 19639,
+  "secondEndPos" : 19639
+}, {
   "firstType" : "EmptyStatement",
   "secondType" : "EmptyStatement",
   "firstLabel" : "",
@@ -25518,6 +25606,17 @@
   "secondPos" : 19729,
   "firstEndPos" : 19844,
   "secondEndPos" : 19844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// non-space",
+  "secondLabel" : "// non-space",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19731,
+  "secondPos" : 19731,
+  "firstEndPos" : 19743,
+  "secondEndPos" : 19743
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -25936,6 +26035,17 @@
   "secondPos" : 20022,
   "firstEndPos" : 20070,
   "secondEndPos" : 20070
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// trailing-space",
+  "secondLabel" : "// trailing-space",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 20024,
+  "secondPos" : 20024,
+  "firstEndPos" : 20041,
+  "secondEndPos" : 20041
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

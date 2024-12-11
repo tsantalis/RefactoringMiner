@@ -10,6 +10,17 @@
   "firstEndPos" : 21920,
   "secondEndPos" : 21889
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it\r\n * under the terms of the GNU Lesser General Public License as published by\r\n * the Free Software Foundation; either version 2.1 of the License, or\r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but\r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\r\n * USA.\r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\r\n * in the United States and other countries.]\r\n *\r\n * ---------\r\n * Week.java\r\n * ---------\r\n * (C) Copyright 2001-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   Aimin Han;\r\n *\r\n * Changes\r\n * -------\r\n * 11-Oct-2001 : Version 1 (DG);\r\n * 18-Dec-2001 : Changed order of parameters in constructor (DG);\r\n * 19-Dec-2001 : Added a new constructor as suggested by Paul English (DG);\r\n * 29-Jan-2002 : Worked on the parseWeek() method (DG);\r\n * 13-Feb-2002 : Fixed bug in Week(Date) constructor (DG);\r\n * 26-Feb-2002 : Changed getStart(), getMiddle() and getEnd() methods to\r\n *               evaluate with reference to a particular time zone (DG);\r\n * 05-Apr-2002 : Reinstated this class to the JCommon library (DG);\r\n * 24-Jun-2002 : Removed unnecessary main method (DG);\r\n * 10-Sep-2002 : Added getSerialIndex() method (DG);\r\n * 06-Oct-2002 : Fixed errors reported by Checkstyle (DG);\r\n * 18-Oct-2002 : Changed to observe 52 or 53 weeks per year, consistent with\r\n *               GregorianCalendar. Thanks to Aimin Han for the code (DG);\r\n * 02-Jan-2003 : Removed debug code (DG);\r\n * 13-Mar-2003 : Moved to com.jrefinery.data.time package, and implemented\r\n *               Serializable (DG);\r\n * 21-Oct-2003 : Added hashCode() method (DG);\r\n * 24-May-2004 : Modified getFirstMillisecond() and getLastMillisecond() to\r\n *               take account of firstDayOfWeek setting in Java's Calendar\r\n *               class (DG);\r\n * 30-Sep-2004 : Replaced getTime().getTime() with getTimeInMillis() (DG);\r\n * 04-Nov-2004 : Reverted change of 30-Sep-2004, because it won't work for\r\n *               JDK 1.3 (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 06-Mar-2006 : Fix for bug 1448828, incorrect calculation of week and year\r\n *               for the first few days of some years (DG);\r\n * 05-Oct-2006 : Updated API docs (DG);\r\n * 06-Oct-2006 : Refactored to cache first and last millisecond values (DG);\r\n * 09-Jan-2007 : Fixed bug in next() (DG);\r\n * 28-Aug-2007 : Added new constructor to avoid problem in creating new\r\n *               instances (DG);\r\n * 19-Dec-2007 : Fixed bug in deprecated constructor (DG);\r\n *\r\n */",
+  "secondLabel" : "/* ===========================================================\r\n * JFreeChart : a free chart library for the Java(tm) platform\r\n * ===========================================================\r\n *\r\n * (C) Copyright 2000-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Project Info:  http://www.jfree.org/jfreechart/index.html\r\n *\r\n * This library is free software; you can redistribute it and/or modify it\r\n * under the terms of the GNU Lesser General Public License as published by\r\n * the Free Software Foundation; either version 2.1 of the License, or\r\n * (at your option) any later version.\r\n *\r\n * This library is distributed in the hope that it will be useful, but\r\n * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\r\n * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public\r\n * License for more details.\r\n *\r\n * You should have received a copy of the GNU Lesser General Public\r\n * License along with this library; if not, write to the Free Software\r\n * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,\r\n * USA.\r\n *\r\n * [Java is a trademark or registered trademark of Sun Microsystems, Inc.\r\n * in the United States and other countries.]\r\n *\r\n * ---------\r\n * Week.java\r\n * ---------\r\n * (C) Copyright 2001-2008, by Object Refinery Limited and Contributors.\r\n *\r\n * Original Author:  David Gilbert (for Object Refinery Limited);\r\n * Contributor(s):   Aimin Han;\r\n *\r\n * Changes\r\n * -------\r\n * 11-Oct-2001 : Version 1 (DG);\r\n * 18-Dec-2001 : Changed order of parameters in constructor (DG);\r\n * 19-Dec-2001 : Added a new constructor as suggested by Paul English (DG);\r\n * 29-Jan-2002 : Worked on the parseWeek() method (DG);\r\n * 13-Feb-2002 : Fixed bug in Week(Date) constructor (DG);\r\n * 26-Feb-2002 : Changed getStart(), getMiddle() and getEnd() methods to\r\n *               evaluate with reference to a particular time zone (DG);\r\n * 05-Apr-2002 : Reinstated this class to the JCommon library (DG);\r\n * 24-Jun-2002 : Removed unnecessary main method (DG);\r\n * 10-Sep-2002 : Added getSerialIndex() method (DG);\r\n * 06-Oct-2002 : Fixed errors reported by Checkstyle (DG);\r\n * 18-Oct-2002 : Changed to observe 52 or 53 weeks per year, consistent with\r\n *               GregorianCalendar. Thanks to Aimin Han for the code (DG);\r\n * 02-Jan-2003 : Removed debug code (DG);\r\n * 13-Mar-2003 : Moved to com.jrefinery.data.time package, and implemented\r\n *               Serializable (DG);\r\n * 21-Oct-2003 : Added hashCode() method (DG);\r\n * 24-May-2004 : Modified getFirstMillisecond() and getLastMillisecond() to\r\n *               take account of firstDayOfWeek setting in Java's Calendar\r\n *               class (DG);\r\n * 30-Sep-2004 : Replaced getTime().getTime() with getTimeInMillis() (DG);\r\n * 04-Nov-2004 : Reverted change of 30-Sep-2004, because it won't work for\r\n *               JDK 1.3 (DG);\r\n * ------------- JFREECHART 1.0.x ---------------------------------------------\r\n * 06-Mar-2006 : Fix for bug 1448828, incorrect calculation of week and year\r\n *               for the first few days of some years (DG);\r\n * 05-Oct-2006 : Updated API docs (DG);\r\n * 06-Oct-2006 : Refactored to cache first and last millisecond values (DG);\r\n * 09-Jan-2007 : Fixed bug in next() (DG);\r\n * 28-Aug-2007 : Added new constructor to avoid problem in creating new\r\n *               instances (DG);\r\n * 19-Dec-2007 : Fixed bug in deprecated constructor (DG);\r\n *\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 3440,
+  "secondEndPos" : 3440
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -262,6 +273,17 @@
   "secondPos" : 4051,
   "firstEndPos" : 4076,
   "secondEndPos" : 4076
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4051,
+  "secondPos" : 4051,
+  "firstEndPos" : 4056,
+  "secondEndPos" : 4056
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1264,6 +1286,17 @@
   "firstEndPos" : 5066,
   "secondEndPos" : 5066
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5034,
+  "secondPos" : 5034,
+  "firstEndPos" : 5040,
+  "secondEndPos" : 5040
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "week",
@@ -1296,6 +1329,17 @@
   "secondPos" : 5075,
   "firstEndPos" : 5112,
   "secondEndPos" : 5112
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5075,
+  "secondPos" : 5075,
+  "firstEndPos" : 5081,
+  "secondEndPos" : 5081
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1968,6 +2012,17 @@
   "firstEndPos" : 5617,
   "secondEndPos" : 5617
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5585,
+  "secondPos" : 5585,
+  "firstEndPos" : 5591,
+  "secondEndPos" : 5591
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "week",
@@ -2000,6 +2055,17 @@
   "secondPos" : 5626,
   "firstEndPos" : 5663,
   "secondEndPos" : 5663
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5626,
+  "secondPos" : 5626,
+  "firstEndPos" : 5632,
+  "secondEndPos" : 5632
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2727,6 +2793,17 @@
   "firstEndPos" : 6218,
   "secondEndPos" : 6218
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6162,
+  "secondPos" : 6162,
+  "firstEndPos" : 6168,
+  "secondEndPos" : 6168
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "time",
@@ -2825,6 +2902,17 @@
   "secondPos" : 6256,
   "firstEndPos" : 6382,
   "secondEndPos" : 6382
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// defer argument checking...",
+  "secondLabel" : "// defer argument checking...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6267,
+  "secondPos" : 6267,
+  "firstEndPos" : 6296,
+  "secondEndPos" : 6296
 }, {
   "firstType" : "ConstructorInvocation",
   "secondType" : "ConstructorInvocation",
@@ -2969,6 +3057,17 @@
   "firstEndPos" : 6610,
   "secondEndPos" : 6610
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6549,
+  "secondPos" : 6549,
+  "firstEndPos" : 6555,
+  "secondEndPos" : 6555
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "time",
@@ -3001,6 +3100,17 @@
   "secondPos" : 6619,
   "firstEndPos" : 6680,
   "secondEndPos" : 6680
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6619,
+  "secondPos" : 6619,
+  "firstEndPos" : 6625,
+  "secondEndPos" : 6625
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3035,6 +3145,17 @@
   "firstEndPos" : 6764,
   "secondEndPos" : 6764
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6697,
+  "secondPos" : 6697,
+  "firstEndPos" : 6708,
+  "secondEndPos" : 6708
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " As of 1.0.7, use ",
@@ -3056,6 +3177,17 @@
   "secondPos" : 6726,
   "firstEndPos" : 6763,
   "secondEndPos" : 6763
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6726,
+  "secondPos" : 6726,
+  "firstEndPos" : 6731,
+  "secondEndPos" : 6731
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -3310,6 +3442,17 @@
   "firstEndPos" : 6943,
   "secondEndPos" : 6912
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// defer argument checking...",
+  "secondLabel" : "// defer argument checking...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6828,
+  "secondPos" : 6828,
+  "firstEndPos" : 6857,
+  "secondEndPos" : 6857
+}, {
   "firstType" : "ConstructorInvocation",
   "secondType" : "ConstructorInvocation",
   "firstLabel" : "",
@@ -3442,6 +3585,17 @@
   "firstEndPos" : 7171,
   "secondEndPos" : 7140
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7110,
+  "secondPos" : 7079,
+  "firstEndPos" : 7116,
+  "secondEndPos" : 7085
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "time",
@@ -3474,6 +3628,17 @@
   "secondPos" : 7149,
   "firstEndPos" : 7241,
   "secondEndPos" : 7210
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7180,
+  "secondPos" : 7149,
+  "firstEndPos" : 7186,
+  "secondEndPos" : 7155
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3508,6 +3673,17 @@
   "firstEndPos" : 7310,
   "secondEndPos" : 7279
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7250,
+  "secondPos" : 7219,
+  "firstEndPos" : 7256,
+  "secondEndPos" : 7225
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "locale",
@@ -3540,6 +3716,17 @@
   "secondPos" : 7296,
   "firstEndPos" : 7339,
   "secondEndPos" : 7308
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7327,
+  "secondPos" : 7296,
+  "firstEndPos" : 7333,
+  "secondEndPos" : 7302
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4288,6 +4475,39 @@
   "secondPos" : 7815,
   "firstEndPos" : 7850,
   "secondEndPos" : 7819
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sometimes the last few days of the year are considered to fall in",
+  "secondLabel" : "// sometimes the last few days of the year are considered to fall in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7864,
+  "secondPos" : 7833,
+  "firstEndPos" : 7932,
+  "secondEndPos" : 7901
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the *first* week of the following year.  Refer to the Javadocs for",
+  "secondLabel" : "// the *first* week of the following year.  Refer to the Javadocs for",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7942,
+  "secondPos" : 7911,
+  "firstEndPos" : 8011,
+  "secondEndPos" : 7980
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// GregorianCalendar.",
+  "secondLabel" : "// GregorianCalendar.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8021,
+  "secondPos" : 7990,
+  "firstEndPos" : 8042,
+  "secondEndPos" : 8011
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5147,6 +5367,28 @@
   "firstEndPos" : 8448,
   "secondEndPos" : 8417
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// alternatively, sometimes the first few days of the year are",
+  "secondLabel" : "// alternatively, sometimes the first few days of the year are",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8464,
+  "secondPos" : 8433,
+  "firstEndPos" : 8526,
+  "secondEndPos" : 8495
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// considered to fall in the *last* week of the previous year...",
+  "secondLabel" : "// considered to fall in the *last* week of the previous year...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8540,
+  "secondPos" : 8509,
+  "firstEndPos" : 8604,
+  "secondEndPos" : 8573
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5609,6 +5851,17 @@
   "firstEndPos" : 8955,
   "secondEndPos" : 8924
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8912,
+  "secondPos" : 8881,
+  "firstEndPos" : 8919,
+  "secondEndPos" : 8888
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The year (never <code>null</code>).",
@@ -5807,6 +6060,17 @@
   "firstEndPos" : 9153,
   "secondEndPos" : 9122
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9136,
+  "secondPos" : 9105,
+  "firstEndPos" : 9143,
+  "secondEndPos" : 9112
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The year.",
@@ -5960,6 +6224,17 @@
   "secondPos" : 9252,
   "firstEndPos" : 9300,
   "secondEndPos" : 9269
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9283,
+  "secondPos" : 9252,
+  "firstEndPos" : 9290,
+  "secondEndPos" : 9259
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6137,6 +6412,17 @@
   "firstEndPos" : 9627,
   "secondEndPos" : 9596
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9605,
+  "secondPos" : 9574,
+  "firstEndPos" : 9610,
+  "secondEndPos" : 9579
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -6214,6 +6500,17 @@
   "firstEndPos" : 9694,
   "secondEndPos" : 9663
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9652,
+  "secondPos" : 9621,
+  "firstEndPos" : 9659,
+  "secondEndPos" : 9628
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The first millisecond of the week.",
@@ -6235,6 +6532,17 @@
   "secondPos" : 9680,
   "firstEndPos" : 9737,
   "secondEndPos" : 9706
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9711,
+  "secondPos" : 9680,
+  "firstEndPos" : 9715,
+  "secondEndPos" : 9684
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -6423,6 +6731,17 @@
   "firstEndPos" : 10088,
   "secondEndPos" : 10057
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10066,
+  "secondPos" : 10035,
+  "firstEndPos" : 10071,
+  "secondEndPos" : 10040
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -6500,6 +6819,17 @@
   "firstEndPos" : 10154,
   "secondEndPos" : 10123
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10113,
+  "secondPos" : 10082,
+  "firstEndPos" : 10120,
+  "secondEndPos" : 10089
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The last millisecond of the week.",
@@ -6521,6 +6851,17 @@
   "secondPos" : 10140,
   "firstEndPos" : 10198,
   "secondEndPos" : 10167
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10171,
+  "secondPos" : 10140,
+  "firstEndPos" : 10175,
+  "secondEndPos" : 10144
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -6698,6 +7039,17 @@
   "firstEndPos" : 10540,
   "secondEndPos" : 10509
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10476,
+  "secondPos" : 10445,
+  "firstEndPos" : 10482,
+  "secondEndPos" : 10451
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "calendar",
@@ -6730,6 +7082,17 @@
   "secondPos" : 10526,
   "firstEndPos" : 10569,
   "secondEndPos" : 10538
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10557,
+  "secondPos" : 10526,
+  "firstEndPos" : 10563,
+  "secondEndPos" : 10532
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7138,6 +7501,17 @@
   "firstEndPos" : 11146,
   "secondEndPos" : 11115
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 11090,
+  "secondPos" : 11059,
+  "firstEndPos" : 11097,
+  "secondEndPos" : 11066
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The preceding week (possibly <code>null</code>).",
@@ -7533,6 +7907,17 @@
   "secondPos" : 11323,
   "firstEndPos" : 11864,
   "secondEndPos" : 11833
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we need to work out if the previous year has 52 or 53 weeks...",
+  "secondLabel" : "// we need to work out if the previous year has 52 or 53 weeks...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11369,
+  "secondPos" : 11338,
+  "firstEndPos" : 11434,
+  "secondEndPos" : 11403
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8270,6 +8655,17 @@
   "secondPos" : 12214,
   "firstEndPos" : 12301,
   "secondEndPos" : 12270
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12245,
+  "secondPos" : 12214,
+  "firstEndPos" : 12252,
+  "secondEndPos" : 12221
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9657,6 +10053,17 @@
   "firstEndPos" : 13235,
   "secondEndPos" : 13204
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13203,
+  "secondPos" : 13172,
+  "firstEndPos" : 13210,
+  "secondEndPos" : 13179
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The serial index number.",
@@ -9910,6 +10317,17 @@
   "firstEndPos" : 13555,
   "secondEndPos" : 13524
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13491,
+  "secondPos" : 13460,
+  "firstEndPos" : 13497,
+  "secondEndPos" : 13466
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "calendar",
@@ -9943,6 +10361,17 @@
   "firstEndPos" : 13614,
   "secondEndPos" : 13583
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13572,
+  "secondPos" : 13541,
+  "firstEndPos" : 13579,
+  "secondEndPos" : 13548
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The first millisecond of the week.",
@@ -9964,6 +10393,17 @@
   "secondPos" : 13600,
   "firstEndPos" : 13718,
   "secondEndPos" : 13687
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13631,
+  "secondPos" : 13600,
+  "firstEndPos" : 13638,
+  "secondEndPos" : 13607
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -10966,6 +11406,17 @@
   "firstEndPos" : 14154,
   "secondEndPos" : 14123
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//return c.getTimeInMillis();  // this won't work for JDK 1.3",
+  "secondLabel" : "//return c.getTimeInMillis();  // this won't work for JDK 1.3",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14166,
+  "secondPos" : 14135,
+  "firstEndPos" : 14227,
+  "secondEndPos" : 14196
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -11120,6 +11571,17 @@
   "firstEndPos" : 14495,
   "secondEndPos" : 14464
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14431,
+  "secondPos" : 14400,
+  "firstEndPos" : 14437,
+  "secondEndPos" : 14406
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "calendar",
@@ -11153,6 +11615,17 @@
   "firstEndPos" : 14553,
   "secondEndPos" : 14522
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14512,
+  "secondPos" : 14481,
+  "firstEndPos" : 14519,
+  "secondEndPos" : 14488
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The last millisecond of the week.",
@@ -11174,6 +11647,17 @@
   "secondPos" : 14539,
   "firstEndPos" : 14657,
   "secondEndPos" : 14626
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14570,
+  "secondPos" : 14539,
+  "firstEndPos" : 14577,
+  "secondEndPos" : 14546
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12209,6 +12693,17 @@
   "firstEndPos" : 15096,
   "secondEndPos" : 15065
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//return c.getTimeInMillis();  // this won't work for JDK 1.3",
+  "secondLabel" : "//return c.getTimeInMillis();  // this won't work for JDK 1.3",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15108,
+  "secondPos" : 15077,
+  "firstEndPos" : 15169,
+  "secondEndPos" : 15138
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -12395,6 +12890,17 @@
   "secondPos" : 15338,
   "firstEndPos" : 15408,
   "secondEndPos" : 15377
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15369,
+  "secondPos" : 15338,
+  "firstEndPos" : 15376,
+  "secondEndPos" : 15345
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -12660,6 +13166,17 @@
   "firstEndPos" : 15806,
   "secondEndPos" : 15775
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15753,
+  "secondPos" : 15722,
+  "firstEndPos" : 15759,
+  "secondEndPos" : 15728
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "obj",
@@ -12692,6 +13209,17 @@
   "secondPos" : 15792,
   "firstEndPos" : 15914,
   "secondEndPos" : 15883
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 15823,
+  "secondPos" : 15792,
+  "firstEndPos" : 15830,
+  "secondEndPos" : 15799
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -13452,6 +13980,17 @@
   "firstEndPos" : 16631,
   "secondEndPos" : 16600
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 16611,
+  "secondPos" : 16580,
+  "firstEndPos" : 16618,
+  "secondEndPos" : 16587
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " A hash code.",
@@ -13947,6 +14486,17 @@
   "firstEndPos" : 17052,
   "secondEndPos" : 17021
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17019,
+  "secondPos" : 16988,
+  "firstEndPos" : 17025,
+  "secondEndPos" : 16994
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "o1",
@@ -13979,6 +14529,17 @@
   "secondPos" : 17038,
   "firstEndPos" : 17129,
   "secondEndPos" : 17098
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17069,
+  "secondPos" : 17038,
+  "firstEndPos" : 17076,
+  "secondEndPos" : 17045
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -14122,6 +14683,28 @@
   "secondPos" : 17162,
   "firstEndPos" : 17199,
   "secondEndPos" : 17168
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CASE 1 : Comparing to another Week object",
+  "secondLabel" : "// CASE 1 : Comparing to another Week object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17212,
+  "secondPos" : 17181,
+  "firstEndPos" : 17256,
+  "secondEndPos" : 17225
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// --------------------------------------------",
+  "secondLabel" : "// --------------------------------------------",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17266,
+  "secondPos" : 17235,
+  "firstEndPos" : 17313,
+  "secondEndPos" : 17282
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14673,6 +15256,28 @@
   "firstEndPos" : 17518,
   "secondEndPos" : 17487
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CASE 2 : Comparing to another TimePeriod object",
+  "secondLabel" : "// CASE 2 : Comparing to another TimePeriod object",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 17559,
+  "secondPos" : 17528,
+  "firstEndPos" : 17609,
+  "secondEndPos" : 17578
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -----------------------------------------------",
+  "secondLabel" : "// -----------------------------------------------",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 17619,
+  "secondPos" : 17588,
+  "firstEndPos" : 17669,
+  "secondEndPos" : 17638
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -14739,6 +15344,17 @@
   "firstEndPos" : 17814,
   "secondEndPos" : 17783
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// more difficult case - evaluate later...",
+  "secondLabel" : "// more difficult case - evaluate later...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17736,
+  "secondPos" : 17705,
+  "firstEndPos" : 17778,
+  "secondEndPos" : 17747
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14794,6 +15410,28 @@
   "firstEndPos" : 17802,
   "secondEndPos" : 17771
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CASE 3 : Comparing to a non-TimePeriod object",
+  "secondLabel" : "// CASE 3 : Comparing to a non-TimePeriod object",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 17826,
+  "secondPos" : 17795,
+  "firstEndPos" : 17874,
+  "secondEndPos" : 17843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ---------------------------------------------",
+  "secondLabel" : "// ---------------------------------------------",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 17884,
+  "secondPos" : 17853,
+  "firstEndPos" : 17932,
+  "secondEndPos" : 17901
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -14804,6 +15442,17 @@
   "secondPos" : 17916,
   "firstEndPos" : 18058,
   "secondEndPos" : 18027
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// consider time periods to be ordered after general objects",
+  "secondLabel" : "// consider time periods to be ordered after general objects",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17962,
+  "secondPos" : 17931,
+  "firstEndPos" : 18022,
+  "secondEndPos" : 17991
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -14970,6 +15619,17 @@
   "firstEndPos" : 18353,
   "secondEndPos" : 18322
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18327,
+  "secondPos" : 18296,
+  "firstEndPos" : 18333,
+  "secondEndPos" : 18302
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "s",
@@ -15002,6 +15662,17 @@
   "secondPos" : 18339,
   "firstEndPos" : 18463,
   "secondEndPos" : 18432
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18370,
+  "secondPos" : 18339,
+  "firstEndPos" : 18377,
+  "secondEndPos" : 18346
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -15266,6 +15937,17 @@
   "secondPos" : 18543,
   "firstEndPos" : 20074,
   "secondEndPos" : 20043
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// trim whitespace from either end of the string",
+  "secondLabel" : "// trim whitespace from either end of the string",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18591,
+  "secondPos" : 18560,
+  "firstEndPos" : 18639,
+  "secondEndPos" : 18608
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17280,6 +17962,17 @@
   "firstEndPos" : 20224,
   "secondEndPos" : 20193
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20194,
+  "secondPos" : 20163,
+  "firstEndPos" : 20200,
+  "secondEndPos" : 20169
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "s",
@@ -17312,6 +18005,17 @@
   "secondPos" : 20210,
   "firstEndPos" : 20359,
   "secondEndPos" : 20328
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20241,
+  "secondPos" : 20210,
+  "firstEndPos" : 20248,
+  "secondEndPos" : 20217
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18226,6 +18930,17 @@
   "firstEndPos" : 20871,
   "secondEndPos" : 20840
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20845,
+  "secondPos" : 20814,
+  "firstEndPos" : 20851,
+  "secondEndPos" : 20820
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "s",
@@ -18258,6 +18973,17 @@
   "secondPos" : 20857,
   "firstEndPos" : 20981,
   "secondEndPos" : 20950
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20888,
+  "secondPos" : 20857,
+  "firstEndPos" : 20895,
+  "secondEndPos" : 20864
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -18655,6 +19381,17 @@
   "firstEndPos" : 21223,
   "secondEndPos" : 21192
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// suppress",
+  "secondLabel" : "// suppress",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21201,
+  "secondPos" : 21170,
+  "firstEndPos" : 21212,
+  "secondEndPos" : 21181
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -18732,6 +19469,17 @@
   "firstEndPos" : 21351,
   "secondEndPos" : 21320
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21321,
+  "secondPos" : 21290,
+  "firstEndPos" : 21327,
+  "secondEndPos" : 21296
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "s",
@@ -18764,6 +19512,17 @@
   "secondPos" : 21329,
   "firstEndPos" : 21479,
   "secondEndPos" : 21448
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21360,
+  "secondPos" : 21329,
+  "firstEndPos" : 21367,
+  "secondEndPos" : 21336
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -19600,6 +20359,17 @@
   "secondPos" : 21812,
   "firstEndPos" : 21880,
   "secondEndPos" : 21849
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// suppress",
+  "secondLabel" : "// suppress",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21858,
+  "secondPos" : 21827,
+  "firstEndPos" : 21869,
+  "secondEndPos" : 21838
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

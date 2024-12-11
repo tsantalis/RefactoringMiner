@@ -3112,6 +3112,17 @@
   "firstEndPos" : 2917,
   "secondEndPos" : 2917
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // // BeanProperty impl",
+  "secondLabel" : "// // // BeanProperty impl",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2933,
+  "secondPos" : 3020,
+  "firstEndPos" : 2959,
+  "secondEndPos" : 3046
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3540,6 +3551,17 @@
   "secondPos" : 3255,
   "firstEndPos" : 3177,
   "secondEndPos" : 3264
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3188,
+  "secondPos" : 3275,
+  "firstEndPos" : 3357,
+  "secondEndPos" : 3444
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4310,6 +4332,17 @@
   "secondPos" : 3913,
   "firstEndPos" : 4216,
   "secondEndPos" : 4303
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the usual case",
+  "secondLabel" : "// the usual case",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3828,
+  "secondPos" : 3915,
+  "firstEndPos" : 3845,
+  "secondEndPos" : 3932
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -5895,6 +5928,28 @@
   "firstEndPos" : 4768,
   "secondEndPos" : 4855
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* JDK serialization handling\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* JDK serialization handling\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4782,
+  "secondPos" : 4869,
+  "firstEndPos" : 4954,
+  "secondEndPos" : 5041
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// When reading things back, ",
+  "secondLabel" : "// When reading things back, ",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4960,
+  "secondPos" : 5047,
+  "firstEndPos" : 4989,
+  "secondEndPos" : 5076
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6070,6 +6125,17 @@
   "secondPos" : 5194,
   "firstEndPos" : 5352,
   "secondEndPos" : 5439
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// need to construct a fake instance to support serialization",
+  "secondLabel" : "// need to construct a fake instance to support serialization",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5117,
+  "secondPos" : 5204,
+  "firstEndPos" : 5178,
+  "secondEndPos" : 5265
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

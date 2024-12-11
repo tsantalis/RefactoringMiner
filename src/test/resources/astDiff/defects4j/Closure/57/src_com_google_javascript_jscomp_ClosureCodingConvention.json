@@ -10,6 +10,17 @@
   "firstEndPos" : 12726,
   "secondEndPos" : 12762
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2007 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -692,6 +703,17 @@
   "firstEndPos" : 1594,
   "secondEndPos" : 1594
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1575,
+  "secondPos" : 1575,
+  "firstEndPos" : 1580,
+  "secondEndPos" : 1580
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " superClass_",
@@ -735,6 +757,17 @@
   "secondPos" : 1632,
   "firstEndPos" : 1651,
   "secondEndPos" : 1651
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1632,
+  "secondPos" : 1632,
+  "firstEndPos" : 1637,
+  "secondEndPos" : 1637
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1396,6 +1429,17 @@
   "firstEndPos" : 2103,
   "secondEndPos" : 2103
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@inheritDoc",
+  "secondLabel" : "@inheritDoc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2090,
+  "secondPos" : 2090,
+  "firstEndPos" : 2101,
+  "secondEndPos" : 2101
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "<p>Understands several different inheritance patterns that occur in",
@@ -1429,6 +1473,17 @@
   "firstEndPos" : 2232,
   "secondEndPos" : 2232
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2216,
+  "secondPos" : 2216,
+  "firstEndPos" : 2221,
+  "secondEndPos" : 2221
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " inherits",
@@ -1461,6 +1516,17 @@
   "secondPos" : 2237,
   "firstEndPos" : 2250,
   "secondEndPos" : 2250
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2237,
+  "secondPos" : 2237,
+  "firstEndPos" : 2242,
+  "secondEndPos" : 2242
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2034,6 +2100,83 @@
   "firstEndPos" : 2544,
   "secondEndPos" : 2544
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There are six possible syntaxes for a class-defining method:",
+  "secondLabel" : "// There are six possible syntaxes for a class-defining method:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2555,
+  "secondPos" : 2555,
+  "firstEndPos" : 2618,
+  "secondEndPos" : 2618
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SubClass.inherits(SuperClass)",
+  "secondLabel" : "// SubClass.inherits(SuperClass)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2625,
+  "secondPos" : 2625,
+  "firstEndPos" : 2657,
+  "secondEndPos" : 2657
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.inherits(SubClass, SuperClass)",
+  "secondLabel" : "// goog.inherits(SubClass, SuperClass)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2664,
+  "secondPos" : 2664,
+  "firstEndPos" : 2702,
+  "secondEndPos" : 2702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog$inherits(SubClass, SuperClass)",
+  "secondLabel" : "// goog$inherits(SubClass, SuperClass)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2709,
+  "secondPos" : 2709,
+  "firstEndPos" : 2747,
+  "secondEndPos" : 2747
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SubClass.mixin(SuperClass.prototype)",
+  "secondLabel" : "// SubClass.mixin(SuperClass.prototype)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2754,
+  "secondPos" : 2754,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 2793
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.mixin(SubClass.prototype, SuperClass.prototype)",
+  "secondLabel" : "// goog.mixin(SubClass.prototype, SuperClass.prototype)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2800,
+  "secondPos" : 2800,
+  "firstEndPos" : 2855,
+  "secondEndPos" : 2855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog$mixin(SubClass.prototype, SuperClass.prototype)",
+  "secondLabel" : "// goog$mixin(SubClass.prototype, SuperClass.prototype)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2862,
+  "secondPos" : 2862,
+  "firstEndPos" : 2917,
+  "secondEndPos" : 2917
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2287,6 +2430,17 @@
   "firstEndPos" : 3154,
   "secondEndPos" : 3154
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// SubClass.inherits(SuperClass)",
+  "secondLabel" : "// SubClass.inherits(SuperClass)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3069,
+  "secondPos" : 3069,
+  "firstEndPos" : 3101,
+  "secondEndPos" : 3101
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2474,6 +2628,17 @@
   "firstEndPos" : 3290,
   "secondEndPos" : 3290
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.inherits(SubClass, SuperClass)",
+  "secondLabel" : "// goog.inherits(SubClass, SuperClass)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3205,
+  "secondPos" : 3205,
+  "firstEndPos" : 3243,
+  "secondEndPos" : 3243
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2660,6 +2825,28 @@
   "secondPos" : 3366,
   "firstEndPos" : 3822,
   "secondEndPos" : 3822
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only consider mixins that mix two prototypes as related to",
+  "secondLabel" : "// Only consider mixins that mix two prototypes as related to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3376,
+  "secondPos" : 3376,
+  "firstEndPos" : 3437,
+  "secondEndPos" : 3437
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// inheritance.",
+  "secondLabel" : "// inheritance.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3446,
+  "secondPos" : 3446,
+  "firstEndPos" : 3461,
+  "secondEndPos" : 3461
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -2936,6 +3123,17 @@
   "firstEndPos" : 3643,
   "secondEndPos" : 3643
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Strip off the prototype from the name.",
+  "secondLabel" : "// Strip off the prototype from the name.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3667,
+  "secondPos" : 3667,
+  "firstEndPos" : 3708,
+  "secondEndPos" : 3708
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3111,6 +3309,50 @@
   "secondPos" : 3798,
   "firstEndPos" : 3811,
   "secondEndPos" : 3811
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// bail out if either of the side of the \"inherits\"",
+  "secondLabel" : "// bail out if either of the side of the \"inherits\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3830,
+  "secondPos" : 3830,
+  "firstEndPos" : 3881,
+  "secondEndPos" : 3881
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// isn't a real class name. This prevents us from",
+  "secondLabel" : "// isn't a real class name. This prevents us from",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3888,
+  "secondPos" : 3888,
+  "firstEndPos" : 3937,
+  "secondEndPos" : 3937
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doing something weird in cases like:",
+  "secondLabel" : "// doing something weird in cases like:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3944,
+  "secondPos" : 3944,
+  "firstEndPos" : 3983,
+  "secondEndPos" : 3983
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.inherits(MySubClass, cond ? SuperClass1 : BaseClass2)",
+  "secondLabel" : "// goog.inherits(MySubClass, cond ? SuperClass1 : BaseClass2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3990,
+  "secondPos" : 3990,
+  "firstEndPos" : 4051,
+  "secondEndPos" : 4051
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3475,6 +3717,17 @@
   "firstEndPos" : 4444,
   "secondEndPos" : 4444
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4395,
+  "secondPos" : 4395,
+  "firstEndPos" : 4402,
+  "secondEndPos" : 4402
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The type of class-defining name, or null.",
@@ -3584,6 +3837,17 @@
   "secondPos" : 4513,
   "firstEndPos" : 5190,
   "secondEndPos" : 5190
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Check if the method name matches one of the class-defining methods.",
+  "secondLabel" : "// Check if the method name matches one of the class-defining methods.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4519,
+  "secondPos" : 4519,
+  "firstEndPos" : 4589,
+  "secondEndPos" : 4589
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5378,6 +5642,17 @@
   "firstEndPos" : 5790,
   "secondEndPos" : 5790
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5748,
+  "secondPos" : 5748,
+  "firstEndPos" : 5755,
+  "secondEndPos" : 5755
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The extracted class name, or null.",
@@ -5685,6 +5960,17 @@
   "secondPos" : 6032,
   "firstEndPos" : 6074,
   "secondEndPos" : 6074
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6032,
+  "secondPos" : 6032,
+  "firstEndPos" : 6039,
+  "secondEndPos" : 6039
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7083,6 +7369,17 @@
   "firstEndPos" : 6896,
   "secondEndPos" : 6932
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6839,
+  "secondPos" : 6875,
+  "firstEndPos" : 6846,
+  "secondEndPos" : 6882
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " closure's function name for exporting properties.",
@@ -7247,6 +7544,17 @@
   "secondPos" : 7082,
   "firstEndPos" : 7100,
   "secondEndPos" : 7136
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7046,
+  "secondPos" : 7082,
+  "firstEndPos" : 7053,
+  "secondEndPos" : 7089
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9139,6 +9447,17 @@
   "secondPos" : 8130,
   "firstEndPos" : 8110,
   "secondEndPos" : 8146
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use both the original name and the post-CollapseProperties name.",
+  "secondLabel" : "// Use both the original name and the post-CollapseProperties name.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8119,
+  "secondPos" : 8155,
+  "firstEndPos" : 8186,
+  "secondEndPos" : 8222
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11901,6 +12220,17 @@
   "firstEndPos" : 10096,
   "secondEndPos" : 10132
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): The coding convention should not be performing checks.",
+  "secondLabel" : "// TODO(johnlenz): The coding convention should not be performing checks.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9863,
+  "secondPos" : 9899,
+  "firstEndPos" : 9936,
+  "secondEndPos" : 9972
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -12871,6 +13201,28 @@
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
+  "firstLabel" : "AssertionFunctionSpec",
+  "secondLabel" : "AssertionFunctionSpec",
+  "firstParentType" : "SimpleType",
+  "secondParentType" : "SimpleType",
+  "firstPos" : 10582,
+  "secondPos" : 10618,
+  "firstEndPos" : 10603,
+  "secondEndPos" : 10639
+}, {
+  "firstType" : "SimpleType",
+  "secondType" : "SimpleType",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 10582,
+  "secondPos" : 10618,
+  "firstEndPos" : 10603,
+  "secondEndPos" : 10639
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
   "firstLabel" : "of",
   "secondLabel" : "of",
   "firstParentType" : "MethodInvocation",
@@ -13209,6 +13561,28 @@
   "secondPos" : 11197,
   "firstEndPos" : 11184,
   "secondEndPos" : 11220
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(agrieve): It would be better if this could make the first",
+  "secondLabel" : "// TODO(agrieve): It would be better if this could make the first",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 11195,
+  "secondPos" : 11231,
+  "firstEndPos" : 11260,
+  "secondEndPos" : 11296
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// parameter the type of the second parameter.",
+  "secondLabel" : "// parameter the type of the second parameter.",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 11269,
+  "secondPos" : 11305,
+  "firstEndPos" : 11315,
+  "secondEndPos" : 11351
 }, {
   "firstType" : "ClassInstanceCreation",
   "secondType" : "ClassInstanceCreation",
@@ -13572,6 +13946,28 @@
   "secondPos" : 11614,
   "firstEndPos" : 11584,
   "secondEndPos" : 11620
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It would be nice to be able to identify a fn.bind call",
+  "secondLabel" : "// It would be nice to be able to identify a fn.bind call",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11597,
+  "secondPos" : 11633,
+  "firstEndPos" : 11654,
+  "secondEndPos" : 11690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but that requires knowing the type of \"fn\".",
+  "secondLabel" : "// but that requires knowing the type of \"fn\".",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11659,
+  "secondPos" : 11695,
+  "firstEndPos" : 11705,
+  "secondEndPos" : 11741
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14133,6 +14529,17 @@
   "secondPos" : 11994,
   "firstEndPos" : 12245,
   "secondEndPos" : 12281
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.bind(fn, self, args...);",
+  "secondLabel" : "// goog.bind(fn, self, args...);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11968,
+  "secondPos" : 12004,
+  "firstEndPos" : 12000,
+  "secondEndPos" : 12036
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14771,6 +15178,17 @@
   "secondPos" : 12353,
   "firstEndPos" : 12586,
   "secondEndPos" : 12622
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// goog.partial(fn, args...);",
+  "secondLabel" : "// goog.partial(fn, args...);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12327,
+  "secondPos" : 12363,
+  "firstEndPos" : 12356,
+  "secondEndPos" : 12392
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

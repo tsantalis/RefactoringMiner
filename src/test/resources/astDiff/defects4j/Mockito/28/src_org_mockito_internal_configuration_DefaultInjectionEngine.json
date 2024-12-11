@@ -10,6 +10,17 @@
   "firstEndPos" : 4163,
   "secondEndPos" : 4218
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "secondLabel" : "/*\r\n * Copyright (c) 2007 Mockito contributors\r\n * This program is made available under the terms of the MIT License.\r\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 122,
+  "secondEndPos" : 122
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -372,6 +383,17 @@
   "secondPos" : 888,
   "firstEndPos" : 926,
   "secondEndPos" : 926
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 888,
+  "secondPos" : 888,
+  "firstEndPos" : 893,
+  "secondEndPos" : 893
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -1693,6 +1715,17 @@
   "firstEndPos" : 2572,
   "secondEndPos" : 2572
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2515,
+  "secondPos" : 2515,
+  "firstEndPos" : 2521,
+  "secondEndPos" : 2521
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "injectMocksFields",
@@ -1726,6 +1759,17 @@
   "firstEndPos" : 2599,
   "secondEndPos" : 2599
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2581,
+  "secondPos" : 2581,
+  "firstEndPos" : 2587,
+  "secondEndPos" : 2587
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "mocks",
@@ -1758,6 +1802,17 @@
   "secondPos" : 2608,
   "firstEndPos" : 2656,
   "secondEndPos" : 2656
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2608,
+  "secondPos" : 2608,
+  "firstEndPos" : 2614,
+  "secondEndPos" : 2614
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2693,6 +2748,17 @@
   "secondPos" : 3213,
   "firstEndPos" : 3214,
   "secondEndPos" : 3214
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for each field in the class hierarchy",
+  "secondLabel" : "// for each field in the class hierarchy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3247,
+  "secondPos" : 3247,
+  "firstEndPos" : 3287,
+  "secondEndPos" : 3287
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

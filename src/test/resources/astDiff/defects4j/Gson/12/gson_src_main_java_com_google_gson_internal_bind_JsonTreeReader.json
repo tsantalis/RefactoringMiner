@@ -10,6 +10,17 @@
   "firstEndPos" : 9802,
   "secondEndPos" : 9868
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 599,
+  "secondEndPos" : 599
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -339,6 +350,17 @@
   "secondPos" : 1110,
   "firstEndPos" : 1130,
   "secondEndPos" : 1130
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1110,
+  "secondPos" : 1110,
+  "firstEndPos" : 1117,
+  "secondEndPos" : 1117
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1077,6 +1099,17 @@
   "firstEndPos" : 1542,
   "secondEndPos" : 1542
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * The nesting stack. Using a manual array rather than an ArrayList saves 20%.\n   */",
+  "secondLabel" : "/*\n   * The nesting stack. Using a manual array rather than an ArrayList saves 20%.\n   */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1549,
+  "secondPos" : 1549,
+  "firstEndPos" : 1638,
+  "secondEndPos" : 1638
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1296,6 +1329,17 @@
   "secondPos" : 1708,
   "firstEndPos" : 1709,
   "secondEndPos" : 1709
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n   * The path members. It corresponds directly to stack: At indices where the\n   * stack contains an object (EMPTY_OBJECT, DANGLING_NAME or NONEMPTY_OBJECT),\n   * pathNames contains the name at this scope. Where it contains an array\n   * (EMPTY_ARRAY, NONEMPTY_ARRAY) pathIndices contains the current index in\n   * that array. Otherwise the value is undefined, and we take advantage of that\n   * by incrementing pathIndices when doing so isn't useful.\n   */",
+  "secondLabel" : "/*\n   * The path members. It corresponds directly to stack: At indices where the\n   * stack contains an object (EMPTY_OBJECT, DANGLING_NAME or NONEMPTY_OBJECT),\n   * pathNames contains the name at this scope. Where it contains an array\n   * (EMPTY_ARRAY, NONEMPTY_ARRAY) pathIndices contains the current index in\n   * that array. Otherwise the value is undefined, and we take advantage of that\n   * by incrementing pathIndices when doing so isn't useful.\n   */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1714,
+  "secondPos" : 1714,
+  "firstEndPos" : 2174,
+  "secondEndPos" : 2174
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2397,6 +2441,17 @@
   "firstEndPos" : 2677,
   "secondEndPos" : 2677
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty iterator",
+  "secondLabel" : "// empty iterator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2681,
+  "secondPos" : 2681,
+  "firstEndPos" : 2698,
+  "secondEndPos" : 2698
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2429,6 +2484,17 @@
   "secondPos" : 2703,
   "firstEndPos" : 2711,
   "secondEndPos" : 2711
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// array",
+  "secondLabel" : "// array",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2715,
+  "secondPos" : 2715,
+  "firstEndPos" : 2723,
+  "secondEndPos" : 2723
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3167,6 +3233,17 @@
   "firstEndPos" : 3089,
   "secondEndPos" : 3089
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// empty iterator",
+  "secondLabel" : "// empty iterator",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3093,
+  "secondPos" : 3093,
+  "firstEndPos" : 3110,
+  "secondEndPos" : 3110
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3199,6 +3276,17 @@
   "secondPos" : 3115,
   "firstEndPos" : 3123,
   "secondEndPos" : 3123
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// object",
+  "secondLabel" : "// object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3127,
+  "secondPos" : 3127,
+  "firstEndPos" : 3136,
+  "secondEndPos" : 3136
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

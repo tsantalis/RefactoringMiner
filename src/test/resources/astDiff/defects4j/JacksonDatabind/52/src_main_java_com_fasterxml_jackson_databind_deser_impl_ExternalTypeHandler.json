@@ -252,6 +252,17 @@
   "firstEndPos" : 538,
   "secondEndPos" : 538
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 464,
+  "secondPos" : 464,
+  "firstEndPos" : 469,
+  "secondEndPos" : 469
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -2078,6 +2089,17 @@
   "firstEndPos" : 2048,
   "secondEndPos" : 2048
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2020,
+  "secondPos" : 2020,
+  "firstEndPos" : 2025,
+  "secondEndPos" : 2025
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -2969,6 +2991,17 @@
   "firstEndPos" : 2567,
   "secondEndPos" : 2567
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: can NOT skip child values (should always be String anyway)",
+  "secondLabel" : "// note: can NOT skip child values (should always be String anyway)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2579,
+  "secondPos" : 2579,
+  "firstEndPos" : 2646,
+  "secondEndPos" : 2646
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3167,6 +3200,17 @@
   "firstEndPos" : 2721,
   "secondEndPos" : 2721
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Minor optimization: deserialize properties as soon as we have all we need:",
+  "secondLabel" : "// Minor optimization: deserialize properties as soon as we have all we need:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2732,
+  "secondPos" : 2732,
+  "firstEndPos" : 2809,
+  "secondEndPos" : 2809
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3298,6 +3342,17 @@
   "secondPos" : 2893,
   "firstEndPos" : 2899,
   "secondEndPos" : 2899
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// clear stored data, to avoid deserializing+setting twice:",
+  "secondLabel" : "// clear stored data, to avoid deserializing+setting twice:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2914,
+  "secondPos" : 2914,
+  "firstEndPos" : 2973,
+  "secondEndPos" : 2973
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3573,6 +3628,17 @@
   "secondPos" : 3413,
   "firstEndPos" : 3469,
   "secondEndPos" : 3469
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3413,
+  "secondPos" : 3413,
+  "firstEndPos" : 3420,
+  "secondEndPos" : 3420
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5213,6 +5279,17 @@
   "firstEndPos" : 4328,
   "secondEndPos" : 4328
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Minor optimization: let's deserialize properties as soon as\n         * we have all pertinent information:\n         */",
+  "secondLabel" : "/* Minor optimization: let's deserialize properties as soon as\n         * we have all pertinent information:\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4349,
+  "secondPos" : 4349,
+  "firstEndPos" : 4469,
+  "secondEndPos" : 4469
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5333,6 +5410,17 @@
   "secondPos" : 4537,
   "firstEndPos" : 4542,
   "secondEndPos" : 4542
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// clear stored data, to avoid deserializing+setting twice:",
+  "secondLabel" : "// clear stored data, to avoid deserializing+setting twice:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4557,
+  "secondPos" : 4557,
+  "firstEndPos" : 4616,
+  "secondEndPos" : 4616
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -6335,6 +6423,28 @@
   "firstEndPos" : 5259,
   "secondEndPos" : 5259
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's allow missing both type and property (may already have been set, too)",
+  "secondLabel" : "// let's allow missing both type and property (may already have been set, too)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5278,
+  "secondPos" : 5278,
+  "firstEndPos" : 5356,
+  "secondEndPos" : 5356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but not just one",
+  "secondLabel" : "// but not just one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5373,
+  "secondPos" : 5373,
+  "firstEndPos" : 5392,
+  "secondEndPos" : 5392
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6411,6 +6521,28 @@
   "secondPos" : 5451,
   "firstEndPos" : 5460,
   "secondEndPos" : 5460
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#118]: Need to mind natural types, for which no type id",
+  "secondLabel" : "// [databind#118]: Need to mind natural types, for which no type id",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5495,
+  "secondPos" : 5495,
+  "firstEndPos" : 5562,
+  "secondEndPos" : 5562
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// will be included.",
+  "secondLabel" : "// will be included.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5579,
+  "secondPos" : 5579,
+  "firstEndPos" : 5599,
+  "secondEndPos" : 5599
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7280,6 +7412,17 @@
   "secondPos" : 6117,
   "firstEndPos" : 6126,
   "secondEndPos" : 6126
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 26-Oct-2012, tatu: As per [databind#94], must allow use of 'defaultImpl'",
+  "secondLabel" : "// 26-Oct-2012, tatu: As per [databind#94], must allow use of 'defaultImpl'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6169,
+  "secondPos" : 6169,
+  "firstEndPos" : 6244,
+  "secondEndPos" : 6244
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -8480,6 +8623,17 @@
   "firstEndPos" : 9656,
   "secondEndPos" : 9656
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first things first: deserialize all data buffered:",
+  "secondLabel" : "// first things first: deserialize all data buffered:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7371,
+  "secondPos" : 7371,
+  "firstEndPos" : 7424,
+  "secondEndPos" : 7424
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -9096,6 +9250,17 @@
   "firstEndPos" : 8314,
   "secondEndPos" : 8314
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's allow missing both type and property (may already have been set, too)",
+  "secondLabel" : "// let's allow missing both type and property (may already have been set, too)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7705,
+  "secondPos" : 7705,
+  "firstEndPos" : 7783,
+  "secondEndPos" : 7783
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -9194,6 +9359,28 @@
   "secondPos" : 7846,
   "firstEndPos" : 7855,
   "secondEndPos" : 7855
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but not just one",
+  "secondLabel" : "// but not just one",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7890,
+  "secondPos" : 7890,
+  "firstEndPos" : 7909,
+  "secondEndPos" : 7909
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 26-Oct-2012, tatu: As per [databind#94], must allow use of 'defaultImpl'",
+  "secondLabel" : "// 26-Oct-2012, tatu: As per [databind#94], must allow use of 'defaultImpl'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7926,
+  "secondPos" : 7926,
+  "firstEndPos" : 8001,
+  "secondEndPos" : 8001
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10130,6 +10317,17 @@
   "firstEndPos" : 8725,
   "secondEndPos" : 8725
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: if it's creator prop, fill in",
+  "secondLabel" : "// also: if it's creator prop, fill in",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8741,
+  "secondPos" : 8741,
+  "firstEndPos" : 8779,
+  "secondEndPos" : 8779
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10339,6 +10537,17 @@
   "firstEndPos" : 8880,
   "secondEndPos" : 8880
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#999] And maybe there's creator property for type id too?",
+  "secondLabel" : "// [databind#999] And maybe there's creator property for type id too?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8901,
+  "secondPos" : 8901,
+  "firstEndPos" : 8970,
+  "secondEndPos" : 8970
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10437,6 +10646,17 @@
   "secondPos" : 9027,
   "firstEndPos" : 9042,
   "secondEndPos" : 9042
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for now, should only be needed for creator properties, too",
+  "secondLabel" : "// for now, should only be needed for creator properties, too",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9062,
+  "secondPos" : 9062,
+  "firstEndPos" : 9123,
+  "secondEndPos" : 9123
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -10844,6 +11064,17 @@
   "secondPos" : 9350,
   "firstEndPos" : 9356,
   "secondEndPos" : 9356
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// third: assign non-creator properties",
+  "secondLabel" : "// third: assign non-creator properties",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9367,
+  "secondPos" : 9367,
+  "firstEndPos" : 9406,
+  "secondEndPos" : 9406
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -11890,6 +12121,17 @@
   "firstEndPos" : 9924,
   "secondEndPos" : 9924
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 29-Sep-2015, tatu: As per [databind#942], nulls need special support",
+  "secondLabel" : "// 29-Sep-2015, tatu: As per [databind#942], nulls need special support",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9936,
+  "secondPos" : 9936,
+  "firstEndPos" : 10007,
+  "secondEndPos" : 10007
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -12351,6 +12593,17 @@
   "secondPos" : 10265,
   "firstEndPos" : 10278,
   "secondEndPos" : 10278
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// needs to point to START_OBJECT (or whatever first token is)",
+  "secondLabel" : "// needs to point to START_OBJECT (or whatever first token is)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10291,
+  "secondPos" : 10291,
+  "firstEndPos" : 10353,
+  "secondEndPos" : 10353
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13001,6 +13254,17 @@
   "firstEndPos" : 11586,
   "secondEndPos" : 11586
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Ok: time to mix type id, value; and we will actually use \"wrapper-array\"\n         * style to ensure we can handle all kinds of JSON constructs.\n         */",
+  "secondLabel" : "/* Ok: time to mix type id, value; and we will actually use \"wrapper-array\"\n         * style to ensure we can handle all kinds of JSON constructs.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10705,
+  "secondPos" : 10705,
+  "firstEndPos" : 10863,
+  "secondEndPos" : 10863
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13242,6 +13506,17 @@
   "secondPos" : 10941,
   "firstEndPos" : 10950,
   "secondEndPos" : 10950
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 29-Sep-2015, tatu: As per [databind#942], nulls need special support",
+  "secondLabel" : "// 29-Sep-2015, tatu: As per [databind#942], nulls need special support",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10962,
+  "secondPos" : 10962,
+  "firstEndPos" : 11033,
+  "secondEndPos" : 11033
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13837,6 +14112,17 @@
   "firstEndPos" : 11362,
   "secondEndPos" : 11362
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// needs to point to START_OBJECT (or whatever first token is)",
+  "secondLabel" : "// needs to point to START_OBJECT (or whatever first token is)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11374,
+  "secondPos" : 11374,
+  "firstEndPos" : 11436,
+  "secondEndPos" : 11436
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -14166,6 +14452,17 @@
   "secondPos" : 11574,
   "firstEndPos" : 11578,
   "secondEndPos" : 11578
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper classes\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper classes\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11592,
+  "secondPos" : 11592,
+  "firstEndPos" : 11752,
+  "secondEndPos" : 11752
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -15300,6 +15597,17 @@
   "firstEndPos" : 12659,
   "secondEndPos" : 12659
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 12649,
+  "secondPos" : 12649,
+  "firstEndPos" : 12655,
+  "secondEndPos" : 12655
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.8",
@@ -15332,6 +15640,17 @@
   "secondPos" : 13482,
   "firstEndPos" : 12788,
   "secondEndPos" : 13492
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.8; may be removed as early as 2.9",
+  "secondLabel" : "// since 2.8; may be removed as early as 2.9",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 12789,
+  "secondPos" : 13493,
+  "firstEndPos" : 12833,
+  "secondEndPos" : 13537
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -15949,6 +16268,17 @@
   "firstEndPos" : 13305,
   "secondEndPos" : 14009
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13295,
+  "secondPos" : 13999,
+  "firstEndPos" : 13301,
+  "secondEndPos" : 14005
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.8",
@@ -16377,6 +16707,17 @@
   "secondPos" : 14348,
   "firstEndPos" : 13654,
   "secondEndPos" : 14358
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 13644,
+  "secondPos" : 14348,
+  "firstEndPos" : 13650,
+  "secondEndPos" : 14354
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -17510,6 +17851,17 @@
   "secondPos" : 15454,
   "firstEndPos" : 14760,
   "secondEndPos" : 15464
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14750,
+  "secondPos" : 15454,
+  "firstEndPos" : 14756,
+  "secondEndPos" : 15460
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

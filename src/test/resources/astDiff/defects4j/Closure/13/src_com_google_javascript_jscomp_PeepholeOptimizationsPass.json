@@ -10,6 +10,17 @@
   "firstEndPos" : 5544,
   "secondEndPos" : 5544
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2010 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -186,6 +197,17 @@
   "firstEndPos" : 990,
   "secondEndPos" : 990
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 951,
+  "secondPos" : 951,
+  "firstEndPos" : 958,
+  "secondEndPos" : 958
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " dcc@google.com (Devin Coughlin)",
@@ -207,6 +229,17 @@
   "secondPos" : 994,
   "firstEndPos" : 1034,
   "secondEndPos" : 1034
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 994,
+  "secondPos" : 994,
+  "firstEndPos" : 1001,
+  "secondEndPos" : 1001
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -329,6 +362,17 @@
   "firstEndPos" : 1136,
   "secondEndPos" : 1136
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Use an array here for faster iteration compared to ImmutableSet",
+  "secondLabel" : "// Use an array here for faster iteration compared to ImmutableSet",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1141,
+  "secondPos" : 1141,
+  "firstEndPos" : 1207,
+  "secondEndPos" : 1207
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -427,6 +471,28 @@
   "secondPos" : 1255,
   "firstEndPos" : 1276,
   "secondEndPos" : 1276
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Track whether the a scope has been modified so that it can be revisited",
+  "secondLabel" : "// Track whether the a scope has been modified so that it can be revisited",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1281,
+  "secondPos" : 1281,
+  "firstEndPos" : 1355,
+  "secondEndPos" : 1355
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// immediately.",
+  "secondLabel" : "// immediately.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1358,
+  "secondPos" : 1358,
+  "firstEndPos" : 1373,
+  "secondEndPos" : 1373
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -3222,6 +3288,50 @@
   "firstEndPos" : 3587,
   "secondEndPos" : 3587
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The goal here is to avoid retraversing",
+  "secondLabel" : "// The goal here is to avoid retraversing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3003,
+  "secondPos" : 3003,
+  "firstEndPos" : 3044,
+  "secondEndPos" : 3044
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the entire AST to catch newly created opportunities.",
+  "secondLabel" : "// the entire AST to catch newly created opportunities.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3049,
+  "secondPos" : 3049,
+  "firstEndPos" : 3104,
+  "secondEndPos" : 3104
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// So we track whether a \"unit of code\" has changed,",
+  "secondLabel" : "// So we track whether a \"unit of code\" has changed,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3109,
+  "secondPos" : 3109,
+  "firstEndPos" : 3161,
+  "secondEndPos" : 3161
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and revisit immediately.",
+  "secondLabel" : "// and revisit immediately.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3166,
+  "secondPos" : 3166,
+  "firstEndPos" : 3193,
+  "secondEndPos" : 3193
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4552,6 +4662,50 @@
   "secondPos" : 3786,
   "firstEndPos" : 4080,
   "secondEndPos" : 4080
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// prepare to re-visit the scope:",
+  "secondLabel" : "// prepare to re-visit the scope:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3796,
+  "secondPos" : 3796,
+  "firstEndPos" : 3829,
+  "secondEndPos" : 3829
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// when revisiting, only visit the immediate scope",
+  "secondLabel" : "// when revisiting, only visit the immediate scope",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3838,
+  "secondPos" : 3838,
+  "firstEndPos" : 3888,
+  "secondEndPos" : 3888
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this reduces the cost of getting to a fixed",
+  "secondLabel" : "// this reduces the cost of getting to a fixed",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3897,
+  "secondPos" : 3897,
+  "firstEndPos" : 3943,
+  "secondEndPos" : 3943
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// point in global scope.",
+  "secondLabel" : "// point in global scope.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3952,
+  "secondPos" : 3952,
+  "firstEndPos" : 3977,
+  "secondEndPos" : 3977
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

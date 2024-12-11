@@ -2485,6 +2485,17 @@
   "firstEndPos" : 1878,
   "secondEndPos" : 1878
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lc version of tag name, for case insensitive tree build",
+  "secondLabel" : "// lc version of tag name, for case insensitive tree build",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1880,
+  "secondPos" : 1880,
+  "firstEndPos" : 1938,
+  "secondEndPos" : 1938
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2550,6 +2561,17 @@
   "secondPos" : 1962,
   "firstEndPos" : 1982,
   "secondEndPos" : 1982
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// attribute names are generally caught in one hop, not accumulated",
+  "secondLabel" : "// attribute names are generally caught in one hop, not accumulated",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1984,
+  "secondPos" : 1984,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2051
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2650,6 +2672,17 @@
   "firstEndPos" : 2123,
   "secondEndPos" : 2123
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but values are accumulated, from e.g. & in hrefs",
+  "secondLabel" : "// but values are accumulated, from e.g. & in hrefs",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2127,
+  "secondPos" : 2127,
+  "firstEndPos" : 2178,
+  "secondEndPos" : 2178
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2716,6 +2749,17 @@
   "firstEndPos" : 2224,
   "secondEndPos" : 2224
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try to get attr vals in one shot, vs Builder",
+  "secondLabel" : "// try to get attr vals in one shot, vs Builder",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2226,
+  "secondPos" : 2226,
+  "firstEndPos" : 2273,
+  "secondEndPos" : 2273
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2781,6 +2825,17 @@
   "secondPos" : 2323,
   "firstEndPos" : 2328,
   "secondEndPos" : 2328
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// distinguish boolean attribute from empty string value",
+  "secondLabel" : "// distinguish boolean attribute from empty string value",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2330,
+  "secondPos" : 2330,
+  "firstEndPos" : 2386,
+  "secondEndPos" : 2386
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -2957,6 +3012,17 @@
   "secondPos" : 2501,
   "firstEndPos" : 2511,
   "secondEndPos" : 2511
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start tags get attributes on construction. End tags get attributes on first new attribute (but only for parser convenience, not used).",
+  "secondLabel" : "// start tags get attributes on construction. End tags get attributes on first new attribute (but only for parser convenience, not used).",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2513,
+  "secondPos" : 2513,
+  "firstEndPos" : 2650,
+  "secondEndPos" : 2650
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -3804,6 +3870,17 @@
   "secondPos" : 3233,
   "firstEndPos" : 4034,
   "secondEndPos" : 4109
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the tokeniser has skipped whitespace control chars, but trimming could collapse to empty for other control codes, so verify here",
+  "secondLabel" : "// the tokeniser has skipped whitespace control chars, but trimming could collapse to empty for other control codes, so verify here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3251,
+  "secondPos" : 3251,
+  "firstEndPos" : 3382,
+  "secondEndPos" : 3382
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4817,6 +4894,17 @@
   "firstEndPos" : 4513,
   "secondEndPos" : 4588
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// finalises for emit",
+  "secondLabel" : "// finalises for emit",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4309,
+  "secondPos" : 4384,
+  "firstEndPos" : 4330,
+  "secondEndPos" : 4405
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4882,6 +4970,17 @@
   "secondPos" : 4452,
   "firstEndPos" : 4503,
   "secondEndPos" : 4578
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo: check if attribute name exists; if so, drop and error",
+  "secondLabel" : "// todo: check if attribute name exists; if so, drop and error",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4395,
+  "secondPos" : 4470,
+  "firstEndPos" : 4457,
+  "secondEndPos" : 4532
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4981,6 +5080,17 @@
   "secondPos" : 4618,
   "firstEndPos" : 4722,
   "secondEndPos" : 4797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// preserves case, for input into Tag.valueOf (which may drop case)",
+  "secondLabel" : "// preserves case, for input into Tag.valueOf (which may drop case)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4545,
+  "secondPos" : 4620,
+  "firstEndPos" : 4612,
+  "secondEndPos" : 4687
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -5278,6 +5388,17 @@
   "secondPos" : 4833,
   "firstEndPos" : 4880,
   "secondEndPos" : 4955
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// loses case, used in tree building for working out where in tree it should go",
+  "secondLabel" : "// loses case, used in tree building for working out where in tree it should go",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4760,
+  "secondPos" : 4835,
+  "firstEndPos" : 4839,
+  "secondEndPos" : 4914
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -5784,6 +5905,17 @@
   "secondPos" : 5298,
   "firstEndPos" : 5233,
   "secondEndPos" : 5308
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// these appenders are rarely hit in not null state-- caused by null chars.",
+  "secondLabel" : "// these appenders are rarely hit in not null state-- caused by null chars.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5254,
+  "secondPos" : 5329,
+  "firstEndPos" : 5329,
+  "secondEndPos" : 5404
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -8117,6 +8249,17 @@
   "firstEndPos" : 6969,
   "secondEndPos" : 7044
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if on second hit, we'll need to move to the builder",
+  "secondLabel" : "// if on second hit, we'll need to move to the builder",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6983,
+  "secondPos" : 7058,
+  "firstEndPos" : 7037,
+  "secondEndPos" : 7112
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8754,6 +8897,17 @@
   "secondPos" : 7588,
   "firstEndPos" : 7523,
   "secondEndPos" : 7598
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo - would prefer these to be null, but need to check Element assertions",
+  "secondLabel" : "// todo - would prefer these to be null, but need to check Element assertions",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7539,
+  "secondPos" : 7614,
+  "firstEndPos" : 7616,
+  "secondEndPos" : 7691
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

@@ -219,6 +219,17 @@
   "firstEndPos" : 369,
   "secondEndPos" : 414
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 341,
+  "secondPos" : 386,
+  "firstEndPos" : 346,
+  "secondEndPos" : 391
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SettableBeanProperty",
@@ -1682,6 +1693,17 @@
   "firstEndPos" : 1611,
   "secondEndPos" : 1656
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // // BeanProperty impl",
+  "secondLabel" : "// // // BeanProperty impl",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1629,
+  "secondPos" : 1674,
+  "firstEndPos" : 1655,
+  "secondEndPos" : 1700
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2022,6 +2044,17 @@
   "secondPos" : 1874,
   "firstEndPos" : 1833,
   "secondEndPos" : 1878
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1842,
+  "secondPos" : 1887,
+  "firstEndPos" : 2011,
+  "secondEndPos" : 2056
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2705,6 +2738,28 @@
   "firstEndPos" : 2422,
   "secondEndPos" : 2945
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "secondLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2433,
+  "secondPos" : 2417,
+  "firstEndPos" : 2731,
+  "secondEndPos" : 2715
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "secondLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2740,
+  "secondPos" : 2724,
+  "firstEndPos" : 2819,
+  "secondEndPos" : 2803
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2968,6 +3023,17 @@
   "secondPos" : 3078,
   "firstEndPos" : 3019,
   "secondEndPos" : 3086
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: may need to set a property value as well",
+  "secondLabel" : "// also: may need to set a property value as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3030,
+  "secondPos" : 3097,
+  "firstEndPos" : 3079,
+  "secondEndPos" : 3146
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

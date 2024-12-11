@@ -197,6 +197,17 @@
   "firstEndPos" : 141,
   "secondEndPos" : 245
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// either a string value, or an attribute map (in the rare case multiple attributes are set)",
+  "secondLabel" : "// either a string value, or an attribute map (in the rare case multiple attributes are set)",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 143,
+  "secondPos" : 247,
+  "firstEndPos" : 235,
+  "secondEndPos" : 339
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3254,6 +3265,17 @@
   "secondPos" : 2070,
   "firstEndPos" : 1989,
   "secondEndPos" : 2093
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// noop",
+  "secondLabel" : "// noop",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1976,
+  "secondPos" : 2080,
+  "firstEndPos" : 1983,
+  "secondEndPos" : 2087
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",

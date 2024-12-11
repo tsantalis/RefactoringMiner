@@ -296,6 +296,17 @@
   "firstEndPos" : 545,
   "secondEndPos" : 545
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 531,
+  "secondPos" : 531,
+  "firstEndPos" : 536,
+  "secondEndPos" : 536
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Number",
@@ -340,6 +351,17 @@
   "firstEndPos" : 610,
   "secondEndPos" : 610
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 592,
+  "secondPos" : 592,
+  "firstEndPos" : 597,
+  "secondEndPos" : 597
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BigInteger",
@@ -372,6 +394,17 @@
   "secondPos" : 615,
   "firstEndPos" : 633,
   "secondEndPos" : 633
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 615,
+  "secondPos" : 615,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -592,6 +625,17 @@
   "secondPos" : 814,
   "firstEndPos" : 838,
   "secondEndPos" : 838
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 814,
+  "secondPos" : 814,
+  "firstEndPos" : 819,
+  "secondEndPos" : 819
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -857,6 +901,17 @@
   "firstEndPos" : 999,
   "secondEndPos" : 999
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 989,
+  "secondPos" : 989,
+  "firstEndPos" : 995,
+  "secondEndPos" : 995
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.5",
@@ -1021,6 +1076,17 @@
   "secondPos" : 1094,
   "firstEndPos" : 1099,
   "secondEndPos" : 1099
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since this will NOT be constructed for Integer or Long, only case is:",
+  "secondLabel" : "// since this will NOT be constructed for Integer or Long, only case is:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1110,
+  "secondPos" : 1110,
+  "firstEndPos" : 1182,
+  "secondEndPos" : 1182
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1374,6 +1440,17 @@
   "firstEndPos" : 2411,
   "secondEndPos" : 2411
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should mostly come in as one of these two:",
+  "secondLabel" : "// should mostly come in as one of these two:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1371,
+  "secondPos" : 1371,
+  "firstEndPos" : 1416,
+  "secondEndPos" : 1416
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -1725,6 +1802,17 @@
   "secondPos" : 1596,
   "firstEndPos" : 1601,
   "secondEndPos" : 1601
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* These shouldn't match (as there are more specific ones),\n         * but just to be sure:\n         */",
+  "secondLabel" : "/* These shouldn't match (as there are more specific ones),\n         * but just to be sure:\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1625,
+  "secondPos" : 1625,
+  "firstEndPos" : 1728,
+  "secondEndPos" : 1728
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -2694,6 +2782,17 @@
   "firstEndPos" : 2211,
   "secondEndPos" : 2211
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// doesn't need to be cast to smaller numbers",
+  "secondLabel" : "// doesn't need to be cast to smaller numbers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2216,
+  "secondPos" : 2216,
+  "firstEndPos" : 2261,
+  "secondEndPos" : 2261
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -2704,6 +2803,17 @@
   "secondPos" : 2277,
   "firstEndPos" : 2405,
   "secondEndPos" : 2405
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We'll have to use fallback \"untyped\" number write method",
+  "secondLabel" : "// We'll have to use fallback \"untyped\" number write method",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2291,
+  "secondPos" : 2291,
+  "firstEndPos" : 2350,
+  "secondEndPos" : 2350
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3672,6 +3782,28 @@
   "secondPos" : 3030,
   "firstEndPos" : 3204,
   "secondEndPos" : 3204
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// otherwise bit unclear what to call... but let's try:",
+  "secondLabel" : "// otherwise bit unclear what to call... but let's try:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3048,
+  "secondPos" : 3048,
+  "firstEndPos" : 3103,
+  "secondEndPos" : 3103
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*JsonNumberFormatVisitor v2 =*/",
+  "secondLabel" : "/*JsonNumberFormatVisitor v2 =*/",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3120,
+  "secondPos" : 3120,
+  "firstEndPos" : 3152,
+  "secondEndPos" : 3152
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

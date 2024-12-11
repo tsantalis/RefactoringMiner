@@ -10,6 +10,17 @@
   "firstEndPos" : 1257,
   "secondEndPos" : 1309
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -53,6 +64,17 @@
   "secondPos" : 169,
   "firstEndPos" : 192,
   "secondEndPos" : 192
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//stolen from hamcrest because I didn't want to have more dependency than Matcher class ",
+  "secondLabel" : "//stolen from hamcrest because I didn't want to have more dependency than Matcher class ",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 197,
+  "secondPos" : 197,
+  "firstEndPos" : 285,
+  "secondEndPos" : 285
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",

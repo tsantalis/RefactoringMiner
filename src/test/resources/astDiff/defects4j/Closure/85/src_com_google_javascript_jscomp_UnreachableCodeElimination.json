@@ -10,6 +10,17 @@
   "firstEndPos" : 8284,
   "secondEndPos" : 7932
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2008 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1714,6 +1725,17 @@
   "secondPos" : 2573,
   "firstEndPos" : 2581,
   "secondEndPos" : 2581
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Computes the control flow graph.",
+  "secondLabel" : "// Computes the control flow graph.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2590,
+  "secondPos" : 2590,
+  "firstEndPos" : 2625,
+  "secondEndPos" : 2625
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3563,6 +3585,17 @@
   "firstEndPos" : 3467,
   "secondEndPos" : 3467
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not in CFG.",
+  "secondLabel" : "// Not in CFG.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3433,
+  "secondPos" : 3433,
+  "firstEndPos" : 3447,
+  "secondEndPos" : 3447
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4113,6 +4146,17 @@
   "firstEndPos" : 4625,
   "secondEndPos" : 4625
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4503,
+  "secondPos" : 4503,
+  "firstEndPos" : 4510,
+  "secondEndPos" : 4510
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " The target of this jump. If the target is also useless jump,",
@@ -4266,6 +4310,28 @@
   "secondPos" : 4722,
   "firstEndPos" : 6958,
   "secondEndPos" : 6409
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     * For each of the unconditional branching control flow node, check to see\n     * if the ControlFlowAnalysis.computeFollowNode of that node is same as\n     * the branching target. If it is, the branch node is safe to be removed.\n     *\n     * This is not as clever as MinimizeExitPoints because it doesn't do any\n     * if-else conversion but it handles more complicated switch statements\n     * much nicer.\n     */",
+  "secondLabel" : "/*\n     * For each of the unconditional branching control flow node, check to see\n     * if the ControlFlowAnalysis.computeFollowNode of that node is same as\n     * the branching target. If it is, the branch node is safe to be removed.\n     *\n     * This is not as clever as MinimizeExitPoints because it doesn't do any\n     * if-else conversion but it handles more complicated switch statements\n     * much nicer.\n     */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4728,
+  "secondPos" : 4728,
+  "firstEndPos" : 5150,
+  "secondEndPos" : 5150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If n is null the target is the end of the function, nothing to do.",
+  "secondLabel" : "// If n is null the target is the end of the function, nothing to do.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5156,
+  "secondPos" : 5156,
+  "firstEndPos" : 5225,
+  "secondEndPos" : 5225
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -4817,6 +4883,39 @@
   "firstEndPos" : 6065,
   "secondEndPos" : 5549
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We are looking for a control flow changing statement that always",
+  "secondLabel" : "// We are looking for a control flow changing statement that always",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 6076,
+  "secondPos" : 5560,
+  "firstEndPos" : 6143,
+  "secondEndPos" : 5627
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// branches to the same node. If removing it the control flow still",
+  "secondLabel" : "// branches to the same node. If removing it the control flow still",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 6152,
+  "secondPos" : 5636,
+  "firstEndPos" : 6219,
+  "secondEndPos" : 5703
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// branches to that same node. It is safe to remove it.",
+  "secondLabel" : "// branches to that same node. It is safe to remove it.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 6228,
+  "secondPos" : 5712,
+  "firstEndPos" : 6283,
+  "secondEndPos" : 5767
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5113,6 +5212,17 @@
   "secondPos" : 5872,
   "firstEndPos" : 6390,
   "secondEndPos" : 5874
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If there is a next node, there is no chance this jump is useless.",
+  "secondLabel" : "// If there is a next node, there is no chance this jump is useless.",
+  "firstParentType" : "InfixExpression",
+  "secondParentType" : "InfixExpression",
+  "firstPos" : 6403,
+  "secondPos" : 5887,
+  "firstEndPos" : 6471,
+  "secondEndPos" : 5955
 }, {
   "firstType" : "ParenthesizedExpression",
   "secondType" : "ParenthesizedExpression",
@@ -6742,6 +6852,17 @@
   "firstEndPos" : 7365,
   "secondEndPos" : 7013
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not always trivial to remove, let FoldContants work its magic later.",
+  "secondLabel" : "// Not always trivial to remove, let FoldContants work its magic later.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7274,
+  "secondPos" : 6922,
+  "firstEndPos" : 7345,
+  "secondEndPos" : 6993
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -6808,6 +6929,39 @@
   "firstEndPos" : 7388,
   "secondEndPos" : 7036
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Removing an unreachable DO node is messy because it means we still have",
+  "secondLabel" : "// Removing an unreachable DO node is messy because it means we still have",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7400,
+  "secondPos" : 7048,
+  "firstEndPos" : 7474,
+  "secondEndPos" : 7122
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// to execute one iteration. If the DO's body has breaks in the middle, it",
+  "secondLabel" : "// to execute one iteration. If the DO's body has breaks in the middle, it",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7481,
+  "secondPos" : 7129,
+  "firstEndPos" : 7555,
+  "secondEndPos" : 7203
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// can get even more trickier and code size might actually increase.",
+  "secondLabel" : "// can get even more trickier and code size might actually increase.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7562,
+  "secondPos" : 7210,
+  "firstEndPos" : 7630,
+  "secondEndPos" : 7278
+}, {
   "firstType" : "SwitchCase",
   "secondType" : "SwitchCase",
   "firstLabel" : "",
@@ -6862,6 +7016,17 @@
   "secondPos" : 7328,
   "firstEndPos" : 7691,
   "secondEndPos" : 7339
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// BLOCKs are used in several ways including wrapping CATCH blocks in TRYs",
+  "secondLabel" : "// BLOCKs are used in several ways including wrapping CATCH blocks in TRYs",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 7701,
+  "secondPos" : 7349,
+  "firstEndPos" : 7775,
+  "secondEndPos" : 7423
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

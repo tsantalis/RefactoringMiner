@@ -10,6 +10,17 @@
   "firstEndPos" : 5789,
   "secondEndPos" : 5812
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1693,6 +1704,17 @@
   "firstEndPos" : 3656,
   "secondEndPos" : 3656
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Set<Object> mocksToBeInjected = new HashSet<Object>(mockCandidates);",
+  "secondLabel" : "// Set<Object> mocksToBeInjected = new HashSet<Object>(mockCandidates);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2976,
+  "secondPos" : 2976,
+  "firstEndPos" : 3047,
+  "secondEndPos" : 3047
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -1802,6 +1824,17 @@
   "secondPos" : 3136,
   "firstEndPos" : 3157,
   "secondEndPos" : 3157
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for each field in the class hierarchy",
+  "secondLabel" : "// for each field in the class hierarchy",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3169,
+  "secondPos" : 3169,
+  "firstEndPos" : 3209,
+  "secondEndPos" : 3209
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3365,6 +3398,17 @@
   "firstEndPos" : 4283,
   "secondEndPos" : 4283
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// never null",
+  "secondLabel" : "// never null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4285,
+  "secondPos" : 4285,
+  "firstEndPos" : 4298,
+  "secondEndPos" : 4298
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3794,6 +3838,17 @@
   "firstEndPos" : 4554,
   "secondEndPos" : 4554
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pass 1",
+  "secondLabel" : "// pass 1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4565,
+  "secondPos" : 4565,
+  "firstEndPos" : 4574,
+  "secondEndPos" : 4574
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3914,6 +3969,17 @@
   "secondPos" : 4669,
   "firstEndPos" : 4690,
   "secondEndPos" : 4690
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// pass 2",
+  "secondLabel" : "// pass 2",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4701,
+  "secondPos" : 4701,
+  "firstEndPos" : 4710,
+  "secondEndPos" : 4710
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

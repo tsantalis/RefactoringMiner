@@ -219,6 +219,17 @@
   "firstEndPos" : 225,
   "secondEndPos" : 225
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 203,
+  "secondPos" : 203,
+  "firstEndPos" : 208,
+  "secondEndPos" : 208
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " XmlTreeBuilder",
@@ -274,6 +285,17 @@
   "firstEndPos" : 415,
   "secondEndPos" : 415
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 342,
+  "secondPos" : 342,
+  "firstEndPos" : 347,
+  "secondEndPos" : 347
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Document xmlDoc = Jsoup.parse(html, baseUrl, Parser.xmlParser());",
@@ -306,6 +328,17 @@
   "secondPos" : 426,
   "firstEndPos" : 449,
   "secondEndPos" : 449
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 426,
+  "secondPos" : 426,
+  "firstEndPos" : 433,
+  "secondEndPos" : 433
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1418,6 +1451,17 @@
   "firstEndPos" : 1130,
   "secondEndPos" : 1130
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// place the document onto the stack. differs from HtmlTreeBuilder (not on stack)",
+  "secondLabel" : "// place the document onto the stack. differs from HtmlTreeBuilder (not on stack)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1133,
+  "secondPos" : 1133,
+  "firstEndPos" : 1214,
+  "secondEndPos" : 1214
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -1648,6 +1692,17 @@
   "secondPos" : 1352,
   "firstEndPos" : 2142,
   "secondEndPos" : 2142
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start tag, end tag, doctype, comment, character, eof",
+  "secondLabel" : "// start tag, end tag, doctype, comment, character, eof",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1362,
+  "secondPos" : 1362,
+  "firstEndPos" : 1417,
+  "secondEndPos" : 1417
 }, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",
@@ -2298,6 +2353,17 @@
   "firstEndPos" : 1941,
   "secondEndPos" : 1941
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// could put some normalisation here if desired",
+  "secondLabel" : "// could put some normalisation here if desired",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 1943,
+  "secondPos" : 1943,
+  "firstEndPos" : 1990,
+  "secondEndPos" : 1990
+}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -2903,6 +2969,17 @@
   "firstEndPos" : 2337,
   "secondEndPos" : 2337
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// todo: wonder if for xml parsing, should treat all tags as unknown? because it's not html.",
+  "secondLabel" : "// todo: wonder if for xml parsing, should treat all tags as unknown? because it's not html.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2348,
+  "secondPos" : 2348,
+  "firstEndPos" : 2440,
+  "secondEndPos" : 2440
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3276,6 +3353,17 @@
   "secondPos" : 2625,
   "firstEndPos" : 2635,
   "secondEndPos" : 2635
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unknown tag, remember this is self closing for output. see above.",
+  "secondLabel" : "// unknown tag, remember this is self closing for output. see above.",
+  "firstParentType" : "IfStatement",
+  "secondParentType" : "IfStatement",
+  "firstPos" : 2639,
+  "secondPos" : 2639,
+  "firstEndPos" : 2707,
+  "secondEndPos" : 2707
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3760,6 +3848,28 @@
   "secondPos" : 2998,
   "firstEndPos" : 3674,
   "secondEndPos" : 3674
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// xml declarations are emitted as bogus comments (which is right for html, but not xml)",
+  "secondLabel" : "// xml declarations are emitted as bogus comments (which is right for html, but not xml)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3000,
+  "secondPos" : 3000,
+  "firstEndPos" : 3088,
+  "secondEndPos" : 3088
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so we do a bit of a hack and parse the data as an element to pull the attributes out",
+  "secondLabel" : "// so we do a bit of a hack and parse the data as an element to pull the attributes out",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3101,
+  "secondPos" : 3101,
+  "firstEndPos" : 3188,
+  "secondEndPos" : 3188
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -6038,6 +6148,17 @@
   "firstEndPos" : 4336,
   "secondEndPos" : 4336
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4310,
+  "secondPos" : 4310,
+  "firstEndPos" : 4316,
+  "secondEndPos" : 4316
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "endTag",
@@ -6906,6 +7027,17 @@
   "secondPos" : 4760,
   "firstEndPos" : 4761,
   "secondEndPos" : 4767
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not found, skip",
+  "secondLabel" : "// not found, skip",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4762,
+  "secondPos" : 4768,
+  "firstEndPos" : 4780,
+  "secondEndPos" : 4786
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",

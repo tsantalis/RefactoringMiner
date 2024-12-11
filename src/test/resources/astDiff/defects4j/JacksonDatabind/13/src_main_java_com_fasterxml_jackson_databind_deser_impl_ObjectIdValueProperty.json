@@ -219,6 +219,17 @@
   "firstEndPos" : 369,
   "secondEndPos" : 369
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 341,
+  "secondPos" : 341,
+  "firstEndPos" : 346,
+  "secondEndPos" : 346
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "SettableBeanProperty",
@@ -1077,6 +1088,17 @@
   "firstEndPos" : 1162,
   "secondEndPos" : 1162
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.3",
+  "secondLabel" : "// since 2.3",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1163,
+  "secondPos" : 1163,
+  "firstEndPos" : 1175,
+  "secondEndPos" : 1175
+}, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
   "firstLabel" : "protected",
@@ -1318,6 +1340,17 @@
   "secondPos" : 1355,
   "firstEndPos" : 1365,
   "secondEndPos" : 1365
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.3",
+  "secondLabel" : "// since 2.3",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 1366,
+  "secondPos" : 1366,
+  "firstEndPos" : 1378,
+  "secondEndPos" : 1378
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -1924,6 +1957,17 @@
   "firstEndPos" : 1807,
   "secondEndPos" : 1807
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// // // BeanProperty impl",
+  "secondLabel" : "// // // BeanProperty impl",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1825,
+  "secondPos" : 1825,
+  "firstEndPos" : 1851,
+  "secondEndPos" : 1851
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2264,6 +2308,17 @@
   "secondPos" : 2025,
   "firstEndPos" : 2029,
   "secondEndPos" : 2029
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Deserialization methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2038,
+  "secondPos" : 2038,
+  "firstEndPos" : 2207,
+  "secondEndPos" : 2207
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2815,6 +2870,17 @@
   "firstEndPos" : 3419,
   "secondEndPos" : 3480
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "secondLabel" : "// note: no null checks (unlike usually); deserializer should fail if one found",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2571,
+  "secondPos" : 2571,
+  "firstEndPos" : 2650,
+  "secondEndPos" : 2650
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2946,6 +3012,17 @@
   "secondPos" : 2706,
   "firstEndPos" : 2710,
   "secondEndPos" : 2710
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "secondLabel" : "/* 02-Apr-2015, tatu: Actually, as per [databind#742], let it be;\n         *  missing or null id is needed for some cases, such as cases where id\n         *  will be generated externally, at a later point, and is not available\n         *  quite yet. Typical use case is with DB inserts.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2722,
+  "secondPos" : 2722,
+  "firstEndPos" : 3020,
+  "secondEndPos" : 3020
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3166,6 +3243,17 @@
   "secondPos" : 3221,
   "firstEndPos" : 3168,
   "secondEndPos" : 3229
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: may need to set a property value as well",
+  "secondLabel" : "// also: may need to set a property value as well",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3179,
+  "secondPos" : 3240,
+  "firstEndPos" : 3228,
+  "secondEndPos" : 3289
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

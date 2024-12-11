@@ -1132,6 +1132,17 @@
   "firstEndPos" : 1077,
   "secondEndPos" : 1077
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// This looks ugly, but appears the fastest way (as per measurements)",
+  "secondLabel" : "// This looks ugly, but appears the fastest way (as per measurements)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1087,
+  "secondPos" : 1087,
+  "firstEndPos" : 1156,
+  "secondEndPos" : 1156
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3596,6 +3607,17 @@
   "firstEndPos" : 4227,
   "secondEndPos" : 4227
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Ok: let's keep strategy simple: ignoring optional minus sign,\n         * we'll accept 1 - 9 digits and parse things efficiently;\n         * otherwise just defer to JDK parse functionality.\n         */",
+  "secondLabel" : "/* Ok: let's keep strategy simple: ignoring optional minus sign,\n         * we'll accept 1 - 9 digits and parse things efficiently;\n         * otherwise just defer to JDK parse functionality.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2477,
+  "secondPos" : 2477,
+  "firstEndPos" : 2680,
+  "secondEndPos" : 2680
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3947,6 +3969,28 @@
   "secondPos" : 2808,
   "firstEndPos" : 2809,
   "secondEndPos" : 2809
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// must have 1 - 9 digits after optional sign:",
+  "secondLabel" : "// must have 1 - 9 digits after optional sign:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2819,
+  "secondPos" : 2819,
+  "firstEndPos" : 2865,
+  "secondEndPos" : 2865
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// negative?",
+  "secondLabel" : "// negative?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2874,
+  "secondPos" : 2874,
+  "firstEndPos" : 2886,
+  "secondEndPos" : 2886
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -5939,6 +5983,17 @@
   "firstEndPos" : 3724,
   "secondEndPos" : 3724
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's just loop if we have more than 3 digits:",
+  "secondLabel" : "// Let's just loop if we have more than 3 digits:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3743,
+  "secondPos" : 3743,
+  "firstEndPos" : 3792,
+  "secondEndPos" : 3792
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -6852,6 +6907,17 @@
   "firstEndPos" : 4531,
   "secondEndPos" : 4531
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note: caller must ensure length is [10, 18]",
+  "secondLabel" : "// Note: caller must ensure length is [10, 18]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4320,
+  "secondPos" : 4320,
+  "firstEndPos" : 4366,
+  "secondEndPos" : 4366
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7358,6 +7424,17 @@
   "firstEndPos" : 4962,
   "secondEndPos" : 4962
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Ok, now; as the very first thing, let's just optimize case of \"fake longs\";\n         * that is, if we know they must be ints, call int parsing\n         */",
+  "secondLabel" : "/* Ok, now; as the very first thing, let's just optimize case of \"fake longs\";\n         * that is, if we know they must be ints, call int parsing\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4592,
+  "secondPos" : 4592,
+  "firstEndPos" : 4749,
+  "secondEndPos" : 4749
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7589,6 +7666,17 @@
   "firstEndPos" : 4850,
   "secondEndPos" : 4850
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// !!! TODO: implement efficient 2-int parsing...",
+  "secondLabel" : "// !!! TODO: implement efficient 2-int parsing...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4871,
+  "secondPos" : 4871,
+  "firstEndPos" : 4920,
+  "secondEndPos" : 4920
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -7753,6 +7841,17 @@
   "secondPos" : 5235,
   "firstEndPos" : 5345,
   "secondEndPos" : 5345
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5235,
+  "secondPos" : 5235,
+  "firstEndPos" : 5241,
+  "secondEndPos" : 5241
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -8898,6 +8997,17 @@
   "firstEndPos" : 5951,
   "secondEndPos" : 5951
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5907,
+  "secondPos" : 5907,
+  "firstEndPos" : 5912,
+  "secondEndPos" : 5912
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -9062,6 +9172,17 @@
   "secondPos" : 5999,
   "firstEndPos" : 6109,
   "secondEndPos" : 6109
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5999,
+  "secondPos" : 5999,
+  "firstEndPos" : 6005,
+  "secondEndPos" : 6005
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -9656,6 +9777,17 @@
   "secondPos" : 6436,
   "firstEndPos" : 6441,
   "secondEndPos" : 6441
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// could perhaps just use String.compareTo()?",
+  "secondLabel" : "// could perhaps just use String.compareTo()?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6452,
+  "secondPos" : 6452,
+  "firstEndPos" : 6497,
+  "secondEndPos" : 6497
 }, {
   "firstType" : "ForStatement",
   "secondType" : "ForStatement",
@@ -10658,6 +10790,17 @@
   "firstEndPos" : 6982,
   "secondEndPos" : 6982
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// One more thing: use integer parsing for 'simple'",
+  "secondLabel" : "// One more thing: use integer parsing for 'simple'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7002,
+  "secondPos" : 7002,
+  "firstEndPos" : 7053,
+  "secondEndPos" : 7053
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -10778,6 +10921,17 @@
   "secondPos" : 7094,
   "firstEndPos" : 7429,
   "secondEndPos" : 7429
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip leading sign:",
+  "secondLabel" : "// skip leading sign:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7096,
+  "secondPos" : 7096,
+  "firstEndPos" : 7117,
+  "secondEndPos" : 7117
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10954,6 +11108,17 @@
   "secondPos" : 7182,
   "firstEndPos" : 7319,
   "secondEndPos" : 7319
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for plus, actually physically remove",
+  "secondLabel" : "// for plus, actually physically remove",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7184,
+  "secondPos" : 7184,
+  "firstEndPos" : 7223,
+  "secondEndPos" : 7223
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11219,6 +11384,17 @@
   "firstEndPos" : 7419,
   "secondEndPos" : 7419
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// minus, just skip for checks, must retain",
+  "secondLabel" : "// minus, just skip for checks, must retain",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7341,
+  "secondPos" : 7341,
+  "firstEndPos" : 7384,
+  "secondEndPos" : 7384
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11471,6 +11647,17 @@
   "secondPos" : 7495,
   "firstEndPos" : 7496,
   "secondEndPos" : 7496
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if other symbols, parse as Double, coerce",
+  "secondLabel" : "// if other symbols, parse as Double, coerce",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7511,
+  "secondPos" : 7511,
+  "firstEndPos" : 7555,
+  "secondEndPos" : 7555
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -12473,6 +12660,17 @@
   "firstEndPos" : 8209,
   "secondEndPos" : 8209
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// One more thing: use long parsing for 'simple'",
+  "secondLabel" : "// One more thing: use long parsing for 'simple'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8229,
+  "secondPos" : 8229,
+  "firstEndPos" : 8277,
+  "secondEndPos" : 8277
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -12593,6 +12791,17 @@
   "secondPos" : 8318,
   "firstEndPos" : 8653,
   "secondEndPos" : 8653
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// skip leading sign:",
+  "secondLabel" : "// skip leading sign:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8320,
+  "secondPos" : 8320,
+  "firstEndPos" : 8341,
+  "secondEndPos" : 8341
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -12769,6 +12978,17 @@
   "secondPos" : 8406,
   "firstEndPos" : 8543,
   "secondEndPos" : 8543
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// for plus, actually physically remove",
+  "secondLabel" : "// for plus, actually physically remove",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8408,
+  "secondPos" : 8408,
+  "firstEndPos" : 8447,
+  "secondEndPos" : 8447
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -13034,6 +13254,17 @@
   "firstEndPos" : 8643,
   "secondEndPos" : 8643
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// minus, just skip for checks, must retain",
+  "secondLabel" : "// minus, just skip for checks, must retain",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8565,
+  "secondPos" : 8565,
+  "firstEndPos" : 8608,
+  "secondEndPos" : 8608
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13286,6 +13517,17 @@
   "secondPos" : 8719,
   "firstEndPos" : 8720,
   "secondEndPos" : 8720
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if other symbols, parse as Double, coerce",
+  "secondLabel" : "// if other symbols, parse as Double, coerce",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8735,
+  "secondPos" : 8735,
+  "firstEndPos" : 8779,
+  "secondEndPos" : 8779
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14584,6 +14826,28 @@
   "secondPos" : 9674,
   "firstEndPos" : 10105,
   "secondEndPos" : 10105
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [JACKSON-486]: avoid some nasty float representations... but should it be MIN_NORMAL or MIN_VALUE?",
+  "secondLabel" : "// [JACKSON-486]: avoid some nasty float representations... but should it be MIN_NORMAL or MIN_VALUE?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9684,
+  "secondPos" : 9684,
+  "firstEndPos" : 9785,
+  "secondEndPos" : 9785
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* as per [JACKSON-827], let's use MIN_VALUE as it is available on all JDKs; normalized\n         * only in JDK 1.6. In practice, should not really matter.\n         */",
+  "secondLabel" : "/* as per [JACKSON-827], let's use MIN_VALUE as it is available on all JDKs; normalized\n         * only in JDK 1.6. In practice, should not really matter.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9794,
+  "secondPos" : 9794,
+  "firstEndPos" : 9960,
+  "secondEndPos" : 9960
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

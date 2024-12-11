@@ -351,6 +351,17 @@
   "firstEndPos" : 1036,
   "secondEndPos" : 1042
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1023,
+  "secondPos" : 1029,
+  "firstEndPos" : 1031,
+  "secondEndPos" : 1037
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " $Id$",
@@ -1033,6 +1044,17 @@
   "firstEndPos" : 1578,
   "secondEndPos" : 1590
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1533,
+  "secondPos" : 1545,
+  "firstEndPos" : 1539,
+  "secondEndPos" : 1551
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "option",
@@ -1065,6 +1087,17 @@
   "secondPos" : 1598,
   "firstEndPos" : 1633,
   "secondEndPos" : 1645
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1586,
+  "secondPos" : 1598,
+  "firstEndPos" : 1593,
+  "secondEndPos" : 1605
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1175,6 +1208,28 @@
   "secondPos" : 1706,
   "firstEndPos" : 1832,
   "secondEndPos" : 1844
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// key   - option name",
+  "secondLabel" : "// key   - option name",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1704,
+  "secondPos" : 1716,
+  "firstEndPos" : 1726,
+  "secondEndPos" : 1738
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// value - the option",
+  "secondLabel" : "// value - the option",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1735,
+  "secondPos" : 1747,
+  "firstEndPos" : 1756,
+  "secondEndPos" : 1768
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -1352,6 +1407,17 @@
   "firstEndPos" : 1932,
   "secondEndPos" : 1944
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1849,
+  "secondPos" : 1861,
+  "firstEndPos" : 1856,
+  "secondEndPos" : 1868
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the names of the options in this group as a ",
@@ -1462,6 +1528,17 @@
   "firstEndPos" : 2078,
   "secondEndPos" : 2090
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the key set is the collection of names",
+  "secondLabel" : "// the key set is the collection of names",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1996,
+  "secondPos" : 2008,
+  "firstEndPos" : 2037,
+  "secondEndPos" : 2049
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -1549,6 +1626,17 @@
   "secondPos" : 2107,
   "firstEndPos" : 2157,
   "secondEndPos" : 2169
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2095,
+  "secondPos" : 2107,
+  "firstEndPos" : 2102,
+  "secondEndPos" : 2114
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1648,6 +1736,17 @@
   "secondPos" : 2225,
   "firstEndPos" : 2307,
   "secondEndPos" : 2319
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the values are the collection of options",
+  "secondLabel" : "// the values are the collection of options",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2223,
+  "secondPos" : 2235,
+  "firstEndPos" : 2266,
+  "secondEndPos" : 2278
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -1759,6 +1858,17 @@
   "firstEndPos" : 2439,
   "secondEndPos" : 2451
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2398,
+  "secondPos" : 2410,
+  "firstEndPos" : 2404,
+  "secondEndPos" : 2416
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "option",
@@ -1791,6 +1901,17 @@
   "secondPos" : 2459,
   "firstEndPos" : 2543,
   "secondEndPos" : 2555
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2447,
+  "secondPos" : 2459,
+  "firstEndPos" : 2454,
+  "secondEndPos" : 2466
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2001,6 +2122,17 @@
   "firstEndPos" : 2781,
   "secondEndPos" : 2793
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reset the option previously selected",
+  "secondLabel" : "// reset the option previously selected",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2683,
+  "secondPos" : 2695,
+  "firstEndPos" : 2722,
+  "secondEndPos" : 2734
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2066,6 +2198,39 @@
   "secondPos" : 2776,
   "firstEndPos" : 2771,
   "secondEndPos" : 2783
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if no option has already been selected or the ",
+  "secondLabel" : "// if no option has already been selected or the ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2799,
+  "secondPos" : 2811,
+  "firstEndPos" : 2848,
+  "secondEndPos" : 2860
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// same option is being reselected then set the",
+  "secondLabel" : "// same option is being reselected then set the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2857,
+  "secondPos" : 2869,
+  "firstEndPos" : 2904,
+  "secondEndPos" : 2916
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// selected member variable",
+  "secondLabel" : "// selected member variable",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2913,
+  "secondPos" : 2925,
+  "firstEndPos" : 2940,
+  "secondEndPos" : 2952
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -2452,6 +2617,17 @@
   "firstEndPos" : 3216,
   "secondEndPos" : 3228
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3184,
+  "secondPos" : 3196,
+  "firstEndPos" : 3191,
+  "secondEndPos" : 3203
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the selected option name",
@@ -2572,6 +2748,17 @@
   "secondPos" : 3322,
   "firstEndPos" : 3361,
   "secondEndPos" : 3373
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3310,
+  "secondPos" : 3322,
+  "firstEndPos" : 3316,
+  "secondEndPos" : 3328
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2804,6 +2991,17 @@
   "firstEndPos" : 3584,
   "secondEndPos" : 3596
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3539,
+  "secondPos" : 3551,
+  "firstEndPos" : 3546,
+  "secondEndPos" : 3558
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " whether this option group is required",
@@ -2935,6 +3133,17 @@
   "secondPos" : 3758,
   "firstEndPos" : 3798,
   "secondEndPos" : 3810
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3746,
+  "secondPos" : 3758,
+  "firstEndPos" : 3753,
+  "secondEndPos" : 3765
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

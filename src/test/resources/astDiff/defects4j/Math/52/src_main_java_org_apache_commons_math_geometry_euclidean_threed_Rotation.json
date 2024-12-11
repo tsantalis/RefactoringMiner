@@ -10,6 +10,17 @@
   "firstEndPos" : 41775,
   "secondEndPos" : 41909
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 802,
+  "secondEndPos" : 802
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -406,6 +417,17 @@
   "firstEndPos" : 2399,
   "secondEndPos" : 2399
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2375,
+  "secondPos" : 2375,
+  "firstEndPos" : 2380,
+  "secondEndPos" : 2380
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Vector3D",
@@ -460,6 +482,17 @@
   "secondPos" : 2432,
   "firstEndPos" : 2456,
   "secondEndPos" : 2456
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2432,
+  "secondPos" : 2432,
+  "firstEndPos" : 2437,
+  "secondEndPos" : 2437
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -747,6 +780,17 @@
   "firstEndPos" : 4173,
   "secondEndPos" : 4173
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4129,
+  "secondPos" : 4129,
+  "firstEndPos" : 4134,
+  "secondEndPos" : 4134
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -834,6 +878,17 @@
   "secondPos" : 4178,
   "firstEndPos" : 4239,
   "secondEndPos" : 4239
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4178,
+  "secondPos" : 4178,
+  "firstEndPos" : 4183,
+  "secondEndPos" : 4183
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -1022,6 +1077,17 @@
   "firstEndPos" : 4970,
   "secondEndPos" : 4970
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4926,
+  "secondPos" : 4926,
+  "firstEndPos" : 4931,
+  "secondEndPos" : 4931
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -1109,6 +1175,17 @@
   "secondPos" : 4978,
   "firstEndPos" : 5036,
   "secondEndPos" : 5036
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4978,
+  "secondPos" : 4978,
+  "firstEndPos" : 4983,
+  "secondEndPos" : 4983
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -1209,6 +1286,17 @@
   "firstEndPos" : 5124,
   "secondEndPos" : 5124
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5111,
+  "secondPos" : 5111,
+  "firstEndPos" : 5119,
+  "secondEndPos" : 5119
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " $Id$",
@@ -1230,6 +1318,17 @@
   "secondPos" : 5128,
   "firstEndPos" : 5141,
   "secondEndPos" : 5141
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5128,
+  "secondPos" : 5128,
+  "firstEndPos" : 5132,
+  "secondEndPos" : 5132
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1253,6 +1352,17 @@
   "firstEndPos" : 5163,
   "secondEndPos" : 5163
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5145,
+  "secondPos" : 5145,
+  "firstEndPos" : 5149,
+  "secondEndPos" : 5149
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "RotationOrder",
@@ -1274,6 +1384,17 @@
   "secondPos" : 5167,
   "firstEndPos" : 5177,
   "secondEndPos" : 5177
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5167,
+  "secondPos" : 5167,
+  "firstEndPos" : 5173,
+  "secondEndPos" : 5173
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2243,6 +2364,17 @@
   "firstEndPos" : 6508,
   "secondEndPos" : 6508
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6469,
+  "secondPos" : 6469,
+  "firstEndPos" : 6475,
+  "secondEndPos" : 6475
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "q0",
@@ -2275,6 +2407,17 @@
   "secondPos" : 6514,
   "firstEndPos" : 6580,
   "secondEndPos" : 6580
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6514,
+  "secondPos" : 6514,
+  "firstEndPos" : 6520,
+  "secondEndPos" : 6520
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2309,6 +2452,17 @@
   "firstEndPos" : 6653,
   "secondEndPos" : 6653
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6586,
+  "secondPos" : 6586,
+  "firstEndPos" : 6592,
+  "secondEndPos" : 6592
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "q2",
@@ -2342,6 +2496,17 @@
   "firstEndPos" : 6725,
   "secondEndPos" : 6725
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6659,
+  "secondPos" : 6659,
+  "firstEndPos" : 6665,
+  "secondEndPos" : 6665
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "q3",
@@ -2374,6 +2539,17 @@
   "secondPos" : 6731,
   "firstEndPos" : 6894,
   "secondEndPos" : 6894
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6731,
+  "secondPos" : 6731,
+  "firstEndPos" : 6737,
+  "secondEndPos" : 6737
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2649,6 +2825,17 @@
   "secondPos" : 7040,
   "firstEndPos" : 7231,
   "secondEndPos" : 7231
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// normalization preprocessing",
+  "secondLabel" : "// normalization preprocessing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7048,
+  "secondPos" : 7048,
+  "firstEndPos" : 7078,
+  "secondEndPos" : 7078
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -3651,6 +3838,17 @@
   "firstEndPos" : 7676,
   "secondEndPos" : 7676
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7644,
+  "secondPos" : 7644,
+  "firstEndPos" : 7649,
+  "secondEndPos" : 7649
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -3860,6 +4058,17 @@
   "firstEndPos" : 8448,
   "secondEndPos" : 8448
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8409,
+  "secondPos" : 8409,
+  "firstEndPos" : 8415,
+  "secondEndPos" : 8415
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "axis",
@@ -3893,6 +4102,17 @@
   "firstEndPos" : 8482,
   "secondEndPos" : 8482
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8454,
+  "secondPos" : 8454,
+  "firstEndPos" : 8460,
+  "secondEndPos" : 8460
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "angle",
@@ -3925,6 +4145,17 @@
   "secondPos" : 8488,
   "firstEndPos" : 8543,
   "secondEndPos" : 8543
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8488,
+  "secondPos" : 8488,
+  "firstEndPos" : 8498,
+  "secondEndPos" : 8498
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5224,6 +5455,17 @@
   "firstEndPos" : 9994,
   "secondEndPos" : 9994
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9970,
+  "secondPos" : 9970,
+  "firstEndPos" : 9976,
+  "secondEndPos" : 9976
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "m",
@@ -5256,6 +5498,17 @@
   "secondPos" : 10000,
   "firstEndPos" : 10223,
   "secondEndPos" : 10223
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10000,
+  "secondPos" : 10000,
+  "firstEndPos" : 10006,
+  "secondEndPos" : 10006
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5322,6 +5575,17 @@
   "secondPos" : 10230,
   "firstEndPos" : 10470,
   "secondEndPos" : 10470
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 10230,
+  "secondPos" : 10230,
+  "firstEndPos" : 10240,
+  "secondEndPos" : 10240
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -5531,6 +5795,17 @@
   "secondPos" : 10567,
   "firstEndPos" : 13490,
   "secondEndPos" : 13490
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// dimension check",
+  "secondLabel" : "// dimension check",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10574,
+  "secondPos" : 10574,
+  "firstEndPos" : 10592,
+  "secondEndPos" : 10592
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6049,6 +6324,17 @@
   "firstEndPos" : 10833,
   "secondEndPos" : 10833
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute a \"close\" orthogonal matrix",
+  "secondLabel" : "// compute a \"close\" orthogonal matrix",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10847,
+  "secondPos" : 10847,
+  "firstEndPos" : 10885,
+  "secondEndPos" : 10885
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6180,6 +6466,17 @@
   "secondPos" : 10930,
   "firstEndPos" : 10939,
   "secondEndPos" : 10939
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// check the sign of the determinant",
+  "secondLabel" : "// check the sign of the determinant",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10947,
+  "secondPos" : 10947,
+  "firstEndPos" : 10983,
+  "secondEndPos" : 10983
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -7523,6 +7820,127 @@
   "firstEndPos" : 11386,
   "secondEndPos" : 11386
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// There are different ways to compute the quaternions elements",
+  "secondLabel" : "// There are different ways to compute the quaternions elements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11400,
+  "secondPos" : 11400,
+  "firstEndPos" : 11463,
+  "secondEndPos" : 11463
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// from the matrix. They all involve computing one element from",
+  "secondLabel" : "// from the matrix. They all involve computing one element from",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11468,
+  "secondPos" : 11468,
+  "firstEndPos" : 11531,
+  "secondEndPos" : 11531
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the diagonal of the matrix, and computing the three other ones",
+  "secondLabel" : "// the diagonal of the matrix, and computing the three other ones",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11536,
+  "secondPos" : 11536,
+  "firstEndPos" : 11601,
+  "secondEndPos" : 11601
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// using a formula involving a division by the first element,",
+  "secondLabel" : "// using a formula involving a division by the first element,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11606,
+  "secondPos" : 11606,
+  "firstEndPos" : 11667,
+  "secondEndPos" : 11667
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// which unfortunately can be zero. Since the norm of the",
+  "secondLabel" : "// which unfortunately can be zero. Since the norm of the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11672,
+  "secondPos" : 11672,
+  "firstEndPos" : 11729,
+  "secondEndPos" : 11729
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// quaternion is 1, we know at least one element has an absolute",
+  "secondLabel" : "// quaternion is 1, we know at least one element has an absolute",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11734,
+  "secondPos" : 11734,
+  "firstEndPos" : 11798,
+  "secondEndPos" : 11798
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// value greater or equal to 0.5, so it is always possible to",
+  "secondLabel" : "// value greater or equal to 0.5, so it is always possible to",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11803,
+  "secondPos" : 11803,
+  "firstEndPos" : 11864,
+  "secondEndPos" : 11864
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// select the right formula and avoid division by zero and even",
+  "secondLabel" : "// select the right formula and avoid division by zero and even",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11869,
+  "secondPos" : 11869,
+  "firstEndPos" : 11932,
+  "secondEndPos" : 11932
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// numerical inaccuracy. Checking the elements in turn and using",
+  "secondLabel" : "// numerical inaccuracy. Checking the elements in turn and using",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11937,
+  "secondPos" : 11937,
+  "firstEndPos" : 12001,
+  "secondEndPos" : 12001
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the first one greater than 0.45 is safe (this leads to a simple",
+  "secondLabel" : "// the first one greater than 0.45 is safe (this leads to a simple",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12006,
+  "secondPos" : 12006,
+  "firstEndPos" : 12072,
+  "secondEndPos" : 12072
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// test since qi = 0.45 implies 4 qi^2 - 1 = -0.19)",
+  "secondLabel" : "// test since qi = 0.45 implies 4 qi^2 - 1 = -0.19)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12077,
+  "secondPos" : 12077,
+  "firstEndPos" : 12128,
+  "secondEndPos" : 12128
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7841,6 +8259,17 @@
   "secondPos" : 12198,
   "firstEndPos" : 12447,
   "secondEndPos" : 12447
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute q0 and deduce q1, q2 and q3",
+  "secondLabel" : "// compute q0 and deduce q1, q2 and q3",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12206,
+  "secondPos" : 12206,
+  "firstEndPos" : 12244,
+  "secondEndPos" : 12244
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -9096,6 +9525,17 @@
   "firstEndPos" : 12784,
   "secondEndPos" : 12784
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute q1 and deduce q0, q2 and q3",
+  "secondLabel" : "// compute q1 and deduce q0, q2 and q3",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12531,
+  "secondPos" : 12531,
+  "firstEndPos" : 12569,
+  "secondEndPos" : 12569
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10350,6 +10790,17 @@
   "firstEndPos" : 13139,
   "secondEndPos" : 13139
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute q2 and deduce q0, q1 and q3",
+  "secondLabel" : "// compute q2 and deduce q0, q1 and q3",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 12874,
+  "secondPos" : 12874,
+  "firstEndPos" : 12912,
+  "secondEndPos" : 12912
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -11284,6 +11735,17 @@
   "secondPos" : 13145,
   "firstEndPos" : 13471,
   "secondEndPos" : 13471
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute q3 and deduce q0, q1 and q2",
+  "secondLabel" : "// compute q3 and deduce q0, q1 and q2",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13157,
+  "secondPos" : 13157,
+  "firstEndPos" : 13195,
+  "secondEndPos" : 13195
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -12583,6 +13045,17 @@
   "firstEndPos" : 14131,
   "secondEndPos" : 14131
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14090,
+  "secondPos" : 14090,
+  "firstEndPos" : 14096,
+  "secondEndPos" : 14096
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "u1",
@@ -12615,6 +13088,17 @@
   "secondPos" : 14137,
   "firstEndPos" : 14179,
   "secondEndPos" : 14179
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14137,
+  "secondPos" : 14137,
+  "firstEndPos" : 14143,
+  "secondEndPos" : 14143
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12649,6 +13133,17 @@
   "firstEndPos" : 14230,
   "secondEndPos" : 14230
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14185,
+  "secondPos" : 14185,
+  "firstEndPos" : 14191,
+  "secondEndPos" : 14191
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "v1",
@@ -12682,6 +13177,17 @@
   "firstEndPos" : 14281,
   "secondEndPos" : 14281
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14236,
+  "secondPos" : 14236,
+  "firstEndPos" : 14242,
+  "secondEndPos" : 14242
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "v2",
@@ -12714,6 +13220,17 @@
   "secondPos" : 14287,
   "firstEndPos" : 14364,
   "secondEndPos" : 14364
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 14287,
+  "secondPos" : 14287,
+  "firstEndPos" : 14297,
+  "secondEndPos" : 14297
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -12945,6 +13462,17 @@
   "secondPos" : 14441,
   "firstEndPos" : 16839,
   "secondEndPos" : 16973
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// norms computation",
+  "secondLabel" : "// norms computation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14446,
+  "secondPos" : 14446,
+  "firstEndPos" : 14466,
+  "secondEndPos" : 14466
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -13639,6 +14167,17 @@
   "firstEndPos" : 14778,
   "secondEndPos" : 14778
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// normalize v1 in order to have (v1'|v1') = (u1|u1)",
+  "secondLabel" : "// normalize v1 in order to have (v1'|v1') = (u1|u1)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14788,
+  "secondPos" : 14788,
+  "firstEndPos" : 14840,
+  "secondEndPos" : 14840
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13825,6 +14364,17 @@
   "secondPos" : 14889,
   "firstEndPos" : 14891,
   "secondEndPos" : 14891
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// adjust v2 in order to have (u1|u2) = (v1'|v2') and (v2'|v2') = (u2|u2)",
+  "secondLabel" : "// adjust v2 in order to have (u1|u2) = (v1'|v2') and (v2'|v2') = (u2|u2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14897,
+  "secondPos" : 14897,
+  "firstEndPos" : 14970,
+  "secondEndPos" : 14970
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -14761,6 +15311,17 @@
   "firstEndPos" : 15270,
   "secondEndPos" : 15270
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// preliminary computation",
+  "secondLabel" : "// preliminary computation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15276,
+  "secondPos" : 15276,
+  "firstEndPos" : 15302,
+  "secondEndPos" : 15302
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -15542,6 +16103,28 @@
   "firstEndPos" : 16427,
   "secondEndPos" : 16561
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the (q1, q2, q3) vector is close to the (u1, u2) plane",
+  "secondLabel" : "// the (q1, q2, q3) vector is close to the (u1, u2) plane",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15564,
+  "secondPos" : 15649,
+  "firstEndPos" : 15621,
+  "secondEndPos" : 15706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we try other vectors",
+  "secondLabel" : "// we try other vectors",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15626,
+  "secondPos" : 15711,
+  "firstEndPos" : 15649,
+  "secondEndPos" : 15734
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16191,6 +16774,28 @@
   "firstEndPos" : 16422,
   "secondEndPos" : 16556
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the (q1, q2, q3) vector is also close to the (u1, u3) plane,",
+  "secondLabel" : "// the (q1, q2, q3) vector is also close to the (u1, u3) plane,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15872,
+  "secondPos" : 16006,
+  "firstEndPos" : 15935,
+  "secondEndPos" : 16069
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it is almost aligned with u1: we try (u2, u3) and (v2, v3)",
+  "secondLabel" : "// it is almost aligned with u1: we try (u2, u3) and (v2, v3)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15942,
+  "secondPos" : 16076,
+  "firstEndPos" : 16003,
+  "secondEndPos" : 16137
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16554,6 +17159,28 @@
   "firstEndPos" : 16314,
   "secondEndPos" : 16448
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the (q1, q2, q3) vector is aligned with everything",
+  "secondLabel" : "// the (q1, q2, q3) vector is aligned with everything",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16117,
+  "secondPos" : 16251,
+  "firstEndPos" : 16170,
+  "secondEndPos" : 16304
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this is really the identity rotation",
+  "secondLabel" : "// this is really the identity rotation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16179,
+  "secondPos" : 16313,
+  "firstEndPos" : 16218,
+  "secondEndPos" : 16352
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16785,6 +17412,17 @@
   "firstEndPos" : 16306,
   "secondEndPos" : 16440
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// we will have to use u2 and v2 to compute the scalar part",
+  "secondLabel" : "// we will have to use u2 and v2 to compute the scalar part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16322,
+  "secondPos" : 16456,
+  "firstEndPos" : 16381,
+  "secondEndPos" : 16515
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16894,6 +17532,17 @@
   "secondPos" : 16546,
   "firstEndPos" : 16414,
   "secondEndPos" : 16548
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute the vectorial part",
+  "secondLabel" : "// compute the vectorial part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16431,
+  "secondPos" : 16565,
+  "firstEndPos" : 16460,
+  "secondEndPos" : 16594
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17499,6 +18148,17 @@
   "secondPos" : 16710,
   "firstEndPos" : 16580,
   "secondEndPos" : 16714
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compute the scalar part",
+  "secondLabel" : "// compute the scalar part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16587,
+  "secondPos" : 16721,
+  "firstEndPos" : 16613,
+  "secondEndPos" : 16747
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -18446,6 +19106,17 @@
   "firstEndPos" : 17333,
   "secondEndPos" : 17467
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17311,
+  "secondPos" : 17445,
+  "firstEndPos" : 17317,
+  "secondEndPos" : 17451
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "u",
@@ -18479,6 +19150,17 @@
   "firstEndPos" : 17382,
   "secondEndPos" : 17516
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17339,
+  "secondPos" : 17473,
+  "firstEndPos" : 17345,
+  "secondEndPos" : 17479
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "v",
@@ -18511,6 +19193,17 @@
   "secondPos" : 17522,
   "firstEndPos" : 17465,
   "secondEndPos" : 17599
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17388,
+  "secondPos" : 17522,
+  "firstEndPos" : 17398,
+  "secondEndPos" : 17532
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -19216,6 +19909,28 @@
   "firstEndPos" : 18046,
   "secondEndPos" : 18180
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// special case u = -v: we select a PI angle rotation around",
+  "secondLabel" : "// special case u = -v: we select a PI angle rotation around",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17818,
+  "secondPos" : 17952,
+  "firstEndPos" : 17878,
+  "secondEndPos" : 18012
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// an arbitrary vector orthogonal to u",
+  "secondLabel" : "// an arbitrary vector orthogonal to u",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17885,
+  "secondPos" : 18019,
+  "firstEndPos" : 17923,
+  "secondEndPos" : 18057
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -19710,6 +20425,28 @@
   "secondPos" : 18186,
   "firstEndPos" : 18424,
   "secondEndPos" : 18558
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// general case: (u, v) defines a plane, we select",
+  "secondLabel" : "// general case: (u, v) defines a plane, we select",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18060,
+  "secondPos" : 18194,
+  "firstEndPos" : 18110,
+  "secondEndPos" : 18244
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the shortest possible rotation: axis orthogonal to this plane",
+  "secondLabel" : "// the shortest possible rotation: axis orthogonal to this plane",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18117,
+  "secondPos" : 18251,
+  "firstEndPos" : 18181,
+  "secondEndPos" : 18315
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20734,6 +21471,17 @@
   "firstEndPos" : 19286,
   "secondEndPos" : 19420
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19248,
+  "secondPos" : 19382,
+  "firstEndPos" : 19254,
+  "secondEndPos" : 19388
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "order",
@@ -20766,6 +21514,17 @@
   "secondPos" : 19426,
   "firstEndPos" : 19344,
   "secondEndPos" : 19478
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19292,
+  "secondPos" : 19426,
+  "firstEndPos" : 19298,
+  "secondEndPos" : 19432
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -20800,6 +21559,17 @@
   "firstEndPos" : 19403,
   "secondEndPos" : 19537
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19350,
+  "secondPos" : 19484,
+  "firstEndPos" : 19356,
+  "secondEndPos" : 19490
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "alpha2",
@@ -20832,6 +21602,17 @@
   "secondPos" : 19543,
   "firstEndPos" : 19461,
   "secondEndPos" : 19595
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19409,
+  "secondPos" : 19543,
+  "firstEndPos" : 19415,
+  "secondEndPos" : 19549
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -21944,6 +22725,17 @@
   "firstEndPos" : 20155,
   "secondEndPos" : 20289
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20070,
+  "secondPos" : 20204,
+  "firstEndPos" : 20077,
+  "secondEndPos" : 20211
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a new rotation whose effect is the reverse of the effect",
@@ -22197,6 +22989,17 @@
   "firstEndPos" : 20344,
   "secondEndPos" : 20478
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20301,
+  "secondPos" : 20435,
+  "firstEndPos" : 20308,
+  "secondEndPos" : 20442
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " scalar coordinate of the quaternion",
@@ -22328,6 +23131,17 @@
   "secondPos" : 20608,
   "firstEndPos" : 20538,
   "secondEndPos" : 20672
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20474,
+  "secondPos" : 20608,
+  "firstEndPos" : 20481,
+  "secondEndPos" : 20615
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -22461,6 +23275,17 @@
   "firstEndPos" : 20734,
   "secondEndPos" : 20868
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20669,
+  "secondPos" : 20803,
+  "firstEndPos" : 20676,
+  "secondEndPos" : 20810
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " second coordinate of the vectorial part of the quaternion",
@@ -22592,6 +23417,17 @@
   "secondPos" : 20998,
   "firstEndPos" : 20928,
   "secondEndPos" : 21062
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20864,
+  "secondPos" : 20998,
+  "firstEndPos" : 20871,
+  "secondEndPos" : 21005
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -22725,6 +23561,17 @@
   "firstEndPos" : 21072,
   "secondEndPos" : 21206
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21033,
+  "secondPos" : 21167,
+  "firstEndPos" : 21040,
+  "secondEndPos" : 21174
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " normalized axis of the rotation",
@@ -22746,6 +23593,17 @@
   "secondPos" : 21212,
   "firstEndPos" : 21110,
   "secondEndPos" : 21244
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21078,
+  "secondPos" : 21212,
+  "firstEndPos" : 21082,
+  "secondEndPos" : 21216
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -24023,6 +24881,17 @@
   "firstEndPos" : 21638,
   "secondEndPos" : 21772
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21588,
+  "secondPos" : 21722,
+  "firstEndPos" : 21595,
+  "secondEndPos" : 21729
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " angle of the rotation (between 0 and &pi;)",
@@ -24044,6 +24913,17 @@
   "secondPos" : 21778,
   "firstEndPos" : 21676,
   "secondEndPos" : 21810
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21644,
+  "secondPos" : 21778,
+  "firstEndPos" : 21648,
+  "secondEndPos" : 21782
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -25321,6 +26201,17 @@
   "firstEndPos" : 23628,
   "secondEndPos" : 23762
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 23594,
+  "secondPos" : 23728,
+  "firstEndPos" : 23600,
+  "secondEndPos" : 23734
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "order",
@@ -25354,6 +26245,17 @@
   "firstEndPos" : 23701,
   "secondEndPos" : 23835
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 23634,
+  "secondPos" : 23768,
+  "firstEndPos" : 23641,
+  "secondEndPos" : 23775
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " an array of three angles, in the order specified by the set",
@@ -25375,6 +26277,17 @@
   "secondPos" : 23841,
   "firstEndPos" : 23823,
   "secondEndPos" : 23957
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 23707,
+  "secondPos" : 23841,
+  "firstEndPos" : 23717,
+  "secondEndPos" : 23851
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -25606,6 +26519,61 @@
   "secondPos" : 24095,
   "firstEndPos" : 24679,
   "secondEndPos" : 24813
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23970,
+  "secondPos" : 24104,
+  "firstEndPos" : 24009,
+  "secondEndPos" : 24143
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  sin (theta), -cos (theta) sin (phi), cos (theta) cos (phi)",
+  "secondLabel" : "//  sin (theta), -cos (theta) sin (phi), cos (theta) cos (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24016,
+  "secondPos" : 24150,
+  "firstEndPos" : 24078,
+  "secondEndPos" : 24212
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24085,
+  "secondPos" : 24219,
+  "firstEndPos" : 24127,
+  "secondEndPos" : 24261
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cos (psi) cos (theta), -sin (psi) cos (theta), sin (theta)",
+  "secondLabel" : "// cos (psi) cos (theta), -sin (psi) cos (theta), sin (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24134,
+  "secondPos" : 24268,
+  "firstEndPos" : 24195,
+  "secondEndPos" : 24329
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have theta in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have theta in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24202,
+  "secondPos" : 24336,
+  "firstEndPos" : 24268,
+  "secondEndPos" : 24402
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -26685,6 +27653,61 @@
   "firstEndPos" : 25417,
   "secondEndPos" : 25551
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24726,
+  "secondPos" : 24860,
+  "firstEndPos" : 24765,
+  "secondEndPos" : 24899
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -sin (psi), cos (psi) cos (phi), cos (psi) sin (phi)",
+  "secondLabel" : "// -sin (psi), cos (psi) cos (phi), cos (psi) sin (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24772,
+  "secondPos" : 24906,
+  "firstEndPos" : 24827,
+  "secondEndPos" : 24961
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24834,
+  "secondPos" : 24968,
+  "firstEndPos" : 24876,
+  "secondEndPos" : 25010
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cos (theta) cos (psi), -sin (psi), sin (theta) cos (psi)",
+  "secondLabel" : "// cos (theta) cos (psi), -sin (psi), sin (theta) cos (psi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24883,
+  "secondPos" : 25017,
+  "firstEndPos" : 24942,
+  "secondEndPos" : 25076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have psi in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have psi in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24949,
+  "secondPos" : 25083,
+  "firstEndPos" : 25013,
+  "secondEndPos" : 25147
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -27719,6 +28742,61 @@
   "firstEndPos" : 26156,
   "secondEndPos" : 26290
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25464,
+  "secondPos" : 25598,
+  "firstEndPos" : 25503,
+  "secondEndPos" : 25637
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  cos (phi) sin (theta), -sin (phi), cos (phi) cos (theta)",
+  "secondLabel" : "//  cos (phi) sin (theta), -sin (phi), cos (phi) cos (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25510,
+  "secondPos" : 25644,
+  "firstEndPos" : 25570,
+  "secondEndPos" : 25704
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25577,
+  "secondPos" : 25711,
+  "firstEndPos" : 25619,
+  "secondEndPos" : 25753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sin (psi) cos (phi), cos (psi) cos (phi), -sin (phi)",
+  "secondLabel" : "// sin (psi) cos (phi), cos (psi) cos (phi), -sin (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25626,
+  "secondPos" : 25760,
+  "firstEndPos" : 25681,
+  "secondEndPos" : 25815
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have phi in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have phi in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 25688,
+  "secondPos" : 25822,
+  "firstEndPos" : 25752,
+  "secondEndPos" : 25886
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -28752,6 +29830,61 @@
   "secondPos" : 26328,
   "firstEndPos" : 26900,
   "secondEndPos" : 27034
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26203,
+  "secondPos" : 26337,
+  "firstEndPos" : 26242,
+  "secondEndPos" : 26376
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cos (psi) cos (theta), sin (psi), -cos (psi) sin (theta)",
+  "secondLabel" : "// cos (psi) cos (theta), sin (psi), -cos (psi) sin (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26249,
+  "secondPos" : 26383,
+  "firstEndPos" : 26308,
+  "secondEndPos" : 26442
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26315,
+  "secondPos" : 26449,
+  "firstEndPos" : 26357,
+  "secondEndPos" : 26491
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sin (psi), cos (phi) cos (psi), -sin (phi) cos (psi)",
+  "secondLabel" : "// sin (psi), cos (phi) cos (psi), -sin (phi) cos (psi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26364,
+  "secondPos" : 26498,
+  "firstEndPos" : 26419,
+  "secondEndPos" : 26553
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have psi in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have psi in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26426,
+  "secondPos" : 26560,
+  "firstEndPos" : 26490,
+  "secondEndPos" : 26624
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -29831,6 +30964,61 @@
   "firstEndPos" : 27644,
   "secondEndPos" : 27778
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26947,
+  "secondPos" : 27081,
+  "firstEndPos" : 26986,
+  "secondEndPos" : 27120
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -cos (phi) sin (psi), cos (phi) cos (psi), sin (phi)",
+  "secondLabel" : "// -cos (phi) sin (psi), cos (phi) cos (psi), sin (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 26993,
+  "secondPos" : 27127,
+  "firstEndPos" : 27048,
+  "secondEndPos" : 27182
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27055,
+  "secondPos" : 27189,
+  "firstEndPos" : 27097,
+  "secondEndPos" : 27231
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -sin (theta) cos (phi), sin (phi), cos (theta) cos (phi)",
+  "secondLabel" : "// -sin (theta) cos (phi), sin (phi), cos (theta) cos (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27104,
+  "secondPos" : 27238,
+  "firstEndPos" : 27163,
+  "secondEndPos" : 27297
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have phi in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have phi in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27170,
+  "secondPos" : 27304,
+  "firstEndPos" : 27234,
+  "secondEndPos" : 27368
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -30909,6 +32097,61 @@
   "firstEndPos" : 28393,
   "secondEndPos" : 28527
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27691,
+  "secondPos" : 27825,
+  "firstEndPos" : 27730,
+  "secondEndPos" : 27864
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  cos (theta) cos (psi), cos (theta) sin (psi), -sin (theta)",
+  "secondLabel" : "//  cos (theta) cos (psi), cos (theta) sin (psi), -sin (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27737,
+  "secondPos" : 27871,
+  "firstEndPos" : 27799,
+  "secondEndPos" : 27933
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27806,
+  "secondPos" : 27940,
+  "firstEndPos" : 27848,
+  "secondEndPos" : 27982
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -sin (theta), sin (phi) cos (theta), cos (phi) cos (theta)",
+  "secondLabel" : "// -sin (theta), sin (phi) cos (theta), cos (phi) cos (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27855,
+  "secondPos" : 27989,
+  "firstEndPos" : 27916,
+  "secondEndPos" : 28050
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have theta in the interval [-PI/2 ; +PI/2]",
+  "secondLabel" : "// and we can choose to have theta in the interval [-PI/2 ; +PI/2]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 27923,
+  "secondPos" : 28057,
+  "firstEndPos" : 27989,
+  "secondEndPos" : 28123
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -31942,6 +33185,61 @@
   "secondPos" : 28565,
   "firstEndPos" : 29140,
   "secondEndPos" : 29274
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28440,
+  "secondPos" : 28574,
+  "firstEndPos" : 28479,
+  "secondEndPos" : 28613
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  cos (theta), sin (phi1) sin (theta), -cos (phi1) sin (theta)",
+  "secondLabel" : "//  cos (theta), sin (phi1) sin (theta), -cos (phi1) sin (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28486,
+  "secondPos" : 28620,
+  "firstEndPos" : 28550,
+  "secondEndPos" : 28684
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28557,
+  "secondPos" : 28691,
+  "firstEndPos" : 28599,
+  "secondEndPos" : 28733
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cos (theta), sin (theta) sin (phi2), sin (theta) cos (phi2)",
+  "secondLabel" : "// cos (theta), sin (theta) sin (phi2), sin (theta) cos (phi2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28606,
+  "secondPos" : 28740,
+  "firstEndPos" : 28668,
+  "secondEndPos" : 28802
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have theta in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have theta in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 28675,
+  "secondPos" : 28809,
+  "firstEndPos" : 28734,
+  "secondEndPos" : 28868
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -32977,6 +34275,61 @@
   "firstEndPos" : 29873,
   "secondEndPos" : 30007
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29187,
+  "secondPos" : 29321,
+  "firstEndPos" : 29226,
+  "secondEndPos" : 29360
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  cos (psi), cos (phi1) sin (psi), sin (phi1) sin (psi)",
+  "secondLabel" : "//  cos (psi), cos (phi1) sin (psi), sin (phi1) sin (psi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29233,
+  "secondPos" : 29367,
+  "firstEndPos" : 29290,
+  "secondEndPos" : 29424
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusI) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29297,
+  "secondPos" : 29431,
+  "firstEndPos" : 29339,
+  "secondEndPos" : 29473
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// cos (psi), -sin (psi) cos (phi2), sin (psi) sin (phi2)",
+  "secondLabel" : "// cos (psi), -sin (psi) cos (phi2), sin (psi) sin (phi2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29346,
+  "secondPos" : 29480,
+  "firstEndPos" : 29403,
+  "secondEndPos" : 29537
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have psi in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have psi in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29410,
+  "secondPos" : 29544,
+  "firstEndPos" : 29467,
+  "secondEndPos" : 29601
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -34010,6 +35363,61 @@
   "secondPos" : 30045,
   "firstEndPos" : 30614,
   "secondEndPos" : 30748
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29920,
+  "secondPos" : 30054,
+  "firstEndPos" : 29959,
+  "secondEndPos" : 30093
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  sin (theta1) sin (phi), cos (phi), cos (theta1) sin (phi)",
+  "secondLabel" : "//  sin (theta1) sin (phi), cos (phi), cos (theta1) sin (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 29966,
+  "secondPos" : 30100,
+  "firstEndPos" : 30027,
+  "secondEndPos" : 30161
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30034,
+  "secondPos" : 30168,
+  "firstEndPos" : 30076,
+  "secondEndPos" : 30210
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sin (phi) sin (theta2), cos (phi), -sin (phi) cos (theta2)",
+  "secondLabel" : "// sin (phi) sin (theta2), cos (phi), -sin (phi) cos (theta2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30083,
+  "secondPos" : 30217,
+  "firstEndPos" : 30144,
+  "secondEndPos" : 30278
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have phi in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have phi in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30151,
+  "secondPos" : 30285,
+  "firstEndPos" : 30208,
+  "secondEndPos" : 30342
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -35045,6 +36453,61 @@
   "firstEndPos" : 31355,
   "secondEndPos" : 31489
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30661,
+  "secondPos" : 30795,
+  "firstEndPos" : 30700,
+  "secondEndPos" : 30834
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  -cos (theta1) sin (psi), cos (psi), sin (theta1) sin (psi)",
+  "secondLabel" : "//  -cos (theta1) sin (psi), cos (psi), sin (theta1) sin (psi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30707,
+  "secondPos" : 30841,
+  "firstEndPos" : 30769,
+  "secondEndPos" : 30903
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusJ) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30776,
+  "secondPos" : 30910,
+  "firstEndPos" : 30818,
+  "secondEndPos" : 30952
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sin (psi) cos (theta2), cos (psi), sin (psi) sin (theta2)",
+  "secondLabel" : "// sin (psi) cos (theta2), cos (psi), sin (psi) sin (theta2)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30825,
+  "secondPos" : 30959,
+  "firstEndPos" : 30885,
+  "secondEndPos" : 31019
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have psi in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have psi in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 30892,
+  "secondPos" : 31026,
+  "firstEndPos" : 30949,
+  "secondEndPos" : 31083
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -36079,6 +37542,61 @@
   "firstEndPos" : 32088,
   "secondEndPos" : 32222
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31402,
+  "secondPos" : 31536,
+  "firstEndPos" : 31441,
+  "secondEndPos" : 31575
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  sin (psi1) sin (phi), -cos (psi1) sin (phi), cos (phi)",
+  "secondLabel" : "//  sin (psi1) sin (phi), -cos (psi1) sin (phi), cos (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31448,
+  "secondPos" : 31582,
+  "firstEndPos" : 31506,
+  "secondEndPos" : 31640
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31513,
+  "secondPos" : 31647,
+  "firstEndPos" : 31555,
+  "secondEndPos" : 31689
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sin (phi) sin (psi2), sin (phi) cos (psi2), cos (phi)",
+  "secondLabel" : "// sin (phi) sin (psi2), sin (phi) cos (psi2), cos (phi)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31562,
+  "secondPos" : 31696,
+  "firstEndPos" : 31618,
+  "secondEndPos" : 31752
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have phi in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have phi in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 31625,
+  "secondPos" : 31759,
+  "firstEndPos" : 31682,
+  "secondEndPos" : 31816
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -37057,6 +38575,72 @@
   "secondPos" : 32228,
   "firstEndPos" : 32830,
   "secondEndPos" : 32964
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// last possibility is ZYZ",
+  "secondLabel" : "// last possibility is ZYZ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32096,
+  "secondPos" : 32230,
+  "firstEndPos" : 32122,
+  "secondEndPos" : 32256
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// r (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32130,
+  "secondPos" : 32264,
+  "firstEndPos" : 32169,
+  "secondEndPos" : 32303
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//  cos (psi1) sin (theta), sin (psi1) sin (theta), cos (theta)",
+  "secondLabel" : "//  cos (psi1) sin (theta), sin (psi1) sin (theta), cos (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32176,
+  "secondPos" : 32310,
+  "firstEndPos" : 32239,
+  "secondEndPos" : 32373
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "secondLabel" : "// (-r) (Vector3D.plusK) coordinates are :",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32246,
+  "secondPos" : 32380,
+  "firstEndPos" : 32288,
+  "secondEndPos" : 32422
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// -sin (theta) cos (psi2), sin (theta) sin (psi2), cos (theta)",
+  "secondLabel" : "// -sin (theta) cos (psi2), sin (theta) sin (psi2), cos (theta)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32295,
+  "secondPos" : 32429,
+  "firstEndPos" : 32358,
+  "secondEndPos" : 32492
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and we can choose to have theta in the interval [0 ; PI]",
+  "secondLabel" : "// and we can choose to have theta in the interval [0 ; PI]",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32365,
+  "secondPos" : 32499,
+  "firstEndPos" : 32424,
+  "secondEndPos" : 32558
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -38081,6 +39665,17 @@
   "firstEndPos" : 32945,
   "secondEndPos" : 33079
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 32897,
+  "secondPos" : 33031,
+  "firstEndPos" : 32904,
+  "secondEndPos" : 33038
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the matrix corresponding to the instance",
@@ -38168,6 +39763,17 @@
   "secondPos" : 33118,
   "firstEndPos" : 33787,
   "secondEndPos" : 33921
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// products",
+  "secondLabel" : "// products",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 32991,
+  "secondPos" : 33125,
+  "firstEndPos" : 33002,
+  "secondEndPos" : 33136
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -39048,6 +40654,17 @@
   "secondPos" : 33413,
   "firstEndPos" : 33281,
   "secondEndPos" : 33415
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create the matrix",
+  "secondLabel" : "// create the matrix",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 33288,
+  "secondPos" : 33422,
+  "firstEndPos" : 33308,
+  "secondEndPos" : 33442
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -41315,6 +42932,17 @@
   "firstEndPos" : 33872,
   "secondEndPos" : 34006
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33832,
+  "secondPos" : 33966,
+  "firstEndPos" : 33838,
+  "secondEndPos" : 33972
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "u",
@@ -41347,6 +42975,17 @@
   "secondPos" : 34012,
   "firstEndPos" : 33938,
   "secondEndPos" : 34072
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 33878,
+  "secondPos" : 34012,
+  "firstEndPos" : 33885,
+  "secondEndPos" : 34019
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -43163,6 +44802,17 @@
   "firstEndPos" : 34458,
   "secondEndPos" : 34592
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 34403,
+  "secondPos" : 34537,
+  "firstEndPos" : 34409,
+  "secondEndPos" : 34543
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "u",
@@ -43195,6 +44845,17 @@
   "secondPos" : 34598,
   "firstEndPos" : 34531,
   "secondEndPos" : 34665
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 34464,
+  "secondPos" : 34598,
+  "firstEndPos" : 34471,
+  "secondEndPos" : 34605
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -45143,6 +46804,17 @@
   "firstEndPos" : 35377,
   "secondEndPos" : 35511
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35335,
+  "secondPos" : 35469,
+  "firstEndPos" : 35341,
+  "secondEndPos" : 35475
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "r",
@@ -45175,6 +46847,17 @@
   "secondPos" : 35517,
   "firstEndPos" : 35451,
   "secondEndPos" : 35585
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 35383,
+  "secondPos" : 35517,
+  "firstEndPos" : 35390,
+  "secondEndPos" : 35524
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -46474,6 +48157,17 @@
   "firstEndPos" : 36295,
   "secondEndPos" : 36429
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36253,
+  "secondPos" : 36387,
+  "firstEndPos" : 36259,
+  "secondEndPos" : 36393
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "r",
@@ -46506,6 +48200,17 @@
   "secondPos" : 36435,
   "firstEndPos" : 36389,
   "secondEndPos" : 36523
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36301,
+  "secondPos" : 36435,
+  "firstEndPos" : 36308,
+  "secondEndPos" : 36442
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -47838,6 +49543,17 @@
   "firstEndPos" : 36874,
   "secondEndPos" : 37008
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36826,
+  "secondPos" : 36960,
+  "firstEndPos" : 36832,
+  "secondEndPos" : 36966
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "m",
@@ -47870,6 +49586,17 @@
   "secondPos" : 37014,
   "firstEndPos" : 37103,
   "secondEndPos" : 37237
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 36880,
+  "secondPos" : 37014,
+  "firstEndPos" : 36886,
+  "secondEndPos" : 37020
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -47937,6 +49664,17 @@
   "firstEndPos" : 37148,
   "secondEndPos" : 37282
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 37109,
+  "secondPos" : 37243,
+  "firstEndPos" : 37116,
+  "secondEndPos" : 37250
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " an orthogonal matrix close to m",
@@ -47958,6 +49696,17 @@
   "secondPos" : 37288,
   "firstEndPos" : 37281,
   "secondEndPos" : 37415
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@exception",
+  "secondLabel" : "@exception",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 37154,
+  "secondPos" : 37288,
+  "firstEndPos" : 37164,
+  "secondEndPos" : 37298
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -49730,6 +51479,17 @@
   "firstEndPos" : 37832,
   "secondEndPos" : 37966
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// iterative correction: Xn+1 = Xn - 0.5 * (Xn.Mt.Xn - M)",
+  "secondLabel" : "// iterative correction: Xn+1 = Xn - 0.5 * (Xn.Mt.Xn - M)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37840,
+  "secondPos" : 37974,
+  "firstEndPos" : 37897,
+  "secondEndPos" : 38031
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -49872,6 +51632,17 @@
   "secondPos" : 38068,
   "firstEndPos" : 40124,
   "secondEndPos" : 40258
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Mt.Xn",
+  "secondLabel" : "// Mt.Xn",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 37943,
+  "secondPos" : 38077,
+  "firstEndPos" : 37951,
+  "secondEndPos" : 38085
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -52446,6 +54217,17 @@
   "secondPos" : 38630,
   "firstEndPos" : 38499,
   "secondEndPos" : 38633
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Xn+1",
+  "secondLabel" : "// Xn+1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 38508,
+  "secondPos" : 38642,
+  "firstEndPos" : 38515,
+  "secondEndPos" : 38649
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -55813,6 +57595,17 @@
   "firstEndPos" : 39178,
   "secondEndPos" : 39312
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// correction on each elements",
+  "secondLabel" : "// correction on each elements",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39189,
+  "secondPos" : 39323,
+  "firstEndPos" : 39219,
+  "secondEndPos" : 39353
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -57001,6 +58794,17 @@
   "firstEndPos" : 39550,
   "secondEndPos" : 39684
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Frobenius norm of the correction",
+  "secondLabel" : "// Frobenius norm of the correction",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39560,
+  "secondPos" : 39694,
+  "firstEndPos" : 39595,
+  "secondEndPos" : 39729
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -57617,6 +59421,17 @@
   "firstEndPos" : 39791,
   "secondEndPos" : 39925
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// convergence test",
+  "secondLabel" : "// convergence test",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39800,
+  "secondPos" : 39934,
+  "firstEndPos" : 39819,
+  "secondEndPos" : 39953
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -57792,6 +59607,17 @@
   "secondPos" : 40020,
   "firstEndPos" : 39887,
   "secondEndPos" : 40021
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// prepare next iteration",
+  "secondLabel" : "// prepare next iteration",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 39904,
+  "secondPos" : 40038,
+  "firstEndPos" : 39929,
+  "secondEndPos" : 40063
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -58541,6 +60367,17 @@
   "firstEndPos" : 40116,
   "secondEndPos" : 40250
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the algorithm did not converge after 10 iterations",
+  "secondLabel" : "// the algorithm did not converge after 10 iterations",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 40130,
+  "secondPos" : 40264,
+  "firstEndPos" : 40183,
+  "secondEndPos" : 40317
+}, {
   "firstType" : "ThrowStatement",
   "secondType" : "ThrowStatement",
   "firstLabel" : "",
@@ -58904,6 +60741,17 @@
   "firstEndPos" : 41576,
   "secondEndPos" : 41710
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 41552,
+  "secondPos" : 41686,
+  "firstEndPos" : 41558,
+  "secondEndPos" : 41692
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "r1",
@@ -58937,6 +60785,17 @@
   "firstEndPos" : 41607,
   "secondEndPos" : 41741
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 41582,
+  "secondPos" : 41716,
+  "firstEndPos" : 41588,
+  "secondEndPos" : 41722
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "r2",
@@ -58969,6 +60828,17 @@
   "secondPos" : 41747,
   "firstEndPos" : 41654,
   "secondEndPos" : 41788
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 41613,
+  "secondPos" : 41747,
+  "firstEndPos" : 41620,
+  "secondEndPos" : 41754
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

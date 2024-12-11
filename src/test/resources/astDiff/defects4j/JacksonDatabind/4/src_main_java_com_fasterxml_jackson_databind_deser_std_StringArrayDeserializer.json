@@ -252,6 +252,17 @@
   "firstEndPos" : 527,
   "secondEndPos" : 527
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 496,
+  "secondPos" : 496,
+  "firstEndPos" : 501,
+  "secondEndPos" : 501
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "ObjectArrayDeserializer",
@@ -1528,6 +1539,17 @@
   "firstEndPos" : 2886,
   "secondEndPos" : 3016
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: must point to START_ARRAY (or equivalent)",
+  "secondLabel" : "// Ok: must point to START_ARRAY (or equivalent)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1501,
+  "secondPos" : 1501,
+  "firstEndPos" : 1549,
+  "secondEndPos" : 1549
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -2298,6 +2320,17 @@
   "firstEndPos" : 2635,
   "secondEndPos" : 2649
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: no need to convert Strings, but must recognize nulls",
+  "secondLabel" : "// Ok: no need to convert Strings, but must recognize nulls",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1992,
+  "secondPos" : 2006,
+  "firstEndPos" : 2051,
+  "secondEndPos" : 2065
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2627,6 +2660,17 @@
   "secondPos" : 2273,
   "firstEndPos" : 2263,
   "secondEndPos" : 2277
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since we have established that '_elementDeserializer == null' earlier",
+  "secondLabel" : "// since we have established that '_elementDeserializer == null' earlier",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2265,
+  "secondPos" : 2279,
+  "firstEndPos" : 2337,
+  "secondEndPos" : 2351
 }, {
   "firstType" : "Block",
   "secondType" : "Block",
@@ -3067,6 +3111,17 @@
   "secondPos" : 2629,
   "firstEndPos" : 2620,
   "secondEndPos" : 2634
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: pass String.class, not String[].class, as we need element type for error info",
+  "secondLabel" : "// note: pass String.class, not String[].class, as we need element type for error info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2648,
+  "secondPos" : 2694,
+  "firstEndPos" : 2734,
+  "secondEndPos" : 2780
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -4190,6 +4245,17 @@
   "firstEndPos" : 3793,
   "secondEndPos" : 3937
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok: no need to convert Strings, but must recognize nulls",
+  "secondLabel" : "// Ok: no need to convert Strings, but must recognize nulls",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3418,
+  "secondPos" : 3562,
+  "firstEndPos" : 3477,
+  "secondEndPos" : 3621
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -4761,6 +4827,17 @@
   "secondPos" : 3917,
   "firstEndPos" : 3778,
   "secondEndPos" : 3922
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// note: pass String.class, not String[].class, as we need element type for error info",
+  "secondLabel" : "// note: pass String.class, not String[].class, as we need element type for error info",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3806,
+  "secondPos" : 3982,
+  "firstEndPos" : 3892,
+  "secondEndPos" : 4068
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5587,6 +5664,17 @@
   "firstEndPos" : 5091,
   "secondEndPos" : 5351
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [JACKSON-526]: implicit arrays from single values?",
+  "secondLabel" : "// [JACKSON-526]: implicit arrays from single values?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4397,
+  "secondPos" : 4657,
+  "firstEndPos" : 4450,
+  "secondEndPos" : 4710
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -5696,6 +5784,17 @@
   "secondPos" : 4793,
   "firstEndPos" : 4973,
   "secondEndPos" : 5233
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [JACKSON-620] Empty String can become null...",
+  "secondLabel" : "// [JACKSON-620] Empty String can become null...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4547,
+  "secondPos" : 4807,
+  "firstEndPos" : 4595,
+  "secondEndPos" : 4855
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -6786,6 +6885,17 @@
   "firstEndPos" : 5470,
   "secondEndPos" : 5730
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// #125: May have a content converter",
+  "secondLabel" : "// #125: May have a content converter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5480,
+  "secondPos" : 5740,
+  "firstEndPos" : 5517,
+  "secondEndPos" : 5777
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7171,6 +7281,17 @@
   "firstEndPos" : 5883,
   "secondEndPos" : 6143
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// if directly assigned, probably not yet contextual, so:",
+  "secondLabel" : "// if directly assigned, probably not yet contextual, so:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5740,
+  "secondPos" : 6000,
+  "firstEndPos" : 5797,
+  "secondEndPos" : 6057
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7291,6 +7412,17 @@
   "secondPos" : 6123,
   "firstEndPos" : 5871,
   "secondEndPos" : 6131
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Ok ok: if all we got is the default String deserializer, can just forget about it",
+  "secondLabel" : "// Ok ok: if all we got is the default String deserializer, can just forget about it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5892,
+  "secondPos" : 6152,
+  "firstEndPos" : 5976,
+  "secondEndPos" : 6236
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

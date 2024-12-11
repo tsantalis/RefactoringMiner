@@ -10,6 +10,17 @@
   "firstEndPos" : 16669,
   "secondEndPos" : 16764
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   John Lenz\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "secondLabel" : "/*\n *\n * ***** BEGIN LICENSE BLOCK *****\n * Version: MPL 1.1/GPL 2.0\n *\n * The contents of this file are subject to the Mozilla Public License Version\n * 1.1 (the \"License\"); you may not use this file except in compliance with\n * the License. You may obtain a copy of the License at\n * http://www.mozilla.org/MPL/\n *\n * Software distributed under the License is distributed on an \"AS IS\" basis,\n * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License\n * for the specific language governing rights and limitations under the\n * License.\n *\n * The Original Code is Rhino code, released\n * May 6, 1999.\n *\n * The Initial Developer of the Original Code is\n * Netscape Communications Corporation.\n * Portions created by the Initial Developer are Copyright (C) 1997-1999\n * the Initial Developer. All Rights Reserved.\n *\n * Contributor(s):\n *   John Lenz\n *\n * Alternatively, the contents of this file may be used under the terms of\n * the GNU General Public License Version 2 or later (the \"GPL\"), in which\n * case the provisions of the GPL are applicable instead of those above. If\n * you wish to allow use of your version of this file only under the terms of\n * the GPL and not to allow others to use your version of this file under the\n * MPL, indicate your decision by deleting the provisions above and replacing\n * them with the notice and other provisions required by the GPL. If you do\n * not delete the provisions above, a recipient may use your version of this\n * file under either the MPL or the GPL.\n *\n * ***** END LICENSE BLOCK ***** */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1563,
+  "secondEndPos" : 1563
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -130,6 +141,17 @@
   "secondPos" : 1716,
   "firstEndPos" : 1755,
   "secondEndPos" : 1755
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1716,
+  "secondPos" : 1716,
+  "firstEndPos" : 1723,
+  "secondEndPos" : 1723
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3661,6 +3683,17 @@
   "secondPos" : 3461,
   "firstEndPos" : 3612,
   "secondEndPos" : 3706
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): finish setting up the SCRIPT node",
+  "secondLabel" : "// TODO(johnlenz): finish setting up the SCRIPT node",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3373,
+  "secondPos" : 3467,
+  "firstEndPos" : 3425,
+  "secondEndPos" : 3519
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10933,6 +10966,17 @@
   "firstEndPos" : 6922,
   "secondEndPos" : 7016
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): additional validation here.",
+  "secondLabel" : "// TODO(johnlenz): additional validation here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6700,
+  "secondPos" : 6794,
+  "firstEndPos" : 6746,
+  "secondEndPos" : 6840
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14101,6 +14145,17 @@
   "firstEndPos" : 8388,
   "secondEndPos" : 8483
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): additional validation here.",
+  "secondLabel" : "// TODO(johnlenz): additional validation here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8248,
+  "secondPos" : 8343,
+  "firstEndPos" : 8294,
+  "secondEndPos" : 8389
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14530,6 +14585,17 @@
   "firstEndPos" : 8664,
   "secondEndPos" : 8759
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): additional validation here.",
+  "secondLabel" : "// TODO(johnlenz): additional validation here.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8521,
+  "secondPos" : 8616,
+  "firstEndPos" : 8567,
+  "secondEndPos" : 8662
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -14705,6 +14771,17 @@
   "secondPos" : 8749,
   "firstEndPos" : 8658,
   "secondEndPos" : 8753
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8669,
+  "secondPos" : 8764,
+  "firstEndPos" : 8671,
+  "secondEndPos" : 8766
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -20602,6 +20679,28 @@
   "firstEndPos" : 11296,
   "secondEndPos" : 11391
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): the rest of the ops",
+  "secondLabel" : "// TODO(johnlenz): the rest of the ops",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11306,
+  "secondPos" : 11401,
+  "firstEndPos" : 11344,
+  "secondEndPos" : 11439
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// literals",
+  "secondLabel" : "// literals",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11348,
+  "secondPos" : 11443,
+  "firstEndPos" : 11359,
+  "secondEndPos" : 11454
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -21349,6 +21448,17 @@
   "secondPos" : 11830,
   "firstEndPos" : 11744,
   "secondEndPos" : 11839
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO(johnlenz): quoted props",
+  "secondLabel" : "// TODO(johnlenz): quoted props",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11753,
+  "secondPos" : 11848,
+  "firstEndPos" : 11784,
+  "secondEndPos" : 11879
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -24375,6 +24485,17 @@
   "firstEndPos" : 13178,
   "secondEndPos" : 13273
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// helper methods",
+  "secondLabel" : "// helper methods",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13188,
+  "secondPos" : 13283,
+  "firstEndPos" : 13205,
+  "secondEndPos" : 13300
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -25706,6 +25827,39 @@
   "firstEndPos" : 13792,
   "secondEndPos" : 13887
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE: some nodes are neither statements nor expression nodes:",
+  "secondLabel" : "// NOTE: some nodes are neither statements nor expression nodes:",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13803,
+  "secondPos" : 13898,
+  "firstEndPos" : 13867,
+  "secondEndPos" : 13962
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   SCRIPT, LABEL_NAME, PARAM_LIST, CASE, DEFAULT_CASE, CATCH",
+  "secondLabel" : "//   SCRIPT, LABEL_NAME, PARAM_LIST, CASE, DEFAULT_CASE, CATCH",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13870,
+  "secondPos" : 13965,
+  "firstEndPos" : 13932,
+  "secondEndPos" : 14027
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   GETTER_DEF, SETTER_DEF",
+  "secondLabel" : "//   GETTER_DEF, SETTER_DEF",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 13935,
+  "secondPos" : 14030,
+  "firstEndPos" : 13962,
+  "secondEndPos" : 14057
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -25958,6 +26112,28 @@
   "secondPos" : 14289,
   "firstEndPos" : 14208,
   "secondEndPos" : 14303
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// EMPTY and FUNCTION are used both in expression and statement",
+  "secondLabel" : "// EMPTY and FUNCTION are used both in expression and statement",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14218,
+  "secondPos" : 14313,
+  "firstEndPos" : 14281,
+  "secondEndPos" : 14376
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// contexts",
+  "secondLabel" : "// contexts",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 14290,
+  "secondPos" : 14385,
+  "firstEndPos" : 14301,
+  "secondEndPos" : 14396
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -26640,6 +26816,28 @@
   "secondPos" : 15105,
   "firstEndPos" : 15024,
   "secondEndPos" : 15119
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// FUNCTION is used both in expression and statement",
+  "secondLabel" : "// FUNCTION is used both in expression and statement",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15034,
+  "secondPos" : 15129,
+  "firstEndPos" : 15086,
+  "secondEndPos" : 15181
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// contexts.",
+  "secondLabel" : "// contexts.",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15095,
+  "secondPos" : 15190,
+  "firstEndPos" : 15107,
+  "secondEndPos" : 15202
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

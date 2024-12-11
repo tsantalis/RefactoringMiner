@@ -318,6 +318,17 @@
   "firstEndPos" : 705,
   "secondEndPos" : 734
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 680,
+  "secondPos" : 709,
+  "firstEndPos" : 685,
+  "secondEndPos" : 714
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Integer",
@@ -1869,6 +1880,17 @@
   "firstEndPos" : 1557,
   "secondEndPos" : 1586
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Numbers, limited length floating point",
+  "secondLabel" : "// Numbers, limited length floating point",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1569,
+  "secondPos" : 1598,
+  "firstEndPos" : 1610,
+  "secondEndPos" : 1639
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2485,6 +2507,17 @@
   "firstEndPos" : 1943,
   "secondEndPos" : 1972
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Shared base class\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Shared base class\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1957,
+  "secondPos" : 1986,
+  "firstEndPos" : 2120,
+  "secondEndPos" : 2149
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -2617,6 +2650,17 @@
   "firstEndPos" : 2568,
   "secondEndPos" : 2597
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2554,
+  "secondPos" : 2583,
+  "firstEndPos" : 2559,
+  "secondEndPos" : 2588
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " public",
@@ -2649,6 +2693,17 @@
   "secondPos" : 2625,
   "firstEndPos" : 2613,
   "secondEndPos" : 2642
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2596,
+  "secondPos" : 2625,
+  "firstEndPos" : 2601,
+  "secondEndPos" : 2630
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4795,6 +4850,17 @@
   "firstEndPos" : 4365,
   "secondEndPos" : 4570
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n     *************************************************************\n     * Concrete serializers, numerics\n     *************************************************************\n     */",
+  "secondLabel" : "/*\n     *************************************************************\n     * Concrete serializers, numerics\n     *************************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4388,
+  "secondPos" : 4593,
+  "firstEndPos" : 4570,
+  "secondEndPos" : 4775
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -5587,6 +5653,17 @@
   "firstEndPos" : 5148,
   "secondEndPos" : 5353
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5123,
+  "secondPos" : 5328,
+  "firstEndPos" : 5128,
+  "secondEndPos" : 5333
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Integer",
@@ -5663,6 +5740,17 @@
   "secondPos" : 5542,
   "firstEndPos" : 5351,
   "secondEndPos" : 5556
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5337,
+  "secondPos" : 5542,
+  "firstEndPos" : 5342,
+  "secondEndPos" : 5547
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6379,6 +6467,17 @@
   "firstEndPos" : 5890,
   "secondEndPos" : 6095
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// IMPORTANT: copied from `NonTypedScalarSerializerBase`",
+  "secondLabel" : "// IMPORTANT: copied from `NonTypedScalarSerializerBase`",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 5914,
+  "secondPos" : 6119,
+  "firstEndPos" : 5970,
+  "secondEndPos" : 6175
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6654,6 +6753,17 @@
   "firstEndPos" : 6276,
   "secondEndPos" : 6481
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no type info, just regular serialization",
+  "secondLabel" : "// no type info, just regular serialization",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6178,
+  "secondPos" : 6383,
+  "firstEndPos" : 6221,
+  "secondEndPos" : 6426
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6786,6 +6896,17 @@
   "firstEndPos" : 6335,
   "secondEndPos" : 6540
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6310,
+  "secondPos" : 6515,
+  "firstEndPos" : 6315,
+  "secondEndPos" : 6520
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "IntegerSerializer",
@@ -6830,6 +6951,17 @@
   "firstEndPos" : 6418,
   "secondEndPos" : 6623
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6394,
+  "secondPos" : 6599,
+  "firstEndPos" : 6399,
+  "secondEndPos" : 6604
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Number",
@@ -6873,6 +7005,17 @@
   "secondPos" : 6661,
   "firstEndPos" : 6489,
   "secondEndPos" : 6694
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6456,
+  "secondPos" : 6661,
+  "firstEndPos" : 6461,
+  "secondEndPos" : 6666
 }, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
@@ -9107,6 +9250,17 @@
   "firstEndPos" : 8000,
   "secondEndPos" : 8205
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7976,
+  "secondPos" : 8181,
+  "firstEndPos" : 7981,
+  "secondEndPos" : 8186
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "java.lang.Double",
@@ -9183,6 +9337,17 @@
   "secondPos" : 8395,
   "firstEndPos" : 8202,
   "secondEndPos" : 8407
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8190,
+  "secondPos" : 8395,
+  "firstEndPos" : 8195,
+  "secondEndPos" : 8400
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -9866,6 +10031,17 @@
   "firstEndPos" : 8623,
   "secondEndPos" : 8828
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// IMPORTANT: copied from `NonTypedScalarSerializerBase`",
+  "secondLabel" : "// IMPORTANT: copied from `NonTypedScalarSerializerBase`",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8647,
+  "secondPos" : 8852,
+  "firstEndPos" : 8703,
+  "secondEndPos" : 8908
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -10140,6 +10316,17 @@
   "secondPos" : 9102,
   "firstEndPos" : 9009,
   "secondEndPos" : 9214
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// no type info, just regular serialization",
+  "secondLabel" : "// no type info, just regular serialization",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8911,
+  "secondPos" : 9116,
+  "firstEndPos" : 8954,
+  "secondEndPos" : 9159
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

@@ -10,6 +10,17 @@
   "firstEndPos" : 7292,
   "secondEndPos" : 8063
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -153,6 +164,17 @@
   "firstEndPos" : 1094,
   "secondEndPos" : 1209
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1070,
+  "secondPos" : 1185,
+  "firstEndPos" : 1077,
+  "secondEndPos" : 1192
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -174,6 +196,17 @@
   "secondPos" : 1213,
   "firstEndPos" : 1124,
   "secondEndPos" : 1239
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1098,
+  "secondPos" : 1213,
+  "firstEndPos" : 1106,
+  "secondEndPos" : 1221
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1968,6 +2001,28 @@
   "firstEndPos" : 2853,
   "secondEndPos" : 2968
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the parent property owner can create",
+  "secondLabel" : "// If the parent property owner can create",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2526,
+  "secondPos" : 2641,
+  "firstEndPos" : 2568,
+  "secondEndPos" : 2683
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a property automatically - let it do so",
+  "secondLabel" : "// a property automatically - let it do so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2581,
+  "secondPos" : 2696,
+  "firstEndPos" : 2623,
+  "secondEndPos" : 2738
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -2770,6 +2825,149 @@
   "secondPos" : 3430,
   "firstEndPos" : 4493,
   "secondEndPos" : 4770
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Consider these two use cases:",
+  "secondLabel" : "// Consider these two use cases:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3329,
+  "secondPos" : 3606,
+  "firstEndPos" : 3361,
+  "secondEndPos" : 3638
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 1. The parent pointer of NullPropertyPointer is ",
+  "secondLabel" : "// 1. The parent pointer of NullPropertyPointer is ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3374,
+  "secondPos" : 3651,
+  "firstEndPos" : 3425,
+  "secondEndPos" : 3702
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    a PropertyOwnerPointer other than NullPointer. When we call ",
+  "secondLabel" : "//    a PropertyOwnerPointer other than NullPointer. When we call ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3438,
+  "secondPos" : 3715,
+  "firstEndPos" : 3504,
+  "secondEndPos" : 3781
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    createPath on it, it most likely returns itself. We then",
+  "secondLabel" : "//    createPath on it, it most likely returns itself. We then",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3517,
+  "secondPos" : 3794,
+  "firstEndPos" : 3579,
+  "secondEndPos" : 3856
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    take a PropertyPointer from it and get the PropertyPointer",
+  "secondLabel" : "//    take a PropertyPointer from it and get the PropertyPointer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3592,
+  "secondPos" : 3869,
+  "firstEndPos" : 3656,
+  "secondEndPos" : 3933
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    to expand the collection for the corresponding property.",
+  "secondLabel" : "//    to expand the collection for the corresponding property.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3669,
+  "secondPos" : 3946,
+  "firstEndPos" : 3731,
+  "secondEndPos" : 4008
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3744,
+  "secondPos" : 4021,
+  "firstEndPos" : 3746,
+  "secondEndPos" : 4023
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 2. The parent pointer of NullPropertyPointer is a NullPointer.",
+  "secondLabel" : "// 2. The parent pointer of NullPropertyPointer is a NullPointer.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3759,
+  "secondPos" : 4036,
+  "firstEndPos" : 3824,
+  "secondEndPos" : 4101
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    When we call createPath, it may return a PropertyOwnerPointer",
+  "secondLabel" : "//    When we call createPath, it may return a PropertyOwnerPointer",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3837,
+  "secondPos" : 4114,
+  "firstEndPos" : 3904,
+  "secondEndPos" : 4181
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    or it may return anything else, like a DOMNodePointer.",
+  "secondLabel" : "//    or it may return anything else, like a DOMNodePointer.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3917,
+  "secondPos" : 4194,
+  "firstEndPos" : 3977,
+  "secondEndPos" : 4254
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    In the former case we need to do exactly what we did in use ",
+  "secondLabel" : "//    In the former case we need to do exactly what we did in use ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3990,
+  "secondPos" : 4267,
+  "firstEndPos" : 4056,
+  "secondEndPos" : 4333
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    case 1.  In the latter case, we simply request that the ",
+  "secondLabel" : "//    case 1.  In the latter case, we simply request that the ",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4069,
+  "secondPos" : 4346,
+  "firstEndPos" : 4131,
+  "secondEndPos" : 4408
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    non-property pointer expand the collection by itself.",
+  "secondLabel" : "//    non-property pointer expand the collection by itself.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4144,
+  "secondPos" : 4421,
+  "firstEndPos" : 4203,
+  "secondEndPos" : 4480
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

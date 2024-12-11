@@ -241,6 +241,17 @@
   "firstEndPos" : 312,
   "secondEndPos" : 312
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 294,
+  "secondPos" : 294,
+  "firstEndPos" : 299,
+  "secondEndPos" : 299
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "DateFormat",
@@ -383,6 +394,39 @@
   "secondPos" : 624,
   "firstEndPos" : 634,
   "secondEndPos" : 634
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* TODO !!! 24-Nov-2009, tatu: Need to rewrite this class:\n     * JDK date parsing is awfully brittle, and ISO-8601 is quite\n     * permissive. The two don't mix, need to write a better one.\n     */",
+  "secondLabel" : "/* TODO !!! 24-Nov-2009, tatu: Need to rewrite this class:\n     * JDK date parsing is awfully brittle, and ISO-8601 is quite\n     * permissive. The two don't mix, need to write a better one.\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 641,
+  "secondPos" : 641,
+  "firstEndPos" : 839,
+  "secondEndPos" : 839
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 02-Oct-2014, tatu: Alas. While spit'n'polished a few times, still",
+  "secondLabel" : "// 02-Oct-2014, tatu: Alas. While spit'n'polished a few times, still",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 844,
+  "secondPos" : 844,
+  "firstEndPos" : 912,
+  "secondEndPos" : 912
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   not really robust. But still in use.",
+  "secondLabel" : "//   not really robust. But still in use.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 917,
+  "secondPos" : 917,
+  "firstEndPos" : 958,
+  "secondEndPos" : 958
 }, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
@@ -1484,6 +1528,17 @@
   "firstEndPos" : 2294,
   "secondEndPos" : 2294
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.7",
+  "secondLabel" : "// since 2.7",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2297,
+  "secondPos" : 2297,
+  "firstEndPos" : 2309,
+  "secondEndPos" : 2309
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1935,6 +1990,17 @@
   "firstEndPos" : 2618,
   "secondEndPos" : 2618
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Let's construct \"blueprint\" date format instances: can not be used\n     * as is, due to thread-safety issues, but can be used for constructing\n     * actual instances more cheaply (avoids re-parsing).\n     */",
+  "secondLabel" : "/* Let's construct \"blueprint\" date format instances: can not be used\n     * as is, due to thread-safety issues, but can be used for constructing\n     * actual instances more cheaply (avoids re-parsing).\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2625,
+  "secondPos" : 2625,
+  "firstEndPos" : 2836,
+  "secondEndPos" : 2836
+}, {
   "firstType" : "Initializer",
   "secondType" : "Initializer",
   "firstLabel" : "",
@@ -1967,6 +2033,17 @@
   "secondPos" : 2848,
   "firstEndPos" : 3591,
   "secondEndPos" : 3591
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Another important thing: let's force use of default timezone for\n         * baseline DataFormat objects\n         */",
+  "secondLabel" : "/* Another important thing: let's force use of default timezone for\n         * baseline DataFormat objects\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2858,
+  "secondPos" : 2858,
+  "firstEndPos" : 2976,
+  "secondEndPos" : 2976
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3101,6 +3178,17 @@
   "firstEndPos" : 4117,
   "secondEndPos" : 4117
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4089,
+  "secondPos" : 4089,
+  "firstEndPos" : 4094,
+  "secondEndPos" : 4094
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -3177,6 +3265,17 @@
   "secondPos" : 4155,
   "firstEndPos" : 4165,
   "secondEndPos" : 4165
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4155,
+  "secondPos" : 4155,
+  "firstEndPos" : 4161,
+  "secondEndPos" : 4161
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3552,6 +3651,17 @@
   "firstEndPos" : 4413,
   "secondEndPos" : 4413
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Life cycle, accessing singleton \"standard\" formats\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Life cycle, accessing singleton \"standard\" formats\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4420,
+  "secondPos" : 4420,
+  "firstEndPos" : 4616,
+  "secondEndPos" : 4616
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3683,6 +3793,17 @@
   "secondPos" : 4693,
   "firstEndPos" : 4703,
   "secondEndPos" : 4703
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.7",
+  "secondLabel" : "// since 2.7",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 4704,
+  "secondPos" : 4704,
+  "firstEndPos" : 4716,
+  "secondEndPos" : 4716
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -5279,6 +5400,17 @@
   "firstEndPos" : 5974,
   "secondEndPos" : 5974
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* Although there is that much state to share, we do need to\n         * orchestrate a bit, mostly since timezones may be changed\n         */",
+  "secondLabel" : "/* Although there is that much state to share, we do need to\n         * orchestrate a bit, mostly since timezones may be changed\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5764,
+  "secondPos" : 5764,
+  "firstEndPos" : 5904,
+  "secondEndPos" : 5904
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -5388,6 +5520,17 @@
   "secondPos" : 5991,
   "firstEndPos" : 6043,
   "secondEndPos" : 6043
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5991,
+  "secondPos" : 5991,
+  "firstEndPos" : 6002,
+  "secondEndPos" : 6002
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -5674,6 +5817,17 @@
   "secondPos" : 6368,
   "firstEndPos" : 6378,
   "secondEndPos" : 6378
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6368,
+  "secondPos" : 6368,
+  "firstEndPos" : 6374,
+  "secondEndPos" : 6374
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6016,6 +6170,17 @@
   "firstEndPos" : 6738,
   "secondEndPos" : 6738
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6728,
+  "secondPos" : 6728,
+  "firstEndPos" : 6734,
+  "secondEndPos" : 6734
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " 2.4",
@@ -6313,6 +6478,17 @@
   "firstEndPos" : 7000,
   "secondEndPos" : 7000
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@deprecated",
+  "secondLabel" : "@deprecated",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6948,
+  "secondPos" : 6948,
+  "firstEndPos" : 6959,
+  "secondEndPos" : 6959
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Since 2.4; use variant that takes Locale",
@@ -6522,6 +6698,17 @@
   "firstEndPos" : 7136,
   "secondEndPos" : 7136
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public API, configuration\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public API, configuration\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 7150,
+  "secondPos" : 7150,
+  "firstEndPos" : 7321,
+  "secondEndPos" : 7321
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6554,6 +6741,17 @@
   "secondPos" : 7328,
   "firstEndPos" : 7336,
   "secondEndPos" : 7336
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.6",
+  "secondLabel" : "// since 2.6",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 7337,
+  "secondPos" : 7337,
+  "firstEndPos" : 7349,
+  "secondEndPos" : 7349
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -6752,6 +6950,17 @@
   "secondPos" : 7478,
   "firstEndPos" : 7731,
   "secondEndPos" : 7731
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* DateFormats are timezone-specific (via Calendar contained),\n         * so need to reset instances if timezone changes:\n         */",
+  "secondLabel" : "/* DateFormats are timezone-specific (via Calendar contained),\n         * so need to reset instances if timezone changes:\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7488,
+  "secondPos" : 7488,
+  "firstEndPos" : 7621,
+  "secondEndPos" : 7621
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -7017,6 +7226,17 @@
   "firstEndPos" : 7860,
   "secondEndPos" : 7860
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7844,
+  "secondPos" : 7844,
+  "firstEndPos" : 7849,
+  "secondEndPos" : 7849
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Calendar",
@@ -7071,6 +7291,17 @@
   "secondPos" : 8199,
   "firstEndPos" : 7984,
   "secondEndPos" : 8207
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// since 2.7",
+  "secondLabel" : "// since 2.7",
+  "firstParentType" : "MethodDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 7985,
+  "secondPos" : 8208,
+  "firstEndPos" : 7997,
+  "secondEndPos" : 8220
 }, {
   "firstType" : "Modifier",
   "secondType" : "Modifier",
@@ -7182,6 +7413,17 @@
   "firstEndPos" : 8140,
   "secondEndPos" : 8363
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// default is, I believe, true",
+  "secondLabel" : "// default is, I believe, true",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8075,
+  "secondPos" : 8298,
+  "firstEndPos" : 8105,
+  "secondEndPos" : 8328
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -7258,6 +7500,17 @@
   "secondPos" : 8388,
   "firstEndPos" : 8177,
   "secondEndPos" : 8400
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public API, parsing\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public API, parsing\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 8192,
+  "secondPos" : 8415,
+  "firstEndPos" : 8357,
+  "secondEndPos" : 8580
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -7721,6 +7974,17 @@
   "firstEndPos" : 8670,
   "secondEndPos" : 8893
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also includes \"plain\"",
+  "secondLabel" : "// also includes \"plain\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8583,
+  "secondPos" : 8806,
+  "firstEndPos" : 8607,
+  "secondEndPos" : 8830
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -7841,6 +8105,17 @@
   "secondPos" : 8899,
   "firstEndPos" : 9585,
   "secondEndPos" : 9808
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also consider \"stringified\" simple time stamp",
+  "secondLabel" : "// Also consider \"stringified\" simple time stamp",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8690,
+  "secondPos" : 8913,
+  "firstEndPos" : 8738,
+  "secondEndPos" : 8961
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -8260,6 +8535,17 @@
   "firstEndPos" : 9124,
   "secondEndPos" : 9347
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 07-Aug-2013, tatu: And [databind#267] points out that negative numbers should also work",
+  "secondLabel" : "// 07-Aug-2013, tatu: And [databind#267] points out that negative numbers should also work",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8917,
+  "secondPos" : 9140,
+  "firstEndPos" : 9007,
+  "secondEndPos" : 9230
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -8490,6 +8776,17 @@
   "secondPos" : 9402,
   "firstEndPos" : 9280,
   "secondEndPos" : 9503
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's just assume negative numbers are fine (can't be RFC-1123 anyway); check length for positive",
+  "secondLabel" : "// let's just assume negative numbers are fine (can't be RFC-1123 anyway); check length for positive",
+  "firstParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "secondParentType" : "INFIX_EXPRESSION_OPERATOR",
+  "firstPos" : 9179,
+  "secondPos" : 9402,
+  "firstEndPos" : 9279,
+  "secondEndPos" : 9502
 }, {
   "firstType" : "ParenthesizedExpression",
   "secondType" : "ParenthesizedExpression",
@@ -8864,6 +9161,17 @@
   "secondPos" : 9674,
   "firstEndPos" : 9575,
   "secondEndPos" : 9798
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, fall back to using RFC 1123",
+  "secondLabel" : "// Otherwise, fall back to using RFC 1123",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9469,
+  "secondPos" : 9692,
+  "firstEndPos" : 9510,
+  "secondEndPos" : 9733
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -10086,6 +10394,17 @@
   "firstEndPos" : 10518,
   "secondEndPos" : 10741
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also includes \"plain\"",
+  "secondLabel" : "// also includes \"plain\"",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10268,
+  "secondPos" : 10491,
+  "firstEndPos" : 10292,
+  "secondEndPos" : 10515
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -10251,6 +10570,17 @@
   "firstEndPos" : 10508,
   "secondEndPos" : 10731
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// will NOT be thrown due to false but is declared...",
+  "secondLabel" : "// will NOT be thrown due to false but is declared...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10412,
+  "secondPos" : 10635,
+  "firstEndPos" : 10465,
+  "secondEndPos" : 10688
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -10272,6 +10602,17 @@
   "secondPos" : 10712,
   "firstEndPos" : 10493,
   "secondEndPos" : 10716
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also consider \"stringified\" simple time stamp",
+  "secondLabel" : "// Also consider \"stringified\" simple time stamp",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10527,
+  "secondPos" : 10750,
+  "firstEndPos" : 10575,
+  "secondEndPos" : 10798
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -10691,6 +11032,17 @@
   "firstEndPos" : 10925,
   "secondEndPos" : 11148
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 07-Aug-2013, tatu: And [databind#267] points out that negative numbers should also work",
+  "secondLabel" : "// 07-Aug-2013, tatu: And [databind#267] points out that negative numbers should also work",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10734,
+  "secondPos" : 10957,
+  "firstEndPos" : 10824,
+  "secondEndPos" : 11047
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -10899,6 +11251,28 @@
   "secondPos" : 11178,
   "firstEndPos" : 11252,
   "secondEndPos" : 11475
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// all digits",
+  "secondLabel" : "// all digits",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10957,
+  "secondPos" : 11180,
+  "firstEndPos" : 10970,
+  "secondEndPos" : 11193
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's just assume negative numbers are fine (can't be RFC-1123 anyway); check length for positive",
+  "secondLabel" : "// let's just assume negative numbers are fine (can't be RFC-1123 anyway); check length for positive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10983,
+  "secondPos" : 11206,
+  "firstEndPos" : 11083,
+  "secondEndPos" : 11306
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -11230,6 +11604,17 @@
   "firstEndPos" : 11225,
   "secondEndPos" : 11448
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Otherwise, fall back to using RFC 1123",
+  "secondLabel" : "// Otherwise, fall back to using RFC 1123",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11261,
+  "secondPos" : 11484,
+  "firstEndPos" : 11302,
+  "secondEndPos" : 11525
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -11295,6 +11680,17 @@
   "secondPos" : 11565,
   "firstEndPos" : 11345,
   "secondEndPos" : 11568
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public API, writing\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public API, writing\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11359,
+  "secondPos" : 11582,
+  "firstEndPos" : 11524,
+  "secondEndPos" : 11747
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -11812,6 +12208,17 @@
   "secondPos" : 12123,
   "firstEndPos" : 11913,
   "secondEndPos" : 12136
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Std overrides\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Std overrides\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 11927,
+  "secondPos" : 12150,
+  "firstEndPos" : 12086,
+  "secondEndPos" : 12309
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -12395,6 +12802,17 @@
   "secondPos" : 12583,
   "firstEndPos" : 12363,
   "secondEndPos" : 12586
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Helper methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 12380,
+  "secondPos" : 12603,
+  "firstEndPos" : 12540,
+  "secondEndPos" : 12763
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -13298,6 +13716,28 @@
   "firstEndPos" : 18211,
   "secondEndPos" : 18434
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 21-May-2009, tatu: DateFormat has very strict handling of\n         * timezone  modifiers for ISO-8601. So we need to do some scrubbing.\n         */",
+  "secondLabel" : "/* 21-May-2009, tatu: DateFormat has very strict handling of\n         * timezone  modifiers for ISO-8601. So we need to do some scrubbing.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13125,
+  "secondPos" : 13348,
+  "firstEndPos" : 13275,
+  "secondEndPos" : 13498
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* First: do we have \"zulu\" format ('Z' == \"UTC\")? If yes, that's\n         * quite simple because we already set date format timezone to be\n         * UTC, and hence can just strip out 'Z' altogether\n         */",
+  "secondLabel" : "/* First: do we have \"zulu\" format ('Z' == \"UTC\")? If yes, that's\n         * quite simple because we already set date format timezone to be\n         * UTC, and hence can just strip out 'Z' altogether\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13285,
+  "secondPos" : 13508,
+  "firstEndPos" : 13496,
+  "secondEndPos" : 13719
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -13638,6 +14078,17 @@
   "secondPos" : 13834,
   "firstEndPos" : 13620,
   "secondEndPos" : 13843
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Need to support \"plain\" date...",
+  "secondLabel" : "// Need to support \"plain\" date...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 13631,
+  "secondPos" : 13854,
+  "firstEndPos" : 13665,
+  "secondEndPos" : 13888
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -14541,6 +14992,17 @@
   "firstEndPos" : 14257,
   "secondEndPos" : 14480
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// may be missing milliseconds... if so, add",
+  "secondLabel" : "// may be missing milliseconds... if so, add",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14286,
+  "secondPos" : 14509,
+  "firstEndPos" : 14330,
+  "secondEndPos" : 14553
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15014,6 +15476,17 @@
   "firstEndPos" : 17794,
   "secondEndPos" : 18017
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Let's see if we have timezone indicator or not...",
+  "secondLabel" : "// Let's see if we have timezone indicator or not...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14568,
+  "secondPos" : 14791,
+  "firstEndPos" : 14620,
+  "secondEndPos" : 14843
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -15288,6 +15761,28 @@
   "secondPos" : 14957,
   "firstEndPos" : 14971,
   "secondEndPos" : 15194
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove optional colon",
+  "secondLabel" : "// remove optional colon",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14736,
+  "secondPos" : 14959,
+  "firstEndPos" : 14760,
+  "secondEndPos" : 14983
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove colon",
+  "secondLabel" : "// remove colon",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14781,
+  "secondPos" : 15004,
+  "firstEndPos" : 14796,
+  "secondEndPos" : 15019
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -15762,6 +16257,28 @@
   "firstEndPos" : 15124,
   "secondEndPos" : 15347
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// missing minutes",
+  "secondLabel" : "// missing minutes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15005,
+  "secondPos" : 15228,
+  "firstEndPos" : 15023,
+  "secondEndPos" : 15246
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's just append '00'",
+  "secondLabel" : "// let's just append '00'",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15044,
+  "secondPos" : 15267,
+  "firstEndPos" : 15069,
+  "secondEndPos" : 15292
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -15816,6 +16333,17 @@
   "secondPos" : 15324,
   "firstEndPos" : 15105,
   "secondEndPos" : 15328
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Milliseconds partial or missing; and even seconds are optional",
+  "secondLabel" : "// Milliseconds partial or missing; and even seconds are optional",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15141,
+  "secondPos" : 15364,
+  "firstEndPos" : 15206,
+  "secondEndPos" : 15429
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -15904,6 +16432,17 @@
   "secondPos" : 15460,
   "firstEndPos" : 15243,
   "secondEndPos" : 15466
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// remove 'T', '+'/'-' and 4-digit timezone-offset",
+  "secondLabel" : "// remove 'T', '+'/'-' and 4-digit timezone-offset",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15263,
+  "secondPos" : 15486,
+  "firstEndPos" : 15313,
+  "secondEndPos" : 15536
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -16125,6 +16664,17 @@
   "firstEndPos" : 16434,
   "secondEndPos" : 16657
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 8 for hh:mm:ss, 4 for .sss",
+  "secondLabel" : "// 8 for hh:mm:ss, 4 for .sss",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15416,
+  "secondPos" : 15639,
+  "firstEndPos" : 15445,
+  "secondEndPos" : 15668
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -16212,6 +16762,17 @@
   "secondPos" : 15708,
   "firstEndPos" : 15486,
   "secondEndPos" : 15709
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// insertion offset, before tz-offset",
+  "secondLabel" : "// insertion offset, before tz-offset",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15488,
+  "secondPos" : 15711,
+  "firstEndPos" : 15525,
+  "secondEndPos" : 15748
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -16598,6 +17159,17 @@
   "firstEndPos" : 15827,
   "secondEndPos" : 16050
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is this legal? (just second fraction marker)",
+  "secondLabel" : "// is this legal? (just second fraction marker)",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 15829,
+  "secondPos" : 16052,
+  "firstEndPos" : 15876,
+  "secondEndPos" : 16099
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -16840,6 +17412,17 @@
   "firstEndPos" : 16046,
   "secondEndPos" : 16269
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// not legal to have single-digit second",
+  "secondLabel" : "// not legal to have single-digit second",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16048,
+  "secondPos" : 16271,
+  "firstEndPos" : 16088,
+  "secondEndPos" : 16311
+}, {
   "firstType" : "BreakStatement",
   "secondType" : "BreakStatement",
   "firstLabel" : "",
@@ -16872,6 +17455,17 @@
   "secondPos" : 16368,
   "firstEndPos" : 16146,
   "secondEndPos" : 16369
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// probably not legal, but let's allow",
+  "secondLabel" : "// probably not legal, but let's allow",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16148,
+  "secondPos" : 16371,
+  "firstEndPos" : 16186,
+  "secondEndPos" : 16409
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16982,6 +17576,17 @@
   "secondPos" : 16488,
   "firstEndPos" : 16266,
   "secondEndPos" : 16489
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// is legal to omit seconds",
+  "secondLabel" : "// is legal to omit seconds",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 16268,
+  "secondPos" : 16491,
+  "firstEndPos" : 16295,
+  "secondEndPos" : 16518
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -17511,6 +18116,17 @@
   "firstEndPos" : 17784,
   "secondEndPos" : 18007
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If not, plain date. Easiest to just patch 'Z' in the end?",
+  "secondLabel" : "// If not, plain date. Easiest to just patch 'Z' in the end?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16772,
+  "secondPos" : 16995,
+  "firstEndPos" : 16832,
+  "secondEndPos" : 17055
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -17609,6 +18225,17 @@
   "secondPos" : 17109,
   "firstEndPos" : 16893,
   "secondEndPos" : 17116
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And possible also millisecond part if missing",
+  "secondLabel" : "// And possible also millisecond part if missing",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16912,
+  "secondPos" : 17135,
+  "firstEndPos" : 16960,
+  "secondEndPos" : 17183
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -17829,6 +18456,17 @@
   "secondPos" : 17284,
   "firstEndPos" : 17401,
   "secondEndPos" : 17624
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// missing, or partial",
+  "secondLabel" : "// missing, or partial",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17063,
+  "secondPos" : 17286,
+  "firstEndPos" : 17085,
+  "secondEndPos" : 17308
 }, {
   "firstType" : "SwitchStatement",
   "secondType" : "SwitchStatement",
@@ -18886,6 +19524,17 @@
   "firstEndPos" : 17834,
   "secondEndPos" : 18057
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 22-Dec-2015, tatu: With non-lenient, may get null",
+  "secondLabel" : "// 22-Dec-2015, tatu: With non-lenient, may get null",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17845,
+  "secondPos" : 18068,
+  "firstEndPos" : 17897,
+  "secondEndPos" : 18120
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -19721,6 +20370,17 @@
   "secondPos" : 18817,
   "firstEndPos" : 19024,
   "secondEndPos" : 19247
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Only accept \"+hh\", \"+hhmm\" and \"+hh:mm\" (and with minus), so",
+  "secondLabel" : "// Only accept \"+hh\", \"+hhmm\" and \"+hh:mm\" (and with minus), so",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18604,
+  "secondPos" : 18827,
+  "firstEndPos" : 18667,
+  "secondEndPos" : 18890
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

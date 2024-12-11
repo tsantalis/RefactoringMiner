@@ -10,6 +10,17 @@
   "firstEndPos" : 3795,
   "secondEndPos" : 4352
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright (C) 2011 Google Inc.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 594,
+  "secondEndPos" : 594
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -175,6 +186,17 @@
   "firstEndPos" : 871,
   "secondEndPos" : 906
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 852,
+  "secondPos" : 887,
+  "firstEndPos" : 859,
+  "secondEndPos" : 894
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Joel Leitch",
@@ -196,6 +218,17 @@
   "secondPos" : 910,
   "firstEndPos" : 895,
   "secondEndPos" : 930
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 875,
+  "secondPos" : 910,
+  "firstEndPos" : 882,
+  "secondEndPos" : 917
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -515,6 +548,50 @@
   "secondPos" : 1083,
   "firstEndPos" : 3550,
   "secondEndPos" : 3684
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try JVM",
+  "secondLabel" : "// try JVM",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1054,
+  "secondPos" : 1089,
+  "firstEndPos" : 1064,
+  "secondEndPos" : 1099
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public class Unsafe {",
+  "secondLabel" : "// public class Unsafe {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1069,
+  "secondPos" : 1104,
+  "firstEndPos" : 1093,
+  "secondEndPos" : 1128
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   public Object allocateInstance(Class<?> type);",
+  "secondLabel" : "//   public Object allocateInstance(Class<?> type);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1098,
+  "secondPos" : 1133,
+  "firstEndPos" : 1149,
+  "secondEndPos" : 1184
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1154,
+  "secondPos" : 1189,
+  "firstEndPos" : 1158,
+  "secondEndPos" : 1193
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -1659,6 +1736,61 @@
   "secondPos" : 1789,
   "firstEndPos" : 1728,
   "secondEndPos" : 1796
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try dalvikvm, post-gingerbread",
+  "secondLabel" : "// try dalvikvm, post-gingerbread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1734,
+  "secondPos" : 1802,
+  "firstEndPos" : 1767,
+  "secondEndPos" : 1835
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public class ObjectStreamClass {",
+  "secondLabel" : "// public class ObjectStreamClass {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1772,
+  "secondPos" : 1840,
+  "firstEndPos" : 1807,
+  "secondEndPos" : 1875
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   private static native int getConstructorId(Class<?> c);",
+  "secondLabel" : "//   private static native int getConstructorId(Class<?> c);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1812,
+  "secondPos" : 1880,
+  "firstEndPos" : 1872,
+  "secondEndPos" : 1940
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   private static native Object newInstance(Class<?> instantiationClass, int methodId);",
+  "secondLabel" : "//   private static native Object newInstance(Class<?> instantiationClass, int methodId);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1877,
+  "secondPos" : 1945,
+  "firstEndPos" : 1966,
+  "secondEndPos" : 2034
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1971,
+  "secondPos" : 2039,
+  "firstEndPos" : 1975,
+  "secondEndPos" : 2043
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -2903,6 +3035,61 @@
   "firstEndPos" : 2682,
   "secondEndPos" : 2783
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// try dalvikvm, pre-gingerbread",
+  "secondLabel" : "// try dalvikvm, pre-gingerbread",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2688,
+  "secondPos" : 2789,
+  "firstEndPos" : 2720,
+  "secondEndPos" : 2821
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// public class ObjectInputStream {",
+  "secondLabel" : "// public class ObjectInputStream {",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2725,
+  "secondPos" : 2826,
+  "firstEndPos" : 2760,
+  "secondEndPos" : 2861
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//   private static native Object newInstance(",
+  "secondLabel" : "//   private static native Object newInstance(",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2765,
+  "secondPos" : 2866,
+  "firstEndPos" : 2811,
+  "secondEndPos" : 2912
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//     Class<?> instantiationClass, Class<?> constructorClass);",
+  "secondLabel" : "//     Class<?> instantiationClass, Class<?> constructorClass);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2816,
+  "secondPos" : 2917,
+  "firstEndPos" : 2879,
+  "secondEndPos" : 2980
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// }",
+  "secondLabel" : "// }",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2884,
+  "secondPos" : 2985,
+  "firstEndPos" : 2888,
+  "secondEndPos" : 2989
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -3739,6 +3926,17 @@
   "firstEndPos" : 3346,
   "secondEndPos" : 3480
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// give up",
+  "secondLabel" : "// give up",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3352,
+  "secondPos" : 3486,
+  "firstEndPos" : 3362,
+  "secondEndPos" : 3496
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -4068,4 +4266,125 @@
   "secondPos" : 3662,
   "firstEndPos" : 3529,
   "secondEndPos" : 3663
+}, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "MethodDeclaration",
+  "firstPos" : 3554,
+  "secondPos" : 3688,
+  "firstEndPos" : 3792,
+  "secondEndPos" : 3926
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 3563,
+  "secondPos" : 3697,
+  "firstEndPos" : 3736,
+  "secondEndPos" : 3870
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Check if the class can be instantiated by unsafe allocator. If the instance has interface or abstract modifiers",
+  "secondLabel" : "Check if the class can be instantiated by unsafe allocator. If the instance has interface or abstract modifiers",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3563,
+  "secondPos" : 3697,
+  "firstEndPos" : 3674,
+  "secondEndPos" : 3808
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "throw an ",
+  "secondLabel" : "throw an ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3680,
+  "secondPos" : 3814,
+  "firstEndPos" : 3689,
+  "secondEndPos" : 3823
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3689,
+  "secondPos" : 3823,
+  "firstEndPos" : 3736,
+  "secondEndPos" : 3870
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3689,
+  "secondPos" : 3823,
+  "firstEndPos" : 3694,
+  "secondEndPos" : 3828
+}, {
+  "firstType" : "QualifiedName",
+  "secondType" : "QualifiedName",
+  "firstLabel" : "java.lang.UnsupportedOperationException",
+  "secondLabel" : "java.lang.UnsupportedOperationException",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3696,
+  "secondPos" : 3830,
+  "firstEndPos" : 3735,
+  "secondEndPos" : 3869
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 3742,
+  "secondPos" : 3876,
+  "firstEndPos" : 3786,
+  "secondEndPos" : 3920
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3742,
+  "secondPos" : 3876,
+  "firstEndPos" : 3748,
+  "secondEndPos" : 3882
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "c",
+  "secondLabel" : "c",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3749,
+  "secondPos" : 3883,
+  "firstEndPos" : 3750,
+  "secondEndPos" : 3884
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : " instance of the class to be checked",
+  "secondLabel" : " instance of the class to be checked",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3750,
+  "secondPos" : 3884,
+  "firstEndPos" : 3786,
+  "secondEndPos" : 3920
 } ]

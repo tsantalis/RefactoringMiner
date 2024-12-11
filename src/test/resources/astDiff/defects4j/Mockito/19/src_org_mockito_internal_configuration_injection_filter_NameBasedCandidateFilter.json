@@ -10,6 +10,17 @@
   "firstEndPos" : 1454,
   "secondEndPos" : 1904
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "secondLabel" : "/*\n * Copyright (c) 2007 Mockito contributors\n * This program is made available under the terms of the MIT License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 119,
+  "secondEndPos" : 119
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -1505,6 +1516,17 @@
   "secondPos" : 1013,
   "firstEndPos" : 998,
   "secondEndPos" : 1026
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n\t\t\t * In this case we have to check whether we have conflicting naming\n\t\t\t * fields. E.g. 2 fields of the same type, but we have to make sure\n\t\t\t * we match on the correct name.\n\t\t\t * \n\t\t\t * Therefore we have to go through all other fields and make sure\n\t\t\t * whenever we find a field that does match its name with the mock\n\t\t\t * name, we should take that field instead.\n\t\t\t */",
+  "secondLabel" : "/*\n\t\t\t * In this case we have to check whether we have conflicting naming\n\t\t\t * fields. E.g. 2 fields of the same type, but we have to make sure\n\t\t\t * we match on the correct name.\n\t\t\t * \n\t\t\t * Therefore we have to go through all other fields and make sure\n\t\t\t * whenever we find a field that does match its name with the mock\n\t\t\t * name, we should take that field instead.\n\t\t\t */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1004,
+  "secondPos" : 1032,
+  "firstEndPos" : 1384,
+  "secondEndPos" : 1412
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",

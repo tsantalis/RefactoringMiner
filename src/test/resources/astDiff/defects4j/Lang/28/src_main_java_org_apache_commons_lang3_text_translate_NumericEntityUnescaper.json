@@ -10,6 +10,17 @@
   "firstEndPos" : 2296,
   "secondEndPos" : 2504
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n * \n *      http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n * \n *      http://www.apache.org/licenses/LICENSE-2.0\n * \n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 804,
+  "secondEndPos" : 804
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -142,6 +153,17 @@
   "firstEndPos" : 1041,
   "secondEndPos" : 1041
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1007,
+  "secondPos" : 1007,
+  "firstEndPos" : 1014,
+  "secondEndPos" : 1014
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Apache Software Foundation",
@@ -163,6 +185,17 @@
   "secondPos" : 1045,
   "firstEndPos" : 1055,
   "secondEndPos" : 1055
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1045,
+  "secondPos" : 1045,
+  "firstEndPos" : 1051,
+  "secondEndPos" : 1051
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -273,6 +306,17 @@
   "secondPos" : 1145,
   "firstEndPos" : 1158,
   "secondEndPos" : 1158
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@inheritDoc",
+  "secondLabel" : "@inheritDoc",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1145,
+  "secondPos" : 1145,
+  "firstEndPos" : 1156,
+  "secondEndPos" : 1156
 }, {
   "firstType" : "MarkerAnnotation",
   "secondType" : "MarkerAnnotation",
@@ -482,6 +526,17 @@
   "secondPos" : 1268,
   "firstEndPos" : 2293,
   "secondEndPos" : 2501
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO: Protect from ArrayIndexOutOfBounds",
+  "secondLabel" : "// TODO: Protect from ArrayIndexOutOfBounds",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1278,
+  "secondPos" : 1278,
+  "firstEndPos" : 1321,
+  "secondEndPos" : 1321
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

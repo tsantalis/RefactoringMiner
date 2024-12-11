@@ -6154,13 +6154,13 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											leafIterator1.remove();
 										}
 									}
-									else if(scopedMappingSet.size() == 1) {
-										LeafMapping minStatementMapping = scopedMappingSet.first();
-										if(canBeAdded(minStatementMapping, parameterToArgumentMap)) {
-											addToMappings(minStatementMapping, scopedMappingSet);
-											leaves2.remove(minStatementMapping.getFragment2());
-											leafIterator1.remove();
-										}
+									else {
+										TreeMap<Integer, LeafMapping> lineDistanceMap = checkForOtherPossibleMatchesWithLineDistance1(
+												leaves1, leaves2, leaf1, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions);
+										LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
+										addMapping(minLineDistanceStatementMapping);
+										leaves2.remove(minLineDistanceStatementMapping.getFragment2());
+										leafIterator1.remove();
 									}
 								}
 							}
@@ -6615,7 +6615,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 									else {
-										TreeMap<Integer, LeafMapping> lineDistanceMap = checkForOtherPossibleMatchesWithLineDistance(
+										TreeMap<Integer, LeafMapping> lineDistanceMap = checkForOtherPossibleMatchesWithLineDistance2(
 												leaves1, leaves2, leaf2, scopedMappingSet, parameterToArgumentMap, equalNumberOfAssertions);
 										LeafMapping minLineDistanceStatementMapping = lineDistanceMap.firstEntry().getValue();
 										addMapping(minLineDistanceStatementMapping);
@@ -7111,7 +7111,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
-	private TreeMap<Integer, LeafMapping> checkForOtherPossibleMatchesWithLineDistance(List<? extends AbstractCodeFragment> leaves1,
+	private TreeMap<Integer, LeafMapping> checkForOtherPossibleMatchesWithLineDistance2(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf2, TreeSet<LeafMapping> mappingSet,
 			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
 			throws RefactoringMinerTimedOutException {
@@ -7180,6 +7180,94 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						}
 						else {
 							lineDistance = lineDistanceFromExistingMappings1(mapping).getMiddle();
+						}
+						if(!lineDistanceMap.containsKey(lineDistance)) {
+							lineDistanceMap.put(lineDistance, mapping);
+						}
+						else {
+							Set<LeafMapping> set = new LinkedHashSet<>();
+							set.add(lineDistanceMap.get(lineDistance));
+							set.add(mapping);
+							if(allUnderTheSameParent(set)) {
+								lineDistanceMap.put(lineDistance, mapping);
+							}
+						}
+					}
+				}
+			}
+		}
+		return lineDistanceMap;
+	}
+
+	private TreeMap<Integer, LeafMapping> checkForOtherPossibleMatchesWithLineDistance1(List<? extends AbstractCodeFragment> leaves1,
+			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, TreeSet<LeafMapping> mappingSet,
+			Map<String, String> parameterToArgumentMap, boolean equalNumberOfAssertions)
+			throws RefactoringMinerTimedOutException {
+		int exactMappingsBefore = 0;
+		int inexactMappingsBefore = 0;
+		int exactMappingsAfter = 0;
+		int inexactMappingsAfter = 0;
+		for(AbstractCodeMapping mapping : this.mappings) {
+			if(leaf1.getLocationInfo().getStartLine() > mapping.getFragment1().getLocationInfo().getStartLine()) {
+				if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+					exactMappingsBefore++;
+				}
+				else {
+					inexactMappingsBefore++;
+				}
+			}
+			else if(leaf1.getLocationInfo().getStartLine() < mapping.getFragment1().getLocationInfo().getStartLine()) {
+				if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+					exactMappingsAfter++;
+				}
+				else {
+					inexactMappingsAfter++;
+				}
+			}
+		}
+		TreeMap<Integer, LeafMapping> lineDistanceMap = new TreeMap<>();
+		for(LeafMapping mapping : mappingSet) {
+			int lineDistance = 0;
+			if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToInlinedMethod == 1) {
+				lineDistance = lineDistanceFromExistingMappings2(mapping).getRight();
+			}
+			else if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
+				lineDistance = lineDistanceFromExistingMappings2(mapping).getLeft();
+			}
+			else {
+				lineDistance = lineDistanceFromExistingMappings2(mapping).getMiddle();
+			}
+			if(!lineDistanceMap.containsKey(lineDistance)) {
+				lineDistanceMap.put(lineDistance, mapping);
+			}
+		}
+		AbstractCodeFragment leaf2 = lineDistanceMap.firstEntry().getValue().getFragment2();
+		CompositeStatementObject parent2 = leaf2.getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		for(AbstractCodeFragment leaf : leaves1) {
+			if(!leaf.equals(leaf1)) {
+				CompositeStatementObject parent1 = leaf.getParent();
+				while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+					parent1 = parent1.getParent();
+				}
+				if(parent1 != null && parent2 != null && parent1.getString().equals(parent2.getString())) {
+					ReplacementInfo replacementInfo = initializeReplacementInfo(leaf, leaf2, leaves1, leaves2);
+					Set<Replacement> replacements = findReplacementsWithExactMatching(leaf, leaf2, parameterToArgumentMap, replacementInfo, equalNumberOfAssertions, this);
+					if (replacements != null) {
+						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
+						mapping.addReplacements(replacements);
+						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
+						int lineDistance = 0;
+						if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToInlinedMethod == 1) {
+							lineDistance = lineDistanceFromExistingMappings2(mapping).getRight();
+						}
+						else if(exactMappingsBefore + inexactMappingsBefore < exactMappingsAfter + inexactMappingsAfter) {
+							lineDistance = lineDistanceFromExistingMappings2(mapping).getLeft();
+						}
+						else {
+							lineDistance = lineDistanceFromExistingMappings2(mapping).getMiddle();
 						}
 						if(!lineDistanceMap.containsKey(lineDistance)) {
 							lineDistanceMap.put(lineDistance, mapping);

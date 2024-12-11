@@ -197,6 +197,17 @@
   "firstEndPos" : 324,
   "secondEndPos" : 324
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 298,
+  "secondPos" : 298,
+  "firstEndPos" : 303,
+  "secondEndPos" : 303
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "BeanPropertyWriter",
@@ -240,6 +251,17 @@
   "secondPos" : 367,
   "firstEndPos" : 421,
   "secondEndPos" : 421
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 367,
+  "secondPos" : 367,
+  "firstEndPos" : 372,
+  "secondEndPos" : 372
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -1693,6 +1715,17 @@
   "firstEndPos" : 1431,
   "secondEndPos" : 1605
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 23-Feb-2015, tatu: Nasty, but has to do (for now)",
+  "secondLabel" : "// 23-Feb-2015, tatu: Nasty, but has to do (for now)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 1454,
+  "secondPos" : 1628,
+  "firstEndPos" : 1506,
+  "secondEndPos" : 1680
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -1967,6 +2000,17 @@
   "secondPos" : 1901,
   "firstEndPos" : 1684,
   "secondEndPos" : 1911
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1674,
+  "secondPos" : 1901,
+  "firstEndPos" : 1680,
+  "secondEndPos" : 1907
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2760,6 +2804,17 @@
   "firstEndPos" : 2185,
   "secondEndPos" : 2412
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 19-Oct-2014, tatu: Should we try to support @JsonInclude options here?",
+  "secondLabel" : "// 19-Oct-2014, tatu: Should we try to support @JsonInclude options here?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2208,
+  "secondPos" : 2435,
+  "firstEndPos" : 2281,
+  "secondEndPos" : 2508
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3024,6 +3079,28 @@
   "firstEndPos" : 2438,
   "secondEndPos" : 2665
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ... not sure how custom handler would do it",
+  "secondLabel" : "// ... not sure how custom handler would do it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2457,
+  "secondPos" : 2684,
+  "firstEndPos" : 2503,
+  "secondEndPos" : 2730
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Note: NOT part of ResolvableSerializer...",
+  "secondLabel" : "// Note: NOT part of ResolvableSerializer...",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2519,
+  "secondPos" : 2799,
+  "firstEndPos" : 2563,
+  "secondEndPos" : 2843
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3177,6 +3254,17 @@
   "secondPos" : 2964,
   "firstEndPos" : 2885,
   "secondEndPos" : 3398
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 05-Sep-2013, tatu: I _think_ this can be considered a primary property...",
+  "secondLabel" : "// 05-Sep-2013, tatu: I _think_ this can be considered a primary property...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2694,
+  "secondPos" : 2974,
+  "firstEndPos" : 2770,
+  "secondEndPos" : 3050
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",

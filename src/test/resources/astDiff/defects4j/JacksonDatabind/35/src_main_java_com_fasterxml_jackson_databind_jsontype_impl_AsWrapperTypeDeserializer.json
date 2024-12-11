@@ -263,6 +263,17 @@
   "firstEndPos" : 523,
   "secondEndPos" : 523
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 498,
+  "secondPos" : 498,
+  "firstEndPos" : 503,
+  "secondEndPos" : 503
+}, {
   "firstType" : "MemberRef",
   "secondType" : "MemberRef",
   "firstLabel" : "",
@@ -2485,6 +2496,17 @@
   "firstEndPos" : 2355,
   "secondEndPos" : 2355
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /***************************************************************\n    /* Internal methods\n    /***************************************************************\n     */",
+  "secondLabel" : "/*\n    /***************************************************************\n    /* Internal methods\n    /***************************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2373,
+  "secondPos" : 2373,
+  "firstEndPos" : 2545,
+  "secondEndPos" : 2545
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -2759,6 +2781,17 @@
   "secondPos" : 2855,
   "firstEndPos" : 4769,
   "secondEndPos" : 4842
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 02-Aug-2013, tatu: May need to use native type ids",
+  "secondLabel" : "// 02-Aug-2013, tatu: May need to use native type ids",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2865,
+  "secondPos" : 2865,
+  "firstEndPos" : 2918,
+  "secondEndPos" : 2918
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3068,6 +3101,17 @@
   "firstEndPos" : 3096,
   "secondEndPos" : 3096
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first, sanity checks",
+  "secondLabel" : "// first, sanity checks",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3131,
+  "secondPos" : 3131,
+  "firstEndPos" : 3154,
+  "secondEndPos" : 3154
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -3309,6 +3353,17 @@
   "secondPos" : 3766,
   "firstEndPos" : 3394,
   "secondEndPos" : 3778
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// should always get field name, but just in case...",
+  "secondLabel" : "// should always get field name, but just in case...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3421,
+  "secondPos" : 3253,
+  "firstEndPos" : 3473,
+  "secondEndPos" : 3305
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -3871,6 +3926,17 @@
   "firstEndPos" : 3856,
   "secondEndPos" : 3929
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Minor complication: we may need to merge type id in?",
+  "secondLabel" : "// Minor complication: we may need to merge type id in?",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3869,
+  "secondPos" : 3942,
+  "firstEndPos" : 3924,
+  "secondEndPos" : 3997
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -4002,6 +4068,17 @@
   "secondPos" : 4075,
   "firstEndPos" : 4404,
   "secondEndPos" : 4477
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// but what if there's nowhere to add it in? Error? Or skip? For now, skip.",
+  "secondLabel" : "// but what if there's nowhere to add it in? Error? Or skip? For now, skip.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4016,
+  "secondPos" : 4089,
+  "firstEndPos" : 4091,
+  "secondEndPos" : 4164
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -4167,6 +4244,17 @@
   "secondPos" : 4239,
   "firstEndPos" : 4182,
   "secondEndPos" : 4255
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// recreate START_OBJECT",
+  "secondLabel" : "// recreate START_OBJECT",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4186,
+  "secondPos" : 4259,
+  "firstEndPos" : 4210,
+  "secondEndPos" : 4283
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4684,6 +4772,17 @@
   "secondPos" : 4531,
   "firstEndPos" : 4462,
   "secondEndPos" : 4535
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// And then need the closing END_OBJECT",
+  "secondLabel" : "// And then need the closing END_OBJECT",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4473,
+  "secondPos" : 4546,
+  "firstEndPos" : 4512,
+  "secondEndPos" : 4585
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

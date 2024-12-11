@@ -10,6 +10,17 @@
   "firstEndPos" : 12291,
   "secondEndPos" : 12329
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one\n * or more contributor license agreements.  See the NOTICE file\n * distributed with this work for additional information\n * regarding copyright ownership.  The ASF licenses this file\n * to you under the Apache License, Version 2.0 (the\n * \"License\"); you may not use this file except in compliance\n * with the License.  You may obtain a copy of the License at\n *\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing,\n * software distributed under the License is distributed on an\n * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n * KIND, either express or implied.  See the License for the\n * specific language governing permissions and limitations\n * under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 805,
+  "secondEndPos" : 805
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -427,6 +438,17 @@
   "secondPos" : 2220,
   "firstEndPos" : 2230,
   "secondEndPos" : 2230
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2220,
+  "secondPos" : 2220,
+  "firstEndPos" : 2226,
+  "secondEndPos" : 2226
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -978,6 +1000,72 @@
   "firstEndPos" : 2540,
   "secondEndPos" : 2598
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// always '1' according to current info-zip spec.",
+  "secondLabel" : "// always '1' according to current info-zip spec.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2542,
+  "secondPos" : 2600,
+  "firstEndPos" : 2591,
+  "secondEndPos" : 2649
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// BigInteger helps us with little-endian / big-endian conversions.",
+  "secondLabel" : "// BigInteger helps us with little-endian / big-endian conversions.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2597,
+  "secondPos" : 2655,
+  "firstEndPos" : 2664,
+  "secondEndPos" : 2722
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (thanks to BigInteger.toByteArray() and a reverse() method we created).",
+  "secondLabel" : "// (thanks to BigInteger.toByteArray() and a reverse() method we created).",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2669,
+  "secondPos" : 2727,
+  "firstEndPos" : 2743,
+  "secondEndPos" : 2801
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Also, the spec theoretically allows UID/GID up to 255 bytes long!",
+  "secondLabel" : "// Also, the spec theoretically allows UID/GID up to 255 bytes long!",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2748,
+  "secondPos" : 2806,
+  "firstEndPos" : 2816,
+  "secondEndPos" : 2874
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2821,
+  "secondPos" : 2879,
+  "firstEndPos" : 2823,
+  "secondEndPos" : 2881
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// NOTE:  equals() and hashCode() currently assume these can never be null.",
+  "secondLabel" : "// NOTE:  equals() and hashCode() currently assume these can never be null.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2828,
+  "secondPos" : 2886,
+  "firstEndPos" : 2903,
+  "secondEndPos" : 2961
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -1275,6 +1363,17 @@
   "firstEndPos" : 3167,
   "secondEndPos" : 3225
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3112,
+  "secondPos" : 3170,
+  "firstEndPos" : 3119,
+  "secondEndPos" : 3177
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the value for the header id for this extrafield",
@@ -1450,6 +1549,17 @@
   "secondPos" : 3562,
   "firstEndPos" : 3526,
   "secondEndPos" : 3584
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3504,
+  "secondPos" : 3562,
+  "firstEndPos" : 3511,
+  "secondEndPos" : 3569
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -1671,6 +1781,17 @@
   "firstEndPos" : 3877,
   "secondEndPos" : 3935
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3855,
+  "secondPos" : 3913,
+  "firstEndPos" : 3862,
+  "secondEndPos" : 3920
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " the GID value.",
@@ -1857,6 +1978,17 @@
   "secondPos" : 4048,
   "firstEndPos" : 4036,
   "secondEndPos" : 4094
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3990,
+  "secondPos" : 4048,
+  "firstEndPos" : 3996,
+  "secondEndPos" : 4054
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2143,6 +2275,17 @@
   "secondPos" : 4227,
   "firstEndPos" : 4215,
   "secondEndPos" : 4273
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4169,
+  "secondPos" : 4227,
+  "firstEndPos" : 4175,
+  "secondEndPos" : 4233
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -2440,6 +2583,17 @@
   "secondPos" : 4489,
   "firstEndPos" : 4509,
   "secondEndPos" : 4567
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4431,
+  "secondPos" : 4489,
+  "firstEndPos" : 4438,
+  "secondEndPos" : 4496
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2793,6 +2947,17 @@
   "firstEndPos" : 4725,
   "secondEndPos" : 4783
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The 3 comes from:  version=1 + uidsize=1 + gidsize=1",
+  "secondLabel" : "// The 3 comes from:  version=1 + uidsize=1 + gidsize=1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4736,
+  "secondPos" : 4794,
+  "firstEndPos" : 4791,
+  "secondEndPos" : 4849
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -2958,6 +3123,17 @@
   "firstEndPos" : 5062,
   "secondEndPos" : 5120
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4984,
+  "secondPos" : 5042,
+  "firstEndPos" : 4991,
+  "secondEndPos" : 5049
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a <code>ZipShort</code> for the length of the data of this extra field",
@@ -3089,6 +3265,17 @@
   "secondPos" : 5328,
   "firstEndPos" : 5310,
   "secondEndPos" : 5348
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5290,
+  "secondPos" : 5328,
+  "firstEndPos" : 5297,
+  "secondEndPos" : 5335
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -3387,6 +3574,39 @@
   "firstEndPos" : 5448,
   "secondEndPos" : 5486
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// BigInteger might prepend a leading-zero to force a positive representation",
+  "secondLabel" : "// BigInteger might prepend a leading-zero to force a positive representation",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5461,
+  "secondPos" : 5499,
+  "firstEndPos" : 5538,
+  "secondEndPos" : 5576
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// (e.g., so that the sign-bit is set to zero).  We need to remove that",
+  "secondLabel" : "// (e.g., so that the sign-bit is set to zero).  We need to remove that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5547,
+  "secondPos" : 5585,
+  "firstEndPos" : 5618,
+  "secondEndPos" : 5656
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// before sending the number over the wire.",
+  "secondLabel" : "// before sending the number over the wire.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5627,
+  "secondPos" : 5665,
+  "firstEndPos" : 5670,
+  "secondEndPos" : 5708
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3563,6 +3783,61 @@
   "firstEndPos" : 5792,
   "secondEndPos" : 5830
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Couldn't bring myself to just call getLocalFileDataLength() when we've",
+  "secondLabel" : "// Couldn't bring myself to just call getLocalFileDataLength() when we've",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5804,
+  "secondPos" : 5842,
+  "firstEndPos" : 5877,
+  "secondEndPos" : 5915
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// already got the arrays right here.  Yeah, yeah, I know, premature",
+  "secondLabel" : "// already got the arrays right here.  Yeah, yeah, I know, premature",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5886,
+  "secondPos" : 5924,
+  "firstEndPos" : 5954,
+  "secondEndPos" : 5992
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// optimization is the root of all...",
+  "secondLabel" : "// optimization is the root of all...",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5963,
+  "secondPos" : 6001,
+  "firstEndPos" : 6000,
+  "secondEndPos" : 6038
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//",
+  "secondLabel" : "//",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6009,
+  "secondPos" : 6047,
+  "firstEndPos" : 6011,
+  "secondEndPos" : 6049
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The 3 comes from:  version=1 + uidsize=1 + gidsize=1",
+  "secondLabel" : "// The 3 comes from:  version=1 + uidsize=1 + gidsize=1",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6020,
+  "secondPos" : 6058,
+  "firstEndPos" : 6075,
+  "secondEndPos" : 6113
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -3727,6 +4002,17 @@
   "secondPos" : 6167,
   "firstEndPos" : 6144,
   "secondEndPos" : 6182
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// reverse() switches byte array from big-endian to little-endian.",
+  "secondLabel" : "// reverse() switches byte array from big-endian to little-endian.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6156,
+  "secondPos" : 6194,
+  "firstEndPos" : 6222,
+  "secondEndPos" : 6260
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -4674,6 +4960,17 @@
   "firstEndPos" : 6825,
   "secondEndPos" : 6863
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6805,
+  "secondPos" : 6843,
+  "firstEndPos" : 6812,
+  "secondEndPos" : 6850
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " get the data",
@@ -4872,6 +5169,17 @@
   "firstEndPos" : 7038,
   "secondEndPos" : 7076
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7007,
+  "secondPos" : 7045,
+  "firstEndPos" : 7013,
+  "secondEndPos" : 7051
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "data",
@@ -4904,6 +5212,17 @@
   "secondPos" : 7084,
   "firstEndPos" : 7076,
   "secondEndPos" : 7114
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7046,
+  "secondPos" : 7084,
+  "firstEndPos" : 7052,
+  "secondEndPos" : 7090
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -4938,6 +5257,17 @@
   "firstEndPos" : 7142,
   "secondEndPos" : 7180
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7084,
+  "secondPos" : 7122,
+  "firstEndPos" : 7090,
+  "secondEndPos" : 7128
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "length",
@@ -4970,6 +5300,17 @@
   "secondPos" : 7188,
   "firstEndPos" : 7193,
   "secondEndPos" : 7231
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7150,
+  "secondPos" : 7188,
+  "firstEndPos" : 7157,
+  "secondEndPos" : 7195
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -5950,6 +6291,17 @@
   "firstEndPos" : 7649,
   "secondEndPos" : 7687
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sign-bit forced positive",
+  "secondLabel" : "// sign-bit forced positive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7653,
+  "secondPos" : 7691,
+  "firstEndPos" : 7680,
+  "secondEndPos" : 7718
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -6478,6 +6830,17 @@
   "firstEndPos" : 7905,
   "secondEndPos" : 7943
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// sign-bit forced positive",
+  "secondLabel" : "// sign-bit forced positive",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7909,
+  "secondPos" : 7947,
+  "firstEndPos" : 7936,
+  "secondEndPos" : 7974
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -6819,6 +7182,17 @@
   "firstEndPos" : 8504,
   "secondEndPos" : 8542
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Typical UID/GID of the first non-root user created on a unix system.",
+  "secondLabel" : "// Typical UID/GID of the first non-root user created on a unix system.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8371,
+  "secondPos" : 8409,
+  "firstEndPos" : 8442,
+  "secondEndPos" : 8480
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6994,6 +7368,17 @@
   "secondPos" : 8657,
   "firstEndPos" : 8710,
   "secondEndPos" : 8748
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 8619,
+  "secondPos" : 8657,
+  "firstEndPos" : 8626,
+  "secondEndPos" : 8664
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -7600,6 +7985,17 @@
   "firstEndPos" : 9095,
   "secondEndPos" : 9133
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// We assume uid and gid can never be null.",
+  "secondLabel" : "// We assume uid and gid can never be null.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9109,
+  "secondPos" : 9147,
+  "firstEndPos" : 9152,
+  "secondEndPos" : 9190
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -8040,6 +8436,39 @@
   "firstEndPos" : 9355,
   "secondEndPos" : 9393
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Since most UID's and GID's are below 65,536, this is (hopefully!)",
+  "secondLabel" : "// Since most UID's and GID's are below 65,536, this is (hopefully!)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9365,
+  "secondPos" : 9403,
+  "firstEndPos" : 9433,
+  "secondEndPos" : 9471
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// a nice way to make sure typical UID and GID values impact the hash",
+  "secondLabel" : "// a nice way to make sure typical UID and GID values impact the hash",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9442,
+  "secondPos" : 9480,
+  "firstEndPos" : 9511,
+  "secondEndPos" : 9549
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// as much as possible.",
+  "secondLabel" : "// as much as possible.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9520,
+  "secondPos" : 9558,
+  "firstEndPos" : 9543,
+  "secondEndPos" : 9581
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8392,6 +8821,17 @@
   "firstEndPos" : 9958,
   "secondEndPos" : 9996
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9918,
+  "secondPos" : 9956,
+  "firstEndPos" : 9924,
+  "secondEndPos" : 9962
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "array",
@@ -8424,6 +8864,17 @@
   "secondPos" : 10004,
   "firstEndPos" : 10004,
   "secondEndPos" : 10042
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9966,
+  "secondPos" : 10004,
+  "firstEndPos" : 9973,
+  "secondEndPos" : 10011
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -8897,6 +9348,17 @@
   "secondPos" : 10321,
   "firstEndPos" : 10289,
   "secondEndPos" : 10327
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n\n        I agonized over my choice of MIN_LENGTH=1.  Here's the situation:\n        InfoZip (the tool I am using to test interop) always sets these\n        to length=4.  And so a UID of 0 (typically root) for example is\n        encoded as {4,0,0,0,0} (len=4, 32 bits of zero), when it could just\n        as easily be encoded as {1,0} (len=1, 8 bits of zero) according to\n        the spec.\n\n        In the end I decided on MIN_LENGTH=1 for four reasons:\n\n        1.)  We are adhering to the spec as far as I can tell, and so\n             a consumer that cannot parse this is broken.\n\n        2.)  Fundamentally, zip files are about shrinking things, so\n             let's save a few bytes per entry while we can.\n\n        3.)  Of all the people creating zip files using commons-\n             compress, how many care about UNIX UID/GID attributes\n             of the files they store?   (e.g., I am probably thinking\n             way too hard about this and no one cares!)\n\n        4.)  InfoZip's tool, even though it carefully stores every UID/GID\n             for every file zipped on a unix machine (by default) currently\n             appears unable to ever restore UID/GID.\n             unzip -X has no effect on my machine, even when run as root!!!!\n\n        And thus it is decided:  MIN_LENGTH=1.\n\n        If anyone runs into interop problems from this, feel free to set\n        it to MIN_LENGTH=4 at some future time, and then we will behave\n        exactly like InfoZip (requires changes to unit tests, though).\n\n        And I am sorry that the time you spent reading this comment is now\n        gone and you can never have it back.\n\n        */",
+  "secondLabel" : "/*\n\n        I agonized over my choice of MIN_LENGTH=1.  Here's the situation:\n        InfoZip (the tool I am using to test interop) always sets these\n        to length=4.  And so a UID of 0 (typically root) for example is\n        encoded as {4,0,0,0,0} (len=4, 32 bits of zero), when it could just\n        as easily be encoded as {1,0} (len=1, 8 bits of zero) according to\n        the spec.\n\n        In the end I decided on MIN_LENGTH=1 for four reasons:\n\n        1.)  We are adhering to the spec as far as I can tell, and so\n             a consumer that cannot parse this is broken.\n\n        2.)  Fundamentally, zip files are about shrinking things, so\n             let's save a few bytes per entry while we can.\n\n        3.)  Of all the people creating zip files using commons-\n             compress, how many care about UNIX UID/GID attributes\n             of the files they store?   (e.g., I am probably thinking\n             way too hard about this and no one cares!)\n\n        4.)  InfoZip's tool, even though it carefully stores every UID/GID\n             for every file zipped on a unix machine (by default) currently\n             appears unable to ever restore UID/GID.\n             unzip -X has no effect on my machine, even when run as root!!!!\n\n        And thus it is decided:  MIN_LENGTH=1.\n\n        If anyone runs into interop problems from this, feel free to set\n        it to MIN_LENGTH=4 at some future time, and then we will behave\n        exactly like InfoZip (requires changes to unit tests, though).\n\n        And I am sorry that the time you spent reading this comment is now\n        gone and you can never have it back.\n\n        */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10323,
+  "secondPos" : 10361,
+  "firstEndPos" : 11975,
+  "secondEndPos" : 12013
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

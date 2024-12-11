@@ -10,6 +10,17 @@
   "firstEndPos" : 25559,
   "secondEndPos" : 27478
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2009 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Copyright 2009 The Closure Compiler Authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 612,
+  "secondEndPos" : 612
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -868,6 +879,17 @@
   "firstEndPos" : 2284,
   "secondEndPos" : 2364
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@code",
+  "secondLabel" : "@code",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2267,
+  "secondPos" : 2347,
+  "firstEndPos" : 2272,
+  "secondEndPos" : 2352
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " @Override",
@@ -1066,6 +1088,17 @@
   "firstEndPos" : 2825,
   "secondEndPos" : 2905
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2781,
+  "secondPos" : 2861,
+  "firstEndPos" : 2788,
+  "secondEndPos" : 2868
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " bolinfest@google.com (Michael Bolin)",
@@ -1186,6 +1219,17 @@
   "secondPos" : 2989,
   "firstEndPos" : 2924,
   "secondEndPos" : 3004
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// I don't really care about unchecked warnings in this class.",
+  "secondLabel" : "// I don't really care about unchecked warnings in this class.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2930,
+  "secondPos" : 3010,
+  "firstEndPos" : 2992,
+  "secondEndPos" : 3072
 }, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
@@ -2419,6 +2463,28 @@
   "firstEndPos" : 4115,
   "secondEndPos" : 4288
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Turn on (very slow) extra sanity checks for use when modifying the",
+  "secondLabel" : "// Turn on (very slow) extra sanity checks for use when modifying the",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4122,
+  "secondPos" : 4295,
+  "firstEndPos" : 4191,
+  "secondEndPos" : 4364
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// compiler.",
+  "secondLabel" : "// compiler.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 4196,
+  "secondPos" : 4369,
+  "firstEndPos" : 4208,
+  "secondEndPos" : 4381
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -2484,6 +2550,17 @@
   "secondPos" : 4401,
   "firstEndPos" : 4247,
   "secondEndPos" : 4420
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// hidden, no usage",
+  "secondLabel" : "// hidden, no usage",
+  "firstParentType" : "NormalAnnotation",
+  "secondParentType" : "NormalAnnotation",
+  "firstPos" : 4257,
+  "secondPos" : 4430,
+  "firstEndPos" : 4276,
+  "secondEndPos" : 4449
 }, {
   "firstType" : "MemberValuePair",
   "secondType" : "MemberValuePair",
@@ -10746,6 +10823,28 @@
   "firstEndPos" : 14308,
   "secondEndPos" : 14649
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Our own option parser to be backwards-compatible.",
+  "secondLabel" : "// Our own option parser to be backwards-compatible.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14315,
+  "secondPos" : 14656,
+  "firstEndPos" : 14367,
+  "secondEndPos" : 14708
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It needs to be public because of the crazy reflection that args4j does.",
+  "secondLabel" : "// It needs to be public because of the crazy reflection that args4j does.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 14372,
+  "secondPos" : 14713,
+  "firstEndPos" : 14446,
+  "secondEndPos" : 14787
+}, {
   "firstType" : "TypeDeclaration",
   "secondType" : "TypeDeclaration",
   "firstLabel" : "",
@@ -14310,6 +14409,39 @@
   "firstEndPos" : 17854,
   "secondEndPos" : 19784
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Args4j has a different format that the old command-line parser.",
+  "secondLabel" : "// Args4j has a different format that the old command-line parser.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17007,
+  "secondPos" : 18937,
+  "firstEndPos" : 17073,
+  "secondEndPos" : 19003
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// So we use some voodoo to get the args into the format that args4j",
+  "secondLabel" : "// So we use some voodoo to get the args into the format that args4j",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17078,
+  "secondPos" : 19008,
+  "firstEndPos" : 17146,
+  "secondEndPos" : 19076
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// expects.",
+  "secondLabel" : "// expects.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17151,
+  "secondPos" : 19081,
+  "firstEndPos" : 17162,
+  "secondEndPos" : 19092
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -17049,6 +17181,17 @@
   "firstEndPos" : 18529,
   "secondEndPos" : 20495
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Currently we are not supporting this (prevent direct/indirect loops)",
+  "secondLabel" : "// Currently we are not supporting this (prevent direct/indirect loops)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18538,
+  "secondPos" : 20504,
+  "firstEndPos" : 18609,
+  "secondEndPos" : 20575
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -17983,6 +18126,17 @@
   "secondPos" : 21066,
   "firstEndPos" : 19066,
   "secondEndPos" : 21068
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// For contains --flagfile flag",
+  "secondLabel" : "// For contains --flagfile flag",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19076,
+  "secondPos" : 21078,
+  "firstEndPos" : 19107,
+  "secondEndPos" : 21109
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -22813,6 +22967,17 @@
   "firstEndPos" : 22892,
   "secondEndPos" : 24811
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The externs expected in externs.zip, in sorted order.",
+  "secondLabel" : "// The externs expected in externs.zip, in sorted order.",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 22907,
+  "secondPos" : 24826,
+  "firstEndPos" : 22963,
+  "secondEndPos" : 24882
+}, {
   "firstType" : "FieldDeclaration",
   "secondType" : "FieldDeclaration",
   "firstLabel" : "",
@@ -22978,6 +23143,17 @@
   "firstEndPos" : 23040,
   "secondEndPos" : 24959
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// JS externs",
+  "secondLabel" : "// JS externs",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 23046,
+  "secondPos" : 24965,
+  "firstEndPos" : 23059,
+  "secondEndPos" : 24978
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstLabel" : "",
@@ -23010,6 +23186,17 @@
   "secondPos" : 24997,
   "firstEndPos" : 23086,
   "secondEndPos" : 25005
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Event APIs",
+  "secondLabel" : "// Event APIs",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 23093,
+  "secondPos" : 25012,
+  "firstEndPos" : 23106,
+  "secondEndPos" : 25025
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
@@ -23065,6 +23252,17 @@
   "secondPos" : 25112,
   "firstEndPos" : 23210,
   "secondEndPos" : 25129
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// DOM apis",
+  "secondLabel" : "// DOM apis",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 23217,
+  "secondPos" : 25136,
+  "firstEndPos" : 23228,
+  "secondEndPos" : 25147
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
@@ -23132,6 +23330,17 @@
   "firstEndPos" : 23342,
   "secondEndPos" : 25261
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// CSS apis",
+  "secondLabel" : "// CSS apis",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 23349,
+  "secondPos" : 25268,
+  "firstEndPos" : 23360,
+  "secondEndPos" : 25279
+}, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
   "firstLabel" : "\"w3c_css.js\"",
@@ -23175,6 +23384,17 @@
   "secondPos" : 25339,
   "firstEndPos" : 23435,
   "secondEndPos" : 25354
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Top-level namespaces",
+  "secondLabel" : "// Top-level namespaces",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 23442,
+  "secondPos" : 25361,
+  "firstEndPos" : 23465,
+  "secondEndPos" : 25384
 }, {
   "firstType" : "StringLiteral",
   "secondType" : "StringLiteral",
@@ -23440,6 +23660,17 @@
   "firstEndPos" : 23938,
   "secondEndPos" : 25857
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 23916,
+  "secondPos" : 25835,
+  "firstEndPos" : 23923,
+  "secondEndPos" : 25842
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " a mutable list",
@@ -23461,6 +23692,17 @@
   "secondPos" : 25863,
   "firstEndPos" : 23963,
   "secondEndPos" : 25882
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 23944,
+  "secondPos" : 25863,
+  "firstEndPos" : 23951,
+  "secondEndPos" : 25870
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -24496,6 +24738,28 @@
   "firstEndPos" : 24485,
   "secondEndPos" : 26404
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Give the files an odd prefix, so that they do not conflict",
+  "secondLabel" : "// Give the files an odd prefix, so that they do not conflict",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 24501,
+  "secondPos" : 26420,
+  "firstEndPos" : 24562,
+  "secondEndPos" : 26481
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// with the user's files.",
+  "secondLabel" : "// with the user's files.",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 24577,
+  "secondPos" : 26496,
+  "firstEndPos" : 24602,
+  "secondEndPos" : 26521
+}, {
   "firstType" : "METHOD_INVOCATION_ARGUMENTS",
   "secondType" : "METHOD_INVOCATION_ARGUMENTS",
   "firstLabel" : "",
@@ -24825,6 +25089,28 @@
   "secondPos" : 26721,
   "firstEndPos" : 24858,
   "secondEndPos" : 26777
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Order matters, so the resources must be added to the result list",
+  "secondLabel" : "// Order matters, so the resources must be added to the result list",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24866,
+  "secondPos" : 26785,
+  "firstEndPos" : 24933,
+  "secondEndPos" : 26852
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// in the expected order.",
+  "secondLabel" : "// in the expected order.",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 24938,
+  "secondPos" : 26857,
+  "firstEndPos" : 24963,
+  "secondEndPos" : 26882
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -25221,6 +25507,17 @@
   "secondPos" : 27068,
   "firstEndPos" : 25192,
   "secondEndPos" : 27111
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 25149,
+  "secondPos" : 27068,
+  "firstEndPos" : 25156,
+  "secondEndPos" : 27075
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

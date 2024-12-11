@@ -10,6 +10,17 @@
   "firstEndPos" : 24937,
   "secondEndPos" : 24969
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "secondLabel" : "/*\n * Licensed to the Apache Software Foundation (ASF) under one or more\n * contributor license agreements.  See the NOTICE file distributed with\n * this work for additional information regarding copyright ownership.\n * The ASF licenses this file to You under the Apache License, Version 2.0\n * (the \"License\"); you may not use this file except in compliance with\n * the License.  You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 801,
+  "secondEndPos" : 801
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -593,6 +604,17 @@
   "firstEndPos" : 1897,
   "secondEndPos" : 1897
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1873,
+  "secondPos" : 1873,
+  "firstEndPos" : 1880,
+  "secondEndPos" : 1880
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " Dmitri Plotnikov",
@@ -614,6 +636,17 @@
   "secondPos" : 1901,
   "firstEndPos" : 1927,
   "secondEndPos" : 1927
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@version",
+  "secondLabel" : "@version",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1901,
+  "secondPos" : 1901,
+  "firstEndPos" : 1909,
+  "secondEndPos" : 1909
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -6192,6 +6225,17 @@
   "firstEndPos" : 5234,
   "secondEndPos" : 5234
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Should not happen",
+  "secondLabel" : "// Should not happen",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5236,
+  "secondPos" : 5236,
+  "firstEndPos" : 5256,
+  "secondEndPos" : 5256
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -7149,6 +7193,17 @@
   "firstEndPos" : 5926,
   "secondEndPos" : 5926
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 5860,
+  "secondPos" : 5860,
+  "firstEndPos" : 5864,
+  "secondEndPos" : 5864
+}, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
   "firstLabel" : "",
@@ -7984,6 +8039,17 @@
   "secondPos" : 6427,
   "firstEndPos" : 6488,
   "secondEndPos" : 6488
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 6427,
+  "secondPos" : 6427,
+  "firstEndPos" : 6431,
+  "secondEndPos" : 6431
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -9040,6 +9106,17 @@
   "secondPos" : 7001,
   "firstEndPos" : 7062,
   "secondEndPos" : 7062
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@see",
+  "secondLabel" : "@see",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 7001,
+  "secondPos" : 7001,
+  "firstEndPos" : 7005,
+  "secondEndPos" : 7005
 }, {
   "firstType" : "MethodRef",
   "secondType" : "MethodRef",
@@ -27828,6 +27905,39 @@
   "secondPos" : 18533,
   "firstEndPos" : 20066,
   "secondEndPos" : 20098
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// If the parent pointer is not a JDOMNodePointer, it is",
+  "secondLabel" : "// If the parent pointer is not a JDOMNodePointer, it is",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18515,
+  "secondPos" : 18547,
+  "firstEndPos" : 18571,
+  "secondEndPos" : 18603
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// the parent's responsibility to produce the node test part",
+  "secondLabel" : "// the parent's responsibility to produce the node test part",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18584,
+  "secondPos" : 18616,
+  "firstEndPos" : 18644,
+  "secondEndPos" : 18676
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// of the path",
+  "secondLabel" : "// of the path",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18657,
+  "secondPos" : 18689,
+  "firstEndPos" : 18671,
+  "secondEndPos" : 18703
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

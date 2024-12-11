@@ -890,6 +890,28 @@
   "firstEndPos" : 866,
   "secondEndPos" : 1052
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//this is kind of overengineered because we don't need to support more params",
+  "secondLabel" : "//this is kind of overengineered because we don't need to support more params",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 580,
+  "secondPos" : 617,
+  "firstEndPos" : 657,
+  "secondEndPos" : 694
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//however, I know we will be needing it :)",
+  "secondLabel" : "//however, I know we will be needing it :)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 670,
+  "secondPos" : 707,
+  "firstEndPos" : 712,
+  "secondEndPos" : 749
+}, {
   "firstType" : "CatchClause",
   "secondType" : "CatchClause",
   "firstLabel" : "",

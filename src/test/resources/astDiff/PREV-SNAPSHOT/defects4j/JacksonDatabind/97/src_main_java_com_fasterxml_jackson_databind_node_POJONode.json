@@ -219,6 +219,17 @@
   "firstEndPos" : 470,
   "secondEndPos" : 470
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 419,
+  "secondPos" : 419,
+  "firstEndPos" : 424,
+  "secondEndPos" : 424
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "com.fasterxml.jackson.databind.ObjectMapper",
@@ -516,6 +527,17 @@
   "firstEndPos" : 601,
   "secondEndPos" : 601
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Base class overrides\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Base class overrides\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 610,
+  "secondPos" : 610,
+  "firstEndPos" : 776,
+  "secondEndPos" : 776
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -801,6 +823,17 @@
   "secondPos" : 1073,
   "firstEndPos" : 1091,
   "secondEndPos" : 1091
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1073,
+  "secondPos" : 1073,
+  "firstEndPos" : 1078,
+  "secondEndPos" : 1078
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -1120,6 +1153,17 @@
   "secondPos" : 1340,
   "firstEndPos" : 1351,
   "secondEndPos" : 1351
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* \n    /**********************************************************\n    /* General type coercions\n    /**********************************************************\n     */",
+  "secondLabel" : "/* \n    /**********************************************************\n    /* General type coercions\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1370,
+  "secondPos" : 1370,
+  "firstEndPos" : 1539,
+  "secondEndPos" : 1539
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2859,6 +2903,17 @@
   "firstEndPos" : 2605,
   "secondEndPos" : 2605
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Public API, serialization\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Public API, serialization\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2622,
+  "secondPos" : 2622,
+  "firstEndPos" : 2793,
+  "secondEndPos" : 2793
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3409,6 +3464,39 @@
   "firstEndPos" : 3321,
   "secondEndPos" : 3337
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// 25-May-2018, tatu: [databind#1991] do not call via generator but through context;",
+  "secondLabel" : "// 25-May-2018, tatu: [databind#1991] do not call via generator but through context;",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3132,
+  "secondPos" : 3132,
+  "firstEndPos" : 3216,
+  "secondEndPos" : 3216
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//    this to preserve contextual information",
+  "secondLabel" : "//    this to preserve contextual information",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3229,
+  "secondPos" : 3229,
+  "firstEndPos" : 3274,
+  "secondEndPos" : 3274
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Extended API\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Extended API\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3333,
+  "secondPos" : 3349,
+  "firstEndPos" : 3491,
+  "secondEndPos" : 3507
+}, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
   "firstLabel" : "",
@@ -3529,6 +3617,17 @@
   "secondPos" : 3629,
   "firstEndPos" : 3619,
   "secondEndPos" : 3635
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n    /**********************************************************\n    /* Overridden standard methods\n    /**********************************************************\n     */",
+  "secondLabel" : "/*\n    /**********************************************************\n    /* Overridden standard methods\n    /**********************************************************\n     */",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 3628,
+  "secondPos" : 3644,
+  "firstEndPos" : 3801,
+  "secondEndPos" : 3817
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -4013,6 +4112,17 @@
   "secondPos" : 4085,
   "firstEndPos" : 4079,
   "secondEndPos" : 4095
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@since",
+  "secondLabel" : "@since",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4069,
+  "secondPos" : 4085,
+  "firstEndPos" : 4075,
+  "secondEndPos" : 4091
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -4530,6 +4640,17 @@
   "secondPos" : 4414,
   "firstEndPos" : 4807,
   "secondEndPos" : 4823
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// [databind#743]: Let's try indicating content type, for debugging purposes",
+  "secondLabel" : "// [databind#743]: Let's try indicating content type, for debugging purposes",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4408,
+  "secondPos" : 4424,
+  "firstEndPos" : 4484,
+  "secondEndPos" : 4500
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

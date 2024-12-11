@@ -102,6 +102,7 @@ public class ExtractOperationRefactoring implements Refactoring {
 	}
 
 	private void checkForMatchingCallChain(AbstractCodeMapping mapping) {
+		Set<AbstractCodeMapping> leafMappingsToBeAdded = new LinkedHashSet<AbstractCodeMapping>();
 		AbstractCall invocation1 = mapping.getFragment1().invocationCoveringEntireFragment();
 		if(invocation1 == null) {
 			invocation1 = mapping.getFragment1().assignmentInvocationCoveringEntireStatement();
@@ -115,11 +116,14 @@ public class ExtractOperationRefactoring implements Refactoring {
 					}
 					if(invocation2 != null && invocation1.equals(invocation2)) {
 						LeafMapping leafMapping = new LeafMapping(invocation1, invocation2, this.sourceOperationBeforeExtraction, this.sourceOperationAfterExtraction);
-						this.bodyMapper.getParentMapper().getMappings().add(leafMapping);
+						leafMappingsToBeAdded.add(leafMapping);
 						break;
 					}
 				}
 			}
+		}
+		for(AbstractCodeMapping m : leafMappingsToBeAdded) {
+			this.bodyMapper.getParentMapper().getMappings().add(m);
 		}
 	}
 

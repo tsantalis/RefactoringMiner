@@ -378,7 +378,7 @@ public class OperationInvocation extends AbstractCall {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
     	if(parameter.getType().getClassType().length() == 1) {
-    		return parameter.getType().getArrayDimension() == type.getArrayDimension();
+    		return true;
     	}
     	if(collectionMatch(parameter.getType(), type))
     		return true;

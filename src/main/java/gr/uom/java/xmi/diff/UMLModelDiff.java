@@ -1124,7 +1124,18 @@ public class UMLModelDiff {
 			TreeSet<UMLClassRenameDiff> identicalBodyDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalStatementDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			TreeSet<UMLClassRenameDiff> identicalPackageDeclarationDocDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			for(UMLClassRenameDiff diff : diffSet) {
+				if(diff.getOriginalClass().getPackageDeclarationJavadoc() != null && diff.getNextClass().getPackageDeclarationJavadoc() != null) {
+					if(diff.getOriginalClass().getPackageDeclarationJavadoc().getFullText().equals(diff.getNextClass().getPackageDeclarationJavadoc().getFullText())) {
+						identicalPackageDeclarationDocDiffSet.add(diff);
+					}
+				}
+				if(diff.getOriginalClass().getPackageDeclarationComments().size() > 0 && diff.getNextClass().getPackageDeclarationComments().size() > 0) {
+					if(diff.getOriginalClass().getPackageDeclarationComments().get(0).getFullText().equals(diff.getNextClass().getPackageDeclarationComments().get(0).getFullText())) {
+						identicalPackageDeclarationDocDiffSet.add(diff);
+					}
+				}
 				List<UMLOperation> operations1 = diff.getOriginalClass().getOperations();
 				List<UMLOperation> operations2 = diff.getNextClass().getOperations();
 				int identicalBodies = 0;
@@ -1179,6 +1190,9 @@ public class UMLModelDiff {
 			}
 			if(identicalSignatureDiffSet.size() == 1) {
 				return identicalSignatureDiffSet;
+			}
+			if(identicalPackageDeclarationDocDiffSet.size() == 1) {
+				return identicalPackageDeclarationDocDiffSet;
 			}
 		}
 		return diffSet;

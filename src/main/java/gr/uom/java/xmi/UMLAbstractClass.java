@@ -58,6 +58,10 @@ public abstract class UMLAbstractClass {
         this.enumConstants = new ArrayList<UMLEnumConstant>();
 	}
 
+	public boolean isEmpty() {
+		return operations.size() == 0 && attributes.size() == 0 && initializers.size() == 0 && enumConstants.size() == 0;
+	}
+
 	public List<UMLOperation> getOperationsWithOverrideAnnotation() {
 		List<UMLOperation> operations = new ArrayList<>();
 		for(UMLOperation operation : this.operations) {

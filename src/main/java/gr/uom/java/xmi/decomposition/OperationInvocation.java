@@ -377,6 +377,9 @@ public class OperationInvocation extends AbstractCall {
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
+    	if(parameter.getType().getClassType().length() == 1) {
+    		return parameter.getType().getArrayDimension() == type.getArrayDimension();
+    	}
     	if(collectionMatch(parameter.getType(), type))
     		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))

@@ -798,6 +798,16 @@ public class UMLModelDiff {
 		return false;
 	}
 
+	private boolean allEmptyClassDiffs(Set<UMLClassRenameDiff> union) {
+		int counter = 0;
+		for(UMLClassRenameDiff renameDiff : union) {
+			if(renameDiff.getOriginalClass().isEmpty() && renameDiff.getNextClass().isEmpty()) {
+				counter++;
+			}
+		}
+		return counter == union.size() && counter > 0;
+	}
+
 	private boolean sameRenamedClass(Set<UMLClassRenameDiff> union) {
 		if(union.size() > 1) {
 			UMLClass renamedClass = null;
@@ -901,7 +911,7 @@ public class UMLModelDiff {
 						}
 					}
 					else if(matcher instanceof UMLClassMatcher.Rename) {
-						if((union.size() > 2 && sameRenamedClass(union)) || (renameDiffSet.size() > 2 && sameRenamedClass(renameDiffSet))) {
+						if((union.size() > 2 && !allEmptyClassDiffs(union) && sameRenamedClass(union)) || (renameDiffSet.size() > 2 && !allEmptyClassDiffs(renameDiffSet) && sameRenamedClass(renameDiffSet))) {
 							for(UMLClassRenameDiff renameDiff : union) {
 								addedClasses.remove(renameDiff.getRenamedClass());
 								mergedClassesToBeRemoved.add(renameDiff.getOriginalClass());
@@ -974,7 +984,7 @@ public class UMLModelDiff {
 						}
 					}
 					else if(matcher instanceof UMLClassMatcher.Rename) {
-						if((union.size() > 2 && sameRenamedClass(union)) || (renameDiffSet.size() > 2 && sameRenamedClass(renameDiffSet))) {
+						if((union.size() > 2 && !allEmptyClassDiffs(union) && sameRenamedClass(union)) || (renameDiffSet.size() > 2 && !allEmptyClassDiffs(renameDiffSet) && sameRenamedClass(renameDiffSet))) {
 							for(UMLClassRenameDiff renameDiff : union) {
 								removedClasses.remove(renameDiff.getOriginalClass());
 							}

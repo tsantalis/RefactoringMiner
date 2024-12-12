@@ -6832,7 +6832,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(parentMapping instanceof CompositeStatementObjectMapping && operationInvocation != null) {
 			CompositeStatementObject comp1 = (CompositeStatementObject)parentMapping.getFragment1();
 			CompositeStatementObject comp2 = (CompositeStatementObject)parentMapping.getFragment2();
-			if(!comp1.getLocationInfo().subsumes(childMapping.getFragment1().getLocationInfo()) && comp2.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+			if(callsToExtractedMethod > 0 && !comp1.getLocationInfo().subsumes(childMapping.getFragment1().getLocationInfo()) && comp2.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
+				return true;
+			}
+			if(callsToInlinedMethod > 0 && !comp2.getLocationInfo().subsumes(childMapping.getFragment2().getLocationInfo()) && comp1.getLocationInfo().subsumes(operationInvocation.getLocationInfo())) {
 				return true;
 			}
 		}

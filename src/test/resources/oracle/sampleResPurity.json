@@ -22250,16 +22250,6 @@
       "validationComment" : "Replacements are not justifiable"
     }
   }, {
-    "type" : "Inline Method",
-    "description" : "Inline Method\tpublic isDomain(url String, domain String) : Boolean inlined to public getImageType(url String) : ImageType in class me.ccrama.redditslide.ContentType",
-    "purity" : {
-      "purityValue" : "0",
-      "purityValidation" : "-",
-      "purityComment" : "",
-      "mappingState" : "",
-      "validationComment" : "Replacements are not justifiable"
-    }
-  }, {
     "type" : "Add Variable Modifier",
     "description" : "Add Variable Modifier\tfinal in variable uri : URI in method public isImgurLink(url String) : boolean from class me.ccrama.redditslide.ContentType",
     "purity" : {

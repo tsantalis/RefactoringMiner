@@ -7791,6 +7791,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(statementContainingOperationInvocation != null) { 
 				if(mapping.getFragment2().equals(statementContainingOperationInvocation.getParent())) { 
 					boolean extractedStatement = parentMapper.extractedStatements.containsKey(this.container2) && parentMapper.extractedStatements.get(this.container2).contains(mapping.getFragment1());
+					for(UMLOperationBodyMapper childMapper : parentMapper.getChildMappers()) {
+						if(childMapper.mappingHashcodesT1.contains(mapping.getFragment1().hashCode())) {
+							extractedStatement = true;
+						}
+					}
 					if(!extractedStatement)
 						return mapping; 
 				} 

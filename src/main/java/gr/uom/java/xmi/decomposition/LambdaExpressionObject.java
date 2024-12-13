@@ -77,7 +77,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, javaFileContent);
 			this.expression.setLambdaOwner(this);
 			for(VariableDeclaration parameter : parameters) {
-				parameter.addStatementInScope(expression);
+				parameter.addStatementInScope(expression, false);
 			}
 		}
 	}

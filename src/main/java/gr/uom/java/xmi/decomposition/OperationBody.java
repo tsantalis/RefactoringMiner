@@ -430,7 +430,16 @@ public class OperationBody {
 
 	private void addStatementInVariableScopes(AbstractStatement statement) {
 		for(VariableDeclaration variableDeclaration : activeVariableDeclarations) {
-			variableDeclaration.addStatementInScope(statement);
+			boolean localVariableWithSameName = false;
+			if(variableDeclaration.isAttribute()) {
+				for(VariableDeclaration v : activeVariableDeclarations) {
+					if(!v.equals(variableDeclaration) && v.getVariableName().equals(variableDeclaration.getVariableName())) {
+						localVariableWithSameName = true;
+						break;
+					}
+				}
+			}
+			variableDeclaration.addStatementInScope(statement, localVariableWithSameName);
 			if(container != null) {
 				for(AnonymousClassDeclarationObject anonymous : statement.getAnonymousClassDeclarations()) {
 					UMLAnonymousClass anonymousClass = container.findAnonymousClass(anonymous);
@@ -438,10 +447,10 @@ public class OperationBody {
 						if(operation.getBody() != null) {
 							CompositeStatementObject composite = operation.getBody().getCompositeStatement();
 							for(AbstractStatement anonymousStatement : composite.getInnerNodes()) {
-								variableDeclaration.addStatementInScope(anonymousStatement);
+								variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
 							}
 							for(AbstractCodeFragment anonymousStatement : composite.getLeaves()) {
-								variableDeclaration.addStatementInScope(anonymousStatement);
+								variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
 							}
 						}
 					}
@@ -451,15 +460,15 @@ public class OperationBody {
 					if(lambdaBody != null) {
 						CompositeStatementObject composite = lambdaBody.getCompositeStatement();
 						for(AbstractStatement lambdaStatement : composite.getInnerNodes()) {
-							variableDeclaration.addStatementInScope(lambdaStatement);
+							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
 						}
 						for(AbstractCodeFragment lambdaStatement : composite.getLeaves()) {
-							variableDeclaration.addStatementInScope(lambdaStatement);
+							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
 						}
 					}
 					AbstractExpression lambdaExpression = lambda.getExpression();
 					if(lambdaExpression != null) {
-						variableDeclaration.addStatementInScope(lambdaExpression);
+						variableDeclaration.addStatementInScope(lambdaExpression, localVariableWithSameName);
 					}
 				}
 			}

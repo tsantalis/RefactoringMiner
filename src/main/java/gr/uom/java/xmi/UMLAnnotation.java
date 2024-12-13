@@ -1,7 +1,6 @@
 package gr.uom.java.xmi;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,13 @@ public class UMLAnnotation implements Serializable, LocationInfoProvider {
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, annotation, CodeElementType.ANNOTATION);
 		if(annotation instanceof SingleMemberAnnotation) {
 			SingleMemberAnnotation singleMemberAnnotation = (SingleMemberAnnotation)annotation;
-			this.value = new AbstractExpression(cu, sourceFolder, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, Collections.emptyMap(), javaFileContent);
+			this.value = new AbstractExpression(cu, sourceFolder, filePath, singleMemberAnnotation.getValue(), CodeElementType.SINGLE_MEMBER_ANNOTATION_VALUE, null, new LinkedHashMap<>(), javaFileContent);
 		}
 		else if(annotation instanceof NormalAnnotation) {
 			NormalAnnotation normalAnnotation = (NormalAnnotation)annotation;
 			List<MemberValuePair> pairs = normalAnnotation.values();
 			for(MemberValuePair pair : pairs) {
-				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, Collections.emptyMap(), javaFileContent);
+				AbstractExpression value = new AbstractExpression(cu, sourceFolder, filePath, pair.getValue(), CodeElementType.NORMAL_ANNOTATION_MEMBER_VALUE_PAIR, null, new LinkedHashMap<>(), javaFileContent);
 				memberValuePairs.put(pair.getName().getIdentifier(), value);
 			}
 		}

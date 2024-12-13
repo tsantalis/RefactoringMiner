@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class OperationBody {
 	private CompositeStatementObject compositeStatement;
 	private List<String> stringRepresentation;
 	private boolean containsAssertion;
-	private Set<VariableDeclaration> activeVariableDeclarations;
+	private Map<String, Set<VariableDeclaration>> activeVariableDeclarations;
 	private VariableDeclarationContainer container;
 	private int bodyHashCode;
 	private List<UMLComment> comments;
@@ -62,17 +63,17 @@ public class OperationBody {
 		this.comments = container.getComments();
 		this.container = container;
 		this.bodyHashCode = stringify(methodBody).hashCode();
-		this.activeVariableDeclarations = new HashSet<VariableDeclaration>();
+		this.activeVariableDeclarations = new HashMap<String, Set<VariableDeclaration>>();
 		for(UMLAttribute attribute : attributes) {
-			activeVariableDeclarations.add(attribute.getVariableDeclaration());
+			addInActiveVariableDeclarations(attribute.getVariableDeclaration());
 		}
-		this.activeVariableDeclarations.addAll(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
+		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		if(container.isDeclaredInAnonymousClass()) {
 			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();
 			for(VariableDeclarationContainer parentContainer : anonymousClassContainer.getParentContainers()) {
 				for(VariableDeclaration parameterDeclaration : parentContainer.getParameterDeclarationList()) {
 					if(parameterDeclaration.isFinal()) {
-						this.activeVariableDeclarations.add(parameterDeclaration);
+						addInActiveVariableDeclarations(parameterDeclaration);
 					}
 				}
 			}
@@ -88,6 +89,35 @@ public class OperationBody {
 			}
 		}
 		this.activeVariableDeclarations = null;
+	}
+
+	private void addInActiveVariableDeclarations(VariableDeclaration v) {
+		if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+			activeVariableDeclarations.get(v.getVariableName()).add(v);
+		}
+		else {
+			Set<VariableDeclaration> set = new HashSet<VariableDeclaration>();
+			set.add(v);
+			activeVariableDeclarations.put(v.getVariableName(), set);
+		}
+	}
+
+	private void removeFromActiveVariableDeclarations(VariableDeclaration v) {
+		if(activeVariableDeclarations.containsKey(v.getVariableName())) {
+			activeVariableDeclarations.get(v.getVariableName()).remove(v);
+		}
+	}
+
+	private void addAllInActiveVariableDeclarations(List<VariableDeclaration> variables) {
+		for(VariableDeclaration v : variables) {
+			addInActiveVariableDeclarations(v);
+		}
+	}
+
+	private void removeAllFromActiveVariableDeclarations(List<VariableDeclaration> variables) {
+		for(VariableDeclaration v : variables) {
+			removeFromActiveVariableDeclarations(v);
+		}
 	}
 
 	public double builderStatementRatio() {
@@ -227,9 +257,9 @@ public class OperationBody {
 			}
 			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
-			this.activeVariableDeclarations.addAll(variableDeclarations);
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			processStatement(cu, sourceFolder, filePath, child, forStatement.getBody(), javaFileContent);
-			this.activeVariableDeclarations.removeAll(variableDeclarations);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof EnhancedForStatement) {
 			EnhancedForStatement enhancedForStatement = (EnhancedForStatement)statement;
@@ -248,9 +278,9 @@ public class OperationBody {
 			child.addExpression(abstractExpression);
 			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
-			this.activeVariableDeclarations.addAll(variableDeclarations);
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			processStatement(cu, sourceFolder, filePath, child, enhancedForStatement.getBody(), javaFileContent);
-			this.activeVariableDeclarations.removeAll(variableDeclarations);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 		}
 		else if(statement instanceof WhileStatement) {
 			WhileStatement whileStatement = (WhileStatement)statement;
@@ -345,12 +375,12 @@ public class OperationBody {
 			}
 			addStatementInVariableScopes(child);
 			List<VariableDeclaration> variableDeclarations = child.getVariableDeclarations();
-			this.activeVariableDeclarations.addAll(variableDeclarations);
+			addAllInActiveVariableDeclarations(variableDeclarations);
 			List<Statement> tryStatements = tryStatement.getBody().statements();
 			for(Statement blockStatement : tryStatements) {
 				processStatement(cu, sourceFolder, filePath, child, blockStatement, javaFileContent);
 			}
-			this.activeVariableDeclarations.removeAll(variableDeclarations);
+			removeAllFromActiveVariableDeclarations(variableDeclarations);
 			List<CatchClause> catchClauses = tryStatement.catchClauses();
 			for(CatchClause catchClause : catchClauses) {
 				Block catchClauseBody = catchClause.getBody();
@@ -369,12 +399,12 @@ public class OperationBody {
 				}
 				addStatementInVariableScopes(catchClauseStatementObject);
 				List<VariableDeclaration> catchClauseVariableDeclarations = catchClauseStatementObject.getVariableDeclarations();
-				this.activeVariableDeclarations.addAll(catchClauseVariableDeclarations);
+				addAllInActiveVariableDeclarations(catchClauseVariableDeclarations);
 				List<Statement> blockStatements = catchClauseBody.statements();
 				for(Statement blockStatement : blockStatements) {
 					processStatement(cu, sourceFolder, filePath, catchClauseStatementObject, blockStatement, javaFileContent);
 				}
-				this.activeVariableDeclarations.removeAll(catchClauseVariableDeclarations);
+				removeAllFromActiveVariableDeclarations(catchClauseVariableDeclarations);
 			}
 			Block finallyBlock = tryStatement.getFinally();
 			if(finallyBlock != null) {
@@ -394,7 +424,7 @@ public class OperationBody {
 			StatementObject child = new StatementObject(cu, sourceFolder, filePath, variableDeclarationStatement, parent.getDepth()+1, CodeElementType.VARIABLE_DECLARATION_STATEMENT, container, javaFileContent);
 			parent.addStatement(child);
 			addStatementInVariableScopes(child);
-			this.activeVariableDeclarations.addAll(child.getVariableDeclarations());
+			addAllInActiveVariableDeclarations(child.getVariableDeclarations());
 		}
 		else if(statement instanceof ConstructorInvocation) {
 			ConstructorInvocation constructorInvocation = (ConstructorInvocation)statement;
@@ -429,46 +459,44 @@ public class OperationBody {
 	}
 
 	private void addStatementInVariableScopes(AbstractStatement statement) {
-		for(VariableDeclaration variableDeclaration : activeVariableDeclarations) {
-			boolean localVariableWithSameName = false;
-			if(variableDeclaration.isAttribute()) {
-				for(VariableDeclaration v : activeVariableDeclarations) {
-					if(!v.equals(variableDeclaration) && v.getVariableName().equals(variableDeclaration.getVariableName())) {
-						localVariableWithSameName = true;
-						break;
-					}
+		for(String variableName : activeVariableDeclarations.keySet()) {
+			Set<VariableDeclaration> variableDeclarations = activeVariableDeclarations.get(variableName);
+			for(VariableDeclaration variableDeclaration : variableDeclarations) {
+				boolean localVariableWithSameName = false;
+				if(variableDeclaration.isAttribute() && variableDeclarations.size() > 1) {
+					localVariableWithSameName = true;
 				}
-			}
-			variableDeclaration.addStatementInScope(statement, localVariableWithSameName);
-			if(container != null) {
-				for(AnonymousClassDeclarationObject anonymous : statement.getAnonymousClassDeclarations()) {
-					UMLAnonymousClass anonymousClass = container.findAnonymousClass(anonymous);
-					for(UMLOperation operation : anonymousClass.getOperations()) {
-						if(operation.getBody() != null) {
-							CompositeStatementObject composite = operation.getBody().getCompositeStatement();
-							for(AbstractStatement anonymousStatement : composite.getInnerNodes()) {
-								variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
-							}
-							for(AbstractCodeFragment anonymousStatement : composite.getLeaves()) {
-								variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
+				variableDeclaration.addStatementInScope(statement, localVariableWithSameName);
+				if(container != null) {
+					for(AnonymousClassDeclarationObject anonymous : statement.getAnonymousClassDeclarations()) {
+						UMLAnonymousClass anonymousClass = container.findAnonymousClass(anonymous);
+						for(UMLOperation operation : anonymousClass.getOperations()) {
+							if(operation.getBody() != null) {
+								CompositeStatementObject composite = operation.getBody().getCompositeStatement();
+								for(AbstractStatement anonymousStatement : composite.getInnerNodes()) {
+									variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
+								}
+								for(AbstractCodeFragment anonymousStatement : composite.getLeaves()) {
+									variableDeclaration.addStatementInScope(anonymousStatement, localVariableWithSameName);
+								}
 							}
 						}
 					}
-				}
-				for(LambdaExpressionObject lambda : statement.getLambdas()) {
-					OperationBody lambdaBody = lambda.getBody();
-					if(lambdaBody != null) {
-						CompositeStatementObject composite = lambdaBody.getCompositeStatement();
-						for(AbstractStatement lambdaStatement : composite.getInnerNodes()) {
-							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+					for(LambdaExpressionObject lambda : statement.getLambdas()) {
+						OperationBody lambdaBody = lambda.getBody();
+						if(lambdaBody != null) {
+							CompositeStatementObject composite = lambdaBody.getCompositeStatement();
+							for(AbstractStatement lambdaStatement : composite.getInnerNodes()) {
+								variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+							}
+							for(AbstractCodeFragment lambdaStatement : composite.getLeaves()) {
+								variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+							}
 						}
-						for(AbstractCodeFragment lambdaStatement : composite.getLeaves()) {
-							variableDeclaration.addStatementInScope(lambdaStatement, localVariableWithSameName);
+						AbstractExpression lambdaExpression = lambda.getExpression();
+						if(lambdaExpression != null) {
+							variableDeclaration.addStatementInScope(lambdaExpression, localVariableWithSameName);
 						}
-					}
-					AbstractExpression lambdaExpression = lambda.getExpression();
-					if(lambdaExpression != null) {
-						variableDeclaration.addStatementInScope(lambdaExpression, localVariableWithSameName);
 					}
 				}
 			}

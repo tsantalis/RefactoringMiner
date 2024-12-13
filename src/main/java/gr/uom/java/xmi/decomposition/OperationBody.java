@@ -97,7 +97,7 @@ public class OperationBody {
 		this.comments = container.getComments();
 		this.container = container;
 		this.bodyHashCode = stringify(methodBody).hashCode();
-		this.activeVariableDeclarations = activeVariableDeclarations;
+		this.activeVariableDeclarations = new HashMap<>(activeVariableDeclarations);
 		addAllInActiveVariableDeclarations(container != null ? container.getParameterDeclarationList() : Collections.emptyList());
 		if(container.isDeclaredInAnonymousClass()) {
 			UMLAnonymousClass anonymousClassContainer = container.getAnonymousClassContainer().get();

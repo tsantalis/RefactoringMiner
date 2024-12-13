@@ -514,6 +514,15 @@
 		"codeElementType": "IF_STATEMENT",
 		"description": "statement referencing the original variable",
 		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 148,
+		"endLine": 148,
+		"startColumn": 11,
+		"endColumn": 120,
+		"codeElementType": "RETURN_STATEMENT",
+		"description": "statement referencing the original variable",
+		"codeElement": null
 }],
 	"rightSideLocations": [{
 		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
@@ -531,6 +540,15 @@
 		"startColumn": 7,
 		"endColumn": 8,
 		"codeElementType": "IF_STATEMENT",
+		"description": "statement referencing the variable with changed type",
+		"codeElement": null
+}, {
+		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/planner/fragment/DistributedQueueParallelizer.java",
+		"startLine": 184,
+		"endLine": 184,
+		"startColumn": 11,
+		"endColumn": 120,
+		"codeElementType": "RETURN_STATEMENT",
 		"description": "statement referencing the variable with changed type",
 		"codeElement": null
 }]

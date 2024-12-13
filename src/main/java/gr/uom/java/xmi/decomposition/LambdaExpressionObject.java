@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -71,7 +72,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			this.parameters.add(parameter);
 		}
 		if(lambda.getBody() instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, activeVariableDeclarations, javaFileContent);
+			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, new HashMap<>(activeVariableDeclarations), javaFileContent);
 		}
 		else if(lambda.getBody() instanceof Expression) {
 			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
@@ -88,7 +89,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		this.asString = switchCaseBody.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
 		if(switchCaseBody instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
+			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, new HashMap<>(activeVariableDeclarations), javaFileContent);
 		}
 		else {
 			//TODO find a way to support switch-case with a single statement

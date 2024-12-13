@@ -420,12 +420,19 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		return this;
 	}
 
-	public void addStatementInScope(AbstractCodeFragment statement) {
+	public void addStatementInScope(AbstractCodeFragment statement, boolean fieldWithOverwrittenScopeByLocalVariable) {
 		if(scope.subsumes(statement.getLocationInfo())) {
 			List<LeafExpression> variables = statement.getVariables();
 			boolean matchFound = false;
 			for(LeafExpression variable : variables) {
-				if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals(JAVA.THIS_DOT + variableName))) {
+				if(fieldWithOverwrittenScopeByLocalVariable) {
+					if(variable.getString().equals(JAVA.THIS_DOT + variableName)) {
+						scope.addStatementUsingVariable(statement);
+						matchFound = true;
+						break;
+					}
+				}
+				else if(variable.getString().equals(variableName) || (isAttribute && variable.getString().equals(JAVA.THIS_DOT + variableName))) {
 					scope.addStatementUsingVariable(statement);
 					matchFound = true;
 					break;
@@ -433,7 +440,13 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 			}
 			if(!matchFound) {
 				for(LeafExpression variable : variables) {
-					if(variable.getString().startsWith(variableName + ".")) {
+					if(fieldWithOverwrittenScopeByLocalVariable) {
+						if(variable.getString().equals(JAVA.THIS_DOT + variableName + ".")) {
+							scope.addStatementUsingVariable(statement);
+							break;
+						}
+					}
+					else if(variable.getString().startsWith(variableName + ".")) {
 						scope.addStatementUsingVariable(statement);
 						break;
 					}

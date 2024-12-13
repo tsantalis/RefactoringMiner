@@ -2,6 +2,8 @@ package gr.uom.java.xmi.decomposition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -50,10 +52,10 @@ public class StatementObject extends AbstractStatement {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
 	
-	public StatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
+	public StatementObject(CompilationUnit cu, String sourceFolder, String filePath, Statement statement, int depth, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		super();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, statement, codeElementType);
-		Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, javaFileContent);
+		Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
 		statement.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();

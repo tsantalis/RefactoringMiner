@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static org.eclipse.jdt.core.JavaCore.VERSION_21;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -425,7 +426,7 @@ public class UMLModelASTReader {
 			}
 			LocationInfo recordComponentLocationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, recordComponent, CodeElementType.RECORD_COMPONENT);
 			UMLRecordComponent umlRecordComponent = new UMLRecordComponent(parameterName, type, recordComponentLocationInfo);
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, recordComponent, umlRecordComponent, recordComponent.isVarargs(), javaFileContent);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, recordComponent, umlRecordComponent, recordComponent.isVarargs(), Collections.emptyMap(), javaFileContent);
 			variableDeclaration.setAttribute(true);
 			umlRecordComponent.setVariableDeclaration(variableDeclaration);
 			umlRecordComponent.setClassName(umlClass.getName());
@@ -1071,7 +1072,7 @@ public class UMLModelASTReader {
 		}
 		
 		if(annotationTypeMemberDeclatation.getDefault() != null) {
-			AbstractExpression defaultExpression = new AbstractExpression(cu, sourceFolder, sourceFile, annotationTypeMemberDeclatation.getDefault(), CodeElementType.ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION, umlOperation, javaFileContent);
+			AbstractExpression defaultExpression = new AbstractExpression(cu, sourceFolder, sourceFile, annotationTypeMemberDeclatation.getDefault(), CodeElementType.ANNOTATION_TYPE_MEMBER_DEFAULT_EXPRESSION, umlOperation, Collections.emptyMap(), javaFileContent);
 			umlOperation.setDefaultExpression(defaultExpression);
 		}
 		return umlOperation;
@@ -1176,7 +1177,7 @@ public class UMLModelASTReader {
 				type.setVarargs();
 			}
 			UMLParameter umlParameter = new UMLParameter(parameterName, type, "in", parameter.isVarargs());
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, parameter, umlOperation, parameter.isVarargs(), javaFileContent);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, parameter, umlOperation, parameter.isVarargs(), Collections.emptyMap(), javaFileContent);
 			variableDeclaration.setParameter(true);
 			umlParameter.setVariableDeclaration(variableDeclaration);
 			umlOperation.addParameter(umlParameter);
@@ -1198,7 +1199,7 @@ public class UMLModelASTReader {
 		UMLJavadoc javadoc = generateJavadoc(cu, enumConstantDeclaration, sourceFolder, sourceFile, javaFileContent);
 		LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, enumConstantDeclaration, CodeElementType.ENUM_CONSTANT_DECLARATION);
 		UMLEnumConstant enumConstant = new UMLEnumConstant(enumConstantDeclaration.getName().getIdentifier(), UMLType.extractTypeObject(umlClass.getName()), locationInfo);
-		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, enumConstantDeclaration, javaFileContent);
+		VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, enumConstantDeclaration, Collections.emptyMap(), javaFileContent);
 		enumConstant.setVariableDeclaration(variableDeclaration);
 		enumConstant.setJavadoc(javadoc);
 		distributeComments(comments, locationInfo, enumConstant.getComments());
@@ -1224,7 +1225,7 @@ public class UMLModelASTReader {
 			LocationInfo locationInfo = generateLocationInfo(cu, sourceFolder, sourceFile, fragment, CodeElementType.FIELD_DECLARATION);
 			UMLAttribute umlAttribute = new UMLAttribute(fieldName, type, locationInfo);
 			umlAttribute.setFieldDeclarationLocationInfo(generateLocationInfo(cu, sourceFolder, sourceFile, fieldDeclaration, CodeElementType.FIELD_DECLARATION));
-			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, fragment, umlAttribute, javaFileContent);
+			VariableDeclaration variableDeclaration = new VariableDeclaration(cu, sourceFolder, sourceFile, fragment, umlAttribute, Collections.emptyMap(), javaFileContent);
 			variableDeclaration.setAttribute(true);
 			umlAttribute.setVariableDeclaration(variableDeclaration);
 			umlAttribute.setJavadoc(javadoc);

@@ -45,7 +45,7 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	private VariableDeclarationContainer owner;
 	private String asString;
 	
-	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner, String javaFileContent) {
+	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, LambdaExpression lambda, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = lambda.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, lambda, CodeElementType.LAMBDA_EXPRESSION);
@@ -54,10 +54,10 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		for(org.eclipse.jdt.core.dom.VariableDeclaration param : params) {
 			VariableDeclaration parameter = null;
 			if(param instanceof VariableDeclarationFragment) {
-				parameter = new VariableDeclaration(cu, sourceFolder, filePath, (VariableDeclarationFragment)param, this, javaFileContent);
+				parameter = new VariableDeclaration(cu, sourceFolder, filePath, (VariableDeclarationFragment)param, this, activeVariableDeclarations, javaFileContent);
 			}
 			else if(param instanceof SingleVariableDeclaration) {
-				parameter = new VariableDeclaration(cu, sourceFolder, filePath, (SingleVariableDeclaration)param, this, javaFileContent);
+				parameter = new VariableDeclaration(cu, sourceFolder, filePath, (SingleVariableDeclaration)param, this, activeVariableDeclarations, javaFileContent);
 				Type parameterType = ((SingleVariableDeclaration)param).getType();
 				String parameterName = param.getName().getFullyQualifiedName();
 				UMLType type = UMLType.extractTypeObject(cu, sourceFolder, filePath, parameterType, param.getExtraDimensions(), javaFileContent);
@@ -71,10 +71,10 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 			this.parameters.add(parameter);
 		}
 		if(lambda.getBody() instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, new ArrayList<>(), javaFileContent);
+			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)lambda.getBody(), this, activeVariableDeclarations, javaFileContent);
 		}
 		else if(lambda.getBody() instanceof Expression) {
-			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, javaFileContent);
+			this.expression = new AbstractExpression(cu, sourceFolder, filePath, (Expression)lambda.getBody(), CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 			this.expression.setLambdaOwner(this);
 			for(VariableDeclaration parameter : parameters) {
 				parameter.addStatementInScope(expression, false);
@@ -82,13 +82,13 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 	}
 
-	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, Statement switchCaseBody, VariableDeclarationContainer owner, String javaFileContent) {
+	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, Statement switchCaseBody, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.hasParentheses = false;
 		this.asString = switchCaseBody.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, switchCaseBody, CodeElementType.LAMBDA_EXPRESSION);
 		if(switchCaseBody instanceof Block) {
-			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, new ArrayList<>(), javaFileContent);
+			this.body = new OperationBody(cu, sourceFolder, filePath, (Block)switchCaseBody, this, activeVariableDeclarations, javaFileContent);
 		}
 		else {
 			//TODO find a way to support switch-case with a single statement
@@ -97,25 +97,25 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 		}
 	}
 
-	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner, String javaFileContent) {
+	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, javaFileContent);
+		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
-	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer owner, String javaFileContent) {
+	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, javaFileContent);
+		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 
-	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, TypeMethodReference reference, VariableDeclarationContainer owner, String javaFileContent) {
+	public LambdaExpressionObject(CompilationUnit cu, String sourceFolder, String filePath, TypeMethodReference reference, VariableDeclarationContainer owner, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.owner = owner;
 		this.asString = reference.toString();
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION);
-		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, javaFileContent);
+		this.expression = new AbstractExpression(cu, sourceFolder, filePath, reference, CodeElementType.LAMBDA_EXPRESSION_BODY, this, activeVariableDeclarations, javaFileContent);
 	}
 	
 	public VariableDeclarationContainer getOwner() {

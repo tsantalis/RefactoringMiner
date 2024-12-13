@@ -4,6 +4,8 @@ import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
@@ -45,9 +47,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 	private List<TernaryOperatorExpression> ternaryOperatorExpressions;
 	private List<LambdaExpressionObject> lambdas;
     
-    public AbstractExpression(CompilationUnit cu, String sourceFolder, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container, String javaFileContent) {
+    public AbstractExpression(CompilationUnit cu, String sourceFolder, String filePath, Expression expression, CodeElementType codeElementType, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
     	this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, expression, codeElementType);
-    	Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, javaFileContent);
+    	Visitor visitor = new Visitor(cu, sourceFolder, filePath, container, activeVariableDeclarations, javaFileContent);
     	expression.accept(visitor);
 		this.variables = visitor.getVariables();
 		this.types = visitor.getTypes();

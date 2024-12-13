@@ -4,6 +4,7 @@ import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -47,7 +48,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 	private List<UMLModifier> modifiers;
 	private String actualSignature;
 
-	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container, String javaFileContent) {
+	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, VariableDeclarationFragment fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		List<IExtendedModifier> extendedModifiers = null;
@@ -93,7 +94,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, sourceFolder, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, javaFileContent) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, sourceFolder, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, javaFileContent) : null;
 		Type astType = extractType(fragment);
 		if(astType != null) {
 			this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, astType, fragment.getExtraDimensions(), javaFileContent);
@@ -122,7 +123,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.actualSignature = javaFileContent.substring(startSignatureOffset, endSignatureOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, String javaFileContent) {
+	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();
@@ -142,7 +143,7 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		}
 		this.locationInfo = new LocationInfo(cu, sourceFolder, filePath, fragment, extractVariableDeclarationType(fragment));
 		this.variableName = fragment.getName().getIdentifier();
-		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, sourceFolder, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, javaFileContent) : null;
+		this.initializer = fragment.getInitializer() != null ? new AbstractExpression(cu, sourceFolder, filePath, fragment.getInitializer(), CodeElementType.VARIABLE_DECLARATION_INITIALIZER, container, activeVariableDeclarations, javaFileContent) : null;
 		Type astType = extractType(fragment);
 		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, astType, fragment.getExtraDimensions(), javaFileContent);
 		int startOffset = fragment.getStartPosition();
@@ -151,15 +152,15 @@ public class VariableDeclaration implements LocationInfoProvider, VariableDeclar
 		this.scope = new VariableScope(cu, filePath, startOffset, endOffset);
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, boolean varargs, String javaFileContent) {
-		this(cu, sourceFolder, filePath, fragment, container, javaFileContent);
+	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, SingleVariableDeclaration fragment, VariableDeclarationContainer container, boolean varargs, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
+		this(cu, sourceFolder, filePath, fragment, container, activeVariableDeclarations, javaFileContent);
 		this.varargsParameter = varargs;
 		if(varargs) {
 			this.type.setVarargs();
 		}
 	}
 
-	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, EnumConstantDeclaration fragment, String javaFileContent) {
+	public VariableDeclaration(CompilationUnit cu, String sourceFolder, String filePath, EnumConstantDeclaration fragment, Map<String, Set<VariableDeclaration>> activeVariableDeclarations, String javaFileContent) {
 		this.annotations = new ArrayList<UMLAnnotation>();
 		this.modifiers = new ArrayList<UMLModifier>();
 		int modifiers = fragment.getModifiers();

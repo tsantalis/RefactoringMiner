@@ -378,7 +378,7 @@ public class OperationInvocation extends AbstractCall {
 		boolean result = this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
 		if(result && classDiff != null) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
-				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName())) {
+				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
 					int j = 0;
 					int exactlyMatchingArguments = 0;
 					for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {

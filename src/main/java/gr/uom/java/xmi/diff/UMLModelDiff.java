@@ -134,6 +134,10 @@ public class UMLModelDiff {
 		return childModel;
 	}
 
+	public Set<Refactoring> getDetectedRefactorings() {
+		return refactorings;
+	}
+
 	public UMLAbstractClass findClassInParentModel(String className) {
 		for(UMLClass umlClass : parentModel.getClassList()) {
 			if(umlClass.getName().equals(className)) {

@@ -13,6 +13,8 @@ import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.containsMethodSignatureOfAnonymousClass;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
+
+import gr.uom.java.xmi.diff.ExtractOperationRefactoring;
 import gr.uom.java.xmi.diff.StringDistance;
 import gr.uom.java.xmi.diff.UMLAbstractClassDiff;
 import gr.uom.java.xmi.diff.UMLClassBaseDiff;
@@ -37,6 +39,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 public class OperationInvocation extends AbstractCall {
@@ -392,6 +395,30 @@ public class OperationInvocation extends AbstractCall {
 					}
 					if(exactlyMatchingArguments > originalExactlyMatchingArguments) {
 						return false;
+					}
+				}
+			}
+			if(modelDiff != null) {
+				for(Refactoring r : modelDiff.getDetectedRefactorings()) {
+					if(r instanceof ExtractOperationRefactoring) {
+						ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+						UMLOperation addedOperation = extract.getExtractedOperation();
+						if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
+							int j = 0;
+							int exactlyMatchingArguments = 0;
+							for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {
+								UMLType parameterType = parameter.getType();
+								if(inferredArgumentTypes.size() > j && inferredArgumentTypes.get(j) != null) {
+									if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(j))) {
+										exactlyMatchingArguments++;
+									}
+								}
+								j++;
+							}
+							if(exactlyMatchingArguments > originalExactlyMatchingArguments) {
+								return false;
+							}
+						}
 					}
 				}
 			}

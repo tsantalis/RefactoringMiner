@@ -359,9 +359,13 @@ public class OperationInvocation extends AbstractCall {
     		}
     	}
     	int i=0;
+    	int originalExactlyMatchingArguments = 0;
     	for(UMLParameter parameter : operation.getParametersWithoutReturnType()) {
     		UMLType parameterType = parameter.getType();
     		if(inferredArgumentTypes.size() > i && inferredArgumentTypes.get(i) != null) {
+    			if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(i))) {
+    				originalExactlyMatchingArguments++;
+    			}
     			if(!parameterType.getClassType().equals(inferredArgumentTypes.get(i).toString()) &&
     					!parameterType.toString().equals(inferredArgumentTypes.get(i).toString()) &&
     					!compatibleTypes(parameter, inferredArgumentTypes.get(i), classDiff, modelDiff)) {
@@ -371,8 +375,33 @@ public class OperationInvocation extends AbstractCall {
     		i++;
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
-		return this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
+		boolean result = this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
+		if(result && classDiff != null) {
+			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName())) {
+					int j = 0;
+					int exactlyMatchingArguments = 0;
+					for(UMLParameter parameter : addedOperation.getParametersWithoutReturnType()) {
+						UMLType parameterType = parameter.getType();
+						if(inferredArgumentTypes.size() > j && inferredArgumentTypes.get(j) != null) {
+							if(exactlyMatchingArgumentType(parameterType, inferredArgumentTypes.get(j))) {
+								exactlyMatchingArguments++;
+							}
+						}
+						j++;
+					}
+					if(exactlyMatchingArguments > originalExactlyMatchingArguments) {
+						return false;
+					}
+				}
+			}
+		}
+		return result;
     }
+
+	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
+		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString());
+	}
 
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();

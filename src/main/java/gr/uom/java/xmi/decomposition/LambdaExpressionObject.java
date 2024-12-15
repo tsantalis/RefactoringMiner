@@ -340,6 +340,15 @@ public class LambdaExpressionObject implements VariableDeclarationContainer, Loc
 	}
 
 	@Override
+	public String getNonQualifiedClassName() {
+		if(owner != null) {
+			String className = owner.getClassName();
+			return className.contains(".") ? className.substring(className.lastIndexOf(".")+1, className.length()) : className;
+		}
+		return null;
+	}
+
+	@Override
 	public String getClassName() {
 		if(owner != null) {
 			return owner.getClassName();

@@ -89,6 +89,7 @@ public interface VariableDeclarationContainer extends LocationInfoProvider {
 	String getName();
 	String getElementType();
 	String getClassName();
+	String getNonQualifiedClassName();
 	String toQualifiedString();
 	Map<String, Set<VariableDeclaration>> variableDeclarationMap();
 	UMLAnonymousClass findAnonymousClass(AnonymousClassDeclarationObject anonymousClassDeclaration);

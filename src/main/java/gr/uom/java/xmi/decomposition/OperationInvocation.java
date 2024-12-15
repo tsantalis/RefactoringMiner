@@ -428,7 +428,10 @@ public class OperationInvocation extends AbstractCall {
 				return operation.getClassName().endsWith("." + expression) || operation.getClassName().equals(expression);
 			}
 			else {
-				return callerOperation.getClassName().equals(operation.getClassName());
+				if(classDiff != null && classDiff.getNextClass().importsType(operation.getClassName() + "." + operation.getName())) {
+					return true;
+				}
+				return callerOperation.getClassName().equals(operation.getClassName()) || callerOperation.getClassName().startsWith(operation.getClassName());
 			}
 		}
 		return result;

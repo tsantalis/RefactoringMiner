@@ -2532,8 +2532,8 @@ Mapping state for Move Method refactoring purity:
     }
 
     private static void checkForParameterizeVariableOnTop(Refactoring refactoring, List<Refactoring> refactorings, List<AbstractCodeFragment> nonMappedLeavesT1) {
-        UMLOperation originalOperation = null;
-        UMLOperation movedOperation = null;
+        VariableDeclarationContainer originalOperation = null;
+        VariableDeclarationContainer movedOperation = null;
 
         if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_OPERATION)  || refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
             originalOperation = ((MoveOperationRefactoring) (refactoring)).getOriginalOperation();
@@ -2567,8 +2567,8 @@ Mapping state for Move Method refactoring purity:
     }
 
     private static void checkForLocalizeParameterOnTop(Refactoring refactoring, List<Refactoring> refactorings, List<AbstractCodeFragment> nonMappedLeavesT2) {
-        UMLOperation originalOperation = null;
-        UMLOperation movedOperation = null;
+        VariableDeclarationContainer originalOperation = null;
+        VariableDeclarationContainer movedOperation = null;
 
         if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_OPERATION)  || refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
             originalOperation = ((MoveOperationRefactoring) (refactoring)).getOriginalOperation();
@@ -2696,8 +2696,8 @@ Mapping state for Move Method refactoring purity:
             int foundInBefore = before.indexOf(after);
             List<String> classBefore = new ArrayList<>();
             List<String> classAfter = new ArrayList<>();
-            UMLOperation originalOperation = null;
-            UMLOperation refactoredOperation = null;
+            VariableDeclarationContainer originalOperation = null;
+            VariableDeclarationContainer refactoredOperation = null;
 
             if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_OPERATION) || refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_RENAME_OPERATION)) {
                 String classBeforeString = ((MoveOperationRefactoring) (refactoring)).getOriginalOperation().getNonQualifiedClassName();
@@ -2810,7 +2810,7 @@ Mapping state for Move Method refactoring purity:
         replacementsToCheck.removeAll(replacementsToRemove);
     }
 
-    private static boolean relaxSearch(UMLOperation movedOperation, List<Refactoring> refactorings, String instanceOrVariable, String method, UMLModelDiff modelDiff) {
+    private static boolean relaxSearch(VariableDeclarationContainer movedOperation, List<Refactoring> refactorings, String instanceOrVariable, String method, UMLModelDiff modelDiff) {
         for (Refactoring refactoring : refactorings) {
             if (isMethodRelatedRefactoring(refactoring)) {
                 if (refactoring instanceof AddMethodAnnotationRefactoring) {
@@ -2842,7 +2842,7 @@ Mapping state for Move Method refactoring purity:
         return false;
     }
 
-    private static boolean searchInVariableDeclarations(UMLOperation operation, String instanceOrVariable, List<String> className, UMLModelDiff umlModelDiff) {
+    private static boolean searchInVariableDeclarations(VariableDeclarationContainer operation, String instanceOrVariable, List<String> className, UMLModelDiff umlModelDiff) {
         // This iteration also covers the parameters list
         for (VariableDeclaration variableDeclaration : operation.getAllVariableDeclarations()) {
             if (variableDeclaration.getVariableName().equals(instanceOrVariable)) {
@@ -2913,7 +2913,7 @@ Mapping state for Move Method refactoring purity:
             return true;
         }
 
-        UMLOperation originalOperation = null;
+        VariableDeclarationContainer originalOperation = null;
 
         if (refactoring instanceof MoveOperationRefactoring) {
             originalOperation = ((MoveOperationRefactoring) refactoring).getOriginalOperation();

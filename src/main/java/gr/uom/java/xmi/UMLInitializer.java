@@ -178,6 +178,11 @@ public class UMLInitializer implements Serializable, VariableDeclarationContaine
 	}
 
 	@Override
+	public String getNonQualifiedClassName() {
+		return className.contains(".") ? className.substring(className.lastIndexOf(".")+1, className.length()) : className;
+	}
+
+	@Override
 	public String getClassName() {
 		return className;
 	}

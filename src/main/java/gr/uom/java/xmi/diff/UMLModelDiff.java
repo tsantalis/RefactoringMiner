@@ -2699,7 +2699,12 @@ public class UMLModelDiff {
 		for(UMLClassSplitDiff classSplitDiff : classSplitDiffList) {
 			SplitClassRefactoring refactoring = new SplitClassRefactoring(classSplitDiff);
 			for(UMLClassRenameDiff renameDiff : classSplitDiff.getClassRenameDiffs()) {
+				renameDiff.process();
 				detectSubRefactorings(renameDiff, renameDiff.getRenamedClass(), refactoring.getRefactoringType());
+				for(UMLOperationBodyMapper mapper : renameDiff.getOperationBodyMapperList()) {
+					MoveOperationRefactoring move = new MoveOperationRefactoring(mapper);
+					refactorings.add(move);
+				}
 			}
 			if(!classSplitDiff.samePackage()) {
 				RenamePattern renamePattern = refactoring.getRenamePattern();

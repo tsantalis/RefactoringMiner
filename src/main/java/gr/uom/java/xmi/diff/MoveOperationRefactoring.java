@@ -10,19 +10,20 @@ import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 
 import gr.uom.java.xmi.UMLOperation;
+import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.UMLOperationBodyMapper;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 
 public class MoveOperationRefactoring implements Refactoring {
-	protected UMLOperation originalOperation;
-	protected UMLOperation movedOperation;
+	protected VariableDeclarationContainer originalOperation;
+	protected VariableDeclarationContainer movedOperation;
 	private Set<Replacement> replacements;
 	private UMLOperationBodyMapper bodyMapper;
 
 	public MoveOperationRefactoring(UMLOperationBodyMapper bodyMapper) {
 		this.bodyMapper = bodyMapper;
-		this.originalOperation = bodyMapper.getOperation1();
-		this.movedOperation = bodyMapper.getOperation2();
+		this.originalOperation = bodyMapper.getContainer1();
+		this.movedOperation = bodyMapper.getContainer2();
 		this.replacements = bodyMapper.getReplacements();
 	}
 
@@ -54,11 +55,11 @@ public class MoveOperationRefactoring implements Refactoring {
 		return bodyMapper;
 	}
 
-	public UMLOperation getOriginalOperation() {
+	public VariableDeclarationContainer getOriginalOperation() {
 		return originalOperation;
 	}
 
-	public UMLOperation getMovedOperation() {
+	public VariableDeclarationContainer getMovedOperation() {
 		return movedOperation;
 	}
 

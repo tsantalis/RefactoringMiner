@@ -1129,6 +1129,7 @@ public class UMLModelDiff {
 			TreeSet<UMLClassRenameDiff> identicalStatementDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalPackageDeclarationDocDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> matchingStatementMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
 			for(UMLClassRenameDiff diff : diffSet) {
 				if(diff.getOriginalClass().getPackageDeclarationJavadoc() != null && diff.getNextClass().getPackageDeclarationJavadoc() != null) {
 					if(diff.getOriginalClass().getPackageDeclarationJavadoc().getFullText().equals(diff.getNextClass().getPackageDeclarationJavadoc().getFullText())) {
@@ -1146,6 +1147,7 @@ public class UMLModelDiff {
 				int identicalSignatures = 0;
 				int identicalStatementSignatures = 0;
 				int totalStatements = 0;
+				int matchingStatements = 0;
 				if(operations1.size() == operations2.size()) {
 					for(int i=0; i<operations1.size(); i++) {
 						UMLOperation op1 = operations1.get(i);
@@ -1169,11 +1171,26 @@ public class UMLModelDiff {
 								}
 							}
 						}
+						else if(op1.getBody() != null && op2.getBody() != null) {
+							List<String> rep1 = op1.getBody().stringRepresentation();
+							List<String> rep2 = op2.getBody().stringRepresentation();
+							if(rep1.containsAll(rep2) || rep2.containsAll(rep1)) {
+								matchingStatements += Math.min(rep1.size(), rep2.size());
+							}
+						}
 						String actualSignature1 = op1.getActualSignature();
 						String actualSignature2 = op2.getActualSignature();
 						if(actualSignature1 != null && actualSignature2 != null && actualSignature1.equals(actualSignature2)) {
 							identicalSignatures++;
 						}
+					}
+					if(matchingStatementMap.containsKey(matchingStatements)) {
+						matchingStatementMap.get(matchingStatements).add(diff);
+					}
+					else {
+						TreeSet<UMLClassRenameDiff> set = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+						set.add(diff);
+						matchingStatementMap.put(matchingStatements, set);
 					}
 				}
 				if(identicalBodies == operations1.size()) {
@@ -1197,6 +1214,10 @@ public class UMLModelDiff {
 			}
 			if(identicalPackageDeclarationDocDiffSet.size() == 1) {
 				return identicalPackageDeclarationDocDiffSet;
+			}
+			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = matchingStatementMap.lastEntry();
+			if(entry != null && entry.getValue().size() == 1) {
+				return entry.getValue();
 			}
 		}
 		return diffSet;

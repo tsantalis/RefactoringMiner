@@ -551,6 +551,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						else if(streamAPIMigration2 && !streamAPIMigration1) {
 							return 1;
 						}
+						boolean thisIdenticalCommentsInParent = this.identicalCommentsInParent();
+						boolean otherIdenticalCommentsInParent = o.identicalCommentsInParent();
+						if(thisIdenticalCommentsInParent && !otherIdenticalCommentsInParent) {
+							return -1;
+						}
+						else if(!thisIdenticalCommentsInParent && otherIdenticalCommentsInParent) {
+							return 1;
+						}
 						if(parentEditDistance1 == parentEditDistance2) {
 							computeIdenticalPreviousAndNextStatements(o);
 							if(this.identicalPreviousAndNextStatement && !o.identicalPreviousAndNextStatement) {

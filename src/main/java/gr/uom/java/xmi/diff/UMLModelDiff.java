@@ -776,6 +776,14 @@ public class UMLModelDiff {
 		if(!removedClass.isTopLevel() && !addedClass.isTopLevel()) {
 			//check if classMoveDiffList contains already a move for the outer class to a different target
 			for(UMLClassMoveDiff diff : classMoveDiffList) {
+				if(!diff.getOriginalClass().isTopLevel() && !diff.getMovedClass().isTopLevel()) {
+					String prefix1 = diff.getOriginalClassName().substring(0, diff.getOriginalClassName().lastIndexOf("."));
+					String prefix2 = diff.getNextClassName().substring(0, diff.getNextClassName().lastIndexOf("."));
+					UMLClass outerRemovedClass = getRemovedClass(prefix1);
+					UMLClass outerAddedClass = getAddedClass(prefix2);
+					if(outerRemovedClass == null || outerAddedClass == null)
+						continue;
+				}
 				if((diff.getOriginalClass().getName().startsWith(removedClass.getPackageName() + ".") &&
 						!diff.getMovedClass().getName().startsWith(addedClass.getPackageName() + ".")) ||
 						(!diff.getOriginalClass().getName().startsWith(removedClass.getPackageName() + ".") &&

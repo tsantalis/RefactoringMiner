@@ -723,11 +723,11 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
+	private boolean onlyArgumentsChanged(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
 		return identicalExpression(call, replacements, parameterToArgumentMap) &&
 				identicalName(call) &&
 				!equalArguments(call) &&
-				arguments().size() != call.arguments().size();
+				(arguments().size() != call.arguments().size() || varArgsParameter);
 	}
 
 	public boolean identicalWithOnlyChangesInAnonymousClassArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
@@ -737,8 +737,8 @@ public abstract class AbstractCall extends LeafExpression {
 				equalArgumentsExceptForAnonymousClassArguments(call);
 	}
 
-	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap)) {
+	public boolean identicalWithMergedArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
+		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap, varArgsParameter)) {
 			List<String> updatedArguments1 = new ArrayList<String>(this.arguments);
 			Map<String, Set<Replacement>> commonVariableReplacementMap = new LinkedHashMap<String, Set<Replacement>>();
 			for(Replacement replacement : replacements) {
@@ -782,8 +782,8 @@ public abstract class AbstractCall extends LeafExpression {
 		return false;
 	}
 
-	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap) {
-		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap)) {
+	public boolean identicalWithDifferentNumberOfArguments(AbstractCall call, Set<Replacement> replacements, Map<String, String> parameterToArgumentMap, boolean varArgsParameter) {
+		if(onlyArgumentsChanged(call, replacements, parameterToArgumentMap, varArgsParameter)) {
 			int argumentIntersectionSize = argumentIntersectionSize(call, replacements, parameterToArgumentMap);
 			if(argumentIntersectionSize > 0 || arguments().size() == 0 || call.arguments().size() == 0) {
 				return true;

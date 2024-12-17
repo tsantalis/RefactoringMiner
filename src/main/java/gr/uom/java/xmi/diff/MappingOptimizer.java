@@ -665,6 +665,9 @@ public class MappingOptimizer {
 			if(invocation.getCoverage().equals(StatementCoverageType.VARIABLE_DECLARATION_INITIALIZER_CALL)) {
 				return true;
 			}
+			if(callFragment instanceof AbstractExpression) {
+				return true;
+			}
 			String expression = invocation.getExpression();
 			if(expression != null && !expression.equals("this")) {
 				return true;

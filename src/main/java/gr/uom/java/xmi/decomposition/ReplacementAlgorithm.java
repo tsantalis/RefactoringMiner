@@ -5,6 +5,7 @@ import static gr.uom.java.xmi.decomposition.OperationInvocation.PRIMITIVE_WRAPPE
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -2661,6 +2662,28 @@ public class ReplacementAlgorithm {
 					replacementInfo.addReplacement(replacement);
 				}
 				return replacementInfo.getReplacements();
+			}
+		}
+		//check for reordered arguments in argumentized strings
+		if(creationCoveringTheEntireStatement1 != null && creationCoveringTheEntireStatement2 != null &&
+				creationCoveringTheEntireStatement1.identicalName(creationCoveringTheEntireStatement2) &&
+				creationCoveringTheEntireStatement1.identicalExpression(creationCoveringTheEntireStatement2)) {
+			String string1 = replacementInfo.getArgumentizedString1();
+			String string2 = replacementInfo.getArgumentizedString2();
+			String name1 = creationCoveringTheEntireStatement1.getName() + "(";
+			String name2 = creationCoveringTheEntireStatement2.getName() + "(";
+			if(string1.contains(name1) && string2.contains(name2) &&
+					string1.contains(")") && string2.contains(")")) {
+				String args1 = string1.substring(string1.indexOf(name1) + name1.length(), string1.lastIndexOf(")"));
+				String args2 = string2.substring(string2.indexOf(name2) + name2.length(), string2.lastIndexOf(")"));
+				List<String> argumentList1 = Arrays.asList(args1.split(","));
+				List<String> argumentList2 = Arrays.asList(args2.split(","));
+				if(argumentList1.containsAll(argumentList2) && argumentList2.containsAll(argumentList1)) {
+					Replacement replacement = new ObjectCreationReplacement(creationCoveringTheEntireStatement1.getName(),
+							creationCoveringTheEntireStatement2.getName(), creationCoveringTheEntireStatement1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
+					replacementInfo.addReplacement(replacement);
+					return replacementInfo.getReplacements();
+				}
 			}
 		}
 		//object creation has identical arguments, but different type

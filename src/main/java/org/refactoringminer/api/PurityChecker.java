@@ -5552,7 +5552,7 @@ Mapping state for Move Method refactoring purity:
         replacementsToCheck.addAll(replacementsToAddSpecific);
         replacementsToCheck.removeAll(replacementsToRemoveSpecific);
 
-        for (Replacement replacement: replacementsToCheck) {
+        for (Replacement replacement: new LinkedHashSet<>(replacementsToCheck)) {
             if (replacement.getType().equals(Replacement.ReplacementType.CLASS_INSTANCE_CREATION) ||
                     replacement.getType().equals(Replacement.ReplacementType.CLASS_INSTANCE_CREATION_ARGUMENT)) {
                 relaxCheckForAddParameterOnTopConstructorVersion(bodyMapper, replacement, refactorings, replacementsToCheck, removedReplacements);

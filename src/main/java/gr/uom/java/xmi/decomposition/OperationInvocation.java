@@ -358,7 +358,13 @@ public class OperationInvocation extends AbstractCall {
         		}
     		}
     		else {
-    			inferredArgumentTypes.add(null);
+    			String numberType = handleNumber(arg);
+    			if(numberType != null) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
+    			}
+    			else {
+    				inferredArgumentTypes.add(null);
+    			}
     		}
     	}
     	int i=0;
@@ -378,7 +384,8 @@ public class OperationInvocation extends AbstractCall {
     		i++;
     	}
     	UMLType lastInferredArgumentType = inferredArgumentTypes.size() > 0 ? inferredArgumentTypes.get(inferredArgumentTypes.size()-1) : null;
-		boolean result = this.numberOfArguments == operation.getParameterTypeList().size() || varArgsMatch(operation, lastInferredArgumentType);
+		List<UMLType> parameterTypeList = operation.getParameterTypeList();
+		boolean result = this.numberOfArguments == parameterTypeList.size() || varArgsMatch(operation, lastInferredArgumentType, parameterTypeList);
 		if(result && classDiff != null) {
 			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
 				if(!addedOperation.equals(operation) && addedOperation.getName().equals(operation.getName()) && addedOperation.getParameterDeclarationList().size() == operation.getParameterDeclarationList().size()) {
@@ -441,6 +448,26 @@ public class OperationInvocation extends AbstractCall {
 		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString());
 	}
 
+	private static String handleNumber(String argument) {
+		try {
+		    Integer.parseInt(argument);
+		    return "int";
+		} catch (NumberFormatException e) {}
+		try {
+		    Long.parseLong(argument);
+		    return "long";
+		} catch (NumberFormatException e) {}
+		try {
+		    Float.parseFloat(argument);
+		    return "float";
+		} catch (NumberFormatException e) {}
+		try {
+		    Double.parseDouble(argument);
+		    return "double";
+		} catch (NumberFormatException e) {}
+		return null;
+	}
+
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {
     	String type1 = parameter.getType().toString();
     	String type2 = type.toString();
@@ -500,7 +527,7 @@ public class OperationInvocation extends AbstractCall {
     	}
     	if(!parameter.isVarargs() && type1.endsWith("Object") && !type2.endsWith("Object"))
     		return true;
-    	if(parameter.isVarargs() && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception")))
+    	if(parameter.isVarargs() && type1.endsWith("Object[]") && (type2.equals("Throwable") || type2.endsWith("Exception") || isPrimitiveType(type2) || type2.equals("String")))
     		return true;
     	if(parameter.getType().equalsWithSubType(type))
     		return true;
@@ -575,19 +602,22 @@ public class OperationInvocation extends AbstractCall {
 		return classDiff;
     }
 
-    private boolean varArgsMatch(VariableDeclarationContainer operation, UMLType lastInferredArgumentType) {
+    private boolean varArgsMatch(VariableDeclarationContainer operation, UMLType lastInferredArgumentType, List<UMLType> parameterTypeList) {
 		//0 varargs arguments passed
 		if(this.numberOfArguments == operation.getNumberOfNonVarargsParameters()) {
 			return true;
 		}
 		//>=1 varargs arguments passed
 		if(operation.hasVarargsParameter() && this.numberOfArguments > operation.getNumberOfNonVarargsParameters()) {
-			List<UMLType> parameterTypeList = operation.getParameterTypeList();
 			UMLType lastParameterType = parameterTypeList.get(parameterTypeList.size()-1);
 			if(lastParameterType.equals(lastInferredArgumentType)) {
 				return true;
 			}
 			if(lastInferredArgumentType != null && lastParameterType.getClassType().equals(lastInferredArgumentType.getClassType())) {
+				return true;
+			}
+			List<UMLParameter> params = operation.getParametersWithoutReturnType();
+			if(compatibleTypes(params.get(params.size()-1), lastInferredArgumentType, null, null)) {
 				return true;
 			}
 		}

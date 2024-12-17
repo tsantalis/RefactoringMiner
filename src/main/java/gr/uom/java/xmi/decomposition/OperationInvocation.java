@@ -617,7 +617,7 @@ public class OperationInvocation extends AbstractCall {
 				return true;
 			}
 			List<UMLParameter> params = operation.getParametersWithoutReturnType();
-			if(compatibleTypes(params.get(params.size()-1), lastInferredArgumentType, null, null)) {
+			if(lastInferredArgumentType != null && compatibleTypes(params.get(params.size()-1), lastInferredArgumentType, null, null)) {
 				return true;
 			}
 		}

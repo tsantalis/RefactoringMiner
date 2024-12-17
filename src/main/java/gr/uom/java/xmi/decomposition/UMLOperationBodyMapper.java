@@ -26,6 +26,7 @@ import static gr.uom.java.xmi.diff.UMLClassBaseDiff.matchParamsWithReplacements;
 import gr.uom.java.xmi.decomposition.replacement.CompositeReplacement;
 import gr.uom.java.xmi.decomposition.replacement.IntersectionReplacement;
 import gr.uom.java.xmi.decomposition.replacement.MethodInvocationReplacement;
+import gr.uom.java.xmi.decomposition.replacement.ClassInstanceCreationWithMethodInvocationReplacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement;
 import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
@@ -4175,6 +4176,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								if(!call1.equals(call2)) {
 									MethodInvocationReplacement r = new MethodInvocationReplacement(call1.actualString(), call2.actualString(), call1, call2, ReplacementType.METHOD_INVOCATION);
 									replacements.add(r);
+								}
+							}
+						}
+						else if(methodInvocations2.size() > methodInvocations1.size()) {
+							List<AbstractCall> creations1 = lambda1.getAllCreations();
+							List<AbstractCall> creations2 = lambda2.getAllCreations();
+							if(creations2.isEmpty() && creations1.size() == 1) {
+								for(int i=0; i<methodInvocations2.size(); i++) {
+									AbstractCall call2 = methodInvocations2.get(i);
+									if(!methodInvocations1.contains(call2)) {
+										ClassInstanceCreationWithMethodInvocationReplacement r = new ClassInstanceCreationWithMethodInvocationReplacement(
+												creations1.get(0).actualString(), call2.actualString(), (ObjectCreation)creations1.get(0), call2, ReplacementType.CLASS_INSTANCE_CREATION_REPLACED_WITH_METHOD_INVOCATION);
+										replacements.add(r);
+									}
 								}
 							}
 						}

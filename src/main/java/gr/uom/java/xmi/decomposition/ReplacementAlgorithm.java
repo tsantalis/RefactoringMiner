@@ -2817,7 +2817,8 @@ public class ReplacementAlgorithm {
 						replacementInfo.addReplacement(replacement);
 						return replacementInfo.getReplacements();
 					}
-					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2)) {
+					else if(objectCreation1.compatibleName(creationCoveringTheEntireStatement2) && objectCreation1.equalArguments(creationCoveringTheEntireStatement2) && objectCreation1.identicalExpression(creationCoveringTheEntireStatement2) &&
+							variableDeclarations1.size() == variableDeclarations2.size()) {
 						Replacement replacement = new ObjectCreationReplacement(objectCreation1.actualString(),
 								creationCoveringTheEntireStatement2.actualString(), (ObjectCreation)objectCreation1, creationCoveringTheEntireStatement2, ReplacementType.CLASS_INSTANCE_CREATION);
 						replacementInfo.addReplacement(replacement);

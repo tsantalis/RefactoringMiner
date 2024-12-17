@@ -160,7 +160,7 @@ public class ProjectASTDiffer
 
 	private void makeASTDiff(List<? extends UMLAbstractClassDiff> umlClassBaseDiffList, boolean mergeFlag){
 		for (UMLAbstractClassDiff classDiff : umlClassBaseDiffList) {
-			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile());
+			Collection<ASTDiff> appends = findAppends(projectASTDiff.getDiffSet(), classDiff.getOriginalClass().getSourceFile(), classDiff.getNextClass().getSourceFile(), false);
 			boolean decision = (!appends.isEmpty()) || mergeFlag;
 			ASTDiff classASTDiff = process(classDiff, findTreeContexts(modelDiff, classDiff), decision, appends);
 			if (!appends.isEmpty()) {

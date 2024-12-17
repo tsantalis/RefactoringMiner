@@ -122,21 +122,28 @@ public class UnifiedModelDiffRefactoringsMatcher {
     }
 
     private void findDiffsAndApplyMatcher(String srcPath, String dstPath, OptimizationAwareMatcher matcher) {
-        Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath);
+        Collection<ASTDiff> diffs = findAppends(diffSet, srcPath, dstPath, false);
         if (diffs.isEmpty()) {
             //This means that the there is no astDiff associated with the refactoring,
             //It could be a case of move from a deleted file to an added file which neither of them have an equivalent file in the other side.
             //In this case, we should create a new ASTDiff and apply the matcher on it.
-            Pair<TreeContext, TreeContext> treeContextPair = findTreeContexts(modelDiff, srcPath, dstPath);
-            Tree srcTree = treeContextPair.first.getRoot();
-            Tree dstTree = treeContextPair.second.getRoot();
-            ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree, dstTree);
-            ASTDiff diff = new ASTDiff(srcPath, dstPath,
+            Collection<ASTDiff> appends = findAppends(newlyGeneratedDiffsOptimizationMap.keySet(), srcPath, dstPath, true);
+            if (appends.isEmpty()) {
+                Pair<TreeContext, TreeContext> treeContextPair = findTreeContexts(modelDiff, srcPath, dstPath);
+                Tree srcTree = treeContextPair.first.getRoot();
+                Tree dstTree = treeContextPair.second.getRoot();
+                ExtendedMultiMappingStore mappingStore = new ExtendedMultiMappingStore(srcTree, dstTree);
+                ASTDiff diff = new ASTDiff(srcPath, dstPath,
                     treeContextPair.first, treeContextPair.second,
                     mappingStore);
-            newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree)));
-            newlyGeneratedDiffsOptimizationMap.get(diff);
-            setOptimizationAndMatch(matcher, diff, newlyGeneratedDiffsOptimizationMap.get(diff), srcTree, dstTree);
+                newlyGeneratedDiffsOptimizationMap.putIfAbsent(diff, new OptimizationData(new ArrayList<>(), new ExtendedMultiMappingStore(srcTree,dstTree)));
+                setOptimizationAndMatch(matcher, diff, newlyGeneratedDiffsOptimizationMap.get(diff), srcTree, dstTree);
+                }
+            else {
+                for (ASTDiff append : appends) {
+                    setOptimizationAndMatch(matcher, append, newlyGeneratedDiffsOptimizationMap.get(append), append.src.getRoot(),  append.dst.getRoot());
+                }
+            }
         }
         for (ASTDiff diff : diffs) {
             Tree srcTotalTree = modelDiff.getParentModel().getTreeContextMap().get(srcPath).getRoot();

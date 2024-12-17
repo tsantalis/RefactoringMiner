@@ -44,13 +44,21 @@ public class Helpers {
         return null;
     }
 
-    public static Collection<ASTDiff> findAppends(Collection<ASTDiff> diffs, String originalSourceFile, String nextSourceFile) {
+    public static Collection<ASTDiff> findAppends(Collection<ASTDiff> diffs, String originalSourceFile, String nextSourceFile, boolean both) {
         Collection<ASTDiff> appends = new LinkedHashSet<>();
         for (ASTDiff existing : diffs) {
-            if (existing.getSrcPath().equals(originalSourceFile))
-                appends.add(existing);
-            else if (existing.getDstPath().equals(nextSourceFile))
-                appends.add(existing);
+            if (both) {
+                if (existing.getSrcPath().equals(originalSourceFile) && existing.getDstPath().equals(nextSourceFile)) {
+                    appends.add(existing);
+                    break;
+                }
+            }
+            else {
+                if (existing.getSrcPath().equals(originalSourceFile))
+                    appends.add(existing);
+                else if (existing.getDstPath().equals(nextSourceFile))
+                    appends.add(existing);
+            }
         }
         return appends;
     }

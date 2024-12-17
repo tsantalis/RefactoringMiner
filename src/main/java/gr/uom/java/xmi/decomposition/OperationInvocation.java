@@ -306,6 +306,10 @@ public class OperationInvocation extends AbstractCall {
     			}
     			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
     		}
+    		else if(arg.endsWith(".INSTANCE") || arg.endsWith(".instance()") || arg.endsWith(".getInstance()")) {
+    			String type = arg.substring(0, arg.lastIndexOf("."));
+    			inferredArgumentTypes.add(UMLType.extractTypeObject(type));
+    		}
     		else if(indexOfOpeningParenthesis == 0 && arg.contains(")") && !arg.contains(JAVA.LAMBDA_ARROW) && !arg.contains(JAVA.METHOD_REFERENCE) && arg.indexOf(")") < arg.length()) {
     			String cast = arg.substring(indexOfOpeningParenthesis + 1, arg.indexOf(")"));
     			if(cast.charAt(0) != '(') {
@@ -465,6 +469,19 @@ public class OperationInvocation extends AbstractCall {
 		    Double.parseDouble(argument);
 		    return "double";
 		} catch (NumberFormatException e) {}
+		/*if(argument.contains(".")) {
+			String beforeDot = argument.substring(0, argument.lastIndexOf("."));
+			String afterDot = argument.substring(argument.lastIndexOf(".") + 1, argument.length());
+			int counter = 0;
+			for(int i=0; i<afterDot.length(); i++) {
+				if(Character.isUpperCase(afterDot.charAt(i)) || afterDot.charAt(i) == '_') {
+					counter++;
+				}
+			}
+			if(counter == afterDot.length()) {
+				return beforeDot;
+			}
+		}*/
 		return null;
 	}
 

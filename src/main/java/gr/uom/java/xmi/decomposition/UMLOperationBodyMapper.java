@@ -3793,6 +3793,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count;
 	}
 
+	public int identicalMatches() {
+		int count = 0;
+		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
+		for(AbstractCodeMapping mapping : getMappings()) {
+			subExpressionMappings.addAll(mapping.getSubExpressionMappings());
+			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString()) && mapping.getFragment1().countableStatement() && mapping.getFragment2().countableStatement() &&
+					!mapping.getFragment1().getString().equals(JAVA.TRY) && !subExpressionMappings.contains(mapping))
+				count++;
+		}
+		return count;
+	}
+
 	public List<AbstractCodeMapping> getExactMatches() {
 		List<AbstractCodeMapping> exactMatches = new ArrayList<AbstractCodeMapping>();
 		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();
@@ -9614,10 +9626,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			return -Integer.compare(thisMappings, otherMappings);
 		}
 		else {
-			int thisExactMatches = this.exactMatches();
-			int otherExactMatches = operationBodyMapper.exactMatches();
-			if(thisExactMatches != otherExactMatches) {
-				return -Integer.compare(thisExactMatches, otherExactMatches);
+			int thisIdenticalMatches = this.identicalMatches();
+			int otherIdenticalMatches = operationBodyMapper.identicalMatches();
+			if(thisIdenticalMatches != otherIdenticalMatches) {
+				return -Integer.compare(thisIdenticalMatches, otherIdenticalMatches);
 			}
 			else {
 				int thisNonMapped = this.nonMappedElementsT2();

@@ -2732,7 +2732,9 @@ public class UMLModelDiff {
 				detectSubRefactorings(renameDiff, renameDiff.getRenamedClass(), refactoring.getRefactoringType());
 				for(UMLOperationBodyMapper mapper : renameDiff.getOperationBodyMapperList()) {
 					MoveOperationRefactoring move = new MoveOperationRefactoring(mapper);
+					Set<Refactoring> mapperRefactorings = mapper.getRefactorings();
 					refactorings.add(move);
+					refactorings.addAll(mapperRefactorings);
 				}
 			}
 			if(!classSplitDiff.samePackage()) {

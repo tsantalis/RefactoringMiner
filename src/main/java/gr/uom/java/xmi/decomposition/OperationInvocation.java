@@ -358,7 +358,13 @@ public class OperationInvocation extends AbstractCall {
         		}
     		}
     		else {
-    			inferredArgumentTypes.add(null);
+    			String numberType = handleNumber(arg);
+    			if(numberType != null) {
+    				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
+    			}
+    			else {
+    				inferredArgumentTypes.add(null);
+    			}
     		}
     	}
     	int i=0;
@@ -440,6 +446,26 @@ public class OperationInvocation extends AbstractCall {
 
 	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
 		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString());
+	}
+
+	private static String handleNumber(String argument) {
+		try {
+		    Integer.parseInt(argument);
+		    return "int";
+		} catch (NumberFormatException e) {}
+		try {
+		    Long.parseLong(argument);
+		    return "long";
+		} catch (NumberFormatException e) {}
+		try {
+		    Float.parseFloat(argument);
+		    return "float";
+		} catch (NumberFormatException e) {}
+		try {
+		    Double.parseDouble(argument);
+		    return "double";
+		} catch (NumberFormatException e) {}
+		return null;
 	}
 
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {

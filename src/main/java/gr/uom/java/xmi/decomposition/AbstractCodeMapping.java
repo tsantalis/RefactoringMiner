@@ -154,7 +154,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						return true;
 					}
 				}
-				else if(s1.contains(r.getBefore() + ".class") && s2.contains(r.getAfter() + ".class")) {
+				else if(s1.contains(r.getBefore() + ".class") && s2.contains(r.getAfter() + ".class") &&
+						!s1.contains("<" + r.getBefore() + ">") && !s2.contains("<" + r.getAfter() + ">")) {
 					String temp = s2.replace(r.getAfter(), r.getBefore());
 					if(s1.equals(temp) || (s1 + JAVA.STATEMENT_TERMINATION).equals(temp)) {
 						return true;

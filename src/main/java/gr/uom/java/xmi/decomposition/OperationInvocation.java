@@ -358,13 +358,7 @@ public class OperationInvocation extends AbstractCall {
         		}
     		}
     		else {
-    			String numberType = handleNumber(arg);
-    			if(numberType != null) {
-    				inferredArgumentTypes.add(UMLType.extractTypeObject(numberType));
-    			}
-    			else {
-    				inferredArgumentTypes.add(null);
-    			}
+    			inferredArgumentTypes.add(null);
     		}
     	}
     	int i=0;
@@ -446,39 +440,6 @@ public class OperationInvocation extends AbstractCall {
 
 	private static boolean exactlyMatchingArgumentType(UMLType parameterType, UMLType argumentType) {
 		return parameterType.getClassType().equals(argumentType.toString()) || parameterType.toString().equals(argumentType.toString());
-	}
-
-	private static String handleNumber(String argument) {
-		try {
-		    Integer.parseInt(argument);
-		    return "int";
-		} catch (NumberFormatException e) {}
-		try {
-		    Long.parseLong(argument);
-		    return "long";
-		} catch (NumberFormatException e) {}
-		try {
-		    Float.parseFloat(argument);
-		    return "float";
-		} catch (NumberFormatException e) {}
-		try {
-		    Double.parseDouble(argument);
-		    return "double";
-		} catch (NumberFormatException e) {}
-		/*if(argument.contains(".")) {
-			String beforeDot = argument.substring(0, argument.lastIndexOf("."));
-			String afterDot = argument.substring(argument.lastIndexOf(".") + 1, argument.length());
-			int counter = 0;
-			for(int i=0; i<afterDot.length(); i++) {
-				if(Character.isUpperCase(afterDot.charAt(i)) || afterDot.charAt(i) == '_') {
-					counter++;
-				}
-			}
-			if(counter == afterDot.length()) {
-				return beforeDot;
-			}
-		}*/
-		return null;
 	}
 
     public static boolean compatibleTypes(UMLParameter parameter, UMLType type, UMLAbstractClassDiff classDiff, UMLModelDiff modelDiff) {

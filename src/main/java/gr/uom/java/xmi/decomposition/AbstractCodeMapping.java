@@ -148,7 +148,13 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		String s2 = fragment2.getArgumentizedString();
 		for(Replacement r : replacements) {
 			if(r.getType().equals(ReplacementType.TYPE)) {
-				if(s1.contains(r.getBefore()) && s2.contains(r.getAfter())) {
+				if(s1.startsWith(r.getBefore()) && s2.startsWith(r.getAfter())) {
+					String temp = s2.replace(r.getAfter(), r.getBefore());
+					if(s1.equals(temp) || (s1 + JAVA.STATEMENT_TERMINATION).equals(temp)) {
+						return true;
+					}
+				}
+				else if(s1.contains(r.getBefore() + ".class") && s2.contains(r.getAfter() + ".class")) {
 					String temp = s2.replace(r.getAfter(), r.getBefore());
 					if(s1.equals(temp) || (s1 + JAVA.STATEMENT_TERMINATION).equals(temp)) {
 						return true;

@@ -122,6 +122,17 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		else if(assignmentCreationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 != null &&
+				assignmentCreationCoveringTheEntireStatement1.arguments().size() > 20 && assignmentInvocationCoveringTheEntireStatement2.arguments().size() > 20) {
+			Set<String> argumentIntersection = creationCoveringTheEntireStatement1.argumentIntersection(invocationCoveringTheEntireStatement2);
+			if(argumentIntersection.size() > Math.max(assignmentCreationCoveringTheEntireStatement1.arguments().size(), assignmentInvocationCoveringTheEntireStatement2.arguments().size())/2.0) {
+				processAnonymousAndLambdas(statement1, statement2, parameterToArgumentMap, replacementInfo,
+						assignmentInvocationCoveringTheEntireStatement1 != null ? assignmentInvocationCoveringTheEntireStatement1 : assignmentCreationCoveringTheEntireStatement1,
+						assignmentInvocationCoveringTheEntireStatement2 != null ? assignmentInvocationCoveringTheEntireStatement2 : assignmentCreationCoveringTheEntireStatement2,
+						methodInvocationMap1, methodInvocationMap2,	anonymousClassDeclarations1, anonymousClassDeclarations2, lambdas1, lambdas2, operationBodyMapper);
+				return replacementInfo.getReplacements();
+			}
+		}
 		Set<String> variables1 = convertToStringSet(statement1.getVariables());
 		Set<String> variables2 = convertToStringSet(statement2.getVariables());
 		Set<String> variableIntersection = new LinkedHashSet<String>(variables1);

@@ -103,6 +103,19 @@ public abstract class UMLAbstractClassDiff {
 		return addedOperations;
 	}
 
+	public List<UMLOperation> getAddedAndExtractedOperations() {
+		List<UMLOperation> operations = new ArrayList<UMLOperation>(addedOperations);
+		for(Refactoring r : refactorings) {
+			if(r instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+				if(!operations.contains(extract.getExtractedOperation())) {
+					operations.add(extract.getExtractedOperation());
+				}
+			}
+		}
+		return operations;
+	}
+
 	public List<UMLOperation> getRemovedOperations() {
 		return removedOperations;
 	}

@@ -3475,7 +3475,7 @@ public class UMLModelDiff {
 		Set<UMLOperation> removedOperationsToBeRemoved = new LinkedHashSet<UMLOperation>();
 		Set<UMLOperation> addedOperationsToBeRemoved = new LinkedHashSet<UMLOperation>();
 		for(UMLOperation removedOperation : classDiff.getRemovedOperations()) {
-			for(UMLOperation addedOperation : classDiff.getAddedOperations()) {
+			for(UMLOperation addedOperation : classDiff.getAddedAndExtractedOperations()) {
 				if(allowInference(classDiff, removedOperation, addedOperation)) {
 					List<UMLOperationBodyMapper> mappers = findMappersWithMatchingSignatures(removedOperation, addedOperation);
 					if(!mappers.isEmpty()) {

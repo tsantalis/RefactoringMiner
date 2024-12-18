@@ -17,6 +17,6 @@ public class TestAllRefactorings {
 		GitHistoryRefactoringMinerImpl detector = new GitHistoryRefactoringMinerImpl();
 		TestBuilder test = new TestBuilder(detector, REPOS, Refactorings.All.getValue());
 		RefactoringPopulator.feedRefactoringsInstances(Refactorings.All.getValue(), Systems.FSE.getValue(), test);
-		test.assertExpectationsWithGitHubAPI(12356, 20, 232);
+		test.assertExpectationsWithGitHubAPI(12362, 20, 232);
 	}
 }

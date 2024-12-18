@@ -2736,6 +2736,24 @@ public class UMLModelDiff {
 					refactorings.add(move);
 					refactorings.addAll(mapperRefactorings);
 				}
+				for(Pair<UMLAttribute, UMLAttribute> pair : renameDiff.getCommonAtrributes()) {
+					MoveAttributeRefactoring move = new MoveAttributeRefactoring(pair.getLeft(), pair.getRight());
+					refactorings.add(move);
+				}
+				for(Pair<UMLEnumConstant, UMLEnumConstant> pair : renameDiff.getCommonEnumConstants()) {
+					MoveAttributeRefactoring move = new MoveAttributeRefactoring(pair.getLeft(), pair.getRight());
+					refactorings.add(move);
+				}
+				for(UMLAttributeDiff attributeDiff : renameDiff.getAttributeDiffList()) {
+					MoveAttributeRefactoring move = new MoveAttributeRefactoring(attributeDiff.getRemovedAttribute(), attributeDiff.getAddedAttribute());
+					refactorings.add(move);
+					refactorings.addAll(attributeDiff.getRefactorings());
+				}
+				for(UMLEnumConstantDiff attributeDiff : renameDiff.getEnumConstantDiffList()) {
+					MoveAttributeRefactoring move = new MoveAttributeRefactoring(attributeDiff.getRemovedEnumConstant(), attributeDiff.getAddedEnumConstant());
+					refactorings.add(move);
+					refactorings.addAll(attributeDiff.getRefactorings());
+				}
 			}
 			if(!classSplitDiff.samePackage()) {
 				RenamePattern renamePattern = refactoring.getRenamePattern();

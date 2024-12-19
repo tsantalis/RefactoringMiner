@@ -442,6 +442,15 @@ public class CompositeStatementObject extends AbstractStatement {
 	}
 
 	@Override
+	public List<LeafExpression> getInstanceofExpressions() {
+		List<LeafExpression> instanceofExpressions = new ArrayList<>();
+		for(AbstractExpression expression : expressionList) {
+			instanceofExpressions.addAll(expression.getInstanceofExpressions());
+		}
+		return instanceofExpressions;
+	}
+
+	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		List<TernaryOperatorExpression> ternaryOperatorExpressions = new ArrayList<TernaryOperatorExpression>();
 		for(AbstractExpression expression : expressionList) {

@@ -6943,7 +6943,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	private void extractInlineVariableAnalysis(List<? extends AbstractCodeFragment> leaves1,
 			List<? extends AbstractCodeFragment> leaves2, AbstractCodeFragment leaf1, AbstractCodeFragment leaf2,
-			LeafMapping mapping, ReplacementInfo replacementInfo) throws RefactoringMinerTimedOutException {
+			AbstractCodeMapping mapping, ReplacementInfo replacementInfo) throws RefactoringMinerTimedOutException {
 		UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 		for(AbstractCodeFragment leaf : leaves2) {
 			if(leaf.equals(leaf2)) {

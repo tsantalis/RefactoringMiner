@@ -2329,11 +2329,11 @@ public class ReplacementAlgorithm {
 		for(String methodInvocation1 : methodInvocations1) {
 			for(AbstractCall operationInvocation1 : methodInvocationMap1.get(methodInvocation1)) {
 				if((statement1.getString().endsWith(methodInvocation1 + JAVA.STATEMENT_TERMINATION) || statement1.getString().startsWith(methodInvocation1 + ".")) && (r = operationInvocation1.makeReplacementForReturnedArgument(replacementInfo.getArgumentizedString2())) != null) {
-					//if(operationInvocation1.makeReplacementForReturnedArgument(statement2.getString()) != null) {
+					if(!variableReturn2) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 						return replacementInfo.getReplacements();
-					//}
+					}
 				}
 			}
 		}
@@ -2350,11 +2350,11 @@ public class ReplacementAlgorithm {
 		for(String methodInvocation2 : methodInvocations2) {
 			for(AbstractCall operationInvocation2 : methodInvocationMap2.get(methodInvocation2)) {
 				if((statement2.getString().endsWith(methodInvocation2 + JAVA.STATEMENT_TERMINATION) || statement2.getString().startsWith(methodInvocation2 + ".")) && (r = operationInvocation2.makeReplacementForWrappedCall(replacementInfo.getArgumentizedString1())) != null) {
-					//if(operationInvocation2.makeReplacementForWrappedCall(statement1.getString()) != null) {
+					if(!variableReturn1) {
 						replacementInfo.addReplacement(r);
 						addLeafMappings(statement1, statement2, r, replacementInfo, container1, container2);
 						return replacementInfo.getReplacements();
-					//}
+					}
 				}
 			}
 		}

@@ -620,6 +620,22 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+				else if(after.startsWith(variableName + " ") && initializer != null) {
+					if(initializer.toString().contains(before)) {
+						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+						List<LeafExpression> subExpressions = getFragment1().findExpression(before);
+						for(LeafExpression subExpression : subExpressions) {
+							LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+						}
+						processExtractVariableRefactoring(ref, refactorings);
+						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
+						//if(identical()) {
+							identicalWithExtractedVariable = true;
+						//}
+						return;
+					}
+				}
 				if(variableName.equals(after) && initializer != null) {
 					checkForAliasedVariable(initializer, replacement, nonMappedLeavesT2, classDiff, insideExtractedOrInlinedMethod);
 					if(initializer.toString().equals(before) ||

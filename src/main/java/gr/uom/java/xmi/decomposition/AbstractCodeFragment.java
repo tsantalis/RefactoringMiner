@@ -67,6 +67,7 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 	public abstract List<LeafExpression> getArguments();
 	public abstract List<LeafExpression> getParenthesizedExpressions();
 	public abstract List<LeafExpression> getCastExpressions();
+	public abstract List<LeafExpression> getInstanceofExpressions();
 	public abstract List<TernaryOperatorExpression> getTernaryOperatorExpressions();
 	public abstract List<LambdaExpressionObject> getLambdas();
 	public abstract VariableDeclaration searchVariableDeclaration(String variableName);
@@ -174,6 +175,13 @@ public abstract class AbstractCodeFragment implements LocationInfoProvider {
 			}
 		}
 		for(LeafExpression expression : getCastExpressions()) {
+			if(expression.getString().equals(s)) {
+				if(!locations.contains(expression.getLocationInfo()))
+					matchingExpressions.add(expression);
+				locations.add(expression.getLocationInfo());
+			}
+		}
+		for(LeafExpression expression : getInstanceofExpressions()) {
 			if(expression.getString().equals(s)) {
 				if(!locations.contains(expression.getLocationInfo()))
 					matchingExpressions.add(expression);

@@ -707,8 +707,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 				}
 			}
-			if(!fragment1.getString().equals(fragment2.getString()) && initializer != null && fragment1.getVariableDeclaration(variableName) == null) {
-				if(getFragment1().getString().contains(initializer.getString()) && getFragment2().getString().contains(variableName) &&
+			if(!fragment1.getString().equals(fragment2.getString()) && initializer != null && fragment1.getVariableDeclaration(variableName) == null && !isDefaultValue(initializer.toString())) {
+				if(getFragment1().getString().contains(initializer.getString()) && getFragment2().findExpression(variableName).size() > 0 &&
 						!getFragment2().getString().equals(JAVA.RETURN_SPACE + variableName + JAVA.STATEMENT_TERMINATION)) {
 					boolean mappingFound = false;
 					for(AbstractCodeMapping m : currentMappings) {

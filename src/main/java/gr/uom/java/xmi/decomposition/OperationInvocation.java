@@ -39,6 +39,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.SuperConstructorInvocation;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.Type;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
@@ -88,11 +89,15 @@ public class OperationInvocation extends AbstractCall {
         PRIMITIVE_TYPE_NARROWING_MAP = Collections.unmodifiableMap(PRIMITIVE_TYPE_NARROWING_MAP);
     }
 
-	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, MethodInvocation invocation, VariableDeclarationContainer container) {
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, MethodInvocation invocation, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = invocation.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(stringify(argument));
@@ -132,11 +137,15 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodInvocation invocation, VariableDeclarationContainer container) {
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodInvocation invocation, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.SUPER_METHOD_INVOCATION, container);
 		this.methodName = invocation.getName().getIdentifier();
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = invocation.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 		this.expression = "super";
 		this.subExpressions.add("super");
 		List<Expression> args = invocation.arguments();
@@ -145,11 +154,15 @@ public class OperationInvocation extends AbstractCall {
 		}
 	}
 
-	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperConstructorInvocation invocation, VariableDeclarationContainer container) {
+	public OperationInvocation(CompilationUnit cu, String sourceFolder, String filePath, SuperConstructorInvocation invocation, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, sourceFolder, filePath, invocation, CodeElementType.SUPER_CONSTRUCTOR_INVOCATION, container);
 		this.methodName = "super";
 		this.numberOfArguments = invocation.arguments().size();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = invocation.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 		List<Expression> args = invocation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(stringify(argument));

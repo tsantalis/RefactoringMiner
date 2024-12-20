@@ -4,10 +4,12 @@ import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ExpressionMethodReference;
 import org.eclipse.jdt.core.dom.SuperMethodReference;
+import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeMethodReference;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
@@ -19,17 +21,25 @@ public class MethodReference extends AbstractCall {
 	private String methodName;
 	private volatile int hashCode = 0;
 	
-	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer container) {
+	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, ExpressionMethodReference reference, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = stringify(reference.getExpression());
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = reference.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 	}
 	
-	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer container) {
+	public MethodReference(CompilationUnit cu, String sourceFolder, String filePath, SuperMethodReference reference, VariableDeclarationContainer container, String javaFileContent) {
 		super(cu, sourceFolder, filePath, reference, CodeElementType.METHOD_REFERENCE, container);
 		this.methodName = reference.getName().getIdentifier();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = reference.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 		if(reference.getQualifier() != null) {
 			this.expression = reference.getQualifier().getFullyQualifiedName() + ".super";
 		}
@@ -43,6 +53,10 @@ public class MethodReference extends AbstractCall {
 		this.methodName = reference.getName().getIdentifier();
 		this.expression = UMLType.extractTypeObject(cu, sourceFolder, filePath, reference.getType(), 0, javaFileContent).toQualifiedString();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = reference.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 	}
 
 	public String getMethodName() {

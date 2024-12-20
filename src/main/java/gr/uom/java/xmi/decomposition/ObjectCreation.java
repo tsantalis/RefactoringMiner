@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.ArrayCreation;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.Type;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.UMLType;
@@ -29,6 +30,10 @@ public class ObjectCreation extends AbstractCall {
 		this.type = UMLType.extractTypeObject(cu, sourceFolder, filePath, creation.getType(), 0, javaFileContent);
 		this.numberOfArguments = creation.arguments().size();
 		this.arguments = new ArrayList<String>();
+		List<Type> typeArgs = creation.typeArguments();
+		for(Type typeArg : typeArgs) {
+			this.typeArguments.add(UMLType.extractTypeObject(cu, sourceFolder, filePath, typeArg, 0, javaFileContent));
+		}
 		List<Expression> args = creation.arguments();
 		for(Expression argument : args) {
 			this.arguments.add(stringify(argument));

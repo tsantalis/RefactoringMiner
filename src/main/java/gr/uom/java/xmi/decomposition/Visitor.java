@@ -561,7 +561,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -571,7 +571,7 @@ public class Visitor extends ASTVisitor {
 	}
 
 	public boolean visit(ExpressionMethodReference node) {
-		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container);
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -581,7 +581,7 @@ public class Visitor extends ASTVisitor {
 	}
 	
 	public boolean visit(SuperMethodReference node) {
-		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container);
+		MethodReference reference = new MethodReference(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(reference);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -633,7 +633,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();
@@ -647,7 +647,7 @@ public class Visitor extends ASTVisitor {
 		for(Expression argument : arguments) {
 			processArgument(argument);
 		}
-		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container);
+		OperationInvocation invocation = new OperationInvocation(cu, sourceFolder, filePath, node, container, javaFileContent);
 		methodInvocations.add(invocation);
 		if(current.getUserObject() != null) {
 			AnonymousClassDeclarationObject anonymous = (AnonymousClassDeclarationObject)current.getUserObject();

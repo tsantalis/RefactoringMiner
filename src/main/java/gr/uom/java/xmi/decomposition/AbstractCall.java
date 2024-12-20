@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import gr.uom.java.xmi.LeafType;
+import gr.uom.java.xmi.UMLType;
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN;
@@ -32,6 +33,7 @@ public abstract class AbstractCall extends LeafExpression {
 	protected int numberOfArguments;
 	protected String expression;
 	protected List<String> arguments;
+	protected List<UMLType> typeArguments = new ArrayList<UMLType>();
 	protected StatementCoverageType coverage = StatementCoverageType.NONE;
 	private static final List<String> logNames = List.of("trace", "debug", "info", "warn", "error", "fatal", "log");
 	private static final List<String> logGuardNames = List.of("isDebugEnabled", "isEnabled", "isErrorEnabled", "isFatalEnabled", "isInfoEnabled", "isTraceEnabled", "isWarnEnabled");
@@ -54,6 +56,10 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public List<String> arguments() {
 		return arguments;
+	}
+
+	public List<UMLType> getTypeArguments() {
+		return typeArguments;
 	}
 
 	public StatementCoverageType getCoverage() {

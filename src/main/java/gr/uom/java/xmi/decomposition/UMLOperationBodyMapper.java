@@ -15,6 +15,7 @@ import gr.uom.java.xmi.UMLAnnotation;
 import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.UMLModelASTReader.processBlock;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.findReplacementsWithExactMatching;
+import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPICalls;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
@@ -455,7 +456,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					assertThrows2++;
 				}
 			}
-			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > 2*Math.min(totalNodes1, totalNodes2);
+			boolean anonymousCollapse = Math.abs(totalNodes1 - totalNodes2) > Math.min(totalNodes1, totalNodes2);
 			if(!operation1.isDeclaredInAnonymousClass() && !operation2.isDeclaredInAnonymousClass() && anonymousCollapse) {
 				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||
 						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() == 0) ||
@@ -1577,7 +1578,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							additionallyMatchedStatements1.add(streamAPICallStatement);
 							additionallyMatchedStatements2.add(fragment2);
 							for(AbstractCall streamAPICall : streamAPICalls) {
-								if(streamAPICall.getName().equals("forEach")) {
+								if(isForEach(streamAPICall.getName())) {
 									if(!additionallyMatchedStatements2.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
@@ -1749,7 +1750,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							else if(streamAPICall.getName().equals("forEach")) {
+							else if(isForEach(streamAPICall.getName())) {
 								for(CompositeStatementObject comp2 : innerNodes2) {
 									if(!additionallyMatchedStatements2.contains(comp2)) {
 										for(AbstractExpression expression : comp2.getExpressions()) {
@@ -1916,7 +1917,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							additionallyMatchedStatements1.add(fragment1);
 							additionallyMatchedStatements2.add(streamAPICallStatement);
 							for(AbstractCall streamAPICall : streamAPICalls) {
-								if(streamAPICall.getName().equals("forEach")) {
+								if(isForEach(streamAPICall.getName())) {
 									if(!additionallyMatchedStatements1.contains(composite)) {
 										for(AbstractExpression expression : composite.getExpressions()) {
 											if(expression.getString().equals(streamAPICall.getExpression())) {
@@ -2033,7 +2034,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						Set<AbstractCodeFragment> additionallyMatchedStatements2 = new LinkedHashSet<>();
 						additionallyMatchedStatements2.add(streamAPICallStatement);
 						for(AbstractCall streamAPICall : streamAPICalls) {
-							if(streamAPICall.getName().equals("forEach")) {
+							if(isForEach(streamAPICall.getName())) {
 								CompositeReplacement replacement = new CompositeReplacement(composite.getString(), streamAPICallStatement.getString(), additionallyMatchedStatements1, additionallyMatchedStatements2);
 								Set<Replacement> replacements = new LinkedHashSet<>();
 								replacements.add(replacement);
@@ -2154,7 +2155,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									}
 								}
 							}
-							else if(streamAPICall.getName().equals("forEach")) {
+							else if(isForEach(streamAPICall.getName())) {
 								for(CompositeStatementObject comp1 : innerNodes1) {
 									if(!additionallyMatchedStatements1.contains(comp1)) {
 										for(AbstractExpression expression : comp1.getExpressions()) {
@@ -4356,7 +4357,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean forEach1 = false;
 		for(AbstractCodeFragment leaf1 : leaves1) {
 			for(AbstractCall call : leaf1.getMethodInvocations()) {
-				if(call.getName().equals("forEach")) {
+				if(isForEach(call.getName())) {
 					forEach1 = true;
 					break;
 				}
@@ -4365,7 +4366,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		boolean forEach2 = false;
 		for(AbstractCodeFragment leaf2 : leaves2) {
 			for(AbstractCall call : leaf2.getMethodInvocations()) {
-				if(call.getName().equals("forEach")) {
+				if(isForEach(call.getName())) {
 					forEach2 = true;
 					break;
 				}

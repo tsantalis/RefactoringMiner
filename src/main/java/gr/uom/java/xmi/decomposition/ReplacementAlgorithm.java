@@ -4840,8 +4840,12 @@ public class ReplacementAlgorithm {
 		}
 	}
 
+	protected static boolean isForEach(String name) {
+		return name.startsWith("forEach");
+	}
+
 	protected static boolean streamAPIName(String name) {
-		return name.equals("stream") || name.equals("filter") || name.equals("forEach") || name.equals("collect") || name.equals("map") || name.equals("flatMap") || name.equals("removeIf") || name.equals("ifPresent") || name.equals("ifPresentOrElse");
+		return name.equals("stream") || name.equals("filter") || isForEach(name) || name.equals("collect") || name.equals("map") || name.equals("flatMap") || name.equals("removeIf") || name.equals("ifPresent") || name.equals("ifPresentOrElse");
 	}
 
 	protected static List<AbstractCall> streamAPICalls(AbstractCodeFragment leaf) {
@@ -4872,7 +4876,7 @@ public class ReplacementAlgorithm {
 	private static int ignoredNonMappedElements(List<AbstractCall> invocations, List<AbstractCodeFragment> nonMappedLeaves, List<CompositeStatementObject> nonMappedInnerNodes) {
 		int counter = 0;
 		for(AbstractCall inv : invocations) {
-			if(inv.getName().equals("forEach")) {
+			if(isForEach(inv.getName())) {
 				for(CompositeStatementObject comp : nonMappedInnerNodes) {
 					if(comp.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) ||
 							comp.getLocationInfo().getCodeElementType().equals(CodeElementType.FOR_STATEMENT) ||

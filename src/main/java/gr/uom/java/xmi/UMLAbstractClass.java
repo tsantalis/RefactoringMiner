@@ -791,6 +791,17 @@ public abstract class UMLAbstractClass {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
 			}
 		}
+		if(this.getNonQualifiedName().equals(umlClass.getNonQualifiedName())) {
+			int mainCount = 0;
+			for(UMLOperation op : commonOperations) {
+				if(op.getName().equals("main")) {
+					mainCount++;
+				}
+			}
+			if(mainCount == 2) {
+				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);
+			}
+		}
 		if(this.isSingleAbstractMethodInterface() || umlClass.isSingleAbstractMethodInterface()) {
 			if(commonOperations.size() == 2) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), totalOperations, totalAttributes, true);

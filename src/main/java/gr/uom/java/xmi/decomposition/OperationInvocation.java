@@ -487,6 +487,9 @@ public class OperationInvocation extends AbstractCall {
     	if(parameter.getType().getClassType().length() == 1) {
     		return true;
     	}
+    	if(type2.equals("var")) {
+    		return true;
+    	}
     	if(collectionMatch(parameter.getType(), type))
     		return true;
     	if(type1.equals("Throwable") && type2.endsWith("Exception"))

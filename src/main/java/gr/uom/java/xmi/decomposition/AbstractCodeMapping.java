@@ -707,7 +707,8 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 					}
 				}
 			}
-			if(!fragment1.getString().equals(fragment2.getString()) && initializer != null && fragment1.getVariableDeclaration(variableName) == null && !isDefaultValue(initializer.toString())) {
+			if(!fragment1.getString().equals(fragment2.getString()) && initializer != null && fragment1.getVariableDeclaration(variableName) == null &&
+					!isDefaultValue(initializer.toString()) && !isVariableReference(initializer.toString(), fragment2.getVariables())) {
 				if(getFragment1().getString().contains(initializer.getString()) && getFragment2().findExpression(variableName).size() > 0 &&
 						!getFragment2().getString().equals(JAVA.RETURN_SPACE + variableName + JAVA.STATEMENT_TERMINATION)) {
 					boolean mappingFound = false;
@@ -870,6 +871,15 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 					}
 				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isVariableReference(String argument, List<LeafExpression> variables) {
+		for(LeafExpression expr : variables) {
+			if(expr.getString().equals(argument)) {
+				return true;
 			}
 		}
 		return false;

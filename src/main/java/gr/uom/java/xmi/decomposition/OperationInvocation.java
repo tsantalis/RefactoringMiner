@@ -589,6 +589,12 @@ public class OperationInvocation extends AbstractCall {
 					if(typeArgument.toString().length() == 1 && Character.isUpperCase(typeArgument.toString().charAt(0))) {
 						return true;
 					}
+					if(type.getTypeArguments().size() == 1) {
+						UMLType typeArgument2 = type.getTypeArguments().get(0);
+						if(typeArgument2.getClassType().equals(typeArgument.getClassType())) {
+							return true;
+						}
+					}
 				}
 			}
 		}

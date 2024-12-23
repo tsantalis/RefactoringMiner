@@ -3332,6 +3332,72 @@
   "firstEndPos" : 4655,
   "secondEndPos" : 4960
 }, {
+  "firstType" : "MethodInvocation",
+  "secondType" : "MethodInvocation",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 4637,
+  "secondPos" : 4549,
+  "firstEndPos" : 4655,
+  "secondEndPos" : 4567
+}, {
+  "firstType" : "METHOD_INVOCATION_RECEIVER",
+  "secondType" : "METHOD_INVOCATION_RECEIVER",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 4637,
+  "secondPos" : 4549,
+  "firstEndPos" : 4642,
+  "secondEndPos" : 4554
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "token",
+  "secondLabel" : "token",
+  "firstParentType" : "METHOD_INVOCATION_RECEIVER",
+  "secondParentType" : "METHOD_INVOCATION_RECEIVER",
+  "firstPos" : 4637,
+  "secondPos" : 4549,
+  "firstEndPos" : 4642,
+  "secondEndPos" : 4554
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "indexOf",
+  "secondLabel" : "indexOf",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 4643,
+  "secondPos" : 4555,
+  "firstEndPos" : 4650,
+  "secondEndPos" : 4562
+}, {
+  "firstType" : "CharacterLiteral",
+  "secondType" : "CharacterLiteral",
+  "firstLabel" : "'='",
+  "secondLabel" : "'='",
+  "firstParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondParentType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstPos" : 4651,
+  "secondPos" : 4563,
+  "firstEndPos" : 4654,
+  "secondEndPos" : 4566
+}, {
+  "firstType" : "METHOD_INVOCATION_ARGUMENTS",
+  "secondType" : "METHOD_INVOCATION_ARGUMENTS",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "MethodInvocation",
+  "secondParentType" : "MethodInvocation",
+  "firstPos" : 4651,
+  "secondPos" : 4563,
+  "firstEndPos" : 4654,
+  "secondEndPos" : 4566
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",

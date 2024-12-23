@@ -3,6 +3,7 @@ package gr.uom.java.xmi;
 public interface UMLClassMatcher {
 
 	public class MatchResult {
+		private int identicalBodyOperations;
 		private int matchedOperations;
 		private int matchedAttributes;
 		private int totalOperations;
@@ -10,12 +11,17 @@ public interface UMLClassMatcher {
 		private boolean match;
 
 		public MatchResult(int matchedOperations, int matchedAttributes,
+				int identicalBodyOperations,
 				int totalOperations, int totalAttributes, boolean match) {
 			this.matchedOperations = matchedOperations;
 			this.matchedAttributes = matchedAttributes;
 			this.totalOperations = totalOperations;
 			this.totalAttributes = totalAttributes;
 			this.match = match;
+		}
+
+		public int getIdenticalBodyOperations() {
+			return identicalBodyOperations;
 		}
 
 		public int getMatchedOperations() {

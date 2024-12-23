@@ -15,6 +15,7 @@ public interface UMLClassMatcher {
 				int totalOperations, int totalAttributes, boolean match) {
 			this.matchedOperations = matchedOperations;
 			this.matchedAttributes = matchedAttributes;
+			this.identicalBodyOperations = identicalBodyOperations;
 			this.totalOperations = totalOperations;
 			this.totalAttributes = totalAttributes;
 			this.match = match;

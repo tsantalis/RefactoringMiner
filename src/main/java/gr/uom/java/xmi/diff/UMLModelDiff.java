@@ -3807,14 +3807,16 @@ public class UMLModelDiff {
 							removedOperationInvocations.add(invocation);
 						}
 					}
-					for(AbstractCodeMapping mapping : mapper.getMappings()) {
-						if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
-							for(AbstractCall invocation : mapping.getFragment1().getMethodInvocations()) {
-								for(ListIterator<AbstractCall> iterator = removedOperationInvocations.listIterator(); iterator.hasNext();) {
-									AbstractCall matchingInvocation = iterator.next();
-									if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
-										iterator.remove();
-										break;
+					if(removedOperationInvocations.size() > 0) {
+						for(AbstractCodeMapping mapping : mapper.getMappings()) {
+							if(mapping.isExact() && mapping.getReplacementsInvolvingMethodInvocation().isEmpty()) {
+								for(AbstractCall invocation : mapping.getFragment1().getMethodInvocations()) {
+									for(ListIterator<AbstractCall> iterator = removedOperationInvocations.listIterator(); iterator.hasNext();) {
+										AbstractCall matchingInvocation = iterator.next();
+										if(invocation == matchingInvocation || invocation.actualString().equals(matchingInvocation.actualString())) {
+											iterator.remove();
+											break;
+										}
 									}
 								}
 							}

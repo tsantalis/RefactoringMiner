@@ -511,7 +511,9 @@ public class CompositeStatementObject extends AbstractStatement {
 				StatementObject statementObject = (StatementObject)statement;
 				list.addAll(statementObject.getMethodInvocations());
 				for(LambdaExpressionObject lambda : statementObject.getLambdas()) {
-					list.addAll(lambda.getAllOperationInvocations());
+					if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+						list.addAll(lambda.getAllOperationInvocations());
+					}
 				}
 				for(AnonymousClassDeclarationObject anonymous : statementObject.getAnonymousClassDeclarations()) {
 					list.addAll(anonymous.getMethodInvocations());

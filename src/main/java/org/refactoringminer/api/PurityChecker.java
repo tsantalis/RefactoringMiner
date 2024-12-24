@@ -1914,19 +1914,20 @@ public class PurityChecker {
         UMLClassBaseDiff umlClassDiff = modelDiff.getUMLClassDiff(refactoring.getTargetOperationAfterInline().getClassName());
         List<AbstractCodeFragment> nonMappedLeavesT1ToRemove = new ArrayList<>();
 
-
-        for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
-            if (umlOperationBodyMapper != null && umlOperationBodyMapper.getOperation2() != null) {
-                if (umlOperationBodyMapper.getOperation2().getName().equals(refactoring.getTargetOperationAfterInline().getName())) {
-                    for (AbstractCodeFragment abstractCodeFragment : nonMappedLeavesT1) {
-                        for (AbstractCodeMapping mapping : umlOperationBodyMapper.getMappings()) {
-                            if (mapping.getFragment2().getString().equals(abstractCodeFragment.getString())) {
-                                nonMappedLeavesT1ToRemove.add(abstractCodeFragment);
-                            }
-                        }
-                    }
-                }
-            }
+        if (umlClassDiff != null) {
+	        for (UMLOperationBodyMapper umlOperationBodyMapper : umlClassDiff.getOperationBodyMapperList()) {
+	            if (umlOperationBodyMapper != null && umlOperationBodyMapper.getOperation2() != null) {
+	                if (umlOperationBodyMapper.getOperation2().getName().equals(refactoring.getTargetOperationAfterInline().getName())) {
+	                    for (AbstractCodeFragment abstractCodeFragment : nonMappedLeavesT1) {
+	                        for (AbstractCodeMapping mapping : umlOperationBodyMapper.getMappings()) {
+	                            if (mapping.getFragment2().getString().equals(abstractCodeFragment.getString())) {
+	                                nonMappedLeavesT1ToRemove.add(abstractCodeFragment);
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
         }
         nonMappedLeavesT1.removeAll(nonMappedLeavesT1ToRemove);
     }

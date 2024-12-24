@@ -10,6 +10,8 @@ import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
 
+import static gr.uom.java.xmi.Constants.JAVA;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -225,7 +227,9 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		if(initializer != null) {
 			List<AbstractCall> list = new ArrayList<>(initializer.getMethodInvocations());
 			for(LambdaExpressionObject lambda : initializer.getLambdas()) {
-				list.addAll(lambda.getAllOperationInvocations());
+				if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+					list.addAll(lambda.getAllOperationInvocations());
+				}
 			}
 			for(AnonymousClassDeclarationObject anonymous : initializer.getAnonymousClassDeclarations()) {
 				list.addAll(anonymous.getMethodInvocations());

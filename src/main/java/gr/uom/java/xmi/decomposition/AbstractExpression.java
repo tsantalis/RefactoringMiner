@@ -1,5 +1,6 @@
 package gr.uom.java.xmi.decomposition;
 
+import static gr.uom.java.xmi.Constants.JAVA;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 
 import java.util.ArrayList;
@@ -135,7 +136,9 @@ public class AbstractExpression extends AbstractCodeFragment {
 		List<AbstractCall> list = new ArrayList<>();
 		list.addAll(getMethodInvocations());
 		for(LambdaExpressionObject lambda : this.getLambdas()) {
-			list.addAll(lambda.getAllOperationInvocations());
+			if(lambda.getString().contains(JAVA.LAMBDA_ARROW)) {
+				list.addAll(lambda.getAllOperationInvocations());
+			}
 		}
 		for(AnonymousClassDeclarationObject anonymous : this.getAnonymousClassDeclarations()) {
 			list.addAll(anonymous.getMethodInvocations());

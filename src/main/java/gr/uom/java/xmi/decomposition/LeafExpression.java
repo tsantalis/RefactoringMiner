@@ -179,6 +179,11 @@ public class LeafExpression extends AbstractCodeFragment {
 	}
 
 	@Override
+	public List<LeafExpression> getPatternInstanceofExpressions() {
+		return Collections.emptyList();
+	}
+
+	@Override
 	public List<TernaryOperatorExpression> getTernaryOperatorExpressions() {
 		return Collections.emptyList();
 	}

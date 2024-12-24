@@ -7506,6 +7506,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 		else if(leaf1.getVariableDeclarations().size() == 0 && mapping.getFragment1().getVariableDeclarations().size() == 0 && mapping.getFragment2().getVariableDeclarations().size() > 0) {
 			VariableDeclaration declaration2 = mapping.getFragment2().getVariableDeclarations().get(0);
+			List<LeafExpression> patternInstanceExpressions = mapping.getFragment2().getPatternInstanceofExpressions();
 			Set<AbstractCodeFragment> matchingVariableDeclarations1 = new LinkedHashSet<>();
 			for(AbstractCodeFragment l1 : leaves1) {
 				if(!alreadyMatched1(l1)) {
@@ -7513,7 +7514,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						VariableDeclaration declaration1 = l1.getVariableDeclarations().get(0);
 						boolean equalName = declaration1.getVariableName().equals(declaration2.getVariableName()) && !mapping.getFragment1().getString().startsWith(declaration2.getVariableName() + JAVA.ASSIGNMENT);
 						if(equalName && declaration1.getType() != null && declaration1.getType().equals(declaration2.getType())) {
-							matchingVariableDeclarations1.add(l1);
+							boolean foundInPatternInstance = false;
+							for(LeafExpression patternInstanceExpression : patternInstanceExpressions) {
+								if(patternInstanceExpression.getString().endsWith(" " + declaration1.getVariableName())) {
+									foundInPatternInstance = true;
+									break;
+								}
+							}
+							if(!foundInPatternInstance) {
+								matchingVariableDeclarations1.add(l1);
+							}
 						}
 					}
 				}

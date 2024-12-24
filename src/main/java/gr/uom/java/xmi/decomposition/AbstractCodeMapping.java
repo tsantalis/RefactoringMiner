@@ -1048,6 +1048,23 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						return;
 					}
 				}
+				if(before.startsWith(JAVA.RETURN_SPACE) && before.endsWith(JAVA.STATEMENT_TERMINATION)) {
+					before = before.substring(JAVA.RETURN_SPACE.length(), before.length()-JAVA.STATEMENT_TERMINATION.length());
+				}
+				if(after.contains(before) && initializer != null && fragment2.getPatternInstanceofExpressions().size() > 0) {
+					for(LeafExpression expression2 : fragment2.getPatternInstanceofExpressions()) {
+						if(expression2.getString().endsWith(" " + variableName)) {
+							InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+							LeafMapping leafMapping = new LeafMapping(initializer, expression2, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+							processInlineVariableRefactoring(ref, refactorings);
+							//if(identical()) {
+								identicalWithInlinedVariable = true;
+							//}
+							return;
+						}
+					}
+				}
 			}
 			if(classDiff != null && getFragment1().getVariableDeclarations().size() > 0 && initializer != null && getFragment1().getVariableDeclarations().toString().equals(getFragment2().getVariableDeclarations().toString())) {
 				VariableDeclaration variableDeclaration2 = getFragment2().getVariableDeclarations().get(0);

@@ -1791,8 +1791,20 @@ public class VariableReplacementAnalysis {
 					candidate.setOriginalVariableDeclaration(v1.getKey());
 				if(v2 != null)
 					candidate.setRenamedVariableDeclaration(v2.getKey());
-				if(!existsConflictingExtractVariableRefactoring(candidate)) {
+				ExtractVariableRefactoring conflictingExtractVariableRefactoring = existsConflictingExtractVariableRefactoring(candidate);
+				if(conflictingExtractVariableRefactoring == null) {
 					this.candidateAttributeRenames.add(candidate);
+				}
+				else {
+					for(LeafMapping mapping : conflictingExtractVariableRefactoring.getSubExpressionMappings()) {
+						if(mapping.getFragment1().getString().equals(replacement.getBefore()) &&
+								!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+							CandidateAttributeRefactoring newCandidate = new CandidateAttributeRefactoring(
+									replacement.getBefore(), mapping.getFragment2().getString(), operation1, operation2,
+									replacementOccurrenceMap.get(replacement));
+							this.candidateAttributeRenames.add(newCandidate);
+						}
+					}
 				}
 			}
 		}
@@ -2869,16 +2881,16 @@ public class VariableReplacementAnalysis {
 		return false;
 	}
 
-	private boolean existsConflictingExtractVariableRefactoring(CandidateAttributeRefactoring ref) {
+	private ExtractVariableRefactoring existsConflictingExtractVariableRefactoring(CandidateAttributeRefactoring ref) {
 		for(Refactoring refactoring : refactorings) {
 			if(refactoring instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extractVariableRef = (ExtractVariableRefactoring)refactoring;
 				if(extractVariableRef.getVariableDeclaration().equals(ref.getRenamedVariableDeclaration())) {
-					return true;
+					return extractVariableRef;
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	private boolean existsConflictingExtractVariableRefactoring(RenameVariableRefactoring ref) {

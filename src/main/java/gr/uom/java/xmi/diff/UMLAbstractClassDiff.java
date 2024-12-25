@@ -1557,6 +1557,14 @@ public abstract class UMLAbstractClassDiff {
 		}
 		int counter = 0;
 		int allCases = 0;
+		String topLevelClassName = null;
+		if(!originalClass.isTopLevel() && !nextClass.isTopLevel()) {
+			String originalTopLevelClass = originalClass.getPackageName();
+			String nextTopLevelClass = nextClass.getPackageName();
+			if(originalTopLevelClass.equals(nextTopLevelClass) && originalTopLevelClass.contains(".")) {
+				topLevelClassName = originalTopLevelClass.substring(originalTopLevelClass.lastIndexOf(".") + 1, originalTopLevelClass.length());
+			}
+		}
 		for(UMLOperationBodyMapper mapper : this.operationBodyMapperList) {
 			List<String> allVariables1 = mapper.getContainer1().getAllVariables();
 			List<String> allVariables2 = mapper.getContainer2().getAllVariables();
@@ -1567,9 +1575,15 @@ public abstract class UMLAbstractClassDiff {
 			boolean variables1contains = (allVariables1.contains(pattern.getBefore()) &&
 					!mapper.getContainer1().getParameterNameList().contains(pattern.getBefore())) ||
 					allVariables1.contains(JAVA.THIS_DOT+pattern.getBefore());
+			if(!variables1contains && topLevelClassName != null) {
+				variables1contains = allVariables1.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getBefore());
+			}
 			boolean variables2Contains = (allVariables2.contains(pattern.getAfter()) &&
 					!mapper.getContainer2().getParameterNameList().contains(pattern.getAfter())) ||
 					allVariables2.contains(JAVA.THIS_DOT+pattern.getAfter());
+			if(!variables2Contains && topLevelClassName != null) {
+				variables2Contains = allVariables2.contains(topLevelClassName + "." + JAVA.THIS_DOT+pattern.getAfter());
+			}
 			if(variables1contains && !variables2Contains) {
 				boolean skip = false;
 				for(AbstractCodeMapping mapping : mapper.getMappings()) {

@@ -121,6 +121,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 	private List<Set<AbstractCodeMapping>> internalParameterizeTestMultiMappings = new ArrayList<Set<AbstractCodeMapping>>();
 	private boolean nested;
 	private boolean lambdaBodyMapper;
+	private boolean anonymousCollapse;
 	private AbstractCall operationInvocation;
 	private Map<String, String> parameterToArgumentMap1;
 	private Map<String, String> parameterToArgumentMap2;
@@ -142,6 +143,10 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 
 	public boolean isNested() {
 		return nested;
+	}
+
+	public boolean isAnonymousCollapse() {
+		return anonymousCollapse;
 	}
 
 	private Set<AbstractCodeFragment> statementsWithStreamAPICalls(List<AbstractCodeFragment> leaves) {
@@ -461,6 +466,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if((anonymous1.size() == 1 && anonymous2.size() == 0) ||
 						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() == 0) ||
 						(anonymous1.size() + nestedAnonymous1.size() == anonymous2.size() + nestedAnonymous2.size() + 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() > 0)) {
+					this.anonymousCollapse = true;
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf1 : leaves1) {
 						if(leaf1.getAnonymousClassDeclarations().size() > 0) {
@@ -487,6 +493,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				else if((anonymous1.size() == 0 && anonymous2.size() == 1) ||
 						(anonymous1.size() == 1 && anonymous2.size() == 1 && anonymous1.get(0).getAnonymousClassDeclarations().size() == 0 && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0) ||
 						(anonymous1.size() + nestedAnonymous1.size() + 1 == anonymous2.size() + nestedAnonymous2.size() && anonymous2.get(0).getAnonymousClassDeclarations().size() > 0)) {
+					this.anonymousCollapse = true;
 					AbstractCodeFragment anonymousFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
 						if(leaf2.getAnonymousClassDeclarations().size() > 0) {

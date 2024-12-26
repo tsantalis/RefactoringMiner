@@ -338,6 +338,22 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 				else if(streamAPIMigration2 && !streamAPIMigration1) {
 					return 1;
 				}
+				if(this.getFragment1().getVariableDeclarations().size() > 0 && this.getFragment2().getVariableDeclarations().size() > 0 &&
+						o.getFragment1().getVariableDeclarations().size() > 0 && o.getFragment2().getVariableDeclarations().size() > 0 &&
+						Math.abs(distance1 - distance2) < 0.02) {
+					int depthDiff1 = Math.abs(this.getFragment1().getDepth() - this.getFragment2().getDepth());
+					int depthDiff2 = Math.abs(o.getFragment1().getDepth() - o.getFragment2().getDepth());
+					if(depthDiff1 != depthDiff2) {
+						return Integer.valueOf(depthDiff1).compareTo(Integer.valueOf(depthDiff2));
+					}
+					else {
+						int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
+						int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
+						if(indexDiff1 != indexDiff2) {
+							return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
+						}
+					}
+				}
 				return Double.compare(distance1, distance2);
 			}
 			else {

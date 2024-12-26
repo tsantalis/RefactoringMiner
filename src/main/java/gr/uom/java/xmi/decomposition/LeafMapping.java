@@ -349,7 +349,7 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 					else {
 						int indexDiff1 = Math.abs(this.getFragment1().getIndex() - this.getFragment2().getIndex());
 						int indexDiff2 = Math.abs(o.getFragment1().getIndex() - o.getFragment2().getIndex());
-						if(indexDiff1 != indexDiff2) {
+						if(indexDiff1 != indexDiff2 && Math.abs(indexDiff1 - indexDiff2) > 1) {
 							return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 						}
 					}

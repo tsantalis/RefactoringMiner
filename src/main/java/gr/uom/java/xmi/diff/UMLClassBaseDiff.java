@@ -2769,10 +2769,16 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 
 	private int mismatchesConsistentMethodInvocationRename(UMLOperationBodyMapper mapper) {
 		int mismatchCount = 0;
+		List<UMLType> parameterTypeList1 = mapper.getContainer1().getParameterTypeList();
+		List<UMLType> parameterTypeList2 = mapper.getContainer2().getParameterTypeList();
+		boolean equalParameterTypes = parameterTypeList1.equals(parameterTypeList2) && parameterTypeList1.size() > 0;
 		for(MethodInvocationReplacement rename : consistentMethodInvocationRenames.keySet()) {
 			UMLOperationBodyMapper referringMapper = consistentMethodInvocationRenames.get(rename);
 			AbstractCall callBefore = rename.getInvokedOperationBefore();
 			AbstractCall callAfter = rename.getInvokedOperationAfter();
+			if(equalParameterTypes && callBefore.arguments().size() != callAfter.arguments().size()) {
+				continue;
+			}
 			if(callBefore.matchesOperation(mapper.getContainer1(), referringMapper.getContainer1(), this, modelDiff) &&
 					!callAfter.matchesOperation(mapper.getContainer2(), referringMapper.getContainer2(), this, modelDiff)) {
 				mismatchCount++;

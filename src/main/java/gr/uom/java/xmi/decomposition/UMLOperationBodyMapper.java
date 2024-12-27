@@ -6971,6 +6971,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				break;
 			}
 		}
+		CompositeStatementObject parent2 = mapping.getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent2 != null && parent2.getExpressions().size() > 0) {
+			for(AbstractExpression expression : parent2.getExpressions()) {
+				if(expression.getPatternInstanceofExpressions().size() > 0) {
+					mapping.temporaryVariableAssignment(expression, leaves2, classDiff, parentMapper != null, mappings);
+				}
+			}
+		}
 		for(AbstractCodeFragment leaf : leaves1) {
 			if(leaf.equals(leaf1)) {
 				break;

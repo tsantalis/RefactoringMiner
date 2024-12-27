@@ -1085,24 +1085,55 @@ public abstract class AbstractCall extends LeafExpression {
 		return -1;
 	}
 
+	private int argumentIsWrappedInExceptionAndThrown(String statement) {
+		if(statement.startsWith(JAVA.THROW_SPACE)) {
+			String removeThrowFromStatement = statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
+			int index = 0;
+			for(String argument : arguments()) {
+				if(argument.equals("true") || argument.equals("false") || argument.equals("null")) {
+					return -1;
+				}
+				if(argument.startsWith("()" + JAVA.LAMBDA_ARROW))
+					argument = argument.substring(("()" + JAVA.LAMBDA_ARROW).length());
+				if(removeThrowFromStatement.contains("(" + argument + ")")) {
+					removeThrowFromStatement = removeThrowFromStatement.replace("(" + argument + ")", "");
+					if(removeThrowFromStatement.startsWith("new ") && removeThrowFromStatement.endsWith("Exception")) {
+						return index;
+					}
+				}
+				index++;
+			}
+		}
+		return -1;
+	}
+
+	private boolean indexCondition(String statement, int index) {
+		return (arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows") || "Assert".equals(this.getExpression()))) || (statement.contains(" ? ") && statement.contains(" : "));
+	}
+
 	public Replacement makeReplacementForReturnedArgument(String statement) {
 		int index = -1;
-		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if((index = argumentIsReturned(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if((index = argumentIsThrown(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsThrown(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_THROW_EXPRESSION);
 		}
-		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsWrappedInExceptionAndThrown(statement)) != -1 && indexCondition(statement, index)) {
+			String arg = statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
+			return new Replacement(arguments().get(index), arg,
+					ReplacementType.ARGUMENT_REPLACED_WITH_THROW_EXPRESSION);
+		}
+		else if((index = argumentIsStatement(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arguments().get(index), arg,
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index)) {
 			return new Replacement(arguments().get(index), statement,
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}
@@ -1111,22 +1142,22 @@ public abstract class AbstractCall extends LeafExpression {
 
 	public Replacement makeReplacementForWrappedCall(String statement) {
 		int index = -1;
-		if((index = argumentIsReturned(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		if((index = argumentIsReturned(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(JAVA.RETURN_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_RETURN_EXPRESSION);
 		}
-		else if((index = argumentIsThrown(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsThrown(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(JAVA.THROW_SPACE.length(), statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_THROW_EXPRESSION);
 		}
-		else if((index = argumentIsStatement(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsStatement(statement)) != -1 && indexCondition(statement, index)) {
 			String arg = statement.substring(0, statement.length()-JAVA.STATEMENT_TERMINATION.length());
 			return new Replacement(arg, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_STATEMENT);
 		}
-		else if((index = argumentIsExpression(statement)) != -1 && ((arguments().size() <= 2 && (index == 0 || this.getName().equals("assertThrows"))) || (statement.contains(" ? ") && statement.contains(" : ")))) {
+		else if((index = argumentIsExpression(statement)) != -1 && indexCondition(statement, index)) {
 			return new Replacement(statement, arguments().get(index),
 					ReplacementType.ARGUMENT_REPLACED_WITH_EXPRESSION);
 		}

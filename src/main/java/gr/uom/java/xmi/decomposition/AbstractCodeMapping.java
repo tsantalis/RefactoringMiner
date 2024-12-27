@@ -706,6 +706,40 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						return;
 					}
 				}
+				if(after.startsWith(JAVA.RETURN_SPACE) && after.endsWith(JAVA.STATEMENT_TERMINATION)) {
+					after = after.substring(JAVA.RETURN_SPACE.length(), after.length()-JAVA.STATEMENT_TERMINATION.length());
+				}
+				if(variableName.equals(after) && statement.getPatternInstanceofExpressions().size() > 0) {
+					for(LeafExpression expression2 : statement.getPatternInstanceofExpressions()) {
+						if(expression2.getString().endsWith(" " + variableName) && expression2.getString().contains(before)) {
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+							List<LeafExpression> expressions1 = fragment1.findExpression(before);
+							if(expressions1.size() > 0) {
+								LeafMapping leafMapping = new LeafMapping(expressions1.get(0), expression2, operation1, operation2);
+								ref.addSubExpressionMapping(leafMapping);
+							}
+							processExtractVariableRefactoring(ref, refactorings);
+							//if(identical()) {
+								identicalWithInlinedVariable = true;
+							//}
+							return;
+						}
+					}
+				}
+				if(after.contains(before) && initializer != null && fragment1.getPatternInstanceofExpressions().size() > 0) {
+					for(LeafExpression expression1 : fragment1.getPatternInstanceofExpressions()) {
+						if(expression1.getString().endsWith(" " + variableName)) {
+							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+							LeafMapping leafMapping = new LeafMapping(expression1, initializer, operation1, operation2);
+							ref.addSubExpressionMapping(leafMapping);
+							processExtractVariableRefactoring(ref, refactorings);
+							//if(identical()) {
+								identicalWithInlinedVariable = true;
+							//}
+							return;
+						}
+					}
+				}
 			}
 			if(!fragment1.getString().equals(fragment2.getString()) && initializer != null && fragment1.getVariableDeclaration(variableName) == null &&
 					!isDefaultValue(initializer.toString()) && !isVariableReference(initializer.toString(), fragment2.getVariables())) {

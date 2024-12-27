@@ -4730,6 +4730,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								for(AbstractExpression expression : statement2.getExpressions()) {
+									if(expression.getPatternInstanceofExpressions().size() > 0) {
+										mapping.temporaryVariableAssignment(expression, leaves2, classDiff, parentMapper != null, mappings);
+									}
+								}
 								for(AbstractCodeFragment leaf : leaves1) {
 									if(leaf.getLocationInfo().before(mapping.getFragment1().getLocationInfo())) {
 										mapping.inlinedVariableAssignment(leaf, leaves2, classDiff, parentMapper != null);
@@ -5078,6 +5083,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											}
 											break;
 										}
+									}
+								}
+								for(AbstractExpression expression : statement2.getExpressions()) {
+									if(expression.getPatternInstanceofExpressions().size() > 0) {
+										mapping.temporaryVariableAssignment(expression, leaves2, classDiff, parentMapper != null, mappings);
 									}
 								}
 								for(AbstractCodeFragment leaf : leaves1) {

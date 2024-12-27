@@ -711,18 +711,37 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				}
 				if(variableName.equals(after) && statement.getPatternInstanceofExpressions().size() > 0) {
 					for(LeafExpression expression2 : statement.getPatternInstanceofExpressions()) {
-						if(expression2.getString().endsWith(" " + variableName) && expression2.getString().contains(before)) {
-							ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
-							List<LeafExpression> expressions1 = fragment1.findExpression(before);
-							if(expressions1.size() > 0) {
-								LeafMapping leafMapping = new LeafMapping(expressions1.get(0), expression2, operation1, operation2);
-								ref.addSubExpressionMapping(leafMapping);
+						String beforeWithoutCast = null;
+						if(before.startsWith("(") && before.contains(")")) {
+							beforeWithoutCast = before.substring(before.indexOf(")") + 1);
+						}
+						if(expression2.getString().endsWith(" " + variableName)) {
+							if(expression2.getString().contains(before)) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> expressions1 = fragment1.findExpression(before);
+								for(LeafExpression expression1 : expressions1) {
+									LeafMapping leafMapping = new LeafMapping(expression1, expression2, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+								processExtractVariableRefactoring(ref, refactorings);
+								//if(identical()) {
+									identicalWithInlinedVariable = true;
+								//}
+								return;
 							}
-							processExtractVariableRefactoring(ref, refactorings);
-							//if(identical()) {
-								identicalWithInlinedVariable = true;
-							//}
-							return;
+							else if(beforeWithoutCast != null && expression2.getString().contains(beforeWithoutCast)) {
+								ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
+								List<LeafExpression> expressions1 = fragment1.findExpression(beforeWithoutCast);
+								for(LeafExpression expression1 : expressions1) {
+									LeafMapping leafMapping = new LeafMapping(expression1, expression2, operation1, operation2);
+									ref.addSubExpressionMapping(leafMapping);
+								}
+								processExtractVariableRefactoring(ref, refactorings);
+								//if(identical()) {
+									identicalWithInlinedVariable = true;
+								//}
+								return;
+							}
 						}
 					}
 				}

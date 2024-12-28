@@ -15,6 +15,7 @@ import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.util.PrefixSuffixUtils;
 
 import gr.uom.java.xmi.LocationInfo.CodeElementType;
+import gr.uom.java.xmi.LeafType;
 import gr.uom.java.xmi.UMLAnonymousClass;
 import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
@@ -643,6 +644,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							overlappingExtractVariable(initializer, before, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + before) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, before) ||
+							fieldAccessReplacedWithGetter(initializer, before) ||
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
 							stringConcatMatch(initializer, before) ||
@@ -1039,6 +1041,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							overlappingExtractVariable(initializer, after, nonMappedLeavesT2, insideExtractedOrInlinedMethod, refactorings) ||
 							(initializer.toString().equals("(" + declaration.getType() + ")" + after) && !containsVariableNameReplacement(variableName)) ||
 							ternaryMatch(initializer, after) ||
+							fieldAccessReplacedWithGetter(initializer, after) ||
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							stringConcatMatch(initializer, after) ||
@@ -1319,6 +1322,44 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		for(LeafExpression infixExpression : infixExpressions) {
 			String infix = infixExpression.getString();
 			if(infix.startsWith(replacedExpression) || infix.endsWith(replacedExpression)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean fieldAccessReplacedWithGetter(AbstractExpression initializer, String replacedExpression) {
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(initializer.getString());
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(replacedExpression);
+		if(tokens1.length == tokens2.length) {
+			int matchingTokens = 0;
+			for(int i=0; i<tokens1.length; i++) {
+				String token1 = tokens1[i];
+				String token2 = tokens2[i];
+				if(token1.equals(token2)) {
+					matchingTokens++;
+				}
+				else if(token1.contains(".") && token2.contains(".")) {
+					String prefix1 = token1.substring(0, token1.indexOf("."));
+					String prefix2 = token2.substring(0, token2.indexOf("."));
+					if(prefix1.equals(prefix2)) {
+						matchingTokens++;
+					}
+				}
+				else if(token1.endsWith("()")) {
+					String prefix1 = token1.substring(0, token1.length()-2);
+					if(prefix1.equals(token2)) {
+						matchingTokens++;
+					}
+				}
+				else if(token2.endsWith("()")) {
+					String prefix2 = token2.substring(0, token2.length()-2);
+					if(prefix2.equals(token1)) {
+						matchingTokens++;
+					}
+				}
+			}
+			if(matchingTokens == tokens1.length) {
 				return true;
 			}
 		}

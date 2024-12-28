@@ -975,6 +975,16 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						before = before.substring(before.indexOf(")")+1, before.length());
 					}
 				}
+				if(replacement instanceof MethodInvocationReplacement) {
+					MethodInvocationReplacement r = (MethodInvocationReplacement)replacement;
+					AbstractCall callBefore = r.getInvokedOperationBefore();
+					AbstractCall callAfter = r.getInvokedOperationAfter();
+					int indexOfArgument1 = callBefore.arguments().indexOf(variableName);
+					if(indexOfArgument1 != -1 && callBefore.arguments().size() == callAfter.arguments().size()) {
+						before = variableName;
+						after = callAfter.arguments().get(indexOfArgument1);
+					}
+				}
 				if(before.startsWith(variableName + ".")) {
 					String suffixBefore = before.substring(variableName.length(), before.length());
 					if(after.endsWith(suffixBefore) || after.contains(suffixBefore)) {

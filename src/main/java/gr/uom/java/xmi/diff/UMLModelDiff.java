@@ -4864,7 +4864,8 @@ public class UMLModelDiff {
 						firstMappers.clear();
 						firstMappers.add(bestMapper);
 					}
-					for(UMLOperationBodyMapper firstMapper : firstMappers) {
+					List<UMLOperationBodyMapper> filteredFirstMappers = promoteSameSourceFolderMoves(firstMappers);
+					for(UMLOperationBodyMapper firstMapper : filteredFirstMappers) {
 						UMLOperation removedOperation = firstMapper.getOperation1();
 						if(sameSourceAndTargetClass) {
 							removedOperations.remove(removedOperation);
@@ -4971,7 +4972,8 @@ public class UMLModelDiff {
 						firstMappers.clear();
 						firstMappers.add(bestMapper);
 					}
-					for(UMLOperationBodyMapper firstMapper : firstMappers) {
+					List<UMLOperationBodyMapper> filteredFirstMappers = promoteSameSourceFolderMoves(firstMappers);
+					for(UMLOperationBodyMapper firstMapper : filteredFirstMappers) {
 						UMLOperation addedOperation = firstMapper.getOperation2();
 						if(sameSourceAndTargetClass) {
 							addedOperations.remove(addedOperation);
@@ -4982,6 +4984,42 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private List<UMLOperationBodyMapper> promoteSameSourceFolderMoves(List<UMLOperationBodyMapper> firstMappers) {
+		List<UMLOperationBodyMapper> list = new ArrayList<UMLOperationBodyMapper>(firstMappers);
+		//filter based on source folder
+		for(int i=0; i<firstMappers.size(); i++) {
+			UMLOperationBodyMapper mapperI = firstMappers.get(i);
+			boolean sameSourceFolderI = mapperI.getContainer1().getLocationInfo().getSourceFolder().equals(mapperI.getContainer2().getLocationInfo().getSourceFolder());
+			if(sameSourceFolderI) {
+				for(int j=i+1; j<firstMappers.size(); j++) {
+					UMLOperationBodyMapper mapperJ = firstMappers.get(j);
+					boolean sameSourceFolderJ = mapperJ.getContainer1().getLocationInfo().getSourceFolder().equals(mapperJ.getContainer2().getLocationInfo().getSourceFolder());
+					if(mapperI.toString().equals(mapperJ.toString()) && !sameSourceFolderJ) {
+						list.remove(mapperJ);
+					}
+				}
+			}
+		}
+		List<UMLOperationBodyMapper> list2 = new ArrayList<UMLOperationBodyMapper>(list);
+		//filter based on signature
+		for(int i=0; i<list.size(); i++) {
+			UMLOperationBodyMapper mapperI = list.get(i);
+			boolean sameSignatureI = mapperI.getContainer1() instanceof UMLOperation && mapperI.getContainer2() instanceof UMLOperation ?
+					((UMLOperation)mapperI.getContainer1()).equalSignature((UMLOperation)mapperI.getContainer2()) : false;
+			if(sameSignatureI) {
+				for(int j=i+1; j<list.size(); j++) {
+					UMLOperationBodyMapper mapperJ = list.get(j);
+					boolean sameSignatureJ = mapperJ.getContainer1() instanceof UMLOperation && mapperJ.getContainer2() instanceof UMLOperation ?
+							((UMLOperation)mapperJ.getContainer1()).equalSignature((UMLOperation)mapperJ.getContainer2()) : false;
+					if(!sameSignatureJ) {
+						list2.remove(mapperJ);
+					}
+				}
+			}
+		}
+		return list2;
 	}
 
 	private void createRefactoring(UMLOperation removedOperation, UMLOperation addedOperation,

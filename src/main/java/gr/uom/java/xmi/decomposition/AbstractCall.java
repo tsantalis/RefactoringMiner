@@ -588,7 +588,9 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private boolean oneNameContainsTheOther(AbstractCall call) {
-		return this.getName().contains(call.getName()) || call.getName().contains(this.getName());
+		return this.getName().contains(call.getName()) || call.getName().contains(this.getName()) ||
+				this.getName().toLowerCase().contains(call.getName().toLowerCase()) ||
+				call.getName().toLowerCase().contains(this.getName().toLowerCase());
 	}
 
 	public boolean renamedWithIdenticalArgumentsAndNoExpression(AbstractCall call, double distance, List<UMLOperationBodyMapper> lambdaMappers) {
@@ -927,6 +929,24 @@ public abstract class AbstractCall extends LeafExpression {
 			if(argumentIndex1 != -1 && argumentIndex2 != -1 && argumentIndex1 == argumentIndex2) {
 				Set<String> argumentIntersection = argumentIntersection(call);
 				if(argumentIntersection.size() == arguments().size()-1 && argumentIntersection.size() == call.arguments().size()-1) {
+					return true;
+				}
+			}
+		}
+		else if(getExpression() == null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOther(call))) {
+			int argumentIndex1 = arguments().indexOf(call.getExpression());
+			if(argumentIndex1 != -1) {
+				Set<String> argumentIntersection = argumentIntersection(call);
+				if(argumentIntersection.size() == arguments().size()-1 && argumentIntersection.size() == call.arguments().size()) {
+					return true;
+				}
+			}
+		}
+		else if(getExpression() != null && call.getExpression() == null && (identicalName(call) || oneNameContainsTheOther(call))) {
+			int argumentIndex2 = call.arguments().indexOf(getExpression());
+			if(argumentIndex2 != -1) {
+				Set<String> argumentIntersection = argumentIntersection(call);
+				if(argumentIntersection.size() == arguments().size() && argumentIntersection.size() == call.arguments().size()-1) {
 					return true;
 				}
 			}

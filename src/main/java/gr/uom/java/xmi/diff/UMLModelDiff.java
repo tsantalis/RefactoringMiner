@@ -2257,7 +2257,7 @@ public class UMLModelDiff {
 			}
 			for(UMLRealization addedRealization : addedRealizations) {
 				String supplier = addedRealization.getSupplier();
-				boolean conflict = conflictingSourceFolders.containsKey(supplier) && nonConflictingSourceFolders.containsKey(supplier);
+				boolean conflict = conflictingSourceFolders.containsKey(supplier) && nonConflictingSourceFolders.containsKey(supplier) && conflictingSourceFolders.get(supplier) == nonConflictingSourceFolders.get(supplier);
 				if(conflict && !addedClass.getLocationInfo().getSourceFolder().equals(addedRealization.getClient().getLocationInfo().getSourceFolder())) {
 					continue;
 				}

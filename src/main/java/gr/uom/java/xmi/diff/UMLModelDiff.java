@@ -2238,8 +2238,29 @@ public class UMLModelDiff {
 					processAddedGeneralization(addedClass, subclassSetBefore, subclassSetAfter, addedGeneralization);
 				}
 			}
+			Map<String, Integer> nonConflictingSourceFolders = new LinkedHashMap<String, Integer>();
+			Map<String, Integer> conflictingSourceFolders = new LinkedHashMap<String, Integer>();
 			for(UMLRealization addedRealization : addedRealizations) {
 				String supplier = addedRealization.getSupplier();
+				if(addedClass.getLocationInfo().getSourceFolder().equals(addedRealization.getClient().getLocationInfo().getSourceFolder())) {
+					if(nonConflictingSourceFolders.containsKey(supplier))
+						nonConflictingSourceFolders.put(supplier, nonConflictingSourceFolders.get(supplier) + 1);
+					else
+						nonConflictingSourceFolders.put(supplier, 1);
+				}
+				else {
+					if(conflictingSourceFolders.containsKey(supplier))
+						conflictingSourceFolders.put(supplier, conflictingSourceFolders.get(supplier) + 1);
+					else
+						conflictingSourceFolders.put(supplier, 1);
+				}
+			}
+			for(UMLRealization addedRealization : addedRealizations) {
+				String supplier = addedRealization.getSupplier();
+				boolean conflict = conflictingSourceFolders.containsKey(supplier) && nonConflictingSourceFolders.containsKey(supplier);
+				if(conflict && !addedClass.getLocationInfo().getSourceFolder().equals(addedRealization.getClient().getLocationInfo().getSourceFolder())) {
+					continue;
+				}
 				if(looksLikeSameType(supplier, addedClassName) && topLevelOrSameOuterClass(addedClass, addedRealization.getClient()) && getAddedClass(addedRealization.getClient().getName()) == null) {
 					UMLClassBaseDiff clientClassDiff = getUMLClassDiff(addedRealization.getClient().getName());
 					int implementedInterfaceOperations = 0;

@@ -2503,21 +2503,31 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 		UMLOperationBodyMapper bestMapper = mapperSet.first();
 		VariableDeclarationContainer bestMapperOperation1 = bestMapper.getContainer1();
 		VariableDeclarationContainer bestMapperOperation2 = bestMapper.getContainer2();
+		int bestCommonParameterTypes = bestMapperOperation1.commonParameterTypes(bestMapperOperation2).size();
+		VariableDeclarationContainer secondBestMapperOperation1 = mapperList.size() > 1 ?  mapperList.get(1).getContainer1() : null;
+		VariableDeclarationContainer secondBestMapperOperation2 = mapperList.size() > 1 ?  mapperList.get(1).getContainer2() : null;
+		boolean secondBestMapperEqualSignatureWithCommonParameterTypes = secondBestMapperOperation1 != null && secondBestMapperOperation2 != null ?
+				equalSignatureWithCommonParameterTypes(secondBestMapperOperation1, secondBestMapperOperation2) : false;
+		int secondBestCommontParameterTypes = secondBestMapperOperation1 != null && secondBestMapperOperation2 != null ?
+				secondBestMapperOperation1.commonParameterTypes(secondBestMapperOperation2).size() : 0;
 		boolean identicalBodyWithOperation1OfTheBestMapper = identicalBodyWithAnotherAddedMethod(bestMapper);
 		boolean identicalBodyWithOperation2OfTheBestMapper = identicalBodyWithAnotherRemovedMethod(bestMapper);
 		if(equalSignatureWithCommonParameterTypes(bestMapperOperation1, bestMapperOperation2) &&
+				!(secondBestMapperEqualSignatureWithCommonParameterTypes && secondBestCommontParameterTypes > bestCommonParameterTypes) &&
 				!identicalBodyWithOperation1OfTheBestMapper && !identicalBodyWithOperation2OfTheBestMapper) {
 			return bestMapper;
 		}
 		for(int i=1; i<mapperList.size(); i++) {
 			UMLOperationBodyMapper mapper = mapperList.get(i);
-			if(checkForCalls(mapper)) {
+			boolean equalSignatureWithCommonParameterTypes = equalSignatureWithCommonParameterTypes(mapper.getContainer1(), mapper.getContainer2());
+			if(checkForCalls(mapper) || equalSignatureWithCommonParameterTypes) {
+				int commonParameterTypes = mapper.getContainer1().commonParameterTypes(mapper.getContainer2()).size();
 				VariableDeclarationContainer operation2 = mapper.getContainer2();
 				List<AbstractCall> operationInvocations2 = operation2.getAllOperationInvocations();
 				boolean anotherMapperCallsOperation2OfTheBestMapper = false;
 				for(AbstractCall invocation : operationInvocations2) {
 					if(invocation.matchesOperation(bestMapper.getContainer2(), operation2, this, modelDiff) && !invocation.matchesOperation(bestMapper.getContainer1(), operation2, this, modelDiff) &&
-							!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations) &&
+							(!operationContainsMethodInvocationWithTheSameNameAndCommonArguments(invocation, removedOperations) || commonParameterTypes > bestCommonParameterTypes) &&
 							(invocation.getExpression() == null || invocation.getExpression().equals("this"))) {
 						boolean skip = false;
 						for(UMLOperationBodyMapper m : operationBodyMapperList) {

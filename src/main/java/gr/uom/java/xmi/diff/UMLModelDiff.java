@@ -5080,7 +5080,14 @@ public class UMLModelDiff {
 		}
 		else if(removedOperation.isConstructor() == addedOperation.isConstructor() &&
 				movedAndRenamedMethodSignature(removedOperation, addedOperation, firstMapper, multipleMappers) && !refactoringListContainsAnotherMoveRefactoringWithTheSameOperations(removedOperation, addedOperation)) {
-			refactoring = new MoveOperationRefactoring(firstMapper);
+			if(removedOperation.isConstructor()) {
+				if(firstMapper.getContainer1().getLocationInfo().getSourceFolder().equals(firstMapper.getContainer2().getLocationInfo().getSourceFolder())) {
+					refactoring = new MoveOperationRefactoring(firstMapper);
+				}
+			}
+			else {
+				refactoring = new MoveOperationRefactoring(firstMapper);
+			}
 		}
 		if(refactoring != null) {
 			deleteRemovedOperation(removedOperation);

@@ -588,6 +588,10 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	private boolean oneNameContainsTheOther(AbstractCall call) {
+		return this.getName().contains(call.getName()) || call.getName().contains(this.getName());
+	}
+
+	private boolean oneNameContainsTheOtherLowerCase(AbstractCall call) {
 		return this.getName().contains(call.getName()) || call.getName().contains(this.getName()) ||
 				this.getName().toLowerCase().contains(call.getName().toLowerCase()) ||
 				call.getName().toLowerCase().contains(this.getName().toLowerCase());
@@ -923,7 +927,7 @@ public abstract class AbstractCall extends LeafExpression {
 	}
 
 	public boolean identicalWithExpressionArgumentSwap(AbstractCall call) {
-		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOther(call))) {
+		if(getExpression() != null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOtherLowerCase(call))) {
 			int argumentIndex1 = arguments().indexOf(call.getExpression());
 			int argumentIndex2 = call.arguments().indexOf(getExpression());
 			if(argumentIndex1 != -1 && argumentIndex2 != -1 && argumentIndex1 == argumentIndex2) {
@@ -933,7 +937,7 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 		}
-		else if(getExpression() == null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOther(call))) {
+		else if(getExpression() == null && call.getExpression() != null && (identicalName(call) || oneNameContainsTheOtherLowerCase(call))) {
 			int argumentIndex1 = arguments().indexOf(call.getExpression());
 			if(argumentIndex1 != -1) {
 				Set<String> argumentIntersection = argumentIntersection(call);
@@ -942,7 +946,7 @@ public abstract class AbstractCall extends LeafExpression {
 				}
 			}
 		}
-		else if(getExpression() != null && call.getExpression() == null && (identicalName(call) || oneNameContainsTheOther(call))) {
+		else if(getExpression() != null && call.getExpression() == null && (identicalName(call) || oneNameContainsTheOtherLowerCase(call))) {
 			int argumentIndex2 = call.arguments().indexOf(getExpression());
 			if(argumentIndex2 != -1) {
 				Set<String> argumentIntersection = argumentIntersection(call);

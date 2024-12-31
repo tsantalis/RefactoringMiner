@@ -323,11 +323,12 @@ public class InlineOperationDetection {
 			}
 		}
 		List<AbstractCodeMapping> exactMatchList = operationBodyMapper.getExactMatches();
+		boolean exactMatchForInt = exactMatchList.size() == 1 && exactMatchList.get(0).getFragment1().getString().startsWith("for(int i=0;");
 		List<AbstractCodeMapping> exactMatchListWithoutMatchesInNestedContainers = operationBodyMapper.getExactMatchesWithoutMatchesInNestedContainers();
 		int exactMatches = exactMatchList.size();
 		int exactMatchesWithoutMatchesInNestedContainers = exactMatchListWithoutMatchesInNestedContainers.size();
 		return mappings > 0 && (mappings > nonMappedElementsT1 ||
-				(exactMatches >= mappings && nonMappedElementsT2 == 0) ||
+				(exactMatches >= mappings && !exactMatchForInt && nonMappedElementsT2 == 0) ||
 				(exactMatchesWithoutMatchesInNestedContainers == 1 && !exactMatchListWithoutMatchesInNestedContainers.get(0).getFragment1().throwsNewException() && nonMappedElementsT1-exactMatchesWithoutMatchesInNestedContainers < 10) ||
 				(exactMatches > 1 && nonMappedElementsT1-exactMatches < 20));
 	}

@@ -2587,6 +2587,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			CompositeStatementObject composite2 = addedOperationBody.getCompositeStatement();
 			List<AbstractCodeFragment> leaves1 = leaves1Sublist.isPresent() ? leaves1Sublist.get() : operationBodyMapper.getNonMappedLeavesT1();
 			List<CompositeStatementObject> innerNodes1 = leaves1Sublist.isPresent() ? new ArrayList<>() : operationBodyMapper.getNonMappedInnerNodesT1();
+			for(Pair<AbstractCodeFragment, UMLComment> pair : operationBodyMapper.getCommentedCode()) {
+				if(leaves1.contains(pair.getLeft())) {
+					leaves1.remove(pair.getLeft());
+				}
+				if(innerNodes1.contains(pair.getLeft())) {
+					innerNodes1.remove(pair.getLeft());
+				}
+			}
 			//adding leaves that were mapped with replacements
 			Set<AbstractCodeFragment> addedLeaves1 = new LinkedHashSet<AbstractCodeFragment>();
 			Set<CompositeStatementObject> addedInnerNodes1 = new LinkedHashSet<CompositeStatementObject>();
@@ -3594,6 +3602,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		return composites;
+	}
+
+	public boolean containsOnlyBlockMappings() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				count++;
+			}
+		}
+		return count > 0 && count == getMappings().size();
 	}
 
 	public int mappingsWithoutBlocks() {
@@ -10494,7 +10512,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		if(parent1 != null && parent2 != null) {
 			for(AbstractCodeMapping previousMapping : this.mappings) {
 				if(previousMapping.getFragment1().equals(parent1) && previousMapping.getFragment2().equals(parent2)) {
-					return true;
+					boolean isMethodBodyBlock1 = parent1.getParent() == null;
+					boolean isMethodBodyBlock2 = parent2.getParent() == null;
+					if(isMethodBodyBlock1 == isMethodBodyBlock2) {
+						return true;
+					}
 				}
 			}
 			if(parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {

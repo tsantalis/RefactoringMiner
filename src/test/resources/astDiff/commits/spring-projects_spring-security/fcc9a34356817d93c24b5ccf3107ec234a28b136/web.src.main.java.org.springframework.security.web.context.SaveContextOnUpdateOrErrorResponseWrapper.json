@@ -1160,6 +1160,61 @@
   "secondLabel" : "",
   "firstParentType" : "TypeDeclaration",
   "secondParentType" : "TypeDeclaration",
+  "firstPos" : 2030,
+  "secondPos" : 1322,
+  "firstEndPos" : 2077,
+  "secondEndPos" : 1357
+}, {
+  "firstType" : "Modifier",
+  "secondType" : "Modifier",
+  "firstLabel" : "private",
+  "secondLabel" : "private",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 2030,
+  "secondPos" : 1322,
+  "firstEndPos" : 2037,
+  "secondEndPos" : 1329
+}, {
+  "firstType" : "PrimitiveType",
+  "secondType" : "PrimitiveType",
+  "firstLabel" : "boolean",
+  "secondLabel" : "boolean",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 2038,
+  "secondPos" : 1330,
+  "firstEndPos" : 2045,
+  "secondEndPos" : 1337
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "disableSaveOnResponseCommitted",
+  "secondLabel" : "disableOnCommitted",
+  "firstParentType" : "VariableDeclarationFragment",
+  "secondParentType" : "VariableDeclarationFragment",
+  "firstPos" : 2046,
+  "secondPos" : 1338,
+  "firstEndPos" : 2076,
+  "secondEndPos" : 1356
+}, {
+  "firstType" : "VariableDeclarationFragment",
+  "secondType" : "VariableDeclarationFragment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldDeclaration",
+  "secondParentType" : "FieldDeclaration",
+  "firstPos" : 2046,
+  "secondPos" : 1338,
+  "firstEndPos" : 2076,
+  "secondEndPos" : 1356
+}, {
+  "firstType" : "FieldDeclaration",
+  "secondType" : "FieldDeclaration",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
   "firstPos" : 2083,
   "secondPos" : 1867,
   "firstEndPos" : 2120,
@@ -2052,9 +2107,75 @@
   "firstParentType" : "Block",
   "secondParentType" : "Block",
   "firstPos" : 3044,
-  "secondPos" : 2803,
+  "secondPos" : 2666,
   "firstEndPos" : 3087,
-  "secondEndPos" : 2832
+  "secondEndPos" : 2697
+}, {
+  "firstType" : "Assignment",
+  "secondType" : "Assignment",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "ExpressionStatement",
+  "secondParentType" : "ExpressionStatement",
+  "firstPos" : 3044,
+  "secondPos" : 2666,
+  "firstEndPos" : 3086,
+  "secondEndPos" : 2696
+}, {
+  "firstType" : "FieldAccess",
+  "secondType" : "FieldAccess",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 3044,
+  "secondPos" : 2666,
+  "firstEndPos" : 3079,
+  "secondEndPos" : 2689
+}, {
+  "firstType" : "ThisExpression",
+  "secondType" : "ThisExpression",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "FieldAccess",
+  "firstPos" : 3044,
+  "secondPos" : 2666,
+  "firstEndPos" : 3048,
+  "secondEndPos" : 2670
+}, {
+  "firstType" : "SimpleName",
+  "secondType" : "SimpleName",
+  "firstLabel" : "disableSaveOnResponseCommitted",
+  "secondLabel" : "disableOnCommitted",
+  "firstParentType" : "FieldAccess",
+  "secondParentType" : "FieldAccess",
+  "firstPos" : 3049,
+  "secondPos" : 2671,
+  "firstEndPos" : 3079,
+  "secondEndPos" : 2689
+}, {
+  "firstType" : "ASSIGNMENT_OPERATOR",
+  "secondType" : "ASSIGNMENT_OPERATOR",
+  "firstLabel" : "=",
+  "secondLabel" : "=",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 3080,
+  "secondPos" : 2690,
+  "firstEndPos" : 3081,
+  "secondEndPos" : 2691
+}, {
+  "firstType" : "BooleanLiteral",
+  "secondType" : "BooleanLiteral",
+  "firstLabel" : "true",
+  "secondLabel" : "true",
+  "firstParentType" : "Assignment",
+  "secondParentType" : "Assignment",
+  "firstPos" : 3082,
+  "secondPos" : 2692,
+  "firstEndPos" : 3086,
+  "secondEndPos" : 2696
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -2264,6 +2385,17 @@
   "secondPos" : 2895,
   "firstEndPos" : 3426,
   "secondEndPos" : 3035
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the session is updated before calling the",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3331,
+  "secondPos" : 2895,
+  "firstEndPos" : 3383,
+  "secondEndPos" : 2906
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2495,6 +2627,17 @@
   "secondPos" : 3203,
   "firstEndPos" : 3681,
   "secondEndPos" : 3343
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the session is updated before calling the",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3586,
+  "secondPos" : 3203,
+  "firstEndPos" : 3638,
+  "secondEndPos" : 3214
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2785,6 +2928,17 @@
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "Makes sure the context is stored before calling the",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 3858,
+  "secondPos" : 3528,
+  "firstEndPos" : 3909,
+  "secondEndPos" : 3539
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the context is stored before calling the",
   "secondLabel" : " is invoked before calling the",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
@@ -3027,6 +3181,17 @@
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "Makes sure the context is stored before calling <code>getOutputStream().close()</code> or",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4136,
+  "secondPos" : 3860,
+  "firstEndPos" : 4225,
+  "secondEndPos" : 3871
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the context is stored before calling <code>getOutputStream().close()</code> or",
   "secondLabel" : "<code>getOutputStream().close()</code> or <code>getOutputStream().flush()</code>",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
@@ -3247,6 +3412,17 @@
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : "Makes sure the context is stored before calling <code>getWriter().close()</code> or",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4462,
+  "secondPos" : 4244,
+  "firstEndPos" : 4545,
+  "secondEndPos" : 4255
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the context is stored before calling <code>getWriter().close()</code> or",
   "secondLabel" : "<code>getWriter().close()</code> or <code>getWriter().flush()</code>",
   "firstParentType" : "TagElement",
   "secondParentType" : "TagElement",
@@ -3463,6 +3639,17 @@
   "secondPos" : 4580,
   "firstEndPos" : 4844,
   "secondEndPos" : 4722
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "Makes sure the context is stored before calling the",
+  "secondLabel" : "Makes sure ",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4748,
+  "secondPos" : 4580,
+  "firstEndPos" : 4799,
+  "secondEndPos" : 4591
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",

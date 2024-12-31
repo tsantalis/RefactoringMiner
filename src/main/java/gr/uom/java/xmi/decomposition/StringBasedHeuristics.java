@@ -2156,6 +2156,16 @@ public class StringBasedHeuristics {
 						assignment1.equals(replacement.getBefore()) &&
 						assignment2.equals(replacement.getAfter()))
 					classInstanceCreationReplacement = true;
+				else if(replacement instanceof MethodInvocationReplacement) {
+					AbstractCall invocationBefore = ((MethodInvocationReplacement)replacement).getInvokedOperationBefore();
+					AbstractCall invocationAfter = ((MethodInvocationReplacement)replacement).getInvokedOperationAfter();
+					if((assignment1.equals(replacement.getBefore()) || assignment1.equals(invocationBefore.actualString())) &&
+							(assignment2.equals(replacement.getAfter()) || assignment2.equals(invocationAfter.actualString()))) {
+						if(!invocationBefore.getName().contains(invocationAfter.getName()) && !invocationAfter.getName().contains(invocationBefore.getName())) {
+							rightHandSideReplacement = true;
+						}
+					}
+				}
 			}
 			if(inv1 != null && inv2 != null) {
 				equalArguments = inv1.equalArguments(inv2) && inv1.arguments().size() > 0;

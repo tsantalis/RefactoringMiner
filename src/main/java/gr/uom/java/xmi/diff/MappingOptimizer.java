@@ -547,7 +547,7 @@ public class MappingOptimizer {
 			if(ref instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring refactoring = (ExtractOperationRefactoring)ref;
 				if(updatedMappers.contains(refactoring.getBodyMapper())) {
-					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0 || refactoring.getBodyMapper().containsOnlyBlockMappings()) {
 						refactoringsToBeRemoved.add(refactoring);
 					}
 					else {
@@ -558,7 +558,7 @@ public class MappingOptimizer {
 			else if(ref instanceof InlineOperationRefactoring) {
 				InlineOperationRefactoring refactoring = (InlineOperationRefactoring)ref;
 				if(updatedMappers.contains(refactoring.getBodyMapper())) {
-					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0 || refactoring.getBodyMapper().containsOnlyBlockMappings()) {
 						refactoringsToBeRemoved.add(refactoring);
 					}
 					else {
@@ -569,7 +569,7 @@ public class MappingOptimizer {
 			else if(ref instanceof MoveCodeRefactoring) {
 				MoveCodeRefactoring refactoring = (MoveCodeRefactoring)ref;
 				if(updatedMappers.contains(refactoring.getBodyMapper())) {
-					if(refactoring.getBodyMapper().getMappings().size() == 0) {
+					if(refactoring.getBodyMapper().getMappings().size() == 0 || refactoring.getBodyMapper().containsOnlyBlockMappings()) {
 						refactoringsToBeRemoved.add(refactoring);
 					}
 					else {

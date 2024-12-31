@@ -1277,6 +1277,49 @@ public abstract class AbstractCall extends LeafExpression {
 				return true;
 			}
 		}
+		String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);
+		String reservedTokens2 = ReplacementUtil.keepReservedTokens(s2);
+		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s1);
+		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(s2);
+		List<String> tokenList1 = new ArrayList<String>();
+		for(String token : tokens1) {
+			if(token.contains("(") && !token.contains("()")) {
+				String prefix = token.substring(0, token.indexOf("("));
+				String suffix = token.substring(token.indexOf("(")+1, token.length());
+				tokenList1.add(prefix);
+				tokenList1.add(suffix);
+			}
+			else {
+				tokenList1.add(token);
+			}
+		}
+		List<String> tokenList2 = new ArrayList<String>();
+		for(String token : tokens2) {
+			if(token.contains("(") && !token.contains("()")) {
+				String prefix = token.substring(0, token.indexOf("("));
+				String suffix = token.substring(token.indexOf("(")+1, token.length());
+				tokenList2.add(prefix);
+				tokenList2.add(suffix);
+			}
+			else {
+				tokenList2.add(token);
+			}
+		}
+		int commonTokens = 0;
+		for(int i=0; i<tokenList1.size(); i++) {
+			String tokenI = tokenList1.get(i);
+			for(int j=i; j<tokenList2.size(); j++) {
+				String tokenJ = tokenList2.get(j);
+				if(tokenI.equals(tokenJ) || tokenI.toLowerCase().equals(tokenJ.toLowerCase())) {
+					commonTokens++;
+					break;
+				}
+			}
+		}
+		if(commonTokens >= Math.min(tokenList1.size(), tokenList2.size()) &&
+				!reservedTokens1.isEmpty() && reservedTokens1.equals(reservedTokens2)) {
+			return true;
+		}
 		return false;
 	}
 

@@ -3614,6 +3614,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return count > 0 && count == getMappings().size();
 	}
 
+	public boolean containsOnlySystemCalls() {
+		int count = 0;
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getFragment1().getString().startsWith("System.") && mapping.getFragment2().getString().startsWith("System.") &&
+					!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				count++;
+			}
+			else if(mapping.getFragment1().getString().startsWith(JAVA.THROW_SPACE + "new") && mapping.getFragment2().getString().startsWith(JAVA.THROW_SPACE + "new") &&
+					!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				count++;
+			}
+			else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+				count++;
+			}
+			else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.FINALLY_BLOCK)) {
+				count++;
+			}
+			else if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.IF_STATEMENT) &&
+					!mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				count++;
+			}
+		}
+		return count > 0 && count == getMappings().size();
+	}
+
 	public int mappingsWithoutBlocks() {
 		int count = 0;
 		Set<LeafMapping> subExpressionMappings = new LinkedHashSet<>();

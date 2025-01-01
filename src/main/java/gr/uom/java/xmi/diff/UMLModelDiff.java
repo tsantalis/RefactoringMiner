@@ -4623,6 +4623,9 @@ public class UMLModelDiff {
 
 	private boolean extractAndMoveMatchCondition(UMLOperationBodyMapper operationBodyMapper, UMLOperationBodyMapper parentMapper, AbstractCall addedOperationInvocation) {
 		List<AbstractCodeMapping> mappingList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getMappings());
+		if(operationBodyMapper.containsOnlySystemCalls()) {
+			return false;
+		}
 		if(operationBodyMapper.getContainer2().isGetter() && mappingList.size() == 1) {
 			List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());
 			for(AbstractCodeMapping mapping : parentMappingList) {

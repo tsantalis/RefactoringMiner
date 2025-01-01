@@ -4364,8 +4364,8 @@ public class UMLModelDiff {
 								}
 							}
 						}
-						if(addedOperationInvocations.size() > 0) {
-							AbstractCall addedOperationInvocation = addedOperationInvocations.get(0);
+						for(AbstractCall addedOperationInvocation : addedOperationInvocations) {
+							//AbstractCall addedOperationInvocation = addedOperationInvocations.get(0);
 							UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
 									mapper, className, addedOperationInvocation, Optional.empty());
 							if(!anotherAddedMethodExistsWithBetterMatchingInvocationExpression(addedOperationInvocation, addedOperation, addedOperations) &&
@@ -4538,19 +4538,70 @@ public class UMLModelDiff {
 				}
 			}
 		}
-		/*else if(expression != null && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(expression)) {
+		else if(expression != null && childFieldDeclarationMap != null && childFieldDeclarationMap.containsKey(expression)) {
 			VariableDeclaration variableDeclaration = childFieldDeclarationMap.get(expression);
-			UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());
 			UMLType type = variableDeclaration.getType();
-			boolean superclassRelationship = false;
-			if(classDiff != null && type != null && classDiff.getNewSuperclass() != null &&
-					classDiff.getNewSuperclass().equals(type)) {
-				superclassRelationship = true;
+			boolean superclassRelationship = superclassRelationship(addedOperation, type);
+			String addedOperationClassName = addedOperation.getNonQualifiedClassName();
+			String addedOperationFullQualifiedClassName = addedOperation.getClassName().substring(0, addedOperation.getClassName().lastIndexOf(addedOperationClassName)-1);
+			String outerClassName = null;
+			if(addedOperationFullQualifiedClassName.contains(".")) {
+				String name = addedOperationFullQualifiedClassName.substring(addedOperationFullQualifiedClassName.lastIndexOf(".")+1, addedOperationFullQualifiedClassName.length());
+				if(name.length() > 0 && Character.isUpperCase(name.charAt(0))) {
+					outerClassName = name;
+				}
 			}
-			if(type != null && !addedOperation.getNonQualifiedClassName().equals(type.getClassType()) && !superclassRelationship) {
+			if(type != null && !addedOperationClassName.equals(type.getClassType()) && !type.getClassType().equals(outerClassName) && !superclassRelationship) {
 				return true;
 			}
-		}*/
+		}
+		return false;
+	}
+
+	private boolean superclassRelationship(UMLOperation addedOperation, UMLType type) {
+		UMLClassBaseDiff classDiff = getUMLClassDiff(addedOperation.getClassName());
+		if(classDiff != null && type != null) {
+			if(classDiff.getNewSuperclass() != null && classDiff.getNewSuperclass().equals(type)) {
+				return true;
+			}
+			for(UMLType interfaceType : classDiff.getNextClass().getImplementedInterfaces()) {
+				if(interfaceType.equals(type)) {
+					return true;
+				}
+			}
+			
+		}
+		UMLClassBaseDiff delegateClassDiff = getUMLClassDiff(type);
+		if(delegateClassDiff != null && type != null) {
+			//check for possible delegation
+			for(UMLOperation operation : delegateClassDiff.getAddedOperations()) {
+				List<AbstractCall> invocations = operation.getAllOperationInvocations();
+				for(AbstractCall invocation : invocations) {
+					if(invocation.matchesOperation(addedOperation, operation, delegateClassDiff, this)) {
+						return true;
+					}
+				}
+			}
+			for(UMLOperationBodyMapper mapper : delegateClassDiff.getOperationBodyMapperList()) {
+				List<AbstractCall> invocations = mapper.getContainer2().getAllOperationInvocations();
+				for(AbstractCall invocation : invocations) {
+					if(invocation.matchesOperation(addedOperation, mapper.getContainer2(), delegateClassDiff, this)) {
+						return true;
+					}
+				}
+			}
+		}
+		UMLClass addedClass = getAddedClass(addedOperation.getClassName());
+		if(addedClass != null && type != null) {
+			if(addedClass.getSuperclass() != null && addedClass.getSuperclass().equals(type)) {
+				return true;
+			}
+			for(UMLType interfaceType : addedClass.getImplementedInterfaces()) {
+				if(interfaceType.equals(type)) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

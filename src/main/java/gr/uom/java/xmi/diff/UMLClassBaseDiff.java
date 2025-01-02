@@ -2031,7 +2031,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 	private void updateMapperSet(TreeSet<UMLOperationBodyMapper> mapperSet, UMLOperation removedOperation, UMLOperation addedOperation, int differenceInPosition) throws RefactoringMinerTimedOutException {
 		boolean mapperWithZeroNonMappedStatementsOrIdenticalMethodName = false;
 		for(UMLOperationBodyMapper mapper : mapperSet) {
-			if(mapper.getContainer1().getBodyHashCode() == mapper.getContainer2().getBodyHashCode()) {
+			if(mapper.getContainer1().getBody() != null && mapper.getContainer2().getBody() != null &&
+					mapper.getContainer1().getBodyHashCode() == mapper.getContainer2().getBodyHashCode()) {
 				return;
 			}
 			if(mapper.getContainer1().getName().equals(mapper.getContainer2().getName())) {

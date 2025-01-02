@@ -9764,6 +9764,21 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							return 1;
 						}
 					}
+					if(this.getContainer1().getJavadoc() != null && this.getContainer2().getJavadoc() != null &&
+							operationBodyMapper.getContainer1().getJavadoc() != null && operationBodyMapper.getContainer2().getJavadoc() != null) {
+						boolean thisCommonJavadoc = 
+								this.getContainer1().getJavadoc().getText().contains(this.getContainer2().getJavadoc().getText()) ||
+								this.getContainer2().getJavadoc().getText().contains(this.getContainer1().getJavadoc().getText());
+						boolean otherCommonJavadoc = 
+								operationBodyMapper.getContainer1().getJavadoc().getText().contains(operationBodyMapper.getContainer2().getJavadoc().getText()) ||
+								operationBodyMapper.getContainer2().getJavadoc().getText().contains(operationBodyMapper.getContainer1().getJavadoc().getText());
+						if(thisCommonJavadoc && !otherCommonJavadoc) {
+							return -1;
+						}
+						else if(!thisCommonJavadoc && otherCommonJavadoc) {
+							return 1;
+						}
+					}
 					int thisEditDistance = this.editDistance();
 					int otherEditDistance = operationBodyMapper.editDistance();
 					if(thisEditDistance != otherEditDistance) {

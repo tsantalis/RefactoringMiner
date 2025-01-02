@@ -1359,9 +1359,15 @@ public class UMLModelDiff {
 					matches.add(className);
 				}
 			}
+			AbstractCall invocationCoveringEntireStatement = fragment.invocationCoveringEntireFragment();
 			for(AbstractCall call : fragment.getMethodInvocations()) {
 				if(call.actualString().equals(s) && s.contains(className)) {
-					matches.add(className);
+					boolean skip = false;
+					if(invocationCoveringEntireStatement != null && invocationCoveringEntireStatement.actualString().equals(call.actualString())) {
+						skip = true;
+					}
+					if(!skip)
+						matches.add(className);
 				}
 			}
 		}

@@ -965,7 +965,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
-								if(!matchingInlinedOperationLeaf) {
+								boolean anotherExtractVariableWithSameInitializer = false;
+								for(Refactoring r : refactorings) {
+									if(r instanceof ExtractVariableRefactoring) {
+										ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
+										if(extract.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+											anotherExtractVariableWithSameInitializer = true;
+											break;
+										}
+									}
+								}
+								if(!matchingInlinedOperationLeaf && !anotherExtractVariableWithSameInitializer) {
 									ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
 									ref.addUnmatchedStatementReference(nonMappedLeaf1);
 									List<LeafExpression> subExpressions = nonMappedLeaf1.findExpression(initializer.getString());
@@ -1015,7 +1025,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
-								if(!matchingExtractedOperationLeaf) {
+								boolean anotherInlineVariableWithSameInitializer = false;
+								for(Refactoring r : refactorings) {
+									if(r instanceof InlineVariableRefactoring) {
+										InlineVariableRefactoring inline = (InlineVariableRefactoring)r;
+										if(inline.getVariableDeclaration().getInitializer().getString().contains(initializer.getString())) {
+											anotherInlineVariableWithSameInitializer = true;
+											break;
+										}
+									}
+								}
+								if(!matchingExtractedOperationLeaf && !anotherInlineVariableWithSameInitializer) {
 									InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, parentMapper != null);
 									ref.addUnmatchedStatementReference(nonMappedLeaf2);
 									List<LeafExpression> subExpressions = nonMappedLeaf2.findExpression(initializerAfterRename != null ? initializerAfterRename : initializer.getString());

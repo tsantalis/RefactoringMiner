@@ -9062,11 +9062,32 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 		}
+		boolean ownedByLambda1 = false;
+		CompositeStatementObject parent1 = minStatementMapping.getFragment1().getParent();
+		while(parent1 != null) {
+			if(parent1.getOwner().isPresent() && parent1.getOwner().get() instanceof LambdaExpressionObject) {
+				ownedByLambda1 = true;
+			}
+			parent1 = parent1.getParent();
+		}
+		boolean ownedByLambda2 = false;
+		CompositeStatementObject parent2 = minStatementMapping.getFragment2().getParent();
+		while(parent2 != null) {
+			if(parent2.getOwner().isPresent() && parent2.getOwner().get() instanceof LambdaExpressionObject) {
+				ownedByLambda2 = true;
+			}
+			parent2 = parent2.getParent();
+		}
 		for(Refactoring r : refactorings) {
 			if(r instanceof ExtractVariableRefactoring) {
 				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)r;
 				if(minStatementMapping.getFragment2().getVariableDeclarations().contains(extract.getVariableDeclaration())) {
-					conflictingMappingFound = true;
+					if(ownedByLambda1 == ownedByLambda2) {
+						conflictingMappingFound = true;
+					}
+					else {
+						refactorings.remove(r);
+					}
 					break;
 				}
 			}

@@ -9734,6 +9734,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					return Integer.compare(thisNonMapped, otherNonMapped);
 				}
 				else {
+					if(getOperation1() != null && getOperation2() != null && operationBodyMapper.getOperation1() != null && operationBodyMapper.getOperation2() != null) {
+						boolean thisEqualSignature = this.getOperation1().equalsIgnoringTypeParameters(this.getOperation2());
+						boolean otherEqualSignature = operationBodyMapper.getOperation1().equalsIgnoringTypeParameters(operationBodyMapper.getOperation2());
+						if(thisEqualSignature && !otherEqualSignature) {
+							return -1;
+						}
+						else if(!thisEqualSignature && otherEqualSignature) {
+							return 1;
+						}
+					}
 					int thisEditDistance = this.editDistance();
 					int otherEditDistance = operationBodyMapper.editDistance();
 					if(thisEditDistance != otherEditDistance) {

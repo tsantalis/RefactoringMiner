@@ -807,7 +807,7 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 		return false;
 	}
 
-	public boolean equalsIgoringTypeParameters(UMLOperation operation) {
+	public boolean equalsIgnoringTypeParameters(UMLOperation operation) {
 		boolean thisEmptyBody = this.getBody() == null || this.hasEmptyBody();
 		boolean otherEmptyBody = operation.getBody() == null || operation.hasEmptyBody();
 		return this.className.equals(operation.className) &&

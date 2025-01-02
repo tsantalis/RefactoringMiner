@@ -1793,7 +1793,13 @@ public class VariableReplacementAnalysis {
 					candidate.setRenamedVariableDeclaration(v2.getKey());
 				ExtractVariableRefactoring conflictingExtractVariableRefactoring = existsConflictingExtractVariableRefactoring(candidate);
 				if(conflictingExtractVariableRefactoring == null) {
-					this.candidateAttributeRenames.add(candidate);
+					boolean skip = false;
+					if(v1 != null && v2 == null && v1.getValue().isConstructor()) {
+						skip = true;
+					}
+					if(!skip) {
+						this.candidateAttributeRenames.add(candidate);
+					}
 				}
 				else {
 					for(LeafMapping mapping : conflictingExtractVariableRefactoring.getSubExpressionMappings()) {

@@ -200,7 +200,14 @@ public class ExtendedMultiMappingStore extends MultiMappingStore implements Iter
 		}
 	}
 
-	public void addWithMaps(MappingStore match,Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {
+	@Override
+	public void addMapping(Tree src, Tree dst) {
+		if (src == null || dst == null)
+			return;
+		super.addMapping(src, dst);
+	}
+
+	public void addWithMaps(MappingStore match, Map<Tree,Tree> srcCopy, Map<Tree,Tree> dstCopy) {
 		for (Mapping mapping : match) {
 			Tree realSrc = srcCopy.get(mapping.first);
 			Tree realDst = dstCopy.get(mapping.second);

@@ -3610,6 +3610,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK) && mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
 				count++;
 			}
+			else if(mapping.getFragment1().getVariables().size() == 1 && mapping.getFragment2().getVariables().size() == 1 &&
+					mapping.getFragment1().getString().equals(JAVA.RETURN_SPACE + mapping.getFragment1().getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION) &&
+					mapping.getFragment2().getString().equals(JAVA.RETURN_SPACE + mapping.getFragment2().getVariables().get(0).getString() + JAVA.STATEMENT_TERMINATION)) {
+				count++;
+			}
 		}
 		return count > 0 && count == getMappings().size();
 	}

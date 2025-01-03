@@ -3,6 +3,7 @@ package gr.uom.java.xmi.diff;
 import static gr.uom.java.xmi.Constants.JAVA;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -186,6 +187,14 @@ public abstract class UMLAbstractClassDiff {
 
 	public UMLModelDiff getModelDiff() {
 		return modelDiff;
+	}
+
+	public Set<String> commonPackagesInQualifiedName() {
+		List<String> packages1 = Arrays.asList(originalClass.getName().split("\\."));
+		List<String> packages2 = Arrays.asList(nextClass.getName().split("\\."));
+		Set<String> intersection = new LinkedHashSet<>(packages1);
+		intersection.retainAll(packages2);
+		return intersection;
 	}
 
 	protected void processAnnotations() {

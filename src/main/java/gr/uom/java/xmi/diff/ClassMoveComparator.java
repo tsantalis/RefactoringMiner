@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import java.util.Comparator;
+import java.util.Set;
 
 public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 
@@ -12,6 +13,11 @@ public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 			return -Integer.compare(matchedMembers1, matchedMembers2);
 		}
 		else {
+			Set<String> set1 = o1.commonPackagesInQualifiedName();
+			Set<String> set2 = o2.commonPackagesInQualifiedName();
+			if(set1.size() != set2.size()) {
+				return -Integer.compare(set1.size(), set2.size());
+			}
 			double sourceFolderDistance1 = o1.getMovedClass().normalizedSourceFolderDistance(o1.getOriginalClass());
 			double sourceFolderDistance2 = o2.getMovedClass().normalizedSourceFolderDistance(o2.getOriginalClass());
 			if(sourceFolderDistance1 != sourceFolderDistance2) {

@@ -21,7 +21,12 @@ public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 			int lineNumberDifference2 = Math.abs(o2.getOriginalClass().getLocationInfo().getCompilationUnitLength() - o2.getNextClass().getLocationInfo().getCompilationUnitLength());
 			boolean isEmpty1 = o1.getOriginalClass().isEmpty() && o1.getNextClass().isEmpty();
 			boolean isEmpty2 = o2.getOriginalClass().isEmpty() && o2.getNextClass().isEmpty();
+			boolean topLevelClass1 = o1.getOriginalClass().isTopLevel() && o1.getNextClass().isTopLevel();
+			boolean topLevelClass2 = o2.getOriginalClass().isTopLevel() && o2.getNextClass().isTopLevel();
 			if(set1.size() != set2.size() && !isEmpty1 && !isEmpty2) {
+				if(sameNumberOfLines1 == sameNumberOfLines2 && !topLevelClass1 && !topLevelClass2) {
+					return -Integer.compare(set1.size(), set2.size());
+				}
 				if(lineNumberDifference1 == lineNumberDifference2)
 					return -Integer.compare(set1.size(), set2.size());
 				else {

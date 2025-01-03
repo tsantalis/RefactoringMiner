@@ -18,6 +18,7 @@ public class LocationInfo {
 	private int startColumn;
 	private int endLine;
 	private int endColumn;
+	private int compilationUnitLength;
 	private CodeElementType codeElementType;
 	
 	public LocationInfo(CompilationUnit cu, String sourceFolder, String filePath, ASTNode node, CodeElementType codeElementType) {
@@ -47,6 +48,12 @@ public class LocationInfo {
 		//convert to 1-based
 		if(this.endColumn > 0) {
 			this.endColumn += 1;
+		}
+		
+		int cuEndOffset = cu.getStartPosition() + cu.getLength();
+		this.compilationUnitLength = cu.getLineNumber(cuEndOffset);
+		if(this.compilationUnitLength == -1) {
+			this.compilationUnitLength = cu.getLineNumber(cuEndOffset-1);
 		}
 	}
 
@@ -84,6 +91,10 @@ public class LocationInfo {
 
 	public int getEndColumn() {
 		return endColumn;
+	}
+
+	public int getCompilationUnitLength() {
+		return compilationUnitLength;
 	}
 
 	public CodeElementType getCodeElementType() {

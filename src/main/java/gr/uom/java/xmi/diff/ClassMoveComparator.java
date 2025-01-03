@@ -15,8 +15,26 @@ public class ClassMoveComparator implements Comparator<UMLClassMoveDiff> {
 		else {
 			Set<String> set1 = o1.commonPackagesInQualifiedName();
 			Set<String> set2 = o2.commonPackagesInQualifiedName();
-			if(set1.size() != set2.size()) {
-				return -Integer.compare(set1.size(), set2.size());
+			boolean sameNumberOfLines1 = o1.getOriginalClass().getLocationInfo().getCompilationUnitLength() == o1.getNextClass().getLocationInfo().getCompilationUnitLength();
+			boolean sameNumberOfLines2 = o2.getOriginalClass().getLocationInfo().getCompilationUnitLength() == o2.getNextClass().getLocationInfo().getCompilationUnitLength();
+			int lineNumberDifference1 = Math.abs(o1.getOriginalClass().getLocationInfo().getCompilationUnitLength() - o1.getNextClass().getLocationInfo().getCompilationUnitLength());
+			int lineNumberDifference2 = Math.abs(o2.getOriginalClass().getLocationInfo().getCompilationUnitLength() - o2.getNextClass().getLocationInfo().getCompilationUnitLength());
+			boolean isEmpty1 = o1.getOriginalClass().isEmpty() && o1.getNextClass().isEmpty();
+			boolean isEmpty2 = o2.getOriginalClass().isEmpty() && o2.getNextClass().isEmpty();
+			if(set1.size() != set2.size() && !isEmpty1 && !isEmpty2) {
+				if(lineNumberDifference1 == lineNumberDifference2)
+					return -Integer.compare(set1.size(), set2.size());
+				else {
+					if(sameNumberOfLines1 && !sameNumberOfLines2) {
+						return -1;
+					}
+					else if(!sameNumberOfLines1 && sameNumberOfLines2) {
+						return 1;
+					}
+					else {
+						return Integer.compare(lineNumberDifference1, lineNumberDifference2);
+					}
+				}
 			}
 			double sourceFolderDistance1 = o1.getMovedClass().normalizedSourceFolderDistance(o1.getOriginalClass());
 			double sourceFolderDistance2 = o2.getMovedClass().normalizedSourceFolderDistance(o2.getOriginalClass());

@@ -1138,6 +1138,7 @@ public class UMLModelDiff {
 			TreeSet<UMLClassRenameDiff> identicalSignatureDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeSet<UMLClassRenameDiff> identicalPackageDeclarationDocDiffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> matchingStatementMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
+			TreeMap<Integer, TreeSet<UMLClassRenameDiff>> identicalMethodMap = new TreeMap<Integer, TreeSet<UMLClassRenameDiff>>();
 			for(UMLClassRenameDiff diff : diffSet) {
 				if(diff.getOriginalClass().getPackageDeclarationJavadoc() != null && diff.getNextClass().getPackageDeclarationJavadoc() != null) {
 					if(diff.getOriginalClass().getPackageDeclarationJavadoc().getFullText().equals(diff.getNextClass().getPackageDeclarationJavadoc().getFullText())) {
@@ -1201,6 +1202,17 @@ public class UMLModelDiff {
 						matchingStatementMap.put(matchingStatements, set);
 					}
 				}
+				else {
+					int count = diff.getMatchResult().getIdenticalBodyOperations();
+					if(identicalMethodMap.containsKey(count)) {
+						identicalMethodMap.get(count).add(diff);
+					}
+					else {
+						TreeSet<UMLClassRenameDiff> set = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+						set.add(diff);
+						identicalMethodMap.put(count, set);
+					}
+				}
 				if(identicalBodies == operations1.size()) {
 					identicalBodyDiffSet.add(diff);
 				}
@@ -1224,7 +1236,12 @@ public class UMLModelDiff {
 				return identicalPackageDeclarationDocDiffSet;
 			}
 			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> entry = matchingStatementMap.lastEntry();
-			if(entry != null && entry.getValue().size() == 1) {
+			if(entry != null && entry.getKey() > 0 && entry.getValue().size() == 1) {
+				return entry.getValue();
+			}
+			entry = identicalMethodMap.lastEntry();
+			Map.Entry<Integer, TreeSet<UMLClassRenameDiff>> firstEntry = identicalMethodMap.firstEntry();
+			if(entry != null && entry.getKey() > 0 && firstEntry.getKey() == 0 && entry.getValue().size() == 1) {
 				return entry.getValue();
 			}
 		}

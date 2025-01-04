@@ -1450,7 +1450,11 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 		}
 		boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
+		int anonymousMappers = this.anonymousClassDiffs.size();
 		processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
+		if(this.anonymousClassDiffs.size() > anonymousMappers && parentMapper != null) {
+			parentMapper.anonymousClassDiffs.addAll(this.anonymousClassDiffs);
+		}
 		
 		processInnerNodes(innerNodes1, innerNodes2, leaves1, leaves2, new LinkedHashMap<String, String>(), containsCallToExtractedMethod(leaves2));
 		

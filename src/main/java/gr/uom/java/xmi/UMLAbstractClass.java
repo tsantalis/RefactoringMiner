@@ -660,6 +660,7 @@ public abstract class UMLAbstractClass {
 			pattern = new RenamePattern(diff1, diff2);
 		}
 		List<UMLOperation> commonOperations = new ArrayList<UMLOperation>();
+		List<UMLOperation> commonConstructors = new ArrayList<UMLOperation>();
 		List<UMLOperation> identicalOperations = new ArrayList<UMLOperation>();
 		int totalOperations = 0;
 		int totalDefaultOperations = 0;
@@ -686,12 +687,14 @@ public abstract class UMLAbstractClass {
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 			else if(operation.isConstructor() && commonPrefix.isEmpty() && commonSuffix.equals(this.name)) {
 				if(umlClass.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse()))) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 			else if(operation.isConstructor() && !commonPrefix.isEmpty() && !commonSuffix.isEmpty() &&
@@ -699,6 +702,7 @@ public abstract class UMLAbstractClass {
 					containsToken(commonSuffix, tokens1) && containsToken(commonSuffix, tokens2)) {
 				if(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse())) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 		}
@@ -724,12 +728,14 @@ public abstract class UMLAbstractClass {
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 			else if(operation.isConstructor() && commonPrefix.isEmpty() && commonSuffix.equals(this.name)) {
 				if(this.containsOperationWithTheSameSignatureIgnoringChangedTypes(operation) ||
 						(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern))) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 			else if(operation.isConstructor() && !commonPrefix.isEmpty() && !commonSuffix.isEmpty() &&
@@ -737,6 +743,7 @@ public abstract class UMLAbstractClass {
 					containsToken(commonSuffix, tokens1) && containsToken(commonSuffix, tokens2)) {
 				if(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern)) {
 					commonOperations.add(operation);
+					commonConstructors.add(operation);
 				}
 			}
 		}
@@ -834,6 +841,12 @@ public abstract class UMLAbstractClass {
 			else if(commonOperations.size() >= Math.floor((totalOperations-totalDefaultOperations)/2.0)) {
 				return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, true);
 			}
+		}
+		boolean allAttributesMatched = commonAttributes.size() == totalAttributes && totalAttributes > 0;
+		boolean containsName = this.getNonQualifiedName().contains(umlClass.getNonQualifiedName()) || umlClass.getNonQualifiedName().contains(this.getNonQualifiedName());
+		if(commonConstructors.size() == commonOperations.size() && commonConstructors.size() > 0 && !allAttributesMatched && !containsName) {
+			//return false match result if only constructors have been matched
+			return new MatchResult(commonOperations.size(), commonAttributes.size(), identicalOperations.size(), totalOperations, totalAttributes, false);
 		}
 		int abstractOperationsToBeDeducted = this.isAbstract() != umlClass.isAbstract() ? totalAbstractOperations : 0;
 		if((commonOperations.size() > Math.floor(totalOperations/2.0) && (commonAttributes.size() > 2 || totalAttributes == 0)) ||

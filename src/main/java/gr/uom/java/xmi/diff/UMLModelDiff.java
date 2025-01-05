@@ -4456,9 +4456,14 @@ public class UMLModelDiff {
 	}
 
 	private static boolean samePackage(AbstractCodeMapping mapping) {
-		String filePathBefore = mapping.getFragment1().getLocationInfo().getFilePath().substring(0, mapping.getFragment1().getLocationInfo().getFilePath().lastIndexOf("/"));
-		String filePathAfter = mapping.getFragment2().getLocationInfo().getFilePath().substring(0, mapping.getFragment2().getLocationInfo().getFilePath().lastIndexOf("/"));
-		return filePathBefore.equals(filePathAfter);
+		String filePath1 = mapping.getFragment1().getLocationInfo().getFilePath();
+		String filePath2 = mapping.getFragment2().getLocationInfo().getFilePath();
+		if(filePath1.contains("/") && filePath2.contains("/")) {
+			String filePathBefore = filePath1.substring(0, filePath1.lastIndexOf("/"));
+			String filePathAfter = filePath2.substring(0, filePath2.lastIndexOf("/"));
+			return filePathBefore.equals(filePathAfter);
+		}
+		return false;
 	}
 
 	private boolean skipRefactoring(Set<AbstractCodeMapping> mappings) {

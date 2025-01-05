@@ -4392,7 +4392,7 @@ public class UMLModelDiff {
 									!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap)) {
 								UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
 										mapper, className, addedOperationInvocation, Optional.empty());
-								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation)) {
+								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation) && !skipRefactoring(operationBodyMapper.getMappings())) {
 									if(className.equals(addedOperation.getClassName())) {
 										//extract inside moved or renamed class
 										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
@@ -4453,6 +4453,38 @@ public class UMLModelDiff {
 				}
 			}
 		}
+	}
+
+	private static boolean samePackage(AbstractCodeMapping mapping) {
+		String filePathBefore = mapping.getFragment1().getLocationInfo().getFilePath().substring(0, mapping.getFragment1().getLocationInfo().getFilePath().lastIndexOf("/"));
+		String filePathAfter = mapping.getFragment2().getLocationInfo().getFilePath().substring(0, mapping.getFragment2().getLocationInfo().getFilePath().lastIndexOf("/"));
+		return filePathBefore.equals(filePathAfter);
+	}
+
+	private boolean skipRefactoring(Set<AbstractCodeMapping> mappings) {
+		boolean skip = false;
+		Set<Refactoring> refactoringsToBeRemoved = new LinkedHashSet<Refactoring>();
+		for(Refactoring r : this.refactorings) {
+			if(r instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+				for(AbstractCodeMapping newMapping : mappings) {
+					boolean newMappingSamePackage = samePackage(newMapping);
+					for(AbstractCodeMapping oldMapping : extract.getBodyMapper().getMappings()) {
+						if(newMapping.getFragment1().equals(oldMapping.getFragment1())) {
+							boolean oldMappingSamePackage = samePackage(oldMapping);
+							if(newMappingSamePackage && !oldMappingSamePackage) {
+								refactoringsToBeRemoved.add(r);
+							}
+							else if(!newMappingSamePackage && oldMappingSamePackage) {
+								skip = true;
+							}
+						}
+					}
+				}
+			}
+		}
+		this.refactorings.removeAll(refactoringsToBeRemoved);
+		return skip;
 	}
 
 	private void createExtractAndMoveMethodRefactoring(UMLOperation addedOperation, UMLOperationBodyMapper mapper,

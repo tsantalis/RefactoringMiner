@@ -64,6 +64,6 @@ public class CsvSourceAnnotation extends SourceAnnotation implements NormalAnnot
                 throw new IllegalArgumentException("@CsvSource normal annotation should have a value or textBlock parameter");
             }
         }
-        return null;
+        return result;
     }
 }

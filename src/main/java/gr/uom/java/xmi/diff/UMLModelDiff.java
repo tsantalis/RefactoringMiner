@@ -3062,7 +3062,7 @@ public class UMLModelDiff {
 						else {
 							originalClassDiff = getUMLClassDiff(candidate.getOperationBefore().getClassName());
 						}
-						if(diffs1.size() > 1) {
+						if(diffs1.size() > 1 && originalClassDiff != null) {
 							for(UMLClassBaseDiff classDiff : diffs1) {
 								if(isSubclassOf(originalClassDiff.nextClass.getName(), classDiff.nextClass.getName())) {
 									diff1 = classDiff;
@@ -3099,7 +3099,7 @@ public class UMLModelDiff {
 						else {
 							originalClassDiff = getUMLClassDiff(candidate.getOperationBefore().getClassName());
 						}
-						if(diffs2.size() > 1) {
+						if(diffs2.size() > 1 && originalClassDiff != null) {
 							for(UMLClassBaseDiff classDiff : diffs2) {
 								if(isSubclassOf(originalClassDiff.nextClass.getName(), classDiff.nextClass.getName())) {
 									diff2 = classDiff;

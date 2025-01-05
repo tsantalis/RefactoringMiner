@@ -167,6 +167,7 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
 
                 if (dstVariableDeclaration != null) {
                     List<Tree> dstChildrenList = dstVariableDeclaration.getChildren();
+                    if (dstChildrenList.isEmpty()) continue; //Might need to investigate what would be the better diff in these cases
                     Tree dstVarName = dstChildrenList.get(dstChildrenList.size() - 1);
                     for (VariableDeclaration variableDeclaration : mergedVariables) {
                         Tree srcVariableDeclaration = TreeUtilFunctions.findByLocationInfo(srcTree, variableDeclaration.getLocationInfo());

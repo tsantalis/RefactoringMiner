@@ -312,19 +312,19 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **December 23, 2024** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **January 4, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12371  | 20  | 233  | 0.998  | 0.982|
+|**Total**|12401  | 20  | 226  | 0.998  | 0.982|
 |Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
 |Move Attribute|255  |  2  |  8  | 0.992  | 0.970|
-|Move And Rename Attribute|14  |  0  |  0  | 1.000  | 1.000|
+|Move And Rename Attribute|16  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
 |Rename Method|388  |  4  | 21  | 0.990  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
-|Move Method|387  |  3  |  6  | 0.992  | 0.985|
+|Move Method|386  |  3  |  6  | 0.992  | 0.985|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
 |Pull Up Method|288  |  0  |  5  | 1.000  | 0.983|
 |Move Class|1095  |  0  |  4  | 1.000  | 0.996|
@@ -337,17 +337,17 @@ As of **December 23, 2024** the precision and recall of the tool on an oracle co
 |Extract Superclass|74  |  0  |  0  | 1.000  | 1.000|
 |Extract Subclass| 4  |  0  |  0  | 1.000  | 1.000|
 |Extract Class|106  |  0  |  0  | 1.000  | 1.000|
-|Extract And Move Method|102  |  0  | 68  | 1.000  | 0.600|
+|Extract And Move Method|119  |  0  | 61  | 1.000  | 0.661|
 |Move And Inline Method|13  |  0  |  4  | 1.000  | 0.765|
 |Replace Anonymous With Class| 8  |  0  |  0  | 1.000  | 1.000|
 |Rename Package|16  |  0  |  0  | 1.000  | 1.000|
 |Move Package|10  |  0  |  0  | 1.000  | 1.000|
-|Extract Variable|303  |  0  |  0  | 1.000  | 1.000|
+|Extract Variable|304  |  0  |  0  | 1.000  | 1.000|
 |Extract Attribute|23  |  0  |  0  | 1.000  | 1.000|
-|Inline Variable|105  |  0  |  0  | 1.000  | 1.000|
+|Inline Variable|110  |  0  |  0  | 1.000  | 1.000|
 |Inline Attribute| 9  |  0  |  0  | 1.000  | 1.000|
-|Rename Variable|331  |  3  | 11  | 0.991  | 0.968|
-|Rename Parameter|492  |  2  | 24  | 0.996  | 0.953|
+|Rename Variable|333  |  3  | 11  | 0.991  | 0.968|
+|Rename Parameter|493  |  2  | 24  | 0.996  | 0.954|
 |Rename Attribute|146  |  0  |  9  | 1.000  | 0.942|
 |Merge Variable| 6  |  0  |  0  | 1.000  | 1.000|
 |Merge Parameter|28  |  0  |  0  | 1.000  | 1.000|
@@ -391,9 +391,9 @@ As of **December 23, 2024** the precision and recall of the tool on an oracle co
 |Remove Method Modifier|111  |  0  |  0  | 1.000  | 1.000|
 |Add Attribute Modifier|142  |  0  |  0  | 1.000  | 1.000|
 |Remove Attribute Modifier|143  |  0  |  0  | 1.000  | 1.000|
-|Add Variable Modifier|134  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter Modifier|132  |  0  |  0  | 1.000  | 1.000|
-|Remove Variable Modifier|61  |  0  |  0  | 1.000  | 1.000|
+|Add Variable Modifier|135  |  0  |  0  | 1.000  | 1.000|
+|Add Parameter Modifier|133  |  0  |  0  | 1.000  | 1.000|
+|Remove Variable Modifier|62  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Modifier|39  |  0  |  0  | 1.000  | 1.000|
 |Change Class Access Modifier|78  |  0  |  0  | 1.000  | 1.000|
 |Add Class Modifier|37  |  0  |  0  | 1.000  | 1.000|

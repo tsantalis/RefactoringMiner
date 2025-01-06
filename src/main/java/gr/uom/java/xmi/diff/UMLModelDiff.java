@@ -4495,7 +4495,7 @@ public class UMLModelDiff {
 	private Set<UMLOperationBodyMapper> findMappersWithTheSameFragment1(Set<AbstractCodeMapping> mappings) {
 		Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<UMLOperationBodyMapper>();
 		for(Refactoring r : this.refactorings) {
-			if(r instanceof ExtractOperationRefactoring) {
+			if(r instanceof ExtractOperationRefactoring && r.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION)) {
 				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 				for(AbstractCodeMapping newMapping : mappings) {
 					for(AbstractCodeMapping oldMapping : extract.getBodyMapper().getMappings()) {

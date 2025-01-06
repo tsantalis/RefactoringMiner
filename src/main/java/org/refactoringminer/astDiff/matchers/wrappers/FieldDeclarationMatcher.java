@@ -98,10 +98,12 @@ public class FieldDeclarationMatcher extends OptimizationAwareMatcher implements
         new JavaDocMatcher(optimizationData, srcUMLAttribute.getJavadoc(), dstUMLAttribute.getJavadoc(), umlJavadocDiff)
                 .match(srcTree, dstTree, mappingStore);
         if (srcVarDeclaration != null && dstVarDeclaration != null)
-            mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
+            if (!srcVarDeclaration.getChildren().isEmpty() && !dstVarDeclaration.getChildren().isEmpty())
+                mappingStore.addMapping(srcVarDeclaration.getChild(0),dstVarDeclaration.getChild(0));
     }
 
     private void matchFieldAllModifiers(Tree srcFieldDeclaration, Tree dstFieldDeclaration, UMLAttribute srcUMLAttribute, UMLAttribute dstUMLAttribute, ExtendedMultiMappingStore mappingStore) {
+        if (srcFieldDeclaration == null || dstFieldDeclaration == null) return;
         matchModifiersForField(srcFieldDeclaration,dstFieldDeclaration,srcUMLAttribute.getVisibility().toString(),dstUMLAttribute.getVisibility().toString(),mappingStore);
         if (srcUMLAttribute.isFinal() && dstUMLAttribute.isFinal())
             matchModifierForField(srcFieldDeclaration,dstFieldDeclaration,Constants.FINAL,mappingStore);

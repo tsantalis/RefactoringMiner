@@ -298,9 +298,10 @@ public class TreeUtilFunctions {
 		return t1.getType().name.equals(type);
 	}
 
-	public static Tree findFirstByType(Tree srcFieldDeclaration, String typeName) {
+	public static Tree findFirstByType(Tree inputTree, String typeName) {
+		if (inputTree == null) return null;
 		Tree fieldAnnotation = null;
-		for (Tree child : srcFieldDeclaration.getChildren()) {
+		for (Tree child : inputTree.getChildren()) {
 			if (isFromType(child, typeName)) {
 				fieldAnnotation = child;
 				break;

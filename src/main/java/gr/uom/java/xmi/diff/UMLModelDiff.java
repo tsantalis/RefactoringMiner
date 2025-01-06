@@ -4492,6 +4492,24 @@ public class UMLModelDiff {
 		return skip;
 	}
 
+	private Set<UMLOperationBodyMapper> findMappersWithTheSameFragment1(Set<AbstractCodeMapping> mappings) {
+		Set<UMLOperationBodyMapper> mappers = new LinkedHashSet<UMLOperationBodyMapper>();
+		for(Refactoring r : this.refactorings) {
+			if(r instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+				for(AbstractCodeMapping newMapping : mappings) {
+					for(AbstractCodeMapping oldMapping : extract.getBodyMapper().getMappings()) {
+						if(newMapping.getFragment1().equals(oldMapping.getFragment1()) && !newMapping.equals(oldMapping)) {
+							mappers.add(extract.getBodyMapper());
+							break;
+						}
+					}
+				}
+			}
+		}
+		return mappers;
+	}
+
 	private void createExtractAndMoveMethodRefactoring(UMLOperation addedOperation, UMLOperationBodyMapper mapper,
 			List<AbstractCall> addedOperationInvocations, UMLOperationBodyMapper operationBodyMapper)
 			throws RefactoringMinerTimedOutException {
@@ -4503,6 +4521,11 @@ public class UMLModelDiff {
 		mapper.addChildMapper(operationBodyMapper);
 		MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
 		optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
+		Set<UMLOperationBodyMapper> mappers = findMappersWithTheSameFragment1(operationBodyMapper.getMappings());
+		if(mappers.size() > 0) {
+			mappers.add(operationBodyMapper);
+			optimizer.optimizeDuplicateMappingsForMoveCode(new ArrayList<>(mappers), refactorings);
+		}
 	}
 
 	private UMLOperationBodyMapper createMapperForExtractAndMove(UMLOperation addedOperation,

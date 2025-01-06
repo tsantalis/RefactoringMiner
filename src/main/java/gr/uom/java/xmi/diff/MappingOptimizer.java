@@ -35,7 +35,7 @@ public class MappingOptimizer {
 		this.classDiff = classDiff;
 	}
 
-	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeMappers, List<Refactoring> refactorings) {
+	public void optimizeDuplicateMappingsForMoveCode(List<UMLOperationBodyMapper> moveCodeMappers, Collection<Refactoring> refactorings) {
 		if(moveCodeMappers.size() > 1) {
 			Map<AbstractCodeFragment, List<AbstractCodeMapping>> oneToManyMappings = new HashMap<>();
 			Map<AbstractCodeFragment, List<UMLOperationBodyMapper>> oneToManyMappers = new HashMap<>();

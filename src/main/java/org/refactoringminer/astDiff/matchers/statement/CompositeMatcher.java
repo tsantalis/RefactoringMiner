@@ -106,12 +106,14 @@ public class CompositeMatcher extends BasicTreeMatcher implements TreeMatcher {
 		cpyMap.put(cpy,tree);
 		for (AbstractExpression abstractExpression : fragment.getExpressions()) {
 			Tree expTree = TreeUtilFunctions.findByLocationInfo(tree,abstractExpression.getLocationInfo());
+			if (expTree == null) continue;
 			Tree expCopy =  TreeUtilFunctions.deepCopyWithMap(expTree,cpyMap);
 			cpy.addChild(expCopy);
 		}
 		if (tree.getType().name.equals(Constants.FOR_STATEMENT)) return cpy;
 		for (VariableDeclaration variableDeclaration : fragment.getVariableDeclarations()) {
 			Tree varTree = TreeUtilFunctions.findByLocationInfo(tree, variableDeclaration.getLocationInfo());
+			if (varTree == null) continue;
 			Tree varCopy = TreeUtilFunctions.deepCopyWithMap(varTree, cpyMap);
 			cpy.addChild(varCopy);
 		}

@@ -3141,6 +3141,8 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				List<ExtractOperationRefactoring> refs = detection.check(addedOperation);
 				List<ExtractOperationRefactoring> discarded = new ArrayList<>();
 				List<ExtractOperationRefactoring> duplicates = new ArrayList<>();
+				List<ExtractOperationRefactoring> superSets = new ArrayList<>();
+				List<ExtractOperationRefactoring> subSets = new ArrayList<>();
 				if(refs.size() > 1) {
 					for(ExtractOperationRefactoring refactoring : refs) {
 						Set<AbstractCodeMapping> mappings = refactoring.getBodyMapper().getMappings();
@@ -3164,6 +3166,11 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 							if(ex.getBodyMapper().getMappings().equals(refactoring.getBodyMapper().getMappings())) {
 								duplicates.add(refactoring);
 							}
+							else if(ex.toString().equals(refactoring.toString()) &&
+									refactoring.getBodyMapper().getMappings().containsAll(ex.getBodyMapper().getMappings())) {
+								superSets.add(refactoring);
+								subSets.add(ex);
+							}
 						}
 					}
 				}
@@ -3172,6 +3179,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 				}
 				for(ExtractOperationRefactoring refactoring : refs) {
 					if(!discarded.contains(refactoring) && !duplicates.contains(refactoring)) {
+						if(superSets.contains(refactoring)) {
+							this.refactorings.removeAll(subSets);
+						}
 						CompositeStatementObject synchronizedBlock = refactoring.extractedFromSynchronizedBlock();
 						if(synchronizedBlock != null) {
 							refactoring.getBodyMapper().getParentMapper().getNonMappedInnerNodesT1().remove(synchronizedBlock);

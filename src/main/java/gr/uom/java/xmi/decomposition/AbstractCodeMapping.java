@@ -124,8 +124,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	public boolean isExact() {
-		return  !fragment1.isKeyword() && (fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) || argumentizedStringExactAfterTypeReplacement() ||
+		return  !fragment1.isKeyword() && (argumentizedStringExact() || argumentizedStringExactAfterTypeReplacement() ||
 				fragment1.getString().equals(fragment2.getString()) || isExactAfterAbstraction() || containsIdenticalOrCompositeReplacement() || callChainMatch());
+	}
+
+	private boolean argumentizedStringExact() {
+		return fragment1.getArgumentizedString().equals(fragment2.getArgumentizedString()) ||
+				fragment1.getArgumentizedString().equals("this." + fragment2.getArgumentizedString()) ||
+				fragment2.getArgumentizedString().equals("this." + fragment1.getArgumentizedString());
 	}
 
 	private boolean callChainMatch() {

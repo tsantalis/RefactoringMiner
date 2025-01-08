@@ -579,9 +579,10 @@ public class OperationInvocation extends AbstractCall {
     }
 
 	private static boolean collectionMatch(UMLType parameterType, UMLType type) {
-		if(parameterType.getClassType().equals("Iterable") || parameterType.getClassType().equals("Collection") ) {
+		if(parameterType.getClassType().equals("Iterable") || parameterType.getClassType().equals("Collection") ||
+				parameterType.getClassType().equals("List") || parameterType.getClassType().equals("Set")) {
 			if(type.getClassType().endsWith("List") || type.getClassType().endsWith("Set") || type.getClassType().endsWith("Collection")) {
-				if(parameterType.getTypeArguments().equals(type.getTypeArguments())) {
+				if(parameterType.getTypeArguments().equals(type.getTypeArguments()) || type.getTypeArguments().isEmpty()) {
 					return true;
 				}
 				if(parameterType.getTypeArguments().size() == 1) {

@@ -4337,6 +4337,7 @@ public class UMLModelDiff {
 	private void checkForExtractedAndMovedOperations(List<UMLOperationBodyMapper> mappers, List<UMLOperation> addedOperations) throws RefactoringMinerTimedOutException {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
+			AbstractCall delegateCall = addedOperation.isDelegate();
 			if(!getterOrSetterCorrespondingToRenamedAttribute(addedOperation)) {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
@@ -4393,47 +4394,25 @@ public class UMLModelDiff {
 								UMLOperationBodyMapper operationBodyMapper = createMapperForExtractAndMove(addedOperation,
 										mapper, className, addedOperationInvocation, Optional.empty());
 								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation) && !skipRefactoring(operationBodyMapper.getMappings())) {
-									if(className.equals(addedOperation.getClassName())) {
-										//extract inside moved or renamed class
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									else if(isSubclassOf(className, addedOperation.getClassName())) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									else if(isSubclassOf(addedOperation.getClassName(), className)) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									else if(addedOperation.getClassName().startsWith(className + ".")) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									else if(className.startsWith(addedOperation.getClassName() + ".")) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									else if(sourceClassImportsTargetClass(className, addedOperation.getClassName()) ||
-											sourceClassImportsSuperclassOfTargetClass(className, addedOperation.getClassName()) ||
-											targetClassImportsSourceClass(className, addedOperation.getClassName())) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
-									}
-									for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
-										String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
-										String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
-										if(before.contains(".") && after.contains(".")) {
-											String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
-											String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
-											if(prefix1.equals(prefix2)) {
-												before = before.substring(prefix1.length(), before.length());
-												after = after.substring(prefix2.length(), after.length());
-											}
+									createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
+											className, addedOperationInvocations, operationBodyMapper);
+								}
+								else if(delegateCall != null) {
+									//find added operation that delegates to
+									UMLOperation delegateDeclaration = null;
+									for(UMLOperation op : new ArrayList<>(addedOperations)) {
+										if(delegateCall.matchesOperation(op, addedOperation, mapper.getClassDiff(), this)) {
+											delegateDeclaration = op;
+											break;
 										}
-										Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
-										if(renameMap.containsKey(renamePattern)) {
-											renameMap.get(renamePattern).add(candidate);
-										}
-										else {
-											Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
-											set.add(candidate);
-											renameMap.put(renamePattern, set);
-										}
+									}
+									if(delegateDeclaration != null) {
+										UMLOperationBodyMapper nestedOperationBodyMapper = createMapperForExtractAndMove(delegateDeclaration,
+												mapper, className, delegateCall, Optional.empty());
+										if(extractAndMoveMatchCondition(nestedOperationBodyMapper, mapper, delegateCall)) {
+											createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
+													className, addedOperationInvocations, nestedOperationBodyMapper);
+										}	
 									}
 								}
 								else {
@@ -4451,6 +4430,53 @@ public class UMLModelDiff {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private void createExtractAndMoveMethodRefactoringBasedOnClassName(UMLOperation addedOperation,
+			UMLOperationBodyMapper mapper, String className, List<AbstractCall> addedOperationInvocations,
+			UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+		if(className.equals(addedOperation.getClassName())) {
+			//extract inside moved or renamed class
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		else if(isSubclassOf(className, addedOperation.getClassName())) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		else if(isSubclassOf(addedOperation.getClassName(), className)) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		else if(addedOperation.getClassName().startsWith(className + ".")) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		else if(className.startsWith(addedOperation.getClassName() + ".")) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		else if(sourceClassImportsTargetClass(className, addedOperation.getClassName()) ||
+				sourceClassImportsSuperclassOfTargetClass(className, addedOperation.getClassName()) ||
+				targetClassImportsSourceClass(className, addedOperation.getClassName())) {
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+		}
+		for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
+			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
+			String after = PrefixSuffixUtils.normalize(candidate.getRenamedVariableName());
+			if(before.contains(".") && after.contains(".")) {
+				String prefix1 = before.substring(0, before.lastIndexOf(".") + 1);
+				String prefix2 = after.substring(0, after.lastIndexOf(".") + 1);
+				if(prefix1.equals(prefix2)) {
+					before = before.substring(prefix1.length(), before.length());
+					after = after.substring(prefix2.length(), after.length());
+				}
+			}
+			Replacement renamePattern = new Replacement(before, after, ReplacementType.VARIABLE_NAME);
+			if(renameMap.containsKey(renamePattern)) {
+				renameMap.get(renamePattern).add(candidate);
+			}
+			else {
+				Set<CandidateAttributeRefactoring> set = new LinkedHashSet<CandidateAttributeRefactoring>();
+				set.add(candidate);
+				renameMap.put(renamePattern, set);
 			}
 		}
 	}

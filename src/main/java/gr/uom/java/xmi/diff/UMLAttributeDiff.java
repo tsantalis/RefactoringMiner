@@ -14,6 +14,7 @@ import org.refactoringminer.api.RefactoringMinerTimedOutException;
 
 import gr.uom.java.xmi.UMLAnnotation;
 import gr.uom.java.xmi.UMLAttribute;
+import gr.uom.java.xmi.UMLEnumConstant;
 import gr.uom.java.xmi.UMLOperation;
 import gr.uom.java.xmi.UMLParameter;
 import gr.uom.java.xmi.VariableDeclarationContainer;
@@ -373,6 +374,9 @@ public class UMLAttributeDiff implements UMLDocumentationDiffProvider {
 	}
 
 	private boolean changeTypeCondition() {
+		if(removedAttribute instanceof UMLEnumConstant && addedAttribute instanceof UMLEnumConstant) {
+			return false;
+		}
 		return (isTypeChanged() || isQualifiedTypeChanged()) && !enumConstantsDeclaredInTheSameEnumDeclarationType();
 	}
 

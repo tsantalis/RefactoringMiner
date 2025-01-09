@@ -1617,7 +1617,7 @@ public class UMLModelDiff {
 			return null;
 		}
 		if(addedAttribute.getName().equals(removedAttribute.getName()) &&
-				addedAttribute.getType().equals(removedAttribute.getType())) {
+				(addedAttribute.getType().equals(removedAttribute.getType()) || (removedAttribute instanceof UMLEnumConstant && addedAttribute instanceof UMLEnumConstant))) {
 			if(isSubclassOf(removedAttribute.getClassName(), addedAttribute.getClassName())) {
 				UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
 				if(!movedAttributeDiffList.contains(attributeDiff)) {
@@ -1944,12 +1944,15 @@ public class UMLModelDiff {
 		List<UMLAttribute> addedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
+			addedAttributes.addAll(classDiff.getAddedEnumConstants());
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
+			addedAttributes.addAll(classDiff.getAddedEnumConstants());
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			addedAttributes.addAll(classDiff.getAddedAttributes());
+			addedAttributes.addAll(classDiff.getAddedEnumConstants());
 		}
 		return addedAttributes;
 	}
@@ -1958,12 +1961,15 @@ public class UMLModelDiff {
 		List<UMLAttribute> removedAttributes = new ArrayList<UMLAttribute>();
 		for(UMLClassDiff classDiff : commonClassDiffList) {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			removedAttributes.addAll(classDiff.getRemovedEnumConstants());
 		}
 		for(UMLClassMoveDiff classDiff : classMoveDiffList) {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			removedAttributes.addAll(classDiff.getRemovedEnumConstants());
 		}
 		for(UMLClassRenameDiff classDiff : classRenameDiffList) {
 			removedAttributes.addAll(classDiff.getRemovedAttributes());
+			removedAttributes.addAll(classDiff.getRemovedEnumConstants());
 		}
 		return removedAttributes;
 	}

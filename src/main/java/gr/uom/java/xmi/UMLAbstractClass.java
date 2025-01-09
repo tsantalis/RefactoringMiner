@@ -649,6 +649,14 @@ public abstract class UMLAbstractClass {
 		String commonSuffix = PrefixSuffixUtils.longestCommonSuffix(this.name, umlClass.name);
 		String[] tokens1 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(this.name);
 		String[] tokens2 = LeafType.CAMEL_CASE_SPLIT_PATTERN.split(umlClass.name);
+		int commonTokens = 0;
+		for(String token1 : tokens1) {
+			for(String token2 : tokens2) {
+				if(token1.equals(token2)) {
+					commonTokens++;
+				}
+			}
+		}
 		RenamePattern pattern = null;
 		if(!commonPrefix.isEmpty() || !commonSuffix.isEmpty()) {
 			int beginIndexS1 = this.name.indexOf(commonPrefix) + commonPrefix.length();
@@ -705,6 +713,13 @@ public abstract class UMLAbstractClass {
 					commonConstructors.add(operation);
 				}
 			}
+			else if(operation.isConstructor() && commonTokens >= Math.max(tokens1.length, tokens2.length)/2 &&
+					!this.isTopLevel() && !umlClass.isTopLevel() && this.getPackageName().equals(umlClass.getPackageName())) {
+				if(pattern != null && umlClass.containsOperationWithTheSameRenamePattern(operation, pattern.reverse())) {
+					commonOperations.add(operation);
+					commonConstructors.add(operation);
+				}
+			}
 		}
 		for(UMLOperation operation : umlClass.operations) {
 			if(!operation.isConstructor() && !operation.overridesObject()) {
@@ -741,6 +756,13 @@ public abstract class UMLAbstractClass {
 			else if(operation.isConstructor() && !commonPrefix.isEmpty() && !commonSuffix.isEmpty() &&
 					containsToken(commonPrefix, tokens1) && containsToken(commonPrefix, tokens2) &&
 					containsToken(commonSuffix, tokens1) && containsToken(commonSuffix, tokens2)) {
+				if(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern)) {
+					commonOperations.add(operation);
+					commonConstructors.add(operation);
+				}
+			}
+			else if(operation.isConstructor() && commonTokens >= Math.max(tokens1.length, tokens2.length)/2 &&
+					!this.isTopLevel() && !umlClass.isTopLevel() && this.getPackageName().equals(umlClass.getPackageName())) {
 				if(pattern != null && this.containsOperationWithTheSameRenamePattern(operation, pattern)) {
 					commonOperations.add(operation);
 					commonConstructors.add(operation);

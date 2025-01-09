@@ -462,7 +462,19 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 		sb.append(" ");
 		sb.append(name);
 		sb.append(" : ");
-		sb.append(type.toQualifiedString());
+		if(this instanceof UMLEnumConstant) {
+			String string = type.toString();
+			if(string.contains(".")) {
+				String suffix = string.substring(string.lastIndexOf(".")+1, string.length());
+				sb.append(suffix);
+			}
+			else {
+				sb.append(type);
+			}
+		}
+		else {
+			sb.append(type.toQualifiedString());
+		}
 		return sb.toString();
 	}
 

@@ -4737,7 +4737,11 @@ public class UMLModelDiff {
 		}
 		if(operationBodyMapper.getContainer2().isGetter() && mappingList.size() == 1) {
 			List<AbstractCodeMapping> parentMappingList = new ArrayList<AbstractCodeMapping>(parentMapper.getMappings());
+			AbstractCodeMapping callerMapping = null;
 			for(AbstractCodeMapping mapping : parentMappingList) {
+				if(mapping.getFragment2().getMethodInvocations().contains(addedOperationInvocation)) {
+					callerMapping = mapping;
+				}
 				if(mapping.getFragment1().equals(mappingList.get(0).getFragment1()) && mapping.isExact()) {
 					return false;
 				}
@@ -4750,6 +4754,9 @@ public class UMLModelDiff {
 						}
 					}
 				}
+			}
+			if(callerMapping != null && (callerMapping.isExact() || callerMapping.getReplacements().isEmpty())) {
+				return false;
 			}
 			String fragment1 = mappingList.get(0).getFragment1().getString();
 			String fragment2 = mappingList.get(0).getFragment2().getString();

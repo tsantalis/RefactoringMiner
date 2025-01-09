@@ -458,8 +458,10 @@ public class UMLAttribute implements Comparable<UMLAttribute>, Serializable, Var
 
 	public String toQualifiedString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(visibility);
-		sb.append(" ");
+		if(!(this instanceof UMLEnumConstant)) {
+			sb.append(visibility);
+			sb.append(" ");
+		}
 		sb.append(name);
 		sb.append(" : ");
 		if(this instanceof UMLEnumConstant) {

@@ -4105,7 +4105,8 @@ public class UMLModelDiff {
 					return true;
 				}
 			}
-			else if(replacement.getAfter().equals(addedOperation.getNonQualifiedClassName())) {
+			else if(replacement.getAfter().equals(addedOperation.getNonQualifiedClassName()) ||
+					replacement.getAfter().startsWith(addedOperation.getNonQualifiedClassName() + ".")) {
 				return true;
 			}
 		}
@@ -4243,7 +4244,7 @@ public class UMLModelDiff {
 											!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap) &&
 											operationBodyMapper.getMappings().size() >= lambdaStatementCount - castingStatements &&
 											extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation)) {
-										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+										createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, false);
 										for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
 											if(fragment.getLambdas().get(0).getLocationInfo().subsumes(mapping.getFragment1().getLocationInfo())) {
 												mapper.getNonMappedLeavesT1().remove(fragment);
@@ -4282,7 +4283,7 @@ public class UMLModelDiff {
 												!conflictingExpression(addedOperationInvocation, addedOperation, variableDeclarationMap, childFieldDeclarationMap) &&
 												operationBodyMapper.getMappings().size() >= lambdaStatementCount - castingStatements - possiblyInlinedOperations.size() &&
 												extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation)) {
-											createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+											createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, false);
 											for(UMLOperation inlinedOperation : possiblyInlinedOperations.keySet()) {
 												AbstractCall inlinedOperationInvocation = possiblyInlinedOperations.get(inlinedOperation);
 												List<String> arguments = inlinedOperationInvocation.arguments();
@@ -4344,6 +4345,9 @@ public class UMLModelDiff {
 		for(Iterator<UMLOperation> addedOperationIterator = addedOperations.iterator(); addedOperationIterator.hasNext();) {
 			UMLOperation addedOperation = addedOperationIterator.next();
 			AbstractCall delegateCall = addedOperation.isDelegate();
+			if(delegateCall == null) {
+				delegateCall = addedOperation.isDelegateToAnotherClass(this);
+			}
 			if(!getterOrSetterCorrespondingToRenamedAttribute(addedOperation)) {
 				for(UMLOperationBodyMapper mapper : mappers) {
 					Pair<VariableDeclarationContainer, VariableDeclarationContainer> pair = Pair.of(mapper.getContainer1(), addedOperation);
@@ -4401,7 +4405,7 @@ public class UMLModelDiff {
 										mapper, className, addedOperationInvocation, Optional.empty());
 								if(extractAndMoveMatchCondition(operationBodyMapper, mapper, addedOperationInvocation) && !skipRefactoring(operationBodyMapper.getMappings())) {
 									createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
-											className, addedOperationInvocations, operationBodyMapper);
+											className, addedOperationInvocations, operationBodyMapper, false);
 								}
 								else if(delegateCall != null) {
 									//find added operation that delegates to
@@ -4417,7 +4421,7 @@ public class UMLModelDiff {
 												mapper, className, delegateCall, Optional.empty());
 										if(extractAndMoveMatchCondition(nestedOperationBodyMapper, mapper, delegateCall)) {
 											createExtractAndMoveMethodRefactoringBasedOnClassName(addedOperation, mapper,
-													className, addedOperationInvocations, nestedOperationBodyMapper);
+													className, addedOperationInvocations, nestedOperationBodyMapper, true);
 										}	
 									}
 								}
@@ -4442,27 +4446,27 @@ public class UMLModelDiff {
 
 	private void createExtractAndMoveMethodRefactoringBasedOnClassName(UMLOperation addedOperation,
 			UMLOperationBodyMapper mapper, String className, List<AbstractCall> addedOperationInvocations,
-			UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
+			UMLOperationBodyMapper operationBodyMapper, boolean nested) throws RefactoringMinerTimedOutException {
 		if(className.equals(addedOperation.getClassName())) {
 			//extract inside moved or renamed class
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(isSubclassOf(className, addedOperation.getClassName())) {
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(isSubclassOf(addedOperation.getClassName(), className)) {
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(addedOperation.getClassName().startsWith(className + ".")) {
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(className.startsWith(addedOperation.getClassName() + ".")) {
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		else if(sourceClassImportsTargetClass(className, addedOperation.getClassName()) ||
 				sourceClassImportsSuperclassOfTargetClass(className, addedOperation.getClassName()) ||
 				targetClassImportsSourceClass(className, addedOperation.getClassName())) {
-			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper);
+			createExtractAndMoveMethodRefactoring(addedOperation, mapper, addedOperationInvocations, operationBodyMapper, nested);
 		}
 		for(CandidateAttributeRefactoring candidate : operationBodyMapper.getCandidateAttributeRenames()) {
 			String before = PrefixSuffixUtils.normalize(candidate.getOriginalVariableName());
@@ -4543,7 +4547,7 @@ public class UMLModelDiff {
 	}
 
 	private void createExtractAndMoveMethodRefactoring(UMLOperation addedOperation, UMLOperationBodyMapper mapper,
-			List<AbstractCall> addedOperationInvocations, UMLOperationBodyMapper operationBodyMapper)
+			List<AbstractCall> addedOperationInvocations, UMLOperationBodyMapper operationBodyMapper, boolean nested)
 			throws RefactoringMinerTimedOutException {
 		ExtractOperationRefactoring extractOperationRefactoring =
 				new ExtractOperationRefactoring(operationBodyMapper, mapper.getContainer2(), addedOperationInvocations);
@@ -4551,12 +4555,15 @@ public class UMLModelDiff {
 		refactorings.addAll(operationBodyMapper.getRefactorings());
 		deleteAddedOperation(addedOperation);
 		mapper.addChildMapper(operationBodyMapper);
-		MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
-		optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
-		Set<UMLOperationBodyMapper> mappers = findMappersWithTheSameFragment1(operationBodyMapper.getMappings());
-		if(mappers.size() > 0) {
-			mappers.add(operationBodyMapper);
-			optimizer.optimizeDuplicateMappingsForMoveCode(new ArrayList<>(mappers), refactorings);
+		if(!nested) {
+			MappingOptimizer optimizer = new MappingOptimizer(mapper.getClassDiff());
+			optimizer.optimizeDuplicateMappingsForExtract(mapper, refactorings);
+			
+			Set<UMLOperationBodyMapper> mappers = findMappersWithTheSameFragment1(operationBodyMapper.getMappings());
+			if(mappers.size() > 0) {
+				mappers.add(operationBodyMapper);
+				optimizer.optimizeDuplicateMappingsForMoveCode(new ArrayList<>(mappers), refactorings);
+			}
 		}
 	}
 

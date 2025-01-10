@@ -8301,7 +8301,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						while(parent != null && parent.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) { 
 							parent = parent.getParent(); 
 						}
-						grandParents.add(parent);
+						if(parent != null) {
+							grandParents.add(parent);
+						}
 					}
 					if(container1.getBody() != null && grandParents.size() == 1) {
 						CompositeStatementObject grandParent2 = grandParents.iterator().next();

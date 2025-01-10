@@ -12,6 +12,8 @@ import gr.uom.java.xmi.decomposition.StatementObject;
 import gr.uom.java.xmi.decomposition.VariableDeclaration;
 import gr.uom.java.xmi.diff.CodeRange;
 import gr.uom.java.xmi.diff.StringDistance;
+import gr.uom.java.xmi.diff.UMLClassBaseDiff;
+import gr.uom.java.xmi.diff.UMLModelDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterDiff;
 import gr.uom.java.xmi.diff.UMLTypeParameterListDiff;
 
@@ -618,6 +620,28 @@ public class UMLOperation implements Comparable<UMLOperation>, Serializable, Var
 					if(operationInvocation.matchesOperation(this, this, null, null) ||
 							(operationInvocation.getName().equals(this.getName()) && (operationInvocation.getExpression() == null || operationInvocation.getExpression().endsWith("this")))) {
 						return operationInvocation;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public AbstractCall isDelegateToAnotherClass(UMLModelDiff modelDiff) {
+		if(getBody() != null && modelDiff != null) {
+			List<AbstractStatement> statements = getBody().getCompositeStatement().getStatements();
+			if(statements.size() == 1 && statements.get(0) instanceof StatementObject) {
+				StatementObject statement = (StatementObject)statements.get(0);
+				for(AbstractCall operationInvocation : statement.getMethodInvocations()) {
+					if(operationInvocation.getExpression() != null) {
+						UMLClassBaseDiff classDiff = modelDiff.getUMLClassDiff(this.getClassName());
+						if(classDiff != null) {
+							for(UMLImport imp : classDiff.getNextClass().getImportedTypes()) {
+								if(imp.getName().endsWith(operationInvocation.getExpression())) {
+									return operationInvocation;
+								}
+							}
+						}
 					}
 				}
 			}

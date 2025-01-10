@@ -1637,7 +1637,8 @@ public class UMLModelDiff {
 				return pushDownAttribute;
 			}
 			else if(sourceClassImportsTargetClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
-					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName())) {
+					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
+					getRemovedClass(removedAttribute.getClassName()) != null) {
 				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute)) {
 					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
 					boolean initializerWithMethodCallReplacement = false;

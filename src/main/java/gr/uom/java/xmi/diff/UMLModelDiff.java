@@ -1793,7 +1793,7 @@ public class UMLModelDiff {
 		UMLClassBaseDiff targetClassDiff = getUMLClassDiff(addedAttribute.getClassName());
 		if(sourceClassDiff != null) {
 			for(UMLAttribute attribute : sourceClassDiff.getNextClass().getAttributes()) {
-				if(attribute.getType() != null && addedAttribute.getClassName().endsWith(attribute.getType().getClassType())) {
+				if(attribute.getType() != null && addedAttribute.getClassName().endsWith("." + attribute.getType().getClassType())) {
 					return true;
 				}
 				if(targetClassDiff != null) {
@@ -1802,12 +1802,18 @@ public class UMLModelDiff {
 							return true;
 						}
 					}
+					UMLType superclassType = targetClassDiff.getNextClass().getSuperclass();
+					if(superclassType != null) {
+						if(attribute.getType().equals(superclassType)) {
+							return true;
+						}
+					}
 				}
 			}
 		}
 		if(targetClassDiff != null) {
 			for(UMLAttribute attribute : targetClassDiff.getRemovedAttributes()) {
-				if(attribute.getType() != null && removedAttribute.getClassName().endsWith(attribute.getType().getClassType())) {
+				if(attribute.getType() != null && removedAttribute.getClassName().endsWith("." + attribute.getType().getClassType())) {
 					return true;
 				}
 			}

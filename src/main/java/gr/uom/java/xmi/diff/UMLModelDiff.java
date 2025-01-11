@@ -1805,6 +1805,13 @@ public class UMLModelDiff {
 				}
 			}
 		}
+		if(targetClassDiff != null) {
+			for(UMLAttribute attribute : targetClassDiff.getOriginalClass().getAttributes()) {
+				if(attribute.getType() != null && removedAttribute.getClassName().endsWith(attribute.getType().getClassType())) {
+					return true;
+				}
+			}
+		}
 		for(Refactoring r : refactorings) {
 			if(r instanceof MoveOperationRefactoring) {
 				MoveOperationRefactoring move = (MoveOperationRefactoring)r;

@@ -1806,7 +1806,7 @@ public class UMLModelDiff {
 			}
 		}
 		if(targetClassDiff != null) {
-			for(UMLAttribute attribute : targetClassDiff.getOriginalClass().getAttributes()) {
+			for(UMLAttribute attribute : targetClassDiff.getRemovedAttributes()) {
 				if(attribute.getType() != null && removedAttribute.getClassName().endsWith(attribute.getType().getClassType())) {
 					return true;
 				}

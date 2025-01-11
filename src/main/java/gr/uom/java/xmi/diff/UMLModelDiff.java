@@ -1639,7 +1639,7 @@ public class UMLModelDiff {
 			else if(sourceClassImportsTargetClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
 					targetClassImportsSourceClass(removedAttribute.getClassName(), addedAttribute.getClassName()) ||
 					getRemovedClass(removedAttribute.getClassName()) != null) {
-				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute)) {
+				if(!initializerContainsTypeLiteral(addedAttribute, removedAttribute) && instanceAttributeMovedAlongWithMethod(addedAttribute, removedAttribute)) {
 					UMLAttributeDiff attributeDiff = new UMLAttributeDiff(removedAttribute, addedAttribute, Collections.emptyList()); 
 					boolean initializerWithMethodCallReplacement = false;
 					if(attributeDiff.getInitializerMapper().isPresent()) {
@@ -1758,6 +1758,100 @@ public class UMLModelDiff {
 			}
 			if(typeLiterals1.equals(typeLiterals2) && typeLiterals1.size() > 0) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean instanceAttributeMovedAlongWithMethod(UMLAttribute addedAttribute, UMLAttribute removedAttribute) {
+		if(addedAttribute.isStatic() || removedAttribute.isStatic()) {
+			return true;
+		}
+		if(addedAttribute.getName().equals(addedAttribute.getName().toUpperCase())) {
+			return true;
+		}
+		if(removedAttribute.getName().equals(removedAttribute.getName().toUpperCase())) {
+			return true;
+		}
+		if(addedAttribute.getClassName().startsWith(removedAttribute.getClassName())) {
+			return true;
+		}
+		if(removedAttribute.getClassName().startsWith(addedAttribute.getClassName())) {
+			return true;
+		}
+		//same package
+		String package1 = removedAttribute.getClassName().contains(".") ? 
+				removedAttribute.getClassName().substring(0, removedAttribute.getClassName().lastIndexOf(".")) : 
+				removedAttribute.getClassName();
+		String package2 = addedAttribute.getClassName().contains(".") ? 
+				addedAttribute.getClassName().substring(0, addedAttribute.getClassName().lastIndexOf(".")) : 
+					addedAttribute.getClassName();
+		if(package1.equals(package2)) {
+			return true;
+		}
+		UMLClassBaseDiff sourceClassDiff = getUMLClassDiff(removedAttribute.getClassName());
+		UMLClassBaseDiff targetClassDiff = getUMLClassDiff(addedAttribute.getClassName());
+		if(sourceClassDiff != null) {
+			for(UMLAttribute attribute : sourceClassDiff.getNextClass().getAttributes()) {
+				if(attribute.getType() != null && addedAttribute.getClassName().endsWith(attribute.getType().getClassType())) {
+					return true;
+				}
+				if(targetClassDiff != null) {
+					for(UMLType interfaceType : targetClassDiff.getNextClass().getImplementedInterfaces()) {
+						if(attribute.getType().equals(interfaceType)) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		for(Refactoring r : refactorings) {
+			if(r instanceof MoveOperationRefactoring) {
+				MoveOperationRefactoring move = (MoveOperationRefactoring)r;
+				if(move.getOriginalOperation().getClassName().equals(removedAttribute.getClassName()) &&
+						move.getMovedOperation().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+			}
+			else if(r instanceof ExtractOperationRefactoring) {
+				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+				if(extract.getSourceOperationBeforeExtraction().getClassName().equals(removedAttribute.getClassName()) &&
+						extract.getExtractedOperation().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+			}
+			else if(r instanceof InlineOperationRefactoring) {
+				InlineOperationRefactoring inline = (InlineOperationRefactoring)r;
+				if(inline.getInlinedOperation().getClassName().equals(removedAttribute.getClassName()) &&
+						inline.getTargetOperationAfterInline().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+			}
+			else if(r instanceof MoveAttributeRefactoring) {
+				MoveAttributeRefactoring move = (MoveAttributeRefactoring)r;
+				if(move.getOriginalAttribute().getClassName().equals(removedAttribute.getClassName()) &&
+						move.getMovedAttribute().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+				//allow for attributes moved from many different classes to the same target class
+				if(move.getMovedAttribute().getClassName().equals(addedAttribute.getClassName()) &&
+						move.getMovedAttribute().getName().equals(addedAttribute.getName())) {
+					return true;
+				}
+			}
+			else if(r instanceof MoveAndRenameAttributeRefactoring) {
+				MoveAndRenameAttributeRefactoring move = (MoveAndRenameAttributeRefactoring)r;
+				if(move.getOriginalAttribute().getClassName().equals(removedAttribute.getClassName()) &&
+						move.getMovedAttribute().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+			}
+			else if(r instanceof AddParameterRefactoring) {
+				AddParameterRefactoring add = (AddParameterRefactoring)r;
+				if(add.getParameter().getType().equals(addedAttribute.getType()) && add.getParameter().getName().equals(addedAttribute.getName()) &&
+						add.getOperationAfter().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
 			}
 		}
 		return false;

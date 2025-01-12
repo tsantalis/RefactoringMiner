@@ -10,6 +10,17 @@
   "firstEndPos" : 11722,
   "secondEndPos" : 12185
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/*\n * Copyright 2010 Ning, Inc.\n *\n * Ning licenses this file to you under the Apache License, version 2.0\n * (the \"License\"); you may not use this file except in compliance with the\n * License.  You may obtain a copy of the License at:\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the\n * License for the specific language governing permissions and limitations\n * under the License.\n *\n */",
+  "secondLabel" : "/*\n * Copyright 2010 Ning, Inc.\n *\n * Ning licenses this file to you under the Apache License, version 2.0\n * (the \"License\"); you may not use this file except in compliance with the\n * License.  You may obtain a copy of the License at:\n *\n *    http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT\n * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the\n * License for the specific language governing permissions and limitations\n * under the License.\n *\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 620,
+  "secondEndPos" : 620
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -471,6 +482,17 @@
   "secondPos" : 1635,
   "firstEndPos" : 1671,
   "secondEndPos" : 1671
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@author",
+  "secondLabel" : "@author",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1635,
+  "secondPos" : 1635,
+  "firstEndPos" : 1642,
+  "secondEndPos" : 1642
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -2155,6 +2177,17 @@
   "firstEndPos" : 2856,
   "secondEndPos" : 2856
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2791,
+  "secondPos" : 2791,
+  "firstEndPos" : 2797,
+  "secondEndPos" : 2797
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "consumerAuth",
@@ -2187,6 +2220,17 @@
   "secondPos" : 2864,
   "firstEndPos" : 2937,
   "secondEndPos" : 2937
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 2864,
+  "secondPos" : 2864,
+  "firstEndPos" : 2870,
+  "secondEndPos" : 2870
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -3518,6 +3562,17 @@
   "secondPos" : 3718,
   "firstEndPos" : 4445,
   "secondEndPos" : 4445
+}, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* 07-Oct-2010, tatu: URL may contain default port number; if so, need to extract\n         *   from base URL.\n         */",
+  "secondLabel" : "/* 07-Oct-2010, tatu: URL may contain default port number; if so, need to extract\n         *   from base URL.\n         */",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3728,
+  "secondPos" : 3728,
+  "firstEndPos" : 3849,
+  "secondEndPos" : 3849
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5224,6 +5279,50 @@
   "firstEndPos" : 5939,
   "secondEndPos" : 6181
 }, {
+  "firstType" : "Javadoc",
+  "secondType" : "Javadoc",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4574,
+  "secondPos" : 4574,
+  "firstEndPos" : 4713,
+  "secondEndPos" : 4713
+}, {
+  "firstType" : "TagElement",
+  "secondType" : "TagElement",
+  "firstLabel" : "",
+  "secondLabel" : "",
+  "firstParentType" : "Javadoc",
+  "secondParentType" : "Javadoc",
+  "firstPos" : 4589,
+  "secondPos" : 4589,
+  "firstEndPos" : 4701,
+  "secondEndPos" : 4701
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "List of all query and form parameters added to this request; needed",
+  "secondLabel" : "List of all query and form parameters added to this request; needed",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4589,
+  "secondPos" : 4589,
+  "firstEndPos" : 4656,
+  "secondEndPos" : 4656
+}, {
+  "firstType" : "TextElement",
+  "secondType" : "TextElement",
+  "firstLabel" : "for calculating request signature",
+  "secondLabel" : "for calculating request signature",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 4668,
+  "secondPos" : 4668,
+  "firstEndPos" : 4701,
+  "secondEndPos" : 4701
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -5762,6 +5861,17 @@
   "secondPos" : 4995,
   "firstEndPos" : 5012,
   "secondEndPos" : 5012
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// start with standard OAuth parameters we need",
+  "secondLabel" : "// start with standard OAuth parameters we need",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5024,
+  "secondPos" : 5024,
+  "firstEndPos" : 5071,
+  "secondEndPos" : 5071
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -7578,6 +7688,17 @@
   "firstEndPos" : 7020,
   "secondEndPos" : 7595
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// beware: must generate first as we're using pooled StringBuilder",
+  "secondLabel" : "// beware: must generate first as we're using pooled StringBuilder",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6221,
+  "secondPos" : 6385,
+  "firstEndPos" : 6287,
+  "secondEndPos" : 6451
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -7985,6 +8106,17 @@
   "firstEndPos" : 6502,
   "secondEndPos" : 6666
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// POST / GET etc (nothing to URL encode)",
+  "secondLabel" : "// POST / GET etc (nothing to URL encode)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6505,
+  "secondPos" : 6669,
+  "firstEndPos" : 6546,
+  "secondEndPos" : 6710
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -8149,6 +8281,17 @@
   "secondPos" : 6790,
   "firstEndPos" : 6633,
   "secondEndPos" : 6797
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and all that needs to be URL encoded (... again!)",
+  "secondLabel" : "// and all that needs to be URL encoded (... again!)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6646,
+  "secondPos" : 6810,
+  "firstEndPos" : 6698,
+  "secondEndPos" : 6862
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -8578,6 +8721,17 @@
   "secondPos" : 7488,
   "firstEndPos" : 6920,
   "secondEndPos" : 7495
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and finally, base64 encoded... phew!",
+  "secondLabel" : "// and finally, base64 encoded... phew!",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 6931,
+  "secondPos" : 7506,
+  "firstEndPos" : 6970,
+  "secondEndPos" : 7545
 }, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
@@ -9943,6 +10097,17 @@
   "firstEndPos" : 7605,
   "secondEndPos" : 8180
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// careful: base64 has chars that need URL encoding:",
+  "secondLabel" : "// careful: base64 has chars that need URL encoding:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7617,
+  "secondPos" : 8192,
+  "firstEndPos" : 7669,
+  "secondEndPos" : 8244
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -10459,6 +10624,17 @@
   "secondPos" : 8464,
   "firstEndPos" : 7895,
   "secondEndPos" : 8470
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// also: nonce may contain things that need URL encoding (esp. when using base64):",
+  "secondLabel" : "// also: nonce may contain things that need URL encoding (esp. when using base64):",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7907,
+  "secondPos" : 8482,
+  "firstEndPos" : 7989,
+  "secondEndPos" : 8564
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11340,6 +11516,17 @@
   "firstEndPos" : 8417,
   "secondEndPos" : 9078
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// let's use base64 encoding over hex, slightly more compact than hex or decimals",
+  "secondLabel" : "// let's use base64 encoding over hex, slightly more compact than hex or decimals",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8428,
+  "secondPos" : 9089,
+  "firstEndPos" : 8509,
+  "secondEndPos" : 9170
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -11416,6 +11603,17 @@
   "secondPos" : 9200,
   "firstEndPos" : 8550,
   "secondEndPos" : 9211
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "//      return String.valueOf(Math.abs(random.nextLong()));",
+  "secondLabel" : "//      return String.valueOf(Math.abs(random.nextLong()));",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8553,
+  "secondPos" : 9214,
+  "firstEndPos" : 8612,
+  "secondEndPos" : 9273
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -12352,6 +12550,17 @@
   "firstEndPos" : 10342,
   "secondEndPos" : 10805
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// then sort them (AFTER encoding, important)",
+  "secondLabel" : "// then sort them (AFTER encoding, important)",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9721,
+  "secondPos" : 10184,
+  "firstEndPos" : 9766,
+  "secondEndPos" : 10229
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -12659,6 +12868,17 @@
   "secondPos" : 10347,
   "firstEndPos" : 9890,
   "secondEndPos" : 10353
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// and build parameter section using pre-encoded pieces:",
+  "secondLabel" : "// and build parameter section using pre-encoded pieces:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9906,
+  "secondPos" : 10369,
+  "firstEndPos" : 9962,
+  "secondEndPos" : 10425
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",

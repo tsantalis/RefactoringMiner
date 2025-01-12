@@ -213,6 +213,12 @@ public class TreeUtilFunctions {
 			throw new RuntimeException(e);
 		}
 	}
+	public static boolean isPartOf(Tree srcSubTree, String type) {
+		if (srcSubTree.getType().name.equals(type))
+			return true;
+		if (srcSubTree.getParent() == null) return false;
+		return isPartOf(srcSubTree.getParent(), type);
+	}
 
 	public static boolean isStatement(String type){
 		switch (type){

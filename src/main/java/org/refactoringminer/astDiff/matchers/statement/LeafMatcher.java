@@ -146,6 +146,7 @@ public class LeafMatcher extends BasicTreeMatcher implements TreeMatcher {
 							mappings.addMappingRecursively(src,dst);
 						return mappings;
 					}
+					, new IdenticalSubtreeMatcherThetaA()
 					, new LcsOptMatcherThetaB()
 					, new UnmappedLeavesMatcherThetaC()
 					, new InnerNodesMatcherThetaD()

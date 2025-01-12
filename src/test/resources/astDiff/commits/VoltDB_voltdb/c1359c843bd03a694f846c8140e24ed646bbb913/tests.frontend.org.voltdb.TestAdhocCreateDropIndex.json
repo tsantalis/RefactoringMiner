@@ -10,6 +10,17 @@
   "firstEndPos" : 10272,
   "secondEndPos" : 10555
 }, {
+  "firstType" : "BlockComment",
+  "secondType" : "BlockComment",
+  "firstLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * Permission is hereby granted, free of charge, to any person obtaining\n * a copy of this software and associated documentation files (the\n * \"Software\"), to deal in the Software without restriction, including\n * without limitation the rights to use, copy, modify, merge, publish,\n * distribute, sublicense, and/or sell copies of the Software, and to\n * permit persons to whom the Software is furnished to do so, subject to\n * the following conditions:\n *\n * The above copyright notice and this permission notice shall be\n * included in all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR\n * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,\n * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n * OTHER DEALINGS IN THE SOFTWARE.\n */",
+  "secondLabel" : "/* This file is part of VoltDB.\n * Copyright (C) 2008-2015 VoltDB Inc.\n *\n * Permission is hereby granted, free of charge, to any person obtaining\n * a copy of this software and associated documentation files (the\n * \"Software\"), to deal in the Software without restriction, including\n * without limitation the rights to use, copy, modify, merge, publish,\n * distribute, sublicense, and/or sell copies of the Software, and to\n * permit persons to whom the Software is furnished to do so, subject to\n * the following conditions:\n *\n * The above copyright notice and this permission notice shall be\n * included in all copies or substantial portions of the Software.\n *\n * THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR\n * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,\n * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR\n * OTHER DEALINGS IN THE SOFTWARE.\n */",
+  "firstParentType" : "CompilationUnit",
+  "secondParentType" : "CompilationUnit",
+  "firstPos" : 0,
+  "secondPos" : 0,
+  "firstEndPos" : 1131,
+  "secondEndPos" : 1131
+}, {
   "firstType" : "PackageDeclaration",
   "secondType" : "PackageDeclaration",
   "firstLabel" : "",
@@ -185,6 +196,17 @@
   "secondPos" : 1367,
   "firstEndPos" : 1383,
   "secondEndPos" : 1383
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Add a test for partitioning a table",
+  "secondLabel" : "// Add a test for partitioning a table",
+  "firstParentType" : "TypeDeclaration",
+  "secondParentType" : "TypeDeclaration",
+  "firstPos" : 1391,
+  "secondPos" : 1391,
+  "firstEndPos" : 1429,
+  "secondEndPos" : 1429
 }, {
   "firstType" : "MethodDeclaration",
   "secondType" : "MethodDeclaration",
@@ -1319,6 +1341,17 @@
   "firstEndPos" : 2677,
   "secondEndPos" : 2150
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create index on partitioned tables",
+  "secondLabel" : "// Create index on tables",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2693,
+  "secondPos" : 2166,
+  "firstEndPos" : 2730,
+  "secondEndPos" : 2191
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -1781,6 +1814,17 @@
   "firstEndPos" : 3184,
   "secondEndPos" : 2645
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create index on replicated tables",
+  "secondLabel" : "// Create index on replicated tables",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3200,
+  "secondPos" : 2661,
+  "firstEndPos" : 3236,
+  "secondEndPos" : 2697
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -2242,6 +2286,17 @@
   "secondPos" : 3148,
   "firstEndPos" : 3697,
   "secondEndPos" : 3158
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create unique index on partitioned tables",
+  "secondLabel" : "// Create unique index on partitioned tables",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 3714,
+  "secondPos" : 3175,
+  "firstEndPos" : 3758,
+  "secondEndPos" : 3219
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -2760,6 +2815,17 @@
   "firstEndPos" : 4278,
   "secondEndPos" : 3739
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Can create redundant unique index on a table",
+  "secondLabel" : "// Can create redundant unique index on a table",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4294,
+  "secondPos" : 3755,
+  "firstEndPos" : 4341,
+  "secondEndPos" : 3802
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -3046,6 +3112,17 @@
   "firstEndPos" : 4649,
   "secondEndPos" : 4110
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// It's going to get dropped because it's redundant, so don't expect to see it here",
+  "secondLabel" : "// It's going to get dropped because it's redundant, so don't expect to see it here",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4678,
+  "secondPos" : 4139,
+  "firstEndPos" : 4761,
+  "secondEndPos" : 4222
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -3133,6 +3210,17 @@
   "secondPos" : 4279,
   "firstEndPos" : 4831,
   "secondEndPos" : 4292
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// drop an index we added",
+  "secondLabel" : "// drop an index we added",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 4848,
+  "secondPos" : 4309,
+  "firstEndPos" : 4873,
+  "secondEndPos" : 4334
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -3507,6 +3595,17 @@
   "secondPos" : 4673,
   "firstEndPos" : 5220,
   "secondEndPos" : 4681
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// can't drop it twice",
+  "secondLabel" : "// can't drop it twice",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5236,
+  "secondPos" : 4697,
+  "firstEndPos" : 5258,
+  "secondEndPos" : 4719
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -3947,6 +4046,17 @@
   "secondPos" : 5107,
   "firstEndPos" : 5654,
   "secondEndPos" : 5115
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unless we use if exists",
+  "secondLabel" : "// unless we use if exists",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 5670,
+  "secondPos" : 5131,
+  "firstEndPos" : 5696,
+  "secondEndPos" : 5157
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -5499,6 +5609,17 @@
   "firstEndPos" : 7401,
   "secondEndPos" : 6372
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// create a basic view",
+  "secondLabel" : "// create a basic view",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 7417,
+  "secondPos" : 6388,
+  "firstEndPos" : 7439,
+  "secondEndPos" : 6410
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6049,6 +6170,17 @@
   "firstEndPos" : 8019,
   "secondEndPos" : 7894
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Create index on view",
+  "secondLabel" : "// Create index on view",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8482,
+  "secondPos" : 6943,
+  "firstEndPos" : 8505,
+  "secondEndPos" : 6966
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -6511,6 +6643,17 @@
   "firstEndPos" : 8950,
   "secondEndPos" : 7421
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// drop index",
+  "secondLabel" : "// drop index",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 8967,
+  "secondPos" : 7438,
+  "firstEndPos" : 8980,
+  "secondEndPos" : 7451
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -6884,6 +7027,17 @@
   "secondPos" : 7805,
   "firstEndPos" : 9337,
   "secondEndPos" : 7818
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// can't drop index twice",
+  "secondLabel" : "// can't drop index twice",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9354,
+  "secondPos" : 7835,
+  "firstEndPos" : 9379,
+  "secondEndPos" : 7860
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
@@ -7269,6 +7423,17 @@
   "secondPos" : 8261,
   "firstEndPos" : 9775,
   "secondEndPos" : 8274
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// unless we use if exists",
+  "secondLabel" : "// with \"if exists\" clause",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 9791,
+  "secondPos" : 8365,
+  "firstEndPos" : 9817,
+  "secondEndPos" : 8391
 }, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",

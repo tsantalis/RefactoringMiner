@@ -30,7 +30,7 @@ public class AddCommand extends BaseCommand {
             required = false)
     private Set<String> files;
 
-    @Parameter(names = "-snapshot", description = "Snapshot option", required = false)
+    @Parameter(names = "--snapshot", description = "Snapshot option", required = false)
     private boolean isSnapshot;
 
     public boolean isSnapshot() {

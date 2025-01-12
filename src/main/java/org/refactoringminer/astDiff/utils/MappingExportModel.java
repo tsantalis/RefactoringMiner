@@ -193,6 +193,10 @@ public class MappingExportModel implements Serializable {
     public static void exportToFile(File outputFile, Iterable<Mapping> mappings) throws IOException {
         List<MappingExportModel> mappingExportModels = exportModelList(mappings);
         ObjectMapper objectMapper = new ObjectMapper();
+        if (!outputFile.exists()) {
+            outputFile.getParentFile().mkdirs();
+            outputFile.createNewFile();
+        }
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, mappingExportModels);
     }
 

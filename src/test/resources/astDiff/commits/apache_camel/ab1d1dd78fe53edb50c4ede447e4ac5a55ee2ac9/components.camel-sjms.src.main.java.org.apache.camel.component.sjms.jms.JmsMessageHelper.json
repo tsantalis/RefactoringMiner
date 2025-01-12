@@ -967,6 +967,17 @@
   "firstEndPos" : 1943,
   "secondEndPos" : 1943
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 1918,
+  "secondPos" : 1918,
+  "firstEndPos" : 1923,
+  "secondEndPos" : 1923
+}, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
   "firstLabel" : "javax.jms.Message",
@@ -2066,6 +2077,17 @@
   "secondPos" : 3458,
   "firstEndPos" : 5694,
   "secondEndPos" : 6465
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// convert to JMS Message of the given type",
+  "secondLabel" : "// convert to JMS Message of the given type",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 2705,
+  "secondPos" : 3476,
+  "firstEndPos" : 2748,
+  "secondEndPos" : 3519
 }, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
@@ -5696,6 +5718,17 @@
   "secondPos" : 6271,
   "firstEndPos" : 5508,
   "secondEndPos" : 6279
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do nothing. Only set the headers for an empty message",
+  "secondLabel" : "// Do nothing. Only set the headers for an empty message",
+  "firstParentType" : "SwitchStatement",
+  "secondParentType" : "SwitchStatement",
+  "firstPos" : 5529,
+  "secondPos" : 6300,
+  "firstEndPos" : 5585,
+  "secondEndPos" : 6356
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -11681,6 +11714,17 @@
   "firstEndPos" : 9345,
   "secondEndPos" : 10116
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9330,
+  "secondPos" : 10101,
+  "firstEndPos" : 9335,
+  "secondEndPos" : 10106
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "Message",
@@ -11725,6 +11769,17 @@
   "firstEndPos" : 9512,
   "secondEndPos" : 10283
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9436,
+  "secondPos" : 10207,
+  "firstEndPos" : 9442,
+  "secondEndPos" : 10213
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "jmsMessage",
@@ -11757,6 +11812,17 @@
   "secondPos" : 10236,
   "firstEndPos" : 9480,
   "secondEndPos" : 10251
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9465,
+  "secondPos" : 10236,
+  "firstEndPos" : 9470,
+  "secondEndPos" : 10241
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11791,6 +11857,17 @@
   "firstEndPos" : 9581,
   "secondEndPos" : 10352
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9520,
+  "secondPos" : 10291,
+  "firstEndPos" : 9526,
+  "secondEndPos" : 10297
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "messageHeaders",
@@ -11823,6 +11900,17 @@
   "secondPos" : 10318,
   "firstEndPos" : 9558,
   "secondEndPos" : 10329
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9547,
+  "secondPos" : 10318,
+  "firstEndPos" : 9552,
+  "secondEndPos" : 10323
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11857,6 +11945,17 @@
   "firstEndPos" : 9825,
   "secondEndPos" : 10502
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9589,
+  "secondPos" : 10360,
+  "firstEndPos" : 9595,
+  "secondEndPos" : 10366
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "keyFormatStrategy",
@@ -11889,6 +11988,17 @@
   "secondPos" : 10391,
   "firstEndPos" : 9645,
   "secondEndPos" : 10416
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9620,
+  "secondPos" : 10391,
+  "firstEndPos" : 9625,
+  "secondEndPos" : 10396
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -11934,6 +12044,17 @@
   "firstEndPos" : 9811,
   "secondEndPos" : 2683
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9776,
+  "secondPos" : 2648,
+  "firstEndPos" : 9781,
+  "secondEndPos" : 2653
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "DefaultJmsKeyFormatStrategy",
@@ -11956,6 +12077,17 @@
   "firstEndPos" : 9856,
   "secondEndPos" : 10533
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9833,
+  "secondPos" : 10510,
+  "firstEndPos" : 9840,
+  "secondEndPos" : 10517
+}, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
   "firstLabel" : " ",
@@ -11977,6 +12109,17 @@
   "secondPos" : 10518,
   "firstEndPos" : 9856,
   "secondEndPos" : 10533
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@link",
+  "secondLabel" : "@link",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 9841,
+  "secondPos" : 10518,
+  "firstEndPos" : 9846,
+  "secondEndPos" : 10523
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -13012,6 +13155,28 @@
   "firstEndPos" : 10613,
   "secondEndPos" : 11291
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Value can be null but we can't cast a null to a String",
+  "secondLabel" : "// Value can be null but we can't cast a null to a String",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10432,
+  "secondPos" : 11110,
+  "firstEndPos" : 10489,
+  "secondEndPos" : 11167
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so pass null to the setter",
+  "secondLabel" : "// so pass null to the setter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 10510,
+  "secondPos" : 11188,
+  "firstEndPos" : 10539,
+  "secondEndPos" : 11217
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13584,6 +13749,39 @@
   "firstEndPos" : 11260,
   "secondEndPos" : 11938
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// FIXME Setting the reply to appears broken. walk back",
+  "secondLabel" : "// FIXME Setting the reply to appears broken. walk back",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11077,
+  "secondPos" : 11755,
+  "firstEndPos" : 11132,
+  "secondEndPos" : 11810
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// through it. If the value is a String we must normalize it",
+  "secondLabel" : "// through it. If the value is a String we must normalize it",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11153,
+  "secondPos" : 11831,
+  "firstEndPos" : 11213,
+  "secondEndPos" : 11891
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// first",
+  "secondLabel" : "// first",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11234,
+  "secondPos" : 11912,
+  "firstEndPos" : 11242,
+  "secondEndPos" : 11920
+}, {
   "firstType" : "Block",
   "secondType" : "Block",
   "firstLabel" : "",
@@ -13594,6 +13792,72 @@
   "secondPos" : 11944,
   "firstEndPos" : 11585,
   "secondEndPos" : 12263
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// TODO write destination converter",
+  "secondLabel" : "// TODO write destination converter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11288,
+  "secondPos" : 11966,
+  "firstEndPos" : 11323,
+  "secondEndPos" : 12001
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Destination replyTo =",
+  "secondLabel" : "// Destination replyTo =",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11344,
+  "secondPos" : 12022,
+  "firstEndPos" : 11368,
+  "secondEndPos" : 12046
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ExchangeHelper.convertToType(exchange,",
+  "secondLabel" : "// ExchangeHelper.convertToType(exchange,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11389,
+  "secondPos" : 12067,
+  "firstEndPos" : 11430,
+  "secondEndPos" : 12108
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Destination.class,",
+  "secondLabel" : "// Destination.class,",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11451,
+  "secondPos" : 12129,
+  "firstEndPos" : 11472,
+  "secondEndPos" : 12150
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// headerValue);",
+  "secondLabel" : "// headerValue);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11493,
+  "secondPos" : 12171,
+  "firstEndPos" : 11509,
+  "secondEndPos" : 12187
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// jmsMessage.setJMSReplyTo(replyTo);",
+  "secondLabel" : "// jmsMessage.setJMSReplyTo(replyTo);",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11530,
+  "secondPos" : 12208,
+  "firstEndPos" : 11567,
+  "secondEndPos" : 12245
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -13749,6 +14013,28 @@
   "firstEndPos" : 11892,
   "secondEndPos" : 12570
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Value can be null but we can't cast a null to a String",
+  "secondLabel" : "// Value can be null but we can't cast a null to a String",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11713,
+  "secondPos" : 12391,
+  "firstEndPos" : 11770,
+  "secondEndPos" : 12448
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// so pass null to the setter",
+  "secondLabel" : "// so pass null to the setter",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11791,
+  "secondPos" : 12469,
+  "firstEndPos" : 11820,
+  "secondEndPos" : 12498
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -13880,6 +14166,17 @@
   "secondPos" : 12611,
   "firstEndPos" : 12070,
   "secondEndPos" : 12748
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Not null but is a String",
+  "secondLabel" : "// Not null but is a String",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 11955,
+  "secondPos" : 12633,
+  "firstEndPos" : 11982,
+  "secondEndPos" : 12660
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -16389,6 +16686,72 @@
   "firstEndPos" : 14703,
   "secondEndPos" : 15381
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The following properties are set by the",
+  "secondLabel" : "// The following properties are set by the",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14263,
+  "secondPos" : 14941,
+  "firstEndPos" : 14305,
+  "secondEndPos" : 14983
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// MessageProducer:",
+  "secondLabel" : "// MessageProducer:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14326,
+  "secondPos" : 15004,
+  "firstEndPos" : 14345,
+  "secondEndPos" : 15023
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// JMSDestination",
+  "secondLabel" : "// JMSDestination",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14366,
+  "secondPos" : 15044,
+  "firstEndPos" : 14383,
+  "secondEndPos" : 15061
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// The following are set on the underlying JMS provider:",
+  "secondLabel" : "// The following are set on the underlying JMS provider:",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14404,
+  "secondPos" : 15082,
+  "firstEndPos" : 14460,
+  "secondEndPos" : 15138
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// JMSMessageID, JMSTimestamp, JMSRedelivered",
+  "secondLabel" : "// JMSMessageID, JMSTimestamp, JMSRedelivered",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14481,
+  "secondPos" : 15159,
+  "firstEndPos" : 14526,
+  "secondEndPos" : 15204
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// log at trace level to not spam log",
+  "secondLabel" : "// log at trace level to not spam log",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 14547,
+  "secondPos" : 15225,
+  "firstEndPos" : 14584,
+  "secondEndPos" : 15262
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -17665,6 +18028,17 @@
   "firstEndPos" : 17299,
   "secondEndPos" : 17977
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// lets populate the standard JMS message headers",
+  "secondLabel" : "// lets populate the standard JMS message headers",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 15642,
+  "secondPos" : 16320,
+  "firstEndPos" : 15691,
+  "secondEndPos" : 16369
+}, {
   "firstType" : "TryStatement",
   "secondType" : "TryStatement",
   "firstLabel" : "",
@@ -18896,6 +19270,17 @@
   "secondPos" : 17124,
   "firstEndPos" : 16456,
   "secondEndPos" : 17134
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// this works around a bug in the ActiveMQ property handling",
+  "secondLabel" : "// this works around a bug in the ActiveMQ property handling",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 16477,
+  "secondPos" : 17155,
+  "firstEndPos" : 16537,
+  "secondEndPos" : 17215
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -20305,6 +20690,17 @@
   "firstEndPos" : 17569,
   "secondEndPos" : 18247
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17543,
+  "secondPos" : 18221,
+  "firstEndPos" : 17549,
+  "secondEndPos" : 18227
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -20337,6 +20733,17 @@
   "secondPos" : 18255,
   "firstEndPos" : 17615,
   "secondEndPos" : 18293
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17577,
+  "secondPos" : 18255,
+  "firstEndPos" : 17584,
+  "secondEndPos" : 18262
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -20602,6 +21009,17 @@
   "firstEndPos" : 17845,
   "secondEndPos" : 18523
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore due OracleAQ does not support accessing JMSType",
+  "secondLabel" : "// ignore due OracleAQ does not support accessing JMSType",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 17778,
+  "secondPos" : 18456,
+  "firstEndPos" : 17835,
+  "secondEndPos" : 18513
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -20679,6 +21097,17 @@
   "firstEndPos" : 17976,
   "secondEndPos" : 18654
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17945,
+  "secondPos" : 18623,
+  "firstEndPos" : 17951,
+  "secondEndPos" : 18629
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -20712,6 +21141,17 @@
   "firstEndPos" : 18052,
   "secondEndPos" : 18730
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 17984,
+  "secondPos" : 18662,
+  "firstEndPos" : 17990,
+  "secondEndPos" : 18668
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "deliveryMode",
@@ -20744,6 +21184,17 @@
   "secondPos" : 18738,
   "firstEndPos" : 18135,
   "secondEndPos" : 18813
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 18060,
+  "secondPos" : 18738,
+  "firstEndPos" : 18067,
+  "secondEndPos" : 18745
 }, {
   "firstType" : "QualifiedName",
   "secondType" : "QualifiedName",
@@ -21449,6 +21900,17 @@
   "firstEndPos" : 19180,
   "secondEndPos" : 19858
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// it may be a number in the String so try that",
+  "secondLabel" : "// it may be a number in the String so try that",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18645,
+  "secondPos" : 19323,
+  "firstEndPos" : 18692,
+  "secondEndPos" : 19370
+}, {
   "firstType" : "VariableDeclarationStatement",
   "secondType" : "VariableDeclarationStatement",
   "firstLabel" : "",
@@ -21712,6 +22174,17 @@
   "secondPos" : 19529,
   "firstEndPos" : 18943,
   "secondEndPos" : 19621
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Do nothing. The error handler below is sufficient",
+  "secondLabel" : "// Do nothing. The error handler below is sufficient",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 18873,
+  "secondPos" : 19551,
+  "firstEndPos" : 18925,
+  "secondEndPos" : 19603
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
@@ -21998,6 +22471,17 @@
   "secondPos" : 19911,
   "firstEndPos" : 19342,
   "secondEndPos" : 20020
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fallback and try to convert to a number",
+  "secondLabel" : "// fallback and try to convert to a number",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 19247,
+  "secondPos" : 19925,
+  "firstEndPos" : 19289,
+  "secondEndPos" : 19967
 }, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
@@ -22428,6 +22912,17 @@
   "firstEndPos" : 19732,
   "secondEndPos" : 20410
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19702,
+  "secondPos" : 20380,
+  "firstEndPos" : 19708,
+  "secondEndPos" : 20386
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -22460,6 +22955,17 @@
   "secondPos" : 20418,
   "firstEndPos" : 19773,
   "secondEndPos" : 20451
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 19740,
+  "secondPos" : 20418,
+  "firstEndPos" : 19746,
+  "secondEndPos" : 20424
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -22967,6 +23473,17 @@
   "firstEndPos" : 20186,
   "secondEndPos" : 20864
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20150,
+  "secondPos" : 20828,
+  "firstEndPos" : 20156,
+  "secondEndPos" : 20834
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -22999,6 +23516,17 @@
   "secondPos" : 20872,
   "firstEndPos" : 20233,
   "secondEndPos" : 20911
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20194,
+  "secondPos" : 20872,
+  "firstEndPos" : 20200,
+  "secondEndPos" : 20878
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -23484,6 +24012,17 @@
   "firstEndPos" : 20619,
   "secondEndPos" : 21297
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20593,
+  "secondPos" : 21271,
+  "firstEndPos" : 20599,
+  "secondEndPos" : 21277
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -23516,6 +24055,17 @@
   "secondPos" : 21305,
   "firstEndPos" : 20666,
   "secondEndPos" : 21344
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 20627,
+  "secondPos" : 21305,
+  "firstEndPos" : 20633,
+  "secondEndPos" : 21311
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -24023,6 +24573,17 @@
   "firstEndPos" : 21037,
   "secondEndPos" : 21715
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21011,
+  "secondPos" : 21689,
+  "firstEndPos" : 21017,
+  "secondEndPos" : 21695
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "message",
@@ -24055,6 +24616,17 @@
   "secondPos" : 21723,
   "firstEndPos" : 21087,
   "secondEndPos" : 21765
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@return",
+  "secondLabel" : "@return",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21045,
+  "secondPos" : 21723,
+  "firstEndPos" : 21052,
+  "secondEndPos" : 21730
 }, {
   "firstType" : "TextElement",
   "secondType" : "TextElement",
@@ -24320,6 +24892,17 @@
   "firstEndPos" : 21331,
   "secondEndPos" : 22009
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// ignore due OracleAQ does not support accessing JMSReplyTo",
+  "secondLabel" : "// ignore due OracleAQ does not support accessing JMSReplyTo",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 21261,
+  "secondPos" : 21939,
+  "firstEndPos" : 21321,
+  "secondEndPos" : 21999
+}, {
   "firstType" : "ReturnStatement",
   "secondType" : "ReturnStatement",
   "firstLabel" : "",
@@ -24397,6 +24980,17 @@
   "firstEndPos" : 21466,
   "secondEndPos" : 22144
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21433,
+  "secondPos" : 22111,
+  "firstEndPos" : 21439,
+  "secondEndPos" : 22117
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "jmsMessage",
@@ -24429,6 +25023,17 @@
   "secondPos" : 22152,
   "firstEndPos" : 21519,
   "secondEndPos" : 22197
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21474,
+  "secondPos" : 22152,
+  "firstEndPos" : 21480,
+  "secondEndPos" : 22158
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -24463,6 +25068,17 @@
   "firstEndPos" : 21554,
   "secondEndPos" : 22232
 }, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@param",
+  "secondLabel" : "@param",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21527,
+  "secondPos" : 22205,
+  "firstEndPos" : 21533,
+  "secondEndPos" : 22211
+}, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
   "firstLabel" : "value",
@@ -24495,6 +25111,17 @@
   "secondPos" : 22240,
   "firstEndPos" : 21596,
   "secondEndPos" : 22274
+}, {
+  "firstType" : "TAG_NAME",
+  "secondType" : "TAG_NAME",
+  "firstLabel" : "@throws",
+  "secondLabel" : "@throws",
+  "firstParentType" : "TagElement",
+  "secondParentType" : "TagElement",
+  "firstPos" : 21562,
+  "secondPos" : 22240,
+  "firstEndPos" : 21569,
+  "secondEndPos" : 22247
 }, {
   "firstType" : "SimpleName",
   "secondType" : "SimpleName",
@@ -26388,6 +27015,17 @@
   "firstEndPos" : 22771,
   "secondEndPos" : 23449
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// fallback to Object",
+  "secondLabel" : "// fallback to Object",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22685,
+  "secondPos" : 23363,
+  "firstEndPos" : 22706,
+  "secondEndPos" : 23384
+}, {
   "firstType" : "ExpressionStatement",
   "secondType" : "ExpressionStatement",
   "firstLabel" : "",
@@ -26663,6 +27301,17 @@
   "firstEndPos" : 22896,
   "secondEndPos" : 23574
 }, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Default is a JMS Message since a body is not required",
+  "secondLabel" : "// Default is a JMS Message since a body is not required",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 22906,
+  "secondPos" : 23584,
+  "firstEndPos" : 22962,
+  "secondEndPos" : 23640
+}, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",
   "firstLabel" : "",
@@ -26794,6 +27443,28 @@
   "secondPos" : 23732,
   "firstEndPos" : 24544,
   "secondEndPos" : 25222
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// Something was found in the body so determine",
+  "secondLabel" : "// Something was found in the body so determine",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23068,
+  "secondPos" : 23746,
+  "firstEndPos" : 23115,
+  "secondEndPos" : 23793
+}, {
+  "firstType" : "LineComment",
+  "secondType" : "LineComment",
+  "firstLabel" : "// what type of message we need to create",
+  "secondLabel" : "// what type of message we need to create",
+  "firstParentType" : "Block",
+  "secondParentType" : "Block",
+  "firstPos" : 23128,
+  "secondPos" : 23806,
+  "firstEndPos" : 23169,
+  "secondEndPos" : 23847
 }, {
   "firstType" : "IfStatement",
   "secondType" : "IfStatement",

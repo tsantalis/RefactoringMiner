@@ -135,6 +135,10 @@ public class MissingIdenticalSubtree extends GreedySubtreeMatcher implements Tre
                 ret =  true;
             else if (src.getType().name.equals(Constants.IMPORT_DECLARATION))
                 ret = true;
+            else if (TreeUtilFunctions.isPartOf(src, Constants.JAVA_DOC))
+                ret = true;
+            else if(src.getType().name.equals(Constants.LINE_COMMENT) || src.getType().name.equals(Constants.BLOCK_COMMENT))
+                ret = true;
             else {
                 ret = false;
             }

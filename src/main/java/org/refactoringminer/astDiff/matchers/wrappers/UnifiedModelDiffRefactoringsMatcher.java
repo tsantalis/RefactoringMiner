@@ -7,6 +7,8 @@ import gr.uom.java.xmi.UMLAttribute;
 import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.UMLComment;
 import gr.uom.java.xmi.diff.*;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
+
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
 import org.refactoringminer.astDiff.models.ASTDiff;
@@ -108,15 +110,23 @@ public class UnifiedModelDiffRefactoringsMatcher {
             else if (refactoring.getRefactoringType().equals(RefactoringType.EXTRACT_AND_MOVE_OPERATION))
             {
                 ExtractOperationRefactoring extractOperationRefactoring = (ExtractOperationRefactoring) refactoring;
-                String srcPath = extractOperationRefactoring.getBodyMapper().getOperation1().getLocationInfo().getFilePath();
-                String dstPath = extractOperationRefactoring.getBodyMapper().getOperation2().getLocationInfo().getFilePath();
+                String srcPath = extractOperationRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
+                String dstPath = extractOperationRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
                 findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(extractOperationRefactoring.getBodyMapper(), true));
             }
             else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_AND_INLINE_OPERATION)) {
                 InlineOperationRefactoring inlineOperationRefactoring = (InlineOperationRefactoring) refactoring;
-                String srcPath = inlineOperationRefactoring.getBodyMapper().getOperation1().getLocationInfo().getFilePath();
-                String dstPath = inlineOperationRefactoring.getBodyMapper().getOperation2().getLocationInfo().getFilePath();
+                String srcPath = inlineOperationRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
+                String dstPath = inlineOperationRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
                 findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(inlineOperationRefactoring.getBodyMapper(), true));
+            }
+            else if (refactoring.getRefactoringType().equals(RefactoringType.MOVE_CODE)) {
+            	MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
+            	if (moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
+            		String srcPath = moveCodeRefactoring.getBodyMapper().getContainer1().getLocationInfo().getFilePath();
+                    String dstPath = moveCodeRefactoring.getBodyMapper().getContainer2().getLocationInfo().getFilePath();
+                    findDiffsAndApplyMatcher(srcPath, dstPath, new BodyMapperMatcher(moveCodeRefactoring.getBodyMapper(), true));
+            	}
             }
         }
     }

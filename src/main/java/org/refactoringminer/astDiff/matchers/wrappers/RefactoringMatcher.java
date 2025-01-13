@@ -7,6 +7,8 @@ import gr.uom.java.xmi.UMLClass;
 import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.*;
 import gr.uom.java.xmi.diff.*;
+import gr.uom.java.xmi.diff.MoveCodeRefactoring.Type;
+
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.refactoringminer.api.Refactoring;
 import org.refactoringminer.api.RefactoringType;
@@ -125,8 +127,10 @@ public class RefactoringMatcher extends OptimizationAwareMatcher {
                 processArgumentMappings(srcTree, dstTree, refactoringList, refactoring, inlineOperationRefactoring.getArgumentMappings());
             } else if (refactoring instanceof MoveCodeRefactoring) {
                 MoveCodeRefactoring moveCodeRefactoring = (MoveCodeRefactoring) refactoring;
-                UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
-                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                if (!moveCodeRefactoring.getMoveType().equals(Type.MOVE_BETWEEN_FILES)) {
+	                UMLOperationBodyMapper bodyMapper = moveCodeRefactoring.getBodyMapper();
+	                new BodyMapperMatcher(optimizationData, bodyMapper, false).match(srcTree,dstTree,mappingStore);
+                }
             } else if (refactoring instanceof ParameterizeTestRefactoring) {
                 ParameterizeTestRefactoring parameterizeTestRefactoring = (ParameterizeTestRefactoring) refactoring;
                 UMLOperationBodyMapper bodyMapper = parameterizeTestRefactoring.getBodyMapper();

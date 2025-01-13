@@ -1826,6 +1826,13 @@ public class UMLModelDiff {
 					return true;
 				}
 			}
+			else if(r instanceof MoveCodeRefactoring) {
+				MoveCodeRefactoring move = (MoveCodeRefactoring)r;
+				if(move.getSourceContainer().getClassName().equals(removedAttribute.getClassName()) &&
+						move.getTargetContainer().getClassName().equals(addedAttribute.getClassName())) {
+					return true;
+				}
+			}
 			else if(r instanceof ExtractOperationRefactoring) {
 				ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
 				if(extract.getSourceOperationBeforeExtraction().getClassName().equals(removedAttribute.getClassName()) &&
@@ -3275,6 +3282,7 @@ public class UMLModelDiff {
 		if(allOperationsInAddedClasses.size() <= MAXIMUM_NUMBER_OF_COMPARED_METHODS) {
 			checkForExtractedAndMovedOperations(getOperationBodyMappersInCommonClasses(), allOperationsInAddedClasses);
 		}
+		checkForMovedCodeBetweenTestFixtures();
 		List<MoveAttributeRefactoring> moveAttributeRefactorings = new ArrayList<MoveAttributeRefactoring>();
 		moveAttributeRefactorings.addAll(checkForAttributeMovesBetweenCommonClasses(renameMap, refactorings));
 		moveAttributeRefactorings.addAll(checkForAttributeMovesIncludingAddedClasses(renameMap, refactorings));
@@ -5502,6 +5510,56 @@ public class UMLModelDiff {
 						moveCodeMappers.addAll(mappersWithUnmatchedStatements);
 						optimizer.optimizeDuplicateMappingsForMoveCode(moveCodeMappers, new ArrayList<>(refactorings));
 					}
+				}
+			}
+		}
+	}
+
+	private void checkForMovedCodeBetweenTestFixtures() throws RefactoringMinerTimedOutException {
+		List<UMLOperationBodyMapper> mappersWithUnmatchedStatementsInSetUpT1 = new ArrayList<UMLOperationBodyMapper>();
+		List<UMLOperationBodyMapper> mappersWithUnmatchedStatementsInSetUpT2 = new ArrayList<UMLOperationBodyMapper>();
+		List<UMLOperationBodyMapper> mappersWithUnmatchedStatementsInTearDownT1 = new ArrayList<UMLOperationBodyMapper>();
+		List<UMLOperationBodyMapper> mappersWithUnmatchedStatementsInTearDownT2 = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLClassDiff classDiff  : commonClassDiffList) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.involvesSetUpMethods() || mapper.getContainer1().getName().equals("setUp")) {
+					if(mapper.getNonMappedLeavesT1().size() > 0 || mapper.getNonMappedInnerNodesT1().size() > 0) {
+						mappersWithUnmatchedStatementsInSetUpT1.add(mapper);
+					}
+					else if(mapper.getNonMappedLeavesT2().size() > 0 || mapper.getNonMappedInnerNodesT2().size() > 0) {
+						mappersWithUnmatchedStatementsInSetUpT2.add(mapper);
+					}
+				}
+				else if(mapper.involvesTearDownMethods() || mapper.getContainer1().getName().equals("tearDown")) {
+					if(mapper.getNonMappedLeavesT1().size() > 0 || mapper.getNonMappedInnerNodesT1().size() > 0) {
+						mappersWithUnmatchedStatementsInTearDownT1.add(mapper);
+					}
+					else if(mapper.getNonMappedLeavesT2().size() > 0 || mapper.getNonMappedInnerNodesT2().size() > 0) {
+						mappersWithUnmatchedStatementsInTearDownT2.add(mapper);
+					}
+				}
+			}
+		}
+		List<UMLOperationBodyMapper> moveCodeMappers = new ArrayList<>();
+		for(UMLOperationBodyMapper mapperT1 : mappersWithUnmatchedStatementsInSetUpT1) {
+			for(UMLOperationBodyMapper mapperT2 : mappersWithUnmatchedStatementsInSetUpT2) {
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapperT1, mapperT2, mapperT1.getClassDiff());
+				if(moveCodeMapper.getMappings().size() > 0) {
+					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_FILES);
+					if(!moveCodeMappers.contains(moveCodeMapper))
+						moveCodeMappers.add(moveCodeMapper);
+					refactorings.add(ref);
+				}
+			}
+		}
+		for(UMLOperationBodyMapper mapperT1 : mappersWithUnmatchedStatementsInTearDownT1) {
+			for(UMLOperationBodyMapper mapperT2 : mappersWithUnmatchedStatementsInTearDownT2) {
+				UMLOperationBodyMapper moveCodeMapper = new UMLOperationBodyMapper(mapperT1, mapperT2, mapperT1.getClassDiff());
+				if(moveCodeMapper.getMappings().size() > 0) {
+					MoveCodeRefactoring ref = new MoveCodeRefactoring(moveCodeMapper.getContainer1(), moveCodeMapper.getContainer2(), moveCodeMapper, Type.MOVE_BETWEEN_FILES);
+					if(!moveCodeMappers.contains(moveCodeMapper))
+						moveCodeMappers.add(moveCodeMapper);
+					refactorings.add(ref);
 				}
 			}
 		}

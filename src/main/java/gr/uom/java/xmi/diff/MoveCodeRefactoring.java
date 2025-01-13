@@ -19,7 +19,8 @@ public class MoveCodeRefactoring implements Refactoring {
 	public enum Type {
 		MOVE_FROM_REMOVED,
 		MOVE_TO_ADDED,
-		MOVE_BETWEEN_EXISTING;
+		MOVE_BETWEEN_EXISTING,
+		MOVE_BETWEEN_FILES;
 	}
 	private VariableDeclarationContainer sourceContainer;
 	private VariableDeclarationContainer targetContainer;

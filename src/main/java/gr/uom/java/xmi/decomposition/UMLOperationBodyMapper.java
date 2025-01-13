@@ -4309,6 +4309,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return container1.hasTestAnnotation() && container2.hasTestAnnotation();
 	}
 
+	public boolean involvesSetUpMethods() {
+		return container1.hasSetUpAnnotation() && container2.hasSetUpAnnotation();
+	}
+
+	public boolean involvesTearDownMethods() {
+		return container1.hasTearDownAnnotation() && container2.hasTearDownAnnotation();
+	}
+
 	private void processInnerNodes(List<CompositeStatementObject> innerNodes1, List<CompositeStatementObject> innerNodes2,
 			List<AbstractCodeFragment> leaves1, List<AbstractCodeFragment> leaves2,
 			Map<String, String> parameterToArgumentMap, boolean containsCallToExtractedMethod) throws RefactoringMinerTimedOutException {

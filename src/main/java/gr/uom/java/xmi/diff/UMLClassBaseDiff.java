@@ -1363,6 +1363,19 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					}
 					boolean matchingMergeCandidateFound = false;
 					boolean matchingSplitCandidateFound = false;
+					//infer split method
+					Set<UMLOperationBodyMapper> exactMappers = new LinkedHashSet<>();
+					CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
+					newCandidate.setOriginalMethodBeforeSplit(removedOperation);
+					for(UMLOperationBodyMapper mapper : mapperSet) {
+						if(mapper.allMappingsAreExactMatches()) {
+							exactMappers.add(mapper);
+							newCandidate.addSplitMethod(mapper.getContainer2());
+						}
+					}
+					if(exactMappers.size() < mapperSet.size() && exactMappers.size() > 1) {
+						candidateMethodSplits.add(newCandidate);
+					}
 					if(!firstMapperWithIdenticalMethodName) {
 						for(CandidateMergeMethodRefactoring candidate : candidateMethodMerges) {
 							Set<VariableDeclarationContainer> methodsWithMapper = new LinkedHashSet<>();

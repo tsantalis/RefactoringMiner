@@ -3962,6 +3962,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return false;
 	}
 
+	public boolean allMappingsAreIdentical() {
+		int identical = 0;
+		for(AbstractCodeMapping mapping : this.getMappings()) {
+			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
+				identical++;
+			}
+		}
+		return identical == this.getMappings().size() && identical > 0;
+	}
+
 	public boolean allMappingsAreExactMatches() {
 		int mappings = this.mappingsWithoutBlocks();
 		int tryMappings = 0;

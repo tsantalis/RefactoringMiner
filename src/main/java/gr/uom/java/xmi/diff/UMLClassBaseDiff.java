@@ -1368,7 +1368,7 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 					CandidateSplitMethodRefactoring newCandidate = new CandidateSplitMethodRefactoring();
 					newCandidate.setOriginalMethodBeforeSplit(removedOperation);
 					for(UMLOperationBodyMapper mapper : mapperSet) {
-						if(mapper.allMappingsAreExactMatches()) {
+						if(mapper.allMappingsAreIdentical()) {
 							exactMappers.add(mapper);
 							newCandidate.addSplitMethod(mapper.getContainer2());
 						}

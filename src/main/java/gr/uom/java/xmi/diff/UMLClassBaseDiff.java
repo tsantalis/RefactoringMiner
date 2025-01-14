@@ -1561,9 +1561,9 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 						}
 					}
 					if(!matchingMergeCandidateFound && !matchingSplitCandidateFound) {
-						if(addedOperation.hasParameterizedTestAnnotation() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
+						List<List<String>> parameterValues = getParameterValues(addedOperation, modelDiff);
+						if(addedOperation.hasParameterizedTestAnnotation() && !parameterValues.isEmpty() && !firstMapper.getContainer1().hasParameterizedTestAnnotation()) {
 							Set<UMLOperationBodyMapper> filteredMapperSet = new LinkedHashSet<UMLOperationBodyMapper>();
-							List<List<String>> parameterValues = getParameterValues(addedOperation, modelDiff);
 							List<String> parameterNames = addedOperation.getParameterNameList();
 							int overallMaxMatchingTestParameters = -1;
 							Map<Integer, Integer> overallMatchingTestParameters = new LinkedHashMap<Integer, Integer>();

@@ -3968,6 +3968,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(mapping.getFragment1().getString().equals(mapping.getFragment2().getString())) {
 				identical++;
 			}
+			else {
+				break;
+			}
 		}
 		return identical == this.getMappings().size() && identical > 0;
 	}
@@ -9762,12 +9765,18 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				otherMappings++;
 			}
 		}
-		if(thisMappings != otherMappings) {
-			return -Integer.compare(thisMappings, otherMappings);
+		int thisExactMatches = this.exactMatches();
+		int otherExactMatches = operationBodyMapper.exactMatches();
+		if(thisMappings > otherMappings && thisExactMatches >= otherExactMatches) {
+			return -1;
 		}
+		else if(thisMappings < otherMappings && thisExactMatches <= otherExactMatches) {
+			return 1;
+		}
+		//if(thisMappings != otherMappings) {
+		//	return -Integer.compare(thisMappings, otherMappings);
+		//}
 		else {
-			int thisExactMatches = this.exactMatches();
-			int otherExactMatches = operationBodyMapper.exactMatches();
 			if(thisExactMatches != otherExactMatches) {
 				return -Integer.compare(thisExactMatches, otherExactMatches);
 			}

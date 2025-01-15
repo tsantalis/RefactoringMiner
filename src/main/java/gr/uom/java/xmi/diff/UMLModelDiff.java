@@ -1269,22 +1269,56 @@ public class UMLModelDiff {
 			UMLClass removedClass = removedClassIterator.next();
 			String removedClassFilePath = removedClass.getSourceFile();
 			TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
+			UMLClassRenameDiff promotedDiff = null;
 			for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 				UMLClass addedClass = addedClassIterator.next();
 				String addedClassFilePath = addedClass.getSourceFile();
 				for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
+					Map<String, String> renameHint = new LinkedHashMap<String, String>();
+					if(!classRenameDiff.getOriginalClass().isTopLevel() && !classRenameDiff.getNextClass().isTopLevel()) {
+						String outerClassName = classRenameDiff.getNextClassName().substring(0, classRenameDiff.getNextClassName().lastIndexOf("."));
+						UMLClassBaseDiff outerClassDiff = getUMLClassDiff(outerClassName);
+						if(outerClassDiff != null) {
+							for(Refactoring r : outerClassDiff.getRefactoringsBeforePostProcessing()) {
+								if(r instanceof ExtractOperationRefactoring) {
+									ExtractOperationRefactoring extract = (ExtractOperationRefactoring)r;
+									for(String key : extract.getParameterToArgumentMap().keySet()) {
+										String value = extract.getParameterToArgumentMap().get(key);
+										if(value.endsWith(".class")) {
+											for(Replacement replacement : extract.getReplacements()) {
+												if(replacement.getAfter().equals(value)) {
+													String before = replacement.getBefore();
+													if(replacement.getBefore().endsWith(".class")) {
+														before = replacement.getBefore().substring(0, replacement.getBefore().length()-6);
+													}
+													String after = value.substring(0, value.length()-6);
+													renameHint.put(before, after);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 					if(classRenameDiff.getOriginalClass().getSourceFile().equals(removedClassFilePath) &&
 							classRenameDiff.getNextClass().getSourceFile().equals(addedClassFilePath)) {
 						MatchResult matchResult = matcher.match(removedClass, addedClass);
 						if(matchResult.getMatchedOperations() > 0 || matchResult.getMatchedAttributes() > 0) {
 							UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
 							diffSet.add(newClassRenameDiff);
+							for(String key : renameHint.keySet()) {
+								if(removedClass.getName().endsWith(key) && addedClass.getName().endsWith(renameHint.get(key))) {
+									promotedDiff = newClassRenameDiff;
+									break;
+								}
+							}
 						}
 					}
 				}
 			}
 			if(diffSet.size() > 0) {
-				UMLClassRenameDiff first = diffSet.first();
+				UMLClassRenameDiff first = promotedDiff != null ? promotedDiff : diffSet.first();
 				diffsToBeAdded.add(first);
 				first.process();
 				addedClassesToBeRemoved.add(first.getNextClass());

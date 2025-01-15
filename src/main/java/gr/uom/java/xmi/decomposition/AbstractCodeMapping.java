@@ -53,6 +53,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	private int matchingArgumentsWithOperationInvocation;
 	private boolean matchedWithNullReplacements;
 	private Set<UMLAnonymousClassDiff> anonymousClassDiffs = new LinkedHashSet<UMLAnonymousClassDiff>();
+	private List<UMLOperationBodyMapper> lambdaMappers = new ArrayList<UMLOperationBodyMapper>();
 	
 	public AbstractCodeMapping(AbstractCodeFragment fragment1, AbstractCodeFragment fragment2,
 			VariableDeclarationContainer operation1, VariableDeclarationContainer operation2) {
@@ -104,6 +105,14 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 
 	public Set<UMLAnonymousClassDiff> getAnonymousClassDiffs() {
 		return anonymousClassDiffs;
+	}
+
+	public void addLambdaMappers(List<UMLOperationBodyMapper> mappers) {
+		lambdaMappers.addAll(mappers);
+	}
+
+	public List<UMLOperationBodyMapper> getLambdaMappers() {
+		return lambdaMappers;
 	}
 
 	public boolean containsRefactoringOfType(RefactoringType type) {

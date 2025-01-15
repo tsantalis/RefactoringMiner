@@ -4140,6 +4140,14 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		return replacements;
 	}
 
+	public boolean containsLambdaMapper() {
+		for(AbstractCodeMapping mapping : getMappings()) {
+			if(mapping.getLambdaMappers().size() > 0 && !mapping.getFragment1().getString().equals(mapping.getFragment2().getString()))
+				return true;
+		}
+		return false;
+	}
+
 	public boolean containsCompositeMappingWithoutReplacements() {
 		for(AbstractCodeMapping mapping : getMappings()) {
 			if(mapping instanceof CompositeStatementObjectMapping && !mapping.getFragment1().equalFragment(mapping.getFragment2()) && mapping.getReplacements().isEmpty()) {
@@ -4793,6 +4801,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											if(score2 > 0) {
 												CompositeStatementObjectMapping mapping = createCompositeMapping(matchingInnerNode1, statement2, parameterToArgumentMap, score2);
 												mapping.addReplacements(replacements2);
+												mapping.addLambdaMappers(replacementInfo2.getLambdaMappers());
 												mapping.addSubExpressionMappings(replacementInfo2.getSubExpressionMappings());
 												mappingSet.add(mapping);
 											}
@@ -4804,6 +4813,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
@@ -4849,6 +4859,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else if(replacements == null && !containsCallToExtractedMethod && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) && score > 0 && mappingSet.size() > 0 && score >= 2.0*mappingSet.first().getCompositeChildMatchingScore()) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								mappingSet.add(mapping);
 							}
@@ -5148,6 +5159,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											if(score2 > 0) {
 												CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, matchingInnerNode2, parameterToArgumentMap, score2);
 												mapping.addReplacements(replacements2);
+												mapping.addLambdaMappers(replacementInfo2.getLambdaMappers());
 												mapping.addSubExpressionMappings(replacementInfo2.getSubExpressionMappings());
 												mappingSet.add(mapping);
 											}
@@ -5159,6 +5171,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 									(score > 0 || Math.max(statement1.getStatements().size(), statement2.getStatements().size()) == 0)) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
 								mapping.addReplacements(replacements);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								UMLAbstractClassDiff classDiff = this.classDiff != null ? this.classDiff : parentMapper != null ? parentMapper.classDiff : null;
 								for(AbstractCodeFragment leaf : leaves2) {
@@ -5195,6 +5208,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 							else if(replacements == null && !containsCallToExtractedMethod && statement1.getLocationInfo().getCodeElementType().equals(statement2.getLocationInfo().getCodeElementType()) && score > 0 && mappingSet.size() > 0 && score >= 2.0*mappingSet.first().getCompositeChildMatchingScore()) {
 								CompositeStatementObjectMapping mapping = createCompositeMapping(statement1, statement2, parameterToArgumentMap, score);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								mappingSet.add(mapping);
 							}
@@ -5363,6 +5377,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if(score > 0) {
 								CompositeStatementObjectMapping newMapping = createCompositeMapping((CompositeStatementObject)mapping.getFragment1(), innerNode2, parameterToArgumentMap, score);
 								newMapping.addReplacements(replacementInfo.getReplacements());
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								newMapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								addMapping(newMapping);
 								mappingsToBeRemoved.add(mapping);
@@ -6221,6 +6236,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf2, mapping, replacementInfo);
 								mappingSet.add(mapping);
@@ -6688,6 +6704,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							if (replacements != null) {
 								LeafMapping mapping = createLeafMapping(leaf1, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 								mapping.addReplacements(replacements);
+								mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 								mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 								extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf2, mapping, replacementInfo);
 								mappingSet.add(mapping);
@@ -7174,6 +7191,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if(matchingMappings == mappingSet.size() || matchWithLessReplacements || differentVariableDeclarationNumber) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 						extractInlineVariableAnalysis(leaves1, leaves2, leaf, leaf2, mapping, replacementInfo);
 						mappingSet.add(mapping);
@@ -7244,6 +7262,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 						boolean allowAdd = false;
 						for(LeafMapping m : mappingSet) {
@@ -7278,6 +7297,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 						extractInlineVariableAnalysis(leaves1, leaves2, leaf1, leaf, mapping, replacementInfo);
 						mappingSet.add(mapping);
@@ -7360,6 +7380,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf1, leaf, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 						int lineDistance = 0;
 						if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToExtractedMethod == 1) {
@@ -7448,6 +7469,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					if (replacements != null) {
 						LeafMapping mapping = createLeafMapping(leaf, leaf2, parameterToArgumentMap, equalNumberOfAssertions);
 						mapping.addReplacements(replacements);
+						mapping.addLambdaMappers(replacementInfo.getLambdaMappers());
 						mapping.addSubExpressionMappings(replacementInfo.getSubExpressionMappings());
 						int lineDistance = 0;
 						if(exactMappingsBefore + inexactMappingsBefore == 0 && callsToInlinedMethod == 1) {

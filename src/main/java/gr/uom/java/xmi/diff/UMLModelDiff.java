@@ -1268,24 +1268,27 @@ public class UMLModelDiff {
 		for(Iterator<UMLClass> removedClassIterator = removedClasses.iterator(); removedClassIterator.hasNext();) {
 			UMLClass removedClass = removedClassIterator.next();
 			String removedClassFilePath = removedClass.getSourceFile();
+			TreeSet<UMLClassRenameDiff> diffSet = new TreeSet<UMLClassRenameDiff>(new ClassRenameComparator());
 			for(Iterator<UMLClass> addedClassIterator = addedClasses.iterator(); addedClassIterator.hasNext();) {
 				UMLClass addedClass = addedClassIterator.next();
 				String addedClassFilePath = addedClass.getSourceFile();
 				for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
-					if(classRenameDiff.getOriginalClass().isTopLevel() && classRenameDiff.getNextClass().isTopLevel() &&
-							classRenameDiff.getOriginalClass().getSourceFile().equals(removedClassFilePath) &&
+					if(classRenameDiff.getOriginalClass().getSourceFile().equals(removedClassFilePath) &&
 							classRenameDiff.getNextClass().getSourceFile().equals(addedClassFilePath)) {
 						MatchResult matchResult = matcher.match(removedClass, addedClass);
 						if(matchResult.getMatchedOperations() > 0 || matchResult.getMatchedAttributes() > 0) {
 							UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-							newClassRenameDiff.process();
-							diffsToBeAdded.add(newClassRenameDiff);
-							addedClassesToBeRemoved.add(addedClass);
-							removedClassesToBeRemoved.add(removedClass);
-							break;
+							diffSet.add(newClassRenameDiff);
 						}
 					}
 				}
+			}
+			if(diffSet.size() > 0) {
+				UMLClassRenameDiff first = diffSet.first();
+				diffsToBeAdded.add(first);
+				first.process();
+				addedClassesToBeRemoved.add(first.getNextClass());
+				removedClassesToBeRemoved.add(first.getOriginalClass());
 			}
 		}
 		classRenameDiffList.addAll(diffsToBeAdded);

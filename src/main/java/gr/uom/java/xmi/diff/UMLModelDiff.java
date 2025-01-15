@@ -1272,7 +1272,8 @@ public class UMLModelDiff {
 				UMLClass addedClass = addedClassIterator.next();
 				String addedClassFilePath = addedClass.getSourceFile();
 				for(UMLClassRenameDiff classRenameDiff : classRenameDiffList) {
-					if(classRenameDiff.getOriginalClass().getSourceFile().equals(removedClassFilePath) &&
+					if(classRenameDiff.getOriginalClass().isTopLevel() && classRenameDiff.getNextClass().isTopLevel() &&
+							classRenameDiff.getOriginalClass().getSourceFile().equals(removedClassFilePath) &&
 							classRenameDiff.getNextClass().getSourceFile().equals(addedClassFilePath)) {
 						MatchResult matchResult = matcher.match(removedClass, addedClass);
 						if(matchResult.getMatchedOperations() > 0 || matchResult.getMatchedAttributes() > 0) {

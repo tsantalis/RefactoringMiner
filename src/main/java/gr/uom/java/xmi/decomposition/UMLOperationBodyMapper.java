@@ -3524,6 +3524,9 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				assertThrowsCalls.add(call);
 				for(AbstractCodeMapping mapping : this.mappings) {
 					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
+						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
+							continue;
+						}
 						if(assertThrowsMappings.containsKey(call.actualString())) {
 							assertThrowsMappings.get(call.actualString()).add(mapping);
 						}
@@ -8982,7 +8985,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						this.nonMappedInnerNodesT2.addAll(mapper.nonMappedInnerNodesT2);
 						this.nonMappedLeavesT1.addAll(mapper.nonMappedLeavesT1);
 						this.nonMappedLeavesT2.addAll(mapper.nonMappedLeavesT2);
-						if(this.container1 != null && this.container2 != null && !lambda1.getString().equals(lambda2.getString())) {
+						if(this.container1 != null && this.container2 != null) {
 							this.refactorings.addAll(mapper.getRefactorings());
 						}
 					}

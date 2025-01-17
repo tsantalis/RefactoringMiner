@@ -1185,6 +1185,19 @@ public class VariableReplacementAnalysis {
 					return subExpressions.get(0);
 				}
 			}
+			//check for string concatenation with "."
+			if(replacementAsString.startsWith("\"") && replacementAsString.endsWith("\"") &&
+					variableDeclaration.getInitializer().getString().startsWith("\"") &&
+					variableDeclaration.getInitializer().getString().endsWith("\"")) {
+				String replacementAsStringWithoutDoubleQuotes = replacementAsString.substring(1, replacementAsString.length()-1);
+				String initializerWithoutDoubleQuotes = variableDeclaration.getInitializer().getString().substring(1, variableDeclaration.getInitializer().getString().length()-1);
+				if(replacementAsStringWithoutDoubleQuotes.equals(initializerWithoutDoubleQuotes + ".")) {
+					List<LeafExpression> subExpressions = variableDeclaration.getInitializer().findExpression(variableDeclaration.getInitializer().getString());
+					if(subExpressions.size() > 0) {
+						return subExpressions.get(0);
+					}
+				}
+			}
 			if(replacement instanceof VariableReplacementWithMethodInvocation) {
 				VariableReplacementWithMethodInvocation r = (VariableReplacementWithMethodInvocation)replacement;
 				for(AbstractCall call : variableDeclaration.getInitializer().getMethodInvocations()) {

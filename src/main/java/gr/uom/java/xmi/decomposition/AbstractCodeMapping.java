@@ -718,7 +718,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						}
 						processExtractVariableRefactoring(ref, refactorings);
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical()) {
+						if(identical() || ternaryMatch(initializer, before)) {
 							identicalWithExtractedVariable = true;
 						}
 						return;

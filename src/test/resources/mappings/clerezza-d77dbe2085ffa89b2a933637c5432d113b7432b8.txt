@@ -1,0 +1,38 @@
+public unavailableConvertor() : void -> public unavailableConvertor() : void
+line range:42-42==line range:49-49
+public testAcessGraph() : void -> public testAcessGraph() : void
+line range:115-115==line range:127-127
+public testNoWildCard() : void -> public testNoWildCard() : void
+line range:120-120==line range:133-133
+public testAllowedArea() : void -> public testAllowedArea() : void
+line range:125-125==line range:139-139
+public testAcessForbiddenGraph() : void -> public testAcessForbiddenGraph() : void
+line range:130-130==line range:145-145
+public testCustomPermissions() : void -> public testCustomPermissions() : void
+line range:141-141==line range:158-158
+public testCustomPermissionsIncorrect() : void -> public testCustomPermissionsIncorrect() : void
+line range:152-152==line range:171-171
+public testCreateMGraph() : void -> public testCreateMGraph() : void
+line range:168-168==line range:189-189
+public testCreateMGraphWithoutWritePermission() : void -> public testCreateMGraphWithoutWritePermission() : void
+line range:172-172==line range:195-195
+public testAddTripleToMGraph() : void -> public testAddTripleToMGraph() : void
+line range:178-178==line range:202-202
+public executeSparqlQueryNoEngineWithString() : void -> public executeSparqlQueryNoEngineWithString() : void
+line range:145-145==line range:153-153
+public executeSparqlQueryNoEngineWithQuery() : void -> public executeSparqlQueryNoEngineWithQuery() : void
+line range:154-154==line range:163-163
+public executeSparqlQueryNoEngineWithSelectQuery() : void -> public executeSparqlQueryNoEngineWithSelectQuery() : void
+line range:163-163==line range:173-173
+public executeSparqlQueryNoEngineWithAskQuery() : void -> public executeSparqlQueryNoEngineWithAskQuery() : void
+line range:172-172==line range:183-183
+public executeSparqlQueryNoEngineWithDescribeQuery() : void -> public executeSparqlQueryNoEngineWithDescribeQuery() : void
+line range:181-182==line range:193-193
+public executeSparqlQueryNoEngineWithConstructQuery() : void -> public executeSparqlQueryNoEngineWithConstructQuery() : void
+line range:191-192==line range:203-203
+public testInvalidQuery() : void -> public testInvalidQuery() : void
+line range:98-98==line range:107-107
+public removeIncompleteSubGraph() : void -> public removeIncompleteSubGraph() : void
+line range:85-85==line range:92-92
+public removeInvalidSubGraph() : void -> public removeInvalidSubGraph() : void
+line range:101-101==line range:109-109

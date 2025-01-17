@@ -24,4 +24,7 @@ public class Assertions {
                         .map((String s) -> s + System.lineSeparator())
                         .collect(Collectors.joining())));
     }
+    public static void assertHasSameElementsAs(List<String> expected, List<String> actual) {
+        assertHasSameElementsAs(expected, actual, () -> "");
+    }
 }

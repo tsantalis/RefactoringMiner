@@ -1,10 +1,8 @@
 package org.refactoringminer.test;
 
-import gr.uom.java.xmi.VariableDeclarationContainer;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
-import gr.uom.java.xmi.diff.ModifyClassAnnotationRefactoring;
 import gr.uom.java.xmi.diff.ModifyMethodAnnotationRefactoring;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
@@ -26,6 +24,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.refactoringminer.utils.Assertions.assertHasSameElementsAs;
 
 public class TestRelatedStatementMappingsTest {
     public static final String REPOS = System.getProperty("user.dir") + "/src/test/resources/oracle/commits";
@@ -91,7 +90,7 @@ public class TestRelatedStatementMappingsTest {
         Assertions.assertDoesNotThrow(() -> {
             expected.addAll(IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName)));
         }, lazyErrorMessage);
-        Assertions.assertIterableEquals(expected, actual, lazyErrorMessage);
+        assertHasSameElementsAs(expected, actual, lazyErrorMessage);
     }
 
     private <T> void mapperInfo(Set<AbstractCodeMapping> mappings, T operationBefore, T operationAfter) {

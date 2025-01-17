@@ -3572,6 +3572,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										}
 									}
 								}
+								if(nonMappedLeavesT2.isEmpty()) {
+									AbstractCodeMapping firstMapping = set.iterator().next();
+									List<LeafExpression> leafExpressions = firstMapping.getFragment2().findExpression(expectedException.getString());
+									if(leafExpressions.size() == 1) {
+										LeafMapping leafMapping = new LeafMapping(expectedException, leafExpressions.get(0), operation1, operation2);
+										ref.addSubExpressionMapping(leafMapping);
+										break;
+									}
+								}
 							}
 						}
 					}

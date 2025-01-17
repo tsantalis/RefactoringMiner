@@ -1270,11 +1270,23 @@ public abstract class AbstractCall extends LeafExpression {
 			if(s2.endsWith(methodReferenceName + "()")) {
 				return true;
 			}
+			if(methodReferenceName.equals("new")) {
+				String type = s1.substring(0, s1.indexOf(JAVA.METHOD_REFERENCE));
+				if(s2.startsWith("new " + type)) {
+					return true;
+				}
+			}
 		}
 		if(s2.contains(JAVA.METHOD_REFERENCE) && !s1.contains(JAVA.METHOD_REFERENCE)) {
 			String methodReferenceName = s2.substring(s2.indexOf(JAVA.METHOD_REFERENCE) + 2, s2.length());
 			if(s1.endsWith(methodReferenceName + "()")) {
 				return true;
+			}
+			if(methodReferenceName.equals("new")) {
+				String type = s2.substring(0, s2.indexOf(JAVA.METHOD_REFERENCE));
+				if(s1.startsWith("new " + type)) {
+					return true;
+				}
 			}
 		}
 		String reservedTokens1 = ReplacementUtil.keepReservedTokens(s1);

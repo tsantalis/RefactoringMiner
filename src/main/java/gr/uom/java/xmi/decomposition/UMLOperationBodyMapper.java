@@ -274,6 +274,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		}
 	}
 
+	private static boolean containsAll(LambdaExpressionObject bigLambda, List<LambdaExpressionObject> small) {
+		int count = 0;
+		for(LambdaExpressionObject lambda : small) {
+			for(LambdaExpressionObject nestedLambda : bigLambda.getAllLambdas()) {
+				if(nestedLambda.getString().equals(lambda.getString())) {
+					count++;
+					break;
+				}
+			}
+		}
+		return count == small.size();
+	}
+
 	public UMLOperationBodyMapper(UMLOperation operation1, UMLOperation operation2, UMLAbstractClassDiff classDiff) throws RefactoringMinerTimedOutException {
 		this.classDiff = classDiff;
 		this.modelDiff = classDiff != null ? classDiff.getModelDiff() : null;
@@ -478,7 +491,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(anonymousFragment, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
 					}
 				}
-				else if(lambdas1.size() == 1 && anonymous2.size() == 0 && lambdas2.size() == 0) {
+				else if(anonymous2.size() == 0 && ((lambdas1.size() == 1 && lambdas2.size() == 0) || (lambdas1.size() == 1 && containsAll(lambdas1.get(0), lambdas2)))) {
 					AbstractCodeFragment lambdaFragment = null;
 					for(AbstractCodeFragment leaf1 : leaves1) {
 						if(leaf1.getLambdas().size() > 0) {
@@ -505,7 +518,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 						expandAnonymousAndLambdas(anonymousFragment, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
 					}
 				}
-				else if(anonymous1.size() == 0 && lambdas1.size() == 0 && lambdas2.size() == 1) {
+				else if(anonymous1.size() == 0 && ((lambdas1.size() == 0 && lambdas2.size() == 1) || (lambdas2.size() == 1 && containsAll(lambdas2.get(0), lambdas1)))) {
 					AbstractCodeFragment lambdaFragment = null;
 					for(AbstractCodeFragment leaf2 : leaves2) {
 						if(leaf2.getLambdas().size() > 0) {

@@ -4,14 +4,13 @@ import narrator.graph.Edge;
 import narrator.graph.Node;
 import org.jgrapht.Graph;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class TraversalComponent extends TraversalPattern {
-    private List<TraversalPattern> components = new ArrayList<>();
-    private Graph<Node, Edge> reason = getGraph();
+    private List<TraversalPattern> components;
+    private Graph<Node, Edge> reason;
 
     TraversalComponent(List<TraversalPattern> components, Graph<Node, Edge> reason) {
         this.components = components;
@@ -20,7 +19,7 @@ public class TraversalComponent extends TraversalPattern {
 
     @Override
     public boolean containsNode(Node node) {
-        Node foundNode = reason.vertexSet().stream()
+        Node foundNode = getGraph().vertexSet().stream()
                 .filter(reasonNode -> reasonNode.equals(node))
                 .findFirst().orElse(null);
         if (foundNode != null) {
@@ -36,9 +35,18 @@ public class TraversalComponent extends TraversalPattern {
         return false;
     }
 
+    public List<TraversalPattern> getComponents() {
+        return components;
+    }
+
+    @Override
+    public Graph<Node, Edge> getGraph() {
+        return reason;
+    }
+
     @Override
     public Node getLead() {
-        Set<Node> nodes = reason.vertexSet();
+        Set<Node> nodes = getGraph().vertexSet();
         if (!nodes.isEmpty()) {
             return nodes.iterator().next();
         }
@@ -48,7 +56,7 @@ public class TraversalComponent extends TraversalPattern {
 
     @Override
     public Set<Node> vertexSet() {
-        Set<Node> result = new HashSet<>(reason.vertexSet());
+        Set<Node> result = new HashSet<>(getGraph().vertexSet());
         for (TraversalPattern component : components) {
             result.addAll(component.vertexSet());
         }

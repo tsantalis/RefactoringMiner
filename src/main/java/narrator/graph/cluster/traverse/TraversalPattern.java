@@ -1,5 +1,6 @@
 package narrator.graph.cluster.traverse;
 
+import com.github.gumtreediff.tree.Tree;
 import narrator.graph.Node;
 import narrator.graph.cluster.GraphWrapper;
 
@@ -21,6 +22,12 @@ public class TraversalPattern extends GraphWrapper {
         int randomIndex = random.nextInt(nodes.size());
 
         return nodes.get(randomIndex);
+    }
+
+    public String getId() {
+        Node lead = getLead();
+        Tree tree = lead.getTree();
+        return getClass().getSimpleName() + "-" + tree.getPos() + '-' + tree.getEndPos() + "-" + tree.getType().name;
     }
 
     public Set<Node> vertexSet() {

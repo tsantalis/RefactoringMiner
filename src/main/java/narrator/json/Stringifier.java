@@ -6,6 +6,7 @@ import narrator.graph.Context;
 import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
+import narrator.graph.cluster.traverse.TraversalComponent;
 import narrator.graph.cluster.traverse.TraversalPattern;
 import org.jgrapht.Graph;
 
@@ -20,65 +21,43 @@ public class Stringifier {
         return graphObj.toString();
     }
 
-    public static String stringifyTraversalGraph(List<TraversalPattern> traversalComponents) {
+    public static String stringifyTraversalComponents(List<TraversalPattern> traversalComponents) {
         JsonArray nodesArray = new JsonArray();
         JsonArray edgesArray = new JsonArray();
 
-        for (int i = 0; i < traversalComponents.size(); i++) {
-            TraversalPattern traversalPattern = traversalComponents.get(i);
-            Graph<Node, Edge> graph = traversalPattern.getGraph();
-            String aggregatorId = String.valueOf(i);
-
-            JsonArray nodesBatch = getNodesArray(graph, aggregatorId);
-
-            nodesArray.addAll(nodesBatch);
-            edgesArray.addAll(getEdgesArray(graph, aggregatorId));
-
-            JsonObject nodeObj = new JsonObject();
-            nodeObj.addProperty("id", aggregatorId);
-            nodeObj.addProperty("content", traversalPattern.textualRepresentation());
-            nodeObj.addProperty("isContext", false);
-            nodeObj.addProperty("isAggregator", true);
-            nodesArray.add(nodeObj);
-
-            Node lead = traversalPattern.getLead();
-            JsonObject edgeObj = new JsonObject();
-            edgeObj.addProperty("sourceId", aggregatorId);
-            edgeObj.addProperty("targetId", getNodeId(lead, aggregatorId));
-            edgeObj.addProperty("type", EdgeType.EXPANSION.name());
-            edgeObj.addProperty("weight", 1);
-            edgesArray.add(edgeObj);
+        for (TraversalPattern traversalComponent : traversalComponents) {
+            stringifyTraversalComponent(traversalComponent, "", nodesArray, edgesArray);
         }
-
-//        for (int i = 0; i < traversalPatterns.size(); i++) {
-//            for (int j = 0; j < traversalPatterns.size(); j++) {
-//                TraversalPattern source = traversalPatterns.get(i);
-//                TraversalPattern target = traversalPatterns.get(j);
-//                if (source.equals(target)) {
-//                    continue;
-//                }
-//
-//                Set<TraversalEdge> edges = traversalGraph.getAllEdges(source, target);
-//                for (TraversalEdge edge : edges) {
-//                    String sourceId = edge.getSourceNode().getId() + "-" + i;
-//                    String targetId = edge.getTargetNode().getId() + "-" + j;
-//
-//                    JsonObject edgeObj = new JsonObject();
-//                    edgeObj.addProperty("sourceId", sourceId);
-//                    edgeObj.addProperty("targetId", targetId);
-//                    edgeObj.addProperty("type", edge.getType().name());
-//                    edgeObj.addProperty("weight", 1);
-//
-//                    edgesArray.add(edgeObj);
-//                }
-//            }
-//        }
 
         JsonObject graphObj = new JsonObject();
         graphObj.add("nodes", nodesArray);
         graphObj.add("edges", edgesArray);
 
         return graphObj.toString();
+    }
+
+    private static void stringifyTraversalComponent(TraversalPattern traversalComponent, String aggregatorId, JsonArray nodes, JsonArray edges) {
+        String id = traversalComponent.getId();
+
+        if (traversalComponent instanceof TraversalComponent) {
+            for (TraversalPattern component : ((TraversalComponent) traversalComponent).getComponents()) {
+                stringifyTraversalComponent(component, id, nodes, edges);
+            }
+        }
+
+        Graph<Node, Edge> graph = traversalComponent.getGraph();
+        nodes.addAll(getNodesArray(graph, id));
+        edges.addAll(getEdgesArray(graph, id));
+
+        // components are unique
+        nodes.add(getNode(id, aggregatorId, traversalComponent.textualRepresentation(), false, true));
+
+        Node lead = traversalComponent.getLead();
+        edges.add(getEdge(id, getNodeId(lead.getId(), id), EdgeType.EXPANSION.name(), 1));
+
+        if (!aggregatorId.isEmpty()) {
+            edges.add(getEdge(aggregatorId, id, EdgeType.EXPANSION.name(), 1));
+        }
     }
 
     private static JsonArray getNodesArray(Graph<Node, Edge> graph, String aggregatorId) {
@@ -90,15 +69,8 @@ public class Stringifier {
                 continue;
             }
 
-            JsonObject nodeObj = new JsonObject();
-            String id = getNodeId(node, aggregatorId);
-            nodeObj.addProperty("id", id);
-            nodeObj.addProperty("content", node.getContent());
-            nodeObj.addProperty("isContext", node.isContext());
-            if (!aggregatorId.isEmpty()) {
-                nodeObj.addProperty("aggregatorId", aggregatorId);
-            }
-            nodesArray.add(nodeObj);
+            // nodes can be repeated between components
+            nodesArray.add(getNode(getNodeId(node.getId(), aggregatorId), aggregatorId, node.getContent(), node.isContext(), false));
         }
 
         return nodesArray;
@@ -114,23 +86,46 @@ public class Stringifier {
                     continue;
                 }
 
-                String sourceId = getNodeId(source, aggregatorId);
-                String targetId = getNodeId(target, aggregatorId);
-
                 Set<Edge> edges = graph.getAllEdges(source, target);
                 for (Edge edge : edges) {
-                    JsonObject edgeObj = new JsonObject();
-                    edgeObj.addProperty("sourceId", sourceId);
-                    edgeObj.addProperty("targetId", targetId);
-                    edgeObj.addProperty("type", edge.getType().name());
-                    edgeObj.addProperty("weight", edge.getWeight());
-
-                    edgesArray.add(edgeObj);
+                    edgesArray.add(getEdge(getNodeId(source.getId(), aggregatorId), getNodeId(target.getId(), aggregatorId), edge.getType().name(), edge.getWeight()));
                 }
             }
         }
 
         return edgesArray;
+    }
+
+    private static JsonObject getNode(String id, String aggregatorId, String content, boolean isContext, boolean isAggregator) {
+        JsonObject nodeObj = new JsonObject();
+
+        nodeObj.addProperty("id", id);
+        nodeObj.addProperty("content", content);
+        nodeObj.addProperty("isContext", isContext);
+        nodeObj.addProperty("isAggregator", isAggregator);
+        if (!aggregatorId.isEmpty()) {
+            nodeObj.addProperty("aggregatorId", aggregatorId);
+        }
+
+        return nodeObj;
+    }
+
+    private static JsonObject getEdge(String sourceId, String targetId, String type, float weight) {
+        JsonObject edgeObj = new JsonObject();
+
+        edgeObj.addProperty("sourceId", sourceId);
+        edgeObj.addProperty("targetId", targetId);
+        edgeObj.addProperty("type", type);
+        edgeObj.addProperty("weight", weight);
+        
+        return edgeObj;
+    }
+
+    private static String getNodeId(String id, String aggregatorId) {
+        if (!aggregatorId.isEmpty()) {
+            id += "-" + aggregatorId;
+        }
+        return id;
     }
 
     public static String stringifyContextGraph() {
@@ -171,13 +166,5 @@ public class Stringifier {
         graphObj.add("edges", edgesArray);
 
         return graphObj.toString();
-    }
-
-    private static String getNodeId(Node node, String aggregatorId) {
-        String id = node.getId();
-        if (!aggregatorId.isEmpty()) {
-            id += "-" + aggregatorId;
-        }
-        return id;
     }
 }

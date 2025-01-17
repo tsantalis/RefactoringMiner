@@ -74,7 +74,7 @@ public class Driver {
 
             TraversalEngine traversalEngine = new TraversalEngine(clusters.get(i));
             writer = new FileWriter(String.format("./json/traversal-%s.json", i));
-            writer.write(Stringifier.stringifyTraversalGraph(traversalEngine.getComponents()));
+            writer.write(Stringifier.stringifyTraversalComponents(traversalEngine.getComponents()));
             writer.close();
         }
     }

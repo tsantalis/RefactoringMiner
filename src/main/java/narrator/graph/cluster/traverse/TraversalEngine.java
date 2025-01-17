@@ -4,13 +4,12 @@ import narrator.graph.Edge;
 import narrator.graph.EdgeType;
 import narrator.graph.Node;
 import narrator.graph.cluster.Cluster;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.builder.GraphTypeBuilder;
 import org.refactoringminer.astDiff.utils.Constants;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class TraversalEngine {
@@ -37,14 +36,13 @@ public class TraversalEngine {
         // find pattern MST
         // requirements
         mergeUsagesRequirements();
-        System.out.println(components.size());
         // same non-context node (e.g. requirement)
-        mergeCommonNodes();
-        System.out.println(components.size());
+        mergeCommonNodes((node) -> !node.isContext());
         // 100% similar nodes
         // successive nodes
         // same context
     }
+
 
     // TODO: support sub changes to javadoc
     private List<String> commentTypes = new ArrayList<>() {{
@@ -254,41 +252,69 @@ public class TraversalEngine {
         components.add(parentComponent);
     }
 
-    private void mergeCommonNodes() {
-        List<Node> nodes = graph.vertexSet().stream().filter(node -> !node.isContext()).toList();
-        HashMap<Node, List<TraversalPattern>> nodesComponents = new HashMap<>();
-        for (Node node : nodes) {
-            List<TraversalPattern> nodeComponents = new ArrayList<>();
-            for (TraversalPattern component : components) {
-                if (component.containsNode(node)) {
-                    nodeComponents.add(component);
+    private void mergeCommonNodes(Function<Node, Boolean> nodeCondition) {
+        while (true) {
+            Set<Node> mostCommonNodes = null;
+            for (int i = 0; i < components.size(); i++) {
+                for (int j = i + 1; j < components.size(); j++) {
+                    Set<Node> subjectNodes = components.get(i).vertexSet();
+                    Set<Node> objectNodes = components.get(j).vertexSet();
+
+                    Set<Node> commonNodes = new HashSet<>();
+                    for (Node subjectNode : subjectNodes) {
+                        if (objectNodes.contains(subjectNode)
+                                && (nodeCondition == null || nodeCondition.apply(subjectNode))) {
+                            commonNodes.add(subjectNode);
+                        }
+                    }
+
+                    if (commonNodes.isEmpty()
+                            || (mostCommonNodes != null && mostCommonNodes.size() >= commonNodes.size())) {
+                        continue;
+                    }
+
+                    mostCommonNodes = commonNodes;
                 }
             }
-            nodesComponents.put(node, nodeComponents);
-        }
 
-        HashMap<Pair<TraversalPattern, TraversalPattern>, Set<Node>> componentsCommonNodes = new HashMap<>();
-        for (int i = 0; i < components.size(); i++) {
-            for (int j = i + 1; j < components.size(); j++) {
-                TraversalPattern subject = components.get(i);
-                TraversalPattern object = components.get(j);
+            if (mostCommonNodes == null) {
+                break;
+            }
 
-                Set<Node> subjectNodes = subject.vertexSet();
-                Set<Node> objectNodes = object.vertexSet();
-                Set<Node> commonNodes = new HashSet<>();
-                for (Node subjectNode : subjectNodes) {
-                    if (objectNodes.contains(subjectNode)) {
-                        commonNodes.add(subjectNode);
+            HashMap<Node, List<TraversalPattern>> commonNodesComponents = new HashMap<>();
+            for (Node node : mostCommonNodes) {
+                List<TraversalPattern> nodeComponents = new ArrayList<>();
+                for (TraversalPattern component : components) {
+                    if (component.containsNode(node)) {
+                        nodeComponents.add(component);
                     }
                 }
-
-                if (commonNodes.isEmpty()) {
-                    continue;
-                }
-
-                componentsCommonNodes.put(new ImmutablePair<>(subject, object), commonNodes);
+                commonNodesComponents.put(node, nodeComponents);
             }
-        }
 
+            // at least two components will be common between nodes
+            Iterator<List<TraversalPattern>> componetsIterator = commonNodesComponents.values().iterator();
+            Set<TraversalPattern> commonComponents = new HashSet<>(componetsIterator.next());
+            while (componetsIterator.hasNext()) {
+                commonComponents.retainAll(componetsIterator.next());
+            }
+
+            Graph<Node, Edge> reason = GraphTypeBuilder
+                    .<Node, Edge>directed()
+                    .allowingMultipleEdges(true)
+                    .allowingSelfLoops(true)
+                    .edgeClass(Edge.class)
+                    .weighted(true)
+                    .buildGraph();
+            for (Node node : mostCommonNodes) {
+                reason.addVertex(node);
+            }
+
+            TraversalComponent parentComponent = new TraversalComponent(commonComponents.stream().toList(), reason);
+            for (TraversalPattern component : commonComponents) {
+                components.remove(component);
+            }
+            components.add(parentComponent);
+        }
     }
 }

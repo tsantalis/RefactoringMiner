@@ -422,12 +422,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			}
 			List<AnonymousClassDeclarationObject> anonymous1 = body1.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> nestedAnonymous1 = new ArrayList<AnonymousClassDeclarationObject>();
+			int doubleBraceInitializations1 = 0;
 			for(AnonymousClassDeclarationObject anonymous : anonymous1) {
+				if(anonymous.toString().startsWith("{\n{")) {
+					doubleBraceInitializations1++;
+				}
 				nestedAnonymous1.addAll(anonymous.getAnonymousClassDeclarationsRecursively());
 			}
 			List<AnonymousClassDeclarationObject> anonymous2 = body2.getAllAnonymousClassDeclarations();
 			List<AnonymousClassDeclarationObject> nestedAnonymous2 = new ArrayList<AnonymousClassDeclarationObject>();
+			int doubleBraceInitializations2 = 0;
 			for(AnonymousClassDeclarationObject anonymous : anonymous2) {
+				if(anonymous.toString().startsWith("{\n{")) {
+					doubleBraceInitializations2++;
+				}
 				nestedAnonymous2.addAll(anonymous.getAnonymousClassDeclarationsRecursively());
 			}
 			List<LambdaExpressionObject> lambdas1 = body1.getAllLambdas();
@@ -538,6 +546,20 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 					(lambdas2.size() + nestedLambdas2.size() == lambdas1.size() + nestedLambdas1.size() + assertThrows2 ||
 					lambdas2.size() == lambdas1.size() + assertThrows2 || assertThrows1 == 0)) {
 				handleAssertThrowsLambda(leaves1, leaves2, innerNodes2, lambdas2, operation2);
+			}
+			else if(doubleBraceInitializations1 > 0 && doubleBraceInitializations2 == 0) {
+				for(AbstractCodeFragment leaf1 : new ArrayList<>(leaves1)) {
+					if(leaf1.getAnonymousClassDeclarations().size() > 0) {
+						expandAnonymousAndLambdas(leaf1, leaves1, innerNodes1, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList1(), codeFragmentOperationMap1, operation1, true);
+					}
+				}
+			}
+			else if(doubleBraceInitializations1 == 0 && doubleBraceInitializations2 > 0) {
+				for(AbstractCodeFragment leaf2 : new ArrayList<>(leaves2)) {
+					if(leaf2.getAnonymousClassDeclarations().size() > 0) {
+						expandAnonymousAndLambdas(leaf2, leaves2, innerNodes2, new LinkedHashSet<>(), new LinkedHashSet<>(), anonymousClassList2(), codeFragmentOperationMap2, operation2, true);
+					}
+				}
 			}
 			Set<AbstractCodeFragment> streamAPIStatements1 = statementsWithStreamAPICalls(leaves1);
 			Set<AbstractCodeFragment> streamAPIStatements2 = statementsWithStreamAPICalls(leaves2);
@@ -3039,6 +3061,27 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 											map.put(anonymousInnerNode, anonymousOperation);
 										}
 									}
+								}
+							}
+						}
+						for(UMLInitializer initializer : anonymous.getInitializers()) {
+							List<AbstractCodeFragment> anonymousClassLeaves = initializer.getBody().getCompositeStatement().getLeaves();
+							for(AbstractCodeFragment anonymousLeaf : anonymousClassLeaves) {
+								if(!leaves.contains(anonymousLeaf)) {
+									leaves.add(anonymousLeaf);
+									addedLeaves.add(anonymousLeaf);
+									map.put(anonymousLeaf, initializer);
+								}
+							}
+							List<CompositeStatementObject> anonymousClassInnerNodes = initializer.getBody().getCompositeStatement().getInnerNodes();
+							for(CompositeStatementObject anonymousInnerNode : anonymousClassInnerNodes) {
+								if(excludeRootBlock && anonymousInnerNode.equals(initializer.getBody().getCompositeStatement())) {
+									continue;
+								}
+								if(!innerNodes.contains(anonymousInnerNode)) {
+									innerNodes.add(anonymousInnerNode);
+									addedInnerNodes.add(anonymousInnerNode);
+									map.put(anonymousInnerNode, initializer);
 								}
 							}
 						}

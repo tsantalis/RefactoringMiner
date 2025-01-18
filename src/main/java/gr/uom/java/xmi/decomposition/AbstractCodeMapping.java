@@ -664,6 +664,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, before) ||
 							wrappedAsArgument(initializer, before) ||
 							stringConcatMatch(initializer, before) ||
+							diamondClassInstanceCreationMatch(initializer, before) ||
 							reservedTokenMatch(initializer, replacement, before) ||
 							anonymousWithMethodSignatureChange(initializer, before, classDiff)) {
 						ExtractVariableRefactoring ref = new ExtractVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
@@ -1072,6 +1073,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							infixOperandMatch(initializer, after) ||
 							wrappedAsArgument(initializer, after) ||
 							stringConcatMatch(initializer, after) ||
+							diamondClassInstanceCreationMatch(initializer, after) ||
 							reservedTokenMatch(initializer, replacement, after) ||
 							anonymousWithMethodSignatureChange(initializer, after, classDiff)) {
 						InlineVariableRefactoring ref = new InlineVariableRefactoring(declaration, operation1, operation2, insideExtractedOrInlinedMethod);
@@ -1398,6 +1400,19 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 		for(TernaryOperatorExpression ternary : ternaryList) {
 			if(ternary.getThenExpression().toString().equals(replacedExpression) || ternary.getElseExpression().toString().equals(replacedExpression)) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean diamondClassInstanceCreationMatch(AbstractExpression initializer, String replacedExpression) {
+		if(initializer.getString().startsWith("new ") && replacedExpression.startsWith("new ")) {
+			if(initializer.getString().contains("<") && replacedExpression.contains("<")) {
+				String type1 = initializer.getString().substring(0, initializer.getString().indexOf("<"));
+				String type2 = replacedExpression.substring(0, replacedExpression.indexOf("<"));
+				if(type1.equals(type2)) {
+					return true;
+				}
 			}
 		}
 		return false;

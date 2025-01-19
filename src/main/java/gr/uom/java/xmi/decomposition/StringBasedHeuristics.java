@@ -2473,6 +2473,9 @@ public class StringBasedHeuristics {
 			if(typeReplacement && !type1.compatibleTypes(type2) && variableRename && (initializerReplacement || nullInitializer || zeroArgumentClassInstantiation || classInstantiationArgumentReplacement)) {
 				return true;
 			}
+			if(type1.equals(type2) && type1.getClassType().equals("int") && variableRename && initializerReplacement) {
+				return true;
+			}
 		}
 		return false;
 	}

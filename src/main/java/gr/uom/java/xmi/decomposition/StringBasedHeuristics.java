@@ -1351,7 +1351,7 @@ public class StringBasedHeuristics {
 				}
 				int size = filteredIntersection.size();
 				int threshold = Math.max(tokens1.size(), tokens2.size()) - size;
-				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size)) {
+				if((size > 0 && size > threshold) || (size > 1 && size >= threshold) || (size > 1 && subExpressionMappings.size() == size) || (size > 1 && intersection.size() == Math.min(tokens1.size(), tokens2.size()))) {
 					List<String> tokens1AsList = new ArrayList<>(tokens1);
 					List<String> tokens2AsList = new ArrayList<>(tokens2);
 					int counter = 0;

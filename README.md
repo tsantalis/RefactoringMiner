@@ -312,17 +312,17 @@ Currently, it supports the detection of the following refactorings:
 * Laleh M. Eshkevari: Refactoring oracle 1.0 validation
 
 # Current precision and recall
-As of **January 4, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
+As of **January 19, 2025** the precision and recall of the tool on an oracle consisting of **547 commits** from **188 open-source projects** is:
 
 | Refactoring Type | TP | FP | FN | Precision | Recall |
 |:-----------------------|-----------:|--------:|--------:|--------:|--------:|
-|**Total**|12401  | 20  | 226  | 0.998  | 0.982|
+|**Total**|12402  | 16  | 226  | 0.999  | 0.982|
 |Extract Method|1007  |  1  | 22  | 0.999  | 0.979|
 |Rename Class|56  |  0  |  2  | 1.000  | 0.966|
-|Move Attribute|255  |  2  |  8  | 0.992  | 0.970|
+|Move Attribute|256  |  0  |  8  | 1.000  | 0.970|
 |Move And Rename Attribute|16  |  0  |  0  | 1.000  | 1.000|
 |Replace Attribute| 1  |  0  |  0  | 1.000  | 1.000|
-|Rename Method|388  |  4  | 21  | 0.990  | 0.949|
+|Rename Method|388  |  3  | 21  | 0.992  | 0.949|
 |Inline Method|118  |  0  |  1  | 1.000  | 0.992|
 |Move Method|386  |  3  |  6  | 0.992  | 0.985|
 |Move And Rename Method|128  |  0  |  4  | 1.000  | 0.970|
@@ -376,7 +376,7 @@ As of **January 4, 2025** the precision and recall of the tool on an oracle cons
 |Add Parameter Annotation|34  |  0  |  0  | 1.000  | 1.000|
 |Remove Parameter Annotation| 4  |  0  |  0  | 1.000  | 1.000|
 |Modify Parameter Annotation| 2  |  0  |  0  | 1.000  | 1.000|
-|Add Parameter|849  |  2  |  1  | 0.998  | 0.999|
+|Add Parameter|849  |  1  |  1  | 0.999  | 0.999|
 |Remove Parameter|311  |  0  |  0  | 1.000  | 1.000|
 |Reorder Parameter| 9  |  0  |  0  | 1.000  | 1.000|
 |Add Variable Annotation| 1  |  0  |  0  | 1.000  | 1.000|

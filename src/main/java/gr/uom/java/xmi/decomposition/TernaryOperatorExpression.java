@@ -50,11 +50,14 @@ public class TernaryOperatorExpression extends LeafExpression {
 	}
 
 	public Replacement makeReplacementWithTernaryOnTheRight(String statement, Map<String, String> parameterToArgumentMap) {
-		if(getElseExpression().getString().equals(statement)) {
+		if(getElseExpression().getString().equals(statement) || getElseExpression().getString().equals(statement + ".get()")) {
 			return new Replacement(statement, getElseExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
 		}
-		if(getThenExpression().getString().equals(statement)) {
+		if(getThenExpression().getString().equals(statement) || getThenExpression().getString().equals(statement + ".get()")) {
 			return new Replacement(statement, getThenExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+		}
+		if(getCondition().getString().equals(statement) || getCondition().getString().equals(statement + ".get()")) {
+			return new Replacement(statement, getCondition().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_CONDITION);
 		}
 		String temp = new String(statement);
 		for(String key : parameterToArgumentMap.keySet()) {
@@ -69,16 +72,22 @@ public class TernaryOperatorExpression extends LeafExpression {
 			if(getThenExpression().getString().equals(temp)) {
 				return new Replacement(statement, getThenExpression().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
 			}
+			if(getCondition().getString().equals(temp)) {
+				return new Replacement(statement, getCondition().getString(), ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_CONDITION);
+			}
 		}
 		return null;
 	}
 
 	public Replacement makeReplacementWithTernaryOnTheLeft(String statement, Map<String, String> parameterToArgumentMap) {
-		if(getElseExpression().getString().equals(statement)) {
+		if(getElseExpression().getString().equals(statement) || getElseExpression().getString().equals(statement + ".get()")) {
 			return new Replacement(getElseExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_ELSE);
 		}
-		if(getThenExpression().getString().equals(statement)) {
+		if(getThenExpression().getString().equals(statement) || getThenExpression().getString().equals(statement + ".get()")) {
 			return new Replacement(getThenExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+		}
+		if(getCondition().getString().equals(statement) || getCondition().getString().equals(statement + ".get()")) {
+			return new Replacement(getCondition().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_CONDITION);
 		}
 		String temp = new String(statement);
 		for(String key : parameterToArgumentMap.keySet()) {
@@ -92,6 +101,9 @@ public class TernaryOperatorExpression extends LeafExpression {
 			}
 			if(getThenExpression().getString().equals(temp)) {
 				return new Replacement(getThenExpression().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_THEN);
+			}
+			if(getCondition().getString().equals(temp)) {
+				return new Replacement(getCondition().getString(), statement, ReplacementType.EXPRESSION_REPLACED_WITH_TERNARY_CONDITION);
 			}
 		}
 		return null;

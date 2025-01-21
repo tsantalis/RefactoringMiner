@@ -718,8 +718,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 							}
 						}
 						processExtractVariableRefactoring(ref, refactorings);
+						int size = refactorings.size();
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical() || ternaryMatch(initializer, before)) {
+						if(identical() || ternaryMatch(initializer, before) || refactorings.size() > size) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -1218,9 +1219,6 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	private boolean identical() {
-		if(refactorings.size() > 1) {
-			return true;
-		}
 		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}

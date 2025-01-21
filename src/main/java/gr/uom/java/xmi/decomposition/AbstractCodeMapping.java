@@ -1218,6 +1218,9 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 	}
 
 	private boolean identical() {
+		if(refactorings.size() > 1) {
+			return true;
+		}
 		if(getReplacements().size() == 1 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {
 			return true;
 		}
@@ -1413,6 +1416,18 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 				if(type1.equals(type2)) {
 					return true;
 				}
+			}
+		}
+		if(initializer.getString().contains("Map.of(") && replacedExpression.contains("Collections.singletonMap(")) {
+			String tmp = initializer.getString().replace("Map.of(", "Collections.singletonMap(");
+			if(tmp.equals(replacedExpression)) {
+				return true;
+			}
+		}
+		else if(initializer.getString().contains("Collections.singletonMap(") && replacedExpression.contains("Map.of(")) {
+			String tmp = initializer.getString().replace("Collections.singletonMap(", "Map.of(");
+			if(tmp.equals(replacedExpression)) {
+				return true;
 			}
 		}
 		return false;

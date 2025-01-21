@@ -602,6 +602,18 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 		}
 	}
 
+	public List<UMLOperationBodyMapper> nestedLambdaMappers() {
+		List<UMLOperationBodyMapper> nestedLambdaMappers = new ArrayList<UMLOperationBodyMapper>();
+		for(UMLOperationBodyMapper lambdaMapper : this.getLambdaMappers()) {
+			for(AbstractCodeMapping mapping : lambdaMapper.getMappings()) {
+				if(mapping.getLambdaMappers().size() > 0) {
+					nestedLambdaMappers.addAll(mapping.getLambdaMappers());
+				}
+			}
+		}
+		return nestedLambdaMappers;
+	}
+
 	private boolean streamAPIMigration() {
 		if(getFragment1() instanceof StatementObject && getFragment2() instanceof AbstractExpression) {
 			AbstractExpression expr2 = (AbstractExpression)getFragment2();

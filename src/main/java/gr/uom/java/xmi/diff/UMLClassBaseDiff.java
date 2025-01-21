@@ -2064,12 +2064,14 @@ public abstract class UMLClassBaseDiff extends UMLAbstractClassDiff implements C
 			boolean zeroNonMapped = operationBodyMapper.getNonMappedLeavesT1().size() == 0 && operationBodyMapper.getNonMappedLeavesT2().size() == 0 &&
 					operationBodyMapper.getNonMappedInnerNodesT1().size() == 0 && operationBodyMapper.getNonMappedInnerNodesT2().size() == 0 &&
 					removedOperation.hasTestAnnotation() && addedOperation.hasTestAnnotation();
+			boolean containsAnonymousClassDiff = operationBodyMapper.getAnonymousClassDiffs().size() > 0 &&
+					!removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation();
 			int absoluteDifferenceInPosition = computeAbsoluteDifferenceInPositionWithinClass(removedOperation, addedOperation);
 			if(exactMappings(operationBodyMapper) || (operationBodyMapper.allMappingsHaveSameDepthAndIndex() && !removedOperation.hasTestAnnotation() && !addedOperation.hasTestAnnotation())) {
 				mapperSet.add(operationBodyMapper);
 			}
 			else if(mappedElementsMoreThanNonMappedT1AndT2(mappings, operationBodyMapper) &&
-					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped || operationBodyMapper.getAnonymousClassDiffs().size() > 0) &&
+					(absoluteDifferenceInPosition <= differenceInPosition || zeroNonMapped || containsAnonymousClassDiff) &&
 					compatibleSignatures(removedOperation, addedOperation, absoluteDifferenceInPosition) &&
 					removedOperation.testMethodCheck(addedOperation)) {
 				isPartOfMethodMovedFromDeletedMethod(removedOperation, addedOperation, operationBodyMapper, mapperSet);

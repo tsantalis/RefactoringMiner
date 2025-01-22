@@ -720,7 +720,7 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 						processExtractVariableRefactoring(ref, refactorings);
 						int size = refactorings.size();
 						checkForNestedExtractVariable(ref, refactorings, nonMappedLeavesT2, insideExtractedOrInlinedMethod);
-						if(identical() || ternaryMatch(initializer, before) || refactorings.size() > size) {
+						if(identical() || refactorings.size() > size) {
 							identicalWithExtractedVariable = true;
 						}
 						return;
@@ -1275,6 +1275,22 @@ public abstract class AbstractCodeMapping implements LeafMappingProvider {
 			}
 			if(temp.equals(fragment2.getString())) {
 				return true;
+			}
+		}
+		if(refactorings.size() == 1) {
+			Refactoring ref = refactorings.iterator().next();
+			if(ref instanceof ExtractVariableRefactoring) {
+				ExtractVariableRefactoring extract = (ExtractVariableRefactoring)ref;
+				AbstractExpression initializer = extract.getVariableDeclaration().getInitializer();
+				if(initializer != null && initializer.getTernaryOperatorExpressions().size() > 0) {
+					TernaryOperatorExpression ternary = initializer.getTernaryOperatorExpressions().get(0);
+					AbstractExpression thenExpression = ternary.getThenExpression();
+					AbstractCodeFragment elseExpression = ternary.getElseExpression();
+					if(fragment1.findExpression(thenExpression.getString()).size() > 0 ||
+							fragment1.findExpression(elseExpression.getString()).size() > 0) {
+						return true;
+					}
+				}
 			}
 		}
 		if(getReplacements().size() == 2 && fragment1.getVariableDeclarations().size() == fragment2.getVariableDeclarations().size()) {

@@ -1389,12 +1389,15 @@ public class UMLModelDiff {
 			if(!conflictingPair(pair, countMap.keySet())) {
 				UMLClass removedClass = removedClassNameMap.get(pair.getLeft());
 				UMLClass addedClass = addedClassNameMap.get(pair.getRight());
-				MatchResult matchResult = matcher.match(removedClass, addedClass);			
-				UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
-				newClassRenameDiff.process();
-				diffsToBeAdded.add(newClassRenameDiff);
-				addedClassesToBeRemoved.add(addedClass);
-				removedClassesToBeRemoved.add(removedClass);
+				MatchResult matchResult = matcher.match(removedClass, addedClass);
+				boolean skip = removedClass.getAttributes().size() > 0 && addedClass.getAttributes().size() > 0 && matchResult.getMatchedAttributes() == 0;
+				if(!skip) {
+					UMLClassRenameDiff newClassRenameDiff = new UMLClassRenameDiff(removedClass, addedClass, this, matchResult);
+					newClassRenameDiff.process();
+					diffsToBeAdded.add(newClassRenameDiff);
+					addedClassesToBeRemoved.add(addedClass);
+					removedClassesToBeRemoved.add(removedClass);
+				}
 			}
 		}
 		classRenameDiffList.addAll(diffsToBeAdded);

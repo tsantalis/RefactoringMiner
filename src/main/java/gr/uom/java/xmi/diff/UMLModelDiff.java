@@ -1361,6 +1361,24 @@ public class UMLModelDiff {
 						}
 					}
 				}
+				if(mapper.getOperationSignatureDiff().isPresent()) {
+					UMLOperationDiff signatureDiff = mapper.getOperationSignatureDiff().get();
+					for(UMLParameterDiff parameterDiff : signatureDiff.getParameterDiffList()) {
+						if(parameterDiff.isTypeChanged()) {
+							String matchingClassNameBefore = matches(parameterDiff.getRemovedParameter().getType().getClassType(), removedClassNames);
+							String matchingClassNameAfter = matches(parameterDiff.getAddedParameter().getType().getClassType(), addedClassNames);
+							if(matchingClassNameBefore != null && matchingClassNameAfter != null) {
+								Pair<String, String> pair = Pair.of(matchingClassNameBefore, matchingClassNameAfter);
+								if(countMap.containsKey(pair)) {
+									countMap.put(pair, countMap.get(pair) + 1);
+								}
+								else {
+									countMap.put(pair, 1);
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		Set<UMLClassRenameDiff> diffsToBeAdded = new LinkedHashSet<UMLClassRenameDiff>();
@@ -1404,6 +1422,19 @@ public class UMLModelDiff {
 			}
 		}
 		return false;
+	}
+
+	private static String matches(String type, Set<String> classNames) {
+		Set<String> matches = new LinkedHashSet<String>();
+		for(String className : classNames) {
+			if(className.equals(type)) {
+				matches.add(type);
+			}
+		}
+		if(matches.size() == 1) {
+			return matches.iterator().next();
+		}
+		return null;
 	}
 
 	private static String matches(String s, Set<String> classNames, AbstractCodeFragment fragment) {

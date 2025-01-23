@@ -504,6 +504,14 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						else if(!this.identicalPreviousAndNextStatement && o.identicalPreviousAndNextStatement) {
 							return 1;
 						}
+						boolean sameEnhancedForCollectionInParent1 = this.sameEnhancedForCollectionInParent();
+						boolean sameEnhancedForCollectionInParent2 = o.sameEnhancedForCollectionInParent();
+						if(sameEnhancedForCollectionInParent1 && !sameEnhancedForCollectionInParent2) {
+							return -1;
+						}
+						else if(!sameEnhancedForCollectionInParent1 && sameEnhancedForCollectionInParent2) {
+							return 1;
+						}
 						return Integer.valueOf(indexDiff1).compareTo(Integer.valueOf(indexDiff2));
 					}
 					else {
@@ -1048,6 +1056,28 @@ public class LeafMapping extends AbstractCodeMapping implements Comparable<LeafM
 						return false;
 					}
 				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean sameEnhancedForCollectionInParent() {
+		CompositeStatementObject parent1 = getFragment1().getParent();
+		while(parent1 != null && parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent1 = parent1.getParent();
+		}
+		CompositeStatementObject parent2 = getFragment2().getParent();
+		while(parent2 != null && parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.BLOCK)) {
+			parent2 = parent2.getParent();
+		}
+		if(parent1 != null && parent2 != null &&
+				parent1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+				parent2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+				parent1.getExpressions().size() > 0 && parent2.getExpressions().size() > 0) {
+			AbstractExpression expr1 = parent1.getExpressions().get(parent1.getExpressions().size()-1);
+			AbstractExpression expr2 = parent2.getExpressions().get(parent2.getExpressions().size()-1);
+			if(expr1.getString().contains(expr2.getString()) || expr2.getString().contains(expr1.getString())) {
 				return true;
 			}
 		}

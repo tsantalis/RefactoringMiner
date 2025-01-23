@@ -1,0 +1,63 @@
+/*
+ * Copyright 2015-2023 the original author or authors.
+ *
+ * All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v2.0 which
+ * accompanies this distribution and is available at
+ *
+ * https://www.eclipse.org/legal/epl-v20.html
+ */
+
+package org.junit.platform.suite.api;
+
+import static org.apiguardian.api.API.Status.EXPERIMENTAL;
+import static org.apiguardian.api.API.Status.MAINTAINED;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.apiguardian.api.API;
+
+/**
+ * {@code @SelectClasses} specifies the classes to <em>select</em> when running
+ * a test suite on the JUnit Platform.
+ *
+ * @since 1.0
+ * @see Suite
+ * @see org.junit.platform.runner.JUnitPlatform
+ * @see org.junit.platform.engine.discovery.DiscoverySelectors#selectClass(Class)
+ * @see org.junit.platform.engine.discovery.DiscoverySelectors#selectClass(String)
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Inherited
+@Documented
+@API(status = MAINTAINED, since = "1.0")
+public @interface SelectClasses {
+
+	/**
+	 * One or more classes to select.
+	 * <p>
+	 * May be use in conjunction with or instead of {@link #names()}.
+	 */
+	Class<?>[] value() default {};
+
+	/**
+	 * One or more classes to select by their fully qualified names.
+	 * <p>
+	 * May be use in conjunction with or instead of {@link #value()}.
+	 * <p>
+	 * This attribute is intended to be used when the class cannot be referenced
+	 * directly from where this annotation is used, for example, when it's not
+	 * visible due to being package-private.
+	 *
+	 * @since 1.10
+	 */
+	@API(status = EXPERIMENTAL, since = "1.10")
+	String[] names() default {};
+
+}

@@ -295,7 +295,7 @@ Currently, it supports the detection of the following refactorings:
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
-        3. Assert Timeout
+	3. Assert Timeout
 </details>
 
 # Contributors

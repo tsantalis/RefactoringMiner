@@ -1640,6 +1640,19 @@ public class ReplacementAlgorithm {
 				}
 			}
 		}
+		if(statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT) &&
+				statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
+			CompositeStatementObject for1 = (CompositeStatementObject)statement1;
+			CompositeStatementObject for2 = (CompositeStatementObject)statement2;
+			List<AbstractExpression> expressions1 = for1.getExpressions();
+			AbstractExpression enhancedForExpression1 = expressions1.get(expressions1.size()-1);
+			List<AbstractExpression> expressions2 = for2.getExpressions();
+			AbstractExpression enhancedForExpression2 = expressions2.get(expressions2.size()-1);
+			if(enhancedForExpression1.getString().startsWith(enhancedForExpression2.getString() + ".") ||
+					enhancedForExpression2.getString().startsWith(enhancedForExpression1.getString() + ".")) {
+				return replacementInfo.getReplacements();
+			}
+		}
 		//match while with enhanced for
 		if(statement1.getLocationInfo().getCodeElementType().equals(CodeElementType.WHILE_STATEMENT) &&
 				statement2.getLocationInfo().getCodeElementType().equals(CodeElementType.ENHANCED_FOR_STATEMENT)) {
@@ -2657,6 +2670,23 @@ public class ReplacementAlgorithm {
 					}
 					return replacementInfo.getReplacements();
 				}
+			}
+		}
+		//check if direct field access is replaced with getter
+		if(assignmentInvocationCoveringTheEntireStatement2 != null && assignmentInvocationCoveringTheEntireStatement1 == null && variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1 &&
+				variableDeclarations1.toString().equals(variableDeclarations2.toString())) {
+			VariableDeclaration v1 = variableDeclarations1.get(0);
+			String initializer1 = v1.getInitializer() != null ? v1.getInitializer().getString() : null;
+			if(initializer1 != null && initializer1.endsWith(assignmentInvocationCoveringTheEntireStatement2.getName())) {
+				return replacementInfo.getReplacements();
+			}
+		}
+		if(assignmentInvocationCoveringTheEntireStatement1 != null && assignmentInvocationCoveringTheEntireStatement2 == null && variableDeclarations1.size() == 1 && variableDeclarations2.size() == 1 &&
+				variableDeclarations1.toString().equals(variableDeclarations2.toString())) {
+			VariableDeclaration v2 = variableDeclarations2.get(0);
+			String initializer2 = v2.getInitializer() != null ? v2.getInitializer().getString() : null;
+			if(initializer2 != null && initializer2.endsWith(assignmentInvocationCoveringTheEntireStatement1.getName())) {
+				return replacementInfo.getReplacements();
 			}
 		}
 		//object creation is identical

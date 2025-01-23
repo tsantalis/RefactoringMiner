@@ -134,7 +134,8 @@ public class RefactoringPopulator {
 		ReplaceGenericWithDiamond(new BigInteger("1267650600228229401496703205376")),
 		TryWithResources(new BigInteger("2535301200456458802993406410752")),
 		ReplaceConditionalWithTernary(new BigInteger("5070602400912917605986812821504")),
-		All(new BigInteger("10141204801825835211973625643007"));
+		AssertTimeout(new BigInteger("10141204801825835211973625643008")),
+		All(new BigInteger("20282409603651670423947251286015"));
 
 		private BigInteger value;
 

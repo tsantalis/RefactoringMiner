@@ -3,6 +3,8 @@ package org.refactoringminer.test;
 import gr.uom.java.xmi.decomposition.AbstractCodeMapping;
 import gr.uom.java.xmi.decomposition.LeafExpression;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
+import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,6 +65,11 @@ public class TestRelatedStatementMappingsTest {
                 AssertThrowsRefactoring assertThrowsRefactoring = (AssertThrowsRefactoring) ref;
                 Set<AbstractCodeMapping> mapper = assertThrowsRefactoring.getAssertThrowsMappings();
                 mapperInfo(mapper, assertThrowsRefactoring.getOperationBefore(), assertThrowsRefactoring.getOperationAfter());
+            }
+            else if (ref instanceof AssertTimeoutRefactoring) {
+            	AssertTimeoutRefactoring assertTimeoutRefactoring = (AssertTimeoutRefactoring) ref;
+                Set<AbstractCodeMapping> mapper = assertTimeoutRefactoring.getAssertTimeoutMappings();
+                mapperInfo(mapper, assertTimeoutRefactoring.getOperationBefore(), assertTimeoutRefactoring.getOperationAfter());
             }
         });
     }

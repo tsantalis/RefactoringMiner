@@ -1,3 +1,149 @@
+public testSuccessfulTaskWithoutCallback() : void -> public testSuccessfulTaskWithoutCallback() : void
+line range:50-50==line range:64-64
+line range:52-52==line range:66-66
+line range:53-53==line range:67-67
+line range:54-54==line range:68-68
+line range:56-56==line range:70-70
+line range:57-57==line range:71-71
+line range:58-58==line range:72-72
+line range:59-59==line range:73-73
+line range:62-62==line range:76-76
+line range:65-65==line range:79-79
+public testSuccessfulTaskWithCallback() : void -> public testSuccessfulTaskWithCallback() : void
+line range:74-74==line range:90-90
+line range:76-76==line range:92-92
+line range:77-77==line range:93-93
+line range:78-78==line range:94-94
+line range:80-80==line range:96-96
+line range:81-81==line range:97-97
+line range:82-82==line range:98-98
+line range:83-83==line range:99-99
+line range:84-84==line range:100-100
+line range:87-87==line range:103-103
+line range:90-90==line range:106-106
+line range:91-91==line range:107-107
+line range:93-93==line range:109-109
+line range:94-94==line range:110-110
+line range:95-95==line range:111-111
+line range:98-98==line range:114-114
+public testLongRunningTaskWithoutCallback() : void -> public testLongRunningTaskWithoutCallback() : void
+line range:108-108==line range:126-126
+line range:110-110==line range:128-128
+line range:111-111==line range:129-129
+line range:112-115==line range:130-133
+line range:113-113==line range:131-131
+line range:114-114==line range:132-132
+line range:112-115==line range:130-133
+line range:117-117==line range:135-135
+line range:118-118==line range:136-136
+line range:119-119==line range:137-137
+line range:122-122==line range:140-140
+line range:123-123==line range:141-141
+line range:125-125==line range:143-143
+line range:129-129==line range:147-147
+line range:132-132==line range:150-150
+line range:133-133==line range:151-151
+line range:134-134==line range:152-152
+line range:137-137==line range:155-155
+line range:121-126==line range:139-144
+line range:124-126==line range:142-144
+public testLongRunningTaskWithCallback() : void -> public testLongRunningTaskWithCallback() : void
+line range:147-147==line range:167-167
+line range:149-149==line range:169-169
+line range:150-150==line range:170-170
+line range:151-154==line range:171-174
+line range:152-152==line range:172-172
+line range:153-153==line range:173-173
+line range:151-154==line range:171-174
+line range:156-156==line range:176-176
+line range:157-157==line range:177-177
+line range:158-158==line range:178-178
+line range:159-159==line range:179-179
+line range:161-161==line range:181-181
+line range:164-164==line range:184-184
+line range:165-165==line range:185-185
+line range:167-167==line range:187-187
+line range:171-171==line range:191-191
+line range:173-173==line range:193-193
+line range:174-174==line range:194-194
+line range:176-176==line range:196-196
+line range:177-177==line range:197-197
+line range:178-178==line range:198-198
+line range:181-181==line range:201-201
+line range:182-182==line range:202-202
+line range:183-183==line range:203-203
+line range:186-186==line range:206-206
+line range:163-168==line range:183-188
+line range:166-168==line range:186-188
+public testEndProcess() : void -> public testEndProcess() : void
+line range:196-196==line range:218-218
+line range:198-198==line range:220-220
+line range:199-199==line range:221-221
+line range:200-203==line range:222-225
+line range:201-201==line range:223-223
+line range:202-202==line range:224-224
+line range:200-203==line range:222-225
+line range:205-205==line range:227-227
+line range:206-206==line range:228-228
+line range:207-207==line range:229-229
+line range:210-210==line range:232-232
+line range:211-211==line range:233-233
+line range:213-213==line range:235-235
+line range:216-216==line range:238-238
+line range:217-217==line range:239-239
+line range:218-218==line range:240-240
+line range:221-221==line range:243-243
+line range:222-222==line range:244-244
+line range:209-214==line range:231-236
+line range:212-214==line range:234-236
+public testNullTask() : void -> public testNullTask() : void
+line range:231-231==line range:255-255
+line range:232-232==line range:256-256
+line range:235-235==line range:259-259
+line range:236-236==line range:260-260
+line range:239-239==line range:263-263
+line range:240-240==line range:264-264
+line range:242-242==line range:266-266
+line range:243-243==line range:267-267
+line range:244-244==line range:268-268
+line range:234-234==line range:258-258
+line range:238-245==line range:262-269
+line range:241-245==line range:265-269
+public testNullTaskWithCallback() : void -> public testNullTaskWithCallback() : void
+line range:256-256==line range:282-282
+line range:257-257==line range:283-283
+line range:258-258==line range:284-284
+line range:261-261==line range:287-287
+line range:262-262==line range:288-288
+line range:264-264==line range:290-290
+line range:265-265==line range:291-291
+line range:267-267==line range:293-293
+line range:268-268==line range:294-294
+line range:269-269==line range:295-295
+line range:271-271==line range:297-297
+line range:272-272==line range:298-298
+line range:273-273==line range:299-299
+line range:276-276==line range:302-302
+line range:277-277==line range:303-303
+line range:279-279==line range:305-305
+line range:280-280==line range:306-306
+line range:281-281==line range:307-307
+line range:260-260==line range:286-286
+line range:275-282==line range:301-308
+line range:278-282==line range:304-308
+public testNullTaskWithNullCallback() : void -> public testNullTaskWithNullCallback() : void
+line range:293-293==line range:321-321
+line range:294-294==line range:322-322
+line range:297-297==line range:328-328
+line range:298-298==line range:329-329
+line range:301-301==line range:332-332
+line range:302-302==line range:333-333
+line range:304-304==line range:335-335
+line range:305-305==line range:336-336
+line range:306-306==line range:337-337
+line range:296-296==line range:324-327
+line range:300-307==line range:331-338
+line range:303-307==line range:334-338
 public testMissingProfession() : void -> public testMissingProfession() : void
 line range:42-42==line range:43-43
 public testMissingName() : void -> public testMissingName() : void
@@ -12,6 +158,25 @@ public retrievingACustomerByIdFailsWithExceptionAsFeedbackToClient() : void -> p
 line range:232-232==line range:236-236
 public retrievingAllCustomersFailsWithExceptionAsFeedbackToClient() : void -> public retrievingAllCustomersFailsWithExceptionAsFeedbackToClient() : void
 line range:237-237==line range:243-243
+public testAddItem() : void -> public testAddItem() : void
+line range:82-82==line range:85-85
+line range:83-83==line range:86-86
+line range:85-87==line range:88-90
+line range:86-86==line range:89-89
+line range:86-86==line range:89-89
+line range:86-86==line range:89-89
+line range:85-87==line range:88-90
+line range:91-91==line range:94-94
+line range:92-92==line range:95-95
+line range:95-95==line range:98-98
+line range:96-96==line range:99-99
+line range:97-97==line range:100-100
+line range:99-99==line range:102-102
+line range:103-103==line range:106-106
+line range:84-88==line range:87-91
+line range:102-104==line range:105-107
+line range:84-88==line range:87-91
+line range:102-104==line range:105-107
 public testUnsuccessfulSynchronousEvent() : void -> public testUnsuccessfulSynchronousEvent() : void
 line range:76-76==line range:78-78
 line range:78-78==line range:80-80
@@ -44,6 +209,11 @@ public testBakeCakeMissingLayer() : void -> public testBakeCakeMissingLayer() : 
 line range:154-154==line range:158-158
 public testBakeCakesUsedLayer() : void -> public testBakeCakesUsedLayer() : void
 line range:177-177==line range:182-182
+public testGetHeavy() : void -> public testGetHeavy() : void
+line range:57-57==line range:60-60
+line range:58-58==line range:61-61
+line range:59-59==line range:62-62
+line range:60-60==line range:63-63
 public testForInvalidName() : void -> public testForInvalidName() : void
 line range:45-45==line range:41-41
 line range:45-45==line range:41-41
@@ -57,6 +227,49 @@ line range:53-53==line range:50-50
 public muteShouldRethrowUnexpectedExceptionAsAssertionError() : void -> public muteShouldRethrowUnexpectedExceptionAsAssertionError() : void
 line range:59-59==line range:54-54
 line range:59-59==line range:54-54
+public testSubsequentCheckinCheckout() : void -> public testSubsequentCheckinCheckout() : void
+line range:48-48==line range:51-51
+line range:49-49==line range:52-52
+line range:51-51==line range:54-54
+line range:52-52==line range:55-55
+line range:54-54==line range:57-57
+line range:55-55==line range:58-58
+line range:58-58==line range:61-61
+line range:59-59==line range:62-62
+line range:60-60==line range:63-63
+line range:61-61==line range:64-64
+line range:62-62==line range:65-65
+line range:64-64==line range:67-67
+line range:65-65==line range:68-68
+line range:57-66==line range:60-69
+line range:57-66==line range:60-69
+public testConcurrentCheckinCheckout() : void -> public testConcurrentCheckinCheckout() : void
+line range:76-76==line range:80-80
+line range:77-77==line range:81-81
+line range:79-79==line range:83-83
+line range:80-80==line range:84-84
+line range:82-82==line range:86-86
+line range:83-83==line range:87-87
+line range:85-85==line range:89-89
+line range:86-86==line range:90-90
+line range:89-89==line range:93-93
+line range:90-90==line range:94-94
+line range:92-92==line range:96-96
+line range:93-93==line range:97-97
+line range:94-94==line range:98-98
+line range:97-97==line range:101-101
+line range:98-98==line range:102-102
+line range:100-100==line range:104-104
+line range:101-101==line range:105-105
+line range:102-102==line range:106-106
+line range:105-105==line range:109-109
+line range:106-106==line range:110-110
+line range:108-108==line range:112-112
+line range:109-109==line range:113-113
+line range:113-113==line range:117-117
+line range:114-114==line range:118-118
+line range:115-115==line range:119-119
+line range:116-116==line range:120-120
 public testAddHeader() : void -> public testAddHeader() : void
 line range:39-39==line range:41-41
 public testGetHeader() : void -> public testGetHeader() : void
@@ -69,7 +282,78 @@ public testGetBody() : void -> public testGetBody() : void
 line range:59-59==line range:69-69
 public testUnModifiableHeaders() : void -> public testUnModifiableHeaders() : void
 line range:58-58==line range:60-60
+public testProduce() : void -> public testProduce() : void
+line range:41-41==line range:44-44
+line range:42-42==line range:45-45
+line range:44-44==line range:47-47
+line range:45-45==line range:48-48
+line range:47-47==line range:50-50
 public oneException() : void -> public oneException() : void
 line range:55-55==line range:58-58
+public testMultipleCallsReturnTheSameObjectInDifferentThreads() : void -> public testMultipleCallsReturnTheSameObjectInDifferentThreads() : void
+line range:87-87==line range:91-91
+line range:89-89==line range:93-93
+line range:89-89==line range:93-93
+line range:93-93==line range:97-97
+line range:94-94==line range:98-98
+line range:97-97==line range:101-101
+line range:99-99==line range:103-103
+line range:100-100==line range:104-104
+line range:101-101==line range:105-105
+line range:105-105==line range:109-109
+line range:88-90==line range:92-94
+line range:98-102==line range:102-106
+line range:88-90==line range:92-94
+line range:98-102==line range:102-106
+public testIdGeneration() : void -> public testIdGeneration() : void
+line range:87-87==line range:89-89
+line range:89-89==line range:91-91
+line range:91-91==line range:93-93
+line range:91-91==line range:93-93
+line range:94-98==line range:96-100
+line range:97-97==line range:99-99
+line range:96-96==line range:98-98
+line range:100-100==line range:102-102
+line range:102-104==line range:104-106
+line range:106-106==line range:108-108
+line range:107-107==line range:109-109
+line range:90-92==line range:92-94
+line range:90-92==line range:92-94
 public constructorTest() : void -> public constructorTest() : void
 line range:38-38==line range:39-39
+public testSuspend() : void -> public testSuspend() : void
+line range:49-49==line range:52-52
+line range:51-51==line range:54-54
+line range:52-52==line range:55-55
+line range:54-54==line range:57-57
+line range:56-56==line range:59-59
+line range:57-57==line range:60-60
+line range:58-58==line range:61-61
+line range:60-60==line range:63-63
+line range:62-62==line range:65-65
+line range:63-63==line range:66-66
+line range:65-65==line range:68-68
+public testResume() : void -> public testResume() : void
+line range:73-73==line range:78-78
+line range:75-75==line range:80-80
+line range:76-76==line range:81-81
+line range:78-78==line range:83-83
+line range:79-79==line range:84-84
+line range:81-81==line range:86-86
+line range:83-83==line range:88-88
+line range:85-85==line range:90-90
+line range:86-86==line range:91-91
+line range:87-87==line range:92-92
+line range:89-89==line range:94-94
+line range:90-90==line range:95-95
+line range:92-92==line range:97-97
+public testInterrupt() : void -> public testInterrupt() : void
+line range:100-100==line range:107-107
+line range:101-101==line range:108-108
+line range:102-102==line range:109-109
+line range:103-103==line range:110-110
+line range:104-104==line range:111-111
+line range:105-105==line range:112-112
+line range:106-106==line range:113-113
+line range:108-108==line range:115-115
+line range:109-109==line range:116-116

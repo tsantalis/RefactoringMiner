@@ -171,6 +171,7 @@ Currently, it supports the detection of the following refactorings:
 100. Replace Generic With Diamond
 101. Try With Resources
 102. Replace Conditional With Ternary
+103. Assert Timeout
 
 # Supported Refactoring Types
 
@@ -290,10 +291,11 @@ Currently, it supports the detection of the following refactorings:
 </details>
 
 <details>
-<summary>Test-specific (2)</summary>
+<summary>Test-specific (3)</summary>
 
 	1. Parameterize Test (JUnit 5 @ParameterizedTest with @ValueSource)
 	2. Assert Throws
+        3. Assert Timeout
 </details>
 
 # Contributors

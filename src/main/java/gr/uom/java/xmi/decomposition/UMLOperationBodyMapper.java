@@ -33,6 +33,7 @@ import gr.uom.java.xmi.decomposition.replacement.Replacement.ReplacementType;
 import gr.uom.java.xmi.diff.UMLAnonymousClassDiff;
 import gr.uom.java.xmi.diff.AddParameterRefactoring;
 import gr.uom.java.xmi.diff.AssertThrowsRefactoring;
+import gr.uom.java.xmi.diff.AssertTimeoutRefactoring;
 import gr.uom.java.xmi.diff.CandidateAttributeRefactoring;
 import gr.uom.java.xmi.diff.CandidateMergeVariableRefactoring;
 import gr.uom.java.xmi.diff.CandidateSplitVariableRefactoring;
@@ -3568,13 +3569,19 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 		addedVariables.addAll(analysis.getAddedVariablesStoringTheReturnOfExtractedMethod());
 		movedVariables = analysis.getMovedVariables();
 		int assertThrows1 = 0;
+		int assertTimeout1 = 0;
 		for(AbstractCall call : container1.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
 				assertThrows1++;
 			}
+			else if(call.getName().equals("assertTimeout")) {
+				assertTimeout1++;
+			}
 		}
 		Map<String, Set<AbstractCodeMapping>> assertThrowsMappings = new LinkedHashMap<>();
+		Map<String, Set<AbstractCodeMapping>> assertTimeoutMappings = new LinkedHashMap<>();
 		List<AbstractCall> assertThrowsCalls = new ArrayList<AbstractCall>();
+		List<AbstractCall> assertTimeoutCalls = new ArrayList<AbstractCall>();
 		for(AbstractCall call : container2.getAllOperationInvocations()) {
 			if(call.getName().equals("assertThrows")) {
 				assertThrowsCalls.add(call);
@@ -3590,6 +3597,24 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
 							mappings.add(mapping);
 							assertThrowsMappings.put(call.actualString(), mappings);
+						}
+					}
+				}
+			}
+			else if(call.getName().equals("assertTimeout")) {
+				assertTimeoutCalls.add(call);
+				for(AbstractCodeMapping mapping : this.mappings) {
+					if(call.getLocationInfo().subsumes(mapping.getFragment2().getLocationInfo()) || mapping.getFragment2().getLocationInfo().subsumes(call.getLocationInfo())) {
+						if(parentMapper != null && parentMapper.getMappings().contains(mapping)) {
+							continue;
+						}
+						if(assertTimeoutMappings.containsKey(call.actualString())) {
+							assertTimeoutMappings.get(call.actualString()).add(mapping);
+						}
+						else {
+							Set<AbstractCodeMapping> mappings = new LinkedHashSet<AbstractCodeMapping>();
+							mappings.add(mapping);
+							assertTimeoutMappings.put(call.actualString(), mappings);
 						}
 					}
 				}
@@ -3640,6 +3665,15 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							}
 						}
 					}
+				}
+			}
+		}
+		if(assertTimeout1 < assertTimeoutCalls.size()) {
+			for(AbstractCall assertTimeoutCall : assertTimeoutCalls) {
+				Set<AbstractCodeMapping> set = assertTimeoutMappings.get(assertTimeoutCall.actualString());
+				if(set != null && set.size() > 0) {
+					AssertTimeoutRefactoring ref = new AssertTimeoutRefactoring(set, assertTimeoutCall, container1, container2);
+					refactorings.add(ref);
 				}
 			}
 		}

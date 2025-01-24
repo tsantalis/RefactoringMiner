@@ -1617,20 +1617,24 @@ public class TestStatementMappings {
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 
-	@Test
-	public void testConsecutiveForLoops() throws Exception {
+	@ParameterizedTest
+	@CsvSource({
+		"https://github.com/hibernate/hibernate-search.git, 9a25c9dd3e4af54c43878d224c27106384302d25, PojoTypeManagerContainer, hibernate-search-9a25c9dd3e4af54c43878d224c27106384302d25.txt",
+		"https://github.com/hibernate/hibernate-search.git, 6133c600d0fc15ce3482aaf9c3a29b4a222c98e8, HibernateOrmTypeContextContainer, hibernate-search-6133c600d0fc15ce3482aaf9c3a29b4a222c98e8.txt"
+	})
+	public void testConsecutiveForLoops(String url, String commitId, String containerName, String testResultFileName) throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();
-		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/hibernate/hibernate-search.git", "9a25c9dd3e4af54c43878d224c27106384302d25", new File(REPOS));
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI(url, commitId, new File(REPOS));
 		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
 		for(UMLClassDiff classDiff : commonClassDiff) {
 			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
-				if(mapper.getContainer1().getName().equals("PojoTypeManagerContainer") && mapper.getContainer2().getName().equals("PojoTypeManagerContainer")) {
+				if(mapper.getContainer1().getName().equals(containerName) && mapper.getContainer2().getName().equals(containerName)) {
 					mapperInfo(mapper, actual);
 				}
 			}
 		}
-		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-search-9a25c9dd3e4af54c43878d224c27106384302d25.txt"));
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + testResultFileName));
 		Assertions.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
 	}
 

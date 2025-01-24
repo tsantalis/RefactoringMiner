@@ -3014,6 +3014,23 @@ public class TestStatementMappingsJunit4 {
 	}
 
 	@Test
+	public void testConsecutiveForLoops2() throws Exception {
+		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
+		final List<String> actual = new ArrayList<>();
+		UMLModelDiff modelDiff = miner.detectAtCommitWithGitHubAPI("https://github.com/hibernate/hibernate-search.git", "6133c600d0fc15ce3482aaf9c3a29b4a222c98e8", new File(REPOS));
+		List<UMLClassDiff> commonClassDiff = modelDiff.getCommonClassDiffList();
+		for(UMLClassDiff classDiff : commonClassDiff) {
+			for(UMLOperationBodyMapper mapper : classDiff.getOperationBodyMapperList()) {
+				if(mapper.getContainer1().getName().equals("HibernateOrmTypeContextContainer") && mapper.getContainer2().getName().equals("HibernateOrmTypeContextContainer")) {
+					mapperInfo(mapper, actual);
+				}
+			}
+		}
+		List<String> expected = IOUtils.readLines(new FileReader(EXPECTED_PATH + "hibernate-search-6133c600d0fc15ce3482aaf9c3a29b4a222c98e8.txt"));
+		Assert.assertTrue(expected.size() == actual.size() && expected.containsAll(actual) && actual.containsAll(expected));
+	}
+
+	@Test
 	public void testAssertMappings() throws Exception {
 		GitHistoryRefactoringMinerImpl miner = new GitHistoryRefactoringMinerImpl();
 		final List<String> actual = new ArrayList<>();

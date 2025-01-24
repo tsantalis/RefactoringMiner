@@ -3473,6 +3473,18 @@ public class UMLModelDiff {
 								}
 								refactorings.remove(moveRef);
 							}
+							//eliminate inner classes being reported as moved
+							List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+							for(Refactoring r : refactorings) {
+								if(r instanceof MoveClassRefactoring) {
+									MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
+									if(moveClass.getOriginalClassName().startsWith(renameDiff.getOriginalClassName() + ".") &&
+											moveClass.getMovedClassName().startsWith(renameDiff.getNextClassName() + ".")) {
+										toBeRemoved.add(moveClass);
+									}
+								}
+							}
+							this.refactorings.removeAll(toBeRemoved);
 						}
 						else {
 							int totalOperations = parentClass.getOperations().size() + childClass.getOperations().size();
@@ -3492,6 +3504,18 @@ public class UMLModelDiff {
 								}
 								refactorings.remove(moveRef);
 							}
+							//eliminate inner classes being reported as moved
+							List<MoveClassRefactoring> toBeRemoved = new ArrayList<MoveClassRefactoring>();
+							for(Refactoring r : refactorings) {
+								if(r instanceof MoveClassRefactoring) {
+									MoveClassRefactoring moveClass = (MoveClassRefactoring)r;
+									if(moveClass.getOriginalClassName().startsWith(moveDiff.getOriginalClassName() + ".") &&
+											moveClass.getMovedClassName().startsWith(moveDiff.getNextClassName() + ".")) {
+										toBeRemoved.add(moveClass);
+									}
+								}
+							}
+							this.refactorings.removeAll(toBeRemoved);
 						}
 					}
 				}

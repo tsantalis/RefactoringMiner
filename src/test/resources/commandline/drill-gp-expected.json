@@ -1166,30 +1166,6 @@
 }]
 },
 {
-	"type": "Move Class",
-	"description": "Move Class org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator.BufferedOpFinder moved to org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities.BufferedOpFinder",
-	"leftSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/work/foreman/rm/ThrottledResourceManager.java",
-		"startLine": 229,
-		"endLine": 244,
-		"startColumn": 5,
-		"endColumn": 6,
-		"codeElementType": "TYPE_DECLARATION",
-		"description": "original type declaration",
-		"codeElement": "org.apache.drill.exec.work.foreman.rm.ThrottledResourceManager.QueuedResourceAllocator.BufferedOpFinder"
-}],
-	"rightSideLocations": [{
-		"filePath": "exec/java-exec/src/main/java/org/apache/drill/exec/util/memory/ZKQueueMemoryAllocationUtilities.java",
-		"startLine": 70,
-		"endLine": 80,
-		"startColumn": 3,
-		"endColumn": 4,
-		"codeElementType": "TYPE_DECLARATION",
-		"description": "moved type declaration",
-		"codeElement": "org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities.BufferedOpFinder"
-}]
-},
-{
 	"type": "Parameterize Variable",
 	"description": "Parameterize Variable nodeMap : Map<String,Collection<PhysicalOperator>> to nodeMap : Map<String,Collection<PhysicalOperator>> in method public planMemory(queryContext QueryContext, rm QueryResourceManager, nodeMap Map<String,Collection<PhysicalOperator>>) : void from class org.apache.drill.exec.util.memory.ZKQueueMemoryAllocationUtilities",
 	"leftSideLocations": [{

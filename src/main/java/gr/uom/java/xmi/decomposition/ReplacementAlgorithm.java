@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.decomposition;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.decomposition.CodeBlockBetweenComments.generateCodeBlock;
 import static gr.uom.java.xmi.decomposition.OperationInvocation.PRIMITIVE_WRAPPER_CLASS_MAP;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 
@@ -73,6 +74,9 @@ public class ReplacementAlgorithm {
 			Map<String, String> parameterToArgumentMap, ReplacementInfo replacementInfo, boolean equalNumberOfAssertions, UMLOperationBodyMapper operationBodyMapper) throws RefactoringMinerTimedOutException {
 		VariableDeclarationContainer container1 = operationBodyMapper.getContainer1();
 		VariableDeclarationContainer container2 = operationBodyMapper.getContainer2();
+		CodeBlockBetweenComments codeBlock1 = container1.hasTestAnnotation() ? generateCodeBlock(statement1, container1) : null;
+		CodeBlockBetweenComments codeBlock2 = container2.hasTestAnnotation() ? generateCodeBlock(statement2, container2) : null;
+		boolean betweenSameComments = codeBlock1 != null && codeBlock2 != null && (codeBlock1.compatible(codeBlock2) || codeBlock1.compatibleWithAfterEnd(codeBlock2));
 		UMLOperationBodyMapper parentMapper = operationBodyMapper.getParentMapper();
 		Set<AbstractCodeMapping> mappings = operationBodyMapper.getMappings();
 		UMLAbstractClassDiff classDiff = operationBodyMapper.getClassDiff();
@@ -740,7 +744,7 @@ public class ReplacementAlgorithm {
 									}
 								}
 							}
-							if((inconsistentVariableMappingCount(statement1, statement2, v1, v2, mappings) > 1 || mappingsForStatementsInScope(statement1, statement2, v1, v2, mappings) == 0) &&
+							if(!betweenSameComments && (inconsistentVariableMappingCount(statement1, statement2, v1, v2, mappings) > 1 || mappingsForStatementsInScope(statement1, statement2, v1, v2, mappings) == 0) &&
 									!existsVariableDeclarationForV2InitializedWithV1(v1, v2, replacementInfo) && !existsVariableDeclarationForV1InitializedWithV2(v1, v2, replacementInfo) &&
 									!isExtractedVariable(v2, mappings) && !containsRightHandSideReplacementWithAppendChange(statement1, statement2, replacementInfo, replacement) &&
 									container2 != null && container2.loopWithVariables(v1.getVariableName(), v2.getVariableName()) == null) {

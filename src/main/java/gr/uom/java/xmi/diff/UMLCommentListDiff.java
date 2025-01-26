@@ -287,7 +287,7 @@ public class UMLCommentListDiff {
 		return groups;
 	}
 
-	private List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {
+	public static List<Integer> findAllMatchingIndices(List<UMLComment> fragments, UMLComment comment) {
 		List<Integer> matchingIndices = new ArrayList<>();
 		for(int i=0; i<fragments.size(); i++) {
 			UMLComment element = fragments.get(i);

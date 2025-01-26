@@ -655,6 +655,47 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				}
 			}
 			boolean isomorphic = isomorphicCompositeStructure(innerNodes1, innerNodes2);
+			//check if it is possible to group statements based on comments, useful for junit tests
+			if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && !operation1.identicalComments(operation2)) {
+				List<CodeBlockBetweenComments> blocks1 = CodeBlockBetweenComments.generateCodeBlocks(leaves1, operation1);
+				List<CodeBlockBetweenComments> blocks2 = CodeBlockBetweenComments.generateCodeBlocks(leaves2, operation2);
+				for(CodeBlockBetweenComments block1 : blocks1) {
+					boolean matchFound = false;
+					for(CodeBlockBetweenComments block2 : blocks2) {
+						if(block1.compatible(block2)) {
+							matchFound = true;
+							List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
+							List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
+							int mappingCount = mappings.size();
+							processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
+							if(mappings.size() > mappingCount) {
+								leaves1.removeAll(block1.getLeaves());
+								leaves2.removeAll(block2.getLeaves());
+							}
+							break;
+						}
+					}
+					if(!matchFound) {
+						for(CodeBlockBetweenComments block2 : blocks2) {
+							if(block1.compatibleWithAfterEnd(block2)) {
+								matchFound = true;
+								List<AbstractCodeFragment> l1 = new ArrayList<AbstractCodeFragment>(block1.getLeaves());
+								List<AbstractCodeFragment> l2 = new ArrayList<AbstractCodeFragment>(block2.getLeaves());
+								int mappingCount = mappings.size();
+								processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
+								if(mappings.size() > mappingCount) {
+									leaves1.removeAll(block1.getLeaves());
+									leaves2.removeAll(block2.getLeaves());
+								}
+								break;
+							}
+						}
+					}
+					if(!matchFound) {
+						//leaves1.removeAll(block1.getLeaves());
+					}
+				}
+			}
 			processLeaves(leaves1, leaves2, new LinkedHashMap<String, String>(), isomorphic);
 			
 			resetNodes(innerNodes1);

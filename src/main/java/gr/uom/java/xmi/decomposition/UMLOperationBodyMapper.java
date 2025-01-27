@@ -659,6 +659,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 			if(operation1.hasTestAnnotation() && operation2.hasTestAnnotation() && !operation1.identicalComments(operation2)) {
 				List<CodeBlockBetweenComments> blocks1 = CodeBlockBetweenComments.generateCodeBlocks(leaves1, operation1);
 				List<CodeBlockBetweenComments> blocks2 = CodeBlockBetweenComments.generateCodeBlocks(leaves2, operation2);
+				List<CodeBlockBetweenComments> nonMatchedBlocks1 = new ArrayList<CodeBlockBetweenComments>();
 				for(CodeBlockBetweenComments block1 : blocks1) {
 					boolean matchFound = false;
 					for(CodeBlockBetweenComments block2 : blocks2) {
@@ -669,8 +670,16 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 							int mappingCount = mappings.size();
 							processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
 							if(mappings.size() > mappingCount) {
-								leaves1.removeAll(block1.getLeaves());
-								leaves2.removeAll(block2.getLeaves());
+								for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
+									if(alreadyMatched1(leaf1)) {
+										leaves1.remove(leaf1);
+									}
+								}
+								for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
+									if(alreadyMatched2(leaf2)) {
+										leaves2.remove(leaf2);
+									}
+								}
 							}
 							break;
 						}
@@ -684,15 +693,31 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 								int mappingCount = mappings.size();
 								processLeaves(l1, l2, new LinkedHashMap<String, String>(), isomorphic);
 								if(mappings.size() > mappingCount) {
-									leaves1.removeAll(block1.getLeaves());
-									leaves2.removeAll(block2.getLeaves());
+									for(AbstractCodeFragment leaf1 : block1.getLeaves()) {
+										if(alreadyMatched1(leaf1)) {
+											leaves1.remove(leaf1);
+										}
+									}
+									for(AbstractCodeFragment leaf2 : block2.getLeaves()) {
+										if(alreadyMatched2(leaf2)) {
+											leaves2.remove(leaf2);
+										}
+									}
 								}
 								break;
 							}
 						}
 					}
 					if(!matchFound) {
-						//leaves1.removeAll(block1.getLeaves());
+						nonMatchedBlocks1.add(block1);
+					}
+				}
+				for(CodeBlockBetweenComments block1 : nonMatchedBlocks1) {
+					int index = blocks1.indexOf(block1);
+					boolean previousMatched = index > 0 && !nonMatchedBlocks1.contains(blocks1.get(index-1));
+					boolean nextMatched = index < blocks1.size()-1 && !nonMatchedBlocks1.contains(blocks1.get(index+1));
+					if(previousMatched && nextMatched) {
+						leaves1.removeAll(block1.getLeaves());
 					}
 				}
 			}

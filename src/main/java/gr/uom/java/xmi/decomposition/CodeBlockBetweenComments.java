@@ -47,6 +47,9 @@ public class CodeBlockBetweenComments {
 
 	public boolean compatible(CodeBlockBetweenComments other) {
 		if(this.startComment.getText().equals(other.startComment.getText())) {
+			if(this.startCommentPosition == other.startCommentPosition && (this.endComment == null || other.endComment == null)) {
+				return true;
+			}
 			boolean equalEnd = false;
 			if(this.endComment != null && other.endComment != null) {
 				equalEnd = this.endComment.getText().equals(other.endComment.getText());
@@ -61,10 +64,10 @@ public class CodeBlockBetweenComments {
 
 	public boolean compatibleWithAfterEnd(CodeBlockBetweenComments other) {
 		if(this.startComment.getText().equals(other.startComment.getText())) {
-			if(this.endComment == null && other.afterEndComment == null) {
+			if(this.startCommentPosition == other.startCommentPosition && this.endComment == null && other.afterEndComment == null) {
 				return true;
 			}
-			if(this.afterEndComment == null && other.endComment == null) {
+			if(this.startCommentPosition == other.startCommentPosition && this.afterEndComment == null && other.endComment == null) {
 				return true;
 			}
 			boolean equalEnd = false;

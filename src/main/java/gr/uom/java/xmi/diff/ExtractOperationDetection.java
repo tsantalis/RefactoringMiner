@@ -531,6 +531,7 @@ public class ExtractOperationDetection {
 		List<AbstractCodeMapping> exactMatchList = new ArrayList<AbstractCodeMapping>(operationBodyMapper.getExactMatches());
 		boolean exceptionHandlingExactMatch = false;
 		boolean throwsNewExceptionExactMatch = false;
+		boolean synchronizedBlockExactMatch = false;
 		if(exactMatchList.size() == 1) {
 			AbstractCodeMapping mapping = exactMatchList.get(0);
 			if(mapping.getFragment1() instanceof StatementObject && mapping.getFragment2() instanceof StatementObject) {
@@ -543,6 +544,10 @@ public class ExtractOperationDetection {
 			}
 			if(mapping.getFragment1().throwsNewException() && mapping.getFragment2().throwsNewException()) {
 				throwsNewExceptionExactMatch = true;
+			}
+			if(mapping.getFragment1().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT) &&
+					mapping.getFragment2().getLocationInfo().getCodeElementType().equals(CodeElementType.SYNCHRONIZED_STATEMENT)) {
+				synchronizedBlockExactMatch = true;
 			}
 		}
 		for(AbstractCodeMapping mapping : operationBodyMapper.getMappings()) {
@@ -619,7 +624,7 @@ public class ExtractOperationDetection {
 		}
 		return (mappings > 0 || (forNestedMapper && identicalMatches > 1)) && (mappings > nonMappedElementsT2 || (mappings > 1 && mappings >= nonMappedElementsT2) ||
 				(exactMatches >= mappings && nonMappedElementsT1 == 0) ||
-				(exactMatches == 1 && !throwsNewExceptionExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
+				(exactMatches == 1 && !throwsNewExceptionExactMatch && !synchronizedBlockExactMatch && nonMappedElementsT2-exactMatches <= 10) ||
 				(!exceptionHandlingExactMatch && exactMatches > 1 && additionalExactMatches.size() <= exactMatches && nonMappedElementsT2-exactMatches < 20) ||
 				(mappings == 1 && mappings > operationBodyMapper.nonMappedLeafElementsT2())) ||
 				argumentExtractedWithDefaultReturnAdded(operationBodyMapper);

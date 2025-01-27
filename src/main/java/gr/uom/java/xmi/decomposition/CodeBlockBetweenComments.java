@@ -61,6 +61,12 @@ public class CodeBlockBetweenComments {
 
 	public boolean compatibleWithAfterEnd(CodeBlockBetweenComments other) {
 		if(this.startComment.getText().equals(other.startComment.getText())) {
+			if(this.endComment == null && other.afterEndComment == null) {
+				return true;
+			}
+			if(this.afterEndComment == null && other.endComment == null) {
+				return true;
+			}
 			boolean equalEnd = false;
 			boolean equalEndPosition = false;
 			if(this.endComment != null && other.afterEndComment != null && this.endComment.getText().equals(other.afterEndComment.getText())) {

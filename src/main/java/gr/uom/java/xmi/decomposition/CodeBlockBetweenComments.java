@@ -89,6 +89,9 @@ public class CodeBlockBetweenComments {
 		List<UMLComment> comments = container.getComments();
 		for(int i=0; i<comments.size(); i++) {
 			UMLComment startComment = comments.get(i);
+			if(container.getBody() != null && startComment.getLocationInfo().before(container.getBody().getCompositeStatement().getLocationInfo())) {
+				continue;
+			}
 			int startIndex = i;
 			List<Integer> allMatchingIndicesForStart = findAllMatchingIndices(container.getComments(), startComment);
 			UMLComment endComment = i == comments.size()-1 ? null : comments.get(i+1);
@@ -131,6 +134,9 @@ public class CodeBlockBetweenComments {
 		List<UMLComment> comments = container.getComments();
 		for(int i=0; i<comments.size(); i++) {
 			UMLComment startComment = comments.get(i);
+			if(container.getBody() != null && startComment.getLocationInfo().before(container.getBody().getCompositeStatement().getLocationInfo())) {
+				continue;
+			}
 			int startIndex = i;
 			List<Integer> allMatchingIndicesForStart = findAllMatchingIndices(container.getComments(), startComment);
 			UMLComment endComment = i == comments.size()-1 ? null : comments.get(i+1);

@@ -1,6 +1,7 @@
 package gr.uom.java.xmi.diff;
 
 import static gr.uom.java.xmi.Constants.JAVA;
+import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -147,10 +148,6 @@ public class InlineOperationRefactoring implements Refactoring {
 			return true;
 		}
 		return false;
-	}
-
-	private boolean isDefaultValue(String argument) {
-		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
 	}
 
 	private void createArgumentMappings(AbstractCodeMapping mapping) {

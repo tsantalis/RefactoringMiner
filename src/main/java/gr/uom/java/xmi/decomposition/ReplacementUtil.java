@@ -211,4 +211,8 @@ public class ReplacementUtil {
 		}
 		return matches == compatibleMatches;
 	}
+
+	public static boolean isDefaultValue(String argument) {
+		return argument.equals("null") || argument.equals("0") || argument.equals("1") || argument.equals("false") || argument.equals("true");
+	}
 }

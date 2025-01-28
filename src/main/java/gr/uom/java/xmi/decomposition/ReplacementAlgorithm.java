@@ -2531,6 +2531,30 @@ public class ReplacementAlgorithm {
 					}
 				}
 			}
+			else if((invocationCoveringTheEntireStatement1.getName().equals("isTrue") && invocationCoveringTheEntireStatement2.getName().equals("assertTrue")) ||
+					(invocationCoveringTheEntireStatement1.getName().equals("isFalse") && invocationCoveringTheEntireStatement2.getName().equals("assertFalse"))) {
+				for(String key1 : methodInvocationMap1.keySet()) {
+					for(AbstractCall invocation1 : methodInvocationMap1.get(key1)) {
+						if(invocation1.getName().equals("assertThat")) {
+							List<String> arguments = invocation1.arguments();
+							if(arguments.size() == 1) {
+								for(String arg : invocationCoveringTheEntireStatement2.arguments()) {
+									if(statement1.getArgumentizedString().contains(arg)) {
+										return replacementInfo.getReplacements();
+									}
+									else if(arg.contains(".")) {
+										String trim = arg.substring(arg.indexOf(".") + 1, arg.length()); {
+											if(statement1.getArgumentizedString().contains(trim)) {
+												return replacementInfo.getReplacements();
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		//check if the class instance creation in the first statement is the expression of the method invocation in the second statement
 		if(creationCoveringTheEntireStatement1 != null) {

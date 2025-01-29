@@ -1087,6 +1087,17 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
 										ref.addSubExpressionMapping(leafMapping);
 									}
+									if(initializer.getString().contains(JAVA.STRING_CONCATENATION)) {
+										String[] tokens = initializer.getString().split("\\+");
+										for(String token : tokens) {
+											token = token.strip();
+											List<LeafExpression> concatenatedSubExpressions = nonMappedLeaf1.findExpression(token);
+											for(LeafExpression subExpression : concatenatedSubExpressions) {
+												LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
+												ref.addSubExpressionMapping(leafMapping);
+											}
+										}
+									}
 									if(!refactorings.contains(ref)) {
 										refactorings.add(ref);
 										leavesToBeRemovedT2.add(statement);

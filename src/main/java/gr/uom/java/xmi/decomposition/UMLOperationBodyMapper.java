@@ -19,6 +19,7 @@ import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.isForEach;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.processLambdas;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPICalls;
 import static gr.uom.java.xmi.decomposition.ReplacementAlgorithm.streamAPIName;
+import static gr.uom.java.xmi.decomposition.ReplacementUtil.isDefaultValue;
 import static gr.uom.java.xmi.decomposition.StringBasedHeuristics.*;
 import static gr.uom.java.xmi.decomposition.Visitor.stringify;
 import static gr.uom.java.xmi.diff.UMLClassBaseDiff.getParameterValues;
@@ -1043,7 +1044,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement.getVariableDeclarations().size() > 0) {
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
-					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0)) {
+					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0 ||
+							initializer.getStringLiterals().size() > 0 || initializer.getCastExpressions().size() > 0 || (initializer.getNumberLiterals().size() > 0 && !isDefaultValue(initializer.getString())))) {
 						for(AbstractCodeFragment nonMappedLeaf1 : nonMappedLeavesT1) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations1 = nonMappedLeaf1.getVariableDeclarations();
@@ -1101,7 +1103,7 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 				if(statement.getVariableDeclarations().size() > 0) {
 					VariableDeclaration declaration = statement.getVariableDeclarations().get(0);
 					AbstractExpression initializer = declaration.getInitializer();
-					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0)) {
+					if(initializer != null && (initializer.getMethodInvocations().size() > 0 || initializer.getCreations().size() > 0 || initializer.getTypeLiterals().size() > 0)) {
 						for(AbstractCodeFragment nonMappedLeaf2 : nonMappedLeavesT2) {
 							boolean matchingVariableDeclaration = false;
 							List<VariableDeclaration> declarations2 = nonMappedLeaf2.getVariableDeclarations();

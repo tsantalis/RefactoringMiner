@@ -1088,9 +1088,8 @@ public class UMLOperationBodyMapper implements Comparable<UMLOperationBodyMapper
 										ref.addSubExpressionMapping(leafMapping);
 									}
 									if(initializer.getString().contains(JAVA.STRING_CONCATENATION)) {
-										String[] tokens = initializer.getString().split("\\+");
+										String[] tokens = StringBasedHeuristics.SPLIT_CONCAT_STRING_PATTERN.split(initializer.getString());
 										for(String token : tokens) {
-											token = token.strip();
 											List<LeafExpression> concatenatedSubExpressions = nonMappedLeaf1.findExpression(token);
 											for(LeafExpression subExpression : concatenatedSubExpressions) {
 												LeafMapping leafMapping = new LeafMapping(subExpression, initializer, operation1, operation2);
